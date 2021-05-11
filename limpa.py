@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import json
 from discord.ext.commands import has_permissions
+from secret import secret_token
 
 def get_prefix(client, message):
     with open('prefixes.json', 'r') as f:
