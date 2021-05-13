@@ -7,7 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.utils import ChromeType
 from secret import secret_token
 
-def get_prefix(client, message):
+def get_prefix(bot, message):
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
     
@@ -25,10 +25,10 @@ def get_prefix(client, message):
         return prefixes[str(message.guild.id)]
 
 intents = discord.Intents(messages=True, guilds=True, members=True, reactions=True, guild_messages=True)
-client = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=intents, help_command=None)
+bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=intents, help_command=None)
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 async def tetris(ctx):
     driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get('https://jstris.jezevec10.com/')
@@ -57,4 +57,4 @@ async def tetris(ctx):
 
     driver.quit()
 
-client.run(secret_token)
+bot.run(secret_token)

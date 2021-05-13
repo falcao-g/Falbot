@@ -4,9 +4,11 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions
 from math import sqrt
 from random import randint
+from random import choice
 from secret import secret_token
+import d20
 
-def get_prefix(client, message):
+def get_prefix(bot, message):
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
     
@@ -24,11 +26,11 @@ def get_prefix(client, message):
         return prefixes[str(message.guild.id)]
 
 intents = discord.Intents(messages=True, guilds=True, members=True, reactions=True, guild_messages=True)
-client = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=intents, help_command=None)
+bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=intents, help_command=None)
 
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 async def sugestao(ctx, *args):
     with open('suggestions.txt', 'a') as arquivo:
         sugestao = ''
@@ -41,7 +43,7 @@ async def sugestao(ctx, *args):
     await ctx.send(f'{ctx.message.author.mention} sua sugestão foi salva com suscesso, obrigado! :smiling_face_with_3_hearts:')
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 @has_permissions(administrator = True)
 async def prefixo(ctx, arg):
     with open('prefixes.json', 'r') as f:
@@ -55,44 +57,70 @@ async def prefixo(ctx, arg):
     await ctx.send(f'{ctx.message.author.mention} o prefixo do servidor foi mudado para "{arg}"  :smile:')
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 async def glm(ctx):
     await ctx.message.delete()
     await ctx.send('Não.')
 
 @commands.guild_only()
-@client.command()
-async def lena(ctx):
-    await ctx.message.delete()
-    await ctx.send('Sim.')
+@bot.command()
+async def lena(ctx, ruido, *args):
+    mensagem = ''
+    for c in args:
+        mensagem += c
+        mensagem += ' '
+
+    if ruido == '0':
+        vezes = randint(int(len(mensagem) / 5), int(len(mensagem) / 3))
+    if ruido == '1':
+        vezes = randint(int(len(mensagem) / 3), int(len(mensagem) / 2))
+    if ruido == '2':
+        vezes = randint(int(len(mensagem) / 2), int(len(mensagem) * 1))
+    if ruido == '3':
+        vezes = randint(int(len(mensagem) * 1), int(len(mensagem) * 1.5))
+    if ruido == '4':
+        vezes = randint(int(len(mensagem) * 1.5), int(len(mensagem) * 3))
+
+    mensagemm = []
+    for c in mensagem:
+        mensagemm.append(c)
+
+    for c in range(vezes):
+        mensagemm.insert(randint(0,len(mensagemm)-1), choice('abcdefghijklmnopqrstuvwxyz'))
+
+    mensagem = ''
+    for c in mensagemm:
+        mensagem += c
+
+    await ctx.send(mensagem)
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 async def luh(ctx):
     #amor da minha vida <3
     await ctx.message.delete()
     await ctx.send(':two_hearts:')
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 async def flor(ctx):
     await ctx.message.delete()
     await ctx.send(':cherry_blossom:')
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 async def falcao(ctx):
     await ctx.message.delete()
     await ctx.send(':thumbsup:')
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 async def gih(ctx):
     await ctx.message.delete()
     await ctx.send(':sunglasses:')
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 async def math(ctx, *args):
     num = ''
     for b in args:
@@ -110,23 +138,16 @@ async def math(ctx, *args):
     await ctx.send(f'O resultado é: {eval(num)}')
 
 @commands.guild_only()
-@client.command()
-async def roll(ctx, dice):
-    if dice[0] == 'd':
-        dice = '1' + dice
-    dice = dice.split('d')
-    dice1 = dice[0]
-    dice2 = dice[1]
-    assert int(dice1) >= 1
-    assert int(dice2) >= 1
-    many = int(dice1)
-    rolls = []
-    for c in range(many):
-        rolls.append(randint(1, int(dice2)))
-    await ctx.send(f'{rolls} -> {sum(rolls)}')
+@bot.command()
+async def roll(ctx, *roll):
+    dice = ''
+    for c in roll:
+        dice += c
+    result = d20.roll(dice)
+    await ctx.send(f'{ctx.message.author.mention}, {result}')
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 async def coinflip(ctx):
     x = randint(0, 1)
     if x == 0:
@@ -135,18 +156,18 @@ async def coinflip(ctx):
         await ctx.send('tail')
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 async def simounao(ctx):
     message = await ctx.send('✅sim 🚫não')
     await message.add_reaction('✅')
     await message.add_reaction('🚫')
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 async def bonk(ctx, *args):
     for c in list(args):
         try:
-            if not client.get_user(int(c[3:-1])) != None:
+            if not bot.get_user(int(c[3:-1])) != None:
                 args.remove(c)
         except:
             args.remove(c)
@@ -157,7 +178,7 @@ async def bonk(ctx, *args):
     await ctx.send(f'{text}',file=discord.File('bonk.gif'))
 
 @commands.guild_only()
-@client.command(aliases=['help'])
+@bot.command(aliases=['help'])
 async def comandos(ctx):
     embed = discord.Embed(
         title='Comandos para sala de jogos',
@@ -198,4 +219,4 @@ async def comandos(ctx):
     await ctx.send(embed=embed1)
 
 
-client.run(secret_token)
+bot.run(secret_token)

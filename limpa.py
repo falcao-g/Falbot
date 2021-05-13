@@ -4,7 +4,7 @@ import json
 from discord.ext.commands import has_permissions
 from secret import secret_token
 
-def get_prefix(client, message):
+def get_prefix(bot, message):
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
     
@@ -22,10 +22,10 @@ def get_prefix(client, message):
         return prefixes[str(message.guild.id)]
 
 intents = discord.Intents(messages=True, guilds=True, members=True, reactions=True, guild_messages=True)
-client = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=intents, help_command=None)
+bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=intents, help_command=None)
 
 @commands.guild_only()
-@client.command()
+@bot.command()
 @has_permissions(administrator = True)
 async def limpa(ctx, arg):
     await ctx.message.delete()
@@ -34,4 +34,4 @@ async def limpa(ctx, arg):
         messages = await canal.history(limit=1).flatten()
         await messages[0].delete()
 
-client.run(secret_token)
+bot.run(secret_token)
