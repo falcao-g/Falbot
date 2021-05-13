@@ -97,7 +97,6 @@ async def lena(ctx, ruido, *args):
 @commands.guild_only()
 @bot.command()
 async def luh(ctx):
-    #amor da minha vida <3
     await ctx.message.delete()
     await ctx.send(':two_hearts:')
 
