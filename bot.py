@@ -143,7 +143,15 @@ async def muda_status():
 @commands.guild_only()
 @bot.command(aliases=['sobre'])
 async def eu(ctx, arg=''):
-    if arg == '':
+    if "sobre" in ctx.message.content and arg == '':
+        embed = discord.Embed(
+            color=discord.Color.green()
+        )
+        embed.add_field(name=f'Info', value=f'Mostra os Falcoins, Vitorias e Divida, da pessoa marcada', inline=False)
+        embed.add_field(name=f'Uso', value=f'?sobre @usuario')
+        embed.set_footer(text='by Falcão ❤️')
+        await ctx.send(embed=embed)
+    elif arg == '':
         arg = ctx.message.author.id
     else:
         arg = arg[3:-1]
@@ -164,7 +172,17 @@ async def eu(ctx, arg=''):
 
 @commands.guild_only()
 @bot.command(aliases=['ap'])
-async def apostar(ctx, arg, *args):
+async def apostar(ctx, arg=''):
+    if arg == '':
+        embed = discord.Embed(
+            color=discord.Color.green()
+        )
+        embed.add_field(name=f'Info', value=f'Aposta x falcoins', inline=False)
+        embed.add_field(name=f'Ganhos', value=f'Até 100%', inline=False)
+        embed.add_field(name=f'Uso', value=f'?apostar <falcoins>/?ap <falcoins>')
+        embed.set_footer(text='by Falcão ❤️')
+        await ctx.send(embed=embed)
+
     global eaposta
     cria_banco(str(ctx.message.author.id))
     arg = arg_especial(arg, str(ctx.message.author.id))
@@ -252,24 +270,18 @@ async def lootbox(ctx):
                 print(error)
 
 @commands.guild_only()
-@bot.command(aliases=['3'])
-@commands.cooldown(1, 86400, commands.BucketType.user)
-async def tres(ctx):
-    cria_banco(str(ctx.message.author.id))
-    muda_saldo(str(ctx.message.author.id), 3)
-    await ctx.send(f' Parabéns {ctx.message.author.mention}! Você ganhou **3** falcoins :heart_eyes:')
-    @bot.event
-    async def on_command_error(ctx,error):
-        if "You are on cooldown." in str(error):
-            await ctx.send(f'{ctx.message.author.mention} faltam **{tempo_formatado(error)}** para você resgatar a lootbox grátis!')
-        elif "Command not found" in str(error):
-            pass
-        else:
-            print(error)
-
-@commands.guild_only()
 @bot.command()
-async def doar(ctx, arg, arg2):
+async def doar(ctx, arg='', arg2=''):
+    if arg == '' and arg2 == '':
+        embed = discord.Embed(
+            color=discord.Color.green()
+        )
+        embed.add_field(name=f'Info', value=f'Doa x Falcoins para o usuário marcado', inline=False)
+        embed.add_field(name=f'Uso', value=f'?doar @usuario <falcoins>')
+        embed.set_footer(text='by Falcão ❤️')
+        await ctx.send(embed=embed)
+
+
     cria_banco(str(ctx.message.author.id))
     cria_banco(arg[3:-1])
     arg2 = arg_especial(arg2, str(ctx.message.author.id))
@@ -296,7 +308,18 @@ async def doar(ctx, arg, arg2):
 
 @commands.guild_only()
 @bot.command()
-async def duelo(ctx, arg, arg2):
+async def duelo(ctx, arg='', arg2=''):
+    if arg == '' and arg2 == '':
+        embed = discord.Embed(
+            color=discord.Color.green()
+        )
+        embed.add_field(name=f'Info', value=f'Desafie seu amigo para um cara ou coroa', inline=False)
+        embed.add_field(name=f'Ganhos', value=f'2x', inline=False)
+        embed.add_field(name=f'Uso', value=f'?duelo @usuario <falcoins>')
+        embed.set_footer(text='by Falcão ❤️')
+        await ctx.send(embed=embed)
+
+
     arg = arg[3:-1]
     if str(ctx.message.author.id) != arg:
         gifs = ['4.gif', '2.gif', '3.gif', '4.gif']
@@ -390,7 +413,16 @@ async def rank_global(ctx):
 
 @commands.guild_only()
 @bot.command()
-async def investir(ctx, arg, arg2):
+async def investir(ctx, arg='', arg2=''):
+    if arg == '' and arg2 == '':
+        embed = discord.Embed(
+            color=discord.Color.green()
+        )
+        embed.add_field(name=f'Info', value=f'Tranfere a quantidade inserida para a pessoa, e ela pagará uma dívida com parte dos ganhos das apostas', inline=False)
+        embed.add_field(name=f'Uso', value=f'?investir @usuario <falcoins>')
+        embed.set_footer(text='by Falcão ❤️')
+        await ctx.send(embed=embed)
+
     arg = arg[3:-1]
     if str(ctx.message.author.id) != arg:
         user = await ctx.message.guild.fetch_member(int(arg))
@@ -451,7 +483,16 @@ async def loja(ctx):
 
 @commands.guild_only()
 @bot.command()
-async def comprar(ctx, arg):
+async def comprar(ctx, arg=''):
+    if arg == '':
+        embed = discord.Embed(
+            color=discord.Color.green()
+        )
+        embed.add_field(name=f'Info', value=f'Compra o item colocado se tiver todos os requisitos', inline=False)
+        embed.add_field(name=f'Uso', value=f'?comprar <numero do item>')
+        embed.set_footer(text='by Falcão ❤️')
+        await ctx.send(embed=embed)
+
     global epromo
     if arg == "1":
         role = discord.utils.get(ctx.guild.roles, name="Pardal")
