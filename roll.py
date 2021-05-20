@@ -26,16 +26,20 @@ bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=int
 
 @bot.event
 async def on_message(message):
-    message.content = '?roll' + ' ' + message.content
-    await bot.process_commands(message)
+    if 'd' in message.content:
+        message.content = '?roll' + ' ' + message.content
+        await bot.process_commands(message)
 
 @commands.guild_only()
 @bot.command()
 async def roll(ctx, *roll):
-    dice = ''
-    for c in roll:
-        dice += c
-    result = d20.roll(dice)
-    await ctx.send(f'{ctx.message.author.mention}, {result}')
+    try:
+        dice = ''
+        for c in roll:
+            dice += c
+        result = d20.roll(dice)
+        await ctx.send(f'{ctx.message.author.mention}, \n{result}')
+    except d20.RollSyntaxError:
+        pass
 
 bot.run(secret_token)
