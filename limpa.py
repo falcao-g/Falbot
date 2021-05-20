@@ -27,7 +27,16 @@ bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=int
 @commands.guild_only()
 @bot.command()
 @has_permissions(administrator = True)
-async def limpa(ctx, arg):
+async def limpa(ctx, arg=''):
+    if arg == '':
+        embed = discord.Embed(
+            color=discord.Color.red()
+        )
+        embed.add_field(name=f'Info', value=f'Limpa x mensagens do canal atual', inline=False)
+        embed.add_field(name=f'Uso', value=f'?limpa <numero de mensagens>')
+        embed.set_footer(text='by Falcão ❤️')
+        await ctx.send(embed=embed)
+
     await ctx.message.delete()
     canal = ctx.channel
     for c in range(int(arg)):
