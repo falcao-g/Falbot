@@ -4,14 +4,7 @@ import asyncio
 import json
 import random
 from funcoes import *
-from discord.utils import get
 import asyncio
-from secret import secret_token
-
-epromo = 1
-elootbox = 1
-eaposta = 1
-status = 1
 
 def get_prefix(client, message):
     with open('prefixes.json', 'r') as f:
@@ -30,21 +23,72 @@ def get_prefix(client, message):
 
         return prefixes[str(message.guild.id)]
 
+falbit_price = 10000
+interest = 0 
+duration = 0
+
 intents = discord.Intents(messages=True, guilds=True, members=True, reactions=True, guild_messages=True)
 bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=intents, help_command=None)
 
 @bot.event
 async def on_ready():
-    try:
-        cancela_evento.start()
-        evento.start()
-        muda_status.start()
-    except:
-        pass
+    falbit.start()
     activity = discord.Activity(name='?comandos | arte by: @kinsallum', type=discord.ActivityType.playing)
     await bot.change_presence(activity=activity)
     print('Bot online')
     
+@tasks.loop(seconds=5)
+async def falbit():
+    global falbit_price
+    global duration
+    global interest
+    if duration == 0:
+        interest = random.randint(1, 200)
+    else:
+        duration -= 1
+    if interest <= 25:
+        print('stable')
+        falbit_price = int(falbit_price * random.uniform(-0.025, 0.025))
+        print(falbit_price)
+        if duration == 0:
+            duration = random.randint(10, 30)
+            print(duration)
+    elif interest > 25 and interest <= 75:
+        print('slow rise')
+        falbit_price = int(falbit_price * random.uniform(-0.005, 0.045))
+        print(falbit_price)
+        if duration == 0:
+            duration = random.randint(10, 30)
+            print(duration)
+    elif interest > 75 and interest <= 125:
+        print('slow fall')
+        falbit_price = int(falbit_price * random.uniform(-0.045, 0.005))
+        print(falbit_price)
+        if duration == 0:
+            duration = random.randint(10, 30)
+            print(duration)
+    elif interest > 125 and interest <= 150:
+        print('fast rise')
+        falbit_price = int(falbit_price * random.randint(0, 1))
+        print(falbit_price)
+        if duration == 0:
+            duration = random.randint(10, 30)
+            print(duration)
+    elif interest > 150 and interest <= 175:
+        print('fast fall')
+        falbit_price = int(falbit_price * random.randint(-1, 0))
+        print(falbit_price)
+        if duration == 0:
+            duration = random.randint(10, 30)
+            print(duration)
+    elif interest > 175:
+        print('chaotic')
+        falbit_price = int(falbit_price * random.randint(-5, 5))
+        print(falbit_price)
+        if duration == 0:
+            duration = random.randint(10, 30)
+            print(duration)
+
 @bot.event
 async def on_guild_join(guild):
     if discord.utils.get(guild.roles, name="Falcão") == None:
@@ -53,8 +97,6 @@ async def on_guild_join(guild):
         await guild.create_role(name="Tucano", colour=discord.Colour(0xFFA500))
     if discord.utils.get(guild.roles, name="Pardal") == None:
         await guild.create_role(name="Pardal", colour=discord.Colour(0x842121))
-    if discord.utils.get(guild.roles, name="Pomba") == None:
-        await guild.create_role(name="Pomba", colour=discord.Colour(0xD2D4DC))
 
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
@@ -71,74 +113,24 @@ async def on_guild_remove(guild):
 
     prefixes.pop(str(guild.id))
 
-@tasks.loop(minutes=30)
-async def cancela_evento():
-    global elootbox
-    global eaposta
-    global epromo
-    elootbox = 1
-    eaposta = 1
-    epromo = 1
-    activity = discord.Activity(name='?comandos | arte by: @kinsallum', type=discord.ActivityType.playing)
-    await bot.change_presence(activity=activity)
+@bot.event
+async def on_message(message):
+    role1 = discord.utils.get(message.guild.roles, name="Pardal")
+    role2 = discord.utils.get(message.guild.roles, name="Tucano")
+    role3 = discord.utils.get(message.guild.roles, name="Falcão")
+    if checa_cargo(str(message.author.id)) == 1:
+        await message.author.add_roles(role1)
+    elif checa_cargo(str(message.author.id)) == 2:
+        await message.author.add_roles(role2)
+    elif checa_cargo(str(message.author.id)) == 3:
+        await message.author.add_roles(role3)
+    elif checa_cargo(str(message.author.id)) == 0 and (role1 in message.author.roles or role2 in message.author.roles or role3 in message.author.roles):
+        try:
+            await message.author.remove_roles(role1, role2, role3)
+        except:
+            pass
 
-@tasks.loop(hours=2)
-async def evento():
-    global elootbox
-    global eaposta
-    global epromo
-    evento = random.randint(1,100)
-    if evento <= 20:
-        escolha = random.randint(1,3)
-        if escolha == 1:
-            activity = discord.Activity(name='?comandos | Evento ativado! Apostas rendem 1.2x', type=discord.ActivityType.playing)
-            await bot.change_presence(activity=activity)
-            eaposta = 1.2
-        elif escolha == 2:
-            activity = discord.Activity(name='?comandos | Evento ativado! Lootboxs rendem 2x', type=discord.ActivityType.playing)
-            await bot.change_presence(activity=activity)
-            elootbox = 2
-        else:
-            activity = discord.Activity(name='?comandos | Evento ativado! Cargos custam metade', type=discord.ActivityType.playing)
-            await bot.change_presence(activity=activity)
-            epromo = 2
-
-@tasks.loop(seconds=30)
-async def muda_status():
-    global elootbox
-    global eaposta
-    global epromo
-    global status
-    if eaposta == 1.2:
-        if status == 1:
-            activity = discord.Activity(name='?comandos | Evento ativado! Apostas rendem 1.2x', type=discord.ActivityType.playing)
-            await bot.change_presence(activity=activity)
-            status = 0
-        else:
-            activity = discord.Activity(name='?comandos | arte by: @kinsallum', type=discord.ActivityType.playing)
-            await bot.change_presence(activity=activity)
-            status = 1
-    elif elootbox == 2:
-        if status == 1:
-            activity = discord.Activity(name='?comandos | Evento ativado! Lootboxs rendem 2x', type=discord.ActivityType.playing)
-            await bot.change_presence(activity=activity)
-            status = 0
-        else:
-            activity = discord.Activity(name='?comandos | arte by: @kinsallum', type=discord.ActivityType.playing)
-            await bot.change_presence(activity=activity)
-            status = 1
-    elif epromo == 2:
-        if status == 1:
-            activity = discord.Activity(name='?comandos | Evento ativado! Cargos custam metade', type=discord.ActivityType.playing)
-            await bot.change_presence(activity=activity)
-            status = 0
-        else:
-            activity = discord.Activity(name='?comandos | arte by: @kinsallum', type=discord.ActivityType.playing)
-            await bot.change_presence(activity=activity)
-            status = 1
-    else:
-        activity = discord.Activity(name='?comandos | arte by: @kinsallum', type=discord.ActivityType.playing)
-        await bot.change_presence(activity=activity)
+    await bot.process_commands(message)
 
 @commands.guild_only()
 @bot.command(aliases=['sobre'])
@@ -174,37 +166,17 @@ async def eu(ctx, arg=''):
 @bot.command(aliases=['ap'])
 async def apostar(ctx, arg=''):
     if arg == '':
-        embed = discord.Embed(
-            color=discord.Color.green()
-        )
-        embed.add_field(name=f'Info', value=f'Aposta x falcoins', inline=False)
-        embed.add_field(name=f'Ganhos', value=f'Até 100%', inline=False)
-        embed.add_field(name=f'Uso', value=f'?apostar <falcoins>/?ap <falcoins>')
-        embed.set_footer(text='by Falcão ❤️')
-        await ctx.send(embed=embed)
+        await ctx.send(embed=explain('apostar'))
 
-    global eaposta
     cria_banco(str(ctx.message.author.id))
     arg = arg_especial(arg, str(ctx.message.author.id))
     if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= int(arg) and int(arg) > 0:
-        role = discord.utils.get(ctx.guild.roles, name="Pomba")
-        role1 = discord.utils.get(ctx.guild.roles, name="Pardal")
-        role2 = discord.utils.get(ctx.guild.roles, name="Tucano")
-        role3 = discord.utils.get(ctx.guild.roles, name="Falcão")
-        if role not in ctx.message.author.roles and role1 not in ctx.message.author.roles and role2 not in ctx.message.author.roles and role3 not in ctx.message.author.roles and checa_cargo(str(ctx.message.author.id)) == 0:
-            await ctx.message.author.add_roles(role)
-        elif checa_cargo(str(ctx.message.author.id)) == 1:
-            await ctx.message.author.add_roles(role1)
-        elif checa_cargo(str(ctx.message.author.id)) == 2:
-            await ctx.message.author.add_roles(role2)
-        elif checa_cargo(str(ctx.message.author.id)) == 3:
-            await ctx.message.author.add_roles(role3)
         sorte = random.randint(0,100)
         if sorte >= 95:
             muda_saldo(str(ctx.message.author.id), -int(arg))
             await ctx.send (f'{ctx.message.author.mention} você perdeu tudo que apostou :pensive: :fist: *Saldo atual*: {format(checa_arquivo(str(ctx.message.author.id), "Falcoins"))}') 
         elif sorte <= 55:
-            total = int(int((random.randint(10,100) * int(arg)) / 100) * eaposta)
+            total = int(int((random.randint(10,100) * int(arg)) / 100))
             if checa_arquivo(str(ctx.message.author.id), 'Divida') > 0:
                 comissao = int(total/10)
                 total -= comissao
@@ -241,7 +213,6 @@ async def apostar(ctx, arg=''):
         await ctx.send(f'{ctx.message.author.mention} {arg} não é um valor válido... :rage:')
     else:
         await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para esta aposta! :rage:')
-    await asyncio.sleep(0.5)
 
 @commands.guild_only()
 @bot.command(aliases=['lb'])
@@ -257,7 +228,7 @@ async def lootbox(ctx):
         if minimo < 200 or maximo < 600:
             minimo = 200
             maximo = 600
-        lb = random.randint(int(minimo), int(maximo)) * elootbox
+        lb = random.randint(int(minimo), int(maximo))
         muda_saldo(str(ctx.message.author.id), lb)
         await ctx.send(f' Parabéns {ctx.message.author.mention}! Você ganhou **{lb}** falcoins :heart_eyes:')
         @bot.event
@@ -273,14 +244,7 @@ async def lootbox(ctx):
 @bot.command()
 async def doar(ctx, arg='', arg2=''):
     if arg == '' and arg2 == '':
-        embed = discord.Embed(
-            color=discord.Color.green()
-        )
-        embed.add_field(name=f'Info', value=f'Doa x Falcoins para o usuário marcado', inline=False)
-        embed.add_field(name=f'Uso', value=f'?doar @usuario <falcoins>')
-        embed.set_footer(text='by Falcão ❤️')
-        await ctx.send(embed=embed)
-
+        await ctx.send(embed=explain('doar'))
 
     cria_banco(str(ctx.message.author.id))
     cria_banco(arg[3:-1])
@@ -310,15 +274,7 @@ async def doar(ctx, arg='', arg2=''):
 @bot.command()
 async def duelo(ctx, arg='', arg2=''):
     if arg == '' and arg2 == '':
-        embed = discord.Embed(
-            color=discord.Color.green()
-        )
-        embed.add_field(name=f'Info', value=f'Desafie seu amigo para um cara ou coroa', inline=False)
-        embed.add_field(name=f'Ganhos', value=f'2x', inline=False)
-        embed.add_field(name=f'Uso', value=f'?duelo @usuario <falcoins>')
-        embed.set_footer(text='by Falcão ❤️')
-        await ctx.send(embed=embed)
-
+        await ctx.send(embed=explain('duelo'))
 
     arg = arg[3:-1]
     if str(ctx.message.author.id) != arg:
@@ -415,13 +371,7 @@ async def rank_global(ctx):
 @bot.command()
 async def investir(ctx, arg='', arg2=''):
     if arg == '' and arg2 == '':
-        embed = discord.Embed(
-            color=discord.Color.green()
-        )
-        embed.add_field(name=f'Info', value=f'Tranfere a quantidade inserida para a pessoa, e ela pagará uma dívida com parte dos ganhos das apostas', inline=False)
-        embed.add_field(name=f'Uso', value=f'?investir @usuario <falcoins>')
-        embed.set_footer(text='by Falcão ❤️')
-        await ctx.send(embed=embed)
+        await ctx.send(embed=explain('investir'))
 
     arg = arg[3:-1]
     if str(ctx.message.author.id) != arg:
@@ -475,7 +425,7 @@ async def loja(ctx):
     title='**Loja**',
     color=discord.Color.green()
     )
-    embed.add_field(name=f'Item número 1: Pardal', value='Pelo custo de 500.000 falcoins você adquire um cargo de pardal no servidor, aumentando em 25% os ganhos de investimentos! (necessário ter feito alguma aposta)', inline=False)
+    embed.add_field(name=f'Item número 1: Pardal', value='Pelo custo de 500.000 falcoins você adquire um cargo de pardal no servidor, aumentando em 25% os ganhos de investimentos!', inline=False)
     embed.add_field(name=f'Item número 2: Tucano',value=f'Pelo custo de 100.000.000 falcoins você adquire um cargo de tucano no servidor, aumentando em 50% os ganhos de investimentos! (necessário ser um pardal)', inline=False)
     embed.add_field(name=f'Item número 3: Falcão', value='Pelo custo de 1.000.000.000 falcoins você adquire um cargo da melhor ave do mundo no servidor, aumentando em 75% os ganhos de investimentos! (necessário ser um tucano)', inline=False)
     embed.set_footer(text='by Falcão ❤️')
@@ -485,15 +435,8 @@ async def loja(ctx):
 @bot.command()
 async def comprar(ctx, arg=''):
     if arg == '':
-        embed = discord.Embed(
-            color=discord.Color.green()
-        )
-        embed.add_field(name=f'Info', value=f'Compra o item colocado se tiver todos os requisitos', inline=False)
-        embed.add_field(name=f'Uso', value=f'?comprar <numero do item>')
-        embed.set_footer(text='by Falcão ❤️')
-        await ctx.send(embed=embed)
+        await ctx.send(embed=explain('comprar'))
 
-    global epromo
     if arg == "1":
         role = discord.utils.get(ctx.guild.roles, name="Pardal")
         role2 = discord.utils.get(ctx.guild.roles, name="Tucano")
@@ -501,17 +444,12 @@ async def comprar(ctx, arg=''):
         if role in ctx.message.author.roles or role2 in ctx.message.author.roles or role3 in ctx.message.author.roles:
             await ctx.send(f'{ctx.message.author.mention} você já possui esse cargo! :rage:')
         else:
-            if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= 500000 / epromo:
-                role1 = discord.utils.get(ctx.guild.roles, name="Pomba")
-                if role1 in ctx.message.author.roles:
-                    custo = int(-500000 / epromo)
-                    muda_saldo(str(ctx.message.author.id), custo)
-                    await ctx.message.author.remove_roles(role1)
-                    await ctx.message.author.add_roles(role)
-                    muda_cargo(str(ctx.message.author.id), 'Pardal')
-                    await ctx.send(f'Parabéns {ctx.message.author.mention}! Você comprou o cargo de Pardal :star_struck:')
-                else:
-                    await ctx.send(f'{ctx.message.author.mention} você precisa fazer alguma aposta antes de comprar esse cargo! :rage:')
+            if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= 500000:
+                custo = -500000
+                muda_saldo(str(ctx.message.author.id), custo)
+                await ctx.message.author.add_roles(role)
+                muda_cargo(str(ctx.message.author.id), 'Pardal')
+                await ctx.send(f'Parabéns {ctx.message.author.mention}! Você comprou o cargo de Pardal :star_struck:')
             else:
                 await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para comprar esse cargo! :rage:')
     elif arg == "2":
@@ -520,10 +458,10 @@ async def comprar(ctx, arg=''):
         if role in ctx.message.author.roles or role2 in ctx.message.author.roles:
             await ctx.send(f'{ctx.message.author.mention} você já possui esse cargo! :rage:')
         else:
-            if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= 100000000 / epromo:
+            if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= 100000000:
                 role1 = discord.utils.get(ctx.guild.roles, name="Pardal")
                 if role1 in ctx.message.author.roles:
-                    custo = int(-100000000 / epromo)
+                    custo = -100000000
                     muda_saldo(str(ctx.message.author.id), custo)
                     await ctx.message.author.remove_roles(role1)
                     await ctx.message.author.add_roles(role)
@@ -538,10 +476,10 @@ async def comprar(ctx, arg=''):
         if role in ctx.message.author.roles:
             await ctx.send(f'{ctx.message.author.mention} você já possui esse cargo! :rage:')
         else:
-            if checa_arquivo(str(ctx.message.author.id), 'Falcoins')>= 1000000000 / epromo:
+            if checa_arquivo(str(ctx.message.author.id), 'Falcoins')>= 1000000000:
                 role1 = discord.utils.get(ctx.guild.roles, name="Tucano")
                 if role1 in ctx.message.author.roles:
-                    custo = int(-1000000000 / epromo)
+                    custo = -1000000000
                     muda_saldo(str(ctx.message.author.id), custo)
                     await ctx.message.author.remove_roles(role1)
                     await ctx.message.author.add_roles(role)
