@@ -1,7 +1,7 @@
 import json
 import discord
 
-secret_token = 'NzQyMzMxODEzNTM5ODcyNzk4.XzEkYA.zxlzvzmaWBW8KMTs8Jrb6Zk-DfY'
+secret_token = 'SECRET_TOKEN'
 
 def cria_banco(pessoa):
     assert pessoa.isnumeric()
