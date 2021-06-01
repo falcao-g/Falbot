@@ -1,7 +1,7 @@
 import json
 import discord
 
-secret_token = 'SECRET_TOKEN'
+secret_token = 'NzQyMzMxODEzNTM5ODcyNzk4.XzEkYA.zxlzvzmaWBW8KMTs8Jrb6Zk-DfY'
 
 def cria_banco(pessoa):
     assert pessoa.isnumeric()
@@ -230,7 +230,7 @@ def explain(command, guild_id=''):
         embed = discord.Embed(
             color=discord.Color.green()
         )
-        embed.add_field(name=f'Info', value=f'Mostra os cargos disponíveis para compra e seus requerimentos', inline=False)
+        embed.add_field(name=f'Info', value=f'Mostra os cargos disponíveis para compra', inline=False)
         embed.add_field(name=f'Uso', value=f'?loja')
         embed.set_footer(text='by Falcão ❤️')
         return embed
@@ -239,17 +239,30 @@ def explain(command, guild_id=''):
         embed = discord.Embed(
             color=discord.Color.green()
         )
-        embed.add_field(name=f'Info', value=f'Compra o item colocado se tiver todos os requisitos', inline=False)
+        embed.add_field(name=f'Info', value=f'Compra o item colocado', inline=False)
         embed.add_field(name=f'Uso', value=f'?comprar <numero do item>')
         embed.set_footer(text='by Falcão ❤️')
         return embed
 
-    elif command == 'investir':
+    elif command == 'roleta':
         embed = discord.Embed(
             color=discord.Color.green()
         )
-        embed.add_field(name=f'Info', value=f'Tranfere a quantidade inserida para a pessoa, e ela pagará uma dívida com parte dos ganhos das apostas', inline=False)
-        embed.add_field(name=f'Uso', value=f'?investir @usuario <falcoins>')
+        embed.add_field(name=f'Tipos de aposta', value=f'**<preto/vermelho/verde>, <0-36>, <altos/baixos>, <par/impar>**')
+        embed.add_field(name=f'Info', value=f'**black/red/green** se o bot rolar um número com a sua cor, você ganha\n**0-36** se o bot rolar seu número, você ganha\n**altos/baixos** baixos 1-18, high 19-36\n**impar/par impar** = 1, 3, 5 ..., 35, par = 2, 4, 6, ..., 36', inline=False)
+        embed.add_field(name=f'Ganhos', value=f'**preto/vermelho/verde** - 2x\n**0-36** - 35x\n**altos/baixos** - 2x\n**impar/par** - 2x', inline=False)
+        embed.add_field(name=f'Números', value=f'Verde: **0**\nPreto: **2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35**\nVermelho: ** 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36**',inline=False)
+        embed.add_field(name=f'Uso', value=f'?roleta <tipo de aposta> <falcoins>')
+        embed.set_footer(text='by Falcão ❤️')
+        return embed
+
+    elif command == 'niquel':
+        embed = discord.Embed(
+            color=discord.Color.green()
+        )
+        embed.add_field(name=f'Info', value=f'Caça-níquel', inline=False)
+        embed.add_field(name=f'Ganhos', value=f':money_mouth: :money_mouth: :grey_question: - **0.5x**\n:coin: :coin: :grey_question: - **2x**\n:dollar: :dollar: :grey_question: - **2x**\n:money_mouth: :money_mouth: :money_mouth: - **2.5x**\n:coin: :coin: :coin: - **3x**\n:moneybag: :moneybag: :grey_question: - **3.5x**\n:dollar: :dollar: :dollar: - **4x**\n:gem: :gem: :grey_question: - **7x**\n:moneybag: :moneybag: :grey_question: - **7x**\n:gem: :gem: :gem: - **15x**', inline=False)
+        embed.add_field(name=f'Uso', value=f'?niquel <falcoins>')
         embed.set_footer(text='by Falcão ❤️')
         return embed
 
@@ -332,7 +345,7 @@ def explain(command, guild_id=''):
         embed = discord.Embed(
             color=discord.Color.blue()
         )
-        embed.add_field(name=f':game_die: Comandos para a sala de jogos', value='`eu`, `sobre`, `lootbox`, `doar`, `apostar`, `duelo`, `rank`, `rank_global`, `loja`, `comprar`, `investir`', inline=False)
+        embed.add_field(name=f':game_die: Comandos para a sala de jogos', value='`eu`, `sobre`, `lootbox`, `doar`, `apostar`, `duelo`, `rank`, `rank_global`, `loja`, `comprar`, `roleta`, `niquel`', inline=False)
         embed.add_field(name=f':gear: Outros comandos', value=f'`prefixo`, `comandos/help`, `limpa`, `tetris`, `math`, `simounao`, `roll`, `flipcoin`, `bonk`', inline=False)
         embed.add_field(name=f'⠀', value=f'O seu prefixo é: **{prefixes[str(guild_id)]}**', inline=False)
         embed.add_field(name=f'⠀', value=f'Use **?help <comando>** para obter maiores detalhes de um comando específico', inline=False)
