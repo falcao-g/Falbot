@@ -28,11 +28,22 @@ bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=int
 
 @bot.event
 async def on_ready():
-    #falbit.start()
+    poupanca.start()
     activity = discord.Activity(name='?comandos | arte by: @kinsallum', type=discord.ActivityType.playing)
     await bot.change_presence(activity=activity)
     print('Bot online')
-  
+
+@tasks.loop(hours=24)
+async def poupanca():
+    with open('falbot.json', 'r') as f:
+        people = json.load(f)
+    
+    for value in people.values():
+        value['Banco'] += int(value['Banco'] * 0.01)
+
+    with open('falbot.json', 'w') as f:
+            json.dump(people, f, indent=4)
+ 
 @bot.event
 async def on_guild_join(guild):
     if discord.utils.get(guild.roles, name="Falcão") == None:
@@ -290,12 +301,61 @@ async def niquel(ctx, bet=''):
                 await ctx.send(f'{ctx.message.author.mention} {bet} não é um valor válido... :rage:')
         else:
             await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para esta aposta! :rage:')
-    
+
+@commands.guild_only()
+@bot.command()
+async def banco(ctx, arg='', arg2=''):
+    if arg2 == '':
+        await ctx.send(embed=explain('banco'))
+    else:
+        cria_banco(str(ctx.message.author.id))
+        if arg == 'depositar':
+            try:    
+                arg2 = int(arg_especial(arg2, str(ctx.message.author.id)))
+            except:
+                await ctx.send(f'{ctx.message.author.mention} {arg2} não é um valor válido... :rage:')
+            if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= arg2 and arg2 > 0:
+                muda_saldo(str(ctx.message.author.id), -arg2)
+                muda_banco(str(ctx.message.author.id), arg2)
+                await ctx.send(f'Você depositou {format(arg2)} falcoins :smiley:')
+                pessoa = await ctx.message.guild.fetch_member(int(ctx.message.author.id))
+                embed = discord.Embed(color=discord.Color(000000))
+                embed.set_author(name=pessoa.name, icon_url=pessoa.avatar_url)
+                embed.add_field(name=f'Saldo atual', value=f'{format(checa_arquivo(str(ctx.message.author.id), "Falcoins"))} falcoins', inline=False)
+                embed.add_field(name=f'Banco', value=f'Você tem {format(checa_arquivo(str(ctx.message.author.id), "Banco"))} falcoins no banco')
+                embed.set_footer(text='by Falcão ❤️')
+                await ctx.send(embed=embed)
+            elif int(arg2) <= 0:
+                    await ctx.send(f'{ctx.message.author.mention} {arg2} não é um valor válido... :rage:')
+            else:
+                await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficientes! :rage:')
+        elif arg == 'retirar':
+            try:    
+                arg2 = int(arg_especial_banco(arg2, str(ctx.message.author.id)))
+            except:
+                await ctx.send(f'{ctx.message.author.mention} {arg2} não é um valor válido... :rage:')
+            if checa_arquivo(str(ctx.message.author.id), 'Banco') >= arg2 and arg2 > 0:
+                muda_saldo(str(ctx.message.author.id), arg2)
+                muda_banco(str(ctx.message.author.id), -arg2)
+                await ctx.send(f'Você retirou {format(arg2)} falcoins :smiley:')
+                pessoa = await ctx.message.guild.fetch_member(int(ctx.message.author.id))
+                embed = discord.Embed(color=discord.Color(000000))
+                embed.set_author(name=pessoa.name, icon_url=pessoa.avatar_url)
+                embed.add_field(name=f'Saldo atual', value=f'{format(checa_arquivo(str(ctx.message.author.id), "Falcoins"))} falcoins', inline=False)
+                embed.add_field(name=f'Banco', value=f'Você tem {format(checa_arquivo(str(ctx.message.author.id), "Banco"))} falcoins no banco')
+                embed.set_footer(text='by Falcão ❤️')
+                await ctx.send(embed=embed)
+            elif int(arg2) <= 0:
+                    await ctx.send(f'{ctx.message.author.mention} {arg2} não é um valor válido... :rage:')
+            else:
+                await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficientes no banco! :rage:')
+        else:
+            await ctx.send(f'{ctx.message.author.mention} {arg} não é um valor válido... :rage:')
+
 @commands.guild_only()
 @bot.command(aliases=['lb'])
-@commands.cooldown(1, 1800, commands.BucketType.user)
+@commands.cooldown(1, 86400, commands.BucketType.user)
 async def lootbox(ctx):
-        global elootbox
         cria_banco(str(ctx.message.author.id))
         minimo = int(checa_arquivo(str(ctx.message.author.id), 'Falcoins')) / 100
         maximo = int(checa_arquivo(str(ctx.message.author.id), 'Falcoins')) / 20
