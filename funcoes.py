@@ -10,7 +10,7 @@ def cria_banco(pessoa):
     try:
         banco[pessoa]
     except KeyError:
-        banco[pessoa] = {'Falcoins': 0, 'Vitorias': 0, 'Divida': 0, 'Agiota': '', 'Cargo': ''}
+        banco[pessoa] = {'Falcoins': 0, 'Vitorias': 0, 'Cargo': '', 'Banco': 0}
     finally:
         with open('falbot.json', 'w') as f:
             json.dump(banco, f, indent=4)
@@ -22,26 +22,6 @@ def muda_saldo(pessoa, dinheiro):
     banco[pessoa]['Falcoins'] += dinheiro
     if banco[pessoa]['Falcoins'] < 0:
         banco[pessoa]['Falcoins'] = 0
-
-    with open('falbot.json', 'w') as f:
-        json.dump(banco, f, indent=4)
-
-def muda_divida(pessoa, dinheiro):
-    with open('falbot.json','r') as f:
-        banco = json.load(f)
-
-    banco[pessoa]['Divida'] += dinheiro
-    if banco[pessoa]['Divida'] <= 0:
-        zera_divida(pessoa)
-
-    with open('falbot.json', 'w') as f:
-        json.dump(banco, f, indent=4)
-
-def muda_agiota(pessoa, agiota):
-    with open('falbot.json','r') as f:
-        banco = json.load(f)
-
-    banco[pessoa]['Agiota'] = agiota
 
     with open('falbot.json', 'w') as f:
         json.dump(banco, f, indent=4)
@@ -60,6 +40,17 @@ def muda_cargo(pessoa, cargo):
         banco = json.load(f)
 
     banco[pessoa]['Cargo'] = cargo
+
+    with open('falbot.json', 'w') as f:
+        json.dump(banco, f, indent=4)
+
+def muda_banco(pessoa, dinheiro):
+    with open('falbot.json','r') as f:
+        banco = json.load(f)
+
+    banco[pessoa]['Banco'] += dinheiro
+    if banco[pessoa]['Banco'] < 0:
+        banco[pessoa]['Banco'] = 0
 
     with open('falbot.json', 'w') as f:
         json.dump(banco, f, indent=4)
@@ -106,6 +97,22 @@ def arg_especial(arg,pessoa):
                 arg = int(int(arg[:-1]) * int(banco[str(pessoa)]['Falcoins']) / 100)
     return arg
 
+def arg_especial_banco(arg,pessoa):
+    with open('falbot.json', 'r') as f:
+        banco = json.load(f)
+
+    if arg == 'tudo':
+        arg = banco[pessoa]['Banco']
+    elif arg == 'metade':
+        arg = int(banco[pessoa]['Banco'] / 2)
+    elif '.' in arg:
+        arg = arg.replace(".", "")
+    else:
+        for c in arg:
+            if c == '%':
+                arg = int(int(arg[:-1]) * int(banco[str(pessoa)]['Banco']) / 100)
+    return arg
+
 def format(falcoins):
     pop = str(falcoins)
     pop_2 = ''
@@ -130,16 +137,6 @@ def checa_cargo(pessoa):
         return 2
     elif banco[pessoa]['Cargo'] == 'Falcão':
         return 3
-
-def zera_divida(pessoa):
-       with open('falbot.json','r') as f:
-        banco = json.load(f)
-
-        banco[pessoa]['Divida'] = 0
-        banco[pessoa]['Agiota'] = ''
-
-        with open('falbot.json', 'w') as f:
-            json.dump(banco, f, indent=4)
 
 def checa_arquivo(pessoa, campo=''):
     with open('falbot.json','r') as f:
@@ -249,7 +246,7 @@ def explain(command, guild_id=''):
             color=discord.Color.green()
         )
         embed.add_field(name=f'Tipos de aposta', value=f'**<preto/vermelho/verde>, <0-36>, <altos/baixos>, <par/impar>**')
-        embed.add_field(name=f'Info', value=f'**black/red/green** se o bot rolar um número com a sua cor, você ganha\n**0-36** se o bot rolar seu número, você ganha\n**altos/baixos** baixos 1-18, high 19-36\n**impar/par impar** = 1, 3, 5 ..., 35, par = 2, 4, 6, ..., 36', inline=False)
+        embed.add_field(name=f'Info', value=f'**black/red/green** se o bot rolar um número com a sua cor, você ganha\n**0-36** se o bot rolar seu número, você ganha\n**altos/baixos** baixos 1-18, altos 19-36\n**impar/par impar** = 1, 3, 5 ..., 35, par = 2, 4, 6, ..., 36', inline=False)
         embed.add_field(name=f'Ganhos', value=f'**preto/vermelho/verde** - 2x\n**0-36** - 35x\n**altos/baixos** - 2x\n**impar/par** - 2x', inline=False)
         embed.add_field(name=f'Números', value=f'Verde: **0**\nPreto: **2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35**\nVermelho: ** 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36**',inline=False)
         embed.add_field(name=f'Uso', value=f'?roleta <tipo de aposta> <falcoins>')
@@ -263,6 +260,16 @@ def explain(command, guild_id=''):
         embed.add_field(name=f'Info', value=f'Caça-níquel', inline=False)
         embed.add_field(name=f'Ganhos', value=f':money_mouth: :money_mouth: :grey_question: - **0.5x**\n:coin: :coin: :grey_question: - **2x**\n:dollar: :dollar: :grey_question: - **2x**\n:money_mouth: :money_mouth: :money_mouth: - **2.5x**\n:coin: :coin: :coin: - **3x**\n:moneybag: :moneybag: :grey_question: - **3.5x**\n:dollar: :dollar: :dollar: - **4x**\n:gem: :gem: :grey_question: - **7x**\n:moneybag: :moneybag: :grey_question: - **7x**\n:gem: :gem: :gem: - **15x**', inline=False)
         embed.add_field(name=f'Uso', value=f'?niquel <falcoins>')
+        embed.set_footer(text='by Falcão ❤️')
+        return embed
+
+    elif command == 'banco':
+        embed = discord.Embed(
+            color=discord.Color.green()
+        )
+        embed.add_field(name=f'Info', value=f'Guarda ou tira seus falcoins do banco', inline=False)
+        embed.add_field(name=f'Ganhos', value=f'O valor depositado aumenta em 1% por dia')  
+        embed.add_field(name=f'Uso', value=f'?banco <depositar/retirar> <falcoins>')
         embed.set_footer(text='by Falcão ❤️')
         return embed
 
@@ -345,7 +352,7 @@ def explain(command, guild_id=''):
         embed = discord.Embed(
             color=discord.Color.blue()
         )
-        embed.add_field(name=f':game_die: Comandos para a sala de jogos', value='`eu`, `sobre`, `lootbox`, `doar`, `apostar`, `duelo`, `rank`, `rank_global`, `loja`, `comprar`, `roleta`, `niquel`', inline=False)
+        embed.add_field(name=f':game_die: Comandos para a sala de jogos', value='`eu`, `sobre`, `lootbox`, `doar`, `apostar`, `duelo`, `rank`, `rank_global`, `loja`, `comprar`, `roleta`, `niquel`, `banco`', inline=False)
         embed.add_field(name=f':gear: Outros comandos', value=f'`prefixo`, `comandos/help`, `limpa`, `tetris`, `math`, `simounao`, `roll`, `flipcoin`, `bonk`', inline=False)
         embed.add_field(name=f'⠀', value=f'O seu prefixo é: **{prefixes[str(guild_id)]}**', inline=False)
         embed.add_field(name=f'⠀', value=f'Use **?help <comando>** para obter maiores detalhes de um comando específico', inline=False)
