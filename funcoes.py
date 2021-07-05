@@ -118,7 +118,11 @@ def arg_especial_banco(arg,pessoa):
     return arg
 
 def format(falcoins):
-    pop = str(falcoins)
+    if int(falcoins) < 0:
+        falcoins = str(falcoins)
+        pop = str(falcoins[1:])
+    else:
+        pop = str(falcoins)
     pop_2 = ''
     for c,i in enumerate(pop[::-1]):
         if c/3 == int(c/3) and c/3 != 0:
@@ -250,7 +254,7 @@ def explain(command, guild_id=''):
             color=discord.Color.green()
         )
         embed.add_field(name=f'Tipos de aposta', value=f'**<preto/vermelho/verde>, <0-36>, <altos/baixos>, <par/impar>**')
-        embed.add_field(name=f'Info', value=f'**´preto/vermelho/verde** se o bot rolar um número com a sua cor, você ganha\n**0-36** se o bot rolar seu número, você ganha\n**altos/baixos** baixos 1-18, altos 19-36\n**impar/par impar** = 1, 3, 5 ..., 35, par = 2, 4, 6, ..., 36', inline=False)
+        embed.add_field(name=f'Info', value=f'**preto/vermelho/verde** se o bot rolar um número com a sua cor, você ganha\n**0-36** se o bot rolar seu número, você ganha\n**altos/baixos** baixos 1-18, altos 19-36\n**impar/par impar** = 1, 3, 5 ..., 35, par = 2, 4, 6, ..., 36', inline=False)
         embed.add_field(name=f'Ganhos', value=f'**preto/vermelho/verde** - 2x\n**0-36** - 35x\n**altos/baixos** - 2x\n**impar/par** - 2x', inline=False)
         embed.add_field(name=f'Números', value=f'Verde: **0**\nPreto: **2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35**\nVermelho: ** 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36**',inline=False)
         embed.add_field(name=f'Uso', value=f'?roleta <tipo de aposta> <falcoins>')
