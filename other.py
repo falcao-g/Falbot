@@ -123,9 +123,9 @@ async def math(ctx, *args):
 async def coinflip(ctx):
     x = randint(0, 1)
     if x == 0:
-        await ctx.send('head')
+        await ctx.send('cara')
     else:
-        await ctx.send('tail')
+        await ctx.send('coroa')
 
 @commands.guild_only()
 @bot.command()
@@ -150,7 +150,7 @@ async def bonk(ctx, *args):
     await ctx.send(f'{text}',file=discord.File('bonk.gif'))
 
 @commands.guild_only()
-@bot.command(aliases=['help'])
+@bot.command(aliases=['help','ajuda'])
 async def comandos(ctx, command=''):
     await ctx.send(embed=explain(command, ctx.guild.id))
 
