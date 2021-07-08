@@ -31,8 +31,13 @@ bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=int
 
 @bot.event
 async def on_message(message):
-    if 'd' in message.content:
-        message.content = '?roll' + ' ' + message.content
+    if 'd' in message.content and 'roll' not in message.content:
+        with open('prefixes.json', 'r') as f:
+            prefixes = json.load(f)
+
+        prefixe = prefixes[str(message.guild.id)]
+        
+        message.content = f'{prefixe}roll' + ' ' + message.content
         await bot.process_commands(message)
     else:
         await bot.process_commands(message)
@@ -77,9 +82,7 @@ async def tetris(ctx):
 @has_permissions(administrator = True)
 async def limpa(ctx, arg=''):
     if arg == '':
-        embed = discord.Embed(
-            color=discord.Color.red()
-        )
+        embed = discord.Embed(color=discord.Color.red())
         embed.add_field(name=f'Info', value=f'Limpa x mensagens do canal atual', inline=False)
         embed.add_field(name=f'Uso', value=f'?limpa <numero de mensagens>')
         embed.set_footer(text='by Falcão ❤️')
@@ -100,7 +103,7 @@ async def roll(ctx, *roll):
             dice += c
         result = d20.roll(dice)
         await ctx.send(f'{ctx.message.author.mention}, \n{result}')
-    except d20.RollSyntaxError:
-        pass
+    except d20.RollSyntaxError as Exception:
+        print(Exception)
 
 bot.run(secret_token)
