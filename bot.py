@@ -73,12 +73,12 @@ async def on_guild_remove(guild):
 
 @bot.event
 async def on_command_error(ctx,error):
-    if "You are on cooldown." in str(error):
+    if "You are on cooldown." in str(error) and str(ctx.command) == 'lootbox':
         await ctx.send(f'{ctx.message.author.mention} faltam **{tempo_formatado(error)}** para você resgatar a lootbox grátis!')
-    elif "Command not found" in str(error):
+    elif "is not found" in str(error):
         pass
     else:
-        print(error)
+        print(f'O erro foi no comando {ctx.command} e aconteceu {error}')
 
 async def check_role(message):
     role1 = discord.utils.get(message.guild.roles, name="Pardal")
@@ -96,6 +96,13 @@ async def check_role(message):
         except:
             pass
 
+async def get_role_color(ctx, member_id):
+    member = await ctx.message.guild.fetch_member(member_id)
+    for c in member.roles:
+        if c == member.roles[-1]:
+            role = c
+    return role.color.value
+
 @commands.guild_only()
 @bot.command(aliases=['sobre'])
 @commands.cooldown(1, 1, commands.BucketType.user)
@@ -112,10 +119,10 @@ async def eu(ctx, arg=''):
     pessoa = await ctx.message.guild.fetch_member(int(arg))
     with open('falbot.json', 'r') as f:
         banco = json.load(f)
-    embed = discord.Embed(color=discord.Color(000000))
+    embed = discord.Embed(color=discord.Color(await get_role_color(ctx, ctx.message.author.id)))
     embed.set_author(name=pessoa.name, icon_url=pessoa.avatar_url)
     for key,item in banco[str(arg)].items():
-        if key != 'Cargo' : embed.add_field(name=key, value=format(item), inline=True)
+        if key != 'Cargo' : embed.add_field(name=key, value=format(item), inline=False)
     embed.set_footer(text='by Falcão ❤️')
     await ctx.send(embed=embed)
 
@@ -133,7 +140,7 @@ async def roleta(ctx, type='', bet=''):
         except:
             await ctx.send(f'{ctx.message.author.mention} {bet} não é um valor válido... :rage:')
         if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= bet and bet > 0:
-            muda_saldo(str(ctx.message.author.id), -bet)
+            change_json(str(ctx.message.author.id), 'Falcoins', -bet)
             await ctx.send('Rolando...')
             if type == 'ímpar' : type = 'impar'
             luck = random.randint(0,36)
@@ -157,18 +164,16 @@ async def roleta(ctx, type='', bet=''):
                 profit = bet * 2
             
             if luck in type:
-                muda_saldo(str(ctx.message.author.id), profit)
+                change_json(str(ctx.message.author.id), 'Falcoins', profit)
                 pessoa = await ctx.message.guild.fetch_member(int(ctx.message.author.id))
-                embed = discord.Embed(color=discord.Color.blue())
+                embed = discord.Embed(color=discord.Color.green())
                 embed.set_author(name=pessoa.name, icon_url=pessoa.avatar_url)
                 embed.add_field(name='Você ganhou! :sunglasses:', value=f'O bot rolou **{luck}**')
                 embed.add_field(name='\u200b', value='\u200b')
                 embed.add_field(name='Lucros', value=f'{format(profit)} falcoins')
             else:
                 pessoa = await ctx.message.guild.fetch_member(int(ctx.message.author.id))
-                embed = discord.Embed(
-                    color=discord.Color(000000)
-                )
+                embed = discord.Embed(color=discord.Color.red())
                 embed.set_author(name=pessoa.name, icon_url=pessoa.avatar_url)
                 embed.add_field(name='Você perdeu! :pensive:', value=f'O bot rolou **{luck}**')
                 embed.add_field(name='\u200b', value='\u200b')
@@ -195,12 +200,12 @@ async def niquel(ctx, bet=''):
         except:
             await ctx.send(f'{ctx.message.author.mention} {bet} não é um valor válido... :rage:')
         if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= bet and bet > 0:
-            muda_saldo(str(ctx.message.author.id), -bet)
+            change_json(str(ctx.message.author.id), 'Falcoins', -bet)
             emojis = [':dollar:', ':coin:', ':moneybag:', ':gem:', ':money_mouth:',':dollar:', ':coin:', ':moneybag:', ':gem:', ':money_mouth:',':dollar:', ':coin:', ':moneybag:', ':gem:', ':money_mouth:']
             emoji1, emoji2, emoji3 = random.choice(emojis), random.choice(emojis), random.choice(emojis)
             str_emojis = emoji1 + emoji2 + emoji3
             pessoa = await ctx.message.guild.fetch_member(int(ctx.message.author.id))
-            embed = discord.Embed(color=discord.Color.blue())
+            embed = discord.Embed(color=discord.Color(await get_role_color(ctx, ctx.message.author.id)))
             embed.set_author(name=pessoa.name, icon_url=pessoa.avatar_url)
             embed.add_field(name='-------------------\n | :dollar: | :dollar: | :dollar: |\n-------------------', value=f'--- **GIRANDO** ---')
             embed.set_footer(text='by Falcão ❤️')
@@ -256,16 +261,20 @@ async def niquel(ctx, bet=''):
             else:
                 winnings = 0
                 profit = (bet * winnings) 
-            muda_saldo(str(ctx.message.author.id), int(profit))
+            change_json(str(ctx.message.author.id), 'Falcoins', int(profit))
 
             if profit > 0:
-                embed.set_field_at(0, name=f'-------------------\n | {emoji11[-1]} | {emoji22[-1]} | {emoji} |\n-------------------', value=f'--- **Você ganhou!** ---', inline=False)
-                embed.add_field(name='Ganhos', value=f'{format(int(profit))} falcoins')
+                embed2 = discord.Embed(color=discord.Color.green())
+                embed2.add_field(name=f'-------------------\n | {emoji11[-1]} | {emoji22[-1]} | {emoji} |\n-------------------', value=f'--- **Você ganhou!** ---', inline=False)
+                embed2.add_field(name='Ganhos', value=f'{format(int(profit))} falcoins')
             else:
-                embed.set_field_at(0, name=f'-------------------\n | {emoji11[-1]} | {emoji22[-1]} | {emoji} |\n-------------------', value=f'--- **Você perdeu!** ---', inline=False)
-                embed.add_field(name='Perdas', value=f'{format(bet)} falcoins')
-            embed.add_field(name='Saldo atual', value=f'{format(checa_arquivo(str(ctx.message.author.id), "Falcoins"))} falcoins')
-            await msg.edit(embed=embed)
+                embed2 = discord.Embed(color=discord.Color.red())
+                embed2.add_field(name=f'-------------------\n | {emoji11[-1]} | {emoji22[-1]} | {emoji} |\n-------------------', value=f'--- **Você perdeu!** ---', inline=False)
+                embed2.add_field(name='Perdas', value=f'{format(bet)} falcoins')
+            embed2.set_author(name=pessoa.name, icon_url=pessoa.avatar_url)
+            embed2.add_field(name='Saldo atual', value=f'{format(checa_arquivo(str(ctx.message.author.id), "Falcoins"))} falcoins')
+            embed2.set_footer(text='by Falcão ❤️')
+            await msg.edit(embed=embed2)
         elif int(bet) <= 0:
                 await ctx.send(f'{ctx.message.author.mention} {bet} não é um valor válido... :rage:')
         else:
@@ -302,9 +311,9 @@ async def luta(ctx, arg='', bet=''):
                     await ctx.send(f'Duelo cancelado. {user.mention} demorou muito para aceitar! :confounded:')
                 else:
                     if str(reaction.emoji) == '✅':
-                        golpes = ['instantâneo', 'stun', 'roubo de vida', 'cura', 'self']
-                        player_1 = {'hp': 100, 'name': ctx.message.author.name, 'stunned': False, 'mention': ctx.message.author.mention, 'id': str(ctx.message.author.id)}
-                        player_2 = {'hp': 100, 'name': user.name, 'stunned': False, 'mention': user.mention, 'id': str(user.id)}
+                        golpes = ['instantâneo', 'stun', 'roubo de vida', 'cura', 'self', 'escudo']
+                        player_1 = {'hp': 100, 'name': ctx.message.author.name, 'stunned': False, 'mention': ctx.message.author.mention, 'id': str(ctx.message.author.id), 'escudo': False}
+                        player_2 = {'hp': 100, 'name': user.name, 'stunned': False, 'mention': user.mention, 'id': str(user.id), 'escudo': False}
                         luck = random.randint(1,2)
                         if luck == 1:
                             order = [player_1, player_2]
@@ -319,8 +328,10 @@ async def luta(ctx, arg='', bet=''):
                                     c['stunned'] = False
                                     continue
 
+                                if c['escudo'] == True : c['escudo'] = False
+
                                 attack = random.choice(golpes)
-                                luck = random.randint(1,100)
+                                luck = random.randint(1,50)
 
                                 if i == 0:
                                     embed, me, enemy = discord.Embed(color=discord.Color.blue()), 0, 1
@@ -329,17 +340,20 @@ async def luta(ctx, arg='', bet=''):
                                 embed.set_footer(text='by Falcão ❤️')
 
                                 if attack == 'instantâneo':
-                                    order[enemy]['hp'] -= luck
+                                    if order[enemy]['escudo'] != True:
+                                        order[enemy]['hp'] -= luck
                                     embed.add_field(name=f'{c["name"]} ataca', value=f'[{attack}] {c["mention"]} dá **{luck}** de dano ao inimigo', inline=False)
 
                                 elif attack == 'stun':
-                                    order[enemy]['hp'] -= luck
-                                    order[enemy]['stunned'] = True
+                                    if order[enemy]['escudo'] != True:
+                                        order[enemy]['hp'] -= luck
+                                        order[enemy]['stunned'] = True
                                     embed.add_field(name=f'{c["name"]} ataca', value=f'[{attack}] {c["mention"]} dá **{luck}** de dano ao inimigo e o deixa nocauteado', inline=False)
 
                                 elif attack == 'roubo de vida':
-                                    order[enemy]['hp'] -= luck
-                                    order[me]['hp'] += luck
+                                    if order[enemy]['escudo'] != True:
+                                        order[enemy]['hp'] -= luck
+                                        order[me]['hp'] += luck
                                     embed.add_field(name=f'{c["name"]} ataca', value=f'[{attack}] {c["mention"]} rouba **{luck}** de vida do inimigo', inline=False)
 
                                 elif attack == 'cura':
@@ -349,6 +363,12 @@ async def luta(ctx, arg='', bet=''):
                                 elif attack == 'self':
                                     order[i]['hp'] -= luck
                                     embed.add_field(name=f'{c["name"]} ataca', value=f'[{attack}] {c["mention"]} acidentalmente dá **{luck}** de dano em si mesmo', inline=False)
+                                
+                                elif attack == 'escudo':
+                                    c['escudo'] = True
+                                    embed.add_field(name=f'{c["name"]} ataca', value=f'[{attack}] {c["mention"]} se protege', inline=False)
+
+                                if order[i]['hp'] > 100 : order[i]['hp'] = 100
 
                                 embed.add_field(name=f'HP', value=f'{order[0]["mention"]}: {order[0]["hp"]} hp\n{order[1]["mention"]}: {order[1]["hp"]} hp')
                                 await ctx.send(embed=embed)
@@ -357,14 +377,16 @@ async def luta(ctx, arg='', bet=''):
                         embed = discord.Embed(color=discord.Color.green())
                         embed.set_footer(text='by Falcão ❤️')
                         if order[0]['hp'] <= 0:
-                            muda_saldo(order[0]['id'], -bet)
-                            muda_saldo(order[1]['id'], bet)
+                            change_json(order[0]['id'], 'Falcoins', -bet)
+                            change_json(order[1]['id'], 'Falcoins', bet)
+                            change_json(order[1]['id'], 'Vitorias')
                             embed.add_field(name=f'{order[1]["name"]} ganhou', value=f'Você derrotou {order[0]["mention"]} em uma luta', inline=False)
                             embed.add_field(name=f'Saldo Atual', value=f'{format(checa_arquivo(str(order[1]["id"]), "Falcoins"))} falcoins')
                         
                         elif order[1]['hp'] <= 0:
-                            muda_saldo(order[0]['id'], bet)
-                            muda_saldo(order[1]['id'], -bet)
+                            change_json(order[0]['id'], 'Falcoins', bet)
+                            change_json(order[1]['id'], 'Falcoins', -bet)
+                            change_json(order[0]['id'], 'Vitorias')
                             embed.add_field(name=f'{order[0]["name"]} ganhou', value=f'Você derrotou {order[1]["mention"]} em uma luta', inline=False)
                             embed.add_field(name=f'Saldo Atual', value=f'{format(checa_arquivo(str(order[0]["id"]), "Falcoins"))} falcoins')
 
@@ -391,11 +413,11 @@ async def banco(ctx, arg='', arg2=''):
             except:
                 await ctx.send(f'{ctx.message.author.mention} {arg2} não é um valor válido... :rage:')
             if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= arg2 and arg2 > 0:
-                muda_saldo(str(ctx.message.author.id), -arg2)
-                muda_banco(str(ctx.message.author.id), arg2)
+                change_json(str(ctx.message.author.id), 'Falcoins', -arg2)
+                change_json(str(ctx.message.author.id), 'Banco', arg2)
                 await ctx.send(f'Você depositou {format(arg2)} falcoins :smiley:')
                 pessoa = await ctx.message.guild.fetch_member(int(ctx.message.author.id))
-                embed = discord.Embed(color=discord.Color(000000))
+                embed = discord.Embed(color=discord.Color(await get_role_color(ctx, ctx.message.author.id)))
                 embed.set_author(name=pessoa.name, icon_url=pessoa.avatar_url)
                 embed.add_field(name=f'Saldo atual', value=f'{format(checa_arquivo(str(ctx.message.author.id), "Falcoins"))} falcoins', inline=False)
                 embed.add_field(name=f'Banco', value=f'Você tem {format(checa_arquivo(str(ctx.message.author.id), "Banco"))} falcoins no banco')
@@ -411,11 +433,11 @@ async def banco(ctx, arg='', arg2=''):
             except:
                 await ctx.send(f'{ctx.message.author.mention} {arg2} não é um valor válido... :rage:')
             if checa_arquivo(str(ctx.message.author.id), 'Banco') >= arg2 and arg2 > 0:
-                muda_saldo(str(ctx.message.author.id), arg2)
-                muda_banco(str(ctx.message.author.id), -arg2)
+                change_json(str(ctx.message.author.id), 'Falcoins', arg2)
+                change_json(str(ctx.message.author.id), 'Banco', -arg2)
                 await ctx.send(f'Você sacou {format(arg2)} falcoins :smiley:')
                 pessoa = await ctx.message.guild.fetch_member(int(ctx.message.author.id))
-                embed = discord.Embed(color=discord.Color(000000))
+                embed = discord.Embed(color=discord.Color(await get_role_color(ctx, ctx.message.author.id)))
                 embed.set_author(name=pessoa.name, icon_url=pessoa.avatar_url)
                 embed.add_field(name=f'Saldo atual', value=f'{format(checa_arquivo(str(ctx.message.author.id), "Falcoins"))} falcoins', inline=False)
                 embed.add_field(name=f'Banco', value=f'Você tem {format(checa_arquivo(str(ctx.message.author.id), "Banco"))} falcoins no banco')
@@ -434,7 +456,7 @@ async def banco(ctx, arg='', arg2=''):
 async def lootbox(ctx):
         cria_banco(str(ctx.message.author.id))
         await check_role(ctx.message)
-        muda_saldo(str(ctx.message.author.id), 1000)
+        change_json(str(ctx.message.author.id), 'Falcoins', 1000)
         await ctx.send(f' Parabéns {ctx.message.author.mention}! Você ganhou **1000** falcoins :heart_eyes:')
 
 @commands.guild_only()
@@ -449,8 +471,8 @@ async def doar(ctx, arg='', arg2=''):
     else:
         arg2 = arg_especial(arg2, str(ctx.message.author.id))
         if checa_arquivo(str(ctx.message.author.id), 'Falcoins')>= int(arg2):
-            muda_saldo(str(ctx.message.author.id), -int(arg2))
-            muda_saldo(arruma_mention(arg), int(arg2))
+            change_json(str(ctx.message.author.id), 'Falcoins', -int(arg2))
+            change_json(arruma_mention(arg), 'Falcoins', int(arg2))
             await ctx.send(f'{ctx.message.author.mention} transferiu {format(arg2)} falcoins para {arg}')
         else:
             await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para esta doação! :rage:')
@@ -470,11 +492,13 @@ async def cavalo(ctx, arg='', bet=''):
             except:
                 await ctx.send(f'{ctx.message.author.mention} {bet} não é um valor válido... :rage:')
             if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= bet and bet > 0:
-                muda_saldo(str(ctx.message.author.id), -bet)
+                change_json(str(ctx.message.author.id), 'Falcoins', -bet)
                 if arg in '12345':
+                    pessoa = await ctx.message.guild.fetch_member(int(ctx.message.author.id))
                     horse1, horse2, horse3, horse4, horse5 = '- - - - -', '- - - - -', '- - - - -', '- - - - -', '- - - - -'
-                    embed = discord.Embed(color=discord.Color.green())
+                    embed = discord.Embed(color=discord.Color(await get_role_color(ctx, ctx.message.author.id)))
                     embed.add_field(name=f'Cavalo', value=f':checkered_flag: {horse1} :horse_racing:\n\u200b\n:checkered_flag: {horse2} :horse_racing:\n\u200b\n:checkered_flag: {horse3} :horse_racing:\n\u200b\n:checkered_flag: {horse4} :horse_racing:\n\u200b\n:checkered_flag: {horse5} :horse_racing:')
+                    embed.set_author(name=pessoa.name, icon_url=pessoa.avatar_url)
                     embed.set_footer(text='by Falcão ❤️')
                     msg = await ctx.send(embed=embed)
 
@@ -503,7 +527,7 @@ async def cavalo(ctx, arg='', bet=''):
                     else : winner = '5'
 
                     if arg in winner:
-                        muda_saldo(str(ctx.message.author.id), bet*5)
+                        change_json(str(ctx.message.author.id), 'Falcoins', bet*5)
                         embed2 = discord.Embed(color=discord.Color.green())
                         embed2.add_field(name=f'Cavalo {winner} ganhou!', value=f'Você ganhou {format(bet*5)} falcoins', inline=False)
                     else:
@@ -511,6 +535,7 @@ async def cavalo(ctx, arg='', bet=''):
                         embed2.add_field(name=f'Cavalo {winner} ganhou!', value=f'Você perdeu {format(bet)} falcoins', inline=False)
                     
                     embed2.add_field(name=f'Saldo atual', value=f'{format(checa_arquivo(str(ctx.message.author.id), "Falcoins"))} falcoins', inline=False)
+                    embed.set_author(name=pessoa.name, icon_url=pessoa.avatar_url)
                     embed2.set_footer(text='by Falcão ❤️')
                     await ctx.send(embed=embed2)
                 else:
@@ -561,14 +586,14 @@ async def cavalo(ctx, arg='', bet=''):
 
                             if player_1 == '':
                                 winner = await ctx.message.guild.fetch_member(ctx.message.author.id)
-                                muda_saldo(str(winner.id), bet)
-                                muda_saldo(str(user.id), -bet)
-                                muda_vitoria(str(winner.id))
+                                change_json(str(winner.id), 'Falcoins', bet)
+                                change_json(str(user.id), 'Falcoins', -bet)
+                                change_json(str(winner.id), 'Vitorias')
                             else:
                                 winner = await ctx.message.guild.fetch_member(int(arg))
-                                muda_saldo(str(winner.id), bet)
-                                muda_saldo(str(ctx.message.author.id), -bet)
-                                muda_vitoria(str(winner.id))
+                                change_json(str(winner.id), 'Falcoins', bet)
+                                change_json(str(ctx.message.author.id), 'Falcoins', -bet)
+                                change_json(str(winner.id), 'Vitorias')
 
                             embed2 = discord.Embed(color=discord.Color.green())
                             embed2.add_field(name=f'{winner.name} ganhou!', value=f'Você ganhou {format(bet)} falcoins', inline=False)
@@ -609,9 +634,7 @@ async def rank(ctx, local=True):
     for i,c in enumerate(users):
         if c == None:
             users[i] = 'Unknown user'
-    embed = discord.Embed(
-        color=discord.Color.blue()
-    )
+    embed = discord.Embed(color=discord.Color(await get_role_color(ctx, ctx.message.author.id)))
     if len(rank) >= 10:
         for c in range(10):
             try:
@@ -636,13 +659,44 @@ async def rank_global(ctx):
 @commands.guild_only()
 @bot.command()
 @commands.cooldown(1, 1, commands.BucketType.user)
+async def caixa(ctx, arg='', amount=''):
+    cria_banco(str(ctx.message.author.id))
+    await check_role(ctx.message)
+    if arg == '' or amount == '':
+        await ctx.send(embed=explain('caixa'))
+    else:
+        if checa_arquivo(str(ctx.message.author.id), 'Caixas') >= int(amount) or checa_arquivo(str(ctx.message.author.id), 'Chaves') >= int(amount):
+            change_json(str(ctx.message.author.id), 'Caixas', -int(amount))
+            change_json(str(ctx.message.author.id), 'Chaves', -int(amount))
+            for c in range(int(amount)):
+                luck = random.randint(0, 100)
+                if luck <= 60:
+                    chaves, caixas, falcoins = random.randint(0, 1), random.randint(0, 1), random.randint(500, 15000)
+                    change_json(str(ctx.message.author.id), 'Falcoins', falcoins)
+                    change_json(str(ctx.message.author.id), 'Caixas', caixas)
+                    change_json(str(ctx.message.author.id), 'Chaves', chaves)
+                else:
+                    chaves, caixas, falcoins = 0, 0, 0
+                embed = discord.Embed(color=await get_role_color(ctx, ctx.message.author.id))
+                embed.set_author(name=ctx.message.author.name, icon_url=ctx.message.author.avatar_url)
+                embed.add_field(name='Caixa', value=f'Você ganhou {chaves} chaves\nVocê ganhou {falcoins} falcoins\nVocê ganhou {caixas} caixas')
+                embed.set_footer(text='by Falcão ❤️')
+                await ctx.send(embed=embed)
+        else:
+            await ctx.send(f'{ctx.message.author.mention} você não tem caixas e/ou chaves o suficiente para esta ação! :rage:')
+
+@commands.guild_only()
+@bot.command()
+@commands.cooldown(1, 1, commands.BucketType.user)
 async def loja(ctx):
     cria_banco(str(ctx.message.author.id))
     await check_role(ctx.message)
-    embed = discord.Embed(title='**Loja**', color=discord.Color.green())
-    embed.add_field(name=f'Item número 1: Pardal', value='Pelo custo de 500.000 falcoins você adquire um cargo de pardal no servidor', inline=False)
-    embed.add_field(name=f'Item número 2: Tucano',value=f'Pelo custo de 100.000.000 falcoins você adquire um cargo de tucano no servidor', inline=False)
-    embed.add_field(name=f'Item número 3: Falcão', value='Pelo custo de 1.000.000.000 falcoins você adquire um cargo da melhor ave do mundo no servidor', inline=False)
+    embed = discord.Embed(title='**Loja**', color=discord.Color(await get_role_color(ctx, ctx.message.author.id)))
+    embed.add_field(name=f'Item número 1: Pardal', value='Pelo custo de 100.000 falcoins você adquire um cargo de pardal', inline=False)
+    embed.add_field(name=f'Item número 2: Tucano',value=f'Pelo custo de 1.000.000 falcoins você adquire um cargo de tucano', inline=False)
+    embed.add_field(name=f'Item número 3: Falcão', value='Pelo custo de 10.000.000 falcoins você adquire um cargo da melhor ave do mundo', inline=False)
+    embed.add_field(name=f'Item número 4: Caixa', value=f'Pelo custo de 5.000 falcoins você compra uma caixa que pode ser aberta usando uma chave', inline=False)
+    embed.add_field(name=f'Item número 5: Chave', value=f'Pelo custo de 20.000 falcoins você compra uma chave que pode ser usada para abrir uma caixa', inline=False)
     embed.set_footer(text='by Falcão ❤️')
     await ctx.send(embed=embed)
 
@@ -660,9 +714,8 @@ async def comprar(ctx, arg=''):
             if role in ctx.message.author.roles or role2 in ctx.message.author.roles or role3 in ctx.message.author.roles:
                 await ctx.send(f'{ctx.message.author.mention} você já possui esse cargo! :rage:')
             else:
-                if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= 500000:
-                    custo = -500000
-                    muda_saldo(str(ctx.message.author.id), custo)
+                if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= 100000:
+                    change_json(str(ctx.message.author.id), 'Falcoins', -100000)
                     await ctx.message.author.add_roles(role)
                     muda_cargo(str(ctx.message.author.id), 'Pardal')
                     await ctx.send(f'Parabéns {ctx.message.author.mention}! Você comprou o cargo de Pardal :star_struck:')
@@ -674,11 +727,10 @@ async def comprar(ctx, arg=''):
             if role in ctx.message.author.roles or role2 in ctx.message.author.roles:
                 await ctx.send(f'{ctx.message.author.mention} você já possui esse cargo! :rage:')
             else:
-                if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= 100000000:
+                if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= 1000000:
                     role1 = discord.utils.get(ctx.guild.roles, name="Pardal")
                     if role1 in ctx.message.author.roles:
-                        custo = -100000000
-                        muda_saldo(str(ctx.message.author.id), custo)
+                        change_json(str(ctx.message.author.id), 'Falcoins', -1000000)
                         await ctx.message.author.remove_roles(role1)
                         await ctx.message.author.add_roles(role)
                         muda_cargo(str(ctx.message.author.id), 'Tucano')
@@ -692,11 +744,10 @@ async def comprar(ctx, arg=''):
             if role in ctx.message.author.roles:
                 await ctx.send(f'{ctx.message.author.mention} você já possui esse cargo! :rage:')
             else:
-                if checa_arquivo(str(ctx.message.author.id), 'Falcoins')>= 1000000000:
+                if checa_arquivo(str(ctx.message.author.id), 'Falcoins')>= 10000000:
                     role1 = discord.utils.get(ctx.guild.roles, name="Tucano")
                     if role1 in ctx.message.author.roles:
-                        custo = -1000000000
-                        muda_saldo(str(ctx.message.author.id), custo)
+                        change_json(str(ctx.message.author.id), 'Falcoins', -10000000)
                         await ctx.message.author.remove_roles(role1)
                         await ctx.message.author.add_roles(role)
                         muda_cargo(str(ctx.message.author.id),'Falcão')
@@ -704,6 +755,21 @@ async def comprar(ctx, arg=''):
                     else:
                         await ctx.send(f'{ctx.message.author.mention} você precisa ter o cargo de Tucano antes de comprar esse cargo! :rage:')
                 else:
-                    await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para comprar esse cargo! :rage:') 
+                    await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para comprar esse cargo! :rage:')
+        elif arg == "4":
+            if checa_arquivo(str(ctx.message.author.id), 'Falcoins')>= 5000:
+                change_json(str(ctx.message.author.id), 'Falcoins', -5000)
+                change_json(str(ctx.message.author.id), 'Caixas')
+                await ctx.send(f'Parabéns {ctx.message.author.mention}! Você comprou uma caixa :star_struck:')
+            else:
+                await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para comprar esse item! :rage:')
+        elif arg == "5":
+            if checa_arquivo(str(ctx.message.author.id), 'Falcoins')>= 20000:
+                change_json(str(ctx.message.author.id), 'Falcoins', -20000)
+                change_json(str(ctx.message.author.id), 'Chaves')
+                await ctx.send(f'Parabéns {ctx.message.author.mention}! Você comprou uma chave :star_struck:')
+            else:
+                await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para comprar esse item! :rage:')    
 
-bot.run(secret_token)
+if __name__ == '__main__':
+    bot.run(secret_token)
