@@ -5,7 +5,7 @@ import d20
 import json
 from discord.ext.commands import has_permissions
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.chrome import ChromeDriverManager  
 from funcoes import secret_token
 from time import sleep
 
@@ -30,6 +30,13 @@ intents = discord.Intents(messages=True, guilds=True, members=True, reactions=Tr
 bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=intents, help_command=None)
 
 @bot.event
+async def on_command_error(ctx,error):
+    if "is not found" in str(error):
+        pass
+    else:
+        print(f'O erro foi no comando {ctx.command} e aconteceu {error}')
+
+@bot.event
 async def on_message(message):
     if 'd' in message.content and 'roll' not in message.content:
         with open('prefixes.json', 'r') as f:
@@ -45,37 +52,27 @@ async def on_message(message):
 def tetris1():
     driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get('https://jstris.jezevec10.com/')
-
-    ### creates room
-    lobbyB = driver.find_element_by_id('lobby')
-    lobbyB.click()
-
-    createB = driver.find_element_by_id('createRoomButton')
-    createB.click()
-
-    privateC = driver.find_element_by_id('isPrivate')
-    privateC.click()
-
+    driver.find_element_by_id('lobby').click()
+    driver.find_element_by_id('createRoomButton').click()
+    driver.find_element_by_id('isPrivate').click()
+    sleep(1)
+    driver.find_element_by_id('create').click()
     sleep(3)
-
-    createBF = driver.find_element_by_id('create')
-    createBF.click()
-
-    sleep(5)
-
-    joinLink = driver.find_element_by_class_name('joinLink')
-    return joinLink.get_attribute('innerHTML'), driver
+    return driver.find_element_by_class_name('joinLink').get_attribute('innerHTML'), driver
 
 @commands.guild_only()
 @bot.command()
 async def tetris(ctx):
     loop = asyncio.get_running_loop()
-    await ctx.send(f'{ctx.message.author.mention}, Esse comando levará alguns segundos para ser executado, tenha paciência!')
-    result, driver = await loop.run_in_executor(None, tetris1)
-    await ctx.send(result)
-
-    await asyncio.sleep(30)
-    driver.quit()
+    await ctx.send(f'{ctx.message.author.mention}, Esse comando levará alguns segundos para ser executado, tenha paciência! :pray:')
+    try:
+        result, driver = await loop.run_in_executor(None, tetris1)
+    except:
+        await ctx.send("Desculpe, mas ocorreu um erro, tente novamente mais tarde :confused:")
+    else:
+        await ctx.send(result)
+        await asyncio.sleep(30)
+        driver.quit()
 
 @commands.guild_only()
 @bot.command()
@@ -106,4 +103,5 @@ async def roll(ctx, *roll):
     except d20.RollSyntaxError as Exception:
         print(Exception)
 
-bot.run(secret_token)
+if __name__ == '__main__':
+    bot.run(secret_token)
