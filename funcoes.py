@@ -10,30 +10,10 @@ def cria_banco(pessoa):
     try:
         banco[pessoa]
     except KeyError:
-        banco[pessoa] = {'Falcoins': 0, 'Vitorias': 0, 'Cargo': '', 'Banco': 0}
+        banco[pessoa] = {'Falcoins': 0, 'Vitorias': 0, 'Cargo': '', 'Banco': 0, 'Caixas': 0, 'Chaves': 0}
     finally:
         with open('falbot.json', 'w') as f:
             json.dump(banco, f, indent=4)
-
-def muda_saldo(pessoa, dinheiro):
-    with open('falbot.json','r') as f:
-        banco = json.load(f)
-
-    banco[pessoa]['Falcoins'] += dinheiro
-    if banco[pessoa]['Falcoins'] < 0:
-        banco[pessoa]['Falcoins'] = 0
-
-    with open('falbot.json', 'w') as f:
-        json.dump(banco, f, indent=4)
-
-def muda_vitoria(pessoa):
-    with open('falbot.json','r') as f:
-        banco = json.load(f)
-
-    banco[pessoa]['Vitorias'] += 1
-
-    with open('falbot.json', 'w') as f:
-        json.dump(banco, f, indent=4)
 
 def muda_cargo(pessoa, cargo):
     with open('falbot.json','r') as f:
@@ -44,13 +24,13 @@ def muda_cargo(pessoa, cargo):
     with open('falbot.json', 'w') as f:
         json.dump(banco, f, indent=4)
 
-def muda_banco(pessoa, dinheiro):
+def change_json(user, field, quantity=1):
     with open('falbot.json','r') as f:
         banco = json.load(f)
 
-    banco[pessoa]['Banco'] += dinheiro
-    if banco[pessoa]['Banco'] < 0:
-        banco[pessoa]['Banco'] = 0
+    banco[user][field] += quantity
+    if banco[user][field] < 0:
+        banco[user][field] = 0
 
     with open('falbot.json', 'w') as f:
         json.dump(banco, f, indent=4)
@@ -219,7 +199,7 @@ def explain(command, guild_id=''):
 
     elif command == 'loja':
         embed = discord.Embed(color=discord.Color.green())
-        embed.add_field(name=f'Info', value=f'Mostra os cargos disponíveis para compra', inline=False)
+        embed.add_field(name=f'Info', value=f'Mostra os itens disponíveis para compra', inline=False)
         embed.add_field(name=f'Uso', value=f'?loja')
         embed.set_footer(text='by Falcão ❤️')
         return embed
@@ -261,8 +241,16 @@ def explain(command, guild_id=''):
         embed = discord.Embed(color=discord.Color.green())
         embed.add_field(name=f'Info', value=f'Desafia um usuário para uma luta até a morte', inline=False)
         embed.add_field(name=f'Ganhos', value=f'**O vencedor leva tudo**', inline=False)
-        embed.add_field(name=f'Habilidades', value=f'**instântaneo:** dá um dano x na hora\n**stun:** dá um dano x e deixa o inimigo paralizado por 1 turno\n**cura:** se cura em x de vida\n**roubo de vida:** rouba uma quantidade x de vida do inimigo\n**self:** dá um dano x a si mesmo\n\n**O bot escolhe os ataques aleatoriamente**',inline=False)
+        embed.add_field(name=f'Habilidades', value=f'**instântaneo:** dá um dano x na hora\n**stun:** dá um dano x e deixa o inimigo paralizado por 1 turno\n**cura:** se cura em x de vida\n**roubo de vida:** rouba uma quantidade x de vida do inimigo\n**self:** dá um dano x a si mesmo\n**escudo:** se protege de todo e qualquer dano por 1 rodada\n\n**O bot escolhe os ataques aleatoriamente**',inline=False)
         embed.add_field(name=f'Uso', value=f'**?luta @usuário <falcoins>**')
+        embed.set_footer(text='by Falcão ❤️')
+        return embed
+
+    elif command == 'caixa':
+        embed = discord.Embed(color=discord.Color.green())
+        embed.add_field(name=f'Info', value=f'Gasta 1 chave e 1 caixa para ter a chance de ganhar alguns prêmios, você pode comprar caixas e chaves na loja',inline=False)
+        embed.add_field(name=f'Ganhos', value=f'Você pode ganhar `caixas`, `chaves`, `falcoins`', inline=False)
+        embed.add_field(name=f'Uso', value=f'**?caixa abrir [quantidade]**')
         embed.set_footer(text='by Falcão ❤️')
         return embed
 
@@ -327,7 +315,7 @@ def explain(command, guild_id=''):
             prefixes = json.load(f)
 
         embed = discord.Embed(color=discord.Color.blue())
-        embed.add_field(name=f':game_die: Comandos para a sala de jogos', value='`eu`, `sobre`, `lootbox`, `doar`, `cavalo`, `rank`, `rank_global`, `loja`, `comprar`, `roleta`, `niquel`, `banco`', inline=False)
+        embed.add_field(name=f':game_die: Comandos para a sala de jogos', value='`eu`, `sobre`, `lootbox`, `doar`, `cavalo`, `rank`, `rank_global`, `loja`, `comprar`, `roleta`, `niquel`, `banco`, `luta`, `caixa`', inline=False)
         embed.add_field(name=f':gear: Outros comandos', value=f'`prefixo`, `comandos/help`, `limpa`, `tetris`, `math`, `simounao`, `roll`, `flipcoin`, `bonk`', inline=False)
         embed.add_field(name=f'⠀', value=f'O seu prefixo é: **{prefixes[str(guild_id)]}**', inline=False)
         embed.add_field(name=f'⠀', value=f'Use **?ajuda <comando>** para obter maiores detalhes de um comando específico', inline=False)
