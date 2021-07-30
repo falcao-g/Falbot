@@ -27,6 +27,13 @@ def get_prefix(bot, message):
 intents = discord.Intents(messages=True, guilds=True, members=True, reactions=True, guild_messages=True)
 bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=intents, help_command=None)
 
+@bot.event
+async def on_command_error(ctx,error):
+    if "is not found" in str(error):
+        pass
+    else:
+        print(f'O erro foi no comando {ctx.command} e aconteceu {error}')
+
 @commands.guild_only()
 @bot.command()
 @has_permissions(administrator = True)
@@ -154,4 +161,5 @@ async def bonk(ctx, *args):
 async def comandos(ctx, command=''):
     await ctx.send(embed=explain(command, ctx.guild.id))
 
-bot.run(secret_token)
+if __name__ == '__main__':
+    bot.run(secret_token)
