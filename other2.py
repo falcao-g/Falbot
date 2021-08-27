@@ -6,8 +6,9 @@ import json
 from discord.ext.commands import has_permissions
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager  
-from funcoes import secret_token
+from funcoes import *
 from time import sleep
+from random import randint
 
 def get_prefix(bot, message):
     with open('prefixes.json', 'r') as f:
@@ -33,21 +34,26 @@ bot = commands.Bot(command_prefix=get_prefix, case_insensitive=True, intents=int
 async def on_command_error(ctx,error):
     if "is not found" in str(error):
         pass
+    elif 'index out of range' in str(error):
+        pass
     else:
         print(f'O erro foi no comando {ctx.command} e aconteceu {error}')
 
 @bot.event
 async def on_message(message):
-    if 'd' in message.content and 'roll' not in message.content:
-        with open('prefixes.json', 'r') as f:
-            prefixes = json.load(f)
+    try:
+        if (message.content[0].isnumeric() or message.content[1].isnumeric()) and 'd' in message.content and 'roll' not in message.content:
+            with open('prefixes.json', 'r') as f:
+                prefixes = json.load(f)
 
-        prefixe = prefixes[str(message.guild.id)]
-        
-        message.content = f'{prefixe}roll' + ' ' + message.content
-        await bot.process_commands(message)
-    else:
-        await bot.process_commands(message)
+            prefixe = prefixes[str(message.guild.id)]
+            
+            message.content = f'{prefixe}roll' + ' ' + message.content
+            await bot.process_commands(message)
+        else:
+            await bot.process_commands(message)
+    except IndexError:
+        pass
 
 def tetris1():
     driver = webdriver.Chrome(ChromeDriverManager().install())
@@ -93,15 +99,57 @@ async def limpa(ctx, arg=''):
 
 @commands.guild_only()
 @bot.command()
-async def roll(ctx, *roll):
+async def roll(ctx, *, roll):
     try:
-        dice = ''
-        for c in roll:
-            dice += c
-        result = d20.roll(dice)
+        result = d20.roll(roll)
         await ctx.send(f'{ctx.message.author.mention}, \n{result}')
-    except d20.RollSyntaxError as Exception:
-        print(Exception)
+    except d20.RollSyntaxError:
+        await ctx.send(f'{ctx.message.author.mention} {roll} não é um dado válido... :rage:')
+
+@commands.guild_only()
+@bot.command()
+async def bonk(ctx, *args):
+    for c in list(args):
+        try:
+            if not bot.get_user(int(c[3:-1])) != None:
+                args.remove(c)
+        except:
+            args.remove(c)
+    text = ''
+    for c in args:
+        text += c
+        text += ' '
+    await ctx.send(f'{text}',file=discord.File('bonk.gif'))
+
+@bot.command()
+async def bola8(ctx):
+    respostas = [
+        "certamente.",
+        "sem dúvida.",
+        "sim, definitivamente.",
+        "você pode contar com isso.",
+        "a meu ver, sim.",
+        "provavelmente.",
+        "sim.",
+        "absolutamente.",
+        "destino nublado, tente de novo.",
+        "pergunte de novo mais tarde.",
+        "melhor não te dizer agora.",
+        "não posso prever agora.",
+        "se concentre e pergunte de novo.",
+        "não conte com isso.",
+        "não.",
+        "minhas fontes dizem que não.",
+        "cenário não muito bom.",
+        "muito duvidoso.",
+        "as chances não são boas."
+    ]
+    resposta = (f"{ctx.message.author.mention}, {respostas[randint(0, len(respostas)-1)]}")
+    embed = discord.Embed(color=discord.Color(await get_role_color(ctx, ctx.message.author.id)))
+    embed.set_author(name="Bola 8 mágica", icon_url="https://images.emojiterra.com/google/noto-emoji/unicode-13.1/128px/1f3b1.png")
+    embed.add_field(name="Previsão:", value=resposta, inline=False )
+    embed.set_footer(text='by Falcão ❤️')
+    await ctx.send(embed=embed)
 
 if __name__ == '__main__':
     bot.run(secret_token)
