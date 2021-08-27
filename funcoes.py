@@ -10,7 +10,7 @@ def cria_banco(pessoa):
     try:
         banco[pessoa]
     except KeyError:
-        banco[pessoa] = {'Falcoins': 0, 'Vitorias': 0, 'Cargo': '', 'Banco': 0, 'Caixas': 0, 'Chaves': 0}
+        banco[pessoa] = {'Falcoins': 0, 'Vitorias': 0, 'Cargo': '', 'Banco': 0, 'Caixas': 0, 'Chaves': 0, 'Lootbox': 1000}
     finally:
         with open('falbot.json', 'w') as f:
             json.dump(banco, f, indent=4)
@@ -141,6 +141,13 @@ def arruma_mention(arg):
             pessoa += c
     return pessoa
 
+async def get_role_color(ctx, member_id):
+    member = await ctx.message.guild.fetch_member(member_id)
+    for c in member.roles:
+        if c == member.roles[-1]:
+            role = c
+    return role.color.value
+
 def explain(command, guild_id=''):
     command = command.lower()
 
@@ -204,13 +211,6 @@ def explain(command, guild_id=''):
         embed.set_footer(text='by Falcão ❤️')
         return embed
 
-    elif command == 'comprar':
-        embed = discord.Embed(color=discord.Color.green())
-        embed.add_field(name=f'Info', value=f'Compra o item colocado', inline=False)
-        embed.add_field(name=f'Uso', value=f'?comprar <numero do item>')
-        embed.set_footer(text='by Falcão ❤️')
-        return embed
-
     elif command == 'roleta':
         embed = discord.Embed(color=discord.Color.green())
         embed.add_field(name=f'Tipos de aposta', value=f'**<preto/vermelho/verde>, <0-36>, <altos/baixos>, <par/impar>**')
@@ -224,7 +224,7 @@ def explain(command, guild_id=''):
     elif command == 'niquel':
         embed = discord.Embed(color=discord.Color.green())
         embed.add_field(name=f'Info', value=f'Caça-níquel', inline=False)
-        embed.add_field(name=f'Ganhos', value=f':money_mouth: :money_mouth: :grey_question: - **0.5x**\n:coin: :coin: :grey_question: - **2x**\n:dollar: :dollar: :grey_question: - **2x**\n:money_mouth: :money_mouth: :money_mouth: - **2.5x**\n:coin: :coin: :coin: - **3x**\n:moneybag: :moneybag: :grey_question: - **3.5x**\n:dollar: :dollar: :dollar: - **4x**\n:gem: :gem: :grey_question: - **7x**\n:moneybag: :moneybag: :moneybag: - **7x**\n:gem: :gem: :gem: - **15x**', inline=False)
+        embed.add_field(name=f'Ganhos', value=f':money_mouth: :money_mouth: :grey_question: - **0.5x**\n:coin: :coin: :grey_question: - **1x**\n:dollar: :dollar: :grey_question: - **1.5x**\n:money_mouth: :money_mouth: :money_mouth: - **2x**\n:coin: :coin: :coin: - **2.5x**\n:moneybag: :moneybag: :grey_question: - **3x**\n:dollar: :dollar: :dollar: - **3.5x**\n:gem: :gem: :grey_question: - **5x**\n:moneybag: :moneybag: :moneybag: - **7x**\n:gem: :gem: :gem: - **10x**', inline=False)
         embed.add_field(name=f'Uso', value=f'?niquel <falcoins>')
         embed.set_footer(text='by Falcão ❤️')
         return embed
@@ -282,10 +282,10 @@ def explain(command, guild_id=''):
         embed.set_footer(text='by Falcão ❤️')
         return embed
 
-    elif command == 'simounao':
+    elif command == 'voto':
         embed = discord.Embed(color=discord.Color.red())
-        embed.add_field(name=f'Info', value=f'Cria uma enquete com sim e não', inline=False)
-        embed.add_field(name=f'Uso', value=f'?simounao')
+        embed.add_field(name=f'Info', value=f'Cria uma bonita pequena enquete', inline=False)
+        embed.add_field(name=f'Uso', value=f'?voto')
         embed.set_footer(text='by Falcão ❤️')
         return embed
 
@@ -310,13 +310,27 @@ def explain(command, guild_id=''):
         embed.set_footer(text='by Falcão ❤️')
         return embed
 
+    elif command == 'falar':
+        embed = discord.Embed(color=discord.Color.red())
+        embed.add_field(name=f'Info', value=f'Permite mandar uma mensagem anonimamente', inline=False)
+        embed.add_field(name=f'Uso', value=f'?falar [mensagem]')
+        embed.set_footer(text='by Falcão ❤️')
+        return embed
+
+    elif command == 'bola8':
+        embed = discord.Embed(color=discord.Color.red())
+        embed.add_field(name=f'Info', value=f'Prevê o seu futuro', inline=False)
+        embed.add_field(name=f'Uso', value=f'?bola8 [pergunta]')
+        embed.set_footer(text='by Falcão ❤️')
+        return embed
+
     else:
         with open('prefixes.json', 'r') as f:
             prefixes = json.load(f)
 
         embed = discord.Embed(color=discord.Color.blue())
-        embed.add_field(name=f':game_die: Comandos para a sala de jogos', value='`eu`, `sobre`, `lootbox`, `doar`, `cavalo`, `rank`, `rank_global`, `loja`, `comprar`, `roleta`, `niquel`, `banco`, `luta`, `caixa`', inline=False)
-        embed.add_field(name=f':gear: Outros comandos', value=f'`prefixo`, `comandos/help`, `limpa`, `tetris`, `math`, `simounao`, `roll`, `flipcoin`, `bonk`', inline=False)
+        embed.add_field(name=f':game_die: Comandos para a sala de jogos', value='`eu`, `sobre`, `lootbox`, `doar`, `cavalo`, `rank`, `rank_global`, `loja`, `roleta`, `niquel`, `banco`, `luta`, `caixa`', inline=False)
+        embed.add_field(name=f':gear: Outros comandos', value=f'`prefixo`, `comandos/help`, `limpa`, `tetris`, `math`, `voto`, `roll`, `flipcoin`, `bonk`, `falar`, `bola8`', inline=False)
         embed.add_field(name=f'⠀', value=f'O seu prefixo é: **{prefixes[str(guild_id)]}**', inline=False)
         embed.add_field(name=f'⠀', value=f'Use **?ajuda <comando>** para obter maiores detalhes de um comando específico', inline=False)
         embed.add_field(name=f'⠀', value=f'O bot também aceita "metade", "tudo" e porcentagens no lugar de valores de aposta', inline=False)
