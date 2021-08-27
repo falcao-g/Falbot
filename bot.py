@@ -75,7 +75,7 @@ async def on_guild_remove(guild):
 async def on_command_error(ctx,error):
     if "You are on cooldown." in str(error) and str(ctx.command) == 'lootbox':
         await ctx.send(f'{ctx.message.author.mention} faltam **{tempo_formatado(error)}** para você resgatar a lootbox grátis!')
-    elif "is not found" in str(error):
+    elif "is not found" in str(error) or "You are on cooldown." in str(error):
         pass
     else:
         print(f'O erro foi no comando {ctx.command} e aconteceu {error}')
@@ -96,13 +96,6 @@ async def check_role(message):
         except:
             pass
 
-async def get_role_color(ctx, member_id):
-    member = await ctx.message.guild.fetch_member(member_id)
-    for c in member.roles:
-        if c == member.roles[-1]:
-            role = c
-    return role.color.value
-
 @commands.guild_only()
 @bot.command(aliases=['sobre'])
 @commands.cooldown(1, 1, commands.BucketType.user)
@@ -122,7 +115,7 @@ async def eu(ctx, arg=''):
     embed = discord.Embed(color=discord.Color(await get_role_color(ctx, ctx.message.author.id)))
     embed.set_author(name=pessoa.name, icon_url=pessoa.avatar_url)
     for key,item in banco[str(arg)].items():
-        if key != 'Cargo' : embed.add_field(name=key, value=format(item), inline=False)
+        if key != 'Cargo' and key != 'Lootbox': embed.add_field(name=key, value=format(item), inline=False)
     embed.set_footer(text='by Falcão ❤️')
     await ctx.send(embed=embed)
 
@@ -229,38 +222,38 @@ async def niquel(ctx, bet=''):
             money_mouth = str_emojis.count(':money_mouth:')
 
             if dollar == 3:
-                winnings = 4
+                winnings = 3.5
                 profit = bet * winnings
             elif coin == 3:
-                winnings = 3
+                winnings = 2.5
                 profit = bet * winnings
             elif moneybag == 3:
                 winnings = 7
                 profit = bet * winnings
             elif gem == 3:
-                winnings = 15
+                winnings = 10
                 profit = bet * winnings
             elif money_mouth == 3:
-                winnings = 2.5
+                winnings = 2
                 profit = bet * winnings
             elif dollar == 2:
-                winnings = 2
+                winnings = 1.5
                 profit = bet * winnings
             elif coin == 2:
-                winnings = 2
+                winnings = 1
                 profit = bet * winnings
             elif moneybag == 2:
-                winnings = 3.5
+                winnings = 3
                 profit = bet * winnings
             elif gem == 2:
-                winnings = 7
+                winnings = 5
                 profit = bet * winnings
             elif money_mouth == 2:
                 winnings = 0.5
                 profit = bet * winnings 
             else:
                 winnings = 0
-                profit = (bet * winnings) 
+                profit = bet * winnings
             change_json(str(ctx.message.author.id), 'Falcoins', int(profit))
 
             if profit > 0:
@@ -456,8 +449,8 @@ async def banco(ctx, arg='', arg2=''):
 async def lootbox(ctx):
         cria_banco(str(ctx.message.author.id))
         await check_role(ctx.message)
-        change_json(str(ctx.message.author.id), 'Falcoins', 1000)
-        await ctx.send(f' Parabéns {ctx.message.author.mention}! Você ganhou **1000** falcoins :heart_eyes:')
+        change_json(str(ctx.message.author.id), 'Falcoins', checa_arquivo(str(ctx.message.author.id), 'Lootbox'))
+        await ctx.send(f'Parabéns {ctx.message.author.mention}! Você ganhou **{checa_arquivo(str(ctx.message.author.id), "Lootbox")}** falcoins :heart_eyes:')
 
 @commands.guild_only()
 @bot.command()
@@ -688,31 +681,26 @@ async def caixa(ctx, arg='', amount=''):
 @commands.guild_only()
 @bot.command()
 @commands.cooldown(1, 1, commands.BucketType.user)
-async def loja(ctx):
+async def loja(ctx, arg='', id='', amount=1):
     cria_banco(str(ctx.message.author.id))
     await check_role(ctx.message)
-    embed = discord.Embed(title='**Loja**', color=discord.Color(await get_role_color(ctx, ctx.message.author.id)))
-    embed.add_field(name=f'Item número 1: Pardal', value='Pelo custo de 100.000 falcoins você adquire um cargo de pardal', inline=False)
-    embed.add_field(name=f'Item número 2: Tucano',value=f'Pelo custo de 1.000.000 falcoins você adquire um cargo de tucano', inline=False)
-    embed.add_field(name=f'Item número 3: Falcão', value='Pelo custo de 10.000.000 falcoins você adquire um cargo da melhor ave do mundo', inline=False)
-    embed.add_field(name=f'Item número 4: Caixa', value=f'Pelo custo de 5.000 falcoins você compra uma caixa que pode ser aberta usando uma chave', inline=False)
-    embed.add_field(name=f'Item número 5: Chave', value=f'Pelo custo de 20.000 falcoins você compra uma chave que pode ser usada para abrir uma caixa', inline=False)
-    embed.set_footer(text='by Falcão ❤️')
-    await ctx.send(embed=embed)
-
-@commands.guild_only()
-@bot.command()
-@commands.cooldown(1, 1, commands.BucketType.user)
-async def comprar(ctx, arg=''):
-    cria_banco(str(ctx.message.author.id))
-    await check_role(ctx.message)
+    amount = int(amount)
     if arg == '':
-        await ctx.send(embed=explain('comprar'))
-    else:
-        if arg == "1":
+        embed = discord.Embed(title='**Loja**', color=discord.Color(await get_role_color(ctx, ctx.message.author.id)))
+        embed.add_field(name=f'Item número 1: Pardal', value='Pelo custo de 100.000 falcoins você adquire um cargo de pardal', inline=False)
+        embed.add_field(name=f'Item número 2: Tucano',value=f'Pelo custo de 1.000.000 falcoins você adquire um cargo de tucano', inline=False)
+        embed.add_field(name=f'Item número 3: Falcão', value='Pelo custo de 10.000.000 falcoins você adquire um cargo da melhor ave do mundo', inline=False)
+        embed.add_field(name=f'Item número 4: Caixa', value=f'Pelo custo de 5.000 falcoins você compra uma caixa que pode ser aberta usando uma chave', inline=False)
+        embed.add_field(name=f'Item número 5: Chave', value=f'Pelo custo de 20.000 falcoins você compra uma chave que pode ser usada para abrir uma caixa', inline=False)
+        embed.add_field(name=f'Item número 6: Aumento da lootbox', value=f'Pelo custo de 50.000 falcoins você aumenta sua recompensa da lootbox em 1.000 falcoins', inline=False)
+        embed.add_field(name=f'\u200b', value=f'Use ?loja comprar [numero] [quantidade]', inline=False)
+        embed.set_footer(text='by Falcão ❤️')
+        await ctx.send(embed=embed)
+    elif arg == 'comprar':
+        if id == "1":
             role, role2, role3 = discord.utils.get(ctx.guild.roles, name="Pardal"), discord.utils.get(ctx.guild.roles, name="Tucano"), discord.utils.get(ctx.guild.roles, name="Falcão")
             if role in ctx.message.author.roles or role2 in ctx.message.author.roles or role3 in ctx.message.author.roles:
-                await ctx.send(f'{ctx.message.author.mention} você já possui esse cargo! :rage:')
+                await ctx.send(f'{ctx.message.author.mention} você já possui esse c2o! :rage:')
             else:
                 if checa_arquivo(str(ctx.message.author.id), 'Falcoins') >= 100000:
                     change_json(str(ctx.message.author.id), 'Falcoins', -100000)
@@ -721,7 +709,7 @@ async def comprar(ctx, arg=''):
                     await ctx.send(f'Parabéns {ctx.message.author.mention}! Você comprou o cargo de Pardal :star_struck:')
                 else:
                     await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para comprar esse cargo! :rage:')
-        elif arg == "2":
+        elif id == "2":
             role = discord.utils.get(ctx.guild.roles, name="Tucano")
             role2 = discord.utils.get(ctx.guild.roles, name="Falcão")
             if role in ctx.message.author.roles or role2 in ctx.message.author.roles:
@@ -739,7 +727,7 @@ async def comprar(ctx, arg=''):
                         await ctx.send(f'{ctx.message.author.mention} você precisa ter o cargo de Pardal antes de comprar esse cargo! :rage:')
                 else:
                     await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para comprar esse cargo! :rage:')
-        elif arg == "3":
+        elif id == "3":
             role = discord.utils.get(ctx.guild.roles, name="Falcão")
             if role in ctx.message.author.roles:
                 await ctx.send(f'{ctx.message.author.mention} você já possui esse cargo! :rage:')
@@ -756,20 +744,30 @@ async def comprar(ctx, arg=''):
                         await ctx.send(f'{ctx.message.author.mention} você precisa ter o cargo de Tucano antes de comprar esse cargo! :rage:')
                 else:
                     await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para comprar esse cargo! :rage:')
-        elif arg == "4":
-            if checa_arquivo(str(ctx.message.author.id), 'Falcoins')>= 5000:
-                change_json(str(ctx.message.author.id), 'Falcoins', -5000)
-                change_json(str(ctx.message.author.id), 'Caixas')
-                await ctx.send(f'Parabéns {ctx.message.author.mention}! Você comprou uma caixa :star_struck:')
+        elif id == "4":
+            if checa_arquivo(str(ctx.message.author.id), 'Falcoins')>= 5000 * amount:
+                for c in range(amount):
+                    change_json(str(ctx.message.author.id), 'Falcoins', -5000)
+                    change_json(str(ctx.message.author.id), 'Caixas')
+                await ctx.send(f'Parabéns {ctx.message.author.mention}! Você comprou {amount} caixas :star_struck:')
             else:
                 await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para comprar esse item! :rage:')
-        elif arg == "5":
-            if checa_arquivo(str(ctx.message.author.id), 'Falcoins')>= 20000:
-                change_json(str(ctx.message.author.id), 'Falcoins', -20000)
-                change_json(str(ctx.message.author.id), 'Chaves')
-                await ctx.send(f'Parabéns {ctx.message.author.mention}! Você comprou uma chave :star_struck:')
+        elif id == "5":
+            if checa_arquivo(str(ctx.message.author.id), 'Falcoins')>= 20000 * amount:
+                for c in range(amount):
+                    change_json(str(ctx.message.author.id), 'Falcoins', -20000)
+                    change_json(str(ctx.message.author.id), 'Chaves')
+                await ctx.send(f'Parabéns {ctx.message.author.mention}! Você comprou {amount} chaves :star_struck:')
             else:
-                await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para comprar esse item! :rage:')    
-
+                await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para comprar esse item! :rage:')
+        elif id == "6":
+            if checa_arquivo(str(ctx.message.author.id), 'Falcoins')>= 50000 * amount:
+                for c in range(amount):
+                    change_json(str(ctx.message.author.id), 'Falcoins', -50000)
+                    change_json(str(ctx.message.author.id), 'Lootbox', 1000)
+                await ctx.send(f'Parabéns {ctx.message.author.mention}! Você aumentou a recompensa da lootbox {amount} vezes :star_struck:')
+            else:
+                await ctx.send(f'{ctx.message.author.mention} você não tem falcoins suficiente para comprar esse item! :rage:')
+    
 if __name__ == '__main__':
     bot.run(secret_token)
