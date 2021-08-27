@@ -5,7 +5,7 @@ from discord.ext.commands import has_permissions
 from math import sqrt
 from random import randint
 from random import choice
-from funcoes import secret_token, explain
+from funcoes import *
 
 def get_prefix(bot, message):
     with open('prefixes.json', 'r') as f:
@@ -136,25 +136,24 @@ async def coinflip(ctx):
 
 @commands.guild_only()
 @bot.command()
-async def simounao(ctx):
-    message = await ctx.send('✅sim 🚫não')
-    await message.add_reaction('✅')
-    await message.add_reaction('🚫')
+async def voto(ctx, *, arg=''):
+    embed = discord.Embed(color=discord.Color(await get_role_color(ctx, ctx.message.author.id)), description=arg)
+    embed.set_author(name=f'novo voto de {ctx.author.name}!', icon_url=ctx.message.author.avatar_url)
+    message = await ctx.send(embed=embed)
+    await message.add_reaction('👍')
+    await message.add_reaction('👎')
+    await ctx.message.delete()
 
 @commands.guild_only()
 @bot.command()
-async def bonk(ctx, *args):
-    for c in list(args):
-        try:
-            if not bot.get_user(int(c[3:-1])) != None:
-                args.remove(c)
-        except:
-            args.remove(c)
-    text = ''
-    for c in args:
-        text += c
-        text += ' '
-    await ctx.send(f'{text}',file=discord.File('bonk.gif'))
+async def falar(ctx, *, arg=''):
+    if arg == '':
+        await ctx.send(embed=explain('falar'))
+    else:
+        arg = arg.replace("@everyone", "everyone")
+        arg = arg.replace("@here", "here")
+        await ctx.send(arg)
+        await ctx.message.delete()
 
 @commands.guild_only()
 @bot.command(aliases=['help','ajuda'])
