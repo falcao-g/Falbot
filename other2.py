@@ -39,22 +39,6 @@ async def on_command_error(ctx,error):
     else:
         print(f'O erro foi no comando {ctx.command} e aconteceu {error}')
 
-@bot.event
-async def on_message(message):
-    try:
-        if (message.content[0].isnumeric() or message.content[1].isnumeric()) and 'd' in message.content and 'roll' not in message.content:
-            with open('prefixes.json', 'r') as f:
-                prefixes = json.load(f)
-
-            prefixe = prefixes[str(message.guild.id)]
-            
-            message.content = f'{prefixe}roll' + ' ' + message.content
-            await bot.process_commands(message)
-        else:
-            await bot.process_commands(message)
-    except IndexError:
-        pass
-
 def tetris1():
     driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get('https://jstris.jezevec10.com/')
