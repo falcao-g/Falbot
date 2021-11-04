@@ -1,0 +1,18 @@
+{
+  "name": "falbot",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Falcão",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^13.2.0",
+    "mathjs": "^9.5.0",
+    "mongoose": "^6.0.12",
+    "roll": "^1.3.1",
+    "wokcommands": "^1.5.3"
+  }
+}
