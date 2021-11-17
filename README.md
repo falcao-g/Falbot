@@ -1,6 +1,14 @@
-# Falbot
+O Falbot é um bot focado em economia e interações com outros usuários, com features como:
 
-O falbot é um bot focado em economia e apostas, com comandos para interagir com outros usuários, ou apostar sozinho, ele também possui compra de cargos e outros comandos divertidos que não são focados em apostas, use ?comandos para ver a lista de comandos e começar a se aventurar pelo bot, se divirta!
+🎲 Comandos de aposta
+
+⚔️ Interações sociais apostando falcoins
+
+🎉 Comandos divertidos
+
+⚙️ Comandos úteis
+
+Use /comandos para começar, Falbot ganha atualizações frequentemente, se você quiser fazer grandes fortunas ou só se divertir com seus amigos, esse bot é para você
 
 Siga no twitter: @falb0t
 
