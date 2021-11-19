@@ -8,14 +8,15 @@ module.exports =  {
     cooldown: '1s',
     guildOnly: true,
     minArgs: 2,
+    testOnly: false,
     expectedArgs: '<opção> <falcoins>',
     expectedArgsTypes: ['STRING', 'STRING'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`banco {ARGUMENTS}',
     options: [{
         name:'opção',
         description: 'se você ira depositar ou sacar falcoins do banco',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Discord.Constants.ApplicationCommandOptionTypes.STRING,
+        choices: [{name: 'depositar', value: 'depositar'}, {name: 'sacar', value: 'sacar'}]
     },
     {
         name: 'falcoins',
@@ -26,6 +27,7 @@ module.exports =  {
     ],
     callback: async ({message, interaction, args}) => {
         try {
+            functions.createUser(message ? message.author.id : interaction.user.id)
             args[0] = args[0].toLowerCase()
             if (args[0] == 'depositar') {
                 try {
@@ -49,8 +51,8 @@ module.exports =  {
                      .setTitle(`Você depositou ${await functions.format(quantity)} falcoins :smiley:`)
                      .setColor(await functions.getRoleColor(message ? message : interaction, message ? message.author.id : interaction.user.id))
                      .setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
-                     .addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, "Falcoins") - quantity)} falcoins`, inline=false)
-                     .addField('Banco', `você tem ${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, "Banco") + quantity)} falcoins no banco`)
+                     .addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, "Falcoins"))} falcoins`, inline=false)
+                     .addField('Banco', `você tem ${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, "Banco"))} falcoins no banco`)
                      .setFooter('by Falcão ❤️')
     
                     return embed
@@ -74,8 +76,8 @@ module.exports =  {
                      .setTitle(`Você sacou ${await functions.format(quantity)} falcoins :smiley:`)
                      .setColor(await functions.getRoleColor(message ? message : interaction, message ? message.author.id : interaction.user.id))
                      .setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
-                     .addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, "Falcoins") + quantity)} falcoins`, inline=false)
-                     .addField('Banco', `você tem ${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, "Banco") - quantity)} falcoins no banco`)
+                     .addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, "Falcoins"))} falcoins`, inline=false)
+                     .addField('Banco', `você tem ${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, "Banco"))} falcoins no banco`)
                      .setFooter('by Falcão ❤️')
     
                      return embed
@@ -88,11 +90,7 @@ module.exports =  {
                 return `${args[0]} não é um valor válido... :rage:`
             }
         } catch (error) {
-            if (error.message.includes("Cannot read property 'Falcoins' of undefined")) {
-                return 'registro não encontrado! :face_with_spiral_eyes:\npor favor use /cria para criar seu registro e poder usar os comandos de economia'
-            } else {
-                console.log('banco:', error)
-            }
+            console.log('banco:', error)
         }
     }
 }   
