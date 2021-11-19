@@ -7,10 +7,10 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
+    testOnly: false,
     minArgs: 2,
     expectedArgs: '<usuario> <falcoins>',
     expectedArgsTypes: ['USER', 'STRING'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`duelo {ARGUMENTS}',
     options: [{
         name: 'usuario',
         description: 'o usuario que você ira desafiar',
@@ -24,8 +24,9 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }   
     ],
-    callback: async ({message, interaction, args}) => {
+    callback: async ({message, interaction, channel, args}) => {
         try {
+            functions.createUser(message ? message.author.id : interaction.user.id)
             const author = message ? message.author : interaction.user
             if (message) {
                 if (args[0][2] == '!') {
@@ -34,6 +35,7 @@ module.exports =  {
                     args[0] = args[0].slice(2,-1)
                 }
             }
+            functions.createUser(args[0])
             var member = await functions.getMember(message ? message : interaction, args[0])
             if (member.user != author) {
                 try {
@@ -123,10 +125,14 @@ module.exports =  {
     
                             if (player_1 === '') {
                                 winner = author
-                                await functions.takeAndGiveAndWin(member.user.id, author.id, 'Falcoins', 'Falcoins', bet)
+                                functions.changeJSON(member.user.id, 'Falcoins', -bet)
+                                functions.changeJSON(author.id, 'Falcoins', bet)
+                                functions.changeJSON(author.id, 'Vitorias')
                             } else {
                                 winner = member.user
-                                await functions.takeAndGiveAndWin(author.id, member.user.id, 'Falcoins', 'Falcoins', bet)
+                                functions.changeJSON(author.id, 'Falcoins', -bet)
+                                functions.changeJSON(member.user.id, 'Falcoins', bet)
+                                functions.changeJSON(member.user.id, 'Vitorias')
                             }
                             const embed2 = new Discord.MessageEmbed()
                             .setColor(10181046)
@@ -136,13 +142,19 @@ module.exports =  {
                                 inline: false
                             }, {
                                 name: 'Saldo atual',
-                                value: `${await functions.format(await functions.readFile(winner.id, 'Falcoins') + bet)} falcoins`,
+                                value: `${await functions.format(await functions.readFile(winner.id, 'Falcoins'))} falcoins`,
                                 inline: false
                             })
                             .setFooter('by Falcão ❤️')
-                            await answer.edit({
+                            if (message) {
+                                await channel.send({
+                                    embeds: [embed2]
+                                })
+                            } else {
+                            await interaction.followUp({
                                 embeds: [embed2]
                             })
+                            }
                         }
                     })
                     
@@ -155,11 +167,7 @@ module.exports =  {
                 return 'Você não pode cavalgar com você mesmo, espertinho :rage:'
             }
         } catch (error) {
-            if (error.message.includes("Cannot read property 'Falcoins' of undefined")) {
-                return 'algum dos participantes não possui um registro! :face_with_spiral_eyes:\npor favor use /cria para criar seu registro e poder usar os comandos de economia'
-            } else {
-                console.log('duelo:', error)
-            }
+            console.log('duelo:', error)
         }
     }
 }   
