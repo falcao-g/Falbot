@@ -7,8 +7,10 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
+    testOnly: false,
     callback: async ({message, interaction}) => {
         try {
+            functions.createUser(message ? message.author.id : interaction.user.id)
             const user = await functions.readFile(message ? message.author.id : interaction.user.id)
             const embed = new Discord.MessageEmbed()
             .setColor(await functions.getRoleColor(message ? message : interaction, message ? message.author.id : interaction.user.id))
@@ -16,34 +18,30 @@ module.exports =  {
             .setFooter('by Falcão ❤️')
             .addFields({
                 name: ':coin: Falcoins',
-                value: `${user['Falcoins']}`,
+                value: `${await functions.format(user['Falcoins'])}`,
                 inline: true
             },{
                 name: ':trophy: Vitorias',
-                value: `${user['Vitorias']}`,
+                value: `${await functions.format(user['Vitorias'])}`,
                 inline: true
             }, {
                 name: ':bank: Banco',
-                value: `${user['Banco']}`,
+                value: `${await functions.format(user['Banco'])}`,
                 inline: true
             }, {
                 name: ':gift: Caixas',
-                value: `${user['Caixas']}`,
+                value: `${await functions.format(user['Caixas'])}`,
                 inline: true
             }, {
                 name: ':key: Chaves',
-                value: `${user['Chaves']}`,
+                value: `${await functions.format(user['Chaves'])}`,
                 inline: true
             })
     
             return embed
             
         } catch (error) {
-            if (error.message.includes("Cannot read property 'Falcoins' of undefined")) {
-                return 'registro não encontrado! :face_with_spiral_eyes:\npor favor use /cria para criar seu registro e poder usar os comandos de economia'
-            } else {
-                console.log('eu:', error)
-            }
+            console.log('eu:', error)
         }
     }
 }
