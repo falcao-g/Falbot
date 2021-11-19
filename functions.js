@@ -1,14 +1,13 @@
 const fs = require("fs");
 const { MessageEmbed } = require("discord.js");
 
-async function createUser(id) {
+function createUser(id) {
   var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
 
   if (users[id] == undefined) {
     users[id] = {
-      Falcoins: 0,
+      Falcoins: 10000,
       Vitorias: 0,
-      Cargo: "",
       Banco: 0,
       Caixas: 0,
       Chaves: 0,
@@ -16,124 +15,25 @@ async function createUser(id) {
     }
 
     json = JSON.stringify(users, null, 2);
-    fs.writeFile("falbot.json", json, "utf8", function (err) {
-      if (err) throw err;
-    });
+    fs.writeFileSync("falbot.json", json, "utf8")
     return true
   }
   return false
 }
 
-async function changeRole(id, role) {
-  fs.readFile("falbot.json", "utf8", function readFileCallback(err, data) {
-    if (err) {
-      console.log(err);
-    } else {
-      users = JSON.parse(data);
-      users[id]["Cargo"] = role;
-      json = JSON.stringify(users, null, 2);
-      fs.writeFile("falbot.json", json, "utf8", function (err) {
-        if (err) throw err;
-      });
-    }
-  });
+function changeJSON(id, field, quantity = 1) {
+  var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
+  users[id][field] += quantity
+  json = JSON.stringify(users, null, 2)
+  fs.writeFileSync("falbot.json", json, "utf8")
 }
 
-async function changeJSON(id, field, quantity = 1) {
-  fs.readFile("falbot.json", "utf8", function readFileCallback(err, data) {
-    if (err) {
-      console.log(err);
-    } else {
-      users = JSON.parse(data);
-      users[id][field] += quantity;
-      json = JSON.stringify(users, null, 2);
-      fs.writeFile("falbot.json", json, "utf8", function (err) {
-        if (err) throw err;
-      });
-    }
-  });
-}
-
-async function takeAndGive(id, id2, field, field2, quantity = 1) {
-  fs.readFile("falbot.json", "utf8", function readFileCallback(err, data) {
-    if (err) {
-      console.log(err);
-    } else {
-      users = JSON.parse(data);
-      users[id][field] -= quantity;
-      users[id2][field2] += quantity;
-      json = JSON.stringify(users, null, 2);
-      fs.writeFile("falbot.json", json, "utf8", function (err) {
-        if (err) throw err;
-      });
-    }
-  });
-}
-
-async function takeAndGiveButNot(id, id2, field, field2, quantity = 1, quantity2 = quantity) {
-  fs.readFile("falbot.json", "utf8", function readFileCallback(err, data) {
-    if (err) {
-      console.log(err);
-    } else {
-      users = JSON.parse(data);
-      users[id][field] -= quantity;
-      users[id2][field2] += quantity2;
-      json = JSON.stringify(users, null, 2);
-      fs.writeFile("falbot.json", json, "utf8", function (err) {
-        if (err) throw err;
-      });
-    }
-  });
-}
-
-async function takeAndTake(id, id2, field, field2, quantity = 1) {
-  fs.readFile("falbot.json", "utf8", function readFileCallback(err, data) {
-    if (err) {
-      console.log(err);
-    } else {
-      users = JSON.parse(data);
-      users[id][field] -= quantity;
-      users[id2][field2] -= quantity;
-      json = JSON.stringify(users, null, 2);
-      fs.writeFile("falbot.json", json, "utf8", function (err) {
-        if (err) throw err;
-      });
-    }
-  });
-}
-
-async function takeAndGiveAndWin(id, id2, field, field2, quantity = 1) {
-  fs.readFile("falbot.json", "utf8", function readFileCallback(err, data) {
-    if (err) {
-      console.log(err);
-    } else {
-      users = JSON.parse(data);
-      users[id][field] -= quantity;
-      users[id2][field2] += quantity;
-      users[id2]['Vitorias'] += 1;
-      json = JSON.stringify(users, null, 2);
-      fs.writeFile("falbot.json", json, "utf8", function (err) {
-        if (err) throw err;
-      });
-    }
-  });
-}
-
-async function changeJSON3(id, field, field2, field3, quantity = 1, quantity2 = 1, quantity3 = 1) {
-  fs.readFile("falbot.json", "utf8", function readFileCallback(err, data) {
-    if (err) {
-      console.log(err);
-    } else {
-      users = JSON.parse(data);
-      users[id][field] += quantity;
-      users[id][field2] += quantity2;
-      users[id][field3] += quantity3;
-      json = JSON.stringify(users, null, 2);
-      fs.writeFile("falbot.json", json, "utf8", function (err) {
-        if (err) throw err;
-      });
-    }
-  });
+function takeAndGive(id, id2, field, field2, quantity = 1) {
+  var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
+    users[id][field] -= quantity;
+    users[id2][field2] += quantity;
+    json = JSON.stringify(users, null, 2);
+    fs.writeFileSync("falbot.json", json, "utf8")
 }
 
 async function msToTime(ms) {
@@ -260,20 +160,6 @@ async function format(falcoins) {
   return pop_2.split("").reverse().join("");
 }
 
-async function checkRole(id) {
-  var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
-
-  if (users[id]["Cargo"] == "") {
-    return 0;
-  } else if (users[id]["Cargo"] == "Pardal") {
-    return 1;
-  } else if (users[id]["Cargo"] == "Tucano") {
-    return 2;
-  } else if (users[id]["Cargo"] == "Falcão") {
-    return 3;
-  }
-}
-
 async function readFile(id, field = "") {
   var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
 
@@ -296,353 +182,301 @@ async function getMember(message, member_id) {
 
 async function explain(command) {
   command = command.toLowerCase();
-
+  embed = new MessageEmbed()
+  
   if (command == "eu") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Info",
-          value: "Mostra suas informações",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/eu",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Mostra suas informações",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/eu",
+        inline: false,
+      },
+    ])
   } else if (command == "sobre") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Info",
-          value: "Mostra as informações do usuário mencionado",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/sobre @usuario",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Mostra as informações do usuário mencionado",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/sobre @usuario",
+        inline: false,
+      },
+    ])
   } else if (command == "lootbox") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Info",
-          value: "Resgata sua lootbox grátis (disponível a cada 12 horas)",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/lootbox\n/lb",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Resgata sua lootbox grátis (disponível a cada 12 horas)",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/lootbox",
+        inline: false,
+      },
+    ])
   } else if (command == "doar") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Info",
-          value: "Doa x Falcoins para o usuário mencionado",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/doar <@usuario> <falcoins>",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Doa x Falcoins para o usuário mencionado",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/doar <@usuario> <falcoins>",
+        inline: false,
+      },
+    ])
   } else if (command == "cavalo") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Info",
-          value: "Adivinhe qual cavalo é o vencedor",
-          inline: false,
-        },
-        {
-          name: "Ganhos",
-          value: "**5x**",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/cavalo <1-5> <falcoins>",
-          inline: false,
-        }
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Adivinhe qual cavalo é o vencedor",
+        inline: false,
+      },
+      {
+        name: "Ganhos",
+        value: "**5x**",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/cavalo <1-5> <falcoins>",
+        inline: false,
+      }
+    ])
   } else if (command == "rank") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Info",
-          value: "Mostra o rank local ou global",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/rank [escopo]",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Mostra o rank local ou global",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/rank [escopo]",
+        inline: false,
+      },
+    ])
   } else if (command == "loja") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Info",
-          value: "Mostra os itens disponíveis para compra",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/loja [numero] [quantidade] - numero e quantidade só são obrigatórios caso você queira comprar algo",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Mostra os itens disponíveis para compra",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/loja [numero] [quantidade] - numero e quantidade só são obrigatórios caso você queira comprar algo",
+        inline: false,
+      },
+    ])
   } else if (command == "roleta") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Tipos de aposta",
-          value:
-            "**<preto/vermelho/verde>, <0-36>, <altos/baixos>, <par/impar>**",
-          inline: false,
-        },
-        {
-          name: "Info",
-          value:
-            "**preto/vermelho/verde** se o bot rolar um número com a sua cor, você ganha\n**0-36** se o bot rolar seu número, você ganha\n**altos/baixos** baixos 1-18, altos 19-36\n**impar/par impar** = 1, 3, 5 ..., 35, par = 2, 4, 6, ..., 36",
-          inline: false,
-        },
-        {
-          name: "Ganhos",
-          value:
-            "**preto/vermelho/verde** - 2x\n**0-36** - 35x\n**altos/baixos** - 2x\n**impar/par** - 2x",
-          inline: false,
-        },
-        {
-          name: "Números",
-          value:
-            "Verde: **0**\nPreto: **2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35**\nVermelho: ** 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36**'",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/roleta <tipo de aposta> <falcoins>",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Tipos de aposta",
+        value:
+          "**<preto/vermelho/verde>, <0-36>, <altos/baixos>, <par/impar>**",
+        inline: false,
+      },
+      {
+        name: "Info",
+        value:
+          "**preto/vermelho/verde** se o bot rolar um número com a sua cor, você ganha\n**0-36** se o bot rolar seu número, você ganha\n**altos/baixos** baixos 1-18, altos 19-36\n**impar/par impar** = 1, 3, 5 ..., 35, par = 2, 4, 6, ..., 36",
+        inline: false,
+      },
+      {
+        name: "Ganhos",
+        value:
+          "**preto/vermelho/verde** - 2x\n**0-36** - 35x\n**altos/baixos** - 2x\n**impar/par** - 2x",
+        inline: false,
+      },
+      {
+        name: "Números",
+        value:
+          "Verde: **0**\nPreto: **2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35**\nVermelho: ** 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36**'",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/roleta <tipo de aposta> <falcoins>",
+        inline: false,
+      },
+    ])
   } else if (command == "niquel") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields(
-        {
-          name: "Info",
-          value: "Caça-níquel",
-          inline: false,
-        },
-        {
-          name: "Ganhos",
-          value:
-            ":money_mouth: :money_mouth: :grey_question: - **0.5x**\n:coin: :coin: :grey_question: - **1x**\n:dollar: :dollar: :grey_question: - **1.5x**\n:money_mouth: :money_mouth: :money_mouth: - **2x**\n:coin: :coin: :coin: - **2.5x**\n:moneybag: :moneybag: :grey_question: - **3x**\n:dollar: :dollar: :dollar: - **3.5x**\n:gem: :gem: :grey_question: - **4x**\n:moneybag: :moneybag: :moneybag: - **4.5x**\n:gem: :gem: :gem: - **5x**",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/niquel <falcoins>",
-          inline: false,
-        })
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields({
+        name: "Info",
+        value: "Caça-níquel",
+        inline: false,
+      },
+      {
+        name: "Ganhos",
+        value:
+          ":money_mouth: :money_mouth: :grey_question: - **0.5x**\n:coin: :coin: :grey_question: - **1x**\n:dollar: :dollar: :grey_question: - **1.5x**\n:money_mouth: :money_mouth: :money_mouth: - **2x**\n:coin: :coin: :coin: - **2.5x**\n:moneybag: :moneybag: :grey_question: - **3x**\n:dollar: :dollar: :dollar: - **3.5x**\n:gem: :gem: :grey_question: - **4x**\n:moneybag: :moneybag: :moneybag: - **4.5x**\n:gem: :gem: :gem: - **5x**",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/niquel <falcoins>",
+        inline: false,
+      })
   } else if (command == "banco") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Info",
-          value: "Guarda ou tira seus falcoins do banco",
-          inline: false,
-        },
-        {
-          name: "Ganhos",
-          value: "O valor depositado aumenta em 1% ao dia",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/banco <depositar/sacar> <falcoins>",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Guarda ou tira seus falcoins do banco",
+        inline: false,
+      },
+      {
+        name: "Ganhos",
+        value: "O valor depositado aumenta em 1% ao dia",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/banco <depositar/sacar> <falcoins>",
+        inline: false,
+      },
+    ])
   } else if (command == "luta") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Info",
-          value: "Desafia um usuário para uma luta até a morte",
-          inline: false,
-        },
-        {
-          name: "Ganhos",
-          value: "**O vencedor leva tudo**",
-          inline: false,
-        },
-        {
-          name: "Habilidades",
-          value:
-            "**instântaneo:** dá um dano x na hora\n**stun:** dá um dano x e deixa o inimigo paralizado por 1 turno\n**cura:** se cura em x de vida\n**roubo de vida:** rouba uma quantidade x de vida do inimigo\n**self:** dá um dano x a si mesmo\n**escudo:** se protege de todo e qualquer dano por 1 rodada\n\n**O bot escolhe os ataques aleatoriamente**",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/luta @usuario <falcoins>",
-          inline: false,
-        }
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Desafia um usuário para uma luta até a morte",
+        inline: false,
+      },
+      {
+        name: "Ganhos",
+        value: "**O vencedor leva tudo**",
+        inline: false,
+      },
+      {
+        name: "Habilidades",
+        value:
+          "**instântaneo:** dá um dano x na hora\n**stun:** dá um dano x e deixa o inimigo paralizado por 1 turno\n**cura:** se cura em x de vida\n**roubo de vida:** rouba uma quantidade x de vida do inimigo\n**self:** dá um dano x a si mesmo\n**escudo:** se protege de todo e qualquer dano por 1 rodada\n\n**O bot escolhe os ataques aleatoriamente**",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/luta @usuario <falcoins>",
+        inline: false,
+      }
+    ])
   } else if (command == "caixa") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Info",
-          value:
-            "Gasta 1 chave e 1 caixa para ter a chance de ganhar alguns prêmios, você pode comprar caixas e chaves na loja",
-          inline: false,
-        },
-        {
-          name: "Ganhos",
-          value: "Você pode ganhar `caixas`, `chaves`, `falcoins`",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/caixa [quantidade]",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value:
+          "Gasta 1 chave e 1 caixa para ter a chance de ganhar alguns prêmios, você pode comprar caixas e chaves na loja",
+        inline: false,
+      },
+      {
+        name: "Ganhos",
+        value: "Você pode ganhar `caixas`, `chaves`, `falcoins`",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/caixa [quantidade]",
+        inline: false,
+      },
+    ])
   } else if (command == "prefix") {
-    const embed = new MessageEmbed()
-      .setColor("RED")
-      .addFields([
-        {
-          name: "Info",
-          value:
-            "Muda o prefixo do servidor atual (só usuários com a permissão de admin podem usar)",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/prefix <prefixo>",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("RED")
+    embed.addFields([
+      {
+        name: "Info",
+        value:
+          "Muda o prefixo do servidor atual (só usuários com a permissão de admin podem usar)",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/prefix <prefixo>",
+        inline: false,
+      },
+    ])
   } else if (command == "limpa") {
-    const embed = new MessageEmbed()
-      .setColor("RED")
-      .addFields([
-        {
-          name: "Info",
-          value:
-            "Limpa x mensagens do canal atual (só usuários com a permissão de administrador podem usar)",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/limpa <numero de mensagens>",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("RED")
+    embed.addFields([
+      {
+        name: "Info",
+        value:
+          "Limpa x mensagens do canal atual (só usuários com a permissão de administrador podem usar)",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/limpa <numero de mensagens>",
+        inline: false,
+      },
+    ])
   } else if (command == "tetris") {
-    const embed = new MessageEmbed()
-      .setColor("RED")
-      .addFields([
-        {
-          name: "Info",
-          value: "Cria uma sala privada no jstris para você!",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/tetris",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("RED")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Cria uma sala privada no jstris para você!",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/tetris",
+        inline: false,
+      },
+    ])
   } else if (command == "math") {
-    const embed = new MessageEmbed()
-      .setColor("RED")
-      .addFields([
-        {
-          name: "Info",
-          value: "Faz um cálculo de matemática",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/math <expressão>",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("RED")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Faz um cálculo de matemática",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/math <expressão>",
+        inline: false,
+      },
+    ])
   } else if (command == "voto") {
-    const embed = new MessageEmbed()
-      .setColor("RED")
-      .addFields([
-        {
-          name: "Info",
-          value: "Cria uma bonita pequena enquete",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/voto",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("RED")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Cria uma bonita pequena enquete",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/voto",
+        inline: false,
+      },
+    ])
   } else if (command == "roll") {
-    const embed = new MessageEmbed()
-      .setColor("RED")
-      .addFields([
+    embed.setColor("RED")
+    embed.addFields([
         {
           name: "Info",
           value: "Rola dados para você",
@@ -654,129 +488,135 @@ async function explain(command) {
           inline: false,
         },
       ])
-      .setFooter("by Falcão ❤️");
-    return embed;
   } else if (command == "coinflip") {
-    const embed = new MessageEmbed()
-      .setColor("RED")
-      .addFields([
-        {
-          name: "Info",
-          value: "Faz um cara ou coroa",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/coinflip [quantidade]",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("RED")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Faz um cara ou coroa",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/coinflip [quantidade]",
+        inline: false,
+      },
+    ])
   } else if (command == "bonk") {
-    const embed = new MessageEmbed()
-      .setColor("RED")
-      .addFields([
-        {
-          name: "Info",
-          value: "Manda alguém para a horny jail",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/bonk <@usuario>",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("RED")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Manda alguém para a horny jail",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/bonk <@usuario>",
+        inline: false,
+      },
+    ])
   } else if (command == "bola8") {
-    const embed = new MessageEmbed()
-      .setColor("RED")
-      .addFields([
-        {
-          name: "Info",
-          value: "Prevê o seu futuro",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/bola8 <pergunta>",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("RED")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Prevê o seu futuro",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/bola8 <pergunta>",
+        inline: false,
+      },
+    ])
   } else if (command == "duelo") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Info",
-          value: "Desafia outro usuário para um duelo de cavalos",
-          inline: false,
-        },
-        {
-          name: "Ganhos",
-          value: "**O vencedor leva tudo**",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/duelo <@usuario>",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
-  } else if (command == "cria") {
-    const embed = new MessageEmbed()
-      .setColor("GREEN")
-      .addFields([
-        {
-          name: "Info",
-          value: "Cria seu registro no bot",
-          inline: false,
-        },
-        {
-          name: "Uso",
-          value: "/cria",
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Desafia outro usuário para um duelo de cavalos",
+        inline: false,
+      },
+      {
+        name: "Ganhos",
+        value: "**O vencedor leva tudo**",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/duelo <@usuario>",
+        inline: false,
+      },
+    ])
+  } else if (command == "foto") {
+    embed.setColor("RED")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Envia uma foto aleatória sobre o termo especificado",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "?foto <termo>",
+        inline: false,
+      },
+      {
+        name: "Exemplo",
+        value: "?foto cachorro",
+        inline: false,
+      },
+    ])
+  } else if (command == "roletarussa") {
+    embed.setColor("GREEN")
+    embed.addFields([
+    {
+      name: "Info",
+      value: "jogue com seus amigos, usuarios podem entrar reagindo a mensagem",
+      inline: false,
+    },
+    {
+      name: "Ganhos",
+        value: "**O vencedor leva tudo**",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "?roletarussa <falcoins>",
+        inline: false,
+      }
+    ])
   } else {
-    const embed = new MessageEmbed()
-      .setColor("BLUE")
-      .addFields([
-        {
-          name: ":game_die: Comandos para a sala de jogos",
-          value:
-            "`eu`, `sobre`, `lootbox`, `doar`, `cavalo`, `rank`, `loja`, `roleta`, `niquel`, `banco`, `luta`, `caixa`, `cria`, `duelo`",
-          inline: false,
-        },
-        {
-          name: ":gear: Outros comandos",
-          value:
-            "`prefix`, `comandos/help`, `limpa`, `math`, `voto`, `roll`, `coinflip`, `bonk`, `bola8`",
-          inline: false,
-        },
-        {
-          name: "\u200B",
-          value: `Use /prefix para ver seu prefixo`,
-          inline: false,
-        },
-        {
-          name: "\u200B",
-          value:
-            'O bot também aceita "metade", "tudo" e porcentagens no lugar de valores de aposta',
-          inline: false,
-        },
-      ])
-      .setFooter("by Falcão ❤️");
-    return embed;
+    embed.setColor("BLUE")
+    embed.addFields([
+      {
+        name: ":game_die: Comandos para a sala de jogos",
+        value:
+          "`eu`, `sobre`, `lootbox`, `doar`, `cavalo`, `rank`, `loja`, `roleta`, `niquel`, `banco`, `luta`, `caixa`, `duelo`, `roletarussa`",
+        inline: false,
+      },
+      {
+        name: ":gear: Outros comandos",
+        value:
+          "`prefix`, `comandos/help`, `limpa`, `math`, `voto`, `roll`, `coinflip`, `bonk`, `bola8`, `foto`",
+        inline: false,
+      },
+      {
+        name: "\u200B",
+        value: `Use /prefix para ver seu prefixo`,
+        inline: false,
+      },
+      {
+        name: "\u200B",
+        value:
+          'O bot também aceita "metade", "tudo" e porcentagens no lugar de valores de aposta',
+        inline: false,
+      },
+    ])
   }
+  embed.setFooter("by Falcão ❤️");
+  return embed;
 }
 
 async function count(array, string) {
@@ -800,16 +640,15 @@ async function bankInterest() {
     users[user]['Banco'] += Math.floor(parseInt(users[user]['Banco'] * 0.01))
   }
   json = JSON.stringify(users, null, 2);
-  fs.writeFile("falbot.json", json, "utf8", function (err) {
+  fs.writeFileSync("falbot.json", json, "utf8", function (err) {
     if (err) throw err;
   });
 }
 
 module.exports = {
-    createUser, changeRole, changeJSON,
-    msToTime, specialArg, specialArgBank, 
-    format, checkRole, readFile, getRoleColor,
+    createUser, changeJSON, msToTime,
+    specialArg, specialArgBank, 
+    format, readFile, getRoleColor,
     getMember, explain, takeAndGive, count,
-    takeAndGiveAndWin, takeAndTake, changeJSON3,
-    takeAndGiveButNot, randint, bankInterest
-};
+    randint, bankInterest
+}
