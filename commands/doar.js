@@ -7,10 +7,10 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
+    testOnly: false,
     minArgs: 2,
     expectedArgs: '<usuario> <falcoins>',
     expectedArgsTypes: ['USER', 'STRING'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`doar {ARGUMENTS}',
     options: [{
         name:'usuario',
         description: 'o usuario que você vai doar os falcoins',
@@ -33,13 +33,12 @@ module.exports =  {
                     args[0] = args[0].slice(2,-1)
                 }
             }
+            functions.createUser(message ? message.author.id : interaction.user.id)
+            functions.createUser(args[0])
             args[0] = await functions.getMember(message ? message : interaction, args[0])
-            if (await functions.readFile(args[0].user.id) === undefined) {
-                return 'Esse usuário não possui um regisro :confused:'
-            }
             const quantity = await functions.specialArg(args[1], message ? message.author.id : interaction.user.id)
             if (await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') >= quantity) {
-                await functions.takeAndGive(message ? message.author.id : interaction.user.id, args[0].user.id, 'Falcoins', 'Falcoins', quantity)
+                functions.takeAndGive(message ? message.author.id : interaction.user.id, args[0].user.id, 'Falcoins', 'Falcoins', quantity)
                 return `:handshake: ${await functions.format(quantity)} falcoins transferidos com sucesso para ${args[0]}`
             } else {
                 if (message) {
@@ -52,11 +51,7 @@ module.exports =  {
                 }
             }
         } catch (error) {
-            if (error.message.includes("Cannot read property 'Falcoins' of undefined")) {
-                return 'registro não encontrado! :face_with_spiral_eyes:\npor favor use /cria para criar seu registro e poder usar os comandos de economia'
-            } else {
-                console.log('doar:', error)
-            }
+            console.log('doar:', error)
         }
     }
 }
