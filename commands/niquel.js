@@ -8,10 +8,10 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
+    testOnly: false,
     minArgs: 1,
     expectedArgs: '<falcoins>',
     expectedArgsTypes: ['STRING'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`niquel {ARGUMENTS}',
     options: [
     {
         name: 'falcoins',
@@ -22,6 +22,7 @@ module.exports =  {
     ],
     callback: async ({message, interaction, args}) => {
         try {
+            functions.createUser(message ? message.author.id : interaction.user.id)
             try {
                 var bet = await functions.specialArg(args[0], message ? message.author.id : interaction.user.id)
             } catch {
@@ -109,7 +110,7 @@ module.exports =  {
                     var winnings = 0
                 }
                 var profit = parseInt(bet * winnings)
-                await functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', profit-bet)
+                functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', profit-bet)
     
                 if (profit > 0) {
                     var embed2 = new Discord.MessageEmbed()
@@ -137,22 +138,24 @@ module.exports =  {
                      })
                 }
                 embed2.setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
-                embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') + profit-bet)}`)
+                embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins'))}`)
                 embed2.setFooter('by Falcão ❤️')
-                await answer.edit({
+                if (message) {
+                    await message.reply({
+                        embeds: [embed2]
+                    })
+                } else {
+                await interaction.followUp({
                     embeds: [embed2]
                 })
+                }
             } else if (bet <= 0) {
                     return `${bet} não é um valor válido... :rage:`
             } else {
                     return `você não tem falcoins suficientes para esta aposta! :rage:`
                 }
         } catch (error) {
-            if (error.message.includes("Cannot read property 'Falcoins' of undefined")) {
-                return 'registro não encontrado! :face_with_spiral_eyes:\npor favor use /cria para criar seu registro e poder usar os comandos de economia'
-            } else {
-                console.log('niquel:', error)
-            }
+            console.log('niquel:', error)
         }
     }
 }   
