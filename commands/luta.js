@@ -7,10 +7,10 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
+    testOnly: false,
     minArgs: 2,
     expectedArgs: '<usuario> <falcoins>',
     expectedArgsTypes: ['USER', 'STRING'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`luta {ARGUMENTS}',
     options: [{
         name: 'usuario',
         description: 'o usuario que você ira desafiar',
@@ -26,6 +26,7 @@ module.exports =  {
     ],
     callback: async ({message, interaction, args}) => {
         try {
+            functions.createUser(message ? message.author.id : interaction.user.id)
             const author = message ? message.author : interaction.user
             if (message) {
                 if (args[0][2] == '!') {
@@ -34,6 +35,7 @@ module.exports =  {
                     args[0] = args[0].slice(2,-1)
                 }
             }
+            functions.createUser(args[0])
             var member = await functions.getMember(message ? message : interaction, args[0])
             if (member.user != author) {
                 try {
@@ -190,13 +192,17 @@ module.exports =  {
                             .setColor(3066993)
                             .setFooter('by Falcão ❤️')
                             if (order[0]['hp'] <= 0) {
-                                await functions.takeAndGiveAndWin(order[0]['id'], order[1]['id'], 'Falcoins', 'Falcoins', bet)
+                                functions.changeJSON(order[0]['id'], 'Falcoins', -bet)
+                                functions.changeJSON(order[1]['id'], 'Falcoins', bet)
+                                functions.changeJSON(order[1]['id'], 'Vitorias')
                                 embed2.addField(`${order[1]['name']} ganhou`, `Você derrotou ${order[0]['mention']} em uma luta`, false)
-                                embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(order[1]['id'], 'Falcoins') + bet)} falcoins`)
+                                embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(order[1]['id'], 'Falcoins'))} falcoins`)
                             }  else if (order[1]['hp'] <= 0) {
-                                await functions.takeAndGiveAndWin(order[0]['id'], order[1]['id'], 'Falcoins', 'Falcoins', bet)
-                                embed2.addField(`${order[1]['name']} ganhou`, `Você derrotou ${order[0]['mention']} em uma luta`, false)
-                                embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(order[1]['id'], 'Falcoins') + bet)} falcoins`)
+                                functions.changeJSON(order[1]['id'], 'Falcoins', -bet)
+                                functions.changeJSON(order[0]['id'], 'Falcoins', bet)
+                                functions.changeJSON(order[0]['id'], 'Vitorias')
+                                embed2.addField(`${order[0]['name']} ganhou`, `Você derrotou ${order[1]['mention']} em uma luta`, false)
+                                embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(order[0]['id'], 'Falcoins'))} falcoins`)
                             }
                             if (message) {
                                 await message.channel.send({
@@ -218,11 +224,7 @@ module.exports =  {
                 return 'Você não pode lutar com você mesmo, espertinho :rage:'
             }
         } catch (error) {
-            if (error.message.includes("Cannot read property 'Falcoins' of undefined")) {
-                return 'algum dos participantes não possui um registro! :face_with_spiral_eyes:\npor favor use /cria para criar seu registro e poder usar os comandos de economia'
-            } else {
-                console.log('luta:', error)
-            }
+            console.log('luta:', error)
         }
     }
 }   
