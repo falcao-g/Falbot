@@ -11,13 +11,14 @@ client.on("ready", () => {
     commandsDir: path.join(__dirname, 'commands'),
     ignoreBots: true,
     ephemeral: false,
+    botOwners: [config.owner],
     testServers: '742332099788275732',
+    defaultLanguage: 'portuguese',
     disabledDefaultCommands: [
       'command',
       'language',
       'requiredrole',
-      'channelonly',
-      'slash'
+      'channelonly'
   ],
   mongoUri: config.MONGODB_URI
   })
@@ -26,13 +27,9 @@ client.on("ready", () => {
   client.user.setActivity('?comandos | arte by: @kinsallum')
 
   setInterval(functions.bankInterest, 1000 * 86400)
+
+  setInterval(() => {
+    client.user.setActivity('?comandos | arte by: @kinsallum')
+  }, 1000 * 600)
 })
-
-// client.on('guildCreate', (guild) => {
-//   const roles = guild.roles.fetch()
-//   roles.forEach((role) => {
-//     console.log(role)
-//   })
-// })
-
 client.login(config.TOKEN)
