@@ -7,10 +7,10 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
+    testOnly: false,
     minArgs: 2,
     expectedArgs: '<tipo> <falcoins>',
     expectedArgsTypes: ['STRING', 'STRING'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`roleta {ARGUMENTS}',
     options: [{
         name:'tipo',
         description: 'tipo de aposta <preto/vermelho/verde>, <0-36>, <altos/baixos>, <par/impar>',
@@ -26,6 +26,7 @@ module.exports =  {
     ],
     callback: async ({message, interaction, args}) => {
         try {
+            functions.createUser(message ? message.author.id : interaction.user.id)
             args[0] = args[0].toLowerCase()
             if (args[0] === 'ímpar') {args[0] = 'impar'}
     
@@ -68,7 +69,7 @@ module.exports =  {
                     const luck = functions.randint(0, 36)
     
                     if (type.includes(luck)) {
-                        await functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', profit-bet)
+                        functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', profit-bet)
                         var embed = new Discord.MessageEmbed()
                          .setColor(3066993)
                          .setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
@@ -85,9 +86,9 @@ module.exports =  {
                              value:`${await functions.format(profit)} falcoins`,
                              inline: true
                          })
-                         .addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') + profit-bet)} falcoins`, false)
+                         .addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins'))} falcoins`, false)
                     } else {
-                        await functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', -bet  )
+                        functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', -bet  )
                         var embed = new Discord.MessageEmbed()
                          .setColor(15158332)
                          .setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
@@ -104,7 +105,7 @@ module.exports =  {
                              value:`${await functions.format(bet)} falcoins`,
                              inline: true
                         })
-                        embed.addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') - bet)} falcoins`, false)
+                        embed.addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins'))} falcoins`, false)
                     }
                     embed.setFooter('by Falcão ❤️')
                     return embed
@@ -117,11 +118,7 @@ module.exports =  {
                 return `${args[0]} não é um tipo de aposta válido`
             }
         } catch (error) {
-            if (error.message.includes("Cannot read property 'Falcoins' of undefined")) {
-                return 'registro não encontrado! :face_with_spiral_eyes:\npor favor use /cria para criar seu registro e poder usar os comandos de economia'
-            } else {
-                console.log('roleta:', error)
-            }
+            console.log('roleta:', error)
         }
     }
 }   
