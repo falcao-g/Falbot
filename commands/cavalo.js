@@ -7,15 +7,16 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
+    testOnly: false,
     minArgs: 2,
     expectedArgs: '<numedo_do_cavalo> <falcoins>',
     expectedArgsTypes: ['NUMBER', 'STRING'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`cavalo {ARGUMENTS}',
     options: [{
         name: 'numero_do_cavalo',
         description: 'numero do cavalo que você vai apostar (1-5)',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER
+        type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER,
+        choices: [{name: 1, value: 1}, {name: 2, value: 2}, {name: 3, value: 3}, {name: 4, value: 4}, {name: 5, value: 5}]
     },
     {
         name: 'falcoins',
@@ -26,6 +27,7 @@ module.exports =  {
     ],
     callback: async ({message, interaction, args}) => {
         try {
+            functions.createUser(message ? message.author.id : interaction.user.id)
             try {
                 var bet = await functions.specialArg(args[1], message ? message.author.id : interaction.user.id)
             } catch {
@@ -92,24 +94,30 @@ module.exports =  {
     
                     if (args[0] == winner) {
                         profit = bet * 5
-                        await functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', profit-bet)
+                        functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', profit-bet)
                         var embed2 = new Discord.MessageEmbed()
                          .setColor(3066993)
                          .addField(`Cavalo ${winner} ganhou!`, `Você ganhou ${await functions.format(bet*5)} falcoins`, false)
                     } else {
                         profit = 0
-                        await functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', -bet)
+                        functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', -bet)
                         var embed2 = new Discord.MessageEmbed()
                          .setColor(15158332)
                          .addField(`Cavalo ${winner} ganhou!`, `Você perdeu ${await functions.format(bet)} falcoins`, false)
                     }
     
-                    embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') + profit - bet)} falcoins`, false)
+                    embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins'))} falcoins`, false)
                     embed2.setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
                     embed2.setFooter('by Falcão ❤️')
-                    await answer.edit({
-                        embeds: [embed, embed2]
+                    if (message) {
+                        await message.reply({
+                            embeds: [embed2]
+                        })
+                    } else {
+                    await interaction.followUp({
+                        embeds: [embed2]
                     })
+                    }
                 }
             } else if (bet <= 0) {
                     return `${bet} não é um valor válido... :rage:`
@@ -117,11 +125,7 @@ module.exports =  {
                     return `você não tem falcoins suficientes para esta aposta! :rage:`
                 }
         } catch (error) {
-            if (error.message.includes("Cannot read property 'Falcoins' of undefined")) {
-                return 'registro não encontrado! :face_with_spiral_eyes:\npor favor use /cria para criar seu registro e poder usar os comandos de economia'
-            } else {
-                console.log('Cavalo:', error)
-            }
+            console.log('Cavalo:', error)
         }
     }
 }   
