@@ -7,10 +7,10 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
+    testOnly: false,
     minArgs: 1,
     expectedArgs: '<sobre>',
     expectedArgsTypes: ['USER'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`sobre {ARGUMENTS}',
     options: [{
         name: 'usuario',
         description: 'o usuario que você quer ver as informações',
@@ -26,34 +26,32 @@ module.exports =  {
                     args[0] = args[0].slice(2,-1)
                 }
             }
+            functions.createUser(args[0])
             const member = await functions.getMember(message ? message : interaction, args[0])
             const user = await functions.readFile(member.user.id)
-            if (user == undefined) {
-                return 'Esse usuário não possui um regisro :confused:'
-            }
             const embed = new Discord.MessageEmbed()
             .setColor(await functions.getRoleColor(message ? message : interaction, member.user.id))
             .setAuthor(member.user.username, member.user.avatarURL())
             .setFooter('by Falcão ❤️')
             .addFields({
                 name: ':coin: Falcoins',
-                value: `${user['Falcoins']}`,
+                value: `${await functions.format(user['Falcoins'])}`,
                 inline: true
             },{
                 name: ':trophy: Vitorias',
-                value: `${user['Vitorias']}`,
+                value: `${await functions.format(user['Vitorias'])}`,
                 inline: true
             }, {
                 name: ':bank: Banco',
-                value: `${user['Banco']}`,
+                value: `${await functions.format(user['Banco'])}`,
                 inline: true
             }, {
                 name: ':gift: Caixas',
-                value: `${user['Caixas']}`,
+                value: `${await functions.format(user['Caixas'])}`,
                 inline: true
             }, {
                 name: ':key: Chaves',
-                value: `${user['Chaves']}`,
+                value: `${await functions.format(user['Chaves'])}`,
                 inline: true
             }) 
     
