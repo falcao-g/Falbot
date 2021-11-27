@@ -13,3 +13,5 @@ Use /comandos para começar, Falbot ganha atualizações frequentemente, se voc�
 Siga no twitter: @falb0t
 
 Adicione ele em: https://top.gg/bot/742331813539872798
+
+Site oficial: https://falbot.netlify.app/
