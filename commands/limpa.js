@@ -9,7 +9,6 @@ module.exports = {
     guildOnly: true,
     expectedArgs: '[quantidade]',
     expectedArgsTypes: ['NUMBER'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`limpa {ARGUMENTS}',
     options: [{
         name: 'quantidade',
         description: 'quantidade de mensagens que o bot ira deletar (máximo de 100)',
@@ -29,7 +28,7 @@ module.exports = {
     
             const messages = await channel.messages.fetch({limit: amount})
             const {size} = messages
-            messages.forEach((message) => message.delete())
+            messages.forEach((message) => message === undefined ? null : message.delete())
 
             const reply = `${size} mensagens deletadas`
 
