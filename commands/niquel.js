@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const functions = require('../functions.js')
+const pick = require('pick-random-weighted')
 
 module.exports =  {
     aliases: ['níquel'],
@@ -8,7 +9,6 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: false,
     minArgs: 1,
     expectedArgs: '<falcoins>',
     expectedArgsTypes: ['STRING'],
@@ -20,8 +20,11 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
-    callback: async ({message, interaction, args}) => {
+    callback: async ({message, interaction, client, args}) => {
         try {
+            guild = client.guilds.cache.get('742332099788275732')
+            emojifoda = await guild.emojis.fetch('926953352774963310')
+            console.log(emojifoda)
             functions.createUser(message ? message.author.id : interaction.user.id)
             try {
                 var bet = await functions.specialArg(args[0], message ? message.author.id : interaction.user.id)
@@ -38,14 +41,15 @@ module.exports =  {
             }
             if (await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') >= bet && bet > 0) {
                 const emojis = [':dollar:', ':coin:', ':moneybag:', ':gem:', ':money_mouth:',':dollar:', ':coin:', ':moneybag:', ':gem:', ':money_mouth:',':dollar:', ':coin:', ':moneybag:', ':gem:', ':money_mouth:']
-                const emoji1 = emojis[functions.randint(0, emojis.length-1)]
-                const emoji2 = emojis[functions.randint(0, emojis.length-1)]
-                const emoji3 = emojis[functions.randint(0, emojis.length-1)]
+                const choices = [[':money_mouth:', 30], [':gem:', 10], [':moneybag:', 15], [':coin:', 25], [':dollar:', 20]]
+                const emoji1 = pick(choices)
+                const emoji2 = pick(choices)
+                const emoji3 = pick(choices)
     
                 const embed = new Discord.MessageEmbed()
                  .setColor(await functions.getRoleColor(message ? message : interaction, message ? message.author.id : interaction.user.id))
                  .setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
-                 .addField('-------------------\n | :dollar: | :dollar: | :dollar: |\n-------------------', '--- **GIRANDO** ---')
+                 .addField(`-------------------\n | ${emojifoda} | ${emojifoda} | ${emojifoda} |\n-------------------`, '--- **GIRANDO** ---')
                  .setFooter('by Falcão ❤️')
     
                 if (message) {
@@ -58,27 +62,16 @@ module.exports =  {
                         fetchReply: true
                     })
                 }
-    
-                emoji11 = [':dollar:']
-                emoji22 = [':dollar:']
-                for (let i = 0; i < emojis.length; i++) {
-                    index = i - 1
-                    var emoji = emojis[i]
-                    emoji11[0] = emoji
-                    emoji22[0] = emoji
-                    if (emoji === emoji1 && emoji11.length === 1) {
-                        emoji11.push(emoji)
-                    } else if (emoji === emoji2 && index > 4 && emoji22.length === 1) {
-                        emoji22.push(emoji)
-                    }
-                    embed.fields[0] = {'name': `-------------------\n | ${emoji11.slice(-1)} | ${emoji22.slice(-1)} | ${emoji} |\n-------------------`, 'value': '--- **GIRANDO** ---'}
-                    await answer.edit({
-                        embeds: [embed]
-                    })
-                    if (emoji === emoji3 && index > 9) {break;}
-                    await new Promise(resolve => setTimeout(resolve, 250));
-                }
-    
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                embed.fields[0] = {'name': `-------------------\n | ${emoji1} | ${emojifoda} | ${emojifoda} |\n-------------------`, 'value': '--- **GIRANDO** ---'}
+                await answer.edit({embeds: [embed]})
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                embed.fields[0] = {'name': `-------------------\n | ${emoji1} | ${emoji2} | ${emojifoda} |\n-------------------`, 'value': '--- **GIRANDO** ---'}
+                await answer.edit({embeds: [embed]})
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                embed.fields[0] = {'name': `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`, 'value': '--- **GIRANDO** ---'}
+                await answer.edit({embeds: [embed]})
+
                 arrayEmojis = [emoji1, emoji2, emoji3]
                 var dollar = await functions.count(arrayEmojis, ':dollar:')
                 var coin = await functions.count(arrayEmojis, ':coin:')
@@ -87,23 +80,23 @@ module.exports =  {
                 var money_mouth = await functions.count(arrayEmojis, ':money_mouth:')
     
                 if (dollar == 3) {
-                    var winnings = 3.5
+                    var winnings = 3
                 } else if (coin == 3) {
                     var winnings = 2.5
                 } else if (moneybag == 3) {
-                    var winnings = 4.5
+                    var winnings = 7
                 } else if (gem == 3) {
-                    var winnings = 5
+                    var winnings = 10
                 } else if (money_mouth == 3) {
-                    var winnings = 2
+                    var winnings = 2.5  
                 } else if (dollar == 2) {
-                    var winnings = 1.5
+                    var winnings = 2
                 } else if (coin == 2) {
-                    var winnings = 1
+                    var winnings = 2
                 } else if (moneybag == 2) {
                     var winnings = 3
                 } else if (gem == 2) {
-                    var winnings = 4
+                    var winnings = 5
                 } else if (money_mouth == 2) {
                     var winnings = 0.5
                 } else {
@@ -116,7 +109,7 @@ module.exports =  {
                     var embed2 = new Discord.MessageEmbed()
                      .setColor(3066993)
                      .addFields({
-                         name: `-------------------\n | ${emoji11.slice(-1)} | ${emoji22.slice(-1)} | ${emoji} |\n-------------------`,
+                         name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
                          value: '--- **Você ganhou!** ---',
                          inline: false
                      }, {
@@ -128,7 +121,7 @@ module.exports =  {
                     var embed2 = new Discord.MessageEmbed()
                      .setColor(15158332)
                      .addFields({
-                         name: `-------------------\n | ${emoji11.slice(-1)} | ${emoji22.slice(-1)} | ${emoji} |\n-------------------`,
+                         name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
                          value: '--- **Você perdeu!** ---',
                          inline: false
                      }, {
@@ -140,15 +133,9 @@ module.exports =  {
                 embed2.setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
                 embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins'))}`)
                 embed2.setFooter('by Falcão ❤️')
-                if (message) {
-                    await message.reply({
-                        embeds: [embed2]
-                    })
-                } else {
-                await interaction.followUp({
+                await answer.edit({
                     embeds: [embed2]
                 })
-                }
             } else if (bet <= 0) {
                     return `${bet} não é um valor válido... :rage:`
             } else {
