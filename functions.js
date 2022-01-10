@@ -12,6 +12,7 @@ function createUser(id) {
       Caixas: 0,
       Chaves: 0,
       Lootbox: 1000,
+      voto: 0
     }
 
     json = JSON.stringify(users, null, 2);
@@ -235,6 +236,11 @@ async function explain(command) {
         inline: false,
       },
       {
+        name: "Valores aceitos",
+        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
+        inline: false,
+      },
+      {
         name: "Uso",
         value: "/doar <@usuario> <falcoins>",
         inline: false,
@@ -251,6 +257,11 @@ async function explain(command) {
       {
         name: "Ganhos",
         value: "**5x**",
+        inline: false,
+      },
+      {
+        name: "Valores aceitos",
+        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
         inline: false,
       },
       {
@@ -279,6 +290,11 @@ async function explain(command) {
       {
         name: "Info",
         value: "Mostra os itens disponíveis para compra",
+        inline: false,
+      },
+      {
+        name: "Valores aceitos",
+        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
         inline: false,
       },
       {
@@ -315,6 +331,11 @@ async function explain(command) {
         inline: false,
       },
       {
+        name: "Valores aceitos",
+        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
+        inline: false,
+      },
+      {
         name: "Uso",
         value: "/roleta <tipo de aposta> <falcoins>",
         inline: false,
@@ -330,7 +351,12 @@ async function explain(command) {
       {
         name: "Ganhos",
         value:
-          ":money_mouth: :money_mouth: :grey_question: - **0.5x**\n:coin: :coin: :grey_question: - **1x**\n:dollar: :dollar: :grey_question: - **1.5x**\n:money_mouth: :money_mouth: :money_mouth: - **2x**\n:coin: :coin: :coin: - **2.5x**\n:moneybag: :moneybag: :grey_question: - **3x**\n:dollar: :dollar: :dollar: - **3.5x**\n:gem: :gem: :grey_question: - **4x**\n:moneybag: :moneybag: :moneybag: - **4.5x**\n:gem: :gem: :gem: - **5x**",
+          ":money_mouth: :money_mouth: :grey_question: - **0.5x**\n:coin: :coin: :grey_question: - **2x**\n:dollar: :dollar: :grey_question: - **2x**\n:money_mouth: :money_mouth: :money_mouth: - **2.5x**\n:coin: :coin: :coin: - **2.5x**\n:moneybag: :moneybag: :grey_question: - **3x**\n:dollar: :dollar: :dollar: - **3x**\n:gem: :gem: :grey_question: - **5x**\n:moneybag: :moneybag: :moneybag: - **7x**\n:gem: :gem: :gem: - **10x**",
+        inline: false,
+      },
+      {
+        name: "Valores aceitos",
+        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
         inline: false,
       },
       {
@@ -349,6 +375,11 @@ async function explain(command) {
       {
         name: "Ganhos",
         value: "O valor depositado aumenta em 1% ao dia",
+        inline: false,
+      },
+      {
+        name: "Valores aceitos",
+        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
         inline: false,
       },
       {
@@ -374,6 +405,11 @@ async function explain(command) {
         name: "Habilidades",
         value:
           "**instântaneo:** dá um dano x na hora\n**stun:** dá um dano x e deixa o inimigo paralizado por 1 turno\n**cura:** se cura em x de vida\n**roubo de vida:** rouba uma quantidade x de vida do inimigo\n**self:** dá um dano x a si mesmo\n**escudo:** se protege de todo e qualquer dano por 1 rodada\n\n**O bot escolhe os ataques aleatoriamente**",
+        inline: false,
+      },
+      {
+        name: "Valores aceitos",
+        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
         inline: false,
       },
       {
@@ -460,7 +496,7 @@ async function explain(command) {
         inline: false,
       },
     ])
-  } else if (command == "voto") {
+  } else if (command == "enquete") {
     embed.setColor("RED")
     embed.addFields([
       {
@@ -470,7 +506,7 @@ async function explain(command) {
       },
       {
         name: "Uso",
-        value: "/voto",
+        value: "/enquete",
         inline: false,
       },
     ])
@@ -530,12 +566,12 @@ async function explain(command) {
         inline: false,
       },
     ])
-  } else if (command == "duelo") {
+  } else if (command == "cavalgada") {
     embed.setColor("GREEN")
     embed.addFields([
       {
         name: "Info",
-        value: "Desafia outro usuário para um duelo de cavalos",
+        value: "Desafia outros usuários para uma corrida de cavalos",
         inline: false,
       },
       {
@@ -544,8 +580,13 @@ async function explain(command) {
         inline: false,
       },
       {
+        name: "Valores aceitos",
+        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
+        inline: false,
+      },
+      {
         name: "Uso",
-        value: "/duelo <@usuario>",
+        value: "/cavalo <falcoins>",
         inline: false,
       },
     ])
@@ -582,10 +623,53 @@ async function explain(command) {
         inline: false,
       },
       {
+        name: "Valores aceitos",
+        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
+        inline: false,
+      },
+      {
         name: "Uso",
         value: "?roletarussa <falcoins>",
         inline: false,
       }
+    ])
+  } else if (command == "velha") {
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Desafia outro usuário para um jogo da velha",
+        inline: false,
+      },
+      {
+        name: "Ganhos",
+        value: "**O vencedor leva tudo**",
+        inline: false,
+      },
+      {
+        name: "Valores aceitos",
+        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/velha <@usuario> <falcoins>",
+        inline: false,
+      },
+    ])
+  } else if (command == "voto") {
+    embed.setColor("GREEN")
+    embed.addFields([
+      {
+        name: "Info",
+        value: "Resgata sua recompensa por votar no bot no top.gg",
+        inline: false,
+      },
+      {
+        name: "Uso",
+        value: "/lootbox",
+        inline: false,
+      },
     ])
   } else {
     embed.setColor("BLUE")
@@ -593,24 +677,24 @@ async function explain(command) {
       {
         name: ":game_die: Comandos para a sala de jogos",
         value:
-          "`eu`, `sobre`, `lootbox`, `doar`, `cavalo`, `rank`, `loja`, `roleta`, `niquel`, `banco`, `luta`, `caixa`, `duelo`, `roletarussa`",
+          "`eu`, `sobre`, `lootbox`, `doar`, `cavalo`, `rank`, `loja`, `roleta`, `niquel`, `banco`, `luta`, `caixa`, `cavalgada`, `roletarussa`, `velha`, `voto`",
         inline: false,
       },
       {
         name: ":gear: Outros comandos",
         value:
-          "`prefix`, `comandos/help`, `limpa`, `math`, `voto`, `roll`, `coinflip`, `bonk`, `bola8`, `foto`",
+          "`prefix`, `comandos/help`, `limpa`, `math`, `enquete`, `roll`, `coinflip`, `bonk`, `bola8`, `foto`",
         inline: false,
       },
       {
-        name: "\u200B",
+        name: '\u200b',
         value: `Use /prefix para ver seu prefixo`,
         inline: false,
       },
       {
         name: "\u200B",
         value:
-          'O bot também aceita "metade", "tudo" e porcentagens no lugar de valores de aposta',
+          'Use /help <comando> para ver a descrição de um comando específico',
         inline: false,
       },
     ])
