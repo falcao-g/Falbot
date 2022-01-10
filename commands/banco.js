@@ -1,3 +1,4 @@
+
 const Discord = require('discord.js')
 const functions = require('../functions.js')
 
@@ -8,7 +9,6 @@ module.exports =  {
     cooldown: '1s',
     guildOnly: true,
     minArgs: 2,
-    testOnly: false,
     expectedArgs: '<opção> <falcoins>',
     expectedArgsTypes: ['STRING', 'STRING'],
     options: [{
