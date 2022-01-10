@@ -8,7 +8,6 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: false,
     expectedArgs: '[numero] [quantidade]',
     expectedArgsTypes: ['NUMBER', 'NUMBER'],
     options: [
@@ -43,7 +42,11 @@ module.exports =  {
                     inline: false
                 }, {
                     name: 'Item número 3: Aumento de lootbox',
-                    value: 'Pelo custo de 50.000 falcoins você aumenta seu ganho na lootbox em 1000 falcoins'
+                    value: 'Pelo custo de 50.000 falcoins você aumenta seu ganho na lootbox em 1000 falcoins',
+                    inline: false
+                }, {
+                    name: '\u200b',
+                    value: 'Use `?loja [numero] [quantidade]` para comprar um item',
                 })
                 .setFooter('by Falcão ❤️')
                 return embed
