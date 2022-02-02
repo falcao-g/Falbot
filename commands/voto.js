@@ -9,23 +9,23 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    callback: async ({message, interaction, client, args}) => {
+    callback: async ({user}) => {
         try {
             const topgg = new top.Client(config.Authorization)
 
-            if (await topgg.isVoted(message ? message.author.id : interaction.user.id) && (Date.now() - await functions.readFile(message ? message.author.id : interaction.user.id, 'voto') > 43200000)) {
-                functions.changeJSON(message ? message.author.id : interaction.user.id, 'voto', Date.now())
-                functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', 5000)
+            if (await topgg.isVoted(user.id) && (Date.now() - await functions.readFile(user.id, 'voto') > 43200000)) {
+                functions.changeJSON(user.id, 'voto', Date.now(), true)
+                functions.changeJSON(user.id, 'Falcoins', 5000)
                 const embed = new Discord.MessageEmbed()
                 .setColor(3066993) 
                 .addField('Você ganhou', `**5000** falcoins`)
-                .addField('Saldo atual', `**${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins'))}** falcoins`)
+                .addField('Saldo atual', `**${await functions.format(await functions.readFile(user.id, 'Falcoins'))}** falcoins`)
                 .setFooter('by Falcão ❤️')
                 return embed
-            } else if (await topgg.isVoted(message ? message.author.id : interaction.user.id) && (Date.now() - await functions.readFile(message ? message.author.id : interaction.user.id, 'voto') < 43200000)) {
+            } else if (await topgg.isVoted(user.id) && (Date.now() - await functions.readFile(user.id, 'voto') < 43200000)) {
                 const embed = new Discord.MessageEmbed()
                 .setColor(15158332) 
-                .addField('Você já coletou sua recompensa hoje', `Recompensa: **5000** falcoins\nVocê pode coletar de novo em **${await functions.msToTime(43200000 - (Date.now() - await functions.readFile(message ? message.author.id : interaction.user.id, 'voto')))}**`)
+                .addField('Você já coletou sua recompensa hoje', `Recompensa: **5000** falcoins\nVocê pode coletar de novo em **${await functions.msToTime(43200000 - (Date.now() - await functions.readFile(user.id, 'voto')))}**`)
                 .setFooter('by Falcão ❤️')
                 return embed
             } else {
@@ -38,7 +38,7 @@ module.exports =  {
                 return embed
             }
         } catch (error) {
-            console.log(`voto2: ${error}`)
+            console.error(`voto: ${error}`)
         }
     }
 }   
