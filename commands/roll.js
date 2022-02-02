@@ -11,14 +11,13 @@ module.exports = {
     minArgs: 1,
     expectedArgs: '<dados>',
     expectedArgsTypes: ['STRING'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`roll {ARGUMENTS}',
     options: [{
         name: 'dados',
         description: 'dados que eu vou rolar para você',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],
-    callback: async ({message, interaction, text}) => {
+    callback: async ({message, interaction, user, text}) => {
         try {
             const roll = new Roll()
             text = text.replace(/\s/g,'')
@@ -38,7 +37,7 @@ module.exports = {
                     })
                 }else {
                     embed = new Discord.MessageEmbed()
-                    .setColor(await functions.getRoleColor(message ? message : interaction, message ? message.author.id : interaction.user.id))
+                    .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
                     .addFields({
                         name: 'Dados:',
                         value: text,
@@ -56,7 +55,7 @@ module.exports = {
                 }
             }
         } catch(error) {
-            console.log('roll:', error)
+            console.error(`roll: ${error}`)
         }
     }
 }
