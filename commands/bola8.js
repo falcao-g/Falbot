@@ -12,14 +12,13 @@ module.exports = {
     minArgs: 1,
     expectedArgs: '<pergunta>',
     expectedArgsTypes: ['STRING'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`bola8 {ARGUMENTS}',
     options: [{
         name: 'pergunta',
         description: 'a pergunta que a bola 8 mágica responderá',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],
-    callback: async ({message, interaction, text}) => {
+    callback: async ({message, interaction, user, text}) => {
         try {
             const answers = [
                 "certamente.",
@@ -44,14 +43,14 @@ module.exports = {
             ]
             let answer = `${answers[functions.randint(0, answers.length-1)]}`
             const embed = new Discord.MessageEmbed()
-             .setColor(await functions.getRoleColor(message ? message : interaction, message ? message.author.id : interaction.user.id))
+             .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
              .setAuthor('Bola 8 mágica', "https://images.emojiterra.com/google/noto-emoji/unicode-13.1/128px/1f3b1.png")
              if (interaction) { embed.addField('Pergunta:', text, false)}
              embed.addField('Previsão:', answer, false)
              .setFooter('by Falcão ❤️')
             return embed
         } catch (error) {
-            console.log('Bola8:', error)
+            console.error(`Bola8: ${error}`)
         }
     }
 }
