@@ -10,7 +10,6 @@ module.exports =  {
     guildOnly: true,
     expectedArgs: '[escopo]',
     expectedArgsTypes: ['STRING'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`rank {ARGUMENTS}',
     options: [{
         name:'escopo',
         description: 'use "global" para ver o rank global, use "local" para ver o rank local',
@@ -18,43 +17,43 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
-    callback: async ({message, interaction, args, client}) => {
+    callback: async ({message, interaction, client, user, args}) => {
         try {
                 var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
                 rank = []
                 if (args[0] === 'local') {
-                    for (user in users) {
-                        if (await functions.getMember(message ? message : interaction, user)) {
+                    for (useri in users) {
+                        if (await functions.getMember(message ? message : interaction, useri)) {
                           if(!rank.length) {
-                              rank.push(user)
+                              rank.push(useri)
                           } else {
                               size = rank.length
                               for (let i = 0; i < size;i++) {
-                                  if (users[user]['Falcoins'] > users[rank[i]]['Falcoins']) {
-                                      rank.splice(i, 0, user)
+                                  if (users[useri]['Falcoins'] > users[rank[i]]['Falcoins']) {
+                                      rank.splice(i, 0, useri)
                                       break;
                                   }
                               }
                               if (rank.length === size) {
-                                  rank.push(user)
+                                  rank.push(useri)
                               }
                           }
                         }
                       }
                 } else {
-                    for (user in users) {
+                    for (useri in users) {
                         if(!rank.length) {
-                            rank.push(user)
+                            rank.push(useri)
                         } else {
                             size = rank.length
                             for (let i = 0; i < size;i++) {
-                                if (users[user]['Falcoins'] > users[rank[i]]['Falcoins']) {
-                                    rank.splice(i, 0, user)
+                                if (users[useri]['Falcoins'] > users[rank[i]]['Falcoins']) {
+                                    rank.splice(i, 0, useri)
                                     break;
                                 }
                             }
                             if (rank.length === size) {
-                                rank.push(user)
+                                rank.push(useri)
                             }
                         }
                       }
@@ -62,7 +61,7 @@ module.exports =  {
                 top10 = rank
                 top10.splice(10)
                 const embed = new Discord.MessageEmbed()
-                .setColor(await functions.getRoleColor(message ? message : interaction, message ? message.author.id : interaction.user.id))
+                .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
                 .setFooter('by Falcão ❤️')
                 for (let i = 0; i < top10.length; i++) {
                     try {
@@ -74,7 +73,7 @@ module.exports =  {
                 }
                 return embed
         } catch (error) {
-                console.log('rank:', error)
+                console.error(`rank: ${error}`)
         }
     }
 }   
