@@ -20,35 +20,25 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
-    callback: async ({message, interaction, client, args}) => {
+    callback: async ({message, interaction, client, user, args}) => {
         try {
             guild = client.guilds.cache.get('742332099788275732')
             emojifoda = await guild.emojis.fetch('926953352774963310')
-            console.log(emojifoda)
-            functions.createUser(message ? message.author.id : interaction.user.id)
+            functions.createUser(user.id)
             try {
-                var bet = await functions.specialArg(args[0], message ? message.author.id : interaction.user.id)
+                var bet = await functions.specialArg(args[0], user.id)
             } catch {
-                if (message) {
-                    message.reply({
-                        content: `${args[0]} não é um valor válido... :rage:`
-                    })
-                } else {
-                    interaction.reply({
-                        content: `${args[0]} não é um valor válido... :rage:`
-                    })
-                }
+                return `${args[0]} não é um valor válido... :rage:`
             }
-            if (await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') >= bet && bet > 0) {
-                const emojis = [':dollar:', ':coin:', ':moneybag:', ':gem:', ':money_mouth:',':dollar:', ':coin:', ':moneybag:', ':gem:', ':money_mouth:',':dollar:', ':coin:', ':moneybag:', ':gem:', ':money_mouth:']
+            if (await functions.readFile(user.id, 'Falcoins') >= bet && bet > 0) {
                 const choices = [[':money_mouth:', 30], [':gem:', 10], [':moneybag:', 15], [':coin:', 25], [':dollar:', 20]]
                 const emoji1 = pick(choices)
                 const emoji2 = pick(choices)
                 const emoji3 = pick(choices)
     
                 const embed = new Discord.MessageEmbed()
-                 .setColor(await functions.getRoleColor(message ? message : interaction, message ? message.author.id : interaction.user.id))
-                 .setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
+                 .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
+                 .setAuthor(user.username, user.avatarURL())
                  .addField(`-------------------\n | ${emojifoda} | ${emojifoda} | ${emojifoda} |\n-------------------`, '--- **GIRANDO** ---')
                  .setFooter('by Falcão ❤️')
     
@@ -103,7 +93,7 @@ module.exports =  {
                     var winnings = 0
                 }
                 var profit = parseInt(bet * winnings)
-                functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', profit-bet)
+                functions.changeJSON(user.id, 'Falcoins', profit-bet)
     
                 if (profit > 0) {
                     var embed2 = new Discord.MessageEmbed()
@@ -130,8 +120,8 @@ module.exports =  {
                          inline: true
                      })
                 }
-                embed2.setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
-                embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins'))}`)
+                embed2.setAuthor(user.username, user.avatarURL())
+                embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(user.id, 'Falcoins'))}`)
                 embed2.setFooter('by Falcão ❤️')
                 await answer.edit({
                     embeds: [embed2]
@@ -142,7 +132,7 @@ module.exports =  {
                     return `você não tem falcoins suficientes para esta aposta! :rage:`
                 }
         } catch (error) {
-            console.log('niquel:', error)
+            console.error(`niquel: ${error}`)
         }
     }
 }   
