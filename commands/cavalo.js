@@ -7,7 +7,6 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: false,
     minArgs: 2,
     expectedArgs: '<numedo_do_cavalo> <falcoins>',
     expectedArgsTypes: ['NUMBER', 'STRING'],
@@ -25,15 +24,15 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
-    callback: async ({message, interaction, args}) => {
+    callback: async ({message, interaction, user, args}) => {
         try {
-            functions.createUser(message ? message.author.id : interaction.user.id)
+            functions.createUser(user.id)
             try {
-                var bet = await functions.specialArg(args[1], message ? message.author.id : interaction.user.id)
+                var bet = await functions.specialArg(args[1], user.id)
             } catch {
                 return `${args[1]} não é um valor válido... :rage:`
             }
-            if (await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') >= bet && bet > 0) {
+            if (await functions.readFile(user.id, 'Falcoins') >= bet && bet > 0) {
                 if (args[0] >= 1 && args[0] <= 5) {
                     let horse1 = '- - - - -'
                     let horse2 = '- - - - -'
@@ -42,8 +41,8 @@ module.exports =  {
                     let horse5 = '- - - - -'
                     const embed = new Discord.MessageEmbed()
                      .addField('Cavalo', `:checkered_flag: ${horse1} :horse_racing:\n\u200b\n:checkered_flag: ${horse2} :horse_racing:\n\u200b\n:checkered_flag: ${horse3} :horse_racing:\n\u200b\n:checkered_flag: ${horse4} :horse_racing:\n\u200b\n:checkered_flag: ${horse5} :horse_racing:`)
-                     .setColor(await functions.getRoleColor(message ? message : interaction, message ? message.author.id : interaction.user.id))
-                     .setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
+                     .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
+                     .setAuthor(user.username, user.avatarURL())
                      .setFooter('by Falcão ❤️')
                     
                     if (message) {
@@ -94,20 +93,20 @@ module.exports =  {
     
                     if (args[0] == winner) {
                         profit = bet * 5
-                        functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', profit-bet)
+                        functions.changeJSON(user.id, 'Falcoins', profit-bet)
                         var embed2 = new Discord.MessageEmbed()
                          .setColor(3066993)
                          .addField(`Cavalo ${winner} ganhou!`, `Você ganhou ${await functions.format(bet*5)} falcoins`, false)
                     } else {
                         profit = 0
-                        functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', -bet)
+                        functions.changeJSON(user.id, 'Falcoins', -bet)
                         var embed2 = new Discord.MessageEmbed()
                          .setColor(15158332)
                          .addField(`Cavalo ${winner} ganhou!`, `Você perdeu ${await functions.format(bet)} falcoins`, false)
                     }
     
-                    embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins'))} falcoins`, false)
-                    embed2.setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
+                    embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(user.id, 'Falcoins'))} falcoins`, false)
+                    embed2.setAuthor(user.username, user.avatarURL())
                     embed2.setFooter('by Falcão ❤️')
                     if (message) {
                         await message.reply({
@@ -125,7 +124,7 @@ module.exports =  {
                     return `você não tem falcoins suficientes para esta aposta! :rage:`
                 }
         } catch (error) {
-            console.log('Cavalo:', error)
+            console.error(`Cavalo: ${error}`)
         }
     }
 }   
