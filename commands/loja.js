@@ -2,7 +2,6 @@ const Discord = require('discord.js')
 const functions = require('../functions.js')
 
 module.exports =  {
-    aliases: ['níquel'],
     category: 'Economia',
     description: 'loja com itens que podem te ajudar a ganhar mais falcoins',
     slash: 'both',
@@ -25,12 +24,12 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER
     }
     ],
-    callback: async ({message, interaction, args}) => {
+    callback: async ({message, interaction, user, args}) => {
         try {
-            functions.createUser(message ? message.author.id : interaction.user.id)
+            functions.createUser(user.id)
             if (args[0] === undefined && args[1] === undefined) {
                 const embed = new Discord.MessageEmbed()
-                .setColor(await functions.getRoleColor(message ? message : interaction, message ? message.author.id : interaction.user.id))
+                .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
                 .setTitle('**Loja**')
                 .addFields({
                     name: 'Item número 1: Caixa',
@@ -57,7 +56,7 @@ module.exports =  {
                 }
     
                 amount = parseInt(args[1] || 1)
-                if (amount <= 0) {
+                if (amount <= 0 || amount != amount) {
                     return 'quantidade inválida! coloque um número positivo ou deixe em branco para comprar 1 :face_with_monocle:'
                 }
     
@@ -66,27 +65,27 @@ module.exports =  {
                 }
 
                 if (item === 1) {
-                    if (await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') >= 5000 * amount) {
+                    if (await functions.readFile(user.id, 'Falcoins') >= 5000 * amount) {
                         for (let i = 0; i < amount; i++) {
-                            functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', -5000 * amount)
-                            functions.changeJSON(message ? message.author.id : interaction.user.id, 'Caixas', 1 * amount)
+                            functions.changeJSON(user.id, 'Falcoins', -5000 * amount)
+                            functions.changeJSON(user.id, 'Caixas', 1 * amount)
                         }
                         return `Parabéns! Você comprou ${amount} caixas :star_struck:`
                     } else {
                         return 'você não tem falcoins suficiente para comprar esse item! :rage:'
                     }
                 } else if (item === 2) {
-                    if (await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') >= 20000 * amount) {
-                        functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', -20000 * amount)
-                        functions.changeJSON(message ? message.author.id : interaction.user.id, 'Chaves', 1 * amount)
+                    if (await functions.readFile(user.id, 'Falcoins') >= 20000 * amount) {
+                        functions.changeJSON(user.id, 'Falcoins', -20000 * amount)
+                        functions.changeJSON(user.id, 'Chaves', 1 * amount)
                         return `Parabéns! Você comprou ${amount} chaves :star_struck:`
                     } else {
                         return 'você não tem falcoins suficiente para comprar esse item! :rage:'
                     }
                 } else if (item === 3) {
-                    if (await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') >= 50000 * amount) {
-                        functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', -50000 * amount)
-                        functions.changeJSON(message ? message.author.id : interaction.user.id, 'Lootbox', 1000 * amount)
+                    if (await functions.readFile(user.id, 'Falcoins') >= 50000 * amount) {
+                        functions.changeJSON(user.id, 'Falcoins', -50000 * amount)
+                        functions.changeJSON(user.id, 'Lootbox', 1000 * amount)
                         return `Parabéns! Você comprou ${amount} aumentos da lootbox :star_struck:`
                     } else {
                         return 'você não tem falcoins suficiente para comprar esse item! :rage:'
@@ -94,7 +93,7 @@ module.exports =  {
                 } 
             }
         } catch (error) {
-            console.log('loja:', error)
+            console.error(`loja: ${error}`)
         }
     }
 }   
