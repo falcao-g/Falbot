@@ -8,17 +8,14 @@ module.exports =  {
     slash: 'both',
     cooldown: '12h',
     guildOnly: true,
-    callback: async ({message, interaction}) => {
+    callback: async ({user}) => {
         try {
-            const quantity = await functions.readFile(message ? message.author.id : interaction.user.id, 'Lootbox')
-            functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', quantity)
+            functions.createUser(user.id)
+            const quantity = await functions.readFile(user.id, 'Lootbox')
+            functions.changeJSON(user.id, 'Falcoins', quantity)
             return `Parabéns! Você ganhou **${quantity}** falcoins :heart_eyes:`
         } catch (error) {
-            if (error.message.includes("Cannot read property 'Lootbox' of undefined")) {
-                return 'registro não encontrado! :face_with_spiral_eyes:\npor favor use /cria para criar seu registro e poder usar os comandos de economia'
-            } else {
-                console.log('lootbox:', error)
-            }
+            console.error(`lootbox: ${error}`)
         }
     }
 }
