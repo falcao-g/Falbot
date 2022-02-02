@@ -24,11 +24,11 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }   
     ],
-    callback: async ({message, interaction, client, args}) => {
+    callback: async ({message, interaction, client, user, args}) => {
         try {
             var board = new Board.default()
-            functions.createUser(message ? message.author.id : interaction.user.id)
-            const author = message ? message.author : interaction.user
+            functions.createUser(user.id)
+            const author = user
             if (message) {
                 if (args[0][2] == '!') {
                     args[0] = args[0].slice(3,-1)
@@ -40,11 +40,11 @@ module.exports =  {
             const member = await functions.getMember(message ? message : interaction, args[0])
             if (member.user != author) {
                 try {
-                    var bet = await functions.specialArg(args[1], message ? message.author.id : interaction.user.id)
+                    var bet = await functions.specialArg(args[1], user.id)
                 } catch {
                     return `${args[1]} não é um valor válido... :rage:`
                 } 
-                if (await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') >= bet && await functions.readFile(member.user.id, 'Falcoins') >= bet && bet > 0) {
+                if (await functions.readFile(user.id, 'Falcoins') >= bet && await functions.readFile(member.user.id, 'Falcoins') >= bet && bet > 0) {
                     if (message) {
                         var answer = await message.reply({
                             content: `${author.username} chamou ${member.user.username} para um jogo da velha apostando ${await functions.format(bet)} falcoins :older_woman:`
@@ -213,7 +213,7 @@ module.exports =  {
                 return 'Você não pode jogar com você mesmo, espertinho :rage:'
             }
         } catch (error) {
-            console.log(`velha: ${error}`)
+            console.error(`velha: ${error}`)
         }
     }
 }   
