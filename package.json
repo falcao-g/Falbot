@@ -1,7 +1,7 @@
 {
   "name": "falbot",
-  "version": "2.2.0",
-  "description": "https://top.gg/bot/742331813539872798",
+  "version": "2.2.1",
+  "description": "https://falbot.netlify.app/",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
