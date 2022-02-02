@@ -16,30 +16,28 @@ module.exports = {
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],
-    callback: async ({message, interaction, text}) => {
+    callback: async ({message, interaction, user, text}) => {
         try {
             const embed = new Discord.MessageEmbed()
-            .setColor(await functions.getRoleColor(message ? message : interaction, message ? message.author.id : interaction.user.id))
+            .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
             .setDescription(text)
-            .setAuthor(`Novo voto de ${message ? message.author.username : interaction.user.username}`, message ? message.author.avatarURL() : interaction.user.avatarURL())
+            .setAuthor(`Nova enquete de ${user.username}`, user.avatarURL())
            .setFooter('by Falcão ❤️')
    
            if (message) {
                answer = await message.reply({
                    embeds: [embed]
                })
-               answer.react('👍')
-               answer.react('👎')
            } else {
                answer = await interaction.reply({
                    embeds: [embed],
                    fetchReply: true
                })
-               answer.react('👍')
-               answer.react('👎')
            }
+           answer.react('👍')
+           answer.react('👎')
         } catch (error) {
-            console.log('voto', error)
+            console.error(`enquete: ${error}`)
         }
     }
 }
