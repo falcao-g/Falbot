@@ -7,7 +7,6 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: false,
     minArgs: 1,
     expectedArgs: '<sobre>',
     expectedArgsTypes: ['USER'],
@@ -57,7 +56,7 @@ module.exports =  {
     
             return embed
         } catch (error) {
-                console.log('sobre:', error)
+                console.error(`sobre: ${error}`)
         }
     }
 }
