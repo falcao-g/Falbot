@@ -2,39 +2,55 @@ const fs = require("fs");
 const { MessageEmbed } = require("discord.js");
 
 function createUser(id) {
-  var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
+  try {
+    var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
 
-  if (users[id] == undefined) {
-    users[id] = {
-      Falcoins: 10000,
-      Vitorias: 0,
-      Banco: 0,
-      Caixas: 0,
-      Chaves: 0,
-      Lootbox: 1000,
-      voto: 0
+    if (users[id] == undefined ) {
+      users[id] = {
+        Falcoins: 10000,
+        Vitorias: 0,
+        Banco: 0,
+        Caixas: 0,
+        Chaves: 0,
+        Lootbox: 1000,
+        voto: 0
+      }
+  
+      json = JSON.stringify(users, null, 2);
+      fs.writeFileSync("falbot.json", json, "utf8")
+      return true
     }
-
-    json = JSON.stringify(users, null, 2);
-    fs.writeFileSync("falbot.json", json, "utf8")
-    return true
+    return false
+  } catch (error) {
+    console.error(`Erro ao criar usuário: ${error}`)
   }
-  return false
 }
 
-function changeJSON(id, field, quantity = 1) {
-  var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
-  users[id][field] += quantity
-  json = JSON.stringify(users, null, 2)
-  fs.writeFileSync("falbot.json", json, "utf8")
+function changeJSON(id, field, quantity = 1, erase = false) {
+  try {
+    var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
+    if (erase == true) {
+      users[id][field] = quantity
+    } else {
+      users[id][field] += quantity
+    }
+    json = JSON.stringify(users, null, 2)
+    fs.writeFileSync("falbot.json", json, "utf8") 
+  } catch (error) {
+    console.error(`Erro ao alterar JSON: ${error}`)	
+  }
 }
 
 function takeAndGive(id, id2, field, field2, quantity = 1) {
-  var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
+  try {
+    var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
     users[id][field] -= quantity;
     users[id2][field2] += quantity;
     json = JSON.stringify(users, null, 2);
     fs.writeFileSync("falbot.json", json, "utf8")
+  } catch (error) {
+    console.error(`Erro ao alterar JSON no takeAndGive: ${error}`)
+  }
 }
 
 async function msToTime(ms) {
@@ -83,7 +99,7 @@ async function msToTime(ms) {
   return time.trimEnd();
 }
 
-async function specialArg(arg, id) {
+async function specialArg(arg, id, field) {
   var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
 
   arg = arg.toString()
@@ -97,48 +113,24 @@ async function specialArg(arg, id) {
   }
 
   if (new_arg == "tudo") {
-    new_arg = users[id]["Falcoins"];
+    new_arg = users[id][field];
   } else if (new_arg == "metade") {
-    new_arg = parseInt(users[id]["Falcoins"] / 2);
+    new_arg = parseInt(users[id][field] / 2);
   } else {
     for (c in new_arg) {
       if (new_arg[c] == "%") {
         new_arg = parseInt(
-          (parseInt(new_arg.slice(0, -1)) * parseInt(users[id]["Falcoins"])) /
+          (parseInt(new_arg.slice(0, -1)) * parseInt(users[id][field])) /
             100
         );
       }
     }
   }
-  return parseInt(new_arg);
-}
-
-async function specialArgBank(arg, id) {
-  var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
-
-  arg = arg.toLowerCase()
-
-  new_arg = "";
-  for (c in arg) {
-    if (arg[c] != "." && arg[c] != ",") {
-      new_arg += arg[c];
-    }
-  }
-
-  if (new_arg == "tudo") {
-    new_arg = users[id]["Banco"];
-  } else if (new_arg == "metade") {
-    new_arg = parseInt(users[id]["Banco"] / 2);
+  if (parseInt(new_arg) < 0 || isNaN(parseInt(new_arg))) {
+    throw Error("Argumento inválido!");
   } else {
-    for (c in new_arg) {
-      if (new_arg[c] == "%") {
-        new_arg = parseInt(
-          (parseInt(new_arg.slice(0, -1)) * parseInt(users[id]["Banco"])) / 100
-        );
-      }
-    }
+    return parseInt(new_arg);
   }
-  return parseInt(new_arg);
 }
 
 async function format(falcoins) {
@@ -162,12 +154,16 @@ async function format(falcoins) {
 }
 
 async function readFile(id, field = "") {
-  var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
+  try {
+    var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
 
-  if (field == "") {
-    return users[id];
-  } else {
-    return users[id][field];
+    if (field == "") {
+      return users[id];
+    } else {
+      return users[id][field];
+    }
+  } catch (error) {
+    console.error(`Erro ao ler arquivo: ${error}`)
   }
 }
 
@@ -213,7 +209,7 @@ async function explain(command) {
         inline: false,
       },
     ])
-  } else if (command == "lootbox") {
+  } else if (command == "lootbox" || command == "lb") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -341,7 +337,7 @@ async function explain(command) {
         inline: false,
       },
     ])
-  } else if (command == "niquel") {
+  } else if (command == "niquel" || command == "níquel") {
     embed.setColor("GREEN")
     embed.addFields({
         name: "Info",
@@ -718,21 +714,33 @@ function randint(low, high) {
 }
 
 async function bankInterest() {
-  console.log('poupança!')
-  var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
-  for (user in users) {
-    users[user]['Banco'] += Math.floor(parseInt(users[user]['Banco'] * 0.01))
+  var config = JSON.parse(fs.readFileSync("./config/config.json", "utf8"));
+  if (Date.now() - config["poupanca"]["last_interest"] > config["poupanca"]["interest_time"]) {
+    console.log('poupança!')
+    config["poupanca"]["last_interest"] = Date.now().toString()
+
+    var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
+
+    for (user in users) {
+      users[user]['Banco'] += Math.floor(parseInt(users[user]['Banco'] * parseFloat(config["poupanca"]["interest_rate"])))
+    }
+
+    json = JSON.stringify(users, null, 2);
+    json2 = JSON.stringify(config, null, 1);
+
+    fs.writeFileSync("falbot.json", json, "utf8", function (err) {
+      if (err) throw err;
+    });
+
+    fs.writeFileSync("./config/config.json", json2, "utf8", function (err) {
+      if (err) throw err;
+    });
   }
-  json = JSON.stringify(users, null, 2);
-  fs.writeFileSync("falbot.json", json, "utf8", function (err) {
-    if (err) throw err;
-  });
 }
 
 module.exports = {
     createUser, changeJSON, msToTime,
-    specialArg, specialArgBank, 
-    format, readFile, getRoleColor,
+    specialArg, format, readFile, getRoleColor,
     getMember, explain, takeAndGive, count,
     randint, bankInterest
 }
