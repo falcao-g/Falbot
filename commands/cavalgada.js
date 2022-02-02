@@ -18,16 +18,16 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }   
     ],
-    callback: async ({message, interaction, client, args}) => {
+    callback: async ({message, interaction, client, user, args}) => {
         try {
-            functions.createUser(message ? message.author.id : interaction.user.id)
-            const author = message ? message.author : interaction.user
+            functions.createUser(user.id)
+            const author = user
             try {
-                var bet = await functions.specialArg(args[0], message ? message.author.id : interaction.user.id)
+                var bet = await functions.specialArg(args[0], user.id)
             } catch {
                 return `${args[1]} não é um valor válido... :rage:`
             } 
-            if (await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') >= bet) {
+            if (await functions.readFile(user.id, 'Falcoins') >= bet) {
                 var pot = bet
                 const embed = new Discord.MessageEmbed()
                 .setTitle('Cavalgada')
@@ -158,7 +158,7 @@ module.exports =  {
                 return 'Saldo insuficiente!'
             }
         } catch (error) {
-            console.log('cavalgada:', error)
+            console.error(`Cavalgada: ${error}`)
         }
     }
 }   
