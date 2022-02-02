@@ -11,26 +11,25 @@ module.exports = {
     minArgs: 1,
     expectedArgs: '<expressão>',
     expectedArgsTypes: ['STRING'],
-    syntaxError: 'uso incorreto! faça `{PREFIX}`math {ARGUMENTS}',
     options: [{
         name: 'expressão',
         description: 'a expressão matemática que eu irei calcular',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],
-    callback: async ({message, interaction, text}) => {
+    callback: async ({message, interaction, user, text}) => {
         try {
             answer = await math.evaluate(text).toString()
 
             const embed = new Discord.MessageEmbed()
-             .setColor(await functions.getRoleColor(message ? message : interaction, message ? message.author.id : interaction.user.id))
+             .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
              if (interaction) { embed.addField('Expressão:', text, false)}
              embed.addField('Resultado:', answer, false)
              .setFooter('by Falcão ❤️')
     
             return embed
         }catch (error) {
-            console.log('math:', error)
+            console.error(`math: ${error}`)
         }
     }
 }
