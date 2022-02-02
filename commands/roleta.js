@@ -7,7 +7,6 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: false,
     minArgs: 2,
     expectedArgs: '<tipo> <falcoins>',
     expectedArgsTypes: ['STRING', 'STRING'],
@@ -24,28 +23,20 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
-    callback: async ({message, interaction, args}) => {
+    callback: async ({message, interaction, user, args}) => {
         try {
-            functions.createUser(message ? message.author.id : interaction.user.id)
+            functions.createUser(user.id)
             args[0] = args[0].toLowerCase()
             if (args[0] === 'ímpar') {args[0] = 'impar'}
     
             if (args[0] == 'preto' || args[0] == 'vermelho' || args[0] == 'verde' || args[0] == 'altos' || args[0] == 'baixos' || args[0] == 'par' || args[0] == 'impar' || (parseInt(args[0]) >=0 && parseInt(args[0]) <= 36)) {
                 try {
-                    var bet = await functions.specialArg(args[1], message ? message.author.id : interaction.user.id)
+                    var bet = await functions.specialArg(args[1], user.id)
                 } catch {
-                    if (message) {
-                        message.reply({
-                            content: `${args[1]} não é um valor válido... :rage:`
-                        })
-                    } else {
-                        interaction.reply({
-                            content: `${args[1]} não é um valor válido... :rage:`
-                        })
-                    }
+                    return `${args[1]} não é um valor válido... :rage:`
                 }
     
-                if (await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') >= bet && bet > 0) {
+                if (await functions.readFile(user.id, 'Falcoins') >= bet && bet > 0) {
     
                     const types = {
                         verde: [0],
@@ -69,10 +60,10 @@ module.exports =  {
                     const luck = functions.randint(0, 36)
     
                     if (type.includes(luck)) {
-                        functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', profit-bet)
+                        functions.changeJSON(user.id, 'Falcoins', profit-bet)
                         var embed = new Discord.MessageEmbed()
                          .setColor(3066993)
-                         .setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
+                         .setAuthor(user.username, user.avatarURL())
                          .addFields({
                              name: 'Você ganhou! :sunglasses:',
                              value: `O bot rolou **${luck}**`,
@@ -86,12 +77,12 @@ module.exports =  {
                              value:`${await functions.format(profit)} falcoins`,
                              inline: true
                          })
-                         .addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins'))} falcoins`, false)
+                         .addField('Saldo atual', `${await functions.format(await functions.readFile(user.id, 'Falcoins'))} falcoins`, false)
                     } else {
-                        functions.changeJSON(message ? message.author.id : interaction.user.id, 'Falcoins', -bet  )
+                        functions.changeJSON(user.id, 'Falcoins', -bet  )
                         var embed = new Discord.MessageEmbed()
                          .setColor(15158332)
-                         .setAuthor(message ? message.author.username : interaction.user.username, message ? message.author.avatarURL() : interaction.user.avatarURL())
+                         .setAuthor(user.username, user.ava)
                          .addFields({
                              name: 'Você perdeu! :pensive:',
                              value: `O bot rolou **${luck}**`,
@@ -105,20 +96,20 @@ module.exports =  {
                              value:`${await functions.format(bet)} falcoins`,
                              inline: true
                         })
-                        embed.addField('Saldo atual', `${await functions.format(await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins'))} falcoins`, false)
+                        embed.addField('Saldo atual', `${await functions.format(await functions.readFile(user.id, 'Falcoins'))} falcoins`, false)
                     }
                     embed.setFooter('by Falcão ❤️')
                     return embed
                 } else if (bet <= 0) {
                     return `${bet} não é um valor rápido... :rage:`
                 } else {
-                    return `${message ? message.author : interaction.user} você não tem falcoins suficiente para esta aposta! :rage:`
+                    return `${user} você não tem falcoins suficiente para esta aposta! :rage:`
                 }
             } else {
                 return `${args[0]} não é um tipo de aposta válido`
             }
         } catch (error) {
-            console.log('roleta:', error)
+            console.error(`roleta: ${error}`)
         }
     }
 }   
