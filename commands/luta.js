@@ -7,7 +7,6 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: false,
     minArgs: 2,
     expectedArgs: '<usuario> <falcoins>',
     expectedArgsTypes: ['USER', 'STRING'],
@@ -24,10 +23,10 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }   
     ],
-    callback: async ({message, interaction, args}) => {
+    callback: async ({message, interaction, user, args}) => {
         try {
-            functions.createUser(message ? message.author.id : interaction.user.id)
-            const author = message ? message.author : interaction.user
+            functions.createUser(user.id)
+            const author = user
             if (message) {
                 if (args[0][2] == '!') {
                     args[0] = args[0].slice(3,-1)
@@ -39,11 +38,11 @@ module.exports =  {
             var member = await functions.getMember(message ? message : interaction, args[0])
             if (member.user != author) {
                 try {
-                    var bet = await functions.specialArg(args[1], message ? message.author.id : interaction.user.id)
+                    var bet = await functions.specialArg(args[1], user.id)
                 } catch {
                     return `${args[1]} não é um valor válido... :rage:`
                 } 
-                if (await functions.readFile(message ? message.author.id : interaction.user.id, 'Falcoins') >= bet && await functions.readFile(member.user.id, 'Falcoins') >= bet && bet > 0) {
+                if (await functions.readFile(user.id, 'Falcoins') >= bet && await functions.readFile(member.user.id, 'Falcoins') >= bet && bet > 0) {
                     if (message) {
                         var answer = await message.reply({
                             content: `${author.username} chamou ${member.user.username} para uma luta apostando ${await functions.format(bet)} falcoins :smiling_imp:`
@@ -69,27 +68,9 @@ module.exports =  {
     
                     collector.on('end', async collected => {
                         if (collected.size === 0) {
-                            if (message) {
-                                message.reply({
-                                    content: `Duelo cancelado. ${member} demorou muito para aceitar! :confounded:`
-                                }) 
-                            } else {
-                                interaction.channel.send({
-                                    content: `Duelo cancelado. ${member} demorou muito para aceitar! :confounded:`
-                                })
-                            }
-                            return
+                            return `Duelo cancelado. ${member} demorou muito para aceitar! :confounded:`
                         } else if (collected.first()._emoji.name === '🚫') {
-                            if (message) {
-                                message.reply({
-                                    content: `Duelo cancelado. ${member} recusou o duelo! :confounded:`
-                                }) 
-                            } else {
-                                interaction.channel.send({
-                                    content: `Duelo cancelado. ${member} recusou o duelo! :confounded:`
-                                })
-                            }
-                            return
+                            return `Duelo cancelado. ${member} recusou o duelo! :confounded:`
                         } else {
                             const attacks = ['instantâneo', 'stun', 'roubo de vida', 'cura', 'self', 'escudo']
                             const player_1 = {
@@ -224,7 +205,7 @@ module.exports =  {
                 return 'Você não pode lutar com você mesmo, espertinho :rage:'
             }
         } catch (error) {
-            console.log('luta:', error)
+            console.error(`luta: ${error}`)
         }
     }
 }   
