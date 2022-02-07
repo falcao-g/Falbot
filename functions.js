@@ -28,6 +28,7 @@ function createUser(id) {
 
 function changeJSON(id, field, quantity = 1, erase = false) {
   try {
+    createUser(id)
     var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
     if (erase == true) {
       users[id][field] = quantity
@@ -43,6 +44,8 @@ function changeJSON(id, field, quantity = 1, erase = false) {
 
 function takeAndGive(id, id2, field, field2, quantity = 1) {
   try {
+    createUser(id)
+    createUser(id2)
     var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
     users[id][field] -= quantity;
     users[id2][field2] += quantity;
@@ -100,6 +103,7 @@ async function msToTime(ms) {
 }
 
 async function specialArg(arg, id, field) {
+  createUser(id)
   var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
 
   arg = arg.toString()
@@ -155,6 +159,7 @@ async function format(falcoins) {
 
 async function readFile(id, field = "") {
   try {
+    createUser(id)
     var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
 
     if (field == "") {
@@ -695,7 +700,7 @@ async function explain(command) {
       },
     ])
   }
-  embed.setFooter("by Falcão ❤️");
+  embed.setFooter({text: 'by Falcão ❤️'});
   return embed;
 }
 
