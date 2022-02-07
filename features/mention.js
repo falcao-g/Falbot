@@ -7,7 +7,7 @@ module.exports = (client) => {
     
         if (message.content.includes("@here") || message.content.includes("@everyone") || message.type == "REPLY") return false;
     
-        if (message.mentions.has(client.user.id)) {
+        if (message.mentions.has(client.user.id) && message.content.startsWith('<')) {
             text = ''
             for (c in message.content) {
                 if ('abcdefghijklmnopqrstuvwxyzí'.includes(message.content[c].toLowerCase()) ) { 
