@@ -9,6 +9,14 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
+    options: [
+        {
+            name: 'comando',
+            description: 'caso deseje informação sobre um comando específico, digite o nome dele, deixe em branco para ver sobre todos',
+            required: false,
+            type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        }
+    ],
     testOnly: config.testOnly,
     callback: async ({args}) => {
         try {
