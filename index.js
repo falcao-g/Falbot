@@ -7,17 +7,14 @@ const path = require('path')
 const functions = require('./functions.js')
 
 client.on("ready", () => {
-  console.log(`O bot está em ${client.guilds.cache.size} servidores`)
-  console.log(`Tem ${client.users.cache.size} usuários usando o bot`)
-
   new WOKCommands(client, {
     commandsDir: path.join(__dirname, 'commands'),
     featuresDir: path.join(__dirname, 'features'),
     ignoreBots: true,
     ephemeral: false,
-    botOwners: [config.owner],
-    testServers: '742332099788275732',
-    defaultLanguage: 'portuguese',
+    botOwners: config.owners,
+    testServers: config.someServers,
+    defaultLanguage: config.language,
     disabledDefaultCommands: [
       'command',
       'language',
@@ -28,12 +25,11 @@ client.on("ready", () => {
   })
   .setDefaultPrefix(config.PREFIX)
 
-  client.user.setActivity('?comandos | arte by: @kinsallum')
-
-  setInterval(functions.bankInterest, 1000 * 300)
-
   setInterval(() => {
-    client.user.setActivity('?comandos | arte by: @kinsallum')
-  }, 1000 * 300)
+    client.user.setActivity('?comandos | arte by: @kinsallum'),
+    functions.bankInterest()
+    console.log(`O bot está em ${client.guilds.cache.size} servidores`)
+    console.log(`Tem ${client.users.cache.size} usuários usando o bot`)
+  }, 1000 * 600)
 })
 client.login(config.TOKEN)
