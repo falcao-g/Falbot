@@ -7,7 +7,7 @@ const path = require('path')
 const functions = require('./functions.js')
 
 client.on("ready", () => {
-  new WOKCommands(client, {
+  const wok = new WOKCommands(client, {
     commandsDir: path.join(__dirname, 'commands'),
     featuresDir: path.join(__dirname, 'features'),
     ignoreBots: true,
@@ -15,15 +15,20 @@ client.on("ready", () => {
     botOwners: config.owners,
     testServers: config.someServers,
     defaultLanguage: config.language,
+    messagesPath: '../messages.json',
     disabledDefaultCommands: [
       'command',
-      'language',
       'requiredrole',
       'channelonly'
   ],
   mongoUri: config.MONGODB_URI
   })
   .setDefaultPrefix(config.PREFIX)
+
+  wok.on('commandException', (command, error) => {
+    console.log(`An exception occured when using command "${command.names[0]}"! The error is:`)
+    console.log(error)
+  })
 
   setInterval(() => {
     client.user.setActivity('?comandos | arte by: @kinsallum'),
