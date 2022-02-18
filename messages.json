@@ -1,0 +1,139 @@
+{
+    "LANGUAGE_NOT_SUPPORTED": {
+      "english": "This bot does not have support for {LANGUAGE} at this time.",
+      "portuguese": "Este bot não é compatível com {LANGUAGE} por enquanto."
+    },
+    "CURRENT_LANGUAGE": {
+      "english": "The current language is set to {LANGUAGE}.",
+      "portuguese": "O idioma atual está definido como {LANGUAGE}."
+    },
+    "NEW_LANGUAGE": {
+      "english": "Language set to {LANGUAGE}.",
+      "portuguese": "Idioma configurado para {LANGUAGE}."
+    },
+    "BOT_OWNERS_ONLY": {
+      "english": "Only the bot owner can run this command.",
+      "portuguese": "Apenas o proprietário do bot pode executar este comando."
+    },
+    "DISABLED_COMMAND": {
+      "english": "That command is currently disabled in this server.",
+      "portuguese": "Este comando está atualmente desabilitado neste servidor."
+    },
+    "MISSING_PERMISSION": {
+      "english": "You must have the {PERM} permission in order to use this command.",
+      "portuguese": "Você precisa ter a permissão {PERM} para utilizar este comando."
+    },
+    "MISSING_ROLES": {
+      "english": "You do not have the required roles to use this command! You need one of the following: {ROLES}",
+      "portuguese": "Você não tem o cargo necessário para usar este comando! Você precisa de um dos seguintes: {ROLES}"
+    },
+    "COOLDOWN": {
+      "english": "You must wait {COOLDOWN} before using that command again.",
+      "portuguese": "Você precisa esperar {COOLDOWN} antes de usar este comando novamente."
+    },
+    "ENABLE_DISABLE_STATE": {
+      "english": "The state must be either \"enable\" or \"disable\".",
+      "portuguese": "O estado deve ser \"ativado\" ou \"desativado\"."
+    },
+    "CANNOT_ENABLE_DISABLE_IN_DMS": {
+      "english": "You cannot enable or disable commands in private messages.",
+      "portuguese": "Você não pode ativar ou desativar comandos em mensagens privadas."
+    },
+    "COMMAND_ALREADY_ENABLED": {
+      "english": "That command is already enabled!",
+      "portuguese": "Este comando já está ativado!"
+    },
+    "COMMAND_ALREADY_DISABLED": {
+      "english": "That command is already disabled!",
+      "portuguese": "Este comando já está desativado!"
+    },
+    "COMMAND_NOW_ENABLED": {
+      "english": "{COMMAND} is now enabled!",
+      "portuguese": "{COMMAND} agora está ativado!"
+    },
+    "COMMAND_NOW_DISABLED": {
+      "english": "{COMMAND} is now disabled!",
+      "portuguese": "{COMMAND} agora está desativado!"
+    },
+    "UNKNOWN_COMMAND": {
+      "english": "Could not find command {COMMAND}!",
+      "portuguese": "Não foi possível encontrar o comando {COMMAND}!"
+    },
+    "CURRENT_PREFIX": {
+      "english": "The current prefix is {PREFIX}.",
+      "portuguese": "O prefixo atual é {PREFIX}."
+    },
+    "SET_PREFIX": {
+      "english": "Set the command prefix to {PREFIX}.",
+      "portuguese": "Prefixo definido para {PREFIX}."
+    },
+    "CANNOT_SET_PREFIX_IN_DMS": {
+      "english": "You cannot set a prefix in a private message.",
+      "portuguese": "Você não pode definir um prefixo em uma mensagem privada"
+    },
+    "CANNOT_CHANGE_REQUIRED_ROLES_IN_DMS": {
+      "english": "You cannot change required roles in private messages.",
+      "portuguese": "Você não pode alterar os cargos necessários em mensagens privadas"
+    },
+    "REMOVED_ALL_REQUIRED_ROLES": {
+      "english": "Removed all required roles from command {COMMAND}.",
+      "portuguese": "Removidas todas as permissões necessárias para o comando {COMMAND}."
+
+    },
+    "ADDED_REQUIRED_ROLE": {
+      "english": "Added role {ROLE} to command {COMMAND}.",
+      "portuguese": "Adicionado o cargo {ROLE} para o comando {COMMAND}."
+    },
+    "SYNTAX_ERROR": {
+      "english": "Incorrect usage! Please use \"{PREFIX}{COMMAND} {ARGUMENTS}\"",
+      "portuguese": "Uso incorreto! Utilize \"{PREFIX}{COMMAND} {ARGUMENTS}\""
+    },
+    "NO_DATABASE_FOUND": {
+      "english": "No database connection found!",
+      "portuguese": "Conexão ao banco de dados não encontrada!"
+    },
+    "GUILD_ONLY_COMMAND": {
+      "english": "This command can only be used within a server.",
+      "portuguese": "Este comando só pode ser usado em um servidor."
+    },
+    "NO_REACT_PERMS": {
+      "english": "This bot needs the \"Add Reactions\" permission to use the help menu.",
+      "portuguese": "Este bot precisa da permissão \"Adicionar reações\" para usar o menu de ajuda."
+    },
+    "EXCEPTION": {
+      "english": "An error occurred when running this command! This error has been reported to the developers.",
+      "portuguese": "Ocorreu um erro ao executar este comando! Este erro foi relatado aos desenvolvedores."
+    },
+    "NO_TAGGED_CHANNELS": {
+      "english": "Please tag at least one channel.",
+      "portuguese": "Marque pelo menos um canal."
+    },
+    "NOT_CHANNEL_COMMAND": {
+      "english": "That command is currently not limited to any channel.",
+      "portuguese": "Esse comando atualmente não está limitado a nenhum canal."
+    },
+    "NO_LONGER_CHANNEL_COMMAND": {
+      "english": "That command is no longer a channel specific command.",
+      "portuguese": "Esse comando não é mais um comando específico do canal."
+    },
+    "NOW_CHANNEL_COMMAND": {
+      "english": "\"{COMMAND}\" can now only be ran in {CHANNELS}.",
+      "portuguese": "\"{COMMAND}\" agora só pode ser executado em {CHANNELS}."
+    },
+    "ALLOWED_CHANNELS": {
+      "english": "You can only use that command in the following: {CHANNELS}.",
+      "portuguese": "Você só pode usar esse comando nos seguintes: {CHANNELS}."
+    },
+    "CANNOT_DISABLE_THIS_COMMAND": {
+      "english": "This command cannot be disabled.",
+      "portuguese": "Este comando não pode ser desabilitado."
+    },
+    "INVALID_SLASH_COMMAND": {
+      "english": "This slash command is not properly registered.",
+      "portuguese": "Este comando de barra não está registrado corretamente."
+    },
+    "REQUIRE_ROLES": {
+      "english": "You must specify what roles can use this command with `{PREFIX}requiredroles {COMMAND} <role ID>`.",
+      "portuguese": "Você deve especificar quais funções podem usar este comando com `{PREFIX} funções necessárias {COMANDO} <ID da função>`.",
+    }
+  }
