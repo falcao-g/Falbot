@@ -134,6 +134,6 @@
     },
     "REQUIRE_ROLES": {
       "english": "You must specify what roles can use this command with `{PREFIX}requiredroles {COMMAND} <role ID>`.",
-      "portuguese": "Você deve especificar quais funções podem usar este comando com `{PREFIX} funções necessárias {COMANDO} <ID da função>`.",
+      "portuguese": "Você deve especificar quais funções podem usar este comando com `{PREFIX} funções necessárias {COMANDO} <ID da função>`."
     }
   }
