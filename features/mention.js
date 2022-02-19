@@ -1,7 +1,7 @@
 const functions = require('../functions.js')
 
 
-module.exports = (client) => {
+module.exports = (client, instance) => {
     client.on("messageCreate", async (message) => {
         if (message.author.bot) return false;
     
@@ -15,7 +15,7 @@ module.exports = (client) => {
                 }
             }
             message.reply({
-                embeds: [await functions.explain(text || '')]
+                embeds: [await functions.explain(instance, message.guild, text || '')]
             }) 
         }
     });

@@ -18,9 +18,9 @@ module.exports =  {
         }
     ],
     testOnly: config.testOnly,
-    callback: async ({args}) => {
+    callback: async ({args, instance, guild}) => {
         try {
-            return await functions.explain(args[0] || '')
+            return await functions.explain(instance, guild, args[0] || '')
         } catch (error) {
             console.error(`Comandos: ${error}`)
         }
