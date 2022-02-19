@@ -15,7 +15,7 @@ client.on("ready", () => {
     botOwners: config.owners,
     testServers: config.someServers,
     defaultLanguage: config.language,
-    messagesPath: '../messages.json',
+    messagesPath: path.join(__dirname, 'messages.json'),
     disabledDefaultCommands: [
       'command',
       'requiredrole',
@@ -26,7 +26,7 @@ client.on("ready", () => {
   .setDefaultPrefix(config.PREFIX)
 
   wok.on('commandException', (command, error) => {
-    console.log(`An exception occured when using command "${command.names[0]}"! The error is:`)
+    console.log(`Um erro ocorreu no comando "${command.names[0]}"! O erro foi:`)
     console.log(error)
   })
 
