@@ -469,20 +469,6 @@ async function explain(command) {
         inline: false,
       },
     ])
-  } else if (command == "tetris") {
-    embed.setColor("RED")
-    embed.addFields([
-      {
-        name: "Info",
-        value: "Cria uma sala privada no jstris para você!",
-        inline: false,
-      },
-      {
-        name: "Uso",
-        value: "/tetris",
-        inline: false,
-      },
-    ])
   } else if (command == "math") {
     embed.setColor("RED")
     embed.addFields([
