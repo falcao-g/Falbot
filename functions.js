@@ -182,7 +182,7 @@ async function getMember(message, member_id) {
   return member;
 }
 
-async function explain(command) {
+async function explain(instance, guild, command) {
   command = command.toLowerCase();
   embed = new MessageEmbed()
   
@@ -191,11 +191,11 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Mostra suas informações",
+        value: instance.messageHandler.get(guild, "EU_INFO"),
         inline: false,
       },
       {
-        name: "Uso",
+        name: instance.messageHandler.get(guild, "USO"),
         value: "/eu",
         inline: false,
       },
@@ -205,12 +205,12 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Mostra as informações do usuário mencionado",
+        value: instance.messageHandler.get(guild, "SOBRE_INFO"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "/sobre @usuario",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "SOBRE_INFO"),
         inline: false,
       },
     ])
@@ -219,12 +219,12 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Resgata sua lootbox grátis (disponível a cada 12 horas)",
+        value: instance.messageHandler.get(guild, "LB_INFO"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "/lootbox",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: "/lootbox\n/lb",
         inline: false,
       },
     ])
@@ -233,17 +233,12 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Doa x Falcoins para o usuário mencionado",
+        value: instance.messageHandler.get(guild, "DOAR_INFO"),
         inline: false,
       },
       {
-        name: "Valores aceitos",
-        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
-        inline: false,
-      },
-      {
-        name: "Uso",
-        value: "/doar <@usuario> <falcoins>",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "DOAR_USO"),
         inline: false,
       },
     ])
@@ -252,21 +247,16 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Adivinhe qual cavalo é o vencedor",
+        value: instance.messageHandler.get(guild, "CAVALO_INFO"),
         inline: false,
       },
       {
-        name: "Ganhos",
+        name: instance.messageHandler.get(guild, "GANHOS"),
         value: "**5x**",
         inline: false,
       },
       {
-        name: "Valores aceitos",
-        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
-        inline: false,
-      },
-      {
-        name: "Uso",
+        name: instance.messageHandler.get(guild, "USO"),
         value: "/cavalo <1-5> <falcoins>",
         inline: false,
       }
@@ -276,12 +266,12 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Mostra o rank local ou global",
+        value: instance.messageHandler.get(guild, "RANK_INFO"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "/rank [escopo]",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "RANK_USO"),
         inline: false,
       },
     ])
@@ -290,17 +280,12 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Mostra os itens disponíveis para compra",
+        value: instance.messageHandler.get(guild, "LOJA_INFO"),
         inline: false,
       },
       {
-        name: "Valores aceitos",
-        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
-        inline: false,
-      },
-      {
-        name: "Uso",
-        value: "/loja [numero] [quantidade] - numero e quantidade só são obrigatórios caso você queira comprar algo",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "LOJA_USO"),
         inline: false,
       },
     ])
@@ -332,11 +317,6 @@ async function explain(command) {
         inline: false,
       },
       {
-        name: "Valores aceitos",
-        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
-        inline: false,
-      },
-      {
         name: "Uso",
         value: "/roleta <tipo de aposta> <falcoins>",
         inline: false,
@@ -346,22 +326,17 @@ async function explain(command) {
     embed.setColor("GREEN")
     embed.addFields({
         name: "Info",
-        value: "Caça-níquel",
+        value: instance.messageHandler.get(guild, "NIQUEL_INFO"),
         inline: false,
       },
       {
-        name: "Ganhos",
+        name: instance.messageHandler.get(guild, "GANHOS"),
         value:
           ":money_mouth: :money_mouth: :grey_question: - **0.5x**\n:coin: :coin: :grey_question: - **2x**\n:dollar: :dollar: :grey_question: - **2x**\n:money_mouth: :money_mouth: :money_mouth: - **2.5x**\n:coin: :coin: :coin: - **2.5x**\n:moneybag: :moneybag: :grey_question: - **3x**\n:dollar: :dollar: :dollar: - **3x**\n:gem: :gem: :grey_question: - **5x**\n:moneybag: :moneybag: :moneybag: - **7x**\n:gem: :gem: :gem: - **10x**",
         inline: false,
       },
       {
-        name: "Valores aceitos",
-        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
-        inline: false,
-      },
-      {
-        name: "Uso",
+        name: instance.messageHandler.get(guild, "USO"),
         value: "/niquel <falcoins>",
         inline: false,
       })
@@ -370,22 +345,17 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Guarda ou tira seus falcoins do banco",
+        value: instance.messageHandler.get(guild, "BANCO_INFO"),
         inline: false,
       },
       {
-        name: "Ganhos",
-        value: "O valor depositado aumenta em 1% ao dia",
+        name: instance.messageHandler.get(guild, "GANHOS"),
+        value: instance.messageHandler.get(guild, "BANCO_GANHOS"),
         inline: false,
       },
       {
-        name: "Valores aceitos",
-        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
-        inline: false,
-      },
-      {
-        name: "Uso",
-        value: "/banco <depositar/sacar> <falcoins>",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "BANCO_USO"),
         inline: false,
       },
     ])
@@ -394,28 +364,22 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Desafia um usuário para uma luta até a morte",
+        value: instance.messageHandler.get(guild, "LUTA_INFO"),
         inline: false,
       },
       {
-        name: "Ganhos",
-        value: "**O vencedor leva tudo**",
+        name: instance.messageHandler.get(guild, "GANHOS"),
+        value: instance.messageHandler.get(guild, "VENCEDOR_TUDO"),
         inline: false,
       },
       {
-        name: "Habilidades",
-        value:
-          "**instântaneo:** dá um dano x na hora\n**stun:** dá um dano x e deixa o inimigo paralizado por 1 turno\n**cura:** se cura em x de vida\n**roubo de vida:** rouba uma quantidade x de vida do inimigo\n**self:** dá um dano x a si mesmo\n**escudo:** se protege de todo e qualquer dano por 1 rodada\n\n**O bot escolhe os ataques aleatoriamente**",
+        name: instance.messageHandler.get(guild, "HABILIDADES"),
+        value: instance.messageHandler.get(guild, "LUTA_HABILIDADES"),
         inline: false,
       },
       {
-        name: "Valores aceitos",
-        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
-        inline: false,
-      },
-      {
-        name: "Uso",
-        value: "/luta @usuario <falcoins>",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "LUTA_USO"),
         inline: false,
       }
     ])
@@ -424,18 +388,17 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value:
-          "Gasta 1 chave e 1 caixa para ter a chance de ganhar alguns prêmios, você pode comprar caixas e chaves na loja",
+        value: instance.messageHandler.get(guild, "CAIXA_INFO"),
         inline: false,
       },
       {
-        name: "Ganhos",
-        value: "Você pode ganhar `caixas`, `chaves`, `falcoins`",
+        name: instance.messageHandler.get(guild, "GANHOS"),
+        value: instance.messageHandler.get(guild, "CAIXA_GANHOS"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "/caixa [quantidade]",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "CAIXA_USO"),
         inline: false,
       },
     ])
@@ -444,28 +407,12 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value:
-          "Muda o prefixo do servidor atual (só usuários com a permissão de admin podem usar)",
+        value: instance.messageHandler.get(guild, "PREFIX_INFO"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "/prefix <prefixo>",
-        inline: false,
-      },
-    ])
-  } else if (command == "limpa") {
-    embed.setColor("RED")
-    embed.addFields([
-      {
-        name: "Info",
-        value:
-          "Limpa x mensagens do canal atual (só usuários com a permissão de administrador podem usar)",
-        inline: false,
-      },
-      {
-        name: "Uso",
-        value: "/limpa <numero de mensagens>",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "PREFIX_USO"),
         inline: false,
       },
     ])
@@ -474,12 +421,12 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Faz um cálculo de matemática",
+        value: instance.messageHandler.get(guild, "MATH_INFO"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "/math <expressão>",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "MATH_USO"),
         inline: false,
       },
     ])
@@ -488,12 +435,12 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Cria uma bonita pequena enquete",
+        value: instance.messageHandler.get(guild, "ENQUETE_INFO"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "/enquete",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "ENQUETE_USO"),
         inline: false,
       },
     ])
@@ -502,12 +449,12 @@ async function explain(command) {
     embed.addFields([
         {
           name: "Info",
-          value: "Rola dados para você",
+          value: instance.messageHandler.get(guild, "ROLL_INFO"),
           inline: false,
         },
         {
-          name: "Uso",
-          value: "/roll <dados>",
+          name: instance.messageHandler.get(guild, "USO"),
+          value: instance.messageHandler.get(guild, "ROLL_USO"),
           inline: false,
         },
       ])
@@ -516,12 +463,12 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Faz um cara ou coroa",
+        value: instance.messageHandler.get(guild, "COINFLIP_INFO"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "/coinflip [quantidade]",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "COINFLIP_USO"),
         inline: false,
       },
     ])
@@ -530,12 +477,12 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Manda alguém para a horny jail",
+        value: instance.messageHandler.get(guild, "BONK_INFO"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "/bonk <@usuario>",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "BONK_USO"),
         inline: false,
       },
     ])
@@ -544,12 +491,12 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Prevê o seu futuro",
+        value: instance.messageHandler.get(guild, "BOLA8_INFO"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "/bola8 <pergunta>",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "BOLA8_USO"),
         inline: false,
       },
     ])
@@ -558,21 +505,16 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Desafia outros usuários para uma corrida de cavalos",
+        value: instance.messageHandler.get(guild, "CAVALGADA_INFO"),
         inline: false,
       },
       {
-        name: "Ganhos",
-        value: "**O vencedor leva tudo**",
+        name: instance.messageHandler.get(guild, "GANHOS"),
+        value: instance.messageHandler.get(guild, "VENCEDOR_TUDO"),
         inline: false,
       },
       {
-        name: "Valores aceitos",
-        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
-        inline: false,
-      },
-      {
-        name: "Uso",
+        name: instance.messageHandler.get(guild, "USO"),
         value: "/cavalo <falcoins>",
         inline: false,
       },
@@ -582,41 +524,31 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Envia uma foto aleatória sobre o termo especificado",
+        value: instance.messageHandler.get(guild, "FOTO_INFO"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "?foto <termo>",
-        inline: false,
-      },
-      {
-        name: "Exemplo",
-        value: "?foto cachorro",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "FOTO_USO"),
         inline: false,
       },
     ])
   } else if (command == "roletarussa") {
     embed.setColor("GREEN")
     embed.addFields([
-    {
-      name: "Info",
-      value: "jogue com seus amigos, usuarios podem entrar reagindo a mensagem",
-      inline: false,
-    },
-    {
-      name: "Ganhos",
-        value: "**O vencedor leva tudo**",
+      {
+        name: "Info",
+        value: instance.messageHandler.get(guild, "ROLETARUSSA_INFO"),
         inline: false,
       },
       {
-        name: "Valores aceitos",
-        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
+        name: instance.messageHandler.get(guild, "GANHOS"),
+        value: instance.messageHandler.get(guild, "VENCEDOR_TUDO"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "?roletarussa <falcoins>",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: "/roletarussa <falcoins>",
         inline: false,
       }
     ])
@@ -625,22 +557,17 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Desafia outro usuário para um jogo da velha",
+        value: instance.messageHandler.get(guild, "VELHA_INFO"),
         inline: false,
       },
       {
-        name: "Ganhos",
-        value: "**O vencedor leva tudo**",
+        name: instance.messageHandler.get(guild, "GANHOS"),
+        value: instance.messageHandler.get(guild, "VENCEDOR_TUDO"),
         inline: false,
       },
       {
-        name: "Valores aceitos",
-        value: "Os valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'",
-        inline: false,
-      },
-      {
-        name: "Uso",
-        value: "/velha <@usuario> <falcoins>",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "VELHA_USO"),
         inline: false,
       },
     ])
@@ -649,12 +576,12 @@ async function explain(command) {
     embed.addFields([
       {
         name: "Info",
-        value: "Resgata sua recompensa por votar no bot no top.gg",
+        value: instance.messageHandler.get(guild, "VOTO_INFO"),
         inline: false,
       },
       {
         name: "Uso",
-        value: "/lootbox",
+        value: "/voto",
         inline: false,
       },
     ])
@@ -662,27 +589,21 @@ async function explain(command) {
     embed.setColor("BLUE")
     embed.addFields([
       {
-        name: ":game_die: Comandos para a sala de jogos",
+        name: instance.messageHandler.get(guild, "SALA_JOGOS"),
         value:
           "`eu`, `sobre`, `lootbox`, `doar`, `cavalo`, `rank`, `loja`, `roleta`, `niquel`, `banco`, `luta`, `caixa`, `cavalgada`, `roletarussa`, `velha`, `voto`",
-        inline: false,
+        inline: false
       },
       {
-        name: ":gear: Outros comandos",
+        name: instance.messageHandler.get(guild, "OUTROS_COMANDOS"),
         value:
           "`prefix`, `comandos/help`, `limpa`, `math`, `enquete`, `roll`, `coinflip`, `bonk`, `bola8`, `foto`",
-        inline: false,
-      },
-      {
-        name: '\u200b',
-        value: `Use /prefix para ver seu prefixo`,
-        inline: false,
+        inline: false
       },
       {
         name: "\u200B",
-        value:
-          'Use /help <comando> para ver a descrição de um comando específico',
-        inline: false,
+        value: instance.messageHandler.get(guild, "COMANDOS_INFO"),
+        inline: false
       },
     ])
   }
