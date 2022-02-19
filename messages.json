@@ -1,139 +1,331 @@
 {
     "LANGUAGE_NOT_SUPPORTED": {
       "english": "This bot does not have support for {LANGUAGE} at this time.",
-      "portuguese": "Este bot não é compatível com {LANGUAGE} por enquanto."
+      "portugues": "Este bot não é compatível com {LANGUAGE} por enquanto."
     },
     "CURRENT_LANGUAGE": {
       "english": "The current language is set to {LANGUAGE}.",
-      "portuguese": "O idioma atual está definido como {LANGUAGE}."
+      "portugues": "O idioma atual está definido como {LANGUAGE}."
     },
     "NEW_LANGUAGE": {
       "english": "Language set to {LANGUAGE}.",
-      "portuguese": "Idioma configurado para {LANGUAGE}."
+      "portugues": "Idioma configurado para {LANGUAGE}."
     },
     "BOT_OWNERS_ONLY": {
       "english": "Only the bot owner can run this command.",
-      "portuguese": "Apenas o proprietário do bot pode executar este comando."
+      "portugues": "Apenas o proprietário do bot pode executar este comando."
     },
     "DISABLED_COMMAND": {
       "english": "That command is currently disabled in this server.",
-      "portuguese": "Este comando está atualmente desabilitado neste servidor."
+      "portugues": "Este comando está atualmente desabilitado neste servidor."
     },
     "MISSING_PERMISSION": {
       "english": "You must have the {PERM} permission in order to use this command.",
-      "portuguese": "Você precisa ter a permissão {PERM} para utilizar este comando."
+      "portugues": "Você precisa ter a permissão {PERM} para utilizar este comando."
     },
     "MISSING_ROLES": {
       "english": "You do not have the required roles to use this command! You need one of the following: {ROLES}",
-      "portuguese": "Você não tem o cargo necessário para usar este comando! Você precisa de um dos seguintes: {ROLES}"
+      "portugues": "Você não tem o cargo necessário para usar este comando! Você precisa de um dos seguintes: {ROLES}"
     },
     "COOLDOWN": {
       "english": "You must wait {COOLDOWN} before using that command again.",
-      "portuguese": "Você precisa esperar {COOLDOWN} antes de usar este comando novamente."
+      "portugues": "Você precisa esperar {COOLDOWN} antes de usar este comando novamente."
     },
     "ENABLE_DISABLE_STATE": {
       "english": "The state must be either \"enable\" or \"disable\".",
-      "portuguese": "O estado deve ser \"ativado\" ou \"desativado\"."
+      "portugues": "O estado deve ser \"ativado\" ou \"desativado\"."
     },
     "CANNOT_ENABLE_DISABLE_IN_DMS": {
       "english": "You cannot enable or disable commands in private messages.",
-      "portuguese": "Você não pode ativar ou desativar comandos em mensagens privadas."
+      "portugues": "Você não pode ativar ou desativar comandos em mensagens privadas."
     },
     "COMMAND_ALREADY_ENABLED": {
       "english": "That command is already enabled!",
-      "portuguese": "Este comando já está ativado!"
+      "portugues": "Este comando já está ativado!"
     },
     "COMMAND_ALREADY_DISABLED": {
       "english": "That command is already disabled!",
-      "portuguese": "Este comando já está desativado!"
+      "portugues": "Este comando já está desativado!"
     },
     "COMMAND_NOW_ENABLED": {
       "english": "{COMMAND} is now enabled!",
-      "portuguese": "{COMMAND} agora está ativado!"
+      "portugues": "{COMMAND} agora está ativado!"
     },
     "COMMAND_NOW_DISABLED": {
       "english": "{COMMAND} is now disabled!",
-      "portuguese": "{COMMAND} agora está desativado!"
+      "portugues": "{COMMAND} agora está desativado!"
     },
     "UNKNOWN_COMMAND": {
       "english": "Could not find command {COMMAND}!",
-      "portuguese": "Não foi possível encontrar o comando {COMMAND}!"
+      "portugues": "Não foi possível encontrar o comando {COMMAND}!"
     },
     "CURRENT_PREFIX": {
       "english": "The current prefix is {PREFIX}.",
-      "portuguese": "O prefixo atual é {PREFIX}."
+      "portugues": "O prefixo atual é {PREFIX}."
     },
     "SET_PREFIX": {
       "english": "Set the command prefix to {PREFIX}.",
-      "portuguese": "Prefixo definido para {PREFIX}."
+      "portugues": "Prefixo definido para {PREFIX}."
     },
     "CANNOT_SET_PREFIX_IN_DMS": {
       "english": "You cannot set a prefix in a private message.",
-      "portuguese": "Você não pode definir um prefixo em uma mensagem privada"
+      "portugues": "Você não pode definir um prefixo em uma mensagem privada"
     },
     "CANNOT_CHANGE_REQUIRED_ROLES_IN_DMS": {
       "english": "You cannot change required roles in private messages.",
-      "portuguese": "Você não pode alterar os cargos necessários em mensagens privadas"
+      "portugues": "Você não pode alterar os cargos necessários em mensagens privadas"
     },
     "REMOVED_ALL_REQUIRED_ROLES": {
       "english": "Removed all required roles from command {COMMAND}.",
-      "portuguese": "Removidas todas as permissões necessárias para o comando {COMMAND}."
+      "portugues": "Removidas todas as permissões necessárias para o comando {COMMAND}."
 
     },
     "ADDED_REQUIRED_ROLE": {
       "english": "Added role {ROLE} to command {COMMAND}.",
-      "portuguese": "Adicionado o cargo {ROLE} para o comando {COMMAND}."
+      "portugues": "Adicionado o cargo {ROLE} para o comando {COMMAND}."
     },
     "SYNTAX_ERROR": {
       "english": "Incorrect usage! Please use \"{PREFIX}{COMMAND} {ARGUMENTS}\"",
-      "portuguese": "Uso incorreto! Utilize \"{PREFIX}{COMMAND} {ARGUMENTS}\""
+      "portugues": "Uso incorreto! Utilize \"{PREFIX}{COMMAND} {ARGUMENTS}\""
     },
     "NO_DATABASE_FOUND": {
       "english": "No database connection found!",
-      "portuguese": "Conexão ao banco de dados não encontrada!"
+      "portugues": "Conexão ao banco de dados não encontrada!"
     },
     "GUILD_ONLY_COMMAND": {
       "english": "This command can only be used within a server.",
-      "portuguese": "Este comando só pode ser usado em um servidor."
+      "portugues": "Este comando só pode ser usado em um servidor."
     },
     "NO_REACT_PERMS": {
       "english": "This bot needs the \"Add Reactions\" permission to use the help menu.",
-      "portuguese": "Este bot precisa da permissão \"Adicionar reações\" para usar o menu de ajuda."
+      "portugues": "Este bot precisa da permissão \"Adicionar reações\" para usar o menu de ajuda."
     },
     "EXCEPTION": {
       "english": "An error occurred when running this command! This error has been reported to the developers.",
-      "portuguese": "Ocorreu um erro ao executar este comando! Este erro foi relatado aos desenvolvedores."
+      "portugues": "Ocorreu um erro ao executar este comando! Este erro foi relatado aos desenvolvedores."
     },
     "NO_TAGGED_CHANNELS": {
       "english": "Please tag at least one channel.",
-      "portuguese": "Marque pelo menos um canal."
+      "portugues": "Marque pelo menos um canal."
     },
     "NOT_CHANNEL_COMMAND": {
       "english": "That command is currently not limited to any channel.",
-      "portuguese": "Esse comando atualmente não está limitado a nenhum canal."
+      "portugues": "Esse comando atualmente não está limitado a nenhum canal."
     },
     "NO_LONGER_CHANNEL_COMMAND": {
       "english": "That command is no longer a channel specific command.",
-      "portuguese": "Esse comando não é mais um comando específico do canal."
+      "portugues": "Esse comando não é mais um comando específico do canal."
     },
     "NOW_CHANNEL_COMMAND": {
       "english": "\"{COMMAND}\" can now only be ran in {CHANNELS}.",
-      "portuguese": "\"{COMMAND}\" agora só pode ser executado em {CHANNELS}."
+      "portugues": "\"{COMMAND}\" agora só pode ser executado em {CHANNELS}."
     },
     "ALLOWED_CHANNELS": {
       "english": "You can only use that command in the following: {CHANNELS}.",
-      "portuguese": "Você só pode usar esse comando nos seguintes: {CHANNELS}."
+      "portugues": "Você só pode usar esse comando nos seguintes: {CHANNELS}."
     },
     "CANNOT_DISABLE_THIS_COMMAND": {
       "english": "This command cannot be disabled.",
-      "portuguese": "Este comando não pode ser desabilitado."
+      "portugues": "Este comando não pode ser desabilitado."
     },
     "INVALID_SLASH_COMMAND": {
       "english": "This slash command is not properly registered.",
-      "portuguese": "Este comando de barra não está registrado corretamente."
+      "portugues": "Este comando de barra não está registrado corretamente."
     },
     "REQUIRE_ROLES": {
       "english": "You must specify what roles can use this command with `{PREFIX}requiredroles {COMMAND} <role ID>`.",
-      "portuguese": "Você deve especificar quais funções podem usar este comando com `{PREFIX} funções necessárias {COMANDO} <ID da função>`."
+      "portugues": "Você deve especificar quais funções podem usar este comando com `{PREFIX} funções necessárias {COMANDO} <ID da função>`."
+    },
+    "EU_INFO": {
+      "portugues": "Mostra suas informações",
+      "english": "Show your info"
+    },
+    "USO": {
+      "portugues": "Uso",
+      "english": "Usage"
+    },
+    "SOBRE_INFO": {
+      "portugues": "Mostra as informações do usuário mencionado",
+      "english": "Show the info of the mentioned user"
+    },
+    "SOBRE_USO": {
+      "portugues": "/sobre @usuário",
+      "english": "/sobre @user"
+    },
+    "LB_INFO": {
+      "portugues": "Resgata sua lootbox grátis (disponível a cada 12 horas)",
+      "english": "Get your free lootbox (available every 12 hours)"
+    },
+    "DOAR_INFO": {
+      "portugues": "Doa x Falcoins para o usuário mencionado",
+      "english": "Donate x Falcoins to the mentioned user"
+    },
+    "DOAR_USO": {
+      "portugues": "/doar @usuário <falcoins>",
+      "english": "/doar @user <falcoins>"
+    },
+    "CAVALO_INFO": {
+      "portugues": "Adivinhe qual cavalo é o vencedor",
+      "english": "Guess the winner horse"
+    },
+    "GANHOS": {
+      "portugues": "Ganhos",
+      "english": "Winnings"
+    },
+    "RANK_INFO": {
+      "portugues": "Mostra o rank local ou global",
+      "english": "Show the local or global rank"
+    },
+    "RANK_USO": {
+      "portugues": "/rank [escopo]",
+      "english": "/rank [scope]"
+    },
+    "LOJA_INFO": {
+      "portugues": "Mostra os itens disponíveis na loja",
+      "english": "Show the available items in the shop"
+    },
+    "LOJA_USO": {
+      "portugues": "/loja [numero] [quantidade] - numero e quantidade só são obrigatórios caso você queira comprar algo",
+      "english": "/loja [number] [amount] - number and amount are only required if you want to buy something"
+    },
+    "NIQUEL_INFO": {
+      "portugues": "Caça-níquel",
+      "english": "Slot machine"
+    },
+    "BANCO_INFO": {
+      "portugues": "Guarda ou tira os seus falcoins do banco",
+      "english": "Deposit or withdraw your falcoins from the bank"
+    },
+    "BANCO_GANHOS": {
+      "portugues": "O valor depositado aumenta em 1% ao dia",
+      "english": "The deposited value increases by 1% every day"
+    },
+    "BANCO_USO": {
+      "portugues": "/banco [depositar/sacar] [falcoins]",
+      "english": "/banco [depositar/sacar] [falcoins]"
+    },
+    "LUTA_INFO": {
+      "portugues": "Desafia um usuário para uma luta até a morte",
+      "english": "Challenge a user to a fight until death"
+    },
+    "VENCEDOR_TUDO": {
+      "portugues": "**O vencedor leva tudo**",
+      "english": "**The winner takes everything**"
+    },
+    "HABILIDADES": {
+      "portugues": "Habilidades",
+      "english": "Skills"
+    },
+    "LUTA_HABILIDADES": {
+      "portugues": "**instântaneo:** dá um dano x na hora\n**stun:** dá um dano x e deixa o inimigo paralizado por 1 turno\n**cura:** se cura em x de vida\n**roubo de vida:** rouba uma quantidade x de vida do inimigo\n**self:** dá um dano x a si mesmo\n**escudo:** se protege de todo e qualquer dano por 1 rodada\n\n**O bot escolhe os ataques aleatoriamente**",
+      "english": "**instant:** does x damage on the turn\n**stun:** does x damage and stuns the enemy for 1 turn\n**heal:** heals x health\n**life steal:** steals x health from the enemy\n**self:** does x damage to yourself\n**shield:** protects you from all damage for 1 turn\n\n**The bot chooses the attacks randomly**"
+    },
+    "LUTA_USO": {
+      "portugues": "/luta @usuário [falcoins]",
+      "english": "/luta @user [falcoins]"
+    },
+    "CAIXA_INFO": {
+      "portugues": "Gasta chaves e caixas para ter a chance de ganhar alguns prêmios, você pode comprar caixas e chaves na loja",
+      "english": "Spend keys and boxes to have a chance to win some prizes, you can buy boxes and keys in the shop"
+    },
+    "CAIXA_GANHOS": {
+      "portugues": "Você pode ganhar `caixas`, `chaves`, `falcoins`",
+      "english": "You can win `boxes`, `keys`, `falcoins`"
+    },
+    "CAIXA_USO": {
+      "portugues": "/caixa [quantidade]",
+      "english": "/caixa [amount]"
+    },
+    "PREFIX_INFO": {
+      "portugues": "Muda o prefixo do servidor atual, deixe vazio para ver o prefixo atual",
+      "english": "Change the server prefix, leave it empty to see the current prefix"
+    },
+    "MATH_INFO": {
+      "portugues": "Calcula o resultado de uma expressão matemática",
+      "english": "Calculate the result of a mathematical expression"
+    },
+    "MATH_USO": {
+      "portugues": "/math <expressão>",
+      "english": "/math <expression>"
+    },
+    "ENQUETE_INFO": {
+      "portugues": "Cria uma bonita pequena enquete",
+      "english": "Create a beautiful small poll"
+    },
+    "ENQUETE_USO": {
+      "portugues": "/enquete <tema>",
+      "english": "/enquete <theme>"
+    },
+    "ROLL_INFO": {
+      "portugues": "Rola dados para você",
+      "english": "Roll dices for you"
+    },
+    "ROLL_USO": {
+      "portugues": "/roll <dados>",
+      "english": "/roll <dices>"
+    },
+    "COINFLIP_INFO": {
+      "portugues": "Joga uma moeda para você",
+      "english": "Flip a coin for you"
+    },
+    "COINFLIP_USO": {
+      "portugues": "/coinflip [quantidade]",
+      "english": "/coinflip [amount]"
+    },
+    "BONK_INFO": {
+      "portugues": "Manda alguém para a horny jail",
+      "english": "Send someone to the horny jail"
+    },
+    "BONK_USO": {
+      "portugues": "/bonk <@usuário>",
+      "english": "/bonk <@user>"
+    },
+    "BOLA8_INFO": {
+      "portugues": "Prevê o seu futuro",
+      "english": "Forecast your future"
+    },
+    "BOLA8_USO": {
+      "portugues": "/bola8 <pergunta>",
+      "english": "/bola8 <question>"
+    },
+    "CAVALGADA_INFO": {
+      "portugues": "Desafia outro usuário para uma corrida de cavalos",
+      "english": "Challenge a user to a horse race"
+    },
+    "FOTO_INFO": {
+      "portugues": "Envia uma foto aleatória sobre o termo especificado",
+      "english": "Send a random photo about the specified term"
+    },
+    "FOTO_USO": {
+      "portugues": "/foto <termo>",
+      "english": "/foto <term>"
+    },
+    "ROLETARUSSA_INFO": {
+      "portugues": "jogue com seus amigos, usuários podem entrar reagindo a mensagem",
+      "english": "play with your friends, users can enter reacting to the message"
+    },
+    "VELHA_INFO": {
+      "portugues": "Desafia outro usuário para um jogo da velha",
+      "english": "Challenge a user to a tic-tac-toe game"
+    },
+    "VELHA_USO": {
+      "portugues": "/velha <@usuario> <falcoins>",
+      "english": "/velha <@user> <falcoins>"
+    },
+    "VOTO_INFO": {
+      "portugues": "Resgata sua recompensa por votar no bot no top.gg",
+      "english": "Get your reward for voting in the bot on top.gg"
+    },
+    "SALA_JOGOS": {
+      "portugues": ":game_die: Comandos para a sala de jogos",
+      "english": ":game_die: Game commands"
+    },
+    "OUTROS_COMANDOS": {
+      "portugues": ":gear: Outros comandos",
+      "english": ":gear: Other commands"
+    },
+    "COMANDOS_INFO": {
+      "portugues": "Use **/prefix** para ver seu prefixo\n\nUse **/help <comando>** para ver a descrição de um comando específico\n\nOs valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'\n\n Use **/language english** to change to english",
+      "english": "Use **/prefix** to see your prefix\n\nUse **/help <command>** to see the description of a specific command\n\nValues in falcoins can be either numbers, percentages, 'tudo' or 'metade'\n\nUse **/language portugues** para mudar para português"
     }
   }
