@@ -224,7 +224,7 @@ async function explain(instance, guild, command) {
       },
       {
         name: instance.messageHandler.get(guild, "USO"),
-        value: "/lootbox\n/lb",
+        value: "/lootbox",
         inline: false,
       },
     ])
@@ -293,32 +293,28 @@ async function explain(instance, guild, command) {
     embed.setColor("GREEN")
     embed.addFields([
       {
-        name: "Tipos de aposta",
-        value:
-          "**<preto/vermelho/verde>, <0-36>, <altos/baixos>, <par/impar>**",
+        name: instance.messageHandler.get(guild, "TIPOS_APOSTAS"),
+        value: instance.messageHandler.get(guild, "ROLETA_TIPOS"),
         inline: false,
       },
       {
         name: "Info",
-        value:
-          "**preto/vermelho/verde** se o bot rolar um número com a sua cor, você ganha\n**0-36** se o bot rolar seu número, você ganha\n**altos/baixos** baixos 1-18, altos 19-36\n**impar/par impar** = 1, 3, 5 ..., 35, par = 2, 4, 6, ..., 36",
+        value: instance.messageHandler.get(guild, "ROLETA_INFO"),
         inline: false,
       },
       {
-        name: "Ganhos",
-        value:
-          "**preto/vermelho/verde** - 2x\n**0-36** - 35x\n**altos/baixos** - 2x\n**impar/par** - 2x",
+        name: instance.messageHandler.get(guild, "GANHOS"),
+        value: instance.messageHandler.get(guild, "ROLETA_GANHOS"),
         inline: false,
       },
       {
-        name: "Números",
-        value:
-          "Verde: **0**\nPreto: **2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35**\nVermelho: ** 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36**'",
+        name: instance.messageHandler.get(guild, "NUMEROS"),
+        value: instance.messageHandler.get(guild, "ROLETA_NUMEROS"),
         inline: false,
       },
       {
-        name: "Uso",
-        value: "/roleta <tipo de aposta> <falcoins>",
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "ROLETA_USO"),
         inline: false,
       },
     ])
