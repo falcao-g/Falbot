@@ -18,12 +18,12 @@ module.exports =  {
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER
     }],
-    callback: async ({message, interaction, user, args}) => {
+    callback: async ({instance, guild, message, interaction, user, args}) => {
         try {
             try {
                 var quantity = await functions.specialArg(args[0], user.id, "Caixas")
             } catch {
-                return `${args[0]} não é um valor válido... :rage:`
+                return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             }
         if (await functions.readFile(user.id, 'Caixas') >= quantity && await functions.readFile(user.id, 'Chaves') >= quantity) {
             caixas = 0
@@ -42,11 +42,11 @@ module.exports =  {
             functions.changeJSON(user.id, 'Falcoins', falcoins)
             const embed = new Discord.MessageEmbed()
             .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
-            .addField(`Você abriu ${quantity} caixas`, `Você ganhou ${chaves} chaves\nVocê ganhou ${falcoins} falcoins\nVocê ganhou ${caixas} caixas`)
+            .addField(instance.messageHandler.get(guild, "CAIXA_TITULO", {QUANTITY: args[0]}), `:key: ${chaves}\n:coin: ${await functions.format(falcoins)} \n:gift: ${caixas}`)
             .setFooter({text: 'by Falcão ❤️'})
             return embed
         } else {
-            return 'você não tem caixas e/ou chaves o suficiente para esta ação! :rage:'
+            return instance.messageHandler.get(guild, "CAIXA_INSUFICIENTE", {VALUE: args[0]})
         }
         } catch (error) {
             console.error(`Caixa: ${error}`)

@@ -12,7 +12,7 @@ module.exports =  {
     options: [
         {
             name: 'comando',
-            description: 'caso deseje informação sobre um comando específico, digite o nome dele, deixe em branco para ver sobre todos',
+            description: 'digite o nome de um comando para ver mais informações, deixe em branco para ver sobre todos',
             required: false,
             type: Discord.Constants.ApplicationCommandOptionTypes.STRING
         }

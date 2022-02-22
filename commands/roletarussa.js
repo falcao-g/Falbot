@@ -19,26 +19,26 @@ module.exports =  {
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],
-    callback: async ({message, interaction, client, user, args}) => {
+    callback: async ({instance, guild, message, interaction, client, user, args}) => {
         try {
             const author = user
                 try {
                     var bet = await functions.specialArg(args[0], user.id)
                 } catch {
-                    return `${args[1]} não é um valor válido... :rage:`
+                    return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 } 
                 if (await functions.readFile(user.id, 'Falcoins')) {
                     var pot = bet
                     const embed = new Discord.MessageEmbed()
-                    .setTitle('Roleta russa')
-                    .setDescription(`${author.username} começou uma roleta russa`)
+                    .setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
+                    .setDescription(`${author.username}` + instance.messageHandler.get(guild, "ROLETA_RUSSA_COMECOU"))
                     .setColor('#0099ff')
                     .addFields({
-                        name: 'Aposta',
+                        name: instance.messageHandler.get(guild, "APOSTA"),
                         value: `${pot} Falcoins`,
                         inline: false
                     }, {
-                        name: 'Jogadores',
+                        name: instance.messageHandler.get(guild, "JOGADORES"),
                         value: `${author}`,
                         inline: false
                     })
@@ -58,7 +58,11 @@ module.exports =  {
 
                     var users = [author]
                     var names = [author]
-                    mensagens = ['morreu', 'colocou a cabeça no lugar errado', 'viajou pro EUA', 'não tinha o high ground', 'descobriu que o chão era lava', 'descobriu que a terra é plana', 'não usou máscara']
+                    if (instance.messageHandler.getLanguage(guild) === "portugues") {
+                        mensagens = ['morreu', 'colocou a cabeça no lugar errado', 'viajou pro EUA', 'não tinha o high ground', 'descobriu que o chão era lava', 'descobriu que a terra é plana', 'não usou máscara']
+                    } else {
+                        mensagens = ['died', 'put their head on the wrong side', 'went to the USA', 'didn\'t have the high ground', 'found out that the floor was lava', 'found out that the earth is flat', 'didn\'t use a mask']
+                    }
     
                     const filter = async (reaction, user) => {
                         return await functions.readFile(user.id, 'Falcoins') >= bet && reaction.emoji.name === '✅' && user.id !== client.user.id && !users.includes(user) 
@@ -74,8 +78,8 @@ module.exports =  {
                         users.push(user)
                         names.push(user)
                         pot += bet
-                        embed.fields[0] = {"name": "Aposta", "value": `${pot} falcoins`, "inline": false}
-                        embed.fields[1] = {"name": "Jogadores", "value": `${names.join('\n')}`, "inline": false}
+                        embed.fields[0] = {"name": instance.messageHandler.get(guild, "APOSTA"), "value": `${pot} falcoins`, "inline": false}
+                        embed.fields[1] = {"name": instance.messageHandler.get(guild, "JOGADORES"), "value": `${names.join('\n')}`, "inline": false}
                         answer.edit({
                             embeds: [embed]
                         })
@@ -88,19 +92,19 @@ module.exports =  {
                             names[luck] = `~~${names[luck]}~~ :skull:`
                             users.splice(luck, 1)
                             var embed2 = new Discord.MessageEmbed()
-                             .setTitle('Roleta russa')
+                             .setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
                              .setDescription(`${eliminated} ${mensagens[functions.randint(0, mensagens.length -1)]}`)
                              .addFields({
-                                name: 'Aposta',
+                                name: instance.messageHandler.get(guild, "APOSTA"),
                                 value: `${pot} Falcoins`,
                                 inline: false
                              }, {
-                                name: 'Jogadores',
+                                name: instance.messageHandler.get(guild, "JOGADORES"),
                                 value: names.join('\n'),
                                 inline: false
                              }, {
-                                 name: 'Tempo restante',
-                                 value: 'atirando em alguém em 5 segundos',
+                                 name: instance.messageHandler.get(guild, "TEMPO_RESTANTE"),
+                                 value: instance.messageHandler.get(guild, "ATIRANDO"),
                                  inline: false
                              })
                              .setFooter({text: 'by Falcão ❤️'})
@@ -119,10 +123,10 @@ module.exports =  {
                         functions.changeJSON(winner.id, 'Falcoins', pot)
                         functions.changeJSON(winner.id, 'Vitorias')
                         var embed3 = new Discord.MessageEmbed()
-                        .setTitle('Roleta russa')
+                        .setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
                         .setDescription(`${winner} ganhou ${pot} falcoins`)
                         .setColor(3066993)
-                        .addField('Saldo atual', `${await functions.format(await functions.readFile(winner.id, 'Falcoins'))} falcoins`, false)
+                        .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(winner.id, 'Falcoins'))} falcoins`, false)
                         .setFooter({text: 'by Falcão ❤️'})
                         if (message) {
                             await message.reply({
@@ -135,9 +139,9 @@ module.exports =  {
                         }
                     })
                 } else if (bet <= 0) {
-                    return `${bet} não é um valor válido... :rage:`
+                    return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: bet})
                 } else {
-                    return 'Saldo insuficiente!'
+                    return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                 }
         } catch (error) {
             console.error(`roletarussa: ${error}`)

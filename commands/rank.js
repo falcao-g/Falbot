@@ -70,7 +70,7 @@ module.exports =  {
                         user = await client.users.fetch(top10[i])
                         embed.addField(`${i + 1}º - ${user.username} falcoins:`, `${await functions.format(users[top10[i]]['Falcoins'])}`, false)
                     } catch {
-                        embed.addField(`${i + 1}º - Usuário desconhecido falcoins:`, `${await functions.format(users[top10[i]]['Falcoins'])}`, false)
+                        embed.addField(`${i + 1}º - Unknown user falcoins:`, `${await functions.format(users[top10[i]]['Falcoins'])}`, false)
                     }
                 }
                 return embed

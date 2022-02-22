@@ -17,7 +17,7 @@ module.exports =  {
         description: 'se você ira depositar ou sacar falcoins do banco',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING,
-        choices: [{name: 'depositar', value: 'depositar'}, {name: 'sacar', value: 'sacar'}]
+        choices: [{name: 'depositar/deposit', value: 'depositar'}, {name: 'sacar/withdraw', value: 'sacar'}]
     },
     {
         name: 'falcoins',
@@ -26,60 +26,55 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
-    callback: async ({message, interaction, user, args}) => {
+    callback: async ({instance, guild, message, interaction, user, args}) => {
         try {
             if (message) {args[0] = args[0].toLowerCase()}
             if (args[0] == 'depositar') {
                 try {
                     var quantity = await functions.specialArg(args[1], user.id, "Falcoins")
                 } catch {
-                    return `${args[1]} não é um valor válido... :rage:`
+                    return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 }
     
                 if (await functions.readFile(user.id, 'Falcoins') >= quantity && quantity > 0) {
                     functions.takeAndGive(user.id, user.id, 'Falcoins', 'Banco', quantity)
     
                     const embed = new Discord.MessageEmbed()
-                     .setTitle(`Você depositou ${await functions.format(quantity)} falcoins :smiley:`)
+                     .setTitle(instance.messageHandler.get(guild, "BANCO_DEPOSITOU", {VALUE: await functions.format(quantity)}))
                      .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
                      .setAuthor({name: user.username, iconURL: user.avatarURL()})
-                     .addField('Saldo atual', `${await functions.format(await functions.readFile(user.id, "Falcoins"))} falcoins`, inline=false)
-                     .addField('Banco', `você tem ${await functions.format(await functions.readFile(user.id, "Banco"))} falcoins no banco`)
+                     .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(user.id, "Falcoins"))} falcoins`, inline=false)
+                     .addField(instance.messageHandler.get(guild, "BANCO"), instance.messageHandler.get(guild, "BANCO_SALDO", {VALUE: await functions.format(await functions.readFile(user.id, "Banco"))}))
                      .setFooter({text: 'by Falcão ❤️'})
     
                     return embed
-                } else if (quantity <= 0) {
-                    return `${args[1]} não é um valor válido... :rage:`
-    
                 } else {
-                    return `você não tem falcoins suficientes! :rage:`
+                    return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                 }
             } else if (args[0] == 'sacar') {
                 try {
                     var quantity = await functions.specialArg(args[1], user.id, "Banco")
                 } catch {
-                    return `${args[1]} não é um valor válido... :rage:`
+                    return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 }
     
                 if (await functions.readFile(user.id, 'Banco') >= quantity && quantity > 0) {
                     functions.takeAndGive(user.id, user.id, 'Banco', 'Falcoins', quantity)
     
                     const embed = new Discord.MessageEmbed()
-                     .setTitle(`Você sacou ${await functions.format(quantity)} falcoins :smiley:`)
+                     .setTitle(instance.messageHandler.get(guild, "BANCO_SACOU", {VALUE: await functions.format(quantity)}))
                      .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
                      .setAuthor({name: user.username, iconURL: user.avatarURL()})
-                     .addField('Saldo atual', `${await functions.format(await functions.readFile(user.id, "Falcoins"))} falcoins`, inline=false)
-                     .addField('Banco', `você tem ${await functions.format(await functions.readFile(user.id, "Banco"))} falcoins no banco`)
+                     .addField(instance.messageHandler.get(guild, "SALDO_ATUAL", {VALUE: await functions.format(quantity)}), `${await functions.format(await functions.readFile(user.id, "Falcoins"))} falcoins`, inline=false)
+                     .addField(instance.messageHandler.get(guild, "BANCO", {VALUE: await functions.format(quantity)}), instance.messageHandler.get(guild, "BANCO_SALDO", {VALUE: await functions.format(await functions.readFile(user.id, "Banco"))}))
                      .setFooter({text: 'by Falcão ❤️'})
     
                      return embed
-                } else if (quantity <= 0) {
-                    return `${args[1]} não é um valor válido... :rage:`
                 } else {
-                    return `você não tem falcoins suficientes no banco! :rage:`
+                    return instance.messageHandler.get(guild, "BANCO_INSUFICIENTE")
                 }
             } else {
-                return `${args[0]} não é um valor válido... :rage:`
+                return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             }
         } catch (error) {
             console.error(`banco: ${error}`)

@@ -22,14 +22,14 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
-    callback: async ({message, interaction, client, user, args}) => {
+    callback: async ({instance, guild, message, interaction, client, user, args}) => {
         try {
             guild = client.guilds.cache.get('742332099788275732')
             emojifoda = await guild.emojis.fetch('926953352774963310')
             try {
                 var bet = await functions.specialArg(args[0], user.id)
             } catch {
-                return `${args[0]} não é um valor válido... :rage:`
+                return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             }
             if (await functions.readFile(user.id, 'Falcoins') >= bet && bet > 0) {
                 const choices = [[':money_mouth:', 30], [':gem:', 10], [':moneybag:', 15], [':coin:', 25], [':dollar:', 20]]
@@ -40,7 +40,7 @@ module.exports =  {
                 const embed = new Discord.MessageEmbed()
                  .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
                  .setAuthor({name: user.username, iconURL: user.avatarURL()})
-                 .addField(`-------------------\n | ${emojifoda} | ${emojifoda} | ${emojifoda} |\n-------------------`, '--- **GIRANDO** ---')
+                 .addField(`-------------------\n | ${emojifoda} | ${emojifoda} | ${emojifoda} |\n-------------------`, `--- **${instance.messageHandler.get(guild, "GIRANDO")}** ---`)
                  .setFooter({text: 'by Falcão ❤️'})
     
                 if (message) {
@@ -54,13 +54,13 @@ module.exports =  {
                     })
                 }
                 await new Promise(resolve => setTimeout(resolve, 1500));
-                embed.fields[0] = {'name': `-------------------\n | ${emoji1} | ${emojifoda} | ${emojifoda} |\n-------------------`, 'value': '--- **GIRANDO** ---'}
+                embed.fields[0] = {'name': `-------------------\n | ${emoji1} | ${emojifoda} | ${emojifoda} |\n-------------------`, 'value': `--- **${instance.messageHandler.get(guild, "GIRANDO")}** ---`}
                 await answer.edit({embeds: [embed]})
                 await new Promise(resolve => setTimeout(resolve, 1500));
-                embed.fields[0] = {'name': `-------------------\n | ${emoji1} | ${emoji2} | ${emojifoda} |\n-------------------`, 'value': '--- **GIRANDO** ---'}
+                embed.fields[0] = {'name': `-------------------\n | ${emoji1} | ${emoji2} | ${emojifoda} |\n-------------------`, 'value': `--- **${instance.messageHandler.get(guild, "GIRANDO")}** ---`}
                 await answer.edit({embeds: [embed]})
                 await new Promise(resolve => setTimeout(resolve, 1500));
-                embed.fields[0] = {'name': `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`, 'value': '--- **GIRANDO** ---'}
+                embed.fields[0] = {'name': `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`, 'value': `--- **${instance.messageHandler.get(guild, "GIRANDO")}** ---`}
                 await answer.edit({embeds: [embed]})
 
                 arrayEmojis = [emoji1, emoji2, emoji3]
@@ -101,10 +101,10 @@ module.exports =  {
                      .setColor(3066993)
                      .addFields({
                          name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
-                         value: '--- **Você ganhou!** ---',
+                         value: `--- **${instance.messageHandler.get(guild, "VOCE_GANHOU")}** ---`,
                          inline: false
                      }, {
-                         name: 'Ganhos',
+                         name: instance.messageHandler.get(guild, "GANHOS"),
                          value: `${await functions.format(profit)} falcoins`,
                          inline: true
                      })
@@ -113,24 +113,22 @@ module.exports =  {
                      .setColor(15158332)
                      .addFields({
                          name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
-                         value: '--- **Você perdeu!** ---',
+                         value: `--- **${instance.messageHandler.get(guild, "VOCE_PERDEU")}** ---`,
                          inline: false
                      }, {
-                         name: 'Perdas',
+                         name: instance.messageHandler.get(guild, "PERDAS"),
                          value: `${await functions.format(bet)} falcoins`,
                          inline: true
                      })
                 }
                 embed2.setAuthor({name: user.username, iconURL: user.avatarURL()})
-                embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(user.id, 'Falcoins'))}`)
+                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(user.id, 'Falcoins'))}`)
                 embed2.setFooter({text: 'by Falcão ❤️'})
                 await answer.edit({
                     embeds: [embed2]
                 })
-            } else if (bet <= 0) {
-                    return `${bet} não é um valor válido... :rage:`
             } else {
-                    return `você não tem falcoins suficientes para esta aposta! :rage:`
+                    return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                 }
         } catch (error) {
             console.error(`niquel: ${error}`)

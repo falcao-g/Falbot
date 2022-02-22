@@ -20,26 +20,26 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }   
     ],
-    callback: async ({message, interaction, client, user, args}) => {
+    callback: async ({instance, guild, message, interaction, client, user, args}) => {
         try {
             const author = user
             try {
                 var bet = await functions.specialArg(args[0], user.id)
             } catch {
-                return `${args[1]} não é um valor válido... :rage:`
+                return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             } 
             if (await functions.readFile(user.id, 'Falcoins') >= bet) {
                 var pot = bet
                 const embed = new Discord.MessageEmbed()
-                .setTitle('Cavalgada')
-                .setDescription(`${author.username} começou uma cavalgada`)
+                .setTitle(instance.messageHandler.get(guild, "CAVALGADA", {VALUE: args[0]}))
+                .setDescription(instance.messageHandler.get(guild, "CAVALGADA_DESAFIO", {USER: author.username}))
                 .setColor('#0099ff')
                 .addFields({
-                    name: 'Aposta',
+                    name: instance.messageHandler.get(guild, "APOSTA"),
                     value: `${pot} Falcoins`,
                     inline: false
                 }, {
-                    name: 'Jogadores',
+                    name: instance.messageHandler.get(guild, "JOGADORES"),
                     value: `${author}`,
                     inline: false
                 })
@@ -76,14 +76,14 @@ module.exports =  {
                     pot += bet
                     const embed2 = new Discord.MessageEmbed()
                     .setTitle('Cavalgada')
-                    .setDescription(`${author.username} te desafia para uma corrida de cavalos!`)
+                    .setDescription(instance.messageHandler.get(guild, "CAVALGADA_DESAFIO", {USER: author.username}))
                     .setColor('#0099ff')
                     .addFields({
-                        name: 'Aposta',
+                        name: instance.messageHandler.get(guild, "APOSTA"),
                         value: `${pot} Falcoins`,
                         inline: false
                     }, {
-                        name: 'Jogadores',
+                        name: instance.messageHandler.get(guild, "JOGADORES"),
                         value: `${users.join('\n')}`,
                         inline: false
                     })
@@ -105,13 +105,13 @@ module.exports =  {
                         }
 
                         var embed2 = new Discord.MessageEmbed()
-                        .setTitle('Calvagada')
+                        .setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
                         .addFields({
-                            name: 'Aposta',
+                            name: instance.messageHandler.get(guild, "APOSTA"),
                             value: `${pot} Falcoins`,
                             inline: false
                         }, {
-                            name: 'Jogadores',
+                            name: instance.messageHandler.get(guild, "JOGADORES"),
                             value: `${frase}`,
                             inline: false
                         })
@@ -137,10 +137,10 @@ module.exports =  {
                 functions.changeJSON(winner.id, 'Falcoins', pot)
                 functions.changeJSON(winner.id, 'Vitorias')
                 var embed3 = new Discord.MessageEmbed()
-                .setTitle('Cavalgada')
-                .setDescription(`${winner} ganhou ${pot} falcoins`)
+                .setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
+                .setDescription(instance.messageHandler.get(guild, "GANHOU", {WINNER: winner, FALCOINS: pot}))
                 .setColor(3066993)
-                .addField('Saldo atual', `${await functions.format(await functions.readFile(winner.id, 'Falcoins'))} falcoins`, false)
+                .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(winner.id, 'Falcoins'))} falcoins`, false)
                 .setFooter({text: 'by Falcão ❤️'})
                 if (message) {
                     await message.reply({
@@ -152,11 +152,8 @@ module.exports =  {
                     })
                 }
                 })
-                
-            } else if (bet <= 0) { 
-                return `${bet} não é um valor válido... :rage:`
             } else {
-                return 'Saldo insuficiente!'
+                return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
             }
         } catch (error) {
             console.error(`Cavalgada: ${error}`)

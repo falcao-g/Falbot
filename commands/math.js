@@ -19,14 +19,13 @@ module.exports = {
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],
-    callback: async ({message, interaction, user, text}) => {
+    callback: async ({instance, guild, message, interaction, user, text}) => {
         try {
             answer = await math.evaluate(text).toString()
 
             const embed = new Discord.MessageEmbed()
              .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
-             if (interaction) { embed.addField('Expressão:', text, false)}
-             embed.addField('Resultado:', answer, false)
+             embed.addField(instance.messageHandler.get(guild, "RESULTADO"), answer, false)
              .setFooter({text: 'by Falcão ❤️'})
     
             return embed

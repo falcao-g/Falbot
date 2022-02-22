@@ -10,11 +10,11 @@ module.exports =  {
     cooldown: '12h',
     guildOnly: true,
     testOnly: config.testOnly,
-    callback: async ({user}) => {
+    callback: async ({instance, guild, user}) => {
         try {
             const quantity = await functions.readFile(user.id, 'Lootbox')
             functions.changeJSON(user.id, 'Falcoins', quantity)
-            return `Parabéns! Você ganhou **${quantity}** falcoins :heart_eyes:`
+            return instance.messageHandler.get(guild, "LOOTBOX", {FALCOINS: quantity})
         } catch (error) {
             console.error(`lootbox: ${error}`)
         }

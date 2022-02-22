@@ -18,7 +18,7 @@ module.exports =  {
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.USER
     }],
-    callback: async ({message, interaction, args}) => {
+    callback: async ({instance, guild, message, interaction, args}) => {
         try {
             if (message) {
                 if (args[0][2] == '!') {
@@ -38,19 +38,19 @@ module.exports =  {
                 value: `${await functions.format(user['Falcoins'])}`,
                 inline: true
             },{
-                name: ':trophy: Vitorias',
+                name: ':trophy: ' + instance.messageHandler.get(guild, 'VITORIAS'),
                 value: `${await functions.format(user['Vitorias'])}`,
                 inline: true
             }, {
-                name: ':bank: Banco',
+                name: ':bank: ' + instance.messageHandler.get(guild, 'BANCO'),
                 value: `${await functions.format(user['Banco'])}`,
                 inline: true
             }, {
-                name: ':gift: Caixas',
+                name: ':gift: ' + instance.messageHandler.get(guild, 'CAIXAS'),
                 value: `${await functions.format(user['Caixas'])}`,
                 inline: true
             }, {
-                name: ':key: Chaves',
+                name: ':key: ' + instance.messageHandler.get(guild, 'CHAVES'),
                 value: `${await functions.format(user['Chaves'])}`,
                 inline: true
             }) 

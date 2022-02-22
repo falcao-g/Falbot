@@ -18,7 +18,7 @@ module.exports = {
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.USER
     }],
-    callback: async ({message, interaction, user, args}) => {
+    callback: async ({instance, guild, message, interaction, user, args}) => {
         try {
             const embed = new Discord.MessageEmbed()
             .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
@@ -29,7 +29,7 @@ module.exports = {
            } else {
                const member = await functions.getMember(interaction, args[0])
                await interaction.reply({
-                   content: `${member} você foi bonked por ${user.username}`,
+                   content: `${member}` + instance.messageHandler.get(guild, "BONKED") + `${user.username}`,
                    embeds: [embed]
                })
            }

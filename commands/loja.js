@@ -26,43 +26,43 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER
     }
     ],
-    callback: async ({message, interaction, user, args}) => {
+    callback: async ({instance, guild, message, interaction, user, args}) => {
         try {
             if (args[0] === undefined && args[1] === undefined) {
                 const embed = new Discord.MessageEmbed()
                 .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
                 .setTitle('**Loja**')
                 .addFields({
-                    name: 'Item número 1: Caixa',
-                    value: 'Pelo custo de 5.000 falcoins você compra uma caixa que pode ser aberta usando uma chave',
+                    name: instance.messageHandler.get(guild, "ITEM_1"),
+                    value: instance.messageHandler.get(guild, "ITEM_1_DESCRICAO"),
                     inline: false
                 }, {
-                    name: 'Item número 2: Chave',
-                    value: 'Pelo custo de 20.000 falcoins você compra uma chave que pode ser usada para abrir uma caixa',
+                    name: instance.messageHandler.get(guild, "ITEM_2"),
+                    value: instance.messageHandler.get(guild, "ITEM_2_DESCRICAO"),
                     inline: false
                 }, {
-                    name: 'Item número 3: Aumento de lootbox',
-                    value: 'Pelo custo de 50.000 falcoins você aumenta seu ganho na lootbox em 1000 falcoins',
+                    name: instance.messageHandler.get(guild, "ITEM_3"),
+                    value: instance.messageHandler.get(guild, "ITEM_3_DESCRICAO"),
                     inline: false
                 }, {
                     name: '\u200b',
-                    value: 'Use `?loja [numero] [quantidade]` para comprar um item',
+                    value: instance.messageHandler.get(guild, "LOJA_USO_2"),
                 })
                 .setFooter({text: 'by Falcão ❤️'})
                 return embed
             } else {
                 item = parseInt(args[0])
                 if (item <= 0 || item > 3 || item != item) {
-                    return 'item inválido! :rage:'
+                    return instance.messageHandler.get(guild, "LOJA_ITEM_INVALIDO")
                 }
     
                 amount = parseInt(args[1] || 1)
                 if (amount <= 0 || amount != amount) {
-                    return 'quantidade inválida! coloque um número positivo ou deixe em branco para comprar 1 :face_with_monocle:'
+                    return instance.messageHandler.get(guild, "LOJA_QUANTIDADE_INVALIDA")
                 }
     
                 if (amount > 100) {
-                    return 'calma lá amigão, o limite é 100 itens por vez :wink:'
+                    return instance.messageHandler.get(guild, "LOJA_LIMITE")
                 }
 
                 if (item === 1) {
@@ -71,25 +71,25 @@ module.exports =  {
                             functions.changeJSON(user.id, 'Falcoins', -5000 * amount)
                             functions.changeJSON(user.id, 'Caixas', 1 * amount)
                         }
-                        return `Parabéns! Você comprou ${amount} caixas :star_struck:`
+                        return instance.messageHandler.get(guild, "LOJA_COMPROU_CAIXA", {AMOUNT: amount})
                     } else {
-                        return 'você não tem falcoins suficiente para comprar esse item! :rage:'
+                        return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                     }
                 } else if (item === 2) {
                     if (await functions.readFile(user.id, 'Falcoins') >= 20000 * amount) {
                         functions.changeJSON(user.id, 'Falcoins', -20000 * amount)
                         functions.changeJSON(user.id, 'Chaves', 1 * amount)
-                        return `Parabéns! Você comprou ${amount} chaves :star_struck:`
+                        return instance.messageHandler.get(guild, "LOJA_COMPROU_CHAVE", {AMOUNT: amount})
                     } else {
-                        return 'você não tem falcoins suficiente para comprar esse item! :rage:'
+                        return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                     }
                 } else if (item === 3) {
                     if (await functions.readFile(user.id, 'Falcoins') >= 50000 * amount) {
                         functions.changeJSON(user.id, 'Falcoins', -50000 * amount)
                         functions.changeJSON(user.id, 'Lootbox', 1000 * amount)
-                        return `Parabéns! Você comprou ${amount} aumentos da lootbox :star_struck:`
+                        return instance.messageHandler.get(guild, "LOJA_COMPROU_AUMENTO", {AMOUNT: amount})
                     } else {
-                        return 'você não tem falcoins suficiente para comprar esse item! :rage:'
+                        return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                     }
                 } 
             }

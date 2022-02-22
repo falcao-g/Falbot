@@ -26,7 +26,7 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }   
     ],
-    callback: async ({message, interaction, client, user, args}) => {
+    callback: async ({instance, guild, message, interaction, client, user, args}) => {
         try {
             var board = new Board.default()
             const author = user
@@ -42,16 +42,16 @@ module.exports =  {
                 try {
                     var bet = await functions.specialArg(args[1], user.id)
                 } catch {
-                    return `${args[1]} não é um valor válido... :rage:`
+                    return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 } 
                 if (await functions.readFile(user.id, 'Falcoins') >= bet && await functions.readFile(member.user.id, 'Falcoins') >= bet && bet > 0) {
                     if (message) {
                         var answer = await message.reply({
-                            content: `${author.username} chamou ${member.user.username} para um jogo da velha apostando ${await functions.format(bet)} falcoins :older_woman:`
+                            content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {USER: author.username, USER2: member.user.username, FALCOINS: await functions.format(bet)})
                         })
                     } else {
                         var answer = await interaction.reply({
-                            content: `${author.username} chamou ${member.user.username} para um jogo da velha apostando ${await functions.format(bet)} falcoins :older_woman:`,
+                            content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {USER: author.username, USER2: member.user.username, FALCOINS: await functions.format(bet)}),
                             fetchReply: true
                         })
                     }
@@ -72,28 +72,28 @@ module.exports =  {
                         if (collected.size === 0) {
                             if (message) {
                                 message.reply({
-                                    content: `Jogo da velha cancelado. ${member} demorou muito para aceitar! :confounded:`
+                                    content: instance.messageHandler.get(guild, "VELHA_CANCELADO_DEMOROU", {USER: member})
                                 }) 
                             } else {
                                 interaction.followUp({
-                                    content: `Jogo da velha cancelado. ${member} demorou muito para aceitar! :confounded:`
+                                    content: instance.messageHandler.get(guild, "VELHA_CANCELADO_DEMOROU", {USER: member})
                                 })
                             }
                             return
                         } else if (collected.first()._emoji.name === '🚫') {
                             if (message) {
                                 message.reply({
-                                    content: `Jogo da velha cancelado. ${member} recusou o desafio! :confounded:`
+                                    content: instance.messageHandler.get(guild, "VELHA_CANCELADO_RECUSOU", {USER: member})
                                 }) 
                             } else {
                                 interaction.followUp({
-                                    content: `Jogo da velha cancelado. ${member} recusou o desafio! :confounded:`
+                                    content: instance.messageHandler.get(guild, "VELHA_CANCELADO_RECUSOU", {USER: member})
                                 })
                             }
                         }else {
                             const embed = new Discord.MessageEmbed()
-                            .setTitle('Jogo da velha')
-                            .setDescription(`turno de: **${author.username} [${board.currentMark()}]**`)
+                            .setTitle(instance.messageHandler.get(guild, "VELHA"))
+                            .setDescription(instance.messageHandler.get(guild, "TURNO") + `**${author.username} [${board.currentMark()}]**`)
                             .addField('\u200B', `:one: | :two: | :three: \n────────\n:four: | :five: | :six: \n────────\n:seven: | :eight: | :nine:`)
                             .setFooter('by Falcão ❤️')
                             .setColor('#0099ff')
@@ -153,8 +153,8 @@ module.exports =  {
                                 }
 
                                 const embed2 = new Discord.MessageEmbed()
-                                .setTitle('Jogo da velha')
-                                .setDescription(`turno de: **${board.currentMark() === 'X' ? author.username : member.user.username} [${board.currentMark()}]**`)
+                                .setTitle(instance.messageHandler.get(guild, "VELHA"))
+                                .setDescription(instance.messageHandler.get(guild, "TURNO") + `**${board.currentMark() === 'X' ? author.username : member.user.username} [${board.currentMark()}]**`)
                                 .addField('\u200B', `${board.isPositionTaken(1) ? (board.markedBoardPositionValue(1) === 'X' ? ':x:' : ':o:') : ':one:'} | ${board.isPositionTaken(2) ? (board.markedBoardPositionValue(2) === 'X' ? ':x:' : ':o:') : ':two:'} | ${board.isPositionTaken(3) ? (board.markedBoardPositionValue(3) === 'X' ? ':x:' : ':o:') : ':three:'} \n────────\n${board.isPositionTaken(4) ? (board.markedBoardPositionValue(4) === 'X' ? ':x:' : ':o:') : ':four:'} | ${board.isPositionTaken(5) ? (board.markedBoardPositionValue(5) === 'X' ? ':x:' : ':o:') : ':five:'} | ${board.isPositionTaken(6) ? (board.markedBoardPositionValue(6) === 'X' ? ':x:' : ':o:') : ':six:'} \n────────\n${board.isPositionTaken(7) ? (board.markedBoardPositionValue(7) === 'X' ? ':x:' : ':o:') : ':seven:'} | ${board.isPositionTaken(8) ? (board.markedBoardPositionValue(8) === 'X' ? ':x:' : ':o:') : ':eight:'} | ${board.isPositionTaken(9) ? (board.markedBoardPositionValue(9) === 'X' ? ':x:' : ':o:') : ':nine:'}`)
                                 .setFooter({text: 'by Falcão ❤️'})
                                 .setColor('#0099ff')
@@ -171,18 +171,16 @@ module.exports =  {
                             collector2.on('end', async collected => {
                                 if (board.hasWinner()) {
                                     const embed2 = new Discord.MessageEmbed()
-                                    .setTitle('Jogo da velha')
-                                    .setDescription(`**${board.winningPlayer() === 'X' ? author.username : member.user.username} ganhou ${bet} falcoins**`)
+                                    .setTitle(instance.messageHandler.get(guild, "VELHA"))
+                                    .setDescription(instance.messageHandler.get(guild, "GANHOU", {WINNER: board.winningPlayer() === 'X' ? author.username : member.user.username, FALCOINS: bet}))
                                     .addField('\u200B', `${board.isPositionTaken(1) ? (board.markedBoardPositionValue(1) === 'X' ? ':x:' : ':o:') : ':one:'} | ${board.isPositionTaken(2) ? (board.markedBoardPositionValue(2) === 'X' ? ':x:' : ':o:') : ':two:'} | ${board.isPositionTaken(3) ? (board.markedBoardPositionValue(3) === 'X' ? ':x:' : ':o:') : ':three:'} \n────────\n${board.isPositionTaken(4) ? (board.markedBoardPositionValue(4) === 'X' ? ':x:' : ':o:') : ':four:'} | ${board.isPositionTaken(5) ? (board.markedBoardPositionValue(5) === 'X' ? ':x:' : ':o:') : ':five:'} | ${board.isPositionTaken(6) ? (board.markedBoardPositionValue(6) === 'X' ? ':x:' : ':o:') : ':six:'} \n────────\n${board.isPositionTaken(7) ? (board.markedBoardPositionValue(7) === 'X' ? ':x:' : ':o:') : ':seven:'} | ${board.isPositionTaken(8) ? (board.markedBoardPositionValue(8) === 'X' ? ':x:' : ':o:') : ':eight:'} | ${board.isPositionTaken(9) ? (board.markedBoardPositionValue(9) === 'X' ? ':x:' : ':o:') : ':nine:'}`)
                                     .setFooter({text: 'by Falcão ❤️'})
                                     .setColor('#0099ff')
                                     if(board.winningPlayer() === 'X') {
-                                        embed2.setDescription(`${author.username} ganhou ${bet} falcoins`)
                                         functions.changeJSON(author.id, 'Falcoins', bet)
                                         functions.changeJSON(author.id, 'Vitorias', 1)
                                         functions.changeJSON(member.id, 'Falcoins', -bet)
                                     } else {
-                                        embed2.setDescription(`${member.user.username} ganhou ${bet} falcoins`)
                                         functions.changeJSON(member.id, 'Falcoins', bet)
                                         functions.changeJSON(member.id, 'Vitorias', 1)
                                         functions.changeJSON(author.id, 'Falcoins', -bet)
@@ -192,8 +190,8 @@ module.exports =  {
                                     })  
                                 } else {
                                     const embed2 = new Discord.MessageEmbed()
-                                    .setTitle('Jogo da velha')
-                                    .setDescription(`**O jogo empatou**`)
+                                    .setTitle(instance.messageHandler.get(guild, "VELHA"))
+                                    .setDescription(instance.messageHandler.get(guild, "VELHA_EMPATOU"))
                                     .addField('\u200B', `${board.isPositionTaken(1) ? (board.markedBoardPositionValue(1) === 'X' ? ':x:' : ':o:') : ':one:'} | ${board.isPositionTaken(2) ? (board.markedBoardPositionValue(2) === 'X' ? ':x:' : ':o:') : ':two:'} | ${board.isPositionTaken(3) ? (board.markedBoardPositionValue(3) === 'X' ? ':x:' : ':o:') : ':three:'} \n────────\n${board.isPositionTaken(4) ? (board.markedBoardPositionValue(4) === 'X' ? ':x:' : ':o:') : ':four:'} | ${board.isPositionTaken(5) ? (board.markedBoardPositionValue(5) === 'X' ? ':x:' : ':o:') : ':five:'} | ${board.isPositionTaken(6) ? (board.markedBoardPositionValue(6) === 'X' ? ':x:' : ':o:') : ':six:'} \n────────\n${board.isPositionTaken(7) ? (board.markedBoardPositionValue(7) === 'X' ? ':x:' : ':o:') : ':seven:'} | ${board.isPositionTaken(8) ? (board.markedBoardPositionValue(8) === 'X' ? ':x:' : ':o:') : ':eight:'} | ${board.isPositionTaken(9) ? (board.markedBoardPositionValue(9) === 'X' ? ':x:' : ':o:') : ':nine:'}`)
                                     .setFooter({text: 'by Falcão ❤️'})
                                     .setColor('#0099ff')
@@ -204,13 +202,11 @@ module.exports =  {
                             })
                         }
                     })
-                } else if (bet <= 0) {
-                    return `${bet} não é um valor válido... :rage:`
                 } else {
-                    return 'Saldo insuficiente em uma das contas! :grimacing:'
+                    return instance.messageHandler.get(guild, "INSUFICIENTE_CONTAS")
                 }
             } else {
-                return 'Você não pode jogar com você mesmo, espertinho :rage:'
+                return instance.messageHandler.get(guild, "NAO_JOGAR_SOZINHO")
             }
         } catch (error) {
             console.error(`velha: ${error}`)

@@ -25,7 +25,7 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }   
     ],
-    callback: async ({message, interaction, user, args}) => {
+    callback: async ({instance, guild, message, interaction, user, args}) => {
         try {
             const author = user
             if (message) {
@@ -40,16 +40,16 @@ module.exports =  {
                 try {
                     var bet = await functions.specialArg(args[1], user.id)
                 } catch {
-                    return `${args[1]} não é um valor válido... :rage:`
+                    return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 } 
                 if (await functions.readFile(user.id, 'Falcoins') >= bet && await functions.readFile(member.user.id, 'Falcoins') >= bet && bet > 0) {
                     if (message) {
                         var answer = await message.reply({
-                            content: `${author.username} chamou ${member.user.username} para uma luta apostando ${await functions.format(bet)} falcoins :smiling_imp:`
+                            content: instance.messageHandler.get(guild, "LUTA_CONVITE", {USER: author.username, USER2: member.user.username, FALCOINS: await functions.format(bet)}),
                         })
                     } else {
                         var answer = await interaction.reply({
-                            content: `${author.username} chamou ${member.user.username} para uma luta apostando ${await functions.format(bet)} falcoins :smiling_imp:`,
+                            content: instance.messageHandler.get(guild, "LUTA_CONVITE", {USER: author.username, USER2: member.user.username, FALCOINS: await functions.format(bet)}),
                             fetchReply: true
                         })
                     }
@@ -70,21 +70,21 @@ module.exports =  {
                         if (collected.size === 0) {
                             if (message) {
                                 message.reply({
-                                    content: `Duelo cancelado. ${member} demorou muito para aceitar! :confounded:`
+                                    content: instance.messageHandler.get(guild, "LUTA_CANCELADO_DEMOROU", {VALUE: member})
                                 }) 
                             } else {
                                 interaction.followUp({
-                                    content: `Duelo cancelado. ${member} demorou muito para aceitar! :confounded:`
+                                    content: instance.messageHandler.get(guild, "LUTA_CANCELADO_DEMOROU", {VALUE: member})
                                 })
                             }
                         } else if (collected.first()._emoji.name === '🚫') {
                             if (message) {
                                 message.reply({
-                                    content: `Duelo cancelado. ${member} recusou o duelo! :confounded:`
+                                    content: instance.messageHandler.get(guild, "LUTA_CANCELADO_RECUSOU", {VALUE: member})
                                 }) 
                             } else {
                                 interaction.followUp({
-                                    content: `Duelo cancelado. ${member} recusou o duelo! :confounded:`
+                                    content: instance.messageHandler.get(guild, "LUTA_CANCELADO_RECUSOU", {VALUE: member})
                                 })
                             }
                         } else {
@@ -144,28 +144,28 @@ module.exports =  {
                                         if (order[enemy]['escudo'] != true) {
                                             order[enemy]['hp'] -= luck
                                         }
-                                        embed.addField(`${order[i]['name']} ataca`, `[${attack}] ${order[i]['mention']} dá **${luck}** de dano ao inimigo`, false)
+                                        embed.addField(`${order[i]['name']} ` + instance.messageHandler.get(guild, "ATACA"), `${order[i]['mention']} ` + instance.messageHandler.get(guild, "ATAQUE", {VALUE: luck}), false)
                                     } else if (attack === 'stun') {
                                         if (order[enemy]['escudo'] != true) {
                                             order[enemy]['hp'] -= luck
                                             order[enemy]['stunned'] = true
                                         }
-                                        embed.addField(`${order[i]['name']} ataca`, `[${attack}] ${order[i]['mention']} dá **${luck}** de dano ao inimigo e o deixa nocauteado`, false)
+                                        embed.addField(`${order[i]['name']} ` + instance.messageHandler.get(guild, "ATACA"), `${order[i]['mention']} ` + instance.messageHandler.get(guild, "ATAQUE_NOCAUTE", {VALUE: luck}), false)
                                     } else if (attack === 'roubo de vida') {
                                         if (order[enemy]['escudo'] != true) {
                                             order[enemy]['hp'] -= luck
                                             order[me]['hp'] += luck
                                         }
-                                        embed.addField(`${order[i]['name']} ataca`, `[${attack}] ${order[i]['mention']} rouba **${luck}** de vida do inimigo`, false)
+                                        embed.addField(`${order[i]['name']} ` + instance.messageHandler.get(guild, "ATACA"), `${order[i]['mention']} ` + instance.messageHandler.get(guild, "ROUBO_VIDA", {VALUE: luck}), false)
                                     } else if (attack === 'cura') {
                                         order[i]['hp'] += luck
-                                        embed.addField(`${order[i]['name']} ataca`, `[${attack}] ${order[i]['mention']} se cura em **${luck}** de vida`, false)
+                                        embed.addField(`${order[i]['name']} ` + instance.messageHandler.get(guild, "ATACA"), `${order[i]['mention']} ` + instance.messageHandler.get(guild, "CURA", {VALUE: luck}), false)
                                     } else if (attack === 'self') {
                                         order[i]['hp'] -= luck
-                                        embed.addField(`${order[i]['name']} ataca`, `[${attack}] ${order[i]['mention']} acidentalmente dá **${luck}** de dano em si mesmo`, false)
+                                        embed.addField(`${order[i]['name']} ` + instance.messageHandler.get(guild, "ATACA"), `${order[i]['mention']} ` + instance.messageHandler.get(guild, "SELF", {VALUE: luck}), false)
                                     } else if (attack === 'escudo') {
                                         order[i]['escudo'] = true
-                                        embed.addField(`${order[i]['name']} ataca`, `[${attack}] ${order[i]['mention']} se protege`, false)
+                                        embed.addField(`${order[i]['name']} ` + instance.messageHandler.get(guild, "ATACA"), `${order[i]['mention']} ` + instance.messageHandler.get(guild, "SE_PROTEGE"), false)
                                     }
     
                                     if (order[i]['hp'] > 100) {
@@ -192,14 +192,14 @@ module.exports =  {
                                 functions.changeJSON(order[0]['id'], 'Falcoins', -bet)
                                 functions.changeJSON(order[1]['id'], 'Falcoins', bet)
                                 functions.changeJSON(order[1]['id'], 'Vitorias')
-                                embed2.addField(`${order[1]['name']} ganhou`, `Você derrotou ${order[0]['mention']} em uma luta`, false)
-                                embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(order[1]['id'], 'Falcoins'))} falcoins`)
+                                embed2.addField(`${order[1]['name']}` + instance.messageHandler.get(guild, "GANHO"), instance.messageHandler.get(guild, "LUTA_DERROTOU", {USER: order[0]['mention']}), false)
+                                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(order[1]['id'], 'Falcoins'))} falcoins`)
                             }  else if (order[1]['hp'] <= 0) {
                                 functions.changeJSON(order[1]['id'], 'Falcoins', -bet)
                                 functions.changeJSON(order[0]['id'], 'Falcoins', bet)
                                 functions.changeJSON(order[0]['id'], 'Vitorias')
-                                embed2.addField(`${order[0]['name']} ganhou`, `Você derrotou ${order[1]['mention']} em uma luta`, false)
-                                embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(order[0]['id'], 'Falcoins'))} falcoins`)
+                                embed2.addField(`${order[0]['name']}` + instance.messageHandler.get(guild, "GANHO"), instance.messageHandler.get(guild, "LUTA_DERROTOU", {USER: order[1]['mention']}), false)
+                                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(order[0]['id'], 'Falcoins'))} falcoins`)
                             }
                             if (message) {
                                 await message.channel.send({
@@ -210,15 +210,13 @@ module.exports =  {
                                     embeds: [embed2]
                                 })
                             }
-                            }
+                        }
                     })
-                } else if (bet <= 0) {
-                    return `${bet} não é um valor válido... :rage:`
                 } else {
-                    return 'Saldo insuficiente em uma das contas! :grimacing:'
+                    return instance.messageHandler.get(guild, "INSUFICIENTE_CONTAS")
                 }
             } else {
-                return 'Você não pode lutar com você mesmo, espertinho :rage:'
+                return instance.messageHandler.get(guild, "NAO_JOGAR_SOZINHO")
             }
         } catch (error) {
             console.error(`luta: ${error}`)

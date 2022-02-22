@@ -149,8 +149,8 @@
       "english": "Show the info of the mentioned user"
     },
     "SOBRE_USO": {
-      "portugues": "/sobre @usuário",
-      "english": "/sobre @user"
+      "portugues": "/sobre <@usuário>",
+      "english": "/sobre <@user>"
     },
     "LB_INFO": {
       "portugues": "Resgata sua lootbox grátis (disponível a cada 12 horas)",
@@ -161,8 +161,8 @@
       "english": "Donate x Falcoins to the mentioned user"
     },
     "DOAR_USO": {
-      "portugues": "/doar @usuário <falcoins>",
-      "english": "/doar @user <falcoins>"
+      "portugues": "/doar <@usuário> <falcoins>",
+      "english": "/doar <@user> <falcoins>"
     },
     "CAVALO_INFO": {
       "portugues": "Adivinhe qual cavalo é o vencedor",
@@ -188,6 +188,34 @@
       "portugues": "/loja [numero] [quantidade] - numero e quantidade só são obrigatórios caso você queira comprar algo",
       "english": "/loja [number] [amount] - number and amount are only required if you want to buy something"
     },
+    "ROLETA_INFO": {
+      "portugues": "**preto/vermelho/verde** se o bot rolar um número com a sua cor, você ganha\n**0-36** se o bot rolar seu número, você ganha\n**altos/baixos** baixos: 1-18, altos: 19-36\n**impar/par** impar = 1, 3, 5 ..., 35, par = 2, 4, 6, ..., 36",
+      "english": "**black/red/green** if the bot rolls your color you win\n**0-36** if the bot rolls your number you win\n**high/low** low: 1-18, high: 19-36\n**odd/even** odd = 1, 3, 5 ..., 35, even = 2, 4, 6, ..., 36"
+    },
+    "ROLETA_USO": {
+      "portugues": "/roleta <tipo de aposta> <falcoins>",
+      "english": "/roleta <bet type> <falcoins>"
+    },
+    "ROLETA_TIPOS": {
+      "portugues": "**<preto/vermelho/verde>, <0-36>, <altos/baixos>, <par/impar>**",
+      "english": "**<black/red/green>, <0-36>, <high/low>, <odd/even>**"
+    },
+    "ROLETA_GANHOS": {
+      "portugues": "**preto/vermelho/verde** - 2x\n**0-36** - 35x\n**altos/baixos** - 2x\n**impar/par** - 2x",
+      "english": "**black/red/green** - 2x\n**0-36** - 35x\n**high/low** - 2x\n**odd/even** - 2x"
+    },
+    "ROLETA_NUMEROS": {
+      "portugues": "Verde: **0**\nPreto: **2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35**\nVermelho: ** 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36**'",
+      "english": "Green: **0**\nBlack: **2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35**\nRed: ** 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36**"
+    },
+    "NUMEROS": {
+      "portugues": "Números",
+      "english": "Numbers"
+    },
+    "TIPOS_APOSTAS": {
+      "portugues": "Tipos de apostas",
+      "english": "Bet types"
+    },
     "NIQUEL_INFO": {
       "portugues": "Caça-níquel",
       "english": "Slot machine"
@@ -201,8 +229,8 @@
       "english": "The deposited value increases by 1% every day"
     },
     "BANCO_USO": {
-      "portugues": "/banco [depositar/sacar] [falcoins]",
-      "english": "/banco [depositar/sacar] [falcoins]"
+      "portugues": "/banco <depositar/sacar> <falcoins>",
+      "english": "/banco <deposit/withdraw> <falcoins>"
     },
     "LUTA_INFO": {
       "portugues": "Desafia um usuário para uma luta até a morte",
@@ -221,8 +249,8 @@
       "english": "**instant:** does x damage on the turn\n**stun:** does x damage and stuns the enemy for 1 turn\n**heal:** heals x health\n**life steal:** steals x health from the enemy\n**self:** does x damage to yourself\n**shield:** protects you from all damage for 1 turn\n\n**The bot chooses the attacks randomly**"
     },
     "LUTA_USO": {
-      "portugues": "/luta @usuário [falcoins]",
-      "english": "/luta @user [falcoins]"
+      "portugues": "/luta <@usuário> <falcoins>",
+      "english": "/luta <@user> <falcoins>"
     },
     "CAIXA_INFO": {
       "portugues": "Gasta chaves e caixas para ter a chance de ganhar alguns prêmios, você pode comprar caixas e chaves na loja",
@@ -233,8 +261,8 @@
       "english": "You can win `boxes`, `keys`, `falcoins`"
     },
     "CAIXA_USO": {
-      "portugues": "/caixa [quantidade]",
-      "english": "/caixa [amount]"
+      "portugues": "/caixa <quantidade>",
+      "english": "/caixa <amount>"
     },
     "PREFIX_INFO": {
       "portugues": "Muda o prefixo do servidor atual, deixe vazio para ver o prefixo atual",
@@ -327,5 +355,301 @@
     "COMANDOS_INFO": {
       "portugues": "Use **/prefix** para ver seu prefixo\n\nUse **/help <comando>** para ver a descrição de um comando específico\n\nOs valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'\n\n Use **/language english** to change to english",
       "english": "Use **/prefix** to see your prefix\n\nUse **/help <command>** to see the description of a specific command\n\nValues in falcoins can be either numbers, percentages, 'tudo' or 'metade'\n\nUse **/language portugues** para mudar para português"
+    },
+    "VALOR_INVALIDO": {
+      "portugues": "{VALUE} não é um valor válido... :rage:",
+      "english": "{VALUE} is not a valid value... :rage:"
+    },
+    "FALCOINS_INSUFICIENTES": {
+      "portugues": "você não tem falcoins suficientes! :rage:",
+      "english": "you don't have enough falcoins! :rage:"
+    },
+    "BANCO_INSUFICIENTE": {
+      "portugues": "você não tem falcoins suficientes no banco! :rage:",
+      "english": "you don't have enough falcoins in the bank! :rage:"
+    },
+    "BANCO_DEPOSITOU": {
+      "portugues": "você depositou {VALUE} falcoins no banco! :smiley:",
+      "english": "You deposited {VALUE} falcoins in the bank! :smiley:"
+    },
+    "SALDO_ATUAL": {
+      "portugues": "Saldo atual",
+      "english": "Current balance"
+    },
+    "BANCO": {
+      "portugues": "Banco",
+      "english": "Bank"
+    },
+    "BANCO_SALDO": {
+      "portugues": "Você tem {VALUE} falcoins no banco",
+      "english": "You have {VALUE} falcoins in the bank"
+    },
+    "BANCO_SACOU": {
+      "portugues": "Você sacou {VALUE} falcoins do banco! :smiley:",
+      "english": "You withdrew {VALUE} falcoins from the bank! :smiley:"
+    },
+    "BONKED": {
+      "portugues": " você foi bonked por ",
+      "english": " you were bonked by "
+    },
+    "CAIXA_TITULO": {
+      "portugues": "Você abriu {QUANTITY} caixas, e encontrou:",
+      "english": "You opened {QUANTITY} crates, and found:"
+    },
+    "CAIXA_INSUFICIENTE": {
+      "portugues": "você não tem caixas e/ou chaves o suficiente para esta ação! :rage:",
+      "english": "you don't have enough crates and/or keys to do this action! :rage:"
+    },
+    "CAVALGADA": {
+      "portugues": "Cavalgada",
+      "english": "Horse race"
+    },
+    "CAVALGADA_DESAFIO": {
+      "portugues": "{USER} te desafia para uma cavalgada!",
+      "english": "{USER} challenges you to a horse race!"
+    },
+    "APOSTA": {
+      "portugues": "Aposta",
+      "english": "Bet"
+    },
+    "JOGADORES": {
+      "portugues": "Jogadores",
+      "english": "Players"
+    },
+    "GANHOU": {
+      "portugues": "{WINNER} ganhou {FALCOINS} falcoins!",
+      "english": "{WINNER} won {FALCOINS} falcoins!"
+    },
+    "CAVALO": {
+      "portugues": "Cavalo",
+      "english": "Horse"
+    },
+    "CAVALO_GANHOU": {
+      "portugues": "Cavalo {WINNER} ganhou!",
+      "english": "Horse {WINNER} won!"
+    },
+    "CAVALO_VOCE_GANHOU": {
+      "portugues": "Você ganhou {FALCOINS} falcoins!",
+      "english": "You won {FALCOINS} falcoins!"
+    },
+    "CAVALO_VOCE_PERDEU": {
+      "portugues": "Você perdeu {FALCOINS} falcoins!",
+      "english": "You lost {FALCOINS} falcoins!"
+    },
+    "COINFLIP": {
+      "portugues": ":coin: você tirou **{CARAS}** caras e **{COROAS}** coroas jogando **{TIMES}** vezes",
+      "english": ":coin: you flipped **{CARAS}** heads and **{COROAS}** tails from playing **{TIMES}** times"
+    },
+    "COINFLIP_LIMITE": {
+      "portugues": "calma lá amigão, o limite é 1000 vezes :wink:",
+      "english": "hold on there buddy, the limit is 1000 times :wink:"
+    },
+    "DOAR": {
+      "portugues": ":handshake: {FALCOINS} falcoins transferidos com sucesso para {USER}",
+      "english": ":handshake: {FALCOINS} falcoins transferred successfully to {USER}"
+    },
+    "ENQUETE": {
+      "portugues": "Nova enquete de: {USER}",
+      "english": "New poll by: {USER}"
+    },
+    "VITORIAS": {
+      "portugues": "Vitórias",
+      "english": "Wins"
+    },
+    "CAIXAS": {
+      "portugues": "Caixas",
+      "english": "Crates"
+    },
+    "CHAVES": {
+      "portugues": "Chaves",
+      "english": "Keys"
+    },
+    "LOOTBOX": {
+      "portugues": "Parabéns! Você ganhou **{FALCOINS}** falcoins :heart_eyes:",
+      "english": "Congratulations! You won **{FALCOINS}** falcoins :heart_eyes:"
+    },
+    "RESULTADO": {
+      "portugues": "Resultado",
+      "english": "Result"
+    },
+    "GIRANDO": {
+      "portugues": "GIRANDO",
+      "english": "SPINNING"
+    },
+    "VOCE_GANHOU": {
+      "portugues": "Você ganhou!",
+      "english": "You won!"
+    },
+    "VOCE_PERDEU": {
+      "portugues": "Você perdeu!",
+      "english": "You lost!"
+    },
+    "PERDAS": {
+      "portugues": "Perdas",
+      "english": "Losses"
+    },
+    "BOT_ROLOU": {
+      "portugues": "O bot rolou",
+      "english": "The bot rolled"
+    },
+    "VELHA_CHAMOU": {
+      "portugues": "{USER} chamou {USER2} para um jogo da velha apostando {FALCOINS} falcoins :older_woman:",
+      "english": "{USER} challenges {USER2} to a tic-tac-toe game for {FALCOINS} falcoins :older_woman:"
+    },
+    "VELHA_CANCELADO_DEMOROU": {
+      "portugues": "Jogo da velha cancelado. {USER} demorou muito para aceitar! :confounded:",
+      "english": "Tic-tac-toe cancelled. {USER} took to long to accept! :confounded:"
+    },
+    "VELHA_CANCELADO_RECUSOU": {
+      "portugues": "Jogo da velha cancelado. {USER} recusou o jogo! :confounded:",
+      "english": "Tic-tac-toe cancelled. {USER} declined the game! :confounded:"
+    },
+    "TURNO": {
+      "portugues": "Turno de ",
+      "english": "Turn of "
+    },
+    "VELHA_EMPATOU": {
+      "portugues": "**O jogo empatou**",
+      "english": "**The game ended in a draw**"
+    },
+    "INSUFICIENTE_CONTAS": {
+      "portugues": "Saldo insuficiente em uma das contas! :grimacing:",
+      "english": "Insufficient balance in one of the accounts! :grimacing:"
+    },
+    "NAO_JOGAR_SOZINHO": {
+      "portugues": "Você não pode jogar com você mesmo, espertinho :rage:",
+      "english": "You can't play with yourself, smartass :rage:"
+    },
+    "VELHA": {
+      "portugues": "Jogo da velha",
+      "english": "Tic-tac-toe"
+    },
+    "ROLETA_RUSSA_COMECOU": {
+      "portugues": " começou uma roleta russa",
+      "english": " started a russian roulette"
+    },
+    "TEMPO_RESTANTE": {
+      "portugues": "Tempo restante",
+      "english": "Time remaining"
+    },
+    "ATIRANDO": {
+      "portugues": "atirando em alguém em 5 segundos",
+      "english": "shooting someone in 5 seconds"
+    },
+    "ROLETA_RUSSA": {
+      "portugues": "Roleta russa",
+      "english": "Russian roulette"
+    },
+    "BOLA8": {
+      "portugues": "Bola 8 mágica",
+      "english": "Magic 8-ball"
+    },
+    "PERGUNTA": {
+      "portugues": "Pergunta",
+      "english": "Question"
+    },
+    "PREVISAO": {
+      "portugues": "Previsão",
+      "english": "Prediction"
+    },
+    "GANHO": {
+      "portugues": " ganhou",
+      "english": " won"
+    },
+    "LUTA_DERROTOU": {
+      "portugues": "Você derrotou {USER} em uma luta",
+      "english": "You defeated {USER} in a fight"
+    },
+    "ATACA": {
+      "portugues": "ataca",
+      "english": "attacks"
+    },
+    "SE_PROTEGE": {
+      "portugues": "se protege",
+      "english": "protects themselves"
+    },
+    "SELF": {
+      "portugues": "acidentalmente dá **{VALUE}** de dano a si mesmo",
+      "english": "accidentally deals **{VALUE}** damage to themselves"
+    },
+    "CURA": {
+      "portugues": "se cura em **{VALUE}** de vida",
+      "english": "heals themselves for **{VALUE}** health"
+    },
+    "ROUBO_VIDA": {
+      "portugues": "rouba **{VALUE}** de vida do inimigo",
+      "english": "steals **{VALUE}** health from the enemy"
+    },
+    "ATAQUE_NOCAUTE": {
+      "portugues": "dá **{VALUE}** de dano ao inimigo e o deixa nocauteado",
+      "english": "deals **{VALUE}** damage to the enemy and puts them on cooldown"
+    },
+    "ATAQUE": {
+      "portugues": "dá **{VALUE}** de dano ao inimigo",
+      "english": "deals **{VALUE}** damage to the enemy"
+    },
+    "LUTA_CANCELADO_DEMOROU": {
+      "portugues": "Luta cancelada. {USER} demorou muito para aceitar! :confounded:",
+      "english": "Fight cancelled. {USER} took to long to accept! :confounded:"
+    },
+    "LUTA_CANCELADO_RECUSOU": {
+      "portugues": "Luta cancelada. {USER} recusou o duelo! :confounded:",
+      "english": "Fight cancelled. {USER} declined the duel! :confounded:"
+    },
+    "LUTA_CONVITE": {
+      "portugues": "{USER} chamou {USER2} para uma luta apostando {FALCOINS} falcoins :smiling_imp:",
+      "english": "{USER} challenges {USER2} to a fight for {FALCOINS} falcoins :smiling_imp:"
+    },
+    "ITEM_1": {
+      "portugues": "Item número 1: Caixa",
+      "english": "Item number 1: Crate"
+    },
+    "ITEM_1_DESCRICAO": {
+      "portugues": "Pelo custo de 5.000 falcoins você compra uma caixa que pode ser aberta usando uma chave",
+      "english": "For the cost of 5.000 falcoins you can buy a crate that can be opened using a key"
+    },
+    "ITEM_2": {
+      "portugues": "Item número 2: Chave",
+      "english": "Item number 2: Key"
+    },
+    "ITEM_2_DESCRICAO": {
+      "portugues": "Pelo custo de 20.000 falcoins você compra uma chave que pode ser usada para abrir uma caixa",
+      "english": "For the cost of 20.000 falcoins you can buy a key that can be used to open a crate"
+    },
+    "ITEM_3": {
+      "portugues": "Item número 3: Aumento da lootbox",
+      "english": "Item number 1: Lootbox increase"
+    },
+    "ITEM_3_DESCRICAO": {
+      "portugues": "Pelo custo de 50.000 falcoins você aumenta seu ganho na lootbox em 1000 falcoins",
+      "english": "For the cost of 50.000 falcoins you can increase your lootbox gain by 1000 falcoins"
+    },
+    "LOJA_USO_2": {
+      "portugues": "Use `?loja [numero] [quantidade]` para comprar um item",
+      "english": "Use `?loja [number] [quantity]` to buy an item"
+    },
+    "LOJA_ITEM_INVALIDO": {
+      "portugues": "item inválido! :rage:",
+      "english": "invalid item! :rage:"
+    },
+    "LOJA_QUANTIDADE_INVALIDA": {
+      "portugues": "quantidade inválida! coloque um número positivo ou deixe em branco para comprar 1 :face_with_monocle:",
+      "english": "invalid quantity! put a positive number or leave it blank to buy 1 :face_with_monocle:"
+    },
+    "LOJA_LIMITE": {
+      "portugues": "calma lá amigão, o limite é 100 itens por vez :wink:",
+      "english": "calm down there friend, the limit is 100 items per time :wink:"
+    },
+    "LOJA_COMPROU_CAIXA": {
+      "portugues": "Parabéns! Você comprou {AMOUNT} caixas :star_struck:",
+      "english": "Congratulations! You bought {AMOUNT} crates :star_struck:"
+    },
+    "LOJA_COMPROU_CHAVE": {
+      "portugues": "Parabéns! Você comprou {AMOUNT} chaves :star_struck:",
+      "english": "Congratulations! You bought {AMOUNT} keys :star_struck:"
+    },
+    "LOJA_COMPROU_AUMENTO": {
+      "portugues": "Parabéns! Você comprou {AMOUNT} aumentos da lootbox :star_struck:",
+      "english": "Congratulations! You bought {AMOUNT} lootbox increases :star_struck:"
     }
   }

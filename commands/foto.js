@@ -30,7 +30,7 @@ module.exports =  {
 
             const embed = new Discord.MessageEmbed()
             .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
-            .setTitle(`Foto de ${args[0]}`)
+            .setTitle(`${args[0]}`)
             .setImage(photos.result[functions.randint(0,photos.result.length - 1)].url)
             .setFooter({text: 'by Falcão ❤️'})
             return embed

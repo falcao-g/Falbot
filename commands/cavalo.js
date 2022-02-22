@@ -26,12 +26,12 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
-    callback: async ({message, interaction, user, args}) => {
+    callback: async ({instance, guild, message, interaction, user, args}) => {
         try {
             try {
                 var bet = await functions.specialArg(args[1], user.id)
             } catch {
-                return `${args[1]} não é um valor válido... :rage:`
+                return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
             }
             if (await functions.readFile(user.id, 'Falcoins') >= bet && bet > 0) {
                 if (args[0] >= 1 && args[0] <= 5) {
@@ -41,7 +41,7 @@ module.exports =  {
                     let horse4 = '- - - - -'
                     let horse5 = '- - - - -'
                     const embed = new Discord.MessageEmbed()
-                     .addField('Cavalo', `:checkered_flag: ${horse1} :horse_racing:\n\u200b\n:checkered_flag: ${horse2} :horse_racing:\n\u200b\n:checkered_flag: ${horse3} :horse_racing:\n\u200b\n:checkered_flag: ${horse4} :horse_racing:\n\u200b\n:checkered_flag: ${horse5} :horse_racing:`)
+                     .addField(instance.messageHandler.get(guild, "CAVALO"), `:checkered_flag: ${horse1} :horse_racing:\n\u200b\n:checkered_flag: ${horse2} :horse_racing:\n\u200b\n:checkered_flag: ${horse3} :horse_racing:\n\u200b\n:checkered_flag: ${horse4} :horse_racing:\n\u200b\n:checkered_flag: ${horse5} :horse_racing:`)
                      .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
                      .setAuthor({name: user.username, iconURL: user.avatarURL()})
                      .setFooter({text: 'by Falcão ❤️'})
@@ -71,7 +71,7 @@ module.exports =  {
                             horse5 = horse5.slice(0, -2)
                         }
     
-                        embed.fields[0] = {'name': 'Cavalo', 'value': `:checkered_flag: ${horse1} :horse_racing:\n\u200b\n:checkered_flag: ${horse2} :horse_racing:\n\u200b\n:checkered_flag: ${horse3} :horse_racing:\n\u200b\n:checkered_flag: ${horse4} :horse_racing:\n\u200b\n:checkered_flag: ${horse5} :horse_racing:`}
+                        embed.fields[0] = {'name': instance.messageHandler.get(guild, "CAVALO"), 'value': `:checkered_flag: ${horse1} :horse_racing:\n\u200b\n:checkered_flag: ${horse2} :horse_racing:\n\u200b\n:checkered_flag: ${horse3} :horse_racing:\n\u200b\n:checkered_flag: ${horse4} :horse_racing:\n\u200b\n:checkered_flag: ${horse5} :horse_racing:`}
                         await answer.edit({
                             embeds: [embed]
                         })
@@ -97,18 +97,18 @@ module.exports =  {
                         functions.changeJSON(user.id, 'Falcoins', profit-bet)
                         var embed2 = new Discord.MessageEmbed()
                          .setColor(3066993)
-                         .addField(`Cavalo ${winner} ganhou!`, `Você ganhou ${await functions.format(bet*5)} falcoins`, false)
+                         .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_GANHOU", {FALCOINS: await functions.format(bet*5)}), false)
                     } else {
                         profit = 0
                         functions.changeJSON(user.id, 'Falcoins', -bet)
                         var embed2 = new Discord.MessageEmbed()
                          .setColor(15158332)
-                         .addField(`Cavalo ${winner} ganhou!`, `Você perdeu ${await functions.format(bet)} falcoins`, false)
+                         .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_PERDEU", {FALCOINS: await functions.format(bet)}), false)
                     }
     
-                    embed2.addField('Saldo atual', `${await functions.format(await functions.readFile(user.id, 'Falcoins'))} falcoins`, false)
-                    embed2.setAuthor(user.username, user.avatarURL())
-                    embed2.setFooter('by Falcão ❤️')
+                    embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL", {VALUE: args[1]}), `${await functions.format(await functions.readFile(user.id, 'Falcoins'))} falcoins`, false)
+                    .setAuthor({name: user.username, iconURL: user.avatarURL()})
+                    .setFooter({text: 'by Falcão ❤️'})
                     if (message) {
                         await message.reply({
                             embeds: [embed2]
@@ -119,10 +119,8 @@ module.exports =  {
                     })
                     }
                 }
-            } else if (bet <= 0) {
-                    return `${bet} não é um valor válido... :rage:`
             } else {
-                    return `você não tem falcoins suficientes para esta aposta! :rage:`
+                    return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                 }
         } catch (error) {
             console.error(`Cavalo: ${error}`)

@@ -17,7 +17,7 @@ module.exports = {
         required: false,
         type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER
     }],
-    callback: async ({args}) => {
+    callback: async ({instance, guild, args}) => {
         try {
             times = parseInt(args[0]) || 1
             if (times <= 1000) {
@@ -31,9 +31,9 @@ module.exports = {
                     }
                 }
         
-                return `:coin: você tirou **${caras}** caras e **${coroas}** coroas jogando **${times}** vezes`
+                return instance.messageHandler.get(guild, "COINFLIP", {CARAS: caras, COROAS: coroas, TIMES: times})
             } else {
-                return 'calma lá amigão, o limite é 1000 vezes :wink:'
+                return instance.messageHandler.get(guild, "COINFLIP_LIMITE")
             }
         } catch (error) {
             console.error(`Coinflip: ${error}`)

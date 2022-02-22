@@ -19,16 +19,13 @@ module.exports = {
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],
-    callback: async ({message, interaction, user, text}) => {
+    callback: async ({instance, guild, message, interaction, user, text}) => {
         try {
             const roll = new Roll()
             text = text.replace(/\s/g,'')
     
             if (!roll.validate(text)) {
-                const messageInteraction = message ? message : interaction
-                messageInteraction.reply({
-                    content: `${text} não é um dado válido`
-                })
+                return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: text})
             } else {
                 rolled = roll.roll(text).result
                 rolled = rolled.toString()
@@ -41,12 +38,12 @@ module.exports = {
                     embed = new Discord.MessageEmbed()
                     .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
                     .addFields({
-                        name: 'Dados:',
+                        name: '🎲:',
                         value: text,
                         inline: false
                     },
                     {
-                        name: 'Resultado:',
+                        name: instance.messageHandler.get(guild, 'RESULTADO'),
                         value: `**${rolled}**`,
                         inline: false
                     })

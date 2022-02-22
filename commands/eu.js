@@ -9,7 +9,7 @@ module.exports =  {
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
-    callback: async ({message, interaction, user}) => {
+    callback: async ({instance, guild, message, interaction, user}) => {
         try {
             const userfile = await functions.readFile(user.id)
             const embed = new Discord.MessageEmbed()
@@ -21,19 +21,19 @@ module.exports =  {
                 value: `${await functions.format(userfile['Falcoins'])}`,
                 inline: true
             },{
-                name: ':trophy: Vitorias',
+                name: ':trophy: ' + instance.messageHandler.get(guild, 'VITORIAS'),
                 value: `${await functions.format(userfile['Vitorias'])}`,
                 inline: true
             }, {
-                name: ':bank: Banco',
+                name: ':bank: ' + instance.messageHandler.get(guild, 'BANCO'),
                 value: `${await functions.format(userfile['Banco'])}`,
                 inline: true
             }, {
-                name: ':gift: Caixas',
+                name: ':gift: ' + instance.messageHandler.get(guild, 'CAIXAS'),
                 value: `${await functions.format(userfile['Caixas'])}`,
                 inline: true
             }, {
-                name: ':key: Chaves',
+                name: ':key: ' + instance.messageHandler.get(guild, 'CHAVES'),
                 value: `${await functions.format(userfile['Chaves'])}`,
                 inline: true
             })
