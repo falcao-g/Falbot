@@ -38,7 +38,7 @@ module.exports =  {
                 const emoji3 = pick(choices)
     
                 const embed = new Discord.MessageEmbed()
-                 .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
+                 .setColor(await functions.getRoleColor(guild, user.id))
                  .setAuthor({name: user.username, iconURL: user.avatarURL()})
                  .addField(`-------------------\n | ${emojifoda} | ${emojifoda} | ${emojifoda} |\n-------------------`, `--- **${instance.messageHandler.get(guild, "GIRANDO")}** ---`)
                  .setFooter({text: 'by Falcão ❤️'})

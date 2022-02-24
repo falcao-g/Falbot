@@ -19,13 +19,13 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
-    callback: async ({message, interaction, client, user, args}) => {
+    callback: async ({client, user, args}) => {
         try {
                 var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
                 rank = []
                 if (args[0] === 'local') {
                     for (useri in users) {
-                        if (await functions.getMember(message ? message : interaction, useri)) {
+                        if (await functions.getMember(guild, useri)) {
                           if(!rank.length) {
                               rank.push(useri)
                           } else {
@@ -63,7 +63,7 @@ module.exports =  {
                 top10 = rank
                 top10.splice(10)
                 const embed = new Discord.MessageEmbed()
-                .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
+                .setColor(await functions.getRoleColor(guild, user.id))
                 .setFooter({text: 'by Falcão ❤️'})
                 for (let i = 0; i < top10.length; i++) {
                     try {

@@ -172,14 +172,12 @@ async function readFile(id, field = "") {
   }
 }
 
-async function getRoleColor(message, member_id) {
-  member = message.guild.members.cache.get(member_id);
-  return member.displayColor;
+async function getRoleColor(guild, member_id) {
+  return guild.members.cache.get(member_id).displayColor
 }
 
-async function getMember(message, member_id) {
-  member = message.guild.members.cache.get(member_id);
-  return member;
+async function getMember(guild, member_id) {
+  return guild.members.cache.get(member_id)
 }
 
 async function explain(instance, guild, command) {

@@ -37,7 +37,7 @@ module.exports =  {
                     args[0] = args[0].slice(2,-1)
                 }
             }
-            const member = await functions.getMember(message ? message : interaction, args[0])
+            const member = await functions.getMember(guild, args[0])
             if (member.user != author) {
                 try {
                     var bet = await functions.specialArg(args[1], user.id)

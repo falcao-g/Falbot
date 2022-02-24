@@ -26,11 +26,11 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER
     }
     ],
-    callback: async ({instance, guild, message, interaction, user, args}) => {
+    callback: async ({instance, guild, user, args}) => {
         try {
             if (args[0] === undefined && args[1] === undefined) {
                 const embed = new Discord.MessageEmbed()
-                .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
+                .setColor(await functions.getRoleColor(guild, user.id))
                 .setTitle('**Loja**')
                 .addFields({
                     name: instance.messageHandler.get(guild, "ITEM_1"),

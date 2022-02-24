@@ -68,7 +68,7 @@ module.exports = {
             }
             let answer = `${answers[functions.randint(0, answers.length-1)]}`
             const embed = new Discord.MessageEmbed()
-             .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
+             .setColor(await functions.getRoleColor(guild, user.id))
              .setAuthor({name: instance.messageHandler.get(guild, "BOLA8"), iconURL: "https://images.emojiterra.com/google/noto-emoji/unicode-13.1/128px/1f3b1.png"})
              if (interaction) { embed.addField(instance.messageHandler.get(guild, "PERGUNTA"), text, false)}
              embed.addField(instance.messageHandler.get(guild, "PREVISAO"), answer, false)

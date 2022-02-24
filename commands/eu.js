@@ -9,11 +9,11 @@ module.exports =  {
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
-    callback: async ({instance, guild, message, interaction, user}) => {
+    callback: async ({instance, guild, user}) => {
         try {
             const userfile = await functions.readFile(user.id)
             const embed = new Discord.MessageEmbed()
-            .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
+            .setColor(await functions.getRoleColor(guild, user.id))
             .setAuthor({name: user.username, iconURL: user.avatarURL()})
             .setFooter({text: 'by Falcão ❤️'})
             .addFields({

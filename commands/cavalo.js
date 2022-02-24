@@ -42,7 +42,7 @@ module.exports =  {
                     let horse5 = '- - - - -'
                     const embed = new Discord.MessageEmbed()
                      .addField(instance.messageHandler.get(guild, "CAVALO"), `:checkered_flag: ${horse1} :horse_racing:\n\u200b\n:checkered_flag: ${horse2} :horse_racing:\n\u200b\n:checkered_flag: ${horse3} :horse_racing:\n\u200b\n:checkered_flag: ${horse4} :horse_racing:\n\u200b\n:checkered_flag: ${horse5} :horse_racing:`)
-                     .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
+                     .setColor(await functions.getRoleColor(guild, user.id))
                      .setAuthor({name: user.username, iconURL: user.avatarURL()})
                      .setFooter({text: 'by Falcão ❤️'})
                     

@@ -34,7 +34,7 @@ module.exports =  {
                     args[0] = args[0].slice(2,-1)
                 }
             }
-            args[0] = await functions.getMember(message ? message : interaction, args[0])
+            args[0] = await functions.getMember(guild, args[0])
             
             try {
                 var quantity = await functions.specialArg(args[1], user.id)

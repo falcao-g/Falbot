@@ -36,7 +36,7 @@ module.exports = {
                     })
                 }else {
                     embed = new Discord.MessageEmbed()
-                    .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
+                    .setColor(await functions.getRoleColor(guild, user.id))
                     .addFields({
                         name: '🎲:',
                         value: text,

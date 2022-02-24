@@ -21,13 +21,13 @@ module.exports = {
     callback: async ({instance, guild, message, interaction, user, args}) => {
         try {
             const embed = new Discord.MessageEmbed()
-            .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
+            .setColor(await functions.getRoleColor(guild, user.id))
             .setImage('https://i.kym-cdn.com/photos/images/original/002/051/072/a4c.gif')
             .setFooter({text: 'by Falcão ❤️'})
            if (message) {
                return embed
            } else {
-               const member = await functions.getMember(interaction, args[0])
+               const member = await functions.getMember(guild, args[0])
                await interaction.reply({
                    content: `${member}` + instance.messageHandler.get(guild, "BONKED") + `${user.username}`,
                    embeds: [embed]

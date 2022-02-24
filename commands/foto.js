@@ -20,7 +20,7 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
-    callback: async ({message, interaction, user, args, text}) => {
+    callback: async ({message, interaction, user, guild, text}) => {
         try {
             if (interaction) {await interaction.deferReply()}
 
@@ -33,7 +33,7 @@ module.exports =  {
             });
 
             const embed = new Discord.MessageEmbed()
-            .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
+            .setColor(await functions.getRoleColor(guild, user.id))
             .setTitle(`${text}`)
             .setImage(photos.result[functions.randint(0,photos.result.length - 1)].url)
             .setFooter({text: 'by Falcão ❤️'})

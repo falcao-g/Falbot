@@ -41,7 +41,7 @@ module.exports =  {
             functions.changeJSON(user.id, 'Caixas', caixas-quantity)
             functions.changeJSON(user.id, 'Falcoins', falcoins)
             const embed = new Discord.MessageEmbed()
-            .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
+            .setColor(await functions.getRoleColor(guild, user.id))
             .addField(instance.messageHandler.get(guild, "CAIXA_TITULO", {QUANTITY: args[0]}), `:key: ${chaves}\n:coin: ${await functions.format(falcoins)} \n:gift: ${caixas}`)
             .setFooter({text: 'by Falcão ❤️'})
             return embed
