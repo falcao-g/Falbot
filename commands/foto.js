@@ -22,6 +22,7 @@ module.exports =  {
     ],
     callback: async ({message, interaction, user, args}) => {
         try {
+            if (interaction) {await interaction.deferReply()}
             const photos = await GOOGLE_IMG_SCRAP({
                 search: args[0],
                 limit: 100,
@@ -33,7 +34,7 @@ module.exports =  {
             .setTitle(`${args[0]}`)
             .setImage(photos.result[functions.randint(0,photos.result.length - 1)].url)
             .setFooter({text: 'by Falcão ❤️'})
-            return embed
+            if (message) {return embed} else {interaction.editReply({embeds: [embed]})}
         } catch (error) {
             console.error(`foto: ${error}`)
         }
