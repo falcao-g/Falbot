@@ -20,18 +20,21 @@ module.exports =  {
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
-    callback: async ({message, interaction, user, args}) => {
+    callback: async ({message, interaction, user, args, text}) => {
         try {
             if (interaction) {await interaction.deferReply()}
+
+            text = text.trim()
+
             const photos = await GOOGLE_IMG_SCRAP({
-                search: args[0],
+                search: text,
                 limit: 100,
                 safeSearch: true,
             });
 
             const embed = new Discord.MessageEmbed()
             .setColor(await functions.getRoleColor(message ? message : interaction, user.id))
-            .setTitle(`${args[0]}`)
+            .setTitle(`${text}`)
             .setImage(photos.result[functions.randint(0,photos.result.length - 1)].url)
             .setFooter({text: 'by Falcão ❤️'})
             if (message) {return embed} else {interaction.editReply({embeds: [embed]})}
