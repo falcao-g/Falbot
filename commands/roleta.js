@@ -32,7 +32,7 @@ module.exports =  {
     
             if (args[0] == 'preto' || args[0] == 'vermelho' || args[0] == 'verde' || args[0] == 'altos' || args[0] == 'baixos' || args[0] == 'par' || args[0] == 'impar' || (parseInt(args[0]) >=0 && parseInt(args[0]) <= 36)) {
                 try {
-                    var bet = await functions.specialArg(args[1], user.id)
+                    var bet = await functions.specialArg(args[1], user.id, "Falcoins")
                 } catch {
                     return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 }

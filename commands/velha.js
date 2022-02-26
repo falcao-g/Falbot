@@ -40,7 +40,7 @@ module.exports =  {
             const member = await functions.getMember(guild, args[0])
             if (member.user != author) {
                 try {
-                    var bet = await functions.specialArg(args[1], user.id)
+                    var bet = await functions.specialArg(args[1], user.id, "Falcoins")
                 } catch {
                     return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 } 

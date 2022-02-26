@@ -27,7 +27,7 @@ module.exports =  {
             guild = client.guilds.cache.get('742332099788275732')
             emojifoda = await guild.emojis.fetch('926953352774963310')
             try {
-                var bet = await functions.specialArg(args[0], user.id)
+                var bet = await functions.specialArg(args[0], user.id, "Falcoins")
             } catch {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             }

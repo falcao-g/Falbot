@@ -37,7 +37,7 @@ module.exports =  {
             args[0] = await functions.getMember(guild, args[0])
             
             try {
-                var quantity = await functions.specialArg(args[1], user.id)
+                var quantity = await functions.specialArg(args[1], user.id, "Falcoins")
             } catch {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
             }
