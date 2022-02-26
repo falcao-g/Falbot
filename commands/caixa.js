@@ -18,7 +18,7 @@ module.exports =  {
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER
     }],
-    callback: async ({instance, guild, message, interaction, user, args}) => {
+    callback: async ({instance, guild, user, args}) => {
         try {
             try {
                 var quantity = await functions.specialArg(args[0], user.id, "Caixas")
