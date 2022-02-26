@@ -85,7 +85,7 @@ module.exports =  {
                              value:`${await functions.format(profit)} falcoins`,
                              inline: true
                          })
-                         .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(user.id, 'Falcoins'))} falcoins`, false)
+                         .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'Falcoins', true)} falcoins`, false)
                     } else {
                         functions.changeJSON(user.id, 'Falcoins', -bet  )
                         var embed = new Discord.MessageEmbed()
@@ -104,7 +104,7 @@ module.exports =  {
                              value:`${await functions.format(bet)} falcoins`,
                              inline: true
                         })
-                        embed.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(user.id, 'Falcoins'))} falcoins`, false)
+                        embed.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'Falcoins', true)} falcoins`, false)
                     }
                     embed.setFooter({text: 'by Falcão ❤️'})
                     return embed

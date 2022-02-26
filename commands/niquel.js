@@ -122,7 +122,7 @@ module.exports =  {
                      })
                 }
                 embed2.setAuthor({name: user.username, iconURL: user.avatarURL()})
-                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(user.id, 'Falcoins'))}`)
+                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'Falcoins', true)}`)
                 embed2.setFooter({text: 'by Falcão ❤️'})
                 await answer.edit({
                     embeds: [embed2]

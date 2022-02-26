@@ -126,7 +126,7 @@ module.exports =  {
                         .setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
                         .setDescription(`${winner} ganhou ${pot} falcoins`)
                         .setColor(3066993)
-                        .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(winner.id, 'Falcoins'))} falcoins`, false)
+                        .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(winner.id, 'Falcoins', true)} falcoins`, false)
                         .setFooter({text: 'by Falcão ❤️'})
                         if (message) {
                             await message.reply({

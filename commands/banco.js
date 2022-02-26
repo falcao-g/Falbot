@@ -43,8 +43,8 @@ module.exports =  {
                      .setTitle(instance.messageHandler.get(guild, "BANCO_DEPOSITOU", {VALUE: await functions.format(quantity)}))
                      .setColor(await functions.getRoleColor(guild, user.id))
                      .setAuthor({name: user.username, iconURL: user.avatarURL()})
-                     .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(user.id, "Falcoins"))} falcoins`, inline=false)
-                     .addField(instance.messageHandler.get(guild, "BANCO"), instance.messageHandler.get(guild, "BANCO_SALDO", {VALUE: await functions.format(await functions.readFile(user.id, "Banco"))}))
+                     .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, "Falcoins", true)} falcoins`, inline=false)
+                     .addField(instance.messageHandler.get(guild, "BANCO"), instance.messageHandler.get(guild, "BANCO_SALDO", {VALUE: await functions.readFile(user.id, "Banco", true)}))
                      .setFooter({text: 'by Falcão ❤️'})
     
                     return embed
@@ -65,8 +65,8 @@ module.exports =  {
                      .setTitle(instance.messageHandler.get(guild, "BANCO_SACOU", {VALUE: await functions.format(quantity)}))
                      .setColor(await functions.getRoleColor(guild, user.id))
                      .setAuthor({name: user.username, iconURL: user.avatarURL()})
-                     .addField(instance.messageHandler.get(guild, "SALDO_ATUAL", {VALUE: await functions.format(quantity)}), `${await functions.format(await functions.readFile(user.id, "Falcoins"))} falcoins`, inline=false)
-                     .addField(instance.messageHandler.get(guild, "BANCO", {VALUE: await functions.format(quantity)}), instance.messageHandler.get(guild, "BANCO_SALDO", {VALUE: await functions.format(await functions.readFile(user.id, "Banco"))}))
+                     .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, "Falcoins", true)} falcoins`, inline=false)
+                     .addField(instance.messageHandler.get(guild, "BANCO"), instance.messageHandler.get(guild, "BANCO_SALDO", {VALUE: await functions.readFile(user.id, "Banco", true)}))
                      .setFooter({text: 'by Falcão ❤️'})
     
                      return embed

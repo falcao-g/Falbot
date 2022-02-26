@@ -193,13 +193,13 @@ module.exports =  {
                                 functions.changeJSON(order[1]['id'], 'Falcoins', bet)
                                 functions.changeJSON(order[1]['id'], 'Vitorias')
                                 embed2.addField(`${order[1]['name']}` + instance.messageHandler.get(guild, "GANHO"), instance.messageHandler.get(guild, "LUTA_DERROTOU", {USER: order[0]['mention']}), false)
-                                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(order[1]['id'], 'Falcoins'))} falcoins`)
+                                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(order[1]['id'], 'Falcoins', true)} falcoins`)
                             }  else if (order[1]['hp'] <= 0) {
                                 functions.changeJSON(order[1]['id'], 'Falcoins', -bet)
                                 functions.changeJSON(order[0]['id'], 'Falcoins', bet)
                                 functions.changeJSON(order[0]['id'], 'Vitorias')
                                 embed2.addField(`${order[0]['name']}` + instance.messageHandler.get(guild, "GANHO"), instance.messageHandler.get(guild, "LUTA_DERROTOU", {USER: order[1]['mention']}), false)
-                                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.format(await functions.readFile(order[0]['id'], 'Falcoins'))} falcoins`)
+                                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(order[0]['id'], 'Falcoins', true)} falcoins`)
                             }
                             if (message) {
                                 await message.channel.send({

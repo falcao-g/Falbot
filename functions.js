@@ -157,15 +157,17 @@ async function format(falcoins) {
   return pop_2.split("").reverse().join("");
 }
 
-async function readFile(id, field = "") {
+async function readFile(id, field = "", rich = false) {
   try {
     createUser(id)
     var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
 
     if (field == "") {
       return users[id];
-    } else {
+    } else if (rich == false) {
       return users[id][field];
+    } else {
+      return await format(users[id][field]);
     }
   } catch (error) {
     console.error(`Erro ao ler arquivo: ${error}`)

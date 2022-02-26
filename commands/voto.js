@@ -20,7 +20,7 @@ module.exports =  {
                 const embed = new Discord.MessageEmbed()
                 .setColor(3066993) 
                 .addField(instance.messageHandler.get(guild, "VOCE_GANHOU"), `**5000** falcoins`)
-                .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `**${await functions.format(await functions.readFile(user.id, 'Falcoins'))}** falcoins`)
+                .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `**${await functions.readFile(user.id, 'Falcoins', true)}** falcoins`)
                 .setFooter({text: 'by Falcão ❤️'})
                 return embed
             } else if (await topgg.isVoted(user.id) && (Date.now() - await functions.readFile(user.id, 'voto') < 43200000)) {

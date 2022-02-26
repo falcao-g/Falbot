@@ -29,7 +29,7 @@ module.exports =  {
     callback: async ({instance, guild, message, interaction, user, args}) => {
         try {
             try {
-                var bet = await functions.specialArg(args[1], user.id)
+                var bet = await functions.specialArg(args[1], user.id, "Falcoins")
             } catch {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
             }
@@ -106,7 +106,7 @@ module.exports =  {
                          .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_PERDEU", {FALCOINS: await functions.format(bet)}), false)
                     }
     
-                    embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL", {VALUE: args[1]}), `${await functions.format(await functions.readFile(user.id, 'Falcoins'))} falcoins`, false)
+                    embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'Falcoins', true)} falcoins`, false)
                     .setAuthor({name: user.username, iconURL: user.avatarURL()})
                     .setFooter({text: 'by Falcão ❤️'})
                     if (message) {
