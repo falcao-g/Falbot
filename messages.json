@@ -348,9 +348,13 @@
       "portugues": ":game_die: Comandos para a sala de jogos",
       "english": ":game_die: Game commands"
     },
-    "OUTROS_COMANDOS": {
-      "portugues": ":gear: Outros comandos",
-      "english": ":gear: Other commands"
+    "COMANDOS_DIVERTIDOS": {
+      "portugues": ":tada: Comandos divertidos",
+      "english": ":tada: Fun commands"
+    },
+    "COMANDOS_UTEIS": {
+      "portugues": ":gear: Comandos úteis",
+      "english": ":gear: Useful commands"
     },
     "COMANDOS_INFO": {
       "portugues": "Use **/prefix** para ver seu prefixo\n\nUse **/help <comando>** para ver a descrição de um comando específico\n\nOs valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'\n\n Use **/language english** to change to english",

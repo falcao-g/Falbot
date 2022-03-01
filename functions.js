@@ -591,9 +591,14 @@ async function explain(instance, guild, command) {
         inline: false
       },
       {
-        name: instance.messageHandler.get(guild, "OUTROS_COMANDOS"),
+        name: instance.messageHandler.get(guild, "COMANDOS_DIVERTIDOS"),
+        value: "`bonk`, `bola8`, `foto`, `coinflip`, `roll`, `enquete`",
+        inline: false
+      },
+      {
+        name: instance.messageHandler.get(guild, "COMANDOS_UTEIS"),
         value:
-          "`prefix`, `comandos/help`, `limpa`, `math`, `enquete`, `roll`, `coinflip`, `bonk`, `bola8`, `foto`",
+          "`prefix`, `comandos/help`, `math`",
         inline: false
       },
       {
