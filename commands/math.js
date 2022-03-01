@@ -21,6 +21,7 @@ module.exports = {
     }],
     callback: async ({instance, guild, user, text}) => {
         try {
+            text = text.replaceAll("**",'^')
             answer = await math.evaluate(text).toString()
 
             const embed = new Discord.MessageEmbed()
