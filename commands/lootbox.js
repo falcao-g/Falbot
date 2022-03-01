@@ -5,7 +5,7 @@ const config = require("../config/config.json")
 module.exports =  {
     aliases: ['lb'],
     category: 'Economia',
-    description: 'Resgata sua lootbox grátis (disponível a cada 12 horas)',
+    description: 'Claim your lootbox (available every 12 hours)',
     slash: 'both',
     cooldown: '12h',
     guildOnly: true,

@@ -3,8 +3,10 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports = {
-    category: 'Misc',
-    description: 'Prevê o seu futuro',
+    name: "8ball",
+    aliases: ["bola8"],
+    category: 'Fun',
+    description: 'Forecast your future',
     expectedArgs: '<pergunta>',
     minArgs: 1,
     slash: 'both',
@@ -15,8 +17,8 @@ module.exports = {
     expectedArgs: '<pergunta>',
     expectedArgsTypes: ['STRING'],
     options: [{
-        name: 'pergunta',
-        description: 'a pergunta que a bola 8 mágica responderá',
+        name: 'question',
+        description: 'the question you want to ask the 8ball',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],

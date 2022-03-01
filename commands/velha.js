@@ -4,24 +4,26 @@ const Board = require('tictactoe-board')
 const config = require("../config/config.json")
 
 module.exports =  {
+    name: 'tictactoe',
+    aliases: ['velha'],
     category: 'Economia',
-    description: 'desafie um usuario para um jogo da velha, o vencedor leva tudo',
+    description: 'challenge someone to a game of tic tac toe',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
     minArgs: 2,
-    expectedArgs: '<usuario> <falcoins>',
+    expectedArgs: '<user> <falcoins>',
     expectedArgsTypes: ['USER', 'STRING'],
     options: [{
-        name: 'usuario',
-        description: 'o usuario que você ira desafiar',
+        name: 'user',
+        description: 'user to challenge',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.USER
     },
     {
         name: 'falcoins',
-        description: 'a quantidade de falcoins que você ira apostar',
+        description: 'amount of falcoins to bet in the game',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }   

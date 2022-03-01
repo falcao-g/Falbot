@@ -4,8 +4,10 @@ const functions = require('../functions.js')
 const top = require('top.gg-core');
 
 module.exports =  {
+    name: "vote",
+    aliases: ['voto'],
     category: 'Economia',
-    description: 'Ganhe recompensas por votar no bot',
+    description: 'Earn falcoins by voting for us on top.gg',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,

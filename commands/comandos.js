@@ -3,16 +3,17 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
-    aliases: ['ajuda', 'help'],
-    category: 'help',
-    description: 'Mostra uma lista de todos os comandos e algumas outras informações',
+    name: "commands",
+    aliases: ['ajuda', 'commandos', 'help'],
+    category: 'uteis',
+    description: 'Show all commands or info about a specific command',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     options: [
         {
-            name: 'comando',
-            description: 'digite o nome de um comando para ver mais informações, deixe em branco para ver sobre todos',
+            name: 'command',
+            description: 'the command you want to get info about, leave blank to see all commands',
             required: false,
             type: Discord.Constants.ApplicationCommandOptionTypes.STRING
         }

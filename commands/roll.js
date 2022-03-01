@@ -4,18 +4,18 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports = {
-    category: 'Misc',
-    description: 'Rola dados para você',
+    category: 'Fun',
+    description: 'Roll dice for you',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
     minArgs: 1,
-    expectedArgs: '<dados>',
+    expectedArgs: '<dice>',
     expectedArgsTypes: ['STRING'],
     options: [{
-        name: 'dados',
-        description: 'dados que eu vou rolar para você',
+        name: 'dice',
+        description: 'dice to be rolled',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],

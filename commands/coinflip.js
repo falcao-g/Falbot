@@ -2,18 +2,18 @@ const Discord = require('discord.js')
 const config = require("../config/config.json")
 
 module.exports = {
-    category: 'Misc',
-    description: 'Faz um cara ou coroa',
+    category: 'Fun',
+    description: 'Flip a coin',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
     minArgs: 1,
-    expectedArgs: '<quantidade>',
+    expectedArgs: '<quantity>',
     expectedArgsTypes: ['NUMBER'],
     options: [{
-        name: 'quantidade',
-        description: 'quantidade de cara ou coroa que o bot vai fazer (padrão é 1)',
+        name: 'quantity',
+        description: 'quantity of coins to flip',
         required: false,
         type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER
     }],

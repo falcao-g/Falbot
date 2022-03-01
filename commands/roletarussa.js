@@ -3,8 +3,10 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
+    name: "russianroulette",
+    aliases: ['roletarussa'],
     category: 'Economia',
-    description: 'jogue com seus amigos, ultimo sobrevivente ganha!',
+    description: 'play with your friend, last to survive wins',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
@@ -15,7 +17,7 @@ module.exports =  {
     options: [
     {
         name: 'falcoins',
-        description: 'a quantidade de falcoins que você ira apostar',
+        description: 'amount of falcoins to play with',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],

@@ -3,18 +3,20 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
+    name: 'about',
+    aliases: ['sobre'],
     category: 'Economia',
-    description: 'Mostra as informações da pessoa marcada',
+    description: 'Show the info of another user',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
     minArgs: 1,
-    expectedArgs: '<sobre>',
+    expectedArgs: '<user>',
     expectedArgsTypes: ['USER'],
     options: [{
-        name: 'usuario',
-        description: 'o usuario que você quer ver as informações',
+        name: 'user',
+        description: 'the user you want to get info about',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.USER
     }],

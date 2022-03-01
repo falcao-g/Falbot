@@ -3,33 +3,35 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
+    name: "bank",
+    aliases: ["banco"],
     category: 'Economia',
-    description: 'Guarda ou tira seus falcoins do banco, dinheiro no banco aumenta diariamente.',
+    description: 'Deposit or withdraw your falcoins from the bank, money in the bank increase daily.',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     minArgs: 2,
     testOnly: config.testOnly,
-    expectedArgs: '<opção> <falcoins>',
+    expectedArgs: '<option> <falcoins>',
     expectedArgsTypes: ['STRING', 'STRING'],
     options: [{
-        name:'opção',
-        description: 'se você ira depositar ou sacar falcoins do banco',
+        name:'option',
+        description: 'if you are going to deposit or withdraw falcoins',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING,
-        choices: [{name: 'depositar/deposit', value: 'depositar'}, {name: 'sacar/withdraw', value: 'sacar'}]
+        choices: [{name: 'deposit', value: 'deposit'}, {name: 'withdraw', value: 'withdraw'}]
     },
     {
         name: 'falcoins',
-        description: 'a quantidade de falcoins que você ira depositar ou sacar',
+        description: 'the amount of falcoins you want to deposit or withdraw',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
-    callback: async ({instance, guild, message, interaction, user, args}) => {
+    callback: async ({instance, guild, message, user, args}) => {
         try {
             if (message) {args[0] = args[0].toLowerCase()}
-            if (args[0] == 'depositar') {
+            if (args[0] == 'depositar' || args[0] == 'deposit') {
                 try {
                     var quantity = await functions.specialArg(args[1], user.id, "Falcoins")
                 } catch {
@@ -51,7 +53,7 @@ module.exports =  {
                 } else {
                     return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                 }
-            } else if (args[0] == 'sacar') {
+            } else if (args[0] == 'sacar' || args[0] == 'withdraw') {
                 try {
                     var quantity = await functions.specialArg(args[1], user.id, "Banco")
                 } catch {

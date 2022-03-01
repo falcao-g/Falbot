@@ -3,18 +3,20 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports = {
-    category: 'Misc',
-    description: 'Cria uma bonita pequena enquete',
+    name: 'poll',
+    aliases: ['enquete'],
+    category: 'Fun',
+    description: 'Create a little pretty poll',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
     minArgs: 1,
-    expectedArgs: '<tema>',
+    expectedArgs: '<theme>',
     expectedArgsTypes: ['STRING'],
     options: [{
-        name: 'tema',
-        description: 'tema da enquete que as pessoas iram votar',
+        name: 'theme',
+        description: 'theme of the poll',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],

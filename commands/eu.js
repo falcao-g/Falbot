@@ -3,8 +3,10 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
+    name: 'me',
+    aliases: ['eu', 'balance'],
     category: 'Economia',
-    description: 'Mostra suas informações',
+    description: 'Show your info',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,

@@ -3,8 +3,10 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
+    name: 'horseduel',
+    aliases: ['cavalgada'],
     category: 'Economia',
-    description: 'desafie um usuario para uma cavalgada, o vencedor leva tudo',
+    description: 'challenge other users to a horse duel',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
@@ -15,7 +17,7 @@ module.exports =  {
     options: [
     {
         name: 'falcoins',
-        description: 'a quantidade de falcoins que você ira apostar',
+        description: 'the amount of falcoins to bet',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }   

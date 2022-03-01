@@ -4,18 +4,18 @@ const math = require('mathjs')
 const config = require("../config/config.json")
 
 module.exports = {
-    category: 'Misc',
-    description: 'Faz um cálculo de matemática para você',
+    category: 'uteis',
+    description: 'Resolve a mathematical expression',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
     minArgs: 1,
-    expectedArgs: '<expressão>',
+    expectedArgs: '<expression>',
     expectedArgsTypes: ['STRING'],
     options: [{
-        name: 'expressão',
-        description: 'a expressão matemática que eu irei calcular',
+        name: 'expression',
+        description: 'the mathematical expression to be solved',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],

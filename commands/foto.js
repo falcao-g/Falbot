@@ -4,18 +4,20 @@ const { GOOGLE_IMG_SCRAP } = require('google-img-scrap');
 const config = require("../config/config.json")
 
 module.exports =  {
-    category: 'Economia',
-    description: 'pesquisa fotos pelo termo dado e retorna uma aleatoria',
+    name: "image",
+    aliases: ['imagem', 'foto'],
+    category: 'Fun',
+    description: 'show a random image from google based on the search query',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
     minArgs: 1,
-    expectedArgs: '<termo>',
+    expectedArgs: '<search>',
     expectedArgsTypes: ['STRING'],
     options: [{
-        name:'termo',
-        description: 'termo que o bot vai pesquisar a imagem por',
+        name:'search',
+        description: 'the search query',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }

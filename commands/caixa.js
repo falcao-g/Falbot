@@ -3,18 +3,20 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
+    name: "crate",
+    aliases: ['caixa'],
     category: 'Economia',
-    description: 'Gasta 1 chave e 1 caixa para ter a chance de ganhar alguns prêmios',
+    description: 'Spend 1 key and 1 crate for a chance to get some prizes',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     minArgs: 1,
     testOnly: config.testOnly,
-    expectedArgs: '<quantidade>',
+    expectedArgs: '<quantity>',
     expectedArgsTypes: ['NUMBER'],
     options: [{
-        name: 'quantidade',
-        description: 'quantidade de caixas que você ira abrir',
+        name: 'quantity',
+        description: 'quantity of crates you wish to open',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER
     }],

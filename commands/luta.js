@@ -3,24 +3,26 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
+    name: 'fight',
+    aliases: ['luta'],
     category: 'Economia',
-    description: 'desafie um usuario para uma luta, o vencedor leva tudo',
+    description: 'challenge someone to a fight, win the fight and get the money',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
     minArgs: 2,
-    expectedArgs: '<usuario> <falcoins>',
+    expectedArgs: '<user> <falcoins>',
     expectedArgsTypes: ['USER', 'STRING'],
     options: [{
-        name: 'usuario',
-        description: 'o usuario que você ira desafiar',
+        name: 'user',
+        description: 'the user to challenge',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.USER
     },
     {
         name: 'falcoins',
-        description: 'a quantidade de falcoins que você ira apostar',
+        description: 'the amount of falcoins to bet',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }   

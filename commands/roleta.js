@@ -3,24 +3,26 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
+    name: 'roulette',
+    aliases: ['roleta'],
     category: 'Economia',
-    description: 'aposte seu dinheiro na roleta',
+    description: 'bet on the roulette',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
     minArgs: 2,
-    expectedArgs: '<tipo> <falcoins>',
+    expectedArgs: '<type> <falcoins>',
     expectedArgsTypes: ['STRING', 'STRING'],
     options: [{
-        name:'tipo',
-        description: 'tipo de aposta <preto/vermelho/verde>, <0-36>, <altos/baixos>, <par/impar>',
+        name:'type',
+        description: 'bet type <black/red/green>, <0-36>, <high/low>, <even/odd>',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     },
     {
         name: 'falcoins',
-        description: 'a quantidade de falcoins que você ira apostar',
+        description: 'amount of falcoins to bet',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }
@@ -30,7 +32,7 @@ module.exports =  {
             args[0] = args[0].toLowerCase()
             if (args[0] === 'ímpar') {args[0] = 'impar'}
     
-            if (args[0] == 'preto' || args[0] == 'vermelho' || args[0] == 'verde' || args[0] == 'altos' || args[0] == 'baixos' || args[0] == 'par' || args[0] == 'impar' || (parseInt(args[0]) >=0 && parseInt(args[0]) <= 36)) {
+            if (args[0] == 'preto' || args[0] == 'black' || args[0] == 'vermelho' || args[0] == 'red' || args[0] == 'verde' || args[0] == 'green' || args[0] == 'altos' || args[0] == 'high' || args[0] == 'baixos' || args[0] == 'low' || args[0] == 'par' || args[0] == 'even' || args[0] == 'impar' || args[0] == 'odd' || (parseInt(args[0]) >=0 && parseInt(args[0]) <= 36)) {
                 try {
                     var bet = await functions.specialArg(args[1], user.id, "Falcoins")
                 } catch {

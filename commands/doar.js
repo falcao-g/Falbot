@@ -3,8 +3,10 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
+    name: "donate",
+    aliases: ['doar', 'doacao'],
     category: 'Economia',
-    description: 'Doa x Falcoins para o usuário marcado',
+    description: 'Donate x falcoins to a user',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
@@ -13,14 +15,14 @@ module.exports =  {
     expectedArgs: '<usuario> <falcoins>',
     expectedArgsTypes: ['USER', 'STRING'],
     options: [{
-        name:'usuario',
-        description: 'o usuario que você vai doar os falcoins',
+        name:'user',
+        description: 'user to donate to',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.USER
     },
     {
         name: 'falcoins',
-        description: 'a quantidade de falcoins que você ira doar',
+        description: 'amount of falcoins to donate',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }

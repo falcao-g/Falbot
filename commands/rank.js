@@ -5,21 +5,22 @@ const config = require("../config/config.json")
 
 module.exports =  {
     category: 'Economia',
-    description: 'mostra o rank do servidor atual ou global',
+    description: 'show the global or local ranking of users',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
-    expectedArgs: '[escopo]',
+    expectedArgs: '[scope]',
     expectedArgsTypes: ['STRING'],
     options: [{
-        name:'escopo',
-        description: 'use "global" para ver o rank global, use "local" para ver o rank local',
+        name:'scope',
+        description: 'show the global or local ranking',
         required: false,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Discord.Constants.ApplicationCommandOptionTypes.STRING,
+        choices: [{name: 'global', value: 'global'}, {name: 'local', value: 'local'}]
     }
     ],
-    callback: async ({client, user, args}) => {
+    callback: async ({client, user, guild, args}) => {
         try {
                 var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
                 rank = []

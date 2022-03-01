@@ -3,25 +3,27 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
+    name: "horse",
+    aliases: ["cavalo"],
     category: 'Economia',
-    description: 'adivinhe qual cavalo é o vencedor',
+    description: 'bet in what horse is going to win',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
     minArgs: 2,
-    expectedArgs: '<numero_do_cavalo> <falcoins>',
+    expectedArgs: '<horse_number> <falcoins>',
     expectedArgsTypes: ['NUMBER', 'STRING'],
     options: [{
-        name: 'numero_do_cavalo',
-        description: 'numero do cavalo que você vai apostar (1-5)',
+        name: 'horse_number',
+        description: 'number of the horse you want to bet in (1-5)',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER,
         choices: [{name: 1, value: 1}, {name: 2, value: 2}, {name: 3, value: 3}, {name: 4, value: 4}, {name: 5, value: 5}]
     },
     {
         name: 'falcoins',
-        description: 'a quantidade de falcoins que você ira apostar',
+        description: 'the amount of falcoins you want to bet',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }

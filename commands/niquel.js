@@ -4,9 +4,10 @@ const pick = require('pick-random-weighted')
 const config = require("../config/config.json")
 
 module.exports =  {
-    aliases: ['níquel'],
+    name: 'slot',
+    aliases: ['niquel', 'níquel'],
     category: 'Economia',
-    description: 'aposte seu dinheiro no caça-níquel',
+    description: 'bet your money in the slot machine',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
@@ -17,7 +18,7 @@ module.exports =  {
     options: [
     {
         name: 'falcoins',
-        description: 'a quantidade de falcoins que você ira apostar',
+        description: 'amount of falcoins to bet',
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }

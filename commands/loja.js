@@ -3,25 +3,27 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
+    name: 'store',
+    aliases: ['loja', 'shop'],
     category: 'Economia',
-    description: 'loja com itens que podem te ajudar a ganhar mais falcoins',
+    description: 'Show the store',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
-    expectedArgs: '[numero] [quantidade]',
+    expectedArgs: '[number] [quantity]',
     expectedArgsTypes: ['NUMBER', 'NUMBER'],
     options: [
     {
-        name: 'numero',
-        description: 'numero do item que você deseja comprar',
+        name: 'number',
+        description: 'number of the item you want to buy',
         required: false,
         type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER,
         choices: [{name: 1, value: 1}, {name: 2, value: 2}, {name: 3, value: 3}]
     },
     {
-        name: 'quantidade',
-        description: 'quantos desse item você deseja comprar',
+        name: 'quantity',
+        description: 'how many items you want to buy',
         required: false,
         type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER
     }
