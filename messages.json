@@ -136,21 +136,17 @@
       "english": "You must specify what roles can use this command with `{PREFIX}requiredroles {COMMAND} <role ID>`.",
       "portugues": "Você deve especificar quais funções podem usar este comando com `{PREFIX} funções necessárias {COMANDO} <ID da função>`."
     },
-    "EU_INFO": {
-      "portugues": "Mostra suas informações",
-      "english": "Show your info"
-    },
     "USO": {
       "portugues": "Uso",
       "english": "Usage"
     },
-    "SOBRE_INFO": {
-      "portugues": "Mostra as informações do usuário mencionado",
-      "english": "Show the info of the mentioned user"
+    "BALANCE_INFO": {
+      "portugues": "Mostra as suas informaçoes ou a de outro usuario",
+      "english": "Shows your or another user's balance"
     },
-    "SOBRE_USO": {
-      "portugues": "/sobre <@usuário>",
-      "english": "/sobre <@user>"
+    "BALANCE_USO": {
+      "portugues": "/balance [@usuário]",
+      "english": "/balance [@user]"
     },
     "LB_INFO": {
       "portugues": "Resgata sua lootbox grátis (disponível a cada 12 horas)",
@@ -161,8 +157,8 @@
       "english": "Donate x Falcoins to the mentioned user"
     },
     "DOAR_USO": {
-      "portugues": "/doar <@usuário> <falcoins>",
-      "english": "/doar <@user> <falcoins>"
+      "portugues": "/donation <@usuário> <falcoins>",
+      "english": "/donation <@user> <falcoins>"
     },
     "CAVALO_INFO": {
       "portugues": "Adivinhe qual cavalo é o vencedor",
@@ -185,16 +181,16 @@
       "english": "Show the available items in the shop"
     },
     "LOJA_USO": {
-      "portugues": "/loja [numero] [quantidade] - numero e quantidade só são obrigatórios caso você queira comprar algo",
-      "english": "/loja [number] [amount] - number and amount are only required if you want to buy something"
+      "portugues": "/store [numero] [quantidade] - numero e quantidade só são obrigatórios caso você queira comprar algo",
+      "english": "/store [number] [amount] - number and amount are only required if you want to buy something"
     },
     "ROLETA_INFO": {
       "portugues": "**preto/vermelho/verde** se o bot rolar um número com a sua cor, você ganha\n**0-36** se o bot rolar seu número, você ganha\n**altos/baixos** baixos: 1-18, altos: 19-36\n**impar/par** impar = 1, 3, 5 ..., 35, par = 2, 4, 6, ..., 36",
       "english": "**black/red/green** if the bot rolls your color you win\n**0-36** if the bot rolls your number you win\n**high/low** low: 1-18, high: 19-36\n**odd/even** odd = 1, 3, 5 ..., 35, even = 2, 4, 6, ..., 36"
     },
     "ROLETA_USO": {
-      "portugues": "/roleta <tipo de aposta> <falcoins>",
-      "english": "/roleta <bet type> <falcoins>"
+      "portugues": "/roulette <tipo de aposta> <falcoins>",
+      "english": "/roulette <bet type> <falcoins>"
     },
     "ROLETA_TIPOS": {
       "portugues": "**<preto/vermelho/verde>, <0-36>, <altos/baixos>, <par/impar>**",
@@ -229,8 +225,8 @@
       "english": "The deposited value increases by 1% every day"
     },
     "BANCO_USO": {
-      "portugues": "/banco <depositar/sacar> <falcoins>",
-      "english": "/banco <deposit/withdraw> <falcoins>"
+      "portugues": "/bank <deposit/withdraw> <falcoins>",
+      "english": "/bank <deposit/withdraw> <falcoins>"
     },
     "LUTA_INFO": {
       "portugues": "Desafia um usuário para uma luta até a morte",
@@ -249,8 +245,8 @@
       "english": "**instant:** does x damage on the turn\n**stun:** does x damage and stuns the enemy for 1 turn\n**heal:** heals x health\n**life steal:** steals x health from the enemy\n**self:** does x damage to yourself\n**shield:** protects you from all damage for 1 turn\n\n**The bot chooses the attacks randomly**"
     },
     "LUTA_USO": {
-      "portugues": "/luta <@usuário> <falcoins>",
-      "english": "/luta <@user> <falcoins>"
+      "portugues": "/fight <@usuário> <falcoins>",
+      "english": "/fight <@user> <falcoins>"
     },
     "CAIXA_INFO": {
       "portugues": "Gasta chaves e caixas para ter a chance de ganhar alguns prêmios, você pode comprar caixas e chaves na loja",
@@ -261,8 +257,8 @@
       "english": "You can win `boxes`, `keys`, `falcoins`"
     },
     "CAIXA_USO": {
-      "portugues": "/caixa <quantidade>",
-      "english": "/caixa <amount>"
+      "portugues": "/crate <quantidade>",
+      "english": "/crate <amount>"
     },
     "PREFIX_INFO": {
       "portugues": "Muda o prefixo do servidor atual, deixe vazio para ver o prefixo atual",
@@ -281,8 +277,8 @@
       "english": "Create a beautiful small poll"
     },
     "ENQUETE_USO": {
-      "portugues": "/enquete <tema>",
-      "english": "/enquete <theme>"
+      "portugues": "/poll <tema>",
+      "english": "/poll <theme>"
     },
     "ROLL_INFO": {
       "portugues": "Rola dados para você",
@@ -313,8 +309,8 @@
       "english": "Forecast your future"
     },
     "BOLA8_USO": {
-      "portugues": "/bola8 <pergunta>",
-      "english": "/bola8 <question>"
+      "portugues": "/8ball <pergunta>",
+      "english": "/8ball <question>"
     },
     "CAVALGADA_INFO": {
       "portugues": "Desafia outro usuário para uma corrida de cavalos",
@@ -325,8 +321,8 @@
       "english": "Send a random photo about the specified term"
     },
     "FOTO_USO": {
-      "portugues": "/foto <termo>",
-      "english": "/foto <term>"
+      "portugues": "/image <termo>",
+      "english": "/image <term>"
     },
     "ROLETARUSSA_INFO": {
       "portugues": "jogue com seus amigos, usuários podem entrar reagindo a mensagem",
@@ -337,8 +333,8 @@
       "english": "Challenge a user to a tic-tac-toe game"
     },
     "VELHA_USO": {
-      "portugues": "/velha <@usuario> <falcoins>",
-      "english": "/velha <@user> <falcoins>"
+      "portugues": "/tictactoe <@usuario> <falcoins>",
+      "english": "/tictactoe <@user> <falcoins>"
     },
     "VOTO_INFO": {
       "portugues": "Resgata sua recompensa por votar no bot no top.gg",
@@ -655,5 +651,9 @@
     "LOJA_COMPROU_AUMENTO": {
       "portugues": "Parabéns! Você comprou {AMOUNT} aumentos da lootbox :star_struck:",
       "english": "Congratulations! You bought {AMOUNT} lootbox increases :star_struck:"
+    },
+    "ALIASES": {
+      "portugues": "Sinônimos",
+      "english": "Aliases"
     }
   }
