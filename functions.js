@@ -186,33 +186,24 @@ async function explain(instance, guild, command) {
   command = command.toLowerCase();
   embed = new MessageEmbed()
   
-  if (command == "eu") {
+  if (command == "balance" || command == "sobre" || command == "credits") {
     embed.setColor("GREEN")
     embed.addFields([
       {
         name: "Info",
-        value: instance.messageHandler.get(guild, "EU_INFO"),
+        value: instance.messageHandler.get(guild, "BALANCE_INFO"),
         inline: false,
       },
       {
         name: instance.messageHandler.get(guild, "USO"),
-        value: "/eu",
-        inline: false,
-      },
-    ])
-  } else if (command == "sobre") {
-    embed.setColor("GREEN")
-    embed.addFields([
-      {
-        name: "Info",
-        value: instance.messageHandler.get(guild, "SOBRE_INFO"),
+        value: instance.messageHandler.get(guild, "BALANCE_USO"),
         inline: false,
       },
       {
-        name: instance.messageHandler.get(guild, "USO"),
-        value: instance.messageHandler.get(guild, "SOBRE_INFO"),
-        inline: false,
-      },
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?sobre`, `?credits`",
+        inline: false
+      }
     ])
   } else if (command == "lootbox" || command == "lb") {
     embed.setColor("GREEN")
@@ -227,8 +218,13 @@ async function explain(instance, guild, command) {
         value: "/lootbox",
         inline: false,
       },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?lb`",
+        inline: false
+      }
     ])
-  } else if (command == "doar") {
+  } else if (command == "donation" || command == "doar" || command == "doacao") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -241,8 +237,13 @@ async function explain(instance, guild, command) {
         value: instance.messageHandler.get(guild, "DOAR_USO"),
         inline: false,
       },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?doar`, `?doacao`",
+        inline: false
+      }
     ])
-  } else if (command == "cavalo") {
+  } else if (command == "cavalo" || command == "horse") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -257,8 +258,13 @@ async function explain(instance, guild, command) {
       },
       {
         name: instance.messageHandler.get(guild, "USO"),
-        value: "/cavalo <1-5> <falcoins>",
+        value: "/horse <1-5> <falcoins>",
         inline: false,
+      },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?cavalo`",
+        inline: false
       }
     ])
   } else if (command == "rank") {
@@ -275,7 +281,7 @@ async function explain(instance, guild, command) {
         inline: false,
       },
     ])
-  } else if (command == "loja") {
+  } else if (command == "loja" || command == "store" || command == "shop") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -288,8 +294,13 @@ async function explain(instance, guild, command) {
         value: instance.messageHandler.get(guild, "LOJA_USO"),
         inline: false,
       },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?store`, `?shop`",
+        inline: false
+      }
     ])
-  } else if (command == "roleta") {
+  } else if (command == "roleta" || command == "roulette") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -317,8 +328,13 @@ async function explain(instance, guild, command) {
         value: instance.messageHandler.get(guild, "ROLETA_USO"),
         inline: false,
       },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?roleta`",
+        inline: false
+      }
     ])
-  } else if (command == "niquel" || command == "níquel") {
+  } else if (command == "niquel" || command == "níquel" || command == "slot") {
     embed.setColor("GREEN")
     embed.addFields({
         name: "Info",
@@ -333,10 +349,15 @@ async function explain(instance, guild, command) {
       },
       {
         name: instance.messageHandler.get(guild, "USO"),
-        value: "/niquel <falcoins>",
+        value: "/slot <falcoins>",
         inline: false,
+      },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?niquel`, `?níquel`",
+        inline: false
       })
-  } else if (command == "banco") {
+  } else if (command == "banco" || command == "bank") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -354,8 +375,13 @@ async function explain(instance, guild, command) {
         value: instance.messageHandler.get(guild, "BANCO_USO"),
         inline: false,
       },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?banco`",
+        inline: false
+      }
     ])
-  } else if (command == "luta") {
+  } else if (command == "luta" || command == "fight") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -377,9 +403,14 @@ async function explain(instance, guild, command) {
         name: instance.messageHandler.get(guild, "USO"),
         value: instance.messageHandler.get(guild, "LUTA_USO"),
         inline: false,
+      },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?luta`",
+        inline: false
       }
     ])
-  } else if (command == "caixa") {
+  } else if (command == "caixa" || command == "crate") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -397,6 +428,11 @@ async function explain(instance, guild, command) {
         value: instance.messageHandler.get(guild, "CAIXA_USO"),
         inline: false,
       },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?caixa`",
+        inline: false
+      }
     ])
   } else if (command == "prefix") {
     embed.setColor("RED")
@@ -426,7 +462,7 @@ async function explain(instance, guild, command) {
         inline: false,
       },
     ])
-  } else if (command == "enquete") {
+  } else if (command == "enquete" || command == "poll") {
     embed.setColor("RED")
     embed.addFields([
       {
@@ -439,6 +475,11 @@ async function explain(instance, guild, command) {
         value: instance.messageHandler.get(guild, "ENQUETE_USO"),
         inline: false,
       },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?enquete`",
+        inline: false
+      }
     ])
   } else if (command == "roll") {
     embed.setColor("RED")
@@ -482,7 +523,7 @@ async function explain(instance, guild, command) {
         inline: false,
       },
     ])
-  } else if (command == "bola8") {
+  } else if (command == "bola8" || command == "8ball") {
     embed.setColor("RED")
     embed.addFields([
       {
@@ -495,8 +536,13 @@ async function explain(instance, guild, command) {
         value: instance.messageHandler.get(guild, "BOLA8_USO"),
         inline: false,
       },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?bola8`",
+        inline: false
+      }
     ])
-  } else if (command == "cavalgada") {
+  } else if (command == "cavalgada" || command == "horseduel") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -511,11 +557,16 @@ async function explain(instance, guild, command) {
       },
       {
         name: instance.messageHandler.get(guild, "USO"),
-        value: "/cavalo <falcoins>",
+        value: "/horseduel <falcoins>",
         inline: false,
       },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?cavalgada`",
+        inline: false
+      }
     ])
-  } else if (command == "foto") {
+  } else if (command == "foto" || command == "image" || command == "imagem") {
     embed.setColor("RED")
     embed.addFields([
       {
@@ -528,8 +579,13 @@ async function explain(instance, guild, command) {
         value: instance.messageHandler.get(guild, "FOTO_USO"),
         inline: false,
       },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?imagem`, `?foto`",
+        inline: false
+      }
     ])
-  } else if (command == "roletarussa") {
+  } else if (command == "roletarussa" || command == "russianroulette") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -544,11 +600,16 @@ async function explain(instance, guild, command) {
       },
       {
         name: instance.messageHandler.get(guild, "USO"),
-        value: "/roletarussa <falcoins>",
+        value: "/russianroulette <falcoins>",
         inline: false,
+      },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?roletarussa`",
+        inline: false
       }
     ])
-  } else if (command == "velha") {
+  } else if (command == "velha" || command == "tictactoe") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -566,8 +627,13 @@ async function explain(instance, guild, command) {
         value: instance.messageHandler.get(guild, "VELHA_USO"),
         inline: false,
       },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?velha`",
+        inline: false
+      }
     ])
-  } else if (command == "voto") {
+  } else if (command == "voto" || command == "vote") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -577,9 +643,14 @@ async function explain(instance, guild, command) {
       },
       {
         name: "Uso",
-        value: "/voto",
+        value: "/vote",
         inline: false,
       },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?voto`",
+        inline: false
+      }
     ])
   } else {
     embed.setColor("BLUE")
@@ -587,18 +658,18 @@ async function explain(instance, guild, command) {
       {
         name: instance.messageHandler.get(guild, "SALA_JOGOS"),
         value:
-          "`eu`, `sobre`, `lootbox`, `doar`, `cavalo`, `rank`, `loja`, `roleta`, `niquel`, `banco`, `luta`, `caixa`, `cavalgada`, `roletarussa`, `velha`, `voto`",
+          "`balance`, `lootbox`, `donation`, `horse`, `rank`, `store`, `roulette`, `slot`, `bank`, `fight`, `crate`, `horseduel`, `russianroulette`, `tictactoe`, `vote`",
         inline: false
       },
       {
         name: instance.messageHandler.get(guild, "COMANDOS_DIVERTIDOS"),
-        value: "`bonk`, `bola8`, `foto`, `coinflip`, `roll`, `enquete`",
+        value: "`bonk`, `8ball`, `image`, `coinflip`, `roll`, `poll`",
         inline: false
       },
       {
         name: instance.messageHandler.get(guild, "COMANDOS_UTEIS"),
         value:
-          "`prefix`, `comandos/help`, `math`",
+          "`prefix`, `commands`, `math`, `language`",
         inline: false
       },
       {
