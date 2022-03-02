@@ -5,7 +5,7 @@ const config = require("../config/config.json")
 module.exports =  {
     aliases: ['credits', 'sobre'],
     category: 'Economia',
-    description: 'Show your balance or of another user',
+    description: 'Shows your or another user\'s balance',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
