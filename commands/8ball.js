@@ -21,7 +21,7 @@ module.exports = {
         required: true,
         type: Discord.Constants.ApplicationCommandOptionTypes.STRING
     }],
-    callback: async ({instance, guild, message, interaction, user, text}) => {
+    callback: async ({instance, guild, interaction, user, text}) => {
         try {
             if (instance.messageHandler.getLanguage(guild) === "portugues") {
                 answers = [
@@ -76,7 +76,7 @@ module.exports = {
              .setFooter({text: 'by Falcão ❤️'})
             return embed
         } catch (error) {
-            console.error(`Bola8: ${error}`)
+            console.error(`8ball: ${error}`)
         }
     }
 }
