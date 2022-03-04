@@ -1,58 +1,46 @@
 const fs = require("fs");
 const { MessageEmbed } = require("discord.js");
+const userSchema = require('./schemas/user-schema')
 
-function createUser(id) {
+async function createUser(id) {
   try {
-    var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
-
-    if (users[id] == undefined ) {
-      users[id] = {
-        Falcoins: 10000,
-        Vitorias: 0,
-        Banco: 0,
-        Caixas: 0,
-        Chaves: 0,
-        Lootbox: 1000,
-        voto: 0
-      }
-  
-      json = JSON.stringify(users, null, 2);
-      fs.writeFileSync("falbot.json", json, "utf8")
-      return true
-    }
-    return false
+    await userSchema.findByIdAndUpdate(id, {
+      _id: id,
+    }, {
+      upsert: true
+    })
   } catch (error) {
     console.error(`Erro ao criar usuário: ${error}`)
   }
 }
 
-function changeJSON(id, field, quantity = 1, erase = false) {
+async function changeDB(id, field, quantity = 1, erase = false) {
   try {
-    createUser(id)
-    var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
+    await createUser(id)
     if (erase == true) {
-      users[id][field] = quantity
+      await userSchema.findByIdAndUpdate(id, {
+        [field]: quantity
+      })
     } else {
-      users[id][field] += quantity
+      await userSchema.findByIdAndUpdate(id, {
+        $inc: {
+          [field]: quantity
+        }
+      })
     }
-    json = JSON.stringify(users, null, 2)
-    fs.writeFileSync("falbot.json", json, "utf8") 
   } catch (error) {
-    console.error(`Erro ao alterar JSON: ${error}`)	
+    console.error(`Erro ao mudar a database: ${error}`)
   }
 }
 
-function takeAndGive(id, id2, field, field2, quantity = 1) {
+async function takeAndGive(id, id2, field, field2, quantity = 1) {
   try {
-    createUser(id)
-    createUser(id2)
-    var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"))
-    users[id][field] -= quantity;
-    users[id2][field2] += quantity;
-    json = JSON.stringify(users, null, 2);
-    fs.writeFileSync("falbot.json", json, "utf8")
-  } catch (error) {
-    console.error(`Erro ao alterar JSON no takeAndGive: ${error}`)
+    await createUser(id)
+    await createUser(id2)
+    await userSchema.findByIdAndUpdate(id, {$inc: { [field]: -quantity }})
+    await userSchema.findByIdAndUpdate(id2, {$inc: { [field2]: quantity }})
+  } catch {
+    console.error(`Erro ao alterar a database no takeAndGive: ${error}`)
   }
 }
 
@@ -104,7 +92,7 @@ async function msToTime(ms) {
 
 async function specialArg(arg, id, field) {
   createUser(id)
-  var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
+  var user = await userSchema.findById(id)
 
   arg = arg.toString()
   arg = arg.toLowerCase()
@@ -117,14 +105,14 @@ async function specialArg(arg, id, field) {
   }
 
   if (new_arg == "tudo") {
-    new_arg = users[id][field];
+    new_arg = user[field];
   } else if (new_arg == "metade") {
-    new_arg = parseInt(users[id][field] / 2);
+    new_arg = parseInt(user[field] / 2);
   } else {
     for (c in new_arg) {
       if (new_arg[c] == "%") {
         new_arg = parseInt(
-          (parseInt(new_arg.slice(0, -1)) * parseInt(users[id][field])) /
+          (parseInt(new_arg.slice(0, -1)) * parseInt(user[field])) /
             100
         );
       }
@@ -160,14 +148,13 @@ async function format(falcoins) {
 async function readFile(id, field = "", rich = false) {
   try {
     createUser(id)
-    var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
 
     if (field == "") {
-      return users[id];
+      return await userSchema.findById(id)
     } else if (rich == false) {
-      return users[id][field];
+      return (await userSchema.findById(id))[field]
     } else {
-      return await format(users[id][field]);
+      return await format((await userSchema.findById(id))[field])
     }
   } catch (error) {
     console.error(`Erro ao ler arquivo: ${error}`)
@@ -722,8 +709,28 @@ async function bankInterest() {
   }
 }
 
+async function bankInterest() {
+  var config = JSON.parse(fs.readFileSync("./config/config.json", "utf8"));
+  if (Date.now() - config["poupanca"]["last_interest"] > config["poupanca"]["interest_time"]) {
+    console.log('poupança!')
+    config["poupanca"]["last_interest"] = Date.now().toString()
+
+    var users = await userSchema.find({})
+    
+    for (user of users) {
+      await userSchema.findByIdAndUpdate(user._id, {$inc: {'banco': Math.floor(parseInt(user['banco'] * parseFloat(config["poupanca"]["interest_rate"])))}})
+    }
+
+    json2 = JSON.stringify(config, null, 1);
+
+    fs.writeFileSync("./config/config.json", json2, "utf8", function (err) {
+      if (err) throw err;
+    });
+  }
+}
+
 module.exports = {
-    createUser, changeJSON, msToTime,
+    createUser, changeDB, msToTime,
     specialArg, format, readFile, getRoleColor,
     getMember, explain, takeAndGive, count,
     randint, bankInterest
