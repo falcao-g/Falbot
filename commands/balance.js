@@ -35,29 +35,29 @@ module.exports =  {
             .setFooter({text: 'by Falcão ❤️'})
             .addFields({
                 name: ':coin: Falcoins',
-                value: `${await functions.format(userFile['Falcoins'])}`,
+                value: `${await functions.format(userFile['falcoins'])}`,
                 inline: true
             },{
                 name: ':trophy: ' + instance.messageHandler.get(guild, 'VITORIAS'),
-                value: `${await functions.format(userFile['Vitorias'])}`,
+                value: `${await functions.format(userFile['vitorias'])}`,
                 inline: true
             }, {
                 name: ':bank: ' + instance.messageHandler.get(guild, 'BANCO'),
-                value: `${await functions.format(userFile['Banco'])}`,
+                value: `${await functions.format(userFile['banco'])}`,
                 inline: true
             }, {
                 name: ':gift: ' + instance.messageHandler.get(guild, 'CAIXAS'),
-                value: `${await functions.format(userFile['Caixas'])}`,
+                value: `${await functions.format(userFile['caixas'])}`,
                 inline: true
             }, {
                 name: ':key: ' + instance.messageHandler.get(guild, 'CHAVES'),
-                value: `${await functions.format(userFile['Chaves'])}`,
+                value: `${await functions.format(userFile['chaves'])}`,
                 inline: true
             }) 
     
             return embed
         } catch (error) {
-                console.error(`sobre: ${error}`)
+                console.error(`balance: ${error}`)
         }
     }
 }
