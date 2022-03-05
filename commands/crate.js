@@ -22,11 +22,11 @@ module.exports =  {
     callback: async ({instance, guild, user, args}) => {
         try {
             try {
-                var quantity = await functions.specialArg(args[0], user.id, "Caixas")
+                var quantity = await functions.specialArg(args[0], user.id, "caixas")
             } catch {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             }
-        if (await functions.readFile(user.id, 'Caixas') >= quantity && await functions.readFile(user.id, 'Chaves') >= quantity) {
+        if (await functions.readFile(user.id, 'caixas') >= quantity && await functions.readFile(user.id, 'chaves') >= quantity) {
             caixas = 0
             chaves = 0
             falcoins = 0
@@ -38,9 +38,9 @@ module.exports =  {
                     falcoins += functions.randint(500, 15000)
                 } 
             }
-            functions.changeJSON(user.id, 'Chaves', chaves-quantity)
-            functions.changeJSON(user.id, 'Caixas', caixas-quantity)
-            functions.changeJSON(user.id, 'Falcoins', falcoins)
+            functions.changeDB(user.id, 'chaves', chaves-quantity)
+            functions.changeDB(user.id, 'caixas', caixas-quantity)
+            functions.changeDB(user.id, 'falcoins', falcoins)
             const embed = new Discord.MessageEmbed()
             .setColor(await functions.getRoleColor(guild, user.id))
             .addField(instance.messageHandler.get(guild, "CAIXA_TITULO", {QUANTITY: args[0]}), `:key: ${chaves}\n:coin: ${await functions.format(falcoins)} \n:gift: ${caixas}`)
@@ -50,7 +50,7 @@ module.exports =  {
             return instance.messageHandler.get(guild, "CAIXA_INSUFICIENTE", {VALUE: args[0]})
         }
         } catch (error) {
-            console.error(`Caixa: ${error}`)
+            console.error(`crate: ${error}`)
         }
     }
 }

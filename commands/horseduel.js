@@ -25,14 +25,14 @@ module.exports =  {
         try {
             const author = user
             try {
-                var bet = await functions.specialArg(args[0], user.id, "Falcoins")
+                var bet = await functions.specialArg(args[0], user.id, "falcoins")
             } catch {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             } 
-            if (await functions.readFile(user.id, 'Falcoins') >= bet) {
+            if (await functions.readFile(user.id, 'falcoins') >= bet) {
                 var pot = bet
                 const embed = new Discord.MessageEmbed()
-                .setTitle(instance.messageHandler.get(guild, "CAVALGADA", {VALUE: args[0]}))
+                .setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
                 .setDescription(instance.messageHandler.get(guild, "CAVALGADA_DESAFIO", {USER: author.username}))
                 .setColor('#0099ff')
                 .addFields({
@@ -56,13 +56,13 @@ module.exports =  {
                     })
                 }
                 answer.react('✅')
-                functions.changeJSON(author.id, 'Falcoins', -bet)
+                await functions.changeDB(author.id, 'falcoins', -bet)
 
                 var users = [author]
                 var path = ['- - - - -']
 
                 const filter = async (reaction, user) => {
-                    return await functions.readFile(user.id, 'Falcoins') >= bet && reaction.emoji.name === '✅'  && user.id !== client.user.id && !users.includes(user)
+                    return await functions.readFile(user.id, 'falcoins') >= bet && reaction.emoji.name === '✅'  && user.id !== client.user.id && !users.includes(user)
                 }
 
                 const collector = answer.createReactionCollector({
@@ -71,12 +71,12 @@ module.exports =  {
                 })
 
                 collector.on('collect', async (reaction, user) => {
-                    functions.changeJSON(user.id, 'Falcoins', -bet)
+                    await functions.changeDB(user.id, 'falcoins', -bet)
                     users.push(user)
                     path.push('- - - - -')
                     pot += bet
                     const embed2 = new Discord.MessageEmbed()
-                    .setTitle('Cavalgada')
+                    .setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
                     .setDescription(instance.messageHandler.get(guild, "CAVALGADA_DESAFIO", {USER: author.username}))
                     .setColor('#0099ff')
                     .addFields({
@@ -135,13 +135,13 @@ module.exports =  {
                         }
                 }
                 var winner = users[winner_path]
-                functions.changeJSON(winner.id, 'Falcoins', pot)
-                functions.changeJSON(winner.id, 'Vitorias')
+                await functions.changeDB(winner.id, 'falcoins', pot)
+                await functions.changeDB(winner.id, 'vitorias')
                 var embed3 = new Discord.MessageEmbed()
                 .setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
                 .setDescription(instance.messageHandler.get(guild, "GANHOU", {WINNER: winner, FALCOINS: pot}))
                 .setColor(3066993)
-                .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(winner.id, 'Falcoins', true)} falcoins`, false)
+                .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(winner.id, 'falcoins', true)} falcoins`, false)
                 .setFooter({text: 'by Falcão ❤️'})
                 if (message) {
                     await message.reply({

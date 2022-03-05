@@ -32,20 +32,20 @@ module.exports =  {
             if (message) {args[0] = args[0].toLowerCase()}
             if (args[0] == 'depositar' || args[0] == 'deposit') {
                 try {
-                    var quantity = await functions.specialArg(args[1], user.id, "Falcoins")
+                    var quantity = await functions.specialArg(args[1], user.id, "falcoins")
                 } catch {
                     return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 }
     
-                if (await functions.readFile(user.id, 'Falcoins') >= quantity && quantity > 0) {
-                    functions.takeAndGive(user.id, user.id, 'Falcoins', 'Banco', quantity)
+                if (await functions.readFile(user.id, 'falcoins') >= quantity && quantity > 0) {
+                    await functions.takeAndGive(user.id, user.id, 'falcoins', 'banco', quantity)
     
                     const embed = new Discord.MessageEmbed()
                      .setTitle(instance.messageHandler.get(guild, "BANCO_DEPOSITOU", {VALUE: await functions.format(quantity)}))
                      .setColor(await functions.getRoleColor(guild, user.id))
                      .setAuthor({name: user.username, iconURL: user.avatarURL()})
-                     .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, "Falcoins", true)} falcoins`, inline=false)
-                     .addField(instance.messageHandler.get(guild, "BANCO"), instance.messageHandler.get(guild, "BANCO_SALDO", {VALUE: await functions.readFile(user.id, "Banco", true)}))
+                     .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, "falcoins", true)} falcoins`, inline=false)
+                     .addField(instance.messageHandler.get(guild, "BANCO"), instance.messageHandler.get(guild, "BANCO_SALDO", {VALUE: await functions.readFile(user.id, "banco", true)}))
                      .setFooter({text: 'by Falcão ❤️'})
     
                     return embed
@@ -59,15 +59,15 @@ module.exports =  {
                     return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 }
     
-                if (await functions.readFile(user.id, 'Banco') >= quantity && quantity > 0) {
-                    functions.takeAndGive(user.id, user.id, 'Banco', 'Falcoins', quantity)
+                if (await functions.readFile(user.id, 'banco') >= quantity && quantity > 0) {
+                    await functions.takeAndGive(user.id, user.id, 'banco', 'falcoins', quantity)
     
                     const embed = new Discord.MessageEmbed()
                      .setTitle(instance.messageHandler.get(guild, "BANCO_SACOU", {VALUE: await functions.format(quantity)}))
                      .setColor(await functions.getRoleColor(guild, user.id))
                      .setAuthor({name: user.username, iconURL: user.avatarURL()})
-                     .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, "Falcoins", true)} falcoins`, inline=false)
-                     .addField(instance.messageHandler.get(guild, "BANCO"), instance.messageHandler.get(guild, "BANCO_SALDO", {VALUE: await functions.readFile(user.id, "Banco", true)}))
+                     .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, "falcoins", true)} falcoins`, inline=false)
+                     .addField(instance.messageHandler.get(guild, "BANCO"), instance.messageHandler.get(guild, "BANCO_SALDO", {VALUE: await functions.readFile(user.id, "banco", true)}))
                      .setFooter({text: 'by Falcão ❤️'})
     
                      return embed
@@ -78,7 +78,7 @@ module.exports =  {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             }
         } catch (error) {
-            console.error(`banco: ${error}`)
+            console.error(`bank: ${error}`)
         }
     }
 }   

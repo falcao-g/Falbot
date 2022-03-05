@@ -38,13 +38,13 @@ module.exports =  {
             args[0] = await functions.getMember(guild, args[0])
             
             try {
-                var quantity = await functions.specialArg(args[1], user.id, "Falcoins")
+                var quantity = await functions.specialArg(args[1], user.id, "falcoins")
             } catch {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
             }
             
-            if (await functions.readFile(user.id, 'Falcoins') >= quantity) {
-                functions.takeAndGive(user.id, args[0].user.id, 'Falcoins', 'Falcoins', quantity)
+            if (await functions.readFile(user.id, 'falcoins') >= quantity) {
+                await functions.takeAndGive(user.id, args[0].user.id, 'falcoins', 'falcoins', quantity)
                 return instance.messageHandler.get(guild, "DOAR", {FALCOINS: await functions.format(quantity), USER: args[0]})
             } else {
                 if (message) {
@@ -57,7 +57,7 @@ module.exports =  {
                 }
             }
         } catch (error) {
-            console.error(`Doar: ${error}`)
+            console.error(`donation: ${error}`)
         }
     }
 }

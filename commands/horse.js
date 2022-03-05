@@ -30,11 +30,11 @@ module.exports =  {
     callback: async ({instance, guild, message, interaction, user, args}) => {
         try {
             try {
-                var bet = await functions.specialArg(args[1], user.id, "Falcoins")
+                var bet = await functions.specialArg(args[1], user.id, "falcoins")
             } catch {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
             }
-            if (await functions.readFile(user.id, 'Falcoins') >= bet && bet > 0) {
+            if (await functions.readFile(user.id, 'falcoins') >= bet && bet > 0) {
                 if (args[0] >= 1 && args[0] <= 5) {
                     let horse1 = '- - - - -'
                     let horse2 = '- - - - -'
@@ -95,19 +95,19 @@ module.exports =  {
     
                     if (args[0] == winner) {
                         profit = bet * 5
-                        functions.changeJSON(user.id, 'Falcoins', profit-bet)
+                        await functions.changeDB(user.id, 'falcoins', profit-bet)
                         var embed2 = new Discord.MessageEmbed()
                          .setColor(3066993)
                          .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_GANHOU", {FALCOINS: await functions.format(bet*5)}), false)
                     } else {
                         profit = 0
-                        functions.changeJSON(user.id, 'Falcoins', -bet)
+                        await functions.changeDB(user.id, 'falcoins', -bet)
                         var embed2 = new Discord.MessageEmbed()
                          .setColor(15158332)
                          .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_PERDEU", {FALCOINS: await functions.format(bet)}), false)
                     }
     
-                    embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'Falcoins', true)} falcoins`, false)
+                    embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'falcoins', true)} falcoins`, false)
                     .setAuthor({name: user.username, iconURL: user.avatarURL()})
                     .setFooter({text: 'by Falcão ❤️'})
                     if (message) {
@@ -124,7 +124,7 @@ module.exports =  {
                     return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                 }
         } catch (error) {
-            console.error(`Cavalo: ${error}`)
+            console.error(`horse: ${error}`)
         }
     }
 }   
