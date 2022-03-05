@@ -40,7 +40,7 @@ module.exports = {
            answer.react('👍')
            answer.react('👎')
         } catch (error) {
-            console.error(`enquete: ${error}`)
+            console.error(`poll: ${error}`)
         }
     }
 }
