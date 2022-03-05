@@ -40,7 +40,7 @@ module.exports =  {
             .setFooter({text: 'by Falcão ❤️'})
             if (message) {return embed} else {interaction.editReply({embeds: [embed]})}
         } catch (error) {
-            console.error(`foto: ${error}`)
+            console.error(`image: ${error}`)
         }
     }
 }   
