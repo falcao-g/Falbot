@@ -91,7 +91,7 @@ async function msToTime(ms) {
 }
 
 async function specialArg(arg, id, field) {
-  createUser(id)
+  await createUser(id)
   var user = await userSchema.findById(id)
 
   arg = arg.toString()
@@ -147,7 +147,7 @@ async function format(falcoins) {
 
 async function readFile(id, field = "", rich = false) {
   try {
-    createUser(id)
+    await createUser(id)
 
     if (field == "") {
       return await userSchema.findById(id)
@@ -682,31 +682,6 @@ async function count(array, string) {
 
 function randint(low, high) {
   return Math.floor(Math.random() * (high - low + 1) + low)
-}
-
-async function bankInterest() {
-  var config = JSON.parse(fs.readFileSync("./config/config.json", "utf8"));
-  if (Date.now() - config["poupanca"]["last_interest"] > config["poupanca"]["interest_time"]) {
-    console.log('poupança!')
-    config["poupanca"]["last_interest"] = Date.now().toString()
-
-    var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
-
-    for (user in users) {
-      users[user]['Banco'] += Math.floor(parseInt(users[user]['Banco'] * parseFloat(config["poupanca"]["interest_rate"])))
-    }
-
-    json = JSON.stringify(users, null, 2);
-    json2 = JSON.stringify(config, null, 1);
-
-    fs.writeFileSync("falbot.json", json, "utf8", function (err) {
-      if (err) throw err;
-    });
-
-    fs.writeFileSync("./config/config.json", json2, "utf8", function (err) {
-      if (err) throw err;
-    });
-  }
 }
 
 async function bankInterest() {
