@@ -1,7 +1,8 @@
 const Discord = require('discord.js')
 const functions = require('../functions.js')
 const fs = require("fs");
-const config = require("../config/config.json")
+const config = require("../config/config.json");
+const userSchema = require('../schemas/user-schema.js');
 
 module.exports =  {
     category: 'Economia',
@@ -22,56 +23,27 @@ module.exports =  {
     ],
     callback: async ({client, user, guild, args}) => {
         try {
-                var users = JSON.parse(fs.readFileSync("falbot.json", "utf8"));
                 rank = []
                 if (args[0] === 'local') {
-                    for (useri in users) {
-                        if (await functions.getMember(guild, useri)) {
-                          if(!rank.length) {
-                              rank.push(useri)
-                          } else {
-                              size = rank.length
-                              for (let i = 0; i < size;i++) {
-                                  if (users[useri]['Falcoins'] > users[rank[i]]['Falcoins']) {
-                                      rank.splice(i, 0, useri)
-                                      break;
-                                  }
-                              }
-                              if (rank.length === size) {
-                                  rank.push(useri)
-                              }
-                          }
-                        }
-                      }
-                } else {
-                    for (useri in users) {
-                        if(!rank.length) {
+                    users = await userSchema.find({}).sort({ 'falcoins': -1 }).limit(10)
+
+                    for (useri of users) {
+                        if (await functions.getMember(guild, useri['_id'])) {
                             rank.push(useri)
-                        } else {
-                            size = rank.length
-                            for (let i = 0; i < size;i++) {
-                                if (users[useri]['Falcoins'] > users[rank[i]]['Falcoins']) {
-                                    rank.splice(i, 0, useri)
-                                    break;
-                                }
-                            }
-                            if (rank.length === size) {
-                                rank.push(useri)
-                            }
-                        }
                       }
+                    }
+                } else {
+                    rank = await userSchema.find({}).sort({ 'falcoins': -1 }).limit(10)
                 }
-                top10 = rank
-                top10.splice(10)
                 const embed = new Discord.MessageEmbed()
                 .setColor(await functions.getRoleColor(guild, user.id))
                 .setFooter({text: 'by Falcão ❤️'})
-                for (let i = 0; i < top10.length; i++) {
+                for (let i = 0; i < rank.length; i++) {
                     try {
-                        user = await client.users.fetch(top10[i])
-                        embed.addField(`${i + 1}º - ${user.username} falcoins:`, `${await functions.format(users[top10[i]]['Falcoins'])}`, false)
+                        user = await client.users.fetch(rank[i]['_id'])
+                        embed.addField(`${i + 1}º - ${user.username} falcoins:`, `${await functions.format(rank[i]['falcoins'])}`, false)
                     } catch {
-                        embed.addField(`${i + 1}º - Unknown user falcoins:`, `${await functions.format(users[top10[i]]['Falcoins'])}`, false)
+                        embed.addField(`${i + 1}º - Unknown user falcoins:`, `${await functions.format(rank[i]['falcoins'])}`, false)
                     }
                 }
                 return embed
