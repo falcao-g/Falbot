@@ -28,7 +28,7 @@ module.exports =  {
                     users = await userSchema.find({}).sort({ 'falcoins': -1 }).limit(10)
 
                     for (useri of users) {
-                        if (await functions.getMember(guild, useri['_id'])) {
+                        if (await functions.getMember(guild, useri['_id']) &&  rank.length < 10) {
                             rank.push(useri)
                       }
                     }
