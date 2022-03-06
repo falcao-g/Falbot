@@ -27,11 +27,11 @@ module.exports =  {
             guild = client.guilds.cache.get('742332099788275732')
             emojifoda = await guild.emojis.fetch('926953352774963310')
             try {
-                var bet = await functions.specialArg(args[0], user.id, "Falcoins")
+                var bet = await functions.specialArg(args[0], user.id, "falcoins")
             } catch {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             }
-            if (await functions.readFile(user.id, 'Falcoins') >= bet && bet > 0) {
+            if (await functions.readFile(user.id, 'falcoins') >= bet && bet > 0) {
                 const choices = [[':money_mouth:', 30], [':gem:', 10], [':moneybag:', 15], [':coin:', 25], [':dollar:', 20]]
                 const emoji1 = pick(choices)
                 const emoji2 = pick(choices)
@@ -94,7 +94,7 @@ module.exports =  {
                     var winnings = 0
                 }
                 var profit = parseInt(bet * winnings)
-                functions.changeJSON(user.id, 'Falcoins', profit-bet)
+                await functions.changeDB(user.id, 'falcoins', profit-bet)
     
                 if (profit > 0) {
                     var embed2 = new Discord.MessageEmbed()
@@ -122,7 +122,7 @@ module.exports =  {
                      })
                 }
                 embed2.setAuthor({name: user.username, iconURL: user.avatarURL()})
-                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'Falcoins', true)}`)
+                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'falcoins', true)}`)
                 embed2.setFooter({text: 'by Falcão ❤️'})
                 await answer.edit({
                     embeds: [embed2]
@@ -131,7 +131,7 @@ module.exports =  {
                     return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                 }
         } catch (error) {
-            console.error(`niquel: ${error}`)
+            console.error(`slot: ${error}`)
         }
     }
 }   

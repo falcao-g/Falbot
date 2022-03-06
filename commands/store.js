@@ -67,27 +67,27 @@ module.exports =  {
                 }
 
                 if (item === 1) {
-                    if (await functions.readFile(user.id, 'Falcoins') >= 5000 * amount) {
+                    if (await functions.readFile(user.id, 'falcoins') >= 5000 * amount) {
                         for (let i = 0; i < amount; i++) {
-                            functions.changeJSON(user.id, 'Falcoins', -5000 * amount)
-                            functions.changeJSON(user.id, 'Caixas', 1 * amount)
+                            await functions.changeDB(user.id, 'falcoins', -5000 * amount)
+                            await functions.changeDB(user.id, 'caixas', 1 * amount)
                         }
                         return instance.messageHandler.get(guild, "LOJA_COMPROU_CAIXA", {AMOUNT: amount})
                     } else {
                         return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                     }
                 } else if (item === 2) {
-                    if (await functions.readFile(user.id, 'Falcoins') >= 20000 * amount) {
-                        functions.changeJSON(user.id, 'Falcoins', -20000 * amount)
-                        functions.changeJSON(user.id, 'Chaves', 1 * amount)
+                    if (await functions.readFile(user.id, 'falcoins') >= 20000 * amount) {
+                        await functions.changeDB(user.id, 'falcoins', -20000 * amount)
+                        await functions.changeDB(user.id, 'chaves', 1 * amount)
                         return instance.messageHandler.get(guild, "LOJA_COMPROU_CHAVE", {AMOUNT: amount})
                     } else {
                         return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                     }
                 } else if (item === 3) {
-                    if (await functions.readFile(user.id, 'Falcoins') >= 50000 * amount) {
-                        functions.changeJSON(user.id, 'Falcoins', -50000 * amount)
-                        functions.changeJSON(user.id, 'Lootbox', 1000 * amount)
+                    if (await functions.readFile(user.id, 'falcoins') >= 50000 * amount) {
+                        await functions.changeDB(user.id, 'falcoins', -50000 * amount)
+                        await functions.changeDB(user.id, 'lootbox', 1000 * amount)
                         return instance.messageHandler.get(guild, "LOJA_COMPROU_AUMENTO", {AMOUNT: amount})
                     } else {
                         return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
@@ -95,7 +95,7 @@ module.exports =  {
                 } 
             }
         } catch (error) {
-            console.error(`loja: ${error}`)
+            console.error(`store: ${error}`)
         }
     }
 }   

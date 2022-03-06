@@ -41,11 +41,11 @@ module.exports =  {
             const member = await functions.getMember(guild, args[0])
             if (member.user != author) {
                 try {
-                    var bet = await functions.specialArg(args[1], user.id, "Falcoins")
+                    var bet = await functions.specialArg(args[1], user.id, "falcoins")
                 } catch {
                     return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 } 
-                if (await functions.readFile(user.id, 'Falcoins') >= bet && await functions.readFile(member.user.id, 'Falcoins') >= bet && bet > 0) {
+                if (await functions.readFile(user.id, 'falcoins') >= bet && await functions.readFile(member.user.id, 'falcoins') >= bet && bet > 0) {
                     if (message) {
                         var answer = await message.reply({
                             content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {USER: author.username, USER2: member.user.username, FALCOINS: await functions.format(bet)})
@@ -96,7 +96,7 @@ module.exports =  {
                             .setTitle(instance.messageHandler.get(guild, "VELHA"))
                             .setDescription(instance.messageHandler.get(guild, "TURNO") + `**${author.username} [${board.currentMark()}]**`)
                             .addField('\u200B', `:one: | :two: | :three: \n────────\n:four: | :five: | :six: \n────────\n:seven: | :eight: | :nine:`)
-                            .setFooter('by Falcão ❤️')
+                            .setFooter({text: 'by Falcão ❤️'})
                             .setColor('#0099ff')
                             if (message) {
                                 var answer2 = await message.reply({
@@ -178,13 +178,13 @@ module.exports =  {
                                     .setFooter({text: 'by Falcão ❤️'})
                                     .setColor('#0099ff')
                                     if(board.winningPlayer() === 'X') {
-                                        functions.changeJSON(author.id, 'Falcoins', bet)
-                                        functions.changeJSON(author.id, 'Vitorias', 1)
-                                        functions.changeJSON(member.id, 'Falcoins', -bet)
+                                        await functions.changeDB(author.id, 'falcoins', bet)
+                                        await functions.changeDB(author.id, 'vitorias', 1)
+                                        await functions.changeDB(member.id, 'falcoins', -bet)
                                     } else {
-                                        functions.changeJSON(member.id, 'Falcoins', bet)
-                                        functions.changeJSON(member.id, 'Vitorias', 1)
-                                        functions.changeJSON(author.id, 'Falcoins', -bet)
+                                        await functions.changeDB(member.id, 'falcoins', bet)
+                                        await functions.changeDB(member.id, 'vitorias', 1)
+                                        await functions.changeDB(author.id, 'falcoins', -bet)
                                     }
                                     await answer2.edit({
                                         embeds: [embed2]

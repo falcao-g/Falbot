@@ -24,11 +24,11 @@ module.exports =  {
         try {
             const author = user
                 try {
-                    var bet = await functions.specialArg(args[0], user.id, "Falcoins")
+                    var bet = await functions.specialArg(args[0], user.id, "falcoins")
                 } catch {
                     return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 } 
-                if (await functions.readFile(user.id, 'Falcoins')) {
+                if (await functions.readFile(user.id, 'falcoins')) {
                     var pot = bet
                     const embed = new Discord.MessageEmbed()
                     .setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
@@ -55,7 +55,7 @@ module.exports =  {
                         })
                     }
                     answer.react('✅')
-                    functions.changeJSON(author.id, 'Falcoins', -bet)
+                    await functions.changeDB(author.id, 'falcoins', -bet)
 
                     var users = [author]
                     var names = [author]
@@ -66,7 +66,7 @@ module.exports =  {
                     }
     
                     const filter = async (reaction, user) => {
-                        return await functions.readFile(user.id, 'Falcoins') >= bet && reaction.emoji.name === '✅' && user.id !== client.user.id && !users.includes(user) 
+                        return await functions.readFile(user.id, 'falcoins') >= bet && reaction.emoji.name === '✅' && user.id !== client.user.id && !users.includes(user) 
                     }
     
                     const collector = answer.createReactionCollector({
@@ -75,7 +75,7 @@ module.exports =  {
                     })
 
                     collector.on('collect', async (reaction, user) => {
-                        functions.changeJSON(user.id, 'Falcoins', -bet)
+                        await functions.changeDB(user.id, 'falcoins', -bet)
                         users.push(user)
                         names.push(user)
                         pot += bet
@@ -121,13 +121,13 @@ module.exports =  {
                             await new Promise(resolve => setTimeout(resolve, 5000));
                         }
                         var winner = users[0]
-                        functions.changeJSON(winner.id, 'Falcoins', pot)
-                        functions.changeJSON(winner.id, 'Vitorias')
+                        await functions.changeDB(winner.id, 'falcoins', pot)
+                        await functions.changeDB(winner.id, 'vitorias')
                         var embed3 = new Discord.MessageEmbed()
                         .setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
                         .setDescription(`${winner} ganhou ${pot} falcoins`)
                         .setColor(3066993)
-                        .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(winner.id, 'Falcoins', true)} falcoins`, false)
+                        .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(winner.id, 'falcoins', true)} falcoins`, false)
                         .setFooter({text: 'by Falcão ❤️'})
                         if (message) {
                             await message.reply({
@@ -145,7 +145,7 @@ module.exports =  {
                     return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
                 }
         } catch (error) {
-            console.error(`roletarussa: ${error}`)
+            console.error(`russianroulette: ${error}`)
         }
     }
 }   

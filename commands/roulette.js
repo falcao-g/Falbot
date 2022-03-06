@@ -33,13 +33,12 @@ module.exports =  {
     
             if (args[0] == 'preto' || args[0] == 'black' || args[0] == 'vermelho' || args[0] == 'red' || args[0] == 'verde' || args[0] == 'green' || args[0] == 'altos' || args[0] == 'high' || args[0] == 'baixos' || args[0] == 'low' || args[0] == 'par' || args[0] == 'even' || args[0] == 'impar' || args[0] == 'odd' || (parseInt(args[0]) >=0 && parseInt(args[0]) <= 36)) {
                 try {
-                    var bet = await functions.specialArg(args[1], user.id, "Falcoins")
+                    var bet = await functions.specialArg(args[1], user.id, "falcoins")
                 } catch {
                     return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 }
-    
-                if (await functions.readFile(user.id, 'Falcoins') >= bet && bet > 0) {
-    
+
+                if (await functions.readFile(user.id, 'falcoins') >= bet && bet > 0) {
                     const types = {
                         verde: [0],
                         green: [0],
@@ -69,7 +68,7 @@ module.exports =  {
                     const luck = functions.randint(0, 36)
     
                     if (type.includes(luck)) {
-                        functions.changeJSON(user.id, 'Falcoins', profit-bet)
+                        await functions.changeDB(user.id, 'falcoins', profit-bet)
                         var embed = new Discord.MessageEmbed()
                          .setColor(3066993)
                          .setAuthor({name: user.username, iconURL: user.avatarURL()})
@@ -78,17 +77,13 @@ module.exports =  {
                              value: instance.messageHandler.get(guild, "BOT_ROLOU") + ` **${luck}**`,
                              inline: true
                          }, {
-                             name: '\u200b',
-                             value: '\u200b',
-                             inline: true
-                         }, {
                              name: instance.messageHandler.get(guild, "GANHOS"),
                              value:`${await functions.format(profit)} falcoins`,
                              inline: true
                          })
-                         .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'Falcoins', true)} falcoins`, false)
+                         .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'falcoins', true)} falcoins`, false)
                     } else {
-                        functions.changeJSON(user.id, 'Falcoins', -bet  )
+                        await functions.changeDB(user.id, 'falcoins', -bet  )
                         var embed = new Discord.MessageEmbed()
                          .setColor(15158332)
                          .setAuthor({name: user.username, iconURL: user.avatarURL()})
@@ -97,15 +92,11 @@ module.exports =  {
                              value: instance.messageHandler.get(guild, "BOT_ROLOU") + ` **${luck}**`,
                              inline: true
                          }, {
-                             name: '\u200b',
-                             value: '\u200b',
-                             inline: true
-                         }, {
                              name:instance.messageHandler.get(guild, "PERDAS"),
                              value:`${await functions.format(bet)} falcoins`,
                              inline: true
                         })
-                        embed.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'Falcoins', true)} falcoins`, false)
+                        embed.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'falcoins', true)} falcoins`, false)
                     }
                     embed.setFooter({text: 'by Falcão ❤️'})
                     return embed
@@ -116,7 +107,7 @@ module.exports =  {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             }
         } catch (error) {
-            console.error(`roleta: ${error}`)
+            console.error(`roulette: ${error}`)
         }
     }
 }   
