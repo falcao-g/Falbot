@@ -3,7 +3,7 @@ const functions = require('../functions.js')
 const config = require("../config/config.json")
 
 module.exports =  {
-    aliases: ['credits', 'sobre'],
+    aliases: ['eu', 'credits', 'sobre'],
     category: 'Economia',
     description: 'Shows your or another user\'s balance',
     slash: 'both',
