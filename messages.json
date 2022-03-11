@@ -655,5 +655,17 @@
     "ALIASES": {
       "portugues": "Sinônimos",
       "english": "Aliases"
+    },
+    "COOLDOWNS": {
+      "portugues": "Tempo de espera",
+      "english": "Cooldowns"
+    },
+    "VOTO": {
+      "portugues": "Voto",
+      "english": "Vote"
+    },
+    "PRONTO": {
+      "portugues": "Pronto!",
+      "english": "Ready!"
     }
   }
