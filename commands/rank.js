@@ -1,6 +1,5 @@
 const Discord = require('discord.js')
 const functions = require('../functions.js')
-const fs = require("fs");
 const config = require("../config/config.json");
 const userSchema = require('../schemas/user-schema.js');
 
