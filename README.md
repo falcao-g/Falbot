@@ -1,17 +1,15 @@
-O Falbot é um bot focado em economia e interações com outros usuários, com features como:
+Falbot is economy and user interaction focused bot, with features like:
 
-🎲 Comandos de aposta
+🎲 Gamble commands
 
-⚔️ Interações sociais apostando falcoins
+⚔️ User interaction betting falcoins
 
-🎉 Comandos divertidos
+🎉 Fun commands
 
-⚙️ Comandos úteis
+⚙️ Useful commands
 
-Use /comandos para começar, Falbot ganha atualizações frequentemente, se você quiser fazer grandes fortunas ou só se divertir com seus amigos, esse bot é para você
+Use /commands to get started, Falbot is updated frequently, if you want to earn huge amounts of money or just have some fun with your friends, this bot is for you
 
-Siga no twitter: @falb0t
+Add him in: https://top.gg/bot/742331813539872798
 
-Adicione ele em: https://top.gg/bot/742331813539872798
-
-Site oficial: https://falbot.netlify.app/
+Official website: https://falbot.netlify.app/
