@@ -68,3 +68,6 @@ Falbot is made to be a really configurable bot:
 - - "interest_rate": how much % the interest increases, default is 1%
 - "testOnly": when you are only testing the slash commands put this as true this way you don't have to wait 1 hour for the command to register, it register instantly in the servers you put earlier
 - "Authorization": this is only required if your bot is in top.gg and you plan to use the /vote command, in this case you go to https://top.gg/bot/:yourbotid/webhooks and put the token here, otherwise just ignore this
+
+### 🏃‍♂️ Running
+If everything was done correctly, you just need to open a terminal on the folder and run ```node .``` and the bot should be up and running!
