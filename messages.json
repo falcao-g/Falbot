@@ -150,7 +150,7 @@
     },
     "LB_INFO": {
       "portugues": "Resgata sua lootbox grátis (disponível a cada 12 horas)",
-      "english": "Get your free lootbox (available every 12 hours)"
+      "english": "Redeem your free lootbox (available every 12 hours)"
     },
     "DOAR_INFO": {
       "portugues": "Doa x Falcoins para o usuário mencionado",
@@ -264,6 +264,10 @@
       "portugues": "Muda o prefixo do servidor atual, deixe vazio para ver o prefixo atual",
       "english": "Change the server prefix, leave it empty to see the current prefix"
     },
+    "PREFIX_USO": {
+      "portugues": "/prefix [prefixo]",	
+      "english": "/prefix [prefix]"
+    },
     "MATH_INFO": {
       "portugues": "Calcula o resultado de uma expressão matemática",
       "english": "Calculate the result of a mathematical expression"
@@ -325,8 +329,8 @@
       "english": "/image <term>"
     },
     "ROLETARUSSA_INFO": {
-      "portugues": "jogue com seus amigos, usuários podem entrar reagindo a mensagem",
-      "english": "play with your friends, users can enter reacting to the message"
+      "portugues": "Jogue com seus amigos, usuários podem entrar reagindo a mensagem",
+      "english": "Play with your friends, users can enter reacting to the message"
     },
     "VELHA_INFO": {
       "portugues": "Desafia outro usuário para um jogo da velha",
@@ -338,7 +342,7 @@
     },
     "VOTO_INFO": {
       "portugues": "Resgata sua recompensa por votar no bot no top.gg",
-      "english": "Get your reward for voting in the bot on top.gg"
+      "english": "Redeem your reward for voting in the bot on top.gg"
     },
     "SALA_JOGOS": {
       "portugues": ":game_die: Comandos para a sala de jogos",
@@ -667,5 +671,13 @@
     "PRONTO": {
       "portugues": "Pronto!",
       "english": "Ready!"
+    },
+    "LANGUAGE_INFO": {
+      "portugues": "Muda o idioma do servidor atual, deixe vazio para ver o idioma atual",
+      "english": "Change the server language, leave it empty to see the current language"
+    },
+    "COOLDOWNS_INFO": {
+      "portugues": "Mostra o tempo de espera dos seus comandos",
+      "english": "See all your cooldowns"
     }
   }
