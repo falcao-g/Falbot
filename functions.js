@@ -174,7 +174,7 @@ async function explain(instance, guild, command) {
   command = command.toLowerCase();
   embed = new MessageEmbed()
   
-  if (command == "balance" || command == "sobre" || command == "credits") {
+  if (command == "balance" || command == "sobre" || command == "credits" || command == "eu") {
     embed.setColor("GREEN")
     embed.addFields([
       {
@@ -189,7 +189,7 @@ async function explain(instance, guild, command) {
       },
       {
         name: instance.messageHandler.get(guild, "ALIASES"),
-        value: "`?sobre`, `?credits`",
+        value: "`?eu`, `?sobre`, `?credits`",
         inline: false
       }
     ])
@@ -451,7 +451,7 @@ async function explain(instance, guild, command) {
       },
     ])
   } else if (command == "enquete" || command == "poll") {
-    embed.setColor("RED")
+    embed.setColor("GOLD")
     embed.addFields([
       {
         name: "Info",
@@ -470,7 +470,7 @@ async function explain(instance, guild, command) {
       }
     ])
   } else if (command == "roll") {
-    embed.setColor("RED")
+    embed.setColor("GOLD")
     embed.addFields([
         {
           name: "Info",
@@ -484,7 +484,7 @@ async function explain(instance, guild, command) {
         },
       ])
   } else if (command == "coinflip") {
-    embed.setColor("RED")
+    embed.setColor("GOLD")
     embed.addFields([
       {
         name: "Info",
@@ -498,7 +498,7 @@ async function explain(instance, guild, command) {
       },
     ])
   } else if (command == "bonk") {
-    embed.setColor("RED")
+    embed.setColor("GOLD")
     embed.addFields([
       {
         name: "Info",
@@ -512,7 +512,7 @@ async function explain(instance, guild, command) {
       },
     ])
   } else if (command == "bola8" || command == "8ball") {
-    embed.setColor("RED")
+    embed.setColor("GOLD")
     embed.addFields([
       {
         name: "Info",
@@ -555,7 +555,7 @@ async function explain(instance, guild, command) {
       }
     ])
   } else if (command == "foto" || command == "image" || command == "imagem") {
-    embed.setColor("RED")
+    embed.setColor("GOLD")
     embed.addFields([
       {
         name: "Info",
@@ -630,7 +630,7 @@ async function explain(instance, guild, command) {
         inline: false,
       },
       {
-        name: "Uso",
+        name: instance.messageHandler.get(guild, "USO"),
         value: "/vote",
         inline: false,
       },
@@ -640,8 +640,41 @@ async function explain(instance, guild, command) {
         inline: false
       }
     ])
+  } else if (command == "language") {
+    embed.setColor("RED")
+    embed.addFields([
+      {
+        name: "Info",
+        value: instance.messageHandler.get(guild, "LANGUAGE_INFO"),
+        inline: false,
+      },
+      {
+        name: instance.messageHandler.get(guild, "USO"),
+        value: "/language [português/english]",
+        inline: false,
+      }
+    ])
+  } else if (command == "cooldowns" || command == "espera") {
+    embed.setColor("RED")
+    embed.addFields([
+      {
+        name: "Info",
+        value: instance.messageHandler.get(guild, "COOLDOWNS_INFO"),
+        inline: false,
+      },
+      {
+        name: instance.messageHandler.get(guild, "USO"),
+        value: "/cooldowns",
+        inline: false,
+      },
+      {
+        name: instance.messageHandler.get(guild, "ALIASES"),
+        value: "`?espera`",
+        inline: false
+      }
+    ])
   } else {
-    embed.setColor("BLUE")
+    embed.setColor("PURPLE")
     embed.addFields([
       {
         name: instance.messageHandler.get(guild, "SALA_JOGOS"),
@@ -651,13 +684,13 @@ async function explain(instance, guild, command) {
       },
       {
         name: instance.messageHandler.get(guild, "COMANDOS_DIVERTIDOS"),
-        value: "`bonk`, `8ball`, `image`, `coinflip`, `roll`, `poll`",
+        value: "`bonk`, `8ball`, `image`, `coinflip`, `poll`",
         inline: false
       },
       {
         name: instance.messageHandler.get(guild, "COMANDOS_UTEIS"),
         value:
-          "`prefix`, `commands`, `math`, `language`",
+          "`roll`, `prefix`, `commands`, `math`, `language`, `cooldowns`",
         inline: false
       },
       {
