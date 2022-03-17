@@ -35,23 +35,23 @@ module.exports =  {
             .setFooter({text: 'by Falcão ❤️'})
             .addFields({
                 name: ':coin: Falcoins',
-                value: `${await functions.format(userFile['falcoins'])}`,
+                value: `${await functions.format(userFile.falcoins)}`,
                 inline: true
             },{
                 name: ':trophy: ' + instance.messageHandler.get(guild, 'VITORIAS'),
-                value: `${await functions.format(userFile['vitorias'])}`,
+                value: `${await functions.format(userFile.vitorias)}`,
                 inline: true
             }, {
                 name: ':bank: ' + instance.messageHandler.get(guild, 'BANCO'),
-                value: `${await functions.format(userFile['banco'])}`,
+                value: `${await functions.format(userFile.banco)}`,
                 inline: true
             }, {
                 name: ':gift: ' + instance.messageHandler.get(guild, 'CAIXAS'),
-                value: `${await functions.format(userFile['caixas'])}`,
+                value: `${await functions.format(userFile.caixas)}`,
                 inline: true
             }, {
                 name: ':key: ' + instance.messageHandler.get(guild, 'CHAVES'),
-                value: `${await functions.format(userFile['chaves'])}`,
+                value: `${await functions.format(userFile.chaves)}`,
                 inline: true
             }) 
     
