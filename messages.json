@@ -679,5 +679,9 @@
     "COOLDOWNS_INFO": {
       "portugues": "Mostra o tempo de espera dos seus comandos",
       "english": "See all your cooldowns"
+    },
+    "SCORE": {
+      "portugues": "Pontuação",
+      "english": "Score"
     }
   }
