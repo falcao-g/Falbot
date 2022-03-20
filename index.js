@@ -5,6 +5,7 @@ const client = new Discord.Client({ intents })
 const WOKCommands = require('wokcommands')
 const path = require('path')
 const functions = require('./functions.js')
+const mongoose = require('mongoose')
 
 client.on("ready", () => {
   const wok = new WOKCommands(client, {
@@ -30,11 +31,13 @@ client.on("ready", () => {
     console.log(error)
   })
 
+  mongoose.connection.on('error', (err) => {
+    console.log(`Erro na conexão do mongoDB: ${err}`)
+  })
+
   setInterval(() => {
     client.user.setActivity('?comandos | arte by: @kinsallum'),
     functions.bankInterest()
-    console.log(`O bot está em ${client.guilds.cache.size} servidores`)
-    console.log(`Tem ${client.users.cache.size} usuários usando o bot`)
   }, 1000 * 600)
 })
 client.login(config.TOKEN)
