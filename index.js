@@ -33,6 +33,7 @@ client.on("ready", () => {
 
   mongoose.connection.on('error', (err) => {
     console.log(`Erro na conexão do mongoDB: ${err}`)
+    console.log(wok.mongoConnection())
   })
 
   setInterval(() => {
