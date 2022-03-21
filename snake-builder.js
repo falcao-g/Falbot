@@ -13,6 +13,7 @@ class Game {
         this.SB = ':purple_square:' // snake body
         this.SF = ':red_square:' // snake food
         this.SC = ':boom:' // snake collision
+        this.time = 30
 
         this.gameEnded = false
 
@@ -41,6 +42,8 @@ class Game {
         }
 
         this.snake = [[this.SHx, this.SHy]]
+
+        this.spawnFood()
     }
 
     _inSnake(r, c, snakeArray) {
@@ -76,6 +79,7 @@ class Game {
     }
 
     snakeMovement(snake, direction) {
+        this.time = 30
         direction = direction || this.Sd;
         let head  = snake[0];
         switch (direction.toUpperCase()) {
