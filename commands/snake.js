@@ -13,15 +13,12 @@ module.exports =  {
     callback: async ({instance, client, guild, message, interaction, user}) => {
         try {
             const author = user
-
             const game = new builder.Game()
-            game.spawnFood()
-            time = 30
 
             const embed = new Discord.MessageEmbed()
             .setTitle(":snake:")
             .addField('\u200b', game.world2string(game.world, game.snake))
-            .addField(`\u200b`, `:alarm_clock: ${time}s\n\n${instance.messageHandler.get(guild, "SCORE")}: ${game.snake.length}`)
+            .addField(`\u200b`, `:alarm_clock: ${game.time}s\n\n${instance.messageHandler.get(guild, "SCORE")}: ${game.snake.length}`)
             .setFooter({text: 'by Falcão ❤️'})
             .setColor('PURPLE')
             if (message) {
@@ -49,21 +46,18 @@ module.exports =  {
             })
 
             var myTimer = setInterval(async function () {
-                if (time <= 0) {
+                if (game.time <= 0) {
                     game.snakeMovement(game.snake, game.Sd)
-                    time = 30
+                    game.time = 30
                 }
-                const embed2 = new Discord.MessageEmbed()
-                .setTitle(':snake:')
-                .addField('\u200b', game.world2string(game.world, game.snake))
-                .addField(`\u200b`, `:alarm_clock: ${time}s\n\n${instance.messageHandler.get(guild, "SCORE")}: ${game.snake.length}`)
-                .setFooter({text: 'by Falcão ❤️'})
-                .setColor('PURPLE')
+
+                embed.fields[0] = {'name': '\u200b', 'value': game.world2string(game.world, game.snake)}
+                embed.fields[1] = {'name': `\u200b`, 'value': `:alarm_clock: ${game.time}s\n\n${instance.messageHandler.get(guild, "SCORE")}: ${game.snake.length}`}
 
                 await answer.edit({
-                    embeds: [embed2]
+                    embeds: [embed]
                 })
-                time -= 5
+                game.time -= 5
             }, 1000 * 5)
 
             collector.on('collect', async reaction => {
@@ -76,25 +70,18 @@ module.exports =  {
                 } else if (reaction._emoji.name === '⬇') {
                     game.snakeMovement(game.snake, 'S')
                 }
-            
 
-                const embed2 = new Discord.MessageEmbed()
-                .setTitle(':snake:')
-                .addField('\u200b', game.world2string(game.world, game.snake))
-                .addField(`\u200b`, `:alarm_clock: ${time}s\n\n${instance.messageHandler.get(guild, "SCORE")}: ${game.snake.length}`)
-                .setFooter({text: 'by Falcão ❤️'})
-                .setColor('PURPLE')
+                embed.fields[0] = {'name': '\u200b', 'value': game.world2string(game.world, game.snake)}
+                embed.fields[1] = {'name': `\u200b`, 'value': `:alarm_clock: ${game.time}s\n\n${instance.messageHandler.get(guild, "SCORE")}: ${game.snake.length}`}
 
                 await answer.edit({
-                    embeds: [embed2]
+                    embeds: [embed]
                 })
 
                 if (game.gameEnded) {
                     clearInterval(myTimer)
                     collector.stop()
                 }
-
-                time = 30
             })
         } catch (error) {
             console.error(`snake: ${error}`)
