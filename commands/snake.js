@@ -1,5 +1,4 @@
 const Discord = require('discord.js')
-const functions = require('../functions.js')
 const config = require("../config/config.json")
 const builder = require("../snake-builder.js")
 
@@ -10,7 +9,7 @@ module.exports =  {
     cooldown: '1s',
     guildOnly: true,
     testOnly: config.testOnly,
-    callback: async ({instance, client, guild, message, interaction, user}) => {
+    callback: async ({instance, guild, message, interaction, user}) => {
         try {
             const author = user
             const game = new builder.Game()
