@@ -92,76 +92,142 @@ module.exports =  {
                                 })
                             }
                         }else {
-                            const embed = new Discord.MessageEmbed()
-                            .setTitle(instance.messageHandler.get(guild, "VELHA"))
-                            .setDescription(instance.messageHandler.get(guild, "TURNO") + `**${author.username} [${board.currentMark()}]**`)
-                            .addField('\u200B', `:one: | :two: | :three: \n────────\n:four: | :five: | :six: \n────────\n:seven: | :eight: | :nine:`)
-                            .setFooter({text: 'by Falcão ❤️'})
-                            .setColor('#0099ff')
+                            const row = new Discord.MessageActionRow()
+                            .addComponents(
+                                new Discord.MessageButton()
+                                .setCustomId('1')
+                                .setLabel('\u200b')
+                                .setStyle('SECONDARY')
+                            )
+                            .addComponents(
+                                new Discord.MessageButton()
+                                .setCustomId('2')
+                                .setLabel('\u200b')
+                                .setStyle('SECONDARY')
+                            )
+                            .addComponents(
+                                new Discord.MessageButton()
+                                .setCustomId('3')
+                                .setLabel('\u200b')
+                                .setStyle('SECONDARY')
+                            )
+                            const row2 = new Discord.MessageActionRow()
+                            .addComponents(
+                                new Discord.MessageButton()
+                                .setCustomId('4')
+                                .setLabel('\u200b')
+                                .setStyle('SECONDARY')
+                            )
+                            .addComponents(
+                                new Discord.MessageButton()
+                                .setCustomId('5')
+                                .setLabel('\u200b')
+                                .setStyle('SECONDARY')
+                            )
+                            .addComponents(
+                                new Discord.MessageButton()
+                                .setCustomId('6')
+                                .setLabel('\u200b')
+                                .setStyle('SECONDARY')
+                            )
+                            const row3 = new Discord.MessageActionRow()
+                            .addComponents(
+                                new Discord.MessageButton()
+                                .setCustomId('7')
+                                .setLabel('\u200b')
+                                .setStyle('SECONDARY')
+                            )
+                            .addComponents(
+                                new Discord.MessageButton()
+                                .setCustomId('8')
+                                .setLabel('\u200b')
+                                .setStyle('SECONDARY')
+                            )
+                            .addComponents(
+                                new Discord.MessageButton()
+                                .setCustomId('9')
+                                .setLabel('\u200b')
+                                .setStyle('SECONDARY')
+                            )
+
                             if (message) {
                                 var answer2 = await message.reply({
-                                    embeds: [embed]
+                                    content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n${instance.messageHandler.get(guild, "VELHA_MOVIMENTO", {USER: author.username})}`,
+                                    components: [row, row2, row3]
                                 }) 
                             } else {
                                 var answer2 = await interaction.reply({
-                                    embeds: [embed],
+                                    content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n${instance.messageHandler.get(guild, "VELHA_MOVIMENTO", {USER: member.user.username})}`,
+                                    components: [row, row2, row3],
                                     fetchReply: true
                                 })
                             }
-                            await answer2.react('1️⃣')
-                            await answer2.react('2️⃣')
-                            await answer2.react('3️⃣')
-                            await answer2.react('4️⃣')
-                            await answer2.react('5️⃣')
-                            await answer2.react('6️⃣')
-                            await answer2.react('7️⃣')
-                            await answer2.react('8️⃣')
-                            await answer2.react('9️⃣')
 
-                            const filter2 = (reaction, user) => {
-                                if (user.id === author.id && user.id !== client.user.id && board.currentMark() === 'X') {
+                            const filter2 = (btInt) => {
+                                if (btInt.user.id === author.id && btInt.user.id !== client.user.id && board.currentMark() === 'X') {
                                     return true
-                                } else if (user.id === member.user.id && user.id !== client.user.id && board.currentMark() === 'O') {
+                                } else if (btInt.user.id === member.user.id && btInt.user.id !== client.user.id && board.currentMark() === 'O') {
                                     return true
                                 }
                             }
             
-                            const collector2 = answer2.createReactionCollector({
+                            const collector2 = answer2.createMessageComponentCollector({
                                 filter: filter2,
                                 max: 9,
                                 time: 1000 * 60 * 60
                             })
 
-                            collector2.on('collect', async reaction => {
-                                if (reaction._emoji.name === '1️⃣') {
+                            collector2.on('collect', async i => {
+                                if (i.customId === '1') {  
+                                    row.components[0].setLabel(board.currentMark())
+                                    i.user.id === author.id ? row.components[0].setStyle("PRIMARY") : row.components[0].setStyle("DANGER")
+                                    row.components[0].setDisabled(true)
                                     board = board.makeMove(1, board.currentMark())
-                                } else if (reaction._emoji.name === '2️⃣') {
+                                } else if (i.customId === '2') {  
+                                    row.components[1].setLabel(board.currentMark())
+                                    i.user.id === author.id ? row.components[1].setStyle("PRIMARY") : row.components[1].setStyle("DANGER")
+                                    row.components[1].setDisabled(true)
                                     board = board.makeMove(2, board.currentMark())
-                                } else if (reaction._emoji.name === '3️⃣') {
+                                } else if (i.customId === '3') {  
+                                    row.components[2].setLabel(board.currentMark())
+                                    i.user.id === author.id ? row.components[2].setStyle("PRIMARY") : row.components[2].setStyle("DANGER")
+                                    row.components[2].setDisabled(true)
                                     board = board.makeMove(3, board.currentMark())
-                                } else if (reaction._emoji.name === '4️⃣') {
+                                } else if (i.customId === '4') { 
+                                    row2.components[0].setLabel(board.currentMark())
+                                    i.user.id === author.id ? row2.components[0].setStyle("PRIMARY") : row2.components[0].setStyle("DANGER")
+                                    row2.components[0].setDisabled(true)
                                     board = board.makeMove(4, board.currentMark())
-                                } else if (reaction._emoji.name === '5️⃣') {
+                                } else if (i.customId === '5') { 
+                                    row2.components[1].setLabel(board.currentMark())
+                                    i.user.id === author.id ? row2.components[1].setStyle("PRIMARY") : row2.components[1].setStyle("DANGER")
+                                    row2.components[1].setDisabled(true)
                                     board = board.makeMove(5, board.currentMark())
-                                } else if (reaction._emoji.name === '6️⃣') {
+                                } else if (i.customId === '6') { 
+                                    row2.components[2].setLabel(board.currentMark())
+                                    i.user.id === author.id ? row2.components[2].setStyle("PRIMARY") : row2.components[2].setStyle("DANGER")
+                                    row2.components[2].setDisabled(true)
                                     board = board.makeMove(6, board.currentMark())
-                                } else if (reaction._emoji.name === '7️⃣') {
+                                } else if (i.customId === '7') { 
+                                    row3.components[0].setLabel(board.currentMark())
+                                    i.user.id === author.id ? row3.components[0].setStyle("PRIMARY") : row3.components[0].setStyle("DANGER")
+                                    row3.components[0].setDisabled(true)
                                     board = board.makeMove(7, board.currentMark())
-                                } else if (reaction._emoji.name === '8️⃣') {
+                                } else if (i.customId === '8') { 
+                                    row3.components[1].setLabel(board.currentMark())
+                                    i.user.id === author.id ? row3.components[1].setStyle("PRIMARY") : row3.components[1].setStyle("DANGER")
+                                    row3.components[1].setDisabled(true)
                                     board = board.makeMove(8, board.currentMark())
-                                } else if (reaction._emoji.name === '9️⃣') {
+                                } else if (i.customId === '9') { 
+                                    row3.components[2].setLabel(board.currentMark())
+                                    i.user.id === author.id ? row3.components[2].setStyle("PRIMARY") : row3.components[2].setStyle("DANGER")
+                                    row3.components[2].setDisabled(true)
                                     board = board.makeMove(9, board.currentMark())
                                 }
 
-                                const embed2 = new Discord.MessageEmbed()
-                                .setTitle(instance.messageHandler.get(guild, "VELHA"))
-                                .setDescription(instance.messageHandler.get(guild, "TURNO") + `**${board.currentMark() === 'X' ? author.username : member.user.username} [${board.currentMark()}]**`)
-                                .addField('\u200B', `${board.isPositionTaken(1) ? (board.markedBoardPositionValue(1) === 'X' ? ':x:' : ':o:') : ':one:'} | ${board.isPositionTaken(2) ? (board.markedBoardPositionValue(2) === 'X' ? ':x:' : ':o:') : ':two:'} | ${board.isPositionTaken(3) ? (board.markedBoardPositionValue(3) === 'X' ? ':x:' : ':o:') : ':three:'} \n────────\n${board.isPositionTaken(4) ? (board.markedBoardPositionValue(4) === 'X' ? ':x:' : ':o:') : ':four:'} | ${board.isPositionTaken(5) ? (board.markedBoardPositionValue(5) === 'X' ? ':x:' : ':o:') : ':five:'} | ${board.isPositionTaken(6) ? (board.markedBoardPositionValue(6) === 'X' ? ':x:' : ':o:') : ':six:'} \n────────\n${board.isPositionTaken(7) ? (board.markedBoardPositionValue(7) === 'X' ? ':x:' : ':o:') : ':seven:'} | ${board.isPositionTaken(8) ? (board.markedBoardPositionValue(8) === 'X' ? ':x:' : ':o:') : ':eight:'} | ${board.isPositionTaken(9) ? (board.markedBoardPositionValue(9) === 'X' ? ':x:' : ':o:') : ':nine:'}`)
-                                .setFooter({text: 'by Falcão ❤️'})
-                                .setColor('#0099ff')
-
-                                await answer2.edit({
-                                    embeds: [embed2]
+                                await i.update({
+                                    content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n${instance.messageHandler.get(guild, "VELHA_MOVIMENTO", {USER: board.currentMark() === 'X' ? author.username : member.user.username})}`,
+                                    components: [row, row2, row3]
                                 })
 
                                 if (board.isGameOver()) {
@@ -169,14 +235,8 @@ module.exports =  {
                                 }
                             })
 
-                            collector2.on('end', async collected => {
+                            collector2.on('end', async () => {
                                 if (board.hasWinner()) {
-                                    const embed2 = new Discord.MessageEmbed()
-                                    .setTitle(instance.messageHandler.get(guild, "VELHA"))
-                                    .setDescription(instance.messageHandler.get(guild, "GANHOU", {WINNER: board.winningPlayer() === 'X' ? author.username : member.user.username, FALCOINS: bet}))
-                                    .addField('\u200B', `${board.isPositionTaken(1) ? (board.markedBoardPositionValue(1) === 'X' ? ':x:' : ':o:') : ':one:'} | ${board.isPositionTaken(2) ? (board.markedBoardPositionValue(2) === 'X' ? ':x:' : ':o:') : ':two:'} | ${board.isPositionTaken(3) ? (board.markedBoardPositionValue(3) === 'X' ? ':x:' : ':o:') : ':three:'} \n────────\n${board.isPositionTaken(4) ? (board.markedBoardPositionValue(4) === 'X' ? ':x:' : ':o:') : ':four:'} | ${board.isPositionTaken(5) ? (board.markedBoardPositionValue(5) === 'X' ? ':x:' : ':o:') : ':five:'} | ${board.isPositionTaken(6) ? (board.markedBoardPositionValue(6) === 'X' ? ':x:' : ':o:') : ':six:'} \n────────\n${board.isPositionTaken(7) ? (board.markedBoardPositionValue(7) === 'X' ? ':x:' : ':o:') : ':seven:'} | ${board.isPositionTaken(8) ? (board.markedBoardPositionValue(8) === 'X' ? ':x:' : ':o:') : ':eight:'} | ${board.isPositionTaken(9) ? (board.markedBoardPositionValue(9) === 'X' ? ':x:' : ':o:') : ':nine:'}`)
-                                    .setFooter({text: 'by Falcão ❤️'})
-                                    .setColor('#0099ff')
                                     if(board.winningPlayer() === 'X') {
                                         await functions.changeDB(author.id, 'falcoins', bet)
                                         await functions.changeDB(author.id, 'vitorias', 1)
@@ -187,17 +247,11 @@ module.exports =  {
                                         await functions.changeDB(author.id, 'falcoins', -bet)
                                     }
                                     await answer2.edit({
-                                        embeds: [embed2]
+                                        content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n**${instance.messageHandler.get(guild, "GANHOU", {WINNER: board.winningPlayer() === 'X' ? author.username : member.user.username, FALCOINS: bet})}**`,
                                     })  
                                 } else {
-                                    const embed2 = new Discord.MessageEmbed()
-                                    .setTitle(instance.messageHandler.get(guild, "VELHA"))
-                                    .setDescription(instance.messageHandler.get(guild, "VELHA_EMPATOU"))
-                                    .addField('\u200B', `${board.isPositionTaken(1) ? (board.markedBoardPositionValue(1) === 'X' ? ':x:' : ':o:') : ':one:'} | ${board.isPositionTaken(2) ? (board.markedBoardPositionValue(2) === 'X' ? ':x:' : ':o:') : ':two:'} | ${board.isPositionTaken(3) ? (board.markedBoardPositionValue(3) === 'X' ? ':x:' : ':o:') : ':three:'} \n────────\n${board.isPositionTaken(4) ? (board.markedBoardPositionValue(4) === 'X' ? ':x:' : ':o:') : ':four:'} | ${board.isPositionTaken(5) ? (board.markedBoardPositionValue(5) === 'X' ? ':x:' : ':o:') : ':five:'} | ${board.isPositionTaken(6) ? (board.markedBoardPositionValue(6) === 'X' ? ':x:' : ':o:') : ':six:'} \n────────\n${board.isPositionTaken(7) ? (board.markedBoardPositionValue(7) === 'X' ? ':x:' : ':o:') : ':seven:'} | ${board.isPositionTaken(8) ? (board.markedBoardPositionValue(8) === 'X' ? ':x:' : ':o:') : ':eight:'} | ${board.isPositionTaken(9) ? (board.markedBoardPositionValue(9) === 'X' ? ':x:' : ':o:') : ':nine:'}`)
-                                    .setFooter({text: 'by Falcão ❤️'})
-                                    .setColor('#0099ff')
                                     await answer2.edit({
-                                        embeds: [embed2]
+                                        content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n${instance.messageHandler.get(guild, "VELHA_EMPATOU")}`
                                     })  
                                 }
                             })
