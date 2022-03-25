@@ -508,10 +508,6 @@
       "portugues": "Jogo da velha cancelado. {USER} recusou o jogo! :confounded:",
       "english": "Tic-tac-toe cancelled. {USER} declined the game! :confounded:"
     },
-    "TURNO": {
-      "portugues": "Turno de ",
-      "english": "Turn of "
-    },
     "VELHA_EMPATOU": {
       "portugues": "**O jogo empatou**",
       "english": "**The game ended in a draw**"
@@ -523,10 +519,6 @@
     "NAO_JOGAR_SOZINHO": {
       "portugues": "Você não pode jogar com você mesmo, espertinho :rage:",
       "english": "You can't play with yourself, smartass :rage:"
-    },
-    "VELHA": {
-      "portugues": "Jogo da velha",
-      "english": "Tic-tac-toe"
     },
     "ROLETA_RUSSA_COMECOU": {
       "portugues": " começou uma roleta russa",
@@ -683,5 +675,9 @@
     "SCORE": {
       "portugues": "Pontuação",
       "english": "Score"
+    },
+    "VELHA_MOVIMENTO": {
+      "portugues": "{USER}, escolha seu movimento:",
+      "english": "{USER}, choose your move:"
     }
   }
