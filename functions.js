@@ -162,8 +162,11 @@ async function readFile(id, field = "", rich = false) {
 }
 
 async function getRoleColor(guild, member_id) {
-  cor = guild.members.cache.get(member_id).displayColor
-  if (cor == undefined) { return "RANDOM" } else { return cor }
+  try {
+    cor = guild.members.cache.get(member_id).displayColor
+  } catch (err) {
+    return "RANDOM"
+  }
 }
 
 async function getMember(guild, member_id) {
