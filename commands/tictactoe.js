@@ -93,80 +93,64 @@ module.exports =  {
                             }
                         }else {
                             const row = new Discord.MessageActionRow()
-                            .addComponents(
-                                new Discord.MessageButton()
-                                .setCustomId('1')
-                                .setLabel('\u200b')
-                                .setStyle('SECONDARY')
-                            )
-                            .addComponents(
-                                new Discord.MessageButton()
-                                .setCustomId('2')
-                                .setLabel('\u200b')
-                                .setStyle('SECONDARY')
-                            )
-                            .addComponents(
-                                new Discord.MessageButton()
-                                .setCustomId('3')
-                                .setLabel('\u200b')
-                                .setStyle('SECONDARY')
-                            )
                             const row2 = new Discord.MessageActionRow()
-                            .addComponents(
-                                new Discord.MessageButton()
-                                .setCustomId('4')
-                                .setLabel('\u200b')
-                                .setStyle('SECONDARY')
-                            )
-                            .addComponents(
-                                new Discord.MessageButton()
-                                .setCustomId('5')
-                                .setLabel('\u200b')
-                                .setStyle('SECONDARY')
-                            )
-                            .addComponents(
-                                new Discord.MessageButton()
-                                .setCustomId('6')
-                                .setLabel('\u200b')
-                                .setStyle('SECONDARY')
-                            )
                             const row3 = new Discord.MessageActionRow()
-                            .addComponents(
-                                new Discord.MessageButton()
-                                .setCustomId('7')
-                                .setLabel('\u200b')
-                                .setStyle('SECONDARY')
-                            )
-                            .addComponents(
-                                new Discord.MessageButton()
-                                .setCustomId('8')
-                                .setLabel('\u200b')
-                                .setStyle('SECONDARY')
-                            )
-                            .addComponents(
-                                new Discord.MessageButton()
-                                .setCustomId('9')
-                                .setLabel('\u200b')
-                                .setStyle('SECONDARY')
-                            )
+
+                            customIds = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+                            for (var i = 0; i < 9; i++) {
+                                if (i < 3) {
+                                    row.addComponents(
+                                        new Discord.MessageButton()
+                                        .setCustomId(customIds[i])
+                                        .setLabel('\u200b')
+                                        .setStyle('SECONDARY')
+                                    )
+                                } else if (i < 6) {
+                                    row2.addComponents(
+                                        new Discord.MessageButton()
+                                        .setCustomId(customIds[i])
+                                        .setLabel('\u200b')
+                                        .setStyle('SECONDARY')
+                                    )
+                                } else {
+                                    row3.addComponents(
+                                        new Discord.MessageButton()
+                                        .setCustomId(customIds[i])
+                                        .setLabel('\u200b')
+                                        .setStyle('SECONDARY')
+                                    )
+                                }
+                            }
+
+                            //randomizing who starts
+                            let first_player;
+                            let second_player;
+                            let random = functions.randint(0, 1)
+                            if (random == 0) {
+                                first_player = author
+                                second_player = member.user
+                            } else {
+                                first_player = member.user
+                                second_player = author
+                            }
 
                             if (message) {
                                 var answer2 = await message.reply({
-                                    content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n${instance.messageHandler.get(guild, "VELHA_MOVIMENTO", {USER: author.username})}`,
+                                    content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n${instance.messageHandler.get(guild, "VELHA_MOVIMENTO", {USER: first_player.username})}`,
                                     components: [row, row2, row3]
                                 }) 
                             } else {
                                 var answer2 = await interaction.reply({
-                                    content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n${instance.messageHandler.get(guild, "VELHA_MOVIMENTO", {USER: member.user.username})}`,
+                                    content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n${instance.messageHandler.get(guild, "VELHA_MOVIMENTO", {USER: first_player.username})}`,
                                     components: [row, row2, row3],
                                     fetchReply: true
                                 })
                             }
-
+                            
                             const filter2 = (btInt) => {
-                                if (btInt.user.id === author.id && btInt.user.id !== client.user.id && board.currentMark() === 'X') {
+                                if (btInt.user.id === first_player.id && btInt.user.id !== client.user.id && board.currentMark() === 'X') {
                                     return true
-                                } else if (btInt.user.id === member.user.id && btInt.user.id !== client.user.id && board.currentMark() === 'O') {
+                                } else if (btInt.user.id === second_player.id && btInt.user.id !== client.user.id && board.currentMark() === 'O') {
                                     return true
                                 }
                             }
@@ -226,7 +210,7 @@ module.exports =  {
                                 }
 
                                 await i.update({
-                                    content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n${instance.messageHandler.get(guild, "VELHA_MOVIMENTO", {USER: board.currentMark() === 'X' ? author.username : member.user.username})}`,
+                                    content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n${instance.messageHandler.get(guild, "VELHA_MOVIMENTO", {USER: board.currentMark() === 'X' ? first_player.username : second_player.username})}`,
                                     components: [row, row2, row3]
                                 })
 
@@ -238,16 +222,16 @@ module.exports =  {
                             collector2.on('end', async () => {
                                 if (board.hasWinner()) {
                                     if(board.winningPlayer() === 'X') {
-                                        await functions.changeDB(author.id, 'falcoins', bet)
-                                        await functions.changeDB(author.id, 'vitorias', 1)
-                                        await functions.changeDB(member.id, 'falcoins', -bet)
+                                        await functions.changeDB(first_player.id, 'falcoins', bet)
+                                        await functions.changeDB(first_player.id, 'vitorias', 1)
+                                        await functions.changeDB(second_player.id, 'falcoins', -bet)
                                     } else {
-                                        await functions.changeDB(member.id, 'falcoins', bet)
-                                        await functions.changeDB(member.id, 'vitorias', 1)
-                                        await functions.changeDB(author.id, 'falcoins', -bet)
+                                        await functions.changeDB(second_player.id, 'falcoins', bet)
+                                        await functions.changeDB(second_player.id, 'vitorias', 1)
+                                        await functions.changeDB(first_player.id, 'falcoins', -bet)
                                     }
                                     await answer2.edit({
-                                        content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n**${instance.messageHandler.get(guild, "GANHOU", {WINNER: board.winningPlayer() === 'X' ? author.username : member.user.username, FALCOINS: bet})}**`,
+                                        content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n**${instance.messageHandler.get(guild, "GANHOU", {WINNER: board.winningPlayer() === 'X' ? first_player.username : second_player.username, FALCOINS: bet})}**`,
                                     })  
                                 } else {
                                     await answer2.edit({
