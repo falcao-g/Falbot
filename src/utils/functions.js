@@ -735,7 +735,7 @@ async function bankInterest() {
 
     json2 = JSON.stringify(config, null, 1);
 
-    fs.writeFileSync("./config/config.json", json2, "utf8", function (err) {
+    fs.writeFileSync("../config.json", json2, "utf8", function (err) {
       if (err) throw err;
     });
   }
