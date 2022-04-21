@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const functions = require('../utils/functions.js')
+const {specialArg, readFile, randint, changeDB, getRoleColor, format} = require('../utils/functions.js')
 const config = require("../config.json")
 
 module.exports =  {
@@ -22,28 +22,28 @@ module.exports =  {
     callback: async ({instance, guild, user, args}) => {
         try {
             try {
-                var quantity = await functions.specialArg(args[0], user.id, "caixas")
+                var quantity = await specialArg(args[0], user.id, "caixas")
             } catch {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             }
-        if (await functions.readFile(user.id, 'caixas') >= quantity && await functions.readFile(user.id, 'chaves') >= quantity) {
+        if (await readFile(user.id, 'caixas') >= quantity && await readFile(user.id, 'chaves') >= quantity) {
             caixas = 0
             chaves = 0
             falcoins = 0
             for (let i = 0; i < quantity; i++) {
-                var luck = functions.randint(1, 60)
+                var luck = randint(1, 60)
                 if (luck <= 40) {
                     chaves += Math.round(Math.random())
                     caixas += Math.round(Math.random())
-                    falcoins += functions.randint(500, 15000)
+                    falcoins += randint(500, 15000)
                 } 
             }
-            functions.changeDB(user.id, 'chaves', chaves-quantity)
-            functions.changeDB(user.id, 'caixas', caixas-quantity)
-            functions.changeDB(user.id, 'falcoins', falcoins)
+            changeDB(user.id, 'chaves', chaves-quantity)
+            changeDB(user.id, 'caixas', caixas-quantity)
+            changeDB(user.id, 'falcoins', falcoins)
             const embed = new Discord.MessageEmbed()
-            .setColor(await functions.getRoleColor(guild, user.id))
-            .addField(instance.messageHandler.get(guild, "CAIXA_TITULO", {QUANTITY: args[0]}), `:key: ${chaves}\n:coin: ${await functions.format(falcoins)} \n:gift: ${caixas}`)
+            .setColor(await getRoleColor(guild, user.id))
+            .addField(instance.messageHandler.get(guild, "CAIXA_TITULO", {QUANTITY: args[0]}), `:key: ${chaves}\n:coin: ${await format(falcoins)} \n:gift: ${caixas}`)
             .setFooter({text: 'by Falcão ❤️'})
             return embed
         } else {

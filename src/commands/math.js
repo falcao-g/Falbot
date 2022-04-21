@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const math = require('mathjs')
-const functions = require('../utils/functions.js')
+const {getRoleColor} = require('../utils/functions.js')
 const config = require("../config.json")
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
             answer = await math.evaluate(text).toString()
 
             const embed = new Discord.MessageEmbed()
-             .setColor(await functions.getRoleColor(guild, user.id))
+             .setColor(await getRoleColor(guild, user.id))
              embed.addField(instance.messageHandler.get(guild, "RESULTADO"), answer, false)
              .setFooter({text: 'by Falcão ❤️'})
     

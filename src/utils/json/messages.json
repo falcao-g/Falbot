@@ -621,8 +621,8 @@
       "english": "For the cost of 50.000 falcoins you can increase your lootbox gain by 1000 falcoins"
     },
     "LOJA_USO_2": {
-      "portugues": "Use `?loja [numero] [quantidade]` para comprar um item",
-      "english": "Use `?loja [number] [quantity]` to buy an item"
+      "portugues": "Use `?store [numero] [quantidade]` para comprar um item",
+      "english": "Use `?store [number] [quantity]` to buy an item"
     },
     "LOJA_ITEM_INVALIDO": {
       "portugues": "item inválido! :rage:",

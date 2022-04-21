@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const functions = require('../utils/functions.js')
+const {specialArg, readFile, changeDB, randint} = require('../utils/functions.js')
 const config = require("../config.json")
 
 module.exports =  {
@@ -25,11 +25,11 @@ module.exports =  {
         try {
             const author = user
             try {
-                var bet = await functions.specialArg(args[0], user.id, "falcoins")
+                var bet = await specialArg(args[0], user.id, "falcoins")
             } catch {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             } 
-            if (await functions.readFile(user.id, 'falcoins') >= bet) {
+            if (await readFile(user.id, 'falcoins') >= bet) {
                 var pot = bet
                 const embed = new Discord.MessageEmbed()
                 .setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
@@ -56,13 +56,13 @@ module.exports =  {
                     })
                 }
                 answer.react('✅')
-                await functions.changeDB(author.id, 'falcoins', -bet)
+                await changeDB(author.id, 'falcoins', -bet)
 
                 var users = [author]
                 var path = ['- - - - -']
 
                 const filter = async (reaction, user) => {
-                    return await functions.readFile(user.id, 'falcoins') >= bet && reaction.emoji.name === '✅'  && user.id !== client.user.id && !users.includes(user)
+                    return await readFile(user.id, 'falcoins') >= bet && reaction.emoji.name === '✅'  && user.id !== client.user.id && !users.includes(user)
                 }
 
                 const collector = answer.createReactionCollector({
@@ -71,7 +71,7 @@ module.exports =  {
                 })
 
                 collector.on('collect', async (reaction, user) => {
-                    await functions.changeDB(user.id, 'falcoins', -bet)
+                    await changeDB(user.id, 'falcoins', -bet)
                     users.push(user)
                     path.push('- - - - -')
                     pot += bet
@@ -97,7 +97,7 @@ module.exports =  {
                 collector.on('end', async () => {
                     loop1:
                     while (true) {
-                        var luck = functions.randint(0, users.length - 1)
+                        var luck = randint(0, users.length - 1)
                         path[luck] = path[luck].slice(0, -2)
 
                         var frase = ''
@@ -135,13 +135,13 @@ module.exports =  {
                         }
                 }
                 var winner = users[winner_path]
-                await functions.changeDB(winner.id, 'falcoins', pot)
-                await functions.changeDB(winner.id, 'vitorias')
+                await changeDB(winner.id, 'falcoins', pot)
+                await changeDB(winner.id, 'vitorias')
                 var embed3 = new Discord.MessageEmbed()
                 .setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
                 .setDescription(instance.messageHandler.get(guild, "GANHOU", {WINNER: winner, FALCOINS: pot}))
                 .setColor(3066993)
-                .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(winner.id, 'falcoins', true)} falcoins`, false)
+                .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await readFile(winner.id, 'falcoins', true)} falcoins`, false)
                 .setFooter({text: 'by Falcão ❤️'})
                 if (message) {
                     await message.reply({

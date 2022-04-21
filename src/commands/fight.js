@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const functions = require('../utils/functions.js')
+const {getMember, specialArg, readFile, format, randint, changeDB} = require('../utils/functions.js')
 const config = require("../config.json")
 
 module.exports =  {
@@ -36,21 +36,21 @@ module.exports =  {
                     args[0] = args[0].slice(2,-1)
                 }
             }
-            var member = await functions.getMember(guild, args[0])
+            var member = await getMember(guild, args[0])
             if (member.user != author) {
                 try {
-                    var bet = await functions.specialArg(args[1], user.id, "falcoins")
+                    var bet = await specialArg(args[1], user.id, "falcoins")
                 } catch {
                     return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 } 
-                if (await functions.readFile(user.id, 'falcoins') >= bet && await functions.readFile(member.user.id, 'falcoins') >= bet && bet > 0) {
+                if (await readFile(user.id, 'falcoins') >= bet && await readFile(member.user.id, 'falcoins') >= bet && bet > 0) {
                     if (message) {
                         var answer = await message.reply({
-                            content: instance.messageHandler.get(guild, "LUTA_CONVITE", {USER: author.username, USER2: member.user.username, FALCOINS: await functions.format(bet)}),
+                            content: instance.messageHandler.get(guild, "LUTA_CONVITE", {USER: author.username, USER2: member.user.username, FALCOINS: await format(bet)}),
                         })
                     } else {
                         var answer = await interaction.reply({
-                            content: instance.messageHandler.get(guild, "LUTA_CONVITE", {USER: author.username, USER2: member.user.username, FALCOINS: await functions.format(bet)}),
+                            content: instance.messageHandler.get(guild, "LUTA_CONVITE", {USER: author.username, USER2: member.user.username, FALCOINS: await format(bet)}),
                             fetchReply: true
                         })
                     }
@@ -126,8 +126,8 @@ module.exports =  {
                                         order[i]['escudo'] = false
                                     }
     
-                                    const attack = attacks[functions.randint(0, attacks.length-1)]
-                                    const luck = functions.randint(1,50)
+                                    const attack = attacks[randint(0, attacks.length-1)]
+                                    const luck = randint(1,50)
     
                                     if (i === 0) {
                                         var embed = new Discord.MessageEmbed()
@@ -190,17 +190,17 @@ module.exports =  {
                             .setColor(3066993)
                             .setFooter({text: 'by Falcão ❤️'})
                             if (order[0]['hp'] <= 0) {
-                                await functions.changeDB(order[0]['id'], 'falcoins', -bet)
-                                await functions.changeDB(order[1]['id'], 'falcoins', bet)
-                                await functions.changeDB(order[1]['id'], 'vitorias')
+                                await changeDB(order[0]['id'], 'falcoins', -bet)
+                                await changeDB(order[1]['id'], 'falcoins', bet)
+                                await changeDB(order[1]['id'], 'vitorias')
                                 embed2.addField(`${order[1]['name']}` + instance.messageHandler.get(guild, "GANHO"), instance.messageHandler.get(guild, "LUTA_DERROTOU", {USER: order[0]['mention']}), false)
-                                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(order[1]['id'], 'falcoins', true)} falcoins`)
+                                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await readFile(order[1]['id'], 'falcoins', true)} falcoins`)
                             }  else if (order[1]['hp'] <= 0) {
-                                await functions.changeDB(order[1]['id'], 'falcoins', -bet)
-                                await functions.changeDB(order[0]['id'], 'falcoins', bet)
-                                await functions.changeDB(order[0]['id'], 'vitorias')
+                                await changeDB(order[1]['id'], 'falcoins', -bet)
+                                await changeDB(order[0]['id'], 'falcoins', bet)
+                                await changeDB(order[0]['id'], 'vitorias')
                                 embed2.addField(`${order[0]['name']}` + instance.messageHandler.get(guild, "GANHO"), instance.messageHandler.get(guild, "LUTA_DERROTOU", {USER: order[1]['mention']}), false)
-                                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(order[0]['id'], 'falcoins', true)} falcoins`)
+                                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await readFile(order[0]['id'], 'falcoins', true)} falcoins`)
                             }
                             if (message) {
                                 await message.channel.send({

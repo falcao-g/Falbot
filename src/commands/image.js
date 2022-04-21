@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const { GOOGLE_IMG_SCRAP } = require('google-img-scrap');
-const functions = require('../utils/functions.js')
+const {randint, getRoleColor} = require('../utils/functions.js')
 const config = require("../config.json")
 
 module.exports =  {
@@ -34,9 +34,9 @@ module.exports =  {
             });
 
             const embed = new Discord.MessageEmbed()
-            .setColor(await functions.getRoleColor(guild, user.id))
+            .setColor(await getRoleColor(guild, user.id))
             .setTitle(`${text}`)
-            .setImage(photos.result[functions.randint(0,photos.result.length - 1)].url)
+            .setImage(photos.result[randint(0,photos.result.length - 1)].url)
             .setFooter({text: 'by Falcão ❤️'})
             if (message) {return embed} else {interaction.editReply({embeds: [embed]})}
         } catch (error) {

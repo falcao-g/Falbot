@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const functions = require('../utils/functions.js')
+const {getRoleColor} = require('../utils/functions.js')
 const config = require("../config.json")
 
 module.exports = {
@@ -22,7 +22,7 @@ module.exports = {
     callback: async ({instance, guild, message, interaction, user, text}) => {
         try {
             const embed = new Discord.MessageEmbed()
-            .setColor(await functions.getRoleColor(guild, user.id))
+            .setColor(await getRoleColor(guild, user.id))
             .setDescription(text)
             .setAuthor({name: instance.messageHandler.get(guild, "ENQUETE", {USER: user.username}), iconURL: user.avatarURL()})
             .setFooter({text: 'by Falcão ❤️'})

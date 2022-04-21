@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const Board = require('tictactoe-board')
-const functions = require('../utils/functions.js')
+const {getMember, specialArg, readFile, format, randint, changeDB} = require('../utils/functions.js')
 const config = require("../config.json")
 
 module.exports =  {
@@ -38,21 +38,21 @@ module.exports =  {
                     args[0] = args[0].slice(2,-1)
                 }
             }
-            const member = await functions.getMember(guild, args[0])
+            const member = await getMember(guild, args[0])
             if (member.user != author) {
                 try {
-                    var bet = await functions.specialArg(args[1], user.id, "falcoins")
+                    var bet = await specialArg(args[1], user.id, "falcoins")
                 } catch {
                     return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 } 
-                if (await functions.readFile(user.id, 'falcoins') >= bet && await functions.readFile(member.user.id, 'falcoins') >= bet && bet > 0) {
+                if (await readFile(user.id, 'falcoins') >= bet && await readFile(member.user.id, 'falcoins') >= bet && bet > 0) {
                     if (message) {
                         var answer = await message.reply({
-                            content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {USER: author.username, USER2: member.user.username, FALCOINS: await functions.format(bet)})
+                            content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {USER: author.username, USER2: member.user.username, FALCOINS: await format(bet)})
                         })
                     } else {
                         var answer = await interaction.reply({
-                            content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {USER: author.username, USER2: member.user.username, FALCOINS: await functions.format(bet)}),
+                            content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {USER: author.username, USER2: member.user.username, FALCOINS: await format(bet)}),
                             fetchReply: true
                         })
                     }
@@ -125,7 +125,7 @@ module.exports =  {
                             //randomizing who starts
                             let first_player;
                             let second_player;
-                            let random = functions.randint(0, 1)
+                            let random = randint(0, 1)
                             if (random == 0) {
                                 first_player = author
                                 second_player = member.user
@@ -222,13 +222,13 @@ module.exports =  {
                             collector2.on('end', async () => {
                                 if (board.hasWinner()) {
                                     if(board.winningPlayer() === 'X') {
-                                        await functions.changeDB(first_player.id, 'falcoins', bet)
-                                        await functions.changeDB(first_player.id, 'vitorias', 1)
-                                        await functions.changeDB(second_player.id, 'falcoins', -bet)
+                                        await changeDB(first_player.id, 'falcoins', bet)
+                                        await changeDB(first_player.id, 'vitorias', 1)
+                                        await changeDB(second_player.id, 'falcoins', -bet)
                                     } else {
-                                        await functions.changeDB(second_player.id, 'falcoins', bet)
-                                        await functions.changeDB(second_player.id, 'vitorias', 1)
-                                        await functions.changeDB(first_player.id, 'falcoins', -bet)
+                                        await changeDB(second_player.id, 'falcoins', bet)
+                                        await changeDB(second_player.id, 'vitorias', 1)
+                                        await changeDB(first_player.id, 'falcoins', -bet)
                                     }
                                     await answer2.edit({
                                         content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n**${instance.messageHandler.get(guild, "GANHOU", {WINNER: board.winningPlayer() === 'X' ? first_player.username : second_player.username, FALCOINS: bet})}**`,

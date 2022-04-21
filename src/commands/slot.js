@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const pick = require('pick-random-weighted')
-const functions = require('../utils/functions.js')
+const {specialArg, readFile, changeDB, getRoleColor, count, format} = require('../utils/functions.js')
 const config = require("../config.json")
 
 module.exports =  {
@@ -27,18 +27,18 @@ module.exports =  {
             guild = client.guilds.cache.get('742332099788275732')
             emojifoda = await guild.emojis.fetch('926953352774963310')
             try {
-                var bet = await functions.specialArg(args[0], user.id, "falcoins")
+                var bet = await specialArg(args[0], user.id, "falcoins")
             } catch {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             }
-            if (await functions.readFile(user.id, 'falcoins') >= bet && bet > 0) {
+            if (await readFile(user.id, 'falcoins') >= bet && bet > 0) {
                 const choices = [[':money_mouth:', 30], [':gem:', 10], [':moneybag:', 15], [':coin:', 25], [':dollar:', 20]]
                 const emoji1 = pick(choices)
                 const emoji2 = pick(choices)
                 const emoji3 = pick(choices)
     
                 const embed = new Discord.MessageEmbed()
-                 .setColor(await functions.getRoleColor(guild, user.id))
+                 .setColor(await getRoleColor(guild, user.id))
                  .setAuthor({name: user.username, iconURL: user.avatarURL()})
                  .addField(`-------------------\n | ${emojifoda} | ${emojifoda} | ${emojifoda} |\n-------------------`, `--- **${instance.messageHandler.get(guild, "GIRANDO")}** ---`)
                  .setFooter({text: 'by Falcão ❤️'})
@@ -64,11 +64,11 @@ module.exports =  {
                 await answer.edit({embeds: [embed]})
 
                 arrayEmojis = [emoji1, emoji2, emoji3]
-                var dollar = await functions.count(arrayEmojis, ':dollar:')
-                var coin = await functions.count(arrayEmojis, ':coin:')
-                var moneybag = await functions.count(arrayEmojis, ':moneybag:')
-                var gem = await functions.count(arrayEmojis, ':gem:')
-                var money_mouth = await functions.count(arrayEmojis, ':money_mouth:')
+                var dollar = await count(arrayEmojis, ':dollar:')
+                var coin = await count(arrayEmojis, ':coin:')
+                var moneybag = await count(arrayEmojis, ':moneybag:')
+                var gem = await count(arrayEmojis, ':gem:')
+                var money_mouth = await count(arrayEmojis, ':money_mouth:')
     
                 if (dollar == 3) {
                     var winnings = 3
@@ -94,7 +94,7 @@ module.exports =  {
                     var winnings = 0
                 }
                 var profit = parseInt(bet * winnings)
-                await functions.changeDB(user.id, 'falcoins', profit-bet)
+                await changeDB(user.id, 'falcoins', profit-bet)
     
                 if (profit > 0) {
                     var embed2 = new Discord.MessageEmbed()
@@ -105,7 +105,7 @@ module.exports =  {
                          inline: false
                      }, {
                          name: instance.messageHandler.get(guild, "GANHOS"),
-                         value: `${await functions.format(profit)} falcoins`,
+                         value: `${await format(profit)} falcoins`,
                          inline: true
                      })
                 } else {
@@ -117,12 +117,12 @@ module.exports =  {
                          inline: false
                      }, {
                          name: instance.messageHandler.get(guild, "PERDAS"),
-                         value: `${await functions.format(bet)} falcoins`,
+                         value: `${await format(bet)} falcoins`,
                          inline: true
                      })
                 }
                 embed2.setAuthor({name: user.username, iconURL: user.avatarURL()})
-                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'falcoins', true)}`)
+                embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await readFile(user.id, 'falcoins', true)}`)
                 embed2.setFooter({text: 'by Falcão ❤️'})
                 await answer.edit({
                     embeds: [embed2]

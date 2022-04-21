@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const Roll = require('roll')
-const functions = require('../utils/functions.js')
+const {getRoleColor} = require('../utils/functions.js')
 const config = require("../config.json")
 
 module.exports = {
@@ -36,7 +36,7 @@ module.exports = {
                     })
                 }else {
                     embed = new Discord.MessageEmbed()
-                    .setColor(await functions.getRoleColor(guild, user.id))
+                    .setColor(await getRoleColor(guild, user.id))
                     .addFields({
                         name: '🎲:',
                         value: text,

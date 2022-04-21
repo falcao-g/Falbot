@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const functions = require('../utils/functions.js')
+const {specialArg, readFile, getRoleColor, randint, changeDB, format} = require('../utils/functions.js')
 const config = require("../config.json")
 
 module.exports =  {
@@ -30,11 +30,11 @@ module.exports =  {
     callback: async ({instance, guild, message, interaction, user, args}) => {
         try {
             try {
-                var bet = await functions.specialArg(args[1], user.id, "falcoins")
+                var bet = await specialArg(args[1], user.id, "falcoins")
             } catch {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
             }
-            if (await functions.readFile(user.id, 'falcoins') >= bet && bet > 0) {
+            if (await readFile(user.id, 'falcoins') >= bet && bet > 0) {
                 if (args[0] >= 1 && args[0] <= 5) {
                     let horse1 = '- - - - -'
                     let horse2 = '- - - - -'
@@ -43,7 +43,7 @@ module.exports =  {
                     let horse5 = '- - - - -'
                     const embed = new Discord.MessageEmbed()
                      .addField(instance.messageHandler.get(guild, "CAVALO"), `:checkered_flag: ${horse1} :horse_racing:\n\u200b\n:checkered_flag: ${horse2} :horse_racing:\n\u200b\n:checkered_flag: ${horse3} :horse_racing:\n\u200b\n:checkered_flag: ${horse4} :horse_racing:\n\u200b\n:checkered_flag: ${horse5} :horse_racing:`)
-                     .setColor(await functions.getRoleColor(guild, user.id))
+                     .setColor(await getRoleColor(guild, user.id))
                      .setAuthor({name: user.username, iconURL: user.avatarURL()})
                      .setFooter({text: 'by Falcão ❤️'})
                     
@@ -59,7 +59,7 @@ module.exports =  {
                     }
         
                     for (let i = 0; i <= 21; i++) {
-                        let run = functions.randint(1, 5)
+                        let run = randint(1, 5)
                         if (run === 1) {
                             horse1 = horse1.slice(0, -2)
                         } else if (run === 2) {
@@ -95,19 +95,19 @@ module.exports =  {
     
                     if (args[0] == winner) {
                         profit = bet * 5
-                        await functions.changeDB(user.id, 'falcoins', profit-bet)
+                        await changeDB(user.id, 'falcoins', profit-bet)
                         var embed2 = new Discord.MessageEmbed()
                          .setColor(3066993)
-                         .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_GANHOU", {FALCOINS: await functions.format(bet*5)}), false)
+                         .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_GANHOU", {FALCOINS: await format(bet*5)}), false)
                     } else {
                         profit = 0
-                        await functions.changeDB(user.id, 'falcoins', -bet)
+                        await changeDB(user.id, 'falcoins', -bet)
                         var embed2 = new Discord.MessageEmbed()
                          .setColor(15158332)
-                         .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_PERDEU", {FALCOINS: await functions.format(bet)}), false)
+                         .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_PERDEU", {FALCOINS: await format(bet)}), false)
                     }
     
-                    embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await functions.readFile(user.id, 'falcoins', true)} falcoins`, false)
+                    embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await readFile(user.id, 'falcoins', true)} falcoins`, false)
                     .setAuthor({name: user.username, iconURL: user.avatarURL()})
                     .setFooter({text: 'by Falcão ❤️'})
                     if (message) {

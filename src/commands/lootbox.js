@@ -1,4 +1,4 @@
-const functions = require('../utils/functions.js')
+const {readFile, changeDB} = require('../utils/functions.js')
 const config = require("../config.json")
 
 module.exports =  {
@@ -11,8 +11,8 @@ module.exports =  {
     testOnly: config.testOnly,
     callback: async ({instance, guild, user}) => {
         try {
-            const quantity = await functions.readFile(user.id, 'lootbox')
-            functions.changeDB(user.id, 'falcoins', quantity)
+            const quantity = await readFile(user.id, 'lootbox')
+            changeDB(user.id, 'falcoins', quantity)
             return instance.messageHandler.get(guild, "LOOTBOX", {FALCOINS: quantity})
         } catch (error) {
             console.error(`lootbox: ${error}`)
