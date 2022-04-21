@@ -1,22 +1,22 @@
 const Discord = require('discord.js')
-const config = require("./config/config.json")
+const config = require("./src/config.json")
 const intents = new Discord.Intents(['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'])
 const client = new Discord.Client({ intents })
 const WOKCommands = require('wokcommands')
 const path = require('path')
-const functions = require('./functions.js')
+const functions = require('./src/utils/functions.js')
 const mongoose = require('mongoose')
 
 client.on("ready", () => {
   const wok = new WOKCommands(client, {
-    commandsDir: path.join(__dirname, 'commands'),
-    featuresDir: path.join(__dirname, 'features'),
+    commandsDir: path.join(__dirname, '/src/commands'),
+    featuresDir: path.join(__dirname, '/src/events'),
     ignoreBots: true,
     ephemeral: false,
     botOwners: config.owners,
     testServers: config.someServers,
     defaultLanguage: config.language,
-    messagesPath: path.join(__dirname, 'messages.json'),
+    messagesPath: path.join(__dirname, '/src/utils/json/messages.json'),
     disabledDefaultCommands: [
       'command',
       'requiredrole',
