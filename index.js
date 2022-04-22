@@ -1,10 +1,10 @@
-const Discord = require('discord.js')
+const {Intents, Client} = require('discord.js')
 const config = require("./src/config.json")
-const intents = new Discord.Intents(['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'])
-const client = new Discord.Client({ intents })
+const intents = new Intents(['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'])
+const client = new Client({ intents })
 const WOKCommands = require('wokcommands')
 const path = require('path')
-const functions = require('./src/utils/functions.js')
+const {bankInterest} = require('./src/utils/functions.js')
 const mongoose = require('mongoose')
 
 client.on("ready", () => {
@@ -38,7 +38,7 @@ client.on("ready", () => {
 
   setInterval(() => {
     client.user.setActivity('?comandos | arte by: @kinsallum'),
-    functions.bankInterest()
+    bankInterest()
   }, 1000 * 600)
 })
 client.login(config.TOKEN)

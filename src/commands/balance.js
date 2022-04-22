@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {getMember, getRoleColor, format, readFile} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -16,7 +16,7 @@ module.exports =  {
         name: 'user',
         description: 'the user you want to get info about, leave blank to get your balance',
         required: false,
-        type: Discord.Constants.ApplicationCommandOptionTypes.USER
+        type: Constants.ApplicationCommandOptionTypes.USER
     }],
     callback: async ({instance, guild, message, user, args}) => {
         try {
@@ -29,7 +29,7 @@ module.exports =  {
             }
             const member = args[0] ? (await getMember(guild, args[0])).user : user
             const userFile = await readFile(member.id)
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
             .setColor(await getRoleColor(guild, member.id))
             .setAuthor({name: member.username, iconURL: member.avatarURL()})
             .setFooter({text: 'by Falcão ❤️'})

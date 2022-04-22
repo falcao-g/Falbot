@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {randint, getRoleColor} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -19,13 +19,13 @@ module.exports = {
         name: 'question',
         description: 'the question you want to ask the 8ball',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }],
     callback: async ({instance, guild, interaction, user, text}) => {
         try {
-            if (instance.messageHandler.getLanguage(guild) === "portugues") { answers = require('../utils/json/8ballPT.json') } else { answers = require('../utils/json/8ballEN.json')}
+            answers = instance.messageHandler.get(guild, "8BALL")
             let answer = `${answers[randint(0, answers.length-1)]}`
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
              .setColor(await getRoleColor(guild, user.id))
              .setAuthor({name: instance.messageHandler.get(guild, "BOLA8"), iconURL: "https://images.emojiterra.com/google/noto-emoji/unicode-13.1/128px/1f3b1.png"})
              if (interaction) { embed.addField(instance.messageHandler.get(guild, "PERGUNTA"), text, false)}
