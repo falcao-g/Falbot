@@ -1,7 +1,7 @@
 const {Constants, MessageEmbed} = require('discord.js')
 const pick = require('pick-random-weighted')
 const {specialArg, readFile, changeDB, getRoleColor, count, format} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 
 module.exports =  {
     aliases: ['niquel', 'níquel'],
@@ -10,7 +10,7 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: config.testOnly,
+    testOnly,
     minArgs: 1,
     expectedArgs: '<falcoins>',
     expectedArgsTypes: ['STRING'],

@@ -1,6 +1,6 @@
 const {Constants} = require('discord.js')
 const {getMember, specialArg, readFile, format, takeAndGive} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 
 module.exports =  {
     aliases: ['doar', 'doacao'],
@@ -9,7 +9,7 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: config.testOnly,
+    testOnly,
     minArgs: 2,
     expectedArgs: '<usuario> <falcoins>',
     expectedArgsTypes: ['USER', 'STRING'],

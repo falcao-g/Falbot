@@ -1,6 +1,6 @@
 const {Constants, MessageEmbed} = require('discord.js')
 const {getRoleColor, readFile, changeDB} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 
 module.exports =  {
     aliases: ['loja', 'shop'],
@@ -9,7 +9,7 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: config.testOnly,
+    testOnly,
     expectedArgs: '[number] [quantity]',
     expectedArgsTypes: ['NUMBER', 'NUMBER'],
     options: [

@@ -1,6 +1,6 @@
 const {MessageEmbed} = require('discord.js')
 const {readFile, getRoleColor, msToTime} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 const cooldownSchema = require('wokcommands/dist/models/cooldown.js')
 
 module.exports =  {
@@ -10,7 +10,7 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: config.testOnly,
+    testOnly,
     callback: async ({instance, guild, user}) => {
         try {
             userCooldown = await cooldownSchema.findById(`lootbox-${guild.id}-${user.id}`)

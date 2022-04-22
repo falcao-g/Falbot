@@ -1,5 +1,5 @@
 const {readFile, changeDB} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 
 module.exports =  {
     aliases: ['lb'],
@@ -8,7 +8,7 @@ module.exports =  {
     slash: 'both',
     cooldown: '12h',
     guildOnly: true,
-    testOnly: config.testOnly,
+    testOnly,
     callback: async ({instance, guild, user}) => {
         try {
             const quantity = await readFile(user.id, 'lootbox')

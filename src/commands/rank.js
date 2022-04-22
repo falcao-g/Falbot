@@ -1,6 +1,6 @@
 const {Constants, MessageEmbed} = require('discord.js')
 const {getMember, getRoleColor, format} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 const userSchema = require('../schemas/user-schema.js');
 
 module.exports =  {
@@ -9,7 +9,7 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: config.testOnly,
+    testOnly,
     expectedArgs: '[scope]',
     expectedArgsTypes: ['STRING'],
     options: [{

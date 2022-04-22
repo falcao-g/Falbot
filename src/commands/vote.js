@@ -1,7 +1,7 @@
 const {MessageEmbed} = require('discord.js')
 const top = require('top.gg-core');
 const {changeDB, readFile, msToTime} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly, Authorization} = require("../config.json")
 
 module.exports =  {
     aliases: ['voto'],
@@ -10,10 +10,10 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: config.testOnly,
+    testOnly,
     callback: async ({instance, guild, user}) => {
         try {
-            const topgg = new top.Client(config.Authorization)
+            const topgg = new top.Client(Authorization)
 
             if (await topgg.isVoted(user.id) && (Date.now() - await readFile(user.id, 'lastVote') > 43200000)) {
                 await changeDB(user.id, 'lastVote', Date.now(), true)

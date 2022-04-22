@@ -1,6 +1,6 @@
 const {MessageEmbed} = require('discord.js')
 const builder = require("../utils/snake-builder.js")
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 
 module.exports =  {
     category: 'Fun',
@@ -8,7 +8,7 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: config.testOnly,
+    testOnly,
     callback: async ({instance, guild, message, interaction, user}) => {
         try {
             const author = user

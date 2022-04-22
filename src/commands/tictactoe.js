@@ -1,7 +1,7 @@
 const {Constants, MessageActionRow, MessageButton} = require('discord.js')
 const Board = require('tictactoe-board')
 const {getMember, specialArg, readFile, format, randint, changeDB} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 
 module.exports =  {
     aliases: ['velha'],
@@ -10,7 +10,7 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: config.testOnly,
+    testOnly,
     minArgs: 2,
     expectedArgs: '<user> <falcoins>',
     expectedArgsTypes: ['USER', 'STRING'],

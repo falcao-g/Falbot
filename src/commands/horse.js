@@ -1,6 +1,6 @@
 const {Constants, MessageEmbed} = require('discord.js')
 const {specialArg, readFile, getRoleColor, randint, changeDB, format} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 
 module.exports =  {
     aliases: ["cavalo"],
@@ -9,7 +9,7 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: config.testOnly,
+    testOnly,
     minArgs: 2,
     expectedArgs: '<horse_number> <falcoins>',
     expectedArgsTypes: ['NUMBER', 'STRING'],

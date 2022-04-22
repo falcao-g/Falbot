@@ -1,6 +1,6 @@
 const {Constants, MessageEmbed} = require('discord.js')
 const {randint, getRoleColor} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 
 module.exports = {
     aliases: ["bola8"],
@@ -11,7 +11,7 @@ module.exports = {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: config.testOnly,
+    testOnly,
     minArgs: 1,
     expectedArgs: '<pergunta>',
     expectedArgsTypes: ['STRING'],

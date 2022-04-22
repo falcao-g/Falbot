@@ -1,6 +1,6 @@
 const {Constants, MessageEmbed} = require('discord.js')
 const {getMember, specialArg, readFile, format, randint, changeDB} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 
 module.exports =  {
     aliases: ['luta'],
@@ -9,7 +9,7 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    testOnly: config.testOnly,
+    testOnly,
     minArgs: 2,
     expectedArgs: '<user> <falcoins>',
     expectedArgsTypes: ['USER', 'STRING'],

@@ -1,5 +1,5 @@
 const {Intents, Client} = require('discord.js')
-const config = require("./src/config.json")
+const {owners, someServers, language, MONGODB_URI, PREFIX, TOKEN} = require("./src/config.json")
 const intents = new Intents(['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'])
 const client = new Client({ intents })
 const WOKCommands = require('wokcommands')
@@ -13,18 +13,18 @@ client.on("ready", () => {
     featuresDir: path.join(__dirname, '/src/events'),
     ignoreBots: true,
     ephemeral: false,
-    botOwners: config.owners,
-    testServers: config.someServers,
-    defaultLanguage: config.language,
+    botOwners: owners,
+    testServers: someServers,
+    defaultLanguage: language,
     messagesPath: path.join(__dirname, '/src/utils/json/messages.json'),
     disabledDefaultCommands: [
       'command',
       'requiredrole',
       'channelonly'
   ],
-  mongoUri: config.MONGODB_URI
+  mongoUri: MONGODB_URI
   })
-  .setDefaultPrefix(config.PREFIX)
+  .setDefaultPrefix(PREFIX)
 
   wok.on('commandException', (command, error) => {
     console.log(`Um erro ocorreu no comando "${command.names[0]}"! O erro foi:`)
@@ -41,4 +41,4 @@ client.on("ready", () => {
     bankInterest()
   }, 1000 * 600)
 })
-client.login(config.TOKEN)
+client.login(TOKEN)

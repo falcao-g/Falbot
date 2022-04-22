@@ -1,6 +1,6 @@
 const {Constants, MessageEmbed} = require('discord.js')
 const {specialArg, readFile, randint, changeDB, getRoleColor, format} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 
 module.exports =  {
     aliases: ['caixa'],
@@ -10,7 +10,7 @@ module.exports =  {
     cooldown: '1s',
     guildOnly: true,
     minArgs: 1,
-    testOnly: config.testOnly,
+    testOnly,
     expectedArgs: '<quantity>',
     expectedArgsTypes: ['NUMBER'],
     options: [{

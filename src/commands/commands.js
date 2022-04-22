@@ -1,6 +1,6 @@
 const {Constants} = require('discord.js')
 const {explain} = require('../utils/functions.js')
-const config = require("../config.json")
+const {testOnly} = require("../config.json")
 
 module.exports =  {
     aliases: ['ajuda', 'comandos', 'help'],
@@ -17,7 +17,7 @@ module.exports =  {
             type: Constants.ApplicationCommandOptionTypes.STRING
         }
     ],
-    testOnly: config.testOnly,
+    testOnly,
     callback: async ({args, instance, guild}) => {
         try {
             return await explain(instance, guild, args[0] || '')
