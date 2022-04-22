@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {getRoleColor} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -17,11 +17,11 @@ module.exports = {
         name: 'theme',
         description: 'theme of the poll',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }],
     callback: async ({instance, guild, message, interaction, user, text}) => {
         try {
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
             .setColor(await getRoleColor(guild, user.id))
             .setDescription(text)
             .setAuthor({name: instance.messageHandler.get(guild, "ENQUETE", {USER: user.username}), iconURL: user.avatarURL()})

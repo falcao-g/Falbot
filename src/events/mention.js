@@ -1,4 +1,4 @@
-const functions = require('../utils/functions.js')
+const {explain} = require('../utils/functions.js')
 
 
 module.exports = (client, instance) => {
@@ -15,7 +15,7 @@ module.exports = (client, instance) => {
                 }
             }
             message.reply({
-                embeds: [await functions.explain(instance, message.guild, text || '')]
+                embeds: [await explain(instance, message.guild, text || '')]
             }) 
         }
     });

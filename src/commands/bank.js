@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {specialArg, readFile, takeAndGive, format, getRoleColor} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -17,14 +17,14 @@ module.exports =  {
         name:'option',
         description: 'if you are going to deposit or withdraw falcoins',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING,
+        type: Constants.ApplicationCommandOptionTypes.STRING,
         choices: [{name: 'deposit', value: 'deposit'}, {name: 'withdraw', value: 'withdraw'}]
     },
     {
         name: 'falcoins',
         description: 'the amount of falcoins you want to deposit or withdraw',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
     callback: async ({instance, guild, message, user, args}) => {
@@ -40,7 +40,7 @@ module.exports =  {
                 if (await readFile(user.id, 'falcoins') >= quantity && quantity > 0) {
                     await takeAndGive(user.id, user.id, 'falcoins', 'banco', quantity)
     
-                    const embed = new Discord.MessageEmbed()
+                    const embed = new MessageEmbed()
                      .setTitle(instance.messageHandler.get(guild, "BANCO_DEPOSITOU", {VALUE: await format(quantity)}))
                      .setColor(await getRoleColor(guild, user.id))
                      .setAuthor({name: user.username, iconURL: user.avatarURL()})
@@ -62,7 +62,7 @@ module.exports =  {
                 if (await readFile(user.id, 'banco') >= quantity && quantity > 0) {
                     await takeAndGive(user.id, user.id, 'banco', 'falcoins', quantity)
     
-                    const embed = new Discord.MessageEmbed()
+                    const embed = new MessageEmbed()
                      .setTitle(instance.messageHandler.get(guild, "BANCO_SACOU", {VALUE: await format(quantity)}))
                      .setColor(await getRoleColor(guild, user.id))
                      .setAuthor({name: user.username, iconURL: user.avatarURL()})

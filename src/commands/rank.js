@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {getMember, getRoleColor, format} = require('../utils/functions.js')
 const config = require("../config.json")
 const userSchema = require('../schemas/user-schema.js');
@@ -16,7 +16,7 @@ module.exports =  {
         name:'scope',
         description: 'show the global or local ranking',
         required: false,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING,
+        type: Constants.ApplicationCommandOptionTypes.STRING,
         choices: [{name: 'global', value: 'global'}, {name: 'local', value: 'local'}]
     }
     ],
@@ -34,7 +34,7 @@ module.exports =  {
                 } else {
                     rank = await userSchema.find({}).sort({ 'falcoins': -1 }).limit(10)
                 }
-                const embed = new Discord.MessageEmbed()
+                const embed = new MessageEmbed()
                 .setColor(await getRoleColor(guild, user.id))
                 .setFooter({text: 'by Falcão ❤️'})
                 for (let i = 0; i < rank.length; i++) {

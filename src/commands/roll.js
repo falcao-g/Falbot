@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const Roll = require('roll')
 const {getRoleColor} = require('../utils/functions.js')
 const config = require("../config.json")
@@ -17,7 +17,7 @@ module.exports = {
         name: 'dice',
         description: 'dice to be rolled',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }],
     callback: async ({instance, guild, message, interaction, user, text}) => {
         try {
@@ -35,7 +35,7 @@ module.exports = {
                         content: `**${rolled}**`
                     })
                 }else {
-                    embed = new Discord.MessageEmbed()
+                    embed = new MessageEmbed()
                     .setColor(await getRoleColor(guild, user.id))
                     .addFields({
                         name: '🎲:',

@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {getRoleColor, readFile, changeDB} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -17,20 +17,20 @@ module.exports =  {
         name: 'number',
         description: 'number of the item you want to buy',
         required: false,
-        type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER,
+        type: Constants.ApplicationCommandOptionTypes.NUMBER,
         choices: [{name: 1, value: 1}, {name: 2, value: 2}, {name: 3, value: 3}]
     },
     {
         name: 'quantity',
         description: 'how many items you want to buy',
         required: false,
-        type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER
+        type: Constants.ApplicationCommandOptionTypes.NUMBER
     }
     ],
     callback: async ({instance, guild, user, args}) => {
         try {
             if (args[0] === undefined && args[1] === undefined) {
-                const embed = new Discord.MessageEmbed()
+                const embed = new MessageEmbed()
                 .setColor(await getRoleColor(guild, user.id))
                 .setTitle('**Loja**')
                 .addFields({

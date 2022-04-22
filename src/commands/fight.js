@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {getMember, specialArg, readFile, format, randint, changeDB} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -17,13 +17,13 @@ module.exports =  {
         name: 'user',
         description: 'the user to challenge',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.USER
+        type: Constants.ApplicationCommandOptionTypes.USER
     },
     {
         name: 'falcoins',
         description: 'the amount of falcoins to bet',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }   
     ],
     callback: async ({instance, guild, message, interaction, user, args}) => {
@@ -71,21 +71,21 @@ module.exports =  {
                         if (collected.size === 0) {
                             if (message) {
                                 message.reply({
-                                    content: instance.messageHandler.get(guild, "LUTA_CANCELADO_DEMOROU", {VALUE: member})
+                                    content: instance.messageHandler.get(guild, "LUTA_CANCELADO_DEMOROU", {USER: member})
                                 }) 
                             } else {
                                 interaction.followUp({
-                                    content: instance.messageHandler.get(guild, "LUTA_CANCELADO_DEMOROU", {VALUE: member})
+                                    content: instance.messageHandler.get(guild, "LUTA_CANCELADO_DEMOROU", {USER: member})
                                 })
                             }
                         } else if (collected.first()._emoji.name === '🚫') {
                             if (message) {
                                 message.reply({
-                                    content: instance.messageHandler.get(guild, "LUTA_CANCELADO_RECUSOU", {VALUE: member})
+                                    content: instance.messageHandler.get(guild, "LUTA_CANCELADO_RECUSOU", {USER: member})
                                 }) 
                             } else {
                                 interaction.followUp({
-                                    content: instance.messageHandler.get(guild, "LUTA_CANCELADO_RECUSOU", {VALUE: member})
+                                    content: instance.messageHandler.get(guild, "LUTA_CANCELADO_RECUSOU", {USER: member})
                                 })
                             }
                         } else {
@@ -130,12 +130,12 @@ module.exports =  {
                                     const luck = randint(1,50)
     
                                     if (i === 0) {
-                                        var embed = new Discord.MessageEmbed()
+                                        var embed = new MessageEmbed()
                                         .setColor(3447003)
                                         var me = 0
                                         var enemy =  1
                                     } else {
-                                        var embed = new Discord.MessageEmbed()
+                                        var embed = new MessageEmbed()
                                         .setColor(15105570)
                                         var me = 1
                                         var enemy =  0
@@ -186,7 +186,7 @@ module.exports =  {
                                     await new Promise(resolve => setTimeout(resolve, 2500));
                                 }
                             }
-                            const embed2 = new Discord.MessageEmbed()
+                            const embed2 = new MessageEmbed()
                             .setColor(3066993)
                             .setFooter({text: 'by Falcão ❤️'})
                             if (order[0]['hp'] <= 0) {

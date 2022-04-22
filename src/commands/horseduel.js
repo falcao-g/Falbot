@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {specialArg, readFile, changeDB, randint} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -18,7 +18,7 @@ module.exports =  {
         name: 'falcoins',
         description: 'the amount of falcoins to bet',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }   
     ],
     callback: async ({instance, guild, message, interaction, client, user, args}) => {
@@ -31,7 +31,7 @@ module.exports =  {
             } 
             if (await readFile(user.id, 'falcoins') >= bet) {
                 var pot = bet
-                const embed = new Discord.MessageEmbed()
+                const embed = new MessageEmbed()
                 .setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
                 .setDescription(instance.messageHandler.get(guild, "CAVALGADA_DESAFIO", {USER: author.username}))
                 .setColor('#0099ff')
@@ -75,7 +75,7 @@ module.exports =  {
                     users.push(user)
                     path.push('- - - - -')
                     pot += bet
-                    const embed2 = new Discord.MessageEmbed()
+                    const embed2 = new MessageEmbed()
                     .setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
                     .setDescription(instance.messageHandler.get(guild, "CAVALGADA_DESAFIO", {USER: author.username}))
                     .setColor('#0099ff')
@@ -105,7 +105,7 @@ module.exports =  {
                             frase += `${users[i]}\n:checkered_flag: ${path[i]}:horse_racing:\n`
                         }
 
-                        var embed2 = new Discord.MessageEmbed()
+                        var embed2 = new MessageEmbed()
                         .setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
                         .addFields({
                             name: instance.messageHandler.get(guild, "APOSTA"),
@@ -137,7 +137,7 @@ module.exports =  {
                 var winner = users[winner_path]
                 await changeDB(winner.id, 'falcoins', pot)
                 await changeDB(winner.id, 'vitorias')
-                var embed3 = new Discord.MessageEmbed()
+                var embed3 = new MessageEmbed()
                 .setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
                 .setDescription(instance.messageHandler.get(guild, "GANHOU", {WINNER: winner, FALCOINS: pot}))
                 .setColor(3066993)

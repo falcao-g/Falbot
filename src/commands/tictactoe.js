@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageActionRow, MessageButton} = require('discord.js')
 const Board = require('tictactoe-board')
 const {getMember, specialArg, readFile, format, randint, changeDB} = require('../utils/functions.js')
 const config = require("../config.json")
@@ -18,13 +18,13 @@ module.exports =  {
         name: 'user',
         description: 'user to challenge',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.USER
+        type: Constants.ApplicationCommandOptionTypes.USER
     },
     {
         name: 'falcoins',
         description: 'amount of falcoins to bet in the game',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }   
     ],
     callback: async ({instance, guild, message, interaction, client, user, args}) => {
@@ -92,29 +92,29 @@ module.exports =  {
                                 })
                             }
                         }else {
-                            const row = new Discord.MessageActionRow()
-                            const row2 = new Discord.MessageActionRow()
-                            const row3 = new Discord.MessageActionRow()
+                            const row = new MessageActionRow()
+                            const row2 = new MessageActionRow()
+                            const row3 = new MessageActionRow()
 
                             customIds = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
                             for (var i = 0; i < 9; i++) {
                                 if (i < 3) {
                                     row.addComponents(
-                                        new Discord.MessageButton()
+                                        new MessageButton()
                                         .setCustomId(customIds[i])
                                         .setLabel('\u200b')
                                         .setStyle('SECONDARY')
                                     )
                                 } else if (i < 6) {
                                     row2.addComponents(
-                                        new Discord.MessageButton()
+                                        new MessageButton()
                                         .setCustomId(customIds[i])
                                         .setLabel('\u200b')
                                         .setStyle('SECONDARY')
                                     )
                                 } else {
                                     row3.addComponents(
-                                        new Discord.MessageButton()
+                                        new MessageButton()
                                         .setCustomId(customIds[i])
                                         .setLabel('\u200b')
                                         .setStyle('SECONDARY')

@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const {readFile, getRoleColor, msToTime} = require('../utils/functions.js')
 const config = require("../config.json")
 const cooldownSchema = require('wokcommands/dist/models/cooldown.js')
@@ -15,7 +15,7 @@ module.exports =  {
         try {
             userCooldown = await cooldownSchema.findById(`lootbox-${guild.id}-${user.id}`)
             voteCooldown = Date.now() - await readFile(user.id, 'lastVote')
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
             .setColor(await getRoleColor(guild, user.id))
             .setAuthor({name: user.username, iconURL: user.avatarURL()})
             .setFooter({text: 'by Falcão ❤️'})

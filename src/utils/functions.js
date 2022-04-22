@@ -722,7 +722,7 @@ function randint(low, high) {
 }
 
 async function bankInterest() {
-  var config = JSON.parse(fs.readFileSync("./config/config.json", "utf8"));
+  var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"));
   if (Date.now() - config["poupanca"]["last_interest"] > config["poupanca"]["interest_time"]) {
     console.log('poupança!')
     config["poupanca"]["last_interest"] = Date.now().toString()
@@ -735,7 +735,7 @@ async function bankInterest() {
 
     json2 = JSON.stringify(config, null, 1);
 
-    fs.writeFileSync("../config.json", json2, "utf8", function (err) {
+    fs.writeFileSync("./src/config.json", json2, "utf8", function (err) {
       if (err) throw err;
     });
   }

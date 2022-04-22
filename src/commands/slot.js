@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const pick = require('pick-random-weighted')
 const {specialArg, readFile, changeDB, getRoleColor, count, format} = require('../utils/functions.js')
 const config = require("../config.json")
@@ -19,7 +19,7 @@ module.exports =  {
         name: 'falcoins',
         description: 'amount of falcoins to bet',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
     callback: async ({instance, guild, message, interaction, client, user, args}) => {
@@ -37,7 +37,7 @@ module.exports =  {
                 const emoji2 = pick(choices)
                 const emoji3 = pick(choices)
     
-                const embed = new Discord.MessageEmbed()
+                const embed = new MessageEmbed()
                  .setColor(await getRoleColor(guild, user.id))
                  .setAuthor({name: user.username, iconURL: user.avatarURL()})
                  .addField(`-------------------\n | ${emojifoda} | ${emojifoda} | ${emojifoda} |\n-------------------`, `--- **${instance.messageHandler.get(guild, "GIRANDO")}** ---`)
@@ -97,7 +97,7 @@ module.exports =  {
                 await changeDB(user.id, 'falcoins', profit-bet)
     
                 if (profit > 0) {
-                    var embed2 = new Discord.MessageEmbed()
+                    var embed2 = new MessageEmbed()
                      .setColor(3066993)
                      .addFields({
                          name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
@@ -109,7 +109,7 @@ module.exports =  {
                          inline: true
                      })
                 } else {
-                    var embed2 = new Discord.MessageEmbed()
+                    var embed2 = new MessageEmbed()
                      .setColor(15158332)
                      .addFields({
                          name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,

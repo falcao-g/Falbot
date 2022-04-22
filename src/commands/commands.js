@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants} = require('discord.js')
 const {explain} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -14,7 +14,7 @@ module.exports =  {
             name: 'command',
             description: 'the command you want to get info about, leave blank to see all commands',
             required: false,
-            type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+            type: Constants.ApplicationCommandOptionTypes.STRING
         }
     ],
     testOnly: config.testOnly,

@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {specialArg, readFile, getRoleColor, randint, changeDB, format} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -17,14 +17,14 @@ module.exports =  {
         name: 'horse_number',
         description: 'number of the horse you want to bet in (1-5)',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER,
+        type: Constants.ApplicationCommandOptionTypes.NUMBER,
         choices: [{name: 1, value: 1}, {name: 2, value: 2}, {name: 3, value: 3}, {name: 4, value: 4}, {name: 5, value: 5}]
     },
     {
         name: 'falcoins',
         description: 'the amount of falcoins you want to bet',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
     callback: async ({instance, guild, message, interaction, user, args}) => {
@@ -41,7 +41,7 @@ module.exports =  {
                     let horse3 = '- - - - -'
                     let horse4 = '- - - - -'
                     let horse5 = '- - - - -'
-                    const embed = new Discord.MessageEmbed()
+                    const embed = new MessageEmbed()
                      .addField(instance.messageHandler.get(guild, "CAVALO"), `:checkered_flag: ${horse1} :horse_racing:\n\u200b\n:checkered_flag: ${horse2} :horse_racing:\n\u200b\n:checkered_flag: ${horse3} :horse_racing:\n\u200b\n:checkered_flag: ${horse4} :horse_racing:\n\u200b\n:checkered_flag: ${horse5} :horse_racing:`)
                      .setColor(await getRoleColor(guild, user.id))
                      .setAuthor({name: user.username, iconURL: user.avatarURL()})
@@ -96,13 +96,13 @@ module.exports =  {
                     if (args[0] == winner) {
                         profit = bet * 5
                         await changeDB(user.id, 'falcoins', profit-bet)
-                        var embed2 = new Discord.MessageEmbed()
+                        var embed2 = new MessageEmbed()
                          .setColor(3066993)
                          .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_GANHOU", {FALCOINS: await format(bet*5)}), false)
                     } else {
                         profit = 0
                         await changeDB(user.id, 'falcoins', -bet)
-                        var embed2 = new Discord.MessageEmbed()
+                        var embed2 = new MessageEmbed()
                          .setColor(15158332)
                          .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_PERDEU", {FALCOINS: await format(bet)}), false)
                     }

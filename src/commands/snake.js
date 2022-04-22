@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const builder = require("../utils/snake-builder.js")
 const config = require("../config.json")
 
@@ -14,7 +14,7 @@ module.exports =  {
             const author = user
             const game = new builder.Game()
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
             .setTitle(":snake:")
             .addField('\u200b', game.world2string(game.world, game.snake))
             .addField(`\u200b`, `:alarm_clock: ${game.time}s\n\n${instance.messageHandler.get(guild, "SCORE")}: ${game.snake.length}`)

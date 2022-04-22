@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const math = require('mathjs')
 const {getRoleColor} = require('../utils/functions.js')
 const config = require("../config.json")
@@ -17,14 +17,14 @@ module.exports = {
         name: 'expression',
         description: 'the mathematical expression to be solved',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }],
     callback: async ({instance, guild, user, text}) => {
         try {
             text = text.replaceAll("**",'^')
             answer = await math.evaluate(text).toString()
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
              .setColor(await getRoleColor(guild, user.id))
              embed.addField(instance.messageHandler.get(guild, "RESULTADO"), answer, false)
              .setFooter({text: 'by Falcão ❤️'})

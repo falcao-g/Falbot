@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const { GOOGLE_IMG_SCRAP } = require('google-img-scrap');
 const {randint, getRoleColor} = require('../utils/functions.js')
 const config = require("../config.json")
@@ -18,7 +18,7 @@ module.exports =  {
         name:'search',
         description: 'the search query',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
     callback: async ({message, interaction, user, guild, text}) => {
@@ -33,7 +33,7 @@ module.exports =  {
                 safeSearch: true,
             });
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
             .setColor(await getRoleColor(guild, user.id))
             .setTitle(`${text}`)
             .setImage(photos.result[randint(0,photos.result.length - 1)].url)

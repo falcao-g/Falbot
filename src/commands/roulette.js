@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {specialArg, readFile, randint, changeDB, format} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -17,13 +17,13 @@ module.exports =  {
         name:'type',
         description: 'bet type <black/red/green>, <0-36>, <high/low>, <even/odd>',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     },
     {
         name: 'falcoins',
         description: 'amount of falcoins to bet',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }
     ],
     callback: async ({instance, guild, user, args}) => {
@@ -69,7 +69,7 @@ module.exports =  {
     
                     if (type.includes(luck)) {
                         await changeDB(user.id, 'falcoins', profit-bet)
-                        var embed = new Discord.MessageEmbed()
+                        var embed = new MessageEmbed()
                          .setColor(3066993)
                          .setAuthor({name: user.username, iconURL: user.avatarURL()})
                          .addFields({
@@ -84,7 +84,7 @@ module.exports =  {
                          .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await readFile(user.id, 'falcoins', true)} falcoins`, false)
                     } else {
                         await changeDB(user.id, 'falcoins', -bet  )
-                        var embed = new Discord.MessageEmbed()
+                        var embed = new MessageEmbed()
                          .setColor(15158332)
                          .setAuthor({name: user.username, iconURL: user.avatarURL()})
                          .addFields({

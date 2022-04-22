@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {specialArg, readFile, changeDB, randint} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -18,7 +18,7 @@ module.exports =  {
         name: 'falcoins',
         description: 'amount of falcoins to play with',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.STRING
+        type: Constants.ApplicationCommandOptionTypes.STRING
     }],
     callback: async ({instance, guild, message, interaction, client, user, args}) => {
         try {
@@ -30,7 +30,7 @@ module.exports =  {
                 } 
                 if (await readFile(user.id, 'falcoins')) {
                     var pot = bet
-                    const embed = new Discord.MessageEmbed()
+                    const embed = new MessageEmbed()
                     .setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
                     .setDescription(`${author.username}` + instance.messageHandler.get(guild, "ROLETA_RUSSA_COMECOU"))
                     .setColor('#0099ff')
@@ -59,11 +59,7 @@ module.exports =  {
 
                     var users = [author]
                     var names = [author]
-                    if (instance.messageHandler.getLanguage(guild) === "portugues") {
-                        mensagens = require('../utils/json/rusroulPT.json')
-                    } else {
-                        mensagens = require('../utils/json/rusroulEN.json')
-                    }
+                    mensagens = instance.messageHandler.get(guild, "RUSROL")
     
                     const filter = async (reaction, user) => {
                         return await readFile(user.id, 'falcoins') >= bet && reaction.emoji.name === '✅' && user.id !== client.user.id && !users.includes(user) 
@@ -92,7 +88,7 @@ module.exports =  {
                             var eliminated = users[luck]
                             names[luck] = `~~${names[luck]}~~ :skull:`
                             users.splice(luck, 1)
-                            var embed2 = new Discord.MessageEmbed()
+                            var embed2 = new MessageEmbed()
                              .setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
                              .setDescription(`${eliminated} ${mensagens[randint(0, mensagens.length -1)]}`)
                              .addFields({
@@ -123,7 +119,7 @@ module.exports =  {
                         var winner = users[0]
                         await changeDB(winner.id, 'falcoins', pot)
                         await changeDB(winner.id, 'vitorias')
-                        var embed3 = new Discord.MessageEmbed()
+                        var embed3 = new MessageEmbed()
                         .setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
                         .setDescription(`${winner} ganhou ${pot} falcoins`)
                         .setColor(3066993)

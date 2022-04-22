@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {getRoleColor, getMember} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -16,11 +16,11 @@ module.exports = {
         name: 'user',
         description: 'the poor soul that will be sent to horny jail',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.USER
+        type: Constants.ApplicationCommandOptionTypes.USER
     }],
     callback: async ({instance, guild, message, interaction, user, args}) => {
         try {
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
             .setColor(await getRoleColor(guild, user.id))
             .setImage('https://i.kym-cdn.com/photos/images/original/002/051/072/a4c.gif')
             .setFooter({text: 'by Falcão ❤️'})

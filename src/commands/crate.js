@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const {Constants, MessageEmbed} = require('discord.js')
 const {specialArg, readFile, randint, changeDB, getRoleColor, format} = require('../utils/functions.js')
 const config = require("../config.json")
 
@@ -17,7 +17,7 @@ module.exports =  {
         name: 'quantity',
         description: 'quantity of crates you wish to open',
         required: true,
-        type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER
+        type: Constants.ApplicationCommandOptionTypes.NUMBER
     }],
     callback: async ({instance, guild, user, args}) => {
         try {
@@ -41,7 +41,7 @@ module.exports =  {
             changeDB(user.id, 'chaves', chaves-quantity)
             changeDB(user.id, 'caixas', caixas-quantity)
             changeDB(user.id, 'falcoins', falcoins)
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
             .setColor(await getRoleColor(guild, user.id))
             .addField(instance.messageHandler.get(guild, "CAIXA_TITULO", {QUANTITY: args[0]}), `:key: ${chaves}\n:coin: ${await format(falcoins)} \n:gift: ${caixas}`)
             .setFooter({text: 'by Falcão ❤️'})
