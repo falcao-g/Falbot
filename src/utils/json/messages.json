@@ -679,5 +679,68 @@
     "VELHA_MOVIMENTO": {
       "portugues": "{USER}, escolha seu movimento:",
       "english": "{USER}, choose your move:"
-    }
+    },
+    "8BALL": {
+      "portugues": [
+        "certamente.",
+        "sem dúvida.",
+        "sim, definitivamente.",
+        "você pode contar com isso.",
+        "a meu ver, sim.",
+        "provavelmente.",
+        "sim.",
+        "absolutamente.",
+        "destino nublado, tente de novo.",
+        "pergunte de novo mais tarde.",
+        "melhor não te dizer agora.",
+        "não posso prever agora.",
+        "se concentre e pergunte de novo.",
+        "não conte com isso.",
+        "não.",
+        "minhas fontes dizem que não.",
+        "cenário não muito bom.",
+        "muito duvidoso.",
+        "as chances não são boas."
+      ] ,
+      "english": [
+        "certainly.",
+        "without a doubt.",
+        "yes, definitely.",
+        "you may rely on it.",
+        "as I see it, yes.",
+        "most likely.",
+        "yes.",
+        "absolutely.",
+        "cloudy future, ask again.",
+        "try again later.",
+        "better not tell you now.",
+        "focus and try again",
+        "don't count on it.",
+        "no.",
+        "my sources say no.",
+        "outlook not so good.",
+        "very doubtful.",
+        "not in a million years."
+    ]
+    },
+  "RUSROL": {
+    "portugues": [
+      "morreu",
+      "colocou a cabeça no lugar errado",
+      "viajou pro EUA",
+      "não tinha o high ground",
+      "descobriu que o chão era lava",
+      "descobriu que a terra é plana",
+      "não usou máscara"
+    ],
+    "english": [
+      "died",
+      "put their head on the wrong side", 
+      "went to the USA", 
+      "didn\"t have the high ground", 
+      "found out that the floor was lava", 
+      "found out that the earth is flat", 
+      "didn\"t use a mask"
+    ] 
   }
+}
