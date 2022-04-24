@@ -25,30 +25,31 @@ module.exports =  {
     ],
     callback: async ({client, user, guild, args, interaction}) => {
         try {
-                rank = []
-                if (args[0] === 'local' || interaction.options.getSubcommand() === 'local') {
-                    users = await userSchema.find({}).sort({ 'falcoins': -1 }).limit(10)
+            rank = []
+            scope = args[0].toLowerCase() || interaction.options.getSubcommand()
+            if (scope === 'local') {
+                users = await userSchema.find({}).sort({ 'falcoins': -1 }).limit(10)
 
-                    for (useri of users) {
-                        if (await getMember(guild, useri['_id']) &&  rank.length < 10) {
-                            rank.push(useri)
-                      }
-                    }
-                } else {
-                    rank = await userSchema.find({}).sort({ 'falcoins': -1 }).limit(10)
-                }
-                const embed = new MessageEmbed()
-                .setColor(await getRoleColor(guild, user.id))
-                .setFooter({text: 'by Falcão ❤️'})
-                for (let i = 0; i < rank.length; i++) {
-                    try {
-                        user = await client.users.fetch(rank[i]['_id'])
-                        embed.addField(`${i + 1}º - ${user.username} falcoins:`, `${await format(rank[i]['falcoins'])}`, false)
-                    } catch {
-                        embed.addField(`${i + 1}º - Unknown user falcoins:`, `${await format(rank[i]['falcoins'])}`, false)
+                for (useri of users) {
+                    if (await getMember(guild, useri['_id']) &&  rank.length < 10) {
+                        rank.push(useri)
                     }
                 }
-                return embed
+            } else {
+                rank = await userSchema.find({}).sort({ 'falcoins': -1 }).limit(10)
+            }
+            const embed = new MessageEmbed()
+            .setColor(await getRoleColor(guild, user.id))
+            .setFooter({text: 'by Falcão ❤️'})
+            for (let i = 0; i < rank.length; i++) {
+                try {
+                    user = await client.users.fetch(rank[i]['_id'])
+                    embed.addField(`${i + 1}º - ${user.username} falcoins:`, `${await format(rank[i]['falcoins'])}`, false)
+                } catch {
+                    embed.addField(`${i + 1}º - Unknown user falcoins:`, `${await format(rank[i]['falcoins'])}`, false)
+                }
+            }
+            return embed
         } catch (error) {
                 console.error(`rank: ${error}`)
         }
