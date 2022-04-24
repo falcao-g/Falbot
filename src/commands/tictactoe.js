@@ -1,4 +1,4 @@
-const {Constants, MessageActionRow, MessageButton} = require('discord.js')
+const {MessageActionRow, MessageButton} = require('discord.js')
 const Board = require('tictactoe-board')
 const {getMember, specialArg, readFile, format, randint, changeDB} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
@@ -18,13 +18,13 @@ module.exports =  {
         name: 'user',
         description: 'user to challenge',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.USER
+        type: "USER"
     },
     {
         name: 'falcoins',
         description: 'amount of falcoins to bet in the game',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.STRING
+        type: "STRING"
     }   
     ],
     callback: async ({instance, guild, message, interaction, client, user, args}) => {

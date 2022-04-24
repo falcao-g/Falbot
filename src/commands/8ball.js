@@ -1,4 +1,4 @@
-const {Constants, MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const {randint, getRoleColor} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
 
@@ -19,7 +19,7 @@ module.exports = {
         name: 'question',
         description: 'the question you want to ask the 8ball',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.STRING
+        type: "STRING"
     }],
     callback: async ({instance, guild, interaction, user, text}) => {
         try {

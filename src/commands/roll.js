@@ -1,4 +1,4 @@
-const {Constants, MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const Roll = require('roll')
 const {getRoleColor} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
@@ -17,7 +17,7 @@ module.exports = {
         name: 'dice',
         description: 'dice to be rolled',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.STRING
+        type: "STRING"
     }],
     callback: async ({instance, guild, message, interaction, user, text}) => {
         try {

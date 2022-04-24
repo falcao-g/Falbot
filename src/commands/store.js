@@ -1,4 +1,4 @@
-const {Constants, MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const {getRoleColor, readFile, changeDB} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
 
@@ -17,14 +17,14 @@ module.exports =  {
         name: 'number',
         description: 'number of the item you want to buy',
         required: false,
-        type: Constants.ApplicationCommandOptionTypes.NUMBER,
+        type: "NUMBER",
         choices: [{name: 1, value: 1}, {name: 2, value: 2}, {name: 3, value: 3}]
     },
     {
         name: 'quantity',
         description: 'how many items you want to buy',
         required: false,
-        type: Constants.ApplicationCommandOptionTypes.NUMBER
+        type: "NUMBER"
     }
     ],
     callback: async ({instance, guild, user, args}) => {

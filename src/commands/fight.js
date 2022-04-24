@@ -1,4 +1,4 @@
-const {Constants, MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const {getMember, specialArg, readFile, format, randint, changeDB} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
 
@@ -17,13 +17,13 @@ module.exports =  {
         name: 'user',
         description: 'the user to challenge',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.USER
+        type: "USER"
     },
     {
         name: 'falcoins',
         description: 'the amount of falcoins to bet',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.STRING
+        type: "STRING"
     }   
     ],
     callback: async ({instance, guild, message, interaction, user, args}) => {

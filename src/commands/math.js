@@ -1,4 +1,4 @@
-const {Constants, MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const math = require('mathjs')
 const {getRoleColor} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
@@ -17,7 +17,7 @@ module.exports = {
         name: 'expression',
         description: 'the mathematical expression to be solved',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.STRING
+        type: "STRING"
     }],
     callback: async ({instance, guild, user, text}) => {
         try {

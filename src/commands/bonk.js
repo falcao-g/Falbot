@@ -1,4 +1,4 @@
-const {Constants, MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const {getRoleColor, getMember} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
 
@@ -16,7 +16,7 @@ module.exports = {
         name: 'user',
         description: 'the poor soul that will be sent to horny jail',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.USER
+        type: "USER"
     }],
     callback: async ({instance, guild, message, interaction, user, args}) => {
         try {

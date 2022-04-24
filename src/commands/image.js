@@ -1,4 +1,4 @@
-const {Constants, MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const { GOOGLE_IMG_SCRAP } = require('google-img-scrap');
 const {randint, getRoleColor} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
@@ -18,7 +18,7 @@ module.exports =  {
         name:'search',
         description: 'the search query',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.STRING
+        type: "STRING"
     }
     ],
     callback: async ({message, interaction, user, guild, text}) => {

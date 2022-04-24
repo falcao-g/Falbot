@@ -1,4 +1,3 @@
-const {Constants} = require('discord.js')
 const {testOnly} = require("../config.json")
 
 module.exports = {
@@ -15,7 +14,7 @@ module.exports = {
         name: 'quantity',
         description: 'quantity of coins to flip',
         required: false,
-        type: Constants.ApplicationCommandOptionTypes.NUMBER
+        type: "NUMBER"
     }],
     callback: async ({instance, guild, args}) => {
         try {

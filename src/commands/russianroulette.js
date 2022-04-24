@@ -1,4 +1,4 @@
-const {Constants, MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const {specialArg, readFile, changeDB, randint} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
 
@@ -18,7 +18,7 @@ module.exports =  {
         name: 'falcoins',
         description: 'amount of falcoins to play with',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.STRING
+        type: "STRING"
     }],
     callback: async ({instance, guild, message, interaction, client, user, args}) => {
         try {

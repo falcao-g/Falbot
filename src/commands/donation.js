@@ -1,4 +1,3 @@
-const {Constants} = require('discord.js')
 const {getMember, specialArg, readFile, format, takeAndGive} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
 
@@ -17,13 +16,13 @@ module.exports =  {
         name:'user',
         description: 'user to donate to',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.USER
+        type: "USER"
     },
     {
         name: 'falcoins',
         description: 'amount of falcoins to donate',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.STRING
+        type: "STRING"
     }
     ],
     callback: async ({instance, guild, message, interaction, user, args}) => {

@@ -1,4 +1,4 @@
-const {Constants, MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const {getMember, getRoleColor, format, readFile} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
 
@@ -16,7 +16,7 @@ module.exports =  {
         name: 'user',
         description: 'the user you want to get info about, leave blank to get your balance',
         required: false,
-        type: Constants.ApplicationCommandOptionTypes.USER
+        type: "USER"
     }],
     callback: async ({instance, guild, message, user, args}) => {
         try {

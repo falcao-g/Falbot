@@ -1,4 +1,4 @@
-const {Constants, MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const {specialArg, readFile, randint, changeDB, getRoleColor, format} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
 
@@ -17,7 +17,7 @@ module.exports =  {
         name: 'quantity',
         description: 'quantity of crates you wish to open',
         required: true,
-        type: Constants.ApplicationCommandOptionTypes.NUMBER
+        type: "NUMBER"
     }],
     callback: async ({instance, guild, user, args}) => {
         try {
