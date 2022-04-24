@@ -1,4 +1,4 @@
-const {Constants, MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js')
 const {getMember, getRoleColor, format} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
 const userSchema = require('../schemas/user-schema.js');
@@ -11,19 +11,22 @@ module.exports =  {
     guildOnly: true,
     testOnly,
     expectedArgs: '[scope]',
-    expectedArgsTypes: ['STRING'],
+    expectedArgsTypes: ['SUB_COMMAND'],
     options: [{
-        name:'scope',
-        description: 'show the global or local ranking',
-        required: false,
-        type: Constants.ApplicationCommandOptionTypes.STRING,
-        choices: [{name: 'global', value: 'global'}, {name: 'local', value: 'local'}]
+        name:'local',
+        description: 'show this server\'s falcoins ranking',
+        type: "SUB_COMMAND",
+    },
+    {
+        name:'global',
+        description: 'show the global falcoins ranking',
+        type: "SUB_COMMAND",
     }
     ],
-    callback: async ({client, user, guild, args}) => {
+    callback: async ({client, user, guild, args, interaction}) => {
         try {
                 rank = []
-                if (args[0] === 'local') {
+                if (args[0] === 'local' || interaction.options.getSubcommand() === 'local') {
                     users = await userSchema.find({}).sort({ 'falcoins': -1 }).limit(10)
 
                     for (useri of users) {
