@@ -26,7 +26,7 @@ module.exports =  {
     callback: async ({client, user, guild, args, interaction}) => {
         try {
             rank = []
-            scope = args[0].toLowerCase() || interaction.options.getSubcommand()
+            if (!interaction) {scope = args[0].toLowerCase()} else {scope = interaction.options.getSubcommand()}
             if (scope === 'local') {
                 users = await userSchema.find({}).sort({ 'falcoins': -1 }).limit(10)
 
