@@ -1,5 +1,7 @@
 const {Intents, Client} = require('discord.js')
-const {owners, someServers, language, MONGODB_URI, PREFIX, TOKEN} = require("./src/config.json")
+require('dotenv').config()
+const {MONGODB_URI, TOKEN} = process.env
+const {owners, someServers, language, PREFIX} = require('./src/config.json')
 const intents = new Intents(['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS'])
 const client = new Client({ intents })
 const WOKCommands = require('wokcommands')
@@ -18,6 +20,7 @@ client.on("ready", () => {
     defaultLanguage: language,
     messagesPath: path.join(__dirname, '/src/utils/json/messages.json'),
     disabledDefaultCommands: [
+      'help',
       'command',
       'requiredrole',
       'channelonly'
