@@ -676,6 +676,25 @@ async function explain(instance, guild, command) {
         inline: false
       }
     ])
+  } else if (command == "place") {
+    embed.setColor("GOLD")
+    embed.addFields([
+      {
+        name: "Info",
+        value: instance.messageHandler.get(guild, "PLACE_INFO"),
+        inline: false,
+      },
+      {
+        name: instance.messageHandler.get(guild, "CORES"),
+        value: instance.messageHandler.get(guild, "PLACE_CORES"),
+        inline: false,
+      },
+      {
+        name: instance.messageHandler.get(guild, "USO"),
+        value: instance.messageHandler.get(guild, "PLACE_USO"),
+        inline: false,
+      }
+    ])
   } else {
     embed.setColor("PURPLE")
     embed.addFields([
@@ -687,7 +706,7 @@ async function explain(instance, guild, command) {
       },
       {
         name: instance.messageHandler.get(guild, "COMANDOS_DIVERTIDOS"),
-        value: "`bonk`, `8ball`, `image`, `coinflip`, `poll`",
+        value: "`bonk`, `8ball`, `image`, `coinflip`, `poll`, `place`",
         inline: false
       },
       {
@@ -741,9 +760,92 @@ async function bankInterest() {
   }
 }
 
+async function placeReset() {
+  var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"));
+  if (Date.now() - config["place"]["last_reset"] > config["place"]["reset_time"]) {
+    console.log('place!')
+    config["place"]["last_reset"] = Date.now().toString()
+
+    var place = JSON.parse(fs.readFileSync("./src/utils/json/place.json", "utf8"));
+
+    for (let i = 0; i < place.length; i++) {
+      place[i] = '⬜'
+    }
+
+    json2 = JSON.stringify(place, null, 1);
+
+    fs.writeFileSync("./src/utils/json/place.json", json2, "utf8", function (err) {
+      if (err) throw err;
+    });
+
+    json2 = JSON.stringify(config, null, 1);
+
+    fs.writeFileSync("./src/config.json", json2, "utf8", function (err) {
+      if (err) throw err;
+    });
+  }
+}
+
+async function convertColor(color) {
+  if (color.toLowerCase() === 'white' || color.toLowerCase() === 'branco') {
+    return ':white_large_square:'
+  } else if (color.toLowerCase() === 'blue' || color.toLowerCase() === 'azul') {
+    return ':blue_square:'
+  } else if (color.toLowerCase() === 'green' || color.toLowerCase() === 'verde') {
+    return ':green_square:'
+  } else if (color.toLowerCase() === 'red' || color.toLowerCase() === 'vermelho') {
+    return ':red_square:'
+  } else if (color.toLowerCase() === 'yellow' || color.toLowerCase() === 'amarelo') {
+    return ':yellow_square:'
+  } else if (color.toLowerCase() === 'black' || color.toLowerCase() === 'preto') {
+    return ':black_square:'
+  } else if (color.toLowerCase() === 'orange' || color.toLowerCase() === 'laranja') {
+    return ':orange_square:'
+  } else if (color.toLowerCase() === 'purple' || color.toLowerCase() === 'roxo') {
+    return ':purple_square:'
+  } else if (color.toLowerCase() === 'brown' || color.toLowerCase() === 'marrom') {
+    return ':brown_square:'
+  } else {
+    throw Error('Color not found')
+  }
+}
+
+async function convertCoordinate(coordinate) {
+  if (coordinate.length > 2) {
+    throw Error('Coordinate is too long')
+  }
+
+  let coordinateNumber = 0
+
+  if (coordinate.slice(0,1).toLowerCase() === 'b') {
+    coordinateNumber += 9
+  } else if (coordinate.slice(0,1).toLowerCase() === 'c') {
+    coordinateNumber += 18
+  } else if (coordinate.slice(0,1).toLowerCase() === 'd') {
+    coordinateNumber += 27
+  } else if (coordinate.slice(0,1).toLowerCase() === 'e') {
+    coordinateNumber += 36
+  } else if (coordinate.slice(0,1).toLowerCase() === 'f') {
+    coordinateNumber += 45
+  } else if (coordinate.slice(0,1).toLowerCase() === 'g') {
+    coordinateNumber += 54
+  } else if (coordinate.slice(0,1).toLowerCase() === 'h') {
+    coordinateNumber += 63
+  } else if (coordinate.slice(0,1).toLowerCase() === 'i') {
+    coordinateNumber += 72
+  } else if (coordinate.slice(0,1).toLowerCase() !== 'a') {
+    throw Error('Coordinate not found')
+  }
+
+  coordinateNumber += parseInt(coordinate.slice(1,2))
+
+  return coordinateNumber
+}
+
 module.exports = {
     createUser, changeDB, msToTime,
     specialArg, format, readFile, getRoleColor,
     getMember, explain, takeAndGive, count,
-    randint, bankInterest
+    randint, bankInterest, convertColor,
+    convertCoordinate, placeReset
 }

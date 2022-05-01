@@ -6,7 +6,7 @@ const intents = new Intents(['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTION
 const client = new Client({ intents })
 const WOKCommands = require('wokcommands')
 const path = require('path')
-const {bankInterest} = require('./src/utils/functions.js')
+const {bankInterest, placeReset} = require('./src/utils/functions.js')
 const mongoose = require('mongoose')
 
 client.on("ready", () => {
@@ -41,7 +41,8 @@ client.on("ready", () => {
 
   setInterval(() => {
     client.user.setActivity('?comandos | arte by: @kinsallum'),
-    bankInterest()
-  }, 1000 * 600)
+    bankInterest(),
+    placeReset()
+  }, 1000 * 6)
 })
 client.login(TOKEN)

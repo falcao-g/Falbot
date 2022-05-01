@@ -723,7 +723,7 @@
         "not in a million years."
     ]
     },
-  "RUSROL": {
+    "RUSROL": {
     "portugues": [
       "morreu",
       "colocou a cabeça no lugar errado",
@@ -742,5 +742,37 @@
       "found out that the earth is flat", 
       "didn\"t use a mask"
     ] 
-  }
+    },
+    "PLACE_NOT_COLOR": {
+      "portugues": "Você precisa especificar uma cor, caso deseje apenas ver o canvas atual não especifique nada",
+      "english": "You need to specify a color, if you only want to see the current canvas don't specify anything"
+    },
+    "PLACE_NOT_COORD": {
+      "portugues": "Você precisa especificar uma coordenada, caso deseje apenas ver o canvas atual não especifique nada",
+      "english": "You need to specify a coordinate, if you only want to see the current canvas don't specify anything"
+    },
+    "PLACE_INVALID_COORD": {
+      "portugues": "A coordenada especificada é inválida, alguns exemplos de coordenadas válidas são A5, G3, F1, etc.",
+      "english": "The coordinate specified is invalid, some examples of valid coordinates are A5, G3, F1, etc."
+    },
+    "PLACE_INVALID_COLOR": {
+      "portugues": "A cor especificada é inválida, as cores válidas são: branco, laranja, vermelho, azul, verde, preto, roxo, marrom e amarelo",
+      "english": "The color specified is invalid, the valid colors are: white, orange, red, blue, green, black, purple, brown and yellow"
+    },
+    "PLACE_INFO": {
+      "portugues": "Um canvas de 9x9 inspirado pelo r/place subreddit, mas usando os emojis do discord",
+      "english": "A 9x9 canvas inspired by the r/place subreddit, but using the discord emojis"
+    },
+    "CORES": {
+      "portugues": "Cores disponíveis",
+      "english": "Available colors"
+    },
+    "PLACE_CORES": {
+      "portugues": "branco -> ⬜\n laranja -> :orange_square:\n azul -> :blue_square:\n vermelho -> :red_square:\n verde -> :green_square:\n preto -> :black_large_square:\n roxo -> :purple_square:\n marrom -> :brown_square:\n amarelo -> :yellow_square:",
+      "english": "white -> ⬜\n orange -> :orange_square:\n blue -> :blue_square:\n red -> :red_square:\n green -> :green_square:\n black -> :black_large_square:\n purple -> :purple_square:\n brown -> :brown_square:\n yellow -> :yellow_square:"
+    },
+    "PLACE_USO": {
+      "portugues": "/place [cor] [coordenada]",
+      "english": "/place [color] [coordinate]"
+    }
 }
