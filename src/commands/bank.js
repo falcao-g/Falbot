@@ -9,7 +9,7 @@ module.exports =  {
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
-    minArgs: 2,
+    minArgs: 1,
     testOnly,
     expectedArgs: '<option> <falcoins>',
     expectedArgsTypes: ['SUB_COMMAND', 'STRING'],
@@ -34,7 +34,7 @@ module.exports =  {
                 falcoins = args[1]
             } else {
                 metodo = interaction.options.getSubcommand()
-                falcoins = interaction.options.getNumber('falcoins')
+                falcoins = interaction.options.getString('falcoins')
             }
             switch (metodo) {
                 case 'depositar':
@@ -63,7 +63,7 @@ module.exports =  {
                 case 'sacar':
                 case 'withdraw':
                     try {
-                        var quantity = await specialArg(falcoins, user.id, "Banco")
+                        var quantity = await specialArg(falcoins, user.id, "banco")
                     } catch {
                         return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: falcoins})
                     }
