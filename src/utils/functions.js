@@ -104,9 +104,9 @@ async function specialArg(arg, id, field) {
     }
   }
 
-  if (new_arg == "tudo") {
+  if (new_arg == "tudo" || new_arg == 'all' ) {
     new_arg = user[field];
-  } else if (new_arg == "metade") {
+  } else if (new_arg == "metade" || new_arg == 'half') {
     new_arg = parseInt(user[field] / 2);
   } else {
     for (c in new_arg) {
