@@ -7,7 +7,7 @@ module.exports =  {
     category: 'Fun',
     description: 'Similar to the r/place subrredit, but with discord emojis',
     slash: 'both',
-    cooldown: '1s',
+    cooldown: '5m',
     guildOnly: true,
     testOnly,
     expectedArgs: '<color> <coordinate>',
@@ -86,4 +86,4 @@ module.exports =  {
             console.error(`place: ${error}`)
         }
     }
-}   
+}
