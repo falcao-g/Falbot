@@ -1,7 +1,9 @@
 const {MessageEmbed} = require('discord.js')
 const top = require('top.gg-core');
 const {changeDB, readFile, msToTime} = require('../utils/functions.js')
-const {testOnly, Authorization} = require("../config.json")
+const {testOnly} = require("../config.json")
+require('dotenv').config()
+const {Authorization} = process.env
 
 module.exports =  {
     aliases: ['voto'],
