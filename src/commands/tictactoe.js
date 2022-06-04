@@ -140,7 +140,7 @@ module.exports =  {
                                     components: [row, row2, row3]
                                 }) 
                             } else {
-                                var answer2 = await interaction.reply({
+                                answer2 = await interaction.followUp({
                                     content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n${instance.messageHandler.get(guild, "VELHA_MOVIMENTO", {USER: first_player.username})}`,
                                     components: [row, row2, row3],
                                     fetchReply: true
