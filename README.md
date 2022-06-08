@@ -22,7 +22,7 @@ You can add the bot's public instance by [clicking here](https://discord.com/oau
 
 ## 🚀 Self-hosting
 
-If you want to contribute to the project, you can do so by hosting falbot on your own machine. However I will not be providing help for those self-hosting, so you should know at least know how to troubleshoot issues, if you find any.
+If you want to contribute to the project, you can do so by hosting falbot on your own machine. However I won't give support for people that are trying to selfhost, I don't want to spend hours trying to troubleshoot other people issues that only happens on selfhosted instances, so you should at least know how to troubleshoot issues, if you find any.
 
 ## 👷 Requirements
 
