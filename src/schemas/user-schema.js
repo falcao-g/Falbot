@@ -34,6 +34,14 @@ const userSchema = mongoose.Schema({
     lastVote: {
         type: Number,
         default: 0
+    },
+    rank: {
+        type: String,
+        default: '1'
+    },
+    limite_banco: {
+        type: Number,
+        default: 100000
     }
 }, {
     timestamps: true
