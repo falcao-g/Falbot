@@ -1,0 +1,18 @@
+[
+        {
+            "rank": "1",
+            "falcoinsToLevelUp": 1000,
+            "perks": ["bank"]
+        }, {
+            "rank": "2",
+            "falcoinsToLevelUp": 2000,
+            "perks": ["bank", "outro"]
+        }, {
+            "rank": "3",
+            "falcoinsToLevelUp": 3000,
+            "perks": ["bank", "outro"]
+        }, {
+            "rank": "4",
+            "perks": ["bank", "outro"]
+        }
+]
