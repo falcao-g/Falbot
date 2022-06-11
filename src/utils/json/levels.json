@@ -1,0 +1,41 @@
+[
+        {
+            "rank": "PLEBEU",
+            "falcoinsToLevelUp": 200
+        }, {
+            "rank": "NOVATO",
+            "falcoinsToLevelUp": 500,
+            "perks": ["lootbox"]
+        }, {
+            "rank": "RECRUTA",
+            "falcoinsToLevelUp": 1000,
+            "perks": ["caixa"]
+        }, {
+            "rank": "TRABALHADOR",
+            "falcoinsToLevelUp": 2600,
+            "perks": ["lootbox"]
+        }, {
+            "rank": "COMERCIANTE",
+            "falcoinsToLevelUp": 5500,
+            "perks": ["bank"]
+        }, {
+            "rank": "PATRULHEIRO",
+            "falcoinsToLevelUp": 15000,
+            "perks": ["lootbox"]
+        }, {
+            "rank": "PATRÃO",
+            "falcoinsToLevelUp": 22000,
+            "perks": ["bank", "lootbox"]
+        }, {
+            "rank": "CAPITÃO",
+            "falcoinsToLevelUp": 33000,
+            "perks": ["bank"]
+        }, {
+            "rank": "PREFEITO",
+            "falcoinsToLevelUp": 45000,
+            "perks": ["caixa"]
+        }, {
+            "rank": "GOVERNADOR",
+            "perks": ["bank", "lootbox"]
+        }
+]

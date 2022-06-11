@@ -1,6 +1,6 @@
 {
   "name": "falbot",
-  "version": "2.2.1",
+  "version": "2.4",
   "description": "https://falbot.netlify.app/",
   "main": "index.js",
   "scripts": {

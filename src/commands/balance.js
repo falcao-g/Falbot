@@ -30,8 +30,8 @@ module.exports =  {
             const member = args[0] ? (await getMember(guild, args[0])).user : user
             const userFile = await readFile(member.id)
             const embed = new MessageEmbed()
+            .setTitle(instance.messageHandler.get(guild, userFile.rank) + ' ' + member.username)
             .setColor(await getRoleColor(guild, member.id))
-            .setAuthor({name: member.username, iconURL: member.avatarURL()})
             .setFooter({text: 'by Falcão ❤️'})
             .addFields({
                 name: ':coin: Falcoins',

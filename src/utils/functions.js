@@ -164,6 +164,7 @@ async function readFile(id, field = "", rich = false) {
 async function getRoleColor(guild, member_id) {
   try {
     cor = guild.members.cache.get(member_id).displayColor
+    return cor
   } catch (err) {
     return "RANDOM"
   }
@@ -749,7 +750,17 @@ async function bankInterest() {
     var users = await userSchema.find({})
     
     for (user of users) {
-      await userSchema.findByIdAndUpdate(user._id, {$inc: {'banco': Math.floor(parseInt(user['banco'] * parseFloat(config["poupanca"]["interest_rate"])))}})
+      user_db = await userSchema.findById(user._id)
+
+      if (user_db.limite_banco > user_db.banco) {
+        user_db.banco += Math.floor(parseInt(user_db.banco * parseFloat(config["poupanca"]["interest_rate"])))
+      }
+
+      if (user_db.banco > user_db.limite_banco) {
+        user_db.banco = user_db.limite_banco
+      }
+
+      user_db.save()
     }
 
     json2 = JSON.stringify(config, null, 1);

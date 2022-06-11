@@ -25,6 +25,10 @@ module.exports =  {
         description: 'withdraw falcoins from the bank',
         type: "SUB_COMMAND",
         options: [{name: 'falcoins', description: 'the amount of falcoins to withdraw', type: "STRING", required: true}]
+    }, {
+        name: 'view',
+        description: "view bank balance and other useful stats",
+        type: "SUB_COMMAND"
     }
     ],
     callback: async ({instance, guild, message, user, args, interaction}) => {
@@ -36,7 +40,20 @@ module.exports =  {
                 metodo = interaction.options.getSubcommand()
                 falcoins = interaction.options.getString('falcoins')
             }
+
             switch (metodo) {
+                case 'view':
+                case 'ver':
+                    //send a message with the bank balance
+                    const embed = new MessageEmbed()
+                     .setColor(await getRoleColor(guild, user.id))
+                     .addFields({
+                        name: ':bank: ' + instance.messageHandler.get(guild, "BANCO"),
+                        value: `**:coin: ${await readFile(user.id, 'banco', true)} falcoins\n:bank: ${instance.messageHandler.get(guild, "BANK_INTEREST")}\n
+                        :money_with_wings: ${await format(await readFile(user.id, 'limite_banco') - await readFile(user.id, 'banco'))} ${instance.messageHandler.get(guild, "BANK_LIMIT")}
+                        :atm: ${instance.messageHandler.get(guild, "BANK_DEPOSIT_LIMIT", {FALCOINS: await format(await readFile(user.id, 'limite_banco') / 2)})}**`,
+                     })
+                     return embed
                 case 'depositar':
                 case 'deposit': 
                     try {
@@ -46,6 +63,14 @@ module.exports =  {
                     }
         
                     if (await readFile(user.id, 'falcoins') >= quantity && quantity > 0) {
+                        if (await readFile(user.id, 'banco') >= await readFile(user.id, 'limite_banco') / 2) {
+                            return instance.messageHandler.get(guild, "BANK_OVER_LIMIT")
+                        }
+
+                        if ((quantity + await readFile(user.id, 'banco')) > await readFile(user.id, 'limite_banco') / 2) {
+                            quantity = (await readFile(user.id, 'limite_banco') / 2) - await readFile(user.id, 'banco') 
+                        }
+
                         await takeAndGive(user.id, user.id, 'falcoins', 'banco', quantity)
         
                         const embed = new MessageEmbed()

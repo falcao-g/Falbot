@@ -774,5 +774,89 @@
     "PLACE_USO": {
       "portugues": "/place [cor] [coordenada]",
       "english": "/place [color] [coordinate]"
+    },
+    "MAX_RANK": {
+      "portugues": "{USER}, você já está no rank máximo",
+      "english": "{USER}, you are already at the maximum rank"
+    },
+    "NO_MONEY_RANK": {
+      "portugues": "Você precisa de mais **{FALCOINS} falcoins** para aumentar seu rank!",
+      "english": "You need more **{FALCOINS} falcoins** to increase your rank!"
+    },
+    "RANKUP_BANK": {
+      "portugues": "⬆️ *+100.000 falcoins de limite no banco*",
+      "english": "⬆️ *+100.000 falcoins of limit in the bank*"
+    },
+    "RANKUP_SUCESS": {
+      "portugues": "Você subiu de rank e agora é **{RANK}**!\nIsso te custou **{FALCOINS} falcoins**",
+      "english": "You have successfully increased your rank and now you are **{RANK}**!\nIt cost you **{FALCOINS} falcoins**"
+    },
+    "RANKUP_PERKS": {
+      "english": "Unlocked Perks",
+      "portugues": "Benefícios desbloqueados"
+    },
+    "BANK_INTEREST": {
+      "portugues": "1% de juros diários",
+      "english": "Daily interest of 1%"
+    },
+    "BANK_LIMIT": {
+      "portugues": "mais falcoins até maximizar",
+      "english": "more falcoins until you reach the maximum"
+    },
+    "BANK_DEPOSIT_LIMIT": {
+      "portugues": "Seu depósito máximo é de {FALCOINS} falcoins - suba de rank para aumentar!",
+      "english": "Your max deposit is {FALCOINS} falcoins - rank up to increase!"
+    },
+    "BANK_OVER_LIMIT": {
+      "portugues": ":raised_hand: Você não pode depositar mais falcoins no banco, pois está acima do seu limite de depósito",
+      "english": ":raised_hand: You can't deposit more falcoins in the bank, because you are over your deposit limit"
+    },
+    "RANKUP_CAIXA": {
+      "portugues": "⬆️ *+1 caixa e chave adicionadas ao seu inventário*",
+      "english": "⬆️ *+1 box and key added to your inventory*"
+    },
+    "RANKUP_LOOTBOX": {
+      "portugues": "⬆️ *+1000 falcoins adicionados a lootbox*",
+      "english": "⬆️ *+1000 falcoins added to lootbox*"
+    },
+    "PLEBEU": {
+      "portugues": ":potato: Plebeu",
+      "english": ":potato: Peasent"
+    },
+    "NOVATO": {
+      "portugues": ":bricks: Novato",
+      "english": ":bricks: Novice"
+    },
+    "RECRUTA": {
+      "portugues": ":medal: Recruta",
+      "english": ":medal: Recruit"
+    },
+    "TRABALHADOR": {
+      "portugues": ":hammer: Trabalhador",
+      "english": ":hammer: Worker"
+    },
+    "COMERCIANTE": {
+      "portugues": ":money_with_wings: Comerciante",
+      "english": ":money_with_wings: Merchant"
+    },
+    "PATRULHEIRO": {
+      "portugues": ":map: Patrulheiro",
+      "english": ":map: Journeyman"
+    },
+    "PATRÃO": {
+      "portugues": ":balloon: Patrão",
+      "english": ":balloon: Boss"
+    },
+    "CAPITÃO": {
+      "portugues": ":anchor: Capitão",
+      "english": ":anchor: Captain"
+    },
+    "PREFEITO": {
+      "portugues": ":helmet_with_cross: Prefeito",
+      "english": ":helmet_with_cross: Warden"
+    },
+    "GOVERNADOR": {
+      "portugues": ":moneybag: Governador",
+      "english": ":moneybag: Governor"
     }
 }
