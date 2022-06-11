@@ -41,13 +41,20 @@ module.exports =  {
             if (new_rank.perks.includes('bank')) {
                 perks += instance.messageHandler.get(guild, "RANKUP_BANK")
                 await changeDB(user.id, 'limite_banco', 100000)
+            } else if (new_rank.perks.includes('caixa')) {
+                perks += instance.messageHandler.get(guild, "RANKUP_CAIXA")
+                await changeDB(user.id, 'caixas', 1)
+                await changeDB(user.id, 'chaves', 1)
+            } else if (new_rank.perks.includes('lootbox')) {
+                perks += instance.messageHandler.get(guild, "RANKUP_LOOTBOX")
+                await changeDB(user.id, 'lootbox', 1000)
             }
 
             const embed = new MessageEmbed()
              .setColor("AQUA")
              .addFields({
                 name: "Rank Up!",
-                value: instance.messageHandler.get(guild, "RANKUP_SUCESS", {RANK: new_rank.rank, FALCOINS: rank.falcoinsToLevelUp})
+                value: instance.messageHandler.get(guild, "RANKUP_SUCESS", {RANK: instance.messageHandler.get(guild, new_rank.rank), FALCOINS: rank.falcoinsToLevelUp})
             }, {
                 name: instance.messageHandler.get(guild, "RANKUP_PERKS"),
                 value: perks
