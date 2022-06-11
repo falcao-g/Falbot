@@ -37,7 +37,7 @@ const userSchema = mongoose.Schema({
     },
     rank: {
         type: String,
-        default: '1'
+        default: 'PLEBEU'
     },
     limite_banco: {
         type: Number,
