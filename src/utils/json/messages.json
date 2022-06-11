@@ -810,5 +810,53 @@
     "BANK_OVER_LIMIT": {
       "portugues": ":raised_hand: Você não pode depositar mais falcoins no banco, pois está acima do seu limite de depósito",
       "english": ":raised_hand: You can't deposit more falcoins in the bank, because you are over your deposit limit"
+    },
+    "RANKUP_CAIXA": {
+      "portugues": "⬆️ *+1 caixa e chave adicionadas ao seu inventário*",
+      "english": "⬆️ *+1 box and key added to your inventory*"
+    },
+    "RANKUP_LOOTBOX": {
+      "portugues": "⬆️ *+1000 falcoins adicionados a lootbox*",
+      "english": "⬆️ *+1000 falcoins added to lootbox*"
+    },
+    "PLEBEU": {
+      "portugues": ":potato: Plebeu",
+      "english": ":potato: Peasent"
+    },
+    "NOVATO": {
+      "portugues": ":bricks: Novato",
+      "english": ":bricks: Novice"
+    },
+    "RECRUTA": {
+      "portugues": ":medal: Recruta",
+      "english": ":medal: Recruit"
+    },
+    "TRABALHADOR": {
+      "portugues": ":hammer: Trabalhador",
+      "english": ":hammer: Worker"
+    },
+    "COMERCIANTE": {
+      "portugues": ":money_with_wings: Comerciante",
+      "english": ":money_with_wings: Merchant"
+    },
+    "PATRULHEIRO": {
+      "portugues": ":map: Patrulheiro",
+      "english": ":map: Journeyman"
+    },
+    "PATRÃO": {
+      "portugues": ":balloon: Patrão",
+      "english": ":balloon: Boss"
+    },
+    "CAPITÃO": {
+      "portugues": ":anchor: Capitão",
+      "english": ":anchor: Captain"
+    },
+    "PREFEITO": {
+      "portugues": ":helmet_with_cross: Prefeito",
+      "english": ":helmet_with_cross: Warden"
+    },
+    "GOVERNADOR": {
+      "portugues": ":moneybag: Governador",
+      "english": ":moneybag: Governor"
     }
 }
