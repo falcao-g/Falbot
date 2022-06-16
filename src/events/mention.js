@@ -1,7 +1,7 @@
 const {explain} = require('../utils/functions.js')
 
 
-module.exports = (client, instance) => {
+module.exports = async (client, instance) => {
     client.on("messageCreate", async (message) => {
         if (message.author.bot) return false;
     

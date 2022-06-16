@@ -1,5 +1,3 @@
-module.exports = (client) => {
-    client.on("error", async (error) => {
-        console.log(error)
-    });
+module.exports = async (client) => {
+    client.on("error", console.error);
 }
