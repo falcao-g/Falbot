@@ -43,6 +43,6 @@ client.on("ready", () => {
     client.user.setActivity('?comandos | arte by: @kinsallum'),
     bankInterest(),
     placeReset()
-  }, 1000 * 6)
+  }, 1000 * 60 * 30)
 })
 client.login(TOKEN)
