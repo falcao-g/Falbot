@@ -819,6 +819,18 @@
       "portugues": "⬆️ *+1000 falcoins adicionados a lootbox*",
       "english": "⬆️ *+1000 falcoins added to lootbox*"
     },
+    "ALL_RANKS": {
+      "portugues": ":sparkles: Todos os ranks",
+      "english": ":sparkles: All ranks"
+    },
+    "UPCOMING_RANKS": {
+      "portugues": ":arrow_up: Próximos ranks",
+      "english": ":arrow_up: Upcoming ranks"
+    },
+    "CURRENT_RANK": {
+      "portugues": " <- rank atual",
+      "english": " <- current rank"
+    },
     "1": {
       "portugues": ":potato: Plebeu",
       "english": ":potato: Peasent"

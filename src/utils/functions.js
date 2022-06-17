@@ -853,10 +853,24 @@ async function convertCoordinate(coordinate) {
   return coordinateNumber
 }
 
+async function rankPerks(rank, instance, guild) {
+  perks = ''
+
+  if (rank.perks.includes('bank')) {
+    perks += instance.messageHandler.get(guild, "RANKUP_BANK")
+  } else if (rank.perks.includes('caixa')) {
+      perks += instance.messageHandler.get(guild, "RANKUP_CAIXA")
+  } else if (rank.perks.includes('lootbox')) {
+      perks += instance.messageHandler.get(guild, "RANKUP_LOOTBOX")
+  }
+
+  return perks
+}
+
 module.exports = {
     createUser, changeDB, msToTime,
     specialArg, format, readFile, getRoleColor,
     getMember, explain, takeAndGive, count,
     randint, bankInterest, convertColor,
-    convertCoordinate, placeReset
+    convertCoordinate, placeReset, rankPerks
 }
