@@ -31,12 +31,11 @@ client.on("ready", () => {
 
   wok.on('commandException', (command, error) => {
     console.log(`Um erro ocorreu no comando "${command.names[0]}"! O erro foi:`)
-    console.log(error)
+    console.error(error)
   })
 
   mongoose.connection.on('error', (err) => {
-    console.log(`Erro na conexão do mongoDB: ${err}`)
-    console.log(wok.mongoConnection())
+    console.error(`Erro na conexão do mongoDB: ${err}`)
   })
 
   setInterval(() => {
