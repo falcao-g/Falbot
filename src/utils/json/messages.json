@@ -796,8 +796,8 @@
       "portugues": "Benefícios desbloqueados"
     },
     "BANK_INTEREST": {
-      "portugues": "1% de juros diários",
-      "english": "Daily interest of 1%"
+      "portugues": "10% de juros diários",
+      "english": "Daily interest of 10%"
     },
     "BANK_LIMIT": {
       "portugues": "mais falcoins até maximizar",
@@ -819,43 +819,43 @@
       "portugues": "⬆️ *+1000 falcoins adicionados a lootbox*",
       "english": "⬆️ *+1000 falcoins added to lootbox*"
     },
-    "PLEBEU": {
+    "1": {
       "portugues": ":potato: Plebeu",
       "english": ":potato: Peasent"
     },
-    "NOVATO": {
+    "2": {
       "portugues": ":bricks: Novato",
       "english": ":bricks: Novice"
     },
-    "RECRUTA": {
+    "3": {
       "portugues": ":medal: Recruta",
       "english": ":medal: Recruit"
     },
-    "TRABALHADOR": {
+    "4": {
       "portugues": ":hammer: Trabalhador",
       "english": ":hammer: Worker"
     },
-    "COMERCIANTE": {
+    "5": {
       "portugues": ":money_with_wings: Comerciante",
       "english": ":money_with_wings: Merchant"
     },
-    "PATRULHEIRO": {
+    "6": {
       "portugues": ":map: Patrulheiro",
       "english": ":map: Journeyman"
     },
-    "PATRÃO": {
+    "7": {
       "portugues": ":balloon: Patrão",
       "english": ":balloon: Boss"
     },
-    "CAPITÃO": {
+    "8": {
       "portugues": ":anchor: Capitão",
       "english": ":anchor: Captain"
     },
-    "PREFEITO": {
+    "9": {
       "portugues": ":helmet_with_cross: Prefeito",
       "english": ":helmet_with_cross: Warden"
     },
-    "GOVERNADOR": {
+    "10": {
       "portugues": ":moneybag: Governador",
       "english": ":moneybag: Governor"
     }
