@@ -65,6 +65,7 @@ module.exports =  {
                             value: perks
                         })
 
+                        embed.setFooter({text: 'by Falcão ❤️'})
                         return embed
                     }
                 case 'view':
@@ -102,6 +103,7 @@ module.exports =  {
                         }    
                     }
 
+                    embed.setFooter({text: 'by Falcão ❤️'})
                     return embed
                 case 'all':
                     var embed = new MessageEmbed()
@@ -117,6 +119,7 @@ module.exports =  {
                     }
 
                     embed.addField(instance.messageHandler.get(guild, "ALL_RANKS"), ranks)
+                    embed.setFooter({text: 'by Falcão ❤️'})
                     return embed
                 default:
                     return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: type})
