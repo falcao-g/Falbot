@@ -136,229 +136,9 @@
       "english": "You must specify what roles can use this command with `{PREFIX}requiredroles {COMMAND} <role ID>`.",
       "portugues": "Você deve especificar quais funções podem usar este comando com `{PREFIX} funções necessárias {COMANDO} <ID da função>`."
     },
-    "USO": {
-      "portugues": "Uso",
-      "english": "Usage"
-    },
-    "BALANCE_INFO": {
-      "portugues": "Mostra as suas informaçoes ou a de outro usuario",
-      "english": "Shows your or another user's balance"
-    },
-    "BALANCE_USO": {
-      "portugues": "/balance [@usuário]",
-      "english": "/balance [@user]"
-    },
-    "LB_INFO": {
-      "portugues": "Resgata sua lootbox grátis (disponível a cada 12 horas)",
-      "english": "Redeem your free lootbox (available every 12 hours)"
-    },
-    "DOAR_INFO": {
-      "portugues": "Doa x Falcoins para o usuário mencionado",
-      "english": "Donate x Falcoins to the mentioned user"
-    },
-    "DOAR_USO": {
-      "portugues": "/donation <@usuário> <falcoins>",
-      "english": "/donation <@user> <falcoins>"
-    },
-    "CAVALO_INFO": {
-      "portugues": "Adivinhe qual cavalo é o vencedor",
-      "english": "Guess the winner horse"
-    },
-    "GANHOS": {
-      "portugues": "Ganhos",
-      "english": "Winnings"
-    },
-    "RANK_INFO": {
-      "portugues": "Mostra o rank local ou global",
-      "english": "Show the local or global rank"
-    },
-    "RANK_USO": {
-      "portugues": "/rank [escopo]",
-      "english": "/rank [scope]"
-    },
-    "LOJA_INFO": {
-      "portugues": "Mostra os itens disponíveis na loja",
-      "english": "Show the available items in the shop"
-    },
-    "LOJA_USO": {
-      "portugues": "/store [numero] [quantidade] - numero e quantidade só são obrigatórios caso você queira comprar algo",
-      "english": "/store [number] [amount] - number and amount are only required if you want to buy something"
-    },
-    "ROLETA_INFO": {
-      "portugues": "**preto/vermelho/verde** se o bot rolar um número com a sua cor, você ganha\n**0-36** se o bot rolar seu número, você ganha\n**altos/baixos** baixos: 1-18, altos: 19-36\n**impar/par** impar = 1, 3, 5 ..., 35, par = 2, 4, 6, ..., 36",
-      "english": "**black/red/green** if the bot rolls your color you win\n**0-36** if the bot rolls your number you win\n**high/low** low: 1-18, high: 19-36\n**odd/even** odd = 1, 3, 5 ..., 35, even = 2, 4, 6, ..., 36"
-    },
-    "ROLETA_USO": {
-      "portugues": "/roulette <tipo de aposta> <falcoins>",
-      "english": "/roulette <bet type> <falcoins>"
-    },
-    "ROLETA_TIPOS": {
-      "portugues": "**<preto/vermelho/verde>, <0-36>, <altos/baixos>, <par/impar>**",
-      "english": "**<black/red/green>, <0-36>, <high/low>, <odd/even>**"
-    },
-    "ROLETA_GANHOS": {
-      "portugues": "**preto/vermelho/verde** - 2x\n**0-36** - 35x\n**altos/baixos** - 2x\n**impar/par** - 2x",
-      "english": "**black/red/green** - 2x\n**0-36** - 35x\n**high/low** - 2x\n**odd/even** - 2x"
-    },
-    "ROLETA_NUMEROS": {
-      "portugues": "Verde: **0**\nPreto: **2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35**\nVermelho: ** 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36**'",
-      "english": "Green: **0**\nBlack: **2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35**\nRed: ** 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36**"
-    },
     "NUMEROS": {
       "portugues": "Números",
       "english": "Numbers"
-    },
-    "TIPOS_APOSTAS": {
-      "portugues": "Tipos de apostas",
-      "english": "Bet types"
-    },
-    "NIQUEL_INFO": {
-      "portugues": "Caça-níquel",
-      "english": "Slot machine"
-    },
-    "BANCO_INFO": {
-      "portugues": "Guarda ou tira os seus falcoins do banco",
-      "english": "Deposit or withdraw your falcoins from the bank"
-    },
-    "BANCO_GANHOS": {
-      "portugues": "O valor depositado aumenta em 1% ao dia",
-      "english": "The deposited value increases by 1% every day"
-    },
-    "BANCO_USO": {
-      "portugues": "/bank <deposit/withdraw> <falcoins>",
-      "english": "/bank <deposit/withdraw> <falcoins>"
-    },
-    "LUTA_INFO": {
-      "portugues": "Desafia um usuário para uma luta até a morte",
-      "english": "Challenge a user to a fight until death"
-    },
-    "VENCEDOR_TUDO": {
-      "portugues": "**O vencedor leva tudo**",
-      "english": "**The winner takes everything**"
-    },
-    "HABILIDADES": {
-      "portugues": "Habilidades",
-      "english": "Skills"
-    },
-    "LUTA_HABILIDADES": {
-      "portugues": "**instântaneo:** dá um dano x na hora\n**stun:** dá um dano x e deixa o inimigo paralizado por 1 turno\n**cura:** se cura em x de vida\n**roubo de vida:** rouba uma quantidade x de vida do inimigo\n**self:** dá um dano x a si mesmo\n**escudo:** se protege de todo e qualquer dano por 1 rodada\n\n**O bot escolhe os ataques aleatoriamente**",
-      "english": "**instant:** does x damage on the turn\n**stun:** does x damage and stuns the enemy for 1 turn\n**heal:** heals x health\n**life steal:** steals x health from the enemy\n**self:** does x damage to yourself\n**shield:** protects you from all damage for 1 turn\n\n**The bot chooses the attacks randomly**"
-    },
-    "LUTA_USO": {
-      "portugues": "/fight <@usuário> <falcoins>",
-      "english": "/fight <@user> <falcoins>"
-    },
-    "CAIXA_INFO": {
-      "portugues": "Gasta chaves e caixas para ter a chance de ganhar alguns prêmios, você pode comprar caixas e chaves na loja",
-      "english": "Spend keys and boxes to have a chance to win some prizes, you can buy boxes and keys in the shop"
-    },
-    "CAIXA_GANHOS": {
-      "portugues": "Você pode ganhar `caixas`, `chaves`, `falcoins`",
-      "english": "You can win `boxes`, `keys`, `falcoins`"
-    },
-    "CAIXA_USO": {
-      "portugues": "/crate <quantidade>",
-      "english": "/crate <amount>"
-    },
-    "PREFIX_INFO": {
-      "portugues": "Muda o prefixo do servidor atual, deixe vazio para ver o prefixo atual",
-      "english": "Change the server prefix, leave it empty to see the current prefix"
-    },
-    "PREFIX_USO": {
-      "portugues": "/prefix [prefixo]",	
-      "english": "/prefix [prefix]"
-    },
-    "MATH_INFO": {
-      "portugues": "Calcula o resultado de uma expressão matemática",
-      "english": "Calculate the result of a mathematical expression"
-    },
-    "MATH_USO": {
-      "portugues": "/math <expressão>",
-      "english": "/math <expression>"
-    },
-    "ENQUETE_INFO": {
-      "portugues": "Cria uma bonita pequena enquete",
-      "english": "Create a beautiful small poll"
-    },
-    "ENQUETE_USO": {
-      "portugues": "/poll <tema>",
-      "english": "/poll <theme>"
-    },
-    "ROLL_INFO": {
-      "portugues": "Rola dados para você",
-      "english": "Roll dices for you"
-    },
-    "ROLL_USO": {
-      "portugues": "/roll <dados>",
-      "english": "/roll <dices>"
-    },
-    "COINFLIP_INFO": {
-      "portugues": "Joga uma moeda para você",
-      "english": "Flip a coin for you"
-    },
-    "COINFLIP_USO": {
-      "portugues": "/coinflip [quantidade]",
-      "english": "/coinflip [amount]"
-    },
-    "BONK_INFO": {
-      "portugues": "Manda alguém para a horny jail",
-      "english": "Send someone to the horny jail"
-    },
-    "BONK_USO": {
-      "portugues": "/bonk <@usuário>",
-      "english": "/bonk <@user>"
-    },
-    "BOLA8_INFO": {
-      "portugues": "Prevê o seu futuro",
-      "english": "Forecast your future"
-    },
-    "BOLA8_USO": {
-      "portugues": "/8ball <pergunta>",
-      "english": "/8ball <question>"
-    },
-    "CAVALGADA_INFO": {
-      "portugues": "Desafia outro usuário para uma corrida de cavalos",
-      "english": "Challenge a user to a horse race"
-    },
-    "FOTO_INFO": {
-      "portugues": "Envia uma foto aleatória sobre o termo especificado",
-      "english": "Send a random photo about the specified term"
-    },
-    "FOTO_USO": {
-      "portugues": "/image <termo>",
-      "english": "/image <term>"
-    },
-    "ROLETARUSSA_INFO": {
-      "portugues": "Jogue com seus amigos, usuários podem entrar reagindo a mensagem",
-      "english": "Play with your friends, users can enter reacting to the message"
-    },
-    "VELHA_INFO": {
-      "portugues": "Desafia outro usuário para um jogo da velha",
-      "english": "Challenge a user to a tic-tac-toe game"
-    },
-    "VELHA_USO": {
-      "portugues": "/tictactoe <@usuario> <falcoins>",
-      "english": "/tictactoe <@user> <falcoins>"
-    },
-    "VOTO_INFO": {
-      "portugues": "Resgata sua recompensa por votar no bot no top.gg",
-      "english": "Redeem your reward for voting in the bot on top.gg"
-    },
-    "SALA_JOGOS": {
-      "portugues": ":game_die: Comandos para a sala de jogos",
-      "english": ":game_die: Game commands"
-    },
-    "COMANDOS_DIVERTIDOS": {
-      "portugues": ":tada: Comandos divertidos",
-      "english": ":tada: Fun commands"
-    },
-    "COMANDOS_UTEIS": {
-      "portugues": ":gear: Comandos úteis",
-      "english": ":gear: Useful commands"
-    },
-    "COMANDOS_INFO": {
-      "portugues": "Use **/prefix** para ver seu prefixo\n\nUse **/help <comando>** para ver a descrição de um comando específico\n\nOs valores em falcoins podem tanto ser números, quanto porcentagens, 'tudo' ou 'metade'\n\n Use **/language english** to change to english",
-      "english": "Use **/prefix** to see your prefix\n\nUse **/help <command>** to see the description of a specific command\n\nValues in falcoins can be either numbers, percentages, 'tudo' or 'metade'\n\nUse **/language portugues** para mudar para português"
     },
     "VALOR_INVALIDO": {
       "portugues": "{VALUE} não é um valor válido... :rage:",
@@ -648,10 +428,6 @@
       "portugues": "Parabéns! Você comprou {AMOUNT} aumentos da lootbox :star_struck:",
       "english": "Congratulations! You bought {AMOUNT} lootbox increases :star_struck:"
     },
-    "ALIASES": {
-      "portugues": "Sinônimos",
-      "english": "Aliases"
-    },
     "COOLDOWNS": {
       "portugues": "Tempo de espera",
       "english": "Cooldowns"
@@ -663,14 +439,6 @@
     "PRONTO": {
       "portugues": "Pronto!",
       "english": "Ready!"
-    },
-    "LANGUAGE_INFO": {
-      "portugues": "Muda o idioma do servidor atual, deixe vazio para ver o idioma atual",
-      "english": "Change the server language, leave it empty to see the current language"
-    },
-    "COOLDOWNS_INFO": {
-      "portugues": "Mostra o tempo de espera dos seus comandos",
-      "english": "See all your cooldowns"
     },
     "SCORE": {
       "portugues": "Pontuação",
@@ -759,21 +527,9 @@
       "portugues": "A cor especificada é inválida, as cores válidas são: branco, laranja, vermelho, azul, verde, preto, roxo, marrom e amarelo",
       "english": "The color specified is invalid, the valid colors are: white, orange, red, blue, green, black, purple, brown and yellow"
     },
-    "PLACE_INFO": {
-      "portugues": "Um canvas de 9x9 inspirado pelo r/place subreddit, mas usando os emojis do discord",
-      "english": "A 9x9 canvas inspired by the r/place subreddit, but using the discord emojis"
-    },
     "CORES": {
       "portugues": "Cores disponíveis",
       "english": "Available colors"
-    },
-    "PLACE_CORES": {
-      "portugues": "branco -> ⬜\n laranja -> :orange_square:\n azul -> :blue_square:\n vermelho -> :red_square:\n verde -> :green_square:\n preto -> :black_large_square:\n roxo -> :purple_square:\n marrom -> :brown_square:\n amarelo -> :yellow_square:",
-      "english": "white -> ⬜\n orange -> :orange_square:\n blue -> :blue_square:\n red -> :red_square:\n green -> :green_square:\n black -> :black_large_square:\n purple -> :purple_square:\n brown -> :brown_square:\n yellow -> :yellow_square:"
-    },
-    "PLACE_USO": {
-      "portugues": "/place [cor] [coordenada]",
-      "english": "/place [color] [coordinate]"
     },
     "MAX_RANK": {
       "portugues": "{USER}, você já está no rank máximo",
@@ -830,6 +586,66 @@
     "CURRENT_RANK": {
       "portugues": " <- rank atual",
       "english": " <- current rank"
+    },
+    "ALL_COMMANDS": {
+      "portugues": ":books: Todos os comandos",
+      "english": ":books: All commands"
+    },
+    "TOO_MANY": {
+      "portugues": ":confused: Existem muitos comandos para mostrar aqui...",
+      "english": ":confused: There are too many commands to show here..."
+    },
+    "LINK_COMMANDS": {
+      "portugues": "[Clique aqui para uma lista completa com todos os comandos](https://falbot.netlify.app/commands)",
+      "english": "[Click here to see a complete list of all commands](https://falbot.netlify.app/commands)"
+    },
+    "WELCOME": {
+      "portugues": ":wave: Bem-vindo ao Falbot! ",
+      "english": ":wave: Welcome to Falbot!"
+    },
+    "ALREADY_COLLECTED": {
+      "portugues": "Você já coletou sua recompensa hoje",
+      "english": "You already collected your reward today"
+    },
+    "ALREADY_COLLECTED2": {
+      "portugues": "Recompensa: **5000** falcoins\nVocê pode coletar de novo em **{TIME}**",
+      "english": "Reward: **5000** falcoins\nYou can collect again in **{TIME}**"
+    },
+    "VOTE_FIRST": {
+      "portugues": "Você precisa votar primeiro para conseguir sua recompensa",
+      "english": "You need to vote first to get your reward"
+    },
+    "VOTE_HERE": {
+      "portugues": "[Você pode votar aqui](https://top.gg/bot/742331813539872798/vote)",
+      "english": "[You can vote here](https://top.gg/bot/742331813539872798/vote)"
+    },
+    "REWARD": {
+      "portugues": "Recompensa",
+      "english": "Reward"
+    },
+    "VOTE_FINAL": {
+      "portugues": "**5000** falcoins\nUse esse comando de novo após ter votado no bot",
+      "english": "**5000** falcoins\nUse this command again after you voted in the bot"
+    },
+    "HELP_RANK": {
+      "portugues": ":arrow_double_up: Gaste falcoins para subir de rank",
+      "english": ":arrow_double_up: Spend falcoins to rank up"
+    },
+    "HELP_RANK2": {
+      "portugues": "-Suba de rank com `/ranks rankup` para ganhar **várias recompensas** que te ajudam a ganhar falcoins\n-Você pode ver os próximos ranks com `/ranks view` e ver todos os ranks com `/ranks all`\n-Existe também uma leaderboard baseada em ranks, suba de rank para alcançar **posições mais altas!**",
+      "english": "-Rank up with `/ranks rankup` to receive **multiple rewards** that help you earn more falcoins\n-You can see upcoming ranks with `/ranks view` and all ranks with `/ranks all`\n-There is also a rank leaderboard, rank up to achieve a **higher position!**"
+    },
+    "HELP_LANGUAGE": {
+      "portugues": ":earth_americas: Escolha a linguagem desejada",
+      "english": ":earth_americas: Choose your desired language"
+    },
+    "HELP_LANGUAGE2": {
+      "portugues": "O falbot é um bot bilíngue!",
+      "english": "Falbot is a bilingual!"
+    },
+    "HELP_LANGUAGE3": {
+      "portugues": "-O idioma padrão do falbot é :flag_br: Português-Brasil, mas é possível mudar para inglês usando `/language english` e de volta para português com `/language portugues`\n-Para ver o idioma atual do servidor, utilize `/language`",
+      "english": "-Falbot's default language is :flag_br: Portuguese-Brazil, but it's possible to change to english using `/language english` and back to portuguese using `/language portugues`\n-To see which language your server is currently using, use `/language`"
     },
     "1": {
       "portugues": ":potato: Plebeu",
