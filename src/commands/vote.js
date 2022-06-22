@@ -29,15 +29,15 @@ module.exports =  {
             } else if (await topgg.isVoted(user.id) && (Date.now() - await readFile(user.id, 'lastVote') < 43200000)) {
                 const embed = new MessageEmbed()
                 .setColor(15158332) 
-                .addField('Você já coletou sua recompensa hoje', `Recompensa: **5000** falcoins\nVocê pode coletar de novo em **${await msToTime(43200000 - (Date.now() - await readFile(user.id, 'lastVote')))}**`)
+                .addField(instance.messageHandler.get(guild, "ALREADY_COLLECTED"), instance.messageHandler.get(guild, "ALREADY_COLLECTED2", {TIME: await msToTime(43200000 - (Date.now() - await readFile(user.id, 'lastVote')))}))
                 .setFooter({text: 'by Falcão ❤️'})
                 return embed
             } else {
                 const embed = new MessageEmbed()
-                .setTitle('Você precisa votar primeiro para conseguir sua recompensa')
+                .setTitle(instance.messageHandler.get(guild, "VOTE_FIRST"))
                 .setColor('#0099ff')
-                .setDescription('[Você pode votar aqui](https://top.gg/bot/742331813539872798/vote)')
-                .addField('Recompensa', '**5000** falcoins\nUse esse comando de novo após ter votado no bot')
+                .setDescription(instance.messageHandler.get(guild, "VOTE_HERE"))
+                .addField(instance.messageHandler.get(guild, "REWARD"), instance.messageHandler.get(guild, "VOTE_FINAL"))
                 .setFooter({text: 'by Falcão ❤️'})
                 return embed
             }
