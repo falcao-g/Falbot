@@ -38,10 +38,13 @@ client.on("ready", () => {
     console.error(`Erro na conexão do mongoDB: ${err}`)
   })
 
+  client.on('error', console.error)
+
   setInterval(() => {
-    client.user.setActivity('?comandos | arte by: @kinsallum'),
+    client.user.setActivity('?help | arte by: @kinsallum'),
     bankInterest(),
     placeReset()
   }, 1000 * 60 * 30)
 })
+
 client.login(TOKEN)
