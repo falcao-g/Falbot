@@ -6,7 +6,7 @@ const intents = new Intents(['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTION
 const client = new Client({ intents })
 const WOKCommands = require('wokcommands')
 const path = require('path')
-const {bankInterest, placeReset} = require('./src/utils/functions.js')
+const {bankInterest} = require('./src/utils/functions.js')
 const mongoose = require('mongoose')
 
 client.on("ready", () => {
