@@ -42,8 +42,7 @@ client.on("ready", () => {
 
   setInterval(() => {
     client.user.setActivity('?help | arte by: @kinsallum'),
-    bankInterest(),
-    placeReset()
+    bankInterest()
   }, 1000 * 60 * 30)
 })
 
