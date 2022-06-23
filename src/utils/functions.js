@@ -218,32 +218,6 @@ async function bankInterest() {
   }
 }
 
-async function placeReset() {
-  var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"));
-  if (Date.now() - config["place"]["last_reset"] > config["place"]["reset_time"]) {
-    console.log('place!')
-    config["place"]["last_reset"] = Date.now().toString()
-
-    var place = JSON.parse(fs.readFileSync("./src/utils/json/place.json", "utf8"));
-
-    for (let i = 0; i < place.length; i++) {
-      place[i] = '⬜'
-    }
-
-    json2 = JSON.stringify(place, null, 1);
-
-    fs.writeFileSync("./src/utils/json/place.json", json2, "utf8", function (err) {
-      if (err) throw err;
-    });
-
-    json2 = JSON.stringify(config, null, 1);
-
-    fs.writeFileSync("./src/config.json", json2, "utf8", function (err) {
-      if (err) throw err;
-    });
-  }
-}
-
 async function convertColor(color) {
   if (color.toLowerCase() === 'white' || color.toLowerCase() === 'branco') {
     return ':white_large_square:'
@@ -319,5 +293,5 @@ module.exports = {
     specialArg, format, readFile, getRoleColor,
     getMember, takeAndGive, count,
     randint, bankInterest, convertColor,
-    convertCoordinate, placeReset, rankPerks
+    convertCoordinate, rankPerks
 }
