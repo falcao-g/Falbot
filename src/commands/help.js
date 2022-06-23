@@ -1,6 +1,5 @@
 const {testOnly} = require("../config.json")
 const {MessageEmbed, MessageActionRow, MessageSelectMenu} = require('discord.js')
-const { e } = require("mathjs")
 
 module.exports =  {
     aliases: ['ajuda', 'comandos', 'commands'],
@@ -15,8 +14,8 @@ module.exports =  {
             description: 'Which help page you want to see',
             required: false,
             type: "STRING",
-            choices: [{name: "introduction", value: "introduction"}, {name: "allcommands", value: "allcommands"},
-            {name: "ranks", value: "ranks"}, {name: "economy", value: "economy"}, {name: "fun", value: "fun"},
+            choices: [{name: "allcommands", value: "allcommands"}, {name: "ranks", value: "ranks"},
+            {name: "economy", value: "economy"}, {name: "fun", value: "fun"},
             {name: "language", value: "language"}, {name: "utils", value: "utils"}]
         }
     ],
@@ -24,7 +23,9 @@ module.exports =  {
     callback: async ({args, message, instance, guild, interaction}) => {
         try {
             if (!interaction) {
-                var page = args[0].toLowerCase()
+                if (args[0] !== undefined) {
+                    var page = args[0].toLowerCase()
+                }
             } else {
                 if (interaction.options !== undefined) {
                     var page = interaction.options.getString("page")
@@ -35,51 +36,71 @@ module.exports =  {
             const embed = new MessageEmbed()
             .setColor("DARK_PURPLE")
             .setFooter({text: 'by Falcão ❤️'})
-            if (page === "introduction") {
-                // Send introduction message
-            } else if (page === "allcommands") {
+            if (page === "allcommands") {
                 embed.setTitle(instance.messageHandler.get(guild, "ALL_COMMANDS"))
                 embed.addField(instance.messageHandler.get(guild, "TOO_MANY"), instance.messageHandler.get(guild, "LINK_COMMANDS"))
             } else if (page === "ranks") {
                 embed.setTitle(':magic_wand: Ranks')
                 embed.addField(instance.messageHandler.get(guild, "HELP_RANK"), instance.messageHandler.get(guild, "HELP_RANK2"))
             } else if (page === "economy") {
-                // Send economy message
+                embed.addField(instance.messageHandler.get(guild, "HELP_ECONOMY2"), instance.messageHandler.get(guild, "HELP_ECONOMY3"))
             } else if (page === "fun") {
-                // Send fun message
+                embed.addField(instance.messageHandler.get(guild, "HELP_FUN"), instance.messageHandler.get(guild, "HELP_FUN2"))
             } else if (page === "language") {
                 embed.setTitle(instance.messageHandler.get(guild, "HELP_LANGUAGE"))
                 embed.addField(instance.messageHandler.get(guild, "HELP_LANGUAGE2"), instance.messageHandler.get(guild, "HELP_LANGUAGE3"))
             } else if (page === "utils") {
-                embed.addField(':pencil: Falbot também pode ser útil no seu dia-a-dia', '-Mude o prefixo do falbot com `/prefix`\n-Deixe o falbot resolver expressões matemáticas para você com `/math`\n-Role dados usando `/roll`')
+                embed.addField(instance.messageHandler.get(guild, "HELP_UTILS"), instance.messageHandler.get(guild, "HELP_UTILS2"))
             } else {
-                embed.setTitle('')  
+                embed.setTitle(instance.messageHandler.get(guild, "FALBOT_WELCOME"))
+                embed.addFields({
+                    name: ":books: " + instance.messageHandler.get(guild, "COMMANDS_ALL"),
+                    value: instance.messageHandler.get(guild, "COMMANDS_ALL2"),
+                    inline: true
+                }, {
+                    name: ":magic_wand: Ranks",
+                    value: instance.messageHandler.get(guild, "HELP_RANK3"),
+                    inline: true
+                }, {
+                    name: ":money_with_wings: " + instance.messageHandler.get(guild, "ECONOMY"),
+                    value: instance.messageHandler.get(guild, "HELP_ECONOMY"),
+                    inline: true
+                }, {
+                    name: ":tada: " + instance.messageHandler.get(guild, "FUN"),
+                    value: instance.messageHandler.get(guild, "HELP_FUN3"),
+                    inline: true
+                }, {
+                    name: ":earth_americas: " + instance.messageHandler.get(guild, "LANGUAGE"),
+                    value: instance.messageHandler.get(guild, "HELP_LANGUAGE4"),
+                    inline: true
+                }, {
+                    name: ":pencil: " + instance.messageHandler.get(guild, "UTILS"),
+                    value: instance.messageHandler.get(guild, "HELP_UTILS3"),
+                    inline: true
+                })
             }
             const row = new MessageActionRow()
             .addComponents(
                 new MessageSelectMenu()
                  .setCustomId("page")
-                 .setPlaceholder("Pick a help page...")
+                 .setPlaceholder(instance.messageHandler.get(guild, "PICK_PAGE"))
                  .addOptions({
-                    label: "Introduction",
-                    value: "introduction"
-                 }, {
-                    label: "allcommands",
+                    label: instance.messageHandler.get(guild, "COMMANDS_ALL"),
                     value: "allcommands"
                  }, {
-                    label: "ranks",
+                    label: "Ranks",
                     value: "ranks"
                  }, {
-                    label: "economy",
+                    label: instance.messageHandler.get(guild, "ECONOMY"),
                     value: "economy"
                  }, {
-                    label: "fun",
+                    label: instance.messageHandler.get(guild, "FUN"),
                     value: "fun"
                  }, {
-                    label: "language",
+                    label: instance.messageHandler.get(guild, "LANGUAGE"),
                     value: "language"
                  }, {
-                    label: "utils",
+                    label: instance.messageHandler.get(guild, "UTILS"),
                     value: "utils"
                  })
             )
@@ -88,8 +109,6 @@ module.exports =  {
             } else {
                 await message.reply({embeds: [embed], components: [row]})
             }
-            //console.log(instance.commandHandler.getCommand('help').callback)
-            //instance.commandHandler.getCommand('help').callback({args, instance, guild, interaction})
         } catch (error) {
             console.error(`Help: ${error}`)
         }

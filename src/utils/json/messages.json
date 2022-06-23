@@ -511,26 +511,6 @@
       "didn\"t use a mask"
     ] 
     },
-    "PLACE_NOT_COLOR": {
-      "portugues": "Você precisa especificar uma cor, caso deseje apenas ver o canvas atual não especifique nada",
-      "english": "You need to specify a color, if you only want to see the current canvas don't specify anything"
-    },
-    "PLACE_NOT_COORD": {
-      "portugues": "Você precisa especificar uma coordenada, caso deseje apenas ver o canvas atual não especifique nada",
-      "english": "You need to specify a coordinate, if you only want to see the current canvas don't specify anything"
-    },
-    "PLACE_INVALID_COORD": {
-      "portugues": "A coordenada especificada é inválida, alguns exemplos de coordenadas válidas são A5, G3, F1, etc.",
-      "english": "The coordinate specified is invalid, some examples of valid coordinates are A5, G3, F1, etc."
-    },
-    "PLACE_INVALID_COLOR": {
-      "portugues": "A cor especificada é inválida, as cores válidas são: branco, laranja, vermelho, azul, verde, preto, roxo, marrom e amarelo",
-      "english": "The color specified is invalid, the valid colors are: white, orange, red, blue, green, black, purple, brown and yellow"
-    },
-    "CORES": {
-      "portugues": "Cores disponíveis",
-      "english": "Available colors"
-    },
     "MAX_RANK": {
       "portugues": "{USER}, você já está no rank máximo",
       "english": "{USER}, you are already at the maximum rank"
@@ -646,6 +626,82 @@
     "HELP_LANGUAGE3": {
       "portugues": "-O idioma padrão do falbot é :flag_br: Português-Brasil, mas é possível mudar para inglês usando `/language english` e de volta para português com `/language portugues`\n-Para ver o idioma atual do servidor, utilize `/language`",
       "english": "-Falbot's default language is :flag_br: Portuguese-Brazil, but it's possible to change to english using `/language english` and back to portuguese using `/language portugues`\n-To see which language your server is currently using, use `/language`"
+    },
+    "HELP_FUN": {
+      "portugues": ":tada: Quer se divertir sem se preocupar com falcoins?",
+      "english": ":tada: Want to have fun without worrying abou falcoins?"
+    },
+    "HELP_FUN2": {
+      "portugues": "-Preveja seu futuro com `/8ball`\n-Mande outro usuário (ou a si mesmo) para a horny jail com `/bonk`\n-Peça para o falbot procurar imagens no google pra você com `/image`\n-Jogue cara ou coroa com `/coinflip`\n-Faça uma pequena enquete com `/poll`",
+      "english": "-Forecast your future with `/8ball`\n-Send you or another user to the horny jail with `/bonk`\n-Ask falbot to search images on google for you with `/image`\n-Flip a coin with `/coinflip`\n-Do a pretty little poll with `/poll`"
+    },
+    "HELP_UTILS": {
+      "portugues": ":pencil: Falbot também pode ser útil no seu dia-a-dia",
+      "english": ":pencil: Falbot can also be useful in your daily life"
+    },
+    "HELP_UTILS2": {
+      "portugues": "-Mude o prefixo do falbot com `/prefix`\n-Deixe o falbot resolver expressões matemáticas para você com `/math`\n-Role dados usando `/roll`",
+      "english": "-Change falbot's prefix with `/prefix`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`"
+    },
+    "COMMANDS_ALL": {
+      "portugues": "Todos os comandos",
+      "english": "All commands"
+    },
+    "ECONOMY": {
+      "portugues": "Economia",
+      "english": "Economy"
+    },
+    "FUN": {
+      "portugues": "Diversão",
+      "english": "Fun"
+    },
+    "LANGUAGE": {
+      "portugues": "Idioma",
+      "english": "Language"
+    },
+    "UTILS": {
+      "portugues": "Úteis",
+      "english": "Utils"
+    },
+    "COMMANDS_ALL2": {
+      "portugues": "*Lista de comandos*",
+      "english": "*Detailed command list*"
+    },
+    "HELP_RANK3": {
+      "portugues": "*Subindo de rank*",
+      "english": "*Ranking up*"
+    },
+    "HELP_ECONOMY": {
+      "portugues": "*Mecânicas de gameplay*",
+      "english": "*Gameplay mechanics*"
+    },
+    "HELP_FUN3": {
+      "portugues": "*Diversão sem falcoins*",
+      "english": "*Fun without falcoins*"
+    },
+    "HELP_LANGUAGE4": {
+      "portugues": "*Configurando o idioma do servidor*",
+      "english": "*Configuring the server's language*"
+    },
+    "HELP_UTILS3": {
+      "portugues": "*Usando falbot no dia-a-dia*",
+      "english": "*Using falbot in your daily life*"
+    },
+    "FALBOT_WELCOME": {
+      "portugues": ":wave: Bem-vindo ao falbot! Use o menu para escolher uma página de ajuda",
+      "english": ":wave: Welcome to falbot! Use the menu to pick a help page"
+    },
+    "HELP_ECONOMY2": {
+      "portugues": ":money_with_wings: Ganhando mais falcoins",
+      "english": ":money_with_wings: Earning more falcoins"
+    },
+    "HELP_ECONOMY3": {
+      "portugues": "**:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/vote`\n:gift: Resgate sua lootbox a cada 12 horas para um bônus extra com `/lootbox`\n:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/bank`**\n**:stopwatch: Veja quanto tempo até poder executar ações de novo com `/cooldowns`**\n**:busts_in_silhouette: Interaja com outros usuários**\n-Compita com seus amigos com `/horseduel`, `/tictactoe`, `/russianroulette` e `/fight`\n-Se sentindo generoso? Doe dinheiro com `/donation`\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/slot`, `/roulette` e `/horse`**",
+      "english": "**:ballot_box: Vote every 12 hours to earn falcoins with `/vote`\n:gift: Claim your lootbox every 12 hours for more falcoins with `/lootbox`\n:bank: Deposit your money in the bank and watch as it increases with `/bank`**\n**:stopwatch: See how long until actions can be performed again with `/cooldowns`**\n**:busts_in_silhouette: Interact with another users**\n-Compete with your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`\n-Feeling generous? Donate money with `/donation`\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette` and `/horse`**"
+    },
+    "PICK_PAGE": {
+      "portugues": "Escolha uma página de ajuda...",
+      "english": "Pick a help page..."
     },
     "1": {
       "portugues": ":potato: Plebeu",
