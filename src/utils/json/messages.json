@@ -576,7 +576,7 @@
       "english": ":confused: There are too many commands to show here..."
     },
     "LINK_COMMANDS": {
-      "portugues": "[Clique aqui para uma lista completa com todos os comandos](https://falbot.netlify.app/commands)",
+      "portugues": "[Clique aqui para uma lista completa com todos os comandos](https://falbot.netlify.app/comandos)",
       "english": "[Click here to see a complete list of all commands](https://falbot.netlify.app/commands)"
     },
     "WELCOME": {
@@ -702,6 +702,10 @@
     "PICK_PAGE": {
       "portugues": "Escolha uma página de ajuda...",
       "english": "Pick a help page..."
+    },
+    "GANHOS": {
+      "portugues": "Ganhos",
+      "english": "Winnings"
     },
     "1": {
       "portugues": ":potato: Plebeu",
