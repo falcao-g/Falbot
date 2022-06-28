@@ -44,6 +44,7 @@ const userSchema = mongoose.Schema({
         default: 100000
     }
 }, {
+    versionKey: false,
     timestamps: true
 })
                                     
