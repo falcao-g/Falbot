@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { MessageEmbed } = require("discord.js");
 const userSchema = require('../schemas/user-schema')
 
 async function createUser(id) {
