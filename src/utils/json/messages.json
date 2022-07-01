@@ -703,9 +703,21 @@
       "portugues": "Escolha uma página de ajuda...",
       "english": "Pick a help page..."
     },
+    "BALANCE_RANKUP": {
+      "portugues": "🎉 Você tem o suficiente para subir de rank!",
+      "english": "🎉 You have enough to rank up!"
+    },
+    "BALANCE_RANKUP2": {
+      "portugues": ":arrow_up: {FALCOINS} falcoins para o próximo rank",
+      "english": ":arrow_up: {FALCOINS} to the next rank"
+    },
     "GANHOS": {
       "portugues": "Ganhos",
       "english": "Winnings"
+    },
+    "MAX_RANK2": {
+      "portugues": "Rank máximo",
+      "english": "Max rank"
     },
     "1": {
       "portugues": ":potato: Plebeu",
