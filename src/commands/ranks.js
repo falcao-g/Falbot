@@ -90,7 +90,7 @@ module.exports =  {
                     for (var i = 0; i < quantity; i++) {
                         if (levels[rank_number + i].falcoinsToLevelUp === undefined) {
                             embed.addField(
-                                instance.messageHandler.get(guild, String(rank_number + i + 1)) + ' - Max Rank',
+                                instance.messageHandler.get(guild, String(rank_number + i + 1)) + ' - ' + instance.messageHandler.get(guild, 'MAX_RANK2'),
                                 await rankPerks(levels[rank_number + i], instance, guild),
                                 false
                             )
@@ -112,7 +112,7 @@ module.exports =  {
                     ranks = ''
                     for (var i = 0; i < levels.length; i++) {
                         if (levels[i].falcoinsToLevelUp === undefined) {
-                            ranks += `**${instance.messageHandler.get(guild, String(i + 1))}** - Max Rank\n`
+                            ranks += `**${instance.messageHandler.get(guild, String(i + 1))}** - ` + instance.messageHandler.get(guild, 'MAX_RANK2') + '\n'
                         } else {
                             ranks += `**${instance.messageHandler.get(guild, String(i + 1))}** - ${levels[i].falcoinsToLevelUp} falcoins\n`
                         }
