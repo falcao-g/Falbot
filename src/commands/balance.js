@@ -1,6 +1,8 @@
 const {MessageEmbed} = require('discord.js')
 const {getMember, getRoleColor, format, readFile} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
+const levels = require('../utils/json/levels.json')
+const { e } = require('mathjs')
 
 module.exports =  {
     aliases: ['eu', 'credits', 'sobre'],
@@ -29,10 +31,11 @@ module.exports =  {
             }
             const member = args[0] ? (await getMember(guild, args[0])).user : user
             const userFile = await readFile(member.id)
+
             const embed = new MessageEmbed()
             .setTitle(instance.messageHandler.get(guild, userFile.rank) + ' ' + member.username)
             .setColor(await getRoleColor(guild, member.id))
-            .setFooter({text: 'by Falcão ❤️'})
+            .setFooter(({text: 'by Falcão ❤️'}))
             .addFields({
                 name: ':coin: Falcoins',
                 value: `${await format(userFile.falcoins)}`,
@@ -54,7 +57,13 @@ module.exports =  {
                 value: `${await format(userFile.chaves)}`,
                 inline: true
             }) 
-    
+            if (levels[userFile.rank-1].falcoinsToLevelUp === undefined) {
+                embed.setDescription(':sparkles: ' + instance.messageHandler.get(guild, 'MAX_RANK2'))
+            } else if (levels[userFile.rank-1].falcoinsToLevelUp <= userFile.falcoins) {
+                embed.setDescription(instance.messageHandler.get(guild, 'BALANCE_RANKUP'))
+            } else {
+                embed.setDescription(instance.messageHandler.get(guild, 'BALANCE_RANKUP2', {FALCOINS: await format(levels[userFile.rank-1].falcoinsToLevelUp - userFile.falcoins)}))
+            }
             return embed
         } catch (error) {
                 console.error(`balance: ${error}`)
