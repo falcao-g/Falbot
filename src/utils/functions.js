@@ -217,62 +217,6 @@ async function bankInterest() {
   }
 }
 
-async function convertColor(color) {
-  if (color.toLowerCase() === 'white' || color.toLowerCase() === 'branco') {
-    return ':white_large_square:'
-  } else if (color.toLowerCase() === 'blue' || color.toLowerCase() === 'azul') {
-    return ':blue_square:'
-  } else if (color.toLowerCase() === 'green' || color.toLowerCase() === 'verde') {
-    return ':green_square:'
-  } else if (color.toLowerCase() === 'red' || color.toLowerCase() === 'vermelho') {
-    return ':red_square:'
-  } else if (color.toLowerCase() === 'yellow' || color.toLowerCase() === 'amarelo') {
-    return ':yellow_square:'
-  } else if (color.toLowerCase() === 'black' || color.toLowerCase() === 'preto') {
-    return ':black_square:'
-  } else if (color.toLowerCase() === 'orange' || color.toLowerCase() === 'laranja') {
-    return ':orange_square:'
-  } else if (color.toLowerCase() === 'purple' || color.toLowerCase() === 'roxo') {
-    return ':purple_square:'
-  } else if (color.toLowerCase() === 'brown' || color.toLowerCase() === 'marrom') {
-    return ':brown_square:'
-  } else {
-    throw Error('Color not found')
-  }
-}
-
-async function convertCoordinate(coordinate) {
-  if (coordinate.length > 2) {
-    throw Error('Coordinate is too long')
-  }
-
-  let coordinateNumber = 0
-
-  if (coordinate.slice(0,1).toLowerCase() === 'b') {
-    coordinateNumber += 9
-  } else if (coordinate.slice(0,1).toLowerCase() === 'c') {
-    coordinateNumber += 18
-  } else if (coordinate.slice(0,1).toLowerCase() === 'd') {
-    coordinateNumber += 27
-  } else if (coordinate.slice(0,1).toLowerCase() === 'e') {
-    coordinateNumber += 36
-  } else if (coordinate.slice(0,1).toLowerCase() === 'f') {
-    coordinateNumber += 45
-  } else if (coordinate.slice(0,1).toLowerCase() === 'g') {
-    coordinateNumber += 54
-  } else if (coordinate.slice(0,1).toLowerCase() === 'h') {
-    coordinateNumber += 63
-  } else if (coordinate.slice(0,1).toLowerCase() === 'i') {
-    coordinateNumber += 72
-  } else if (coordinate.slice(0,1).toLowerCase() !== 'a') {
-    throw Error('Coordinate not found')
-  }
-
-  coordinateNumber += parseInt(coordinate.slice(1,2))
-
-  return coordinateNumber
-}
-
 async function rankPerks(rank, instance, guild) {
   perks = ''
 
@@ -291,6 +235,5 @@ module.exports = {
     createUser, changeDB, msToTime,
     specialArg, format, readFile, getRoleColor,
     getMember, takeAndGive, count,
-    randint, bankInterest, convertColor,
-    convertCoordinate, rankPerks
+    randint, bankInterest, rankPerks
 }
