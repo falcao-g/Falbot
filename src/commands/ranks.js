@@ -69,12 +69,12 @@ module.exports =  {
                         return embed
                     }
                 case 'view':
-                    if (await readFile(user.id, 'rank') === 10) {
+                    if (await readFile(user.id, 'rank') === 15) {
                         return instance.messageHandler.get(guild, "MAX_RANK", {USER: user})
                     }
 
                     var rank_number = await readFile(user.id, 'rank')
-                    quantity = 10 - rank_number
+                    quantity = 15 - rank_number
                     if (quantity > 3) {quantity = 3}
 
                     var embed = new MessageEmbed()

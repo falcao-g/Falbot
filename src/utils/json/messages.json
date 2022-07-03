@@ -758,5 +758,25 @@
     "10": {
       "portugues": ":moneybag: Governador",
       "english": ":moneybag: Governor"
+    },
+    "11": {
+      "portugues": ":shield: Vice-rei",
+      "english": ":shield: Viceroy"
+    },
+    "12": {
+      "portugues": ":1234: Conde",
+      "english": ":1234: Count"
+    },
+    "13": {
+      "portugues": ":crystal_ball: Magistrado",
+      "english": ":crystal_ball: Magistrate"
+    },
+    "14": {
+      "portugues": ":vulcan: Coronel",
+      "english": ":vulcan: Colonel"
+    },
+    "15": {
+      "portugues": ":paperclip: Comandante",
+      "english": ":paperclip: Commander"
     }
 }

@@ -1,41 +1,46 @@
 [
-        {
-            "rank": "PLEBEU",
-            "falcoinsToLevelUp": 200
-        }, {
-            "rank": "NOVATO",
-            "falcoinsToLevelUp": 500,
-            "perks": ["lootbox"]
-        }, {
-            "rank": "RECRUTA",
-            "falcoinsToLevelUp": 1000,
-            "perks": ["caixa"]
-        }, {
-            "rank": "TRABALHADOR",
-            "falcoinsToLevelUp": 2600,
-            "perks": ["lootbox"]
-        }, {
-            "rank": "COMERCIANTE",
-            "falcoinsToLevelUp": 5500,
-            "perks": ["bank"]
-        }, {
-            "rank": "PATRULHEIRO",
-            "falcoinsToLevelUp": 15000,
-            "perks": ["lootbox"]
-        }, {
-            "rank": "PATRÃO",
-            "falcoinsToLevelUp": 22000,
-            "perks": ["bank", "lootbox"]
-        }, {
-            "rank": "CAPITÃO",
-            "falcoinsToLevelUp": 33000,
-            "perks": ["bank"]
-        }, {
-            "rank": "PREFEITO",
-            "falcoinsToLevelUp": 45000,
-            "perks": ["caixa"]
-        }, {
-            "rank": "GOVERNADOR",
-            "perks": ["bank", "lootbox"]
-        }
+    {
+        "falcoinsToLevelUp": 200
+    }, {
+        "falcoinsToLevelUp": 500,
+        "perks": ["lootbox"]
+    }, {
+        "falcoinsToLevelUp": 1000,
+        "perks": ["caixa"]
+    }, {
+        "falcoinsToLevelUp": 2600,
+        "perks": ["lootbox"]
+    }, {
+        "falcoinsToLevelUp": 5500,
+        "perks": ["bank"]
+    }, {
+        "falcoinsToLevelUp": 15000,
+        "perks": ["lootbox"]
+    }, {
+        "falcoinsToLevelUp": 22000,
+        "perks": ["bank", "lootbox"]
+    }, {
+        "falcoinsToLevelUp": 33000,
+        "perks": ["bank"]
+    }, {
+        "falcoinsToLevelUp": 45000,
+        "perks": ["caixa"]
+    }, {
+        "falcoinsToLevelUp": 60000,
+        "perks": ["bank", "lootbox"]
+    }, {
+        "falcoinsToLevelUp": 80000,
+        "perks": ["lootbox"]
+    }, {
+        "falcoinsToLevelUp": 105000,
+        "perks": ["bank", "caixa"]
+    }, {
+        "falcoinsToLevelUp": 130000,
+        "perks": ["lootbox"]
+    }, {
+        "falcoinsToLevelUp": 160000,
+        "perks": ["bank"]
+    }, {
+        "perks": ["bank", "lootbox"]
+    }
 ]
