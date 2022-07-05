@@ -86,22 +86,28 @@ module.exports =  {
                  .setPlaceholder(instance.messageHandler.get(guild, "PICK_PAGE"))
                  .addOptions({
                     label: instance.messageHandler.get(guild, "COMMANDS_ALL"),
-                    value: "allcommands"
+                    value: "allcommands",
+                    emoji: "📚"
                  }, {
                     label: "Ranks",
-                    value: "ranks"
+                    value: "ranks",
+                    emoji: "🪄"
                  }, {
                     label: instance.messageHandler.get(guild, "ECONOMY"),
-                    value: "economy"
+                    value: "economy",
+                    emoji: "💸"
                  }, {
                     label: instance.messageHandler.get(guild, "FUN"),
-                    value: "fun"
+                    value: "fun",
+                    emoji: "🎉"
                  }, {
                     label: instance.messageHandler.get(guild, "LANGUAGE"),
-                    value: "language"
+                    value: "language",
+                    emoji: "🌎"
                  }, {
                     label: instance.messageHandler.get(guild, "UTILS"),
-                    value: "utils"
+                    value: "utils",
+                    emoji: "📝"
                  })
             )
             if (interaction) {
