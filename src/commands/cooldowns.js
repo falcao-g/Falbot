@@ -1,7 +1,6 @@
 const {MessageEmbed} = require('discord.js')
 const {readFile, getRoleColor, msToTime} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
-const cooldownSchema = require('wokcommands/dist/models/cooldown.js')
 
 module.exports =  {
     aliases: ['espera'],
@@ -13,6 +12,7 @@ module.exports =  {
     testOnly,
     callback: async ({instance, guild, user}) => {
         try {
+            cooldownSchema = instance._mongoConnection.models['wokcommands-cooldowns']
             userCooldown = await cooldownSchema.findById(`lootbox-${guild.id}-${user.id}`)
             voteCooldown = Date.now() - await readFile(user.id, 'lastVote')
             const embed = new MessageEmbed()
