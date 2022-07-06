@@ -2,7 +2,6 @@ const {MessageEmbed} = require('discord.js')
 const {getMember, getRoleColor, format, readFile} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
 const levels = require('../utils/json/levels.json')
-const { e } = require('mathjs')
 
 module.exports =  {
     aliases: ['eu', 'credits', 'sobre'],
