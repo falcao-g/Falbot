@@ -6,7 +6,7 @@ const intents = new Intents(['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTION
 const client = new Client({ intents })
 const WOKCommands = require('wokcommands')
 const path = require('path')
-const {bankInterest} = require('./src/utils/functions.js')
+const {bankInterest, sendVoteReminders} = require('./src/utils/functions.js')
 const mongoose = require('mongoose')
 
 client.on("ready", () => {
@@ -42,7 +42,8 @@ client.on("ready", () => {
 
   setInterval(() => {
     client.user.setActivity('?help | arte by: @kinsallum'),
-    bankInterest()
+    bankInterest(),
+    sendVoteReminders(client)
   }, 1000 * 60 * 30)
 })
 
