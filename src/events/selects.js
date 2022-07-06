@@ -8,7 +8,7 @@ module.exports = (client, instance) => {
                 instance.commandHandler.getCommand('help').callback({instance, guild, interaction})
             }
         } catch (error) {
-            console.log(`Select: ${error}`)
+            console.error(`Select: ${error}`)
         }
     })
 }
