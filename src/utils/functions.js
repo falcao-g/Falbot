@@ -1,5 +1,6 @@
 const fs = require("fs");
 const userSchema = require('../schemas/user-schema')
+const {MessageEmbed, MessageActionRow, MessageButton} = require('discord.js')
 
 async function createUser(id) {
   try {
@@ -217,6 +218,42 @@ async function bankInterest() {
   }
 }
 
+async function sendVoteReminders(client) {
+  try {
+    var users = await userSchema.find({})
+
+    for (user of users) {
+      user_db = await userSchema.findById(user._id)
+  
+      //send dm reminder vote if user wants to
+      if (Date.now() - user_db.lastVote > 43200000 && user_db.voteReminder === true) {
+        discordUser = await client.users.fetch(user_db._id)
+        const embed = new MessageEmbed()
+         .setColor("YELLOW")
+         .addField("Lembrete para votar :bell:", "Resgate sua recompensa depois de votar usando o comando /vote")
+         .addField("Link", "https://top.gg/bot/742331813539872798/vote", false)
+         .setFooter(({text: 'by Falcão ❤️'}))
+  
+        const row = new MessageActionRow()
+        .addComponents(
+          new MessageButton()
+           .setCustomId('disableVoteReminderDM')
+           .setLabel('Desativar Lembrete')
+           .setEmoji("🔕")
+           .setStyle("DANGER")
+        )
+  
+        await discordUser.send({
+          embeds: [embed],
+          components: [row]
+        })
+      }
+    }
+  } catch (err) {
+    console.log(`Sending reminders: ${error}`)
+  }
+}
+
 async function rankPerks(rank, instance, guild) {
   perks = ''
 
@@ -235,5 +272,6 @@ module.exports = {
     createUser, changeDB, msToTime,
     specialArg, format, readFile, getRoleColor,
     getMember, takeAndGive, count,
-    randint, bankInterest, rankPerks
+    randint, bankInterest, rankPerks,
+    sendVoteReminders
 }
