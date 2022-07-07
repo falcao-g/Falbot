@@ -44,7 +44,7 @@ client.on("ready", () => {
     client.user.setActivity('?help | arte by: @kinsallum'),
     bankInterest(),
     sendVoteReminders(client)
-  }, 1000 * 60 * 30)
+  }, 1000 * 60 * 15)
 })
 
 client.login(TOKEN)
