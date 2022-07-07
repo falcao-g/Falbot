@@ -226,7 +226,7 @@ async function sendVoteReminders(client) {
       user_db = await userSchema.findById(user._id)
   
       //send dm reminder vote if user wants to
-      if (Date.now() - user_db.lastVote > 43200000 && user_db.voteReminder === true) {
+      if (Date.now() - user_db.lastVote > 43200000 && user_db.voteReminder === true && user_db.lastReminder <= user_db.lastVote) {
         discordUser = await client.users.fetch(user_db._id)
         const embed = new MessageEmbed()
          .setColor("YELLOW")
@@ -247,6 +247,9 @@ async function sendVoteReminders(client) {
           embeds: [embed],
           components: [row]
         })
+
+        user_db.lastReminder = Date.now()
+        user_db.save()
       }
     }
   } catch (err) {

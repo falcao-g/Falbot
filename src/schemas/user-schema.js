@@ -46,6 +46,10 @@ const userSchema = mongoose.Schema({
     voteReminder: {
         type: Boolean,
         default: false
+    },
+    lastReminder: {
+        type: Number,
+        default: 0
     }
 }, {
     versionKey: false,
