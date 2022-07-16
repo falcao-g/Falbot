@@ -20,6 +20,7 @@ client.on("ready", () => {
     defaultLanguage: language,
     messagesPath: path.join(__dirname, '/src/utils/json/messages.json'),
     disabledDefaultCommands: [
+      'language',
       'help',
       'command',
       'requiredrole',
@@ -43,7 +44,7 @@ client.on("ready", () => {
   setInterval(() => {
     client.user.setActivity('?help | arte by: @kinsallum'),
     bankInterest(),
-    sendVoteReminders(client)
+    sendVoteReminders(wok, client)
   }, 1000 * 60 * 15)
 })
 
