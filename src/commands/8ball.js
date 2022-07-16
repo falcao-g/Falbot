@@ -12,8 +12,6 @@ module.exports = {
     cooldown: '1s',
     guildOnly: true,
     testOnly,
-    minArgs: 1,
-    expectedArgs: '<pergunta>',
     expectedArgsTypes: ['STRING'],
     options: [{
         name: 'question',
