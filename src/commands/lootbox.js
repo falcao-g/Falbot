@@ -1,4 +1,4 @@
-const {readFile, changeDB} = require('../utils/functions.js')
+const {readFile, changeDB, msToTime} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
 
 module.exports =  {
@@ -11,6 +11,11 @@ module.exports =  {
     testOnly,
     callback: async ({instance, guild, user}) => {
         try {
+            cooldownSchema = instance._mongoConnection.models['wokcommands-cooldowns']
+            userCooldown = await cooldownSchema.findOne({_id: {$regex: user.id}})
+            if (userCooldown) {
+                return instance.messageHandler.get(guild, "COOLDOWN", {COOLDOWN: await msToTime(userCooldown.cooldown * 1000)})
+            }
             const quantity = await readFile(user.id, 'lootbox')
             changeDB(user.id, 'falcoins', quantity)
             return instance.messageHandler.get(guild, "LOOTBOX", {FALCOINS: quantity})
