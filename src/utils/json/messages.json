@@ -735,6 +735,14 @@
       "portugues": "O lembrete para votar foi desativado.",
       "english": "DM vote reminder is now off."
     },
+    "VOTE_REMINDER": {
+      "portugues": "Lembrete para votar :bell:",
+      "english": "Vote reminder :bell:"
+    },
+    "REWARD_AFTER": {
+      "portugues": "Resgate sua recompensa depois de votar usando o comando /vote",
+      "english": "Claim your reward after voting by using /vote"
+    },
     "1": {
       "portugues": ":potato: Plebeu",
       "english": ":potato: Peasent"

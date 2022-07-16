@@ -5,77 +5,42 @@ module.exports = (client, instance) => {
         try {
             if (!interaction.isButton()) return
 
-            if (interaction.customId === "disableVoteReminderDM") {
+            guildUser = interaction.guild ? interaction.guild : interaction.user
+
+            if (interaction.customId === "disableVoteReminder") {
                 await changeDB(interaction.user.id, "voteReminder", false, true)
+                await changeDB(user.id, "lastReminder", 0, true)
 
                 const row = new MessageActionRow()
                  .addComponents(
                 new MessageButton()
-                 .setCustomId('enableVoteReminderDM')
-                 .setLabel('Ativar Lembrete')
+                 .setCustomId('enableVoteReminder')
+                 .setLabel(instance.messageHandler.get(guildUser, "ENABLE_REMINDER"))
                  .setEmoji("🔔")
                  .setStyle("PRIMARY")
                 )
 
                 interaction.reply({
-                    content: "O lembrete para votar foi desativado.",
+                    content: instance.messageHandler.get(guildUser, "REMINDER_DISABLED"),
                     ephemeral: true,
                     components: [row]
                 })
             }
 
-            if (interaction.customId === "enableVoteReminderDM") {
+            if (interaction.customId === "enableVoteReminder") {
                 await changeDB(interaction.user.id, "voteReminder", true, true)
 
                 const row = new MessageActionRow()
                  .addComponents(
                 new MessageButton()
-                 .setCustomId('disableVoteReminderDM')
-                 .setLabel('Desativar Lembrete')
+                 .setCustomId('disableVoteReminder')
+                 .setLabel(instance.messageHandler.get(guildUser, "DISABLE_REMINDER"))
                  .setEmoji("🔕")
                  .setStyle("PRIMARY")
                 )
 
                 interaction.reply({
-                    content: "O lembrete para votar foi ativado.",
-                    ephemeral: true,
-                    components: [row]
-                })
-            }
-
-            if (interaction.customId === "disableVoteReminderGUILD") {
-                await changeDB(interaction.user.id, "voteReminder", false, true)
-
-                const row = new MessageActionRow()
-                 .addComponents(
-                new MessageButton()
-                 .setCustomId('enableVoteReminderGUILD')
-                 .setLabel(instance.messageHandler.get(interaction.member.guild, "ENABLE_REMINDER"))
-                 .setEmoji("🔔")
-                 .setStyle("PRIMARY")
-                )
-
-                interaction.reply({
-                    content: instance.messageHandler.get(interaction.member.guild, "REMINDER_DISABLED"),
-                    ephemeral: true,
-                    components: [row]
-                })
-            }
-
-            if (interaction.customId === "enableVoteReminderGUILD") {
-                await changeDB(interaction.user.id, "voteReminder", true, true)
-
-                const row = new MessageActionRow()
-                 .addComponents(
-                new MessageButton()
-                 .setCustomId('disableVoteReminderGUILD')
-                 .setLabel(instance.messageHandler.get(interaction.member.guild, "DISABLE_REMINDER"))
-                 .setEmoji("🔕")
-                 .setStyle("PRIMARY")
-                )
-
-                interaction.reply({
-                    content: instance.messageHandler.get(interaction.member.guild, "REMINDER_ENABLED"),
+                    content: instance.messageHandler.get(guildUser, "REMINDER_ENABLED"),
                     ephemeral: true,
                     components: [row]
                 })

@@ -218,7 +218,7 @@ async function bankInterest() {
   }
 }
 
-async function sendVoteReminders(client) {
+async function sendVoteReminders(instance, client) {
   try {
     var users = await userSchema.find({})
 
@@ -230,15 +230,15 @@ async function sendVoteReminders(client) {
         discordUser = await client.users.fetch(user_db._id)
         const embed = new MessageEmbed()
          .setColor("YELLOW")
-         .addField("Lembrete para votar :bell:", "Resgate sua recompensa depois de votar usando o comando /vote")
+         .addField(instance.messageHandler.get(discordUser, "VOTE_REMINDER"), instance.messageHandler.get(discordUser, "REWARD_AFTER"))
          .addField("Link", "https://top.gg/bot/742331813539872798/vote", false)
          .setFooter(({text: 'by Falcão ❤️'}))
   
         const row = new MessageActionRow()
         .addComponents(
           new MessageButton()
-           .setCustomId('disableVoteReminderDM')
-           .setLabel('Desativar Lembrete')
+           .setCustomId('disableVoteReminder')
+           .setLabel(instance.messageHandler.get(discordUser, "DISABLE_REMINDER"))
            .setEmoji("🔕")
            .setStyle("DANGER")
         )
@@ -253,7 +253,7 @@ async function sendVoteReminders(client) {
       }
     }
   } catch (err) {
-    console.log(`Sending reminders: ${error}`)
+    console.log(`Sending reminders: ${err}`)
   }
 }
 

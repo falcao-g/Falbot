@@ -19,7 +19,7 @@ module.exports =  {
                 const row = new MessageActionRow()
                  .addComponents(
                 new MessageButton()
-                 .setCustomId('disableVoteReminderGUILD')
+                 .setCustomId('disableVoteReminder')
                  .setLabel(instance.messageHandler.get(guild, "DISABLE_REMINDER"))
                  .setEmoji("🔕")
                  .setStyle("PRIMARY")
@@ -32,11 +32,12 @@ module.exports =  {
                 })
             } else {
                 await changeDB(user.id, "voteReminder", false, true)
+                await changeDB(user.id, "lastReminder", 0, true)
 
                 const row = new MessageActionRow()
                  .addComponents(
                 new MessageButton()
-                 .setCustomId('enableVoteReminderGUILD')
+                 .setCustomId('enableVoteReminder')
                  .setLabel(instance.messageHandler.get(guild, "ENABLE_REMINDER"))
                  .setEmoji("🔔")
                  .setStyle("PRIMARY")
