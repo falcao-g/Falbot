@@ -21,8 +21,7 @@ module.exports =  {
             .setFooter({text: 'by Falcão ❤️'})
             .addFields({
                 name: instance.messageHandler.get(guild, 'COOLDOWNS'),
-                value: `Lootbox: **${userCooldown ? `:red_circle: ${await msToTime(userCooldown['cooldown'] * 1000)}` : `:green_circle: ${instance.messageHandler.get(guild, 'PRONTO')}`}**
-                ${instance.messageHandler.get(guild, 'VOTO')}: **${voteCooldown < 43200000 ? `:red_circle: ${await msToTime(43200000 - voteCooldown)}` : `:green_circle: ${instance.messageHandler.get(guild, 'PRONTO')}`}**`
+                value: `Lootbox: **${userCooldown ? `:red_circle: ${await msToTime(userCooldown['cooldown'] * 1000)}` : `:green_circle: ${instance.messageHandler.get(guild, 'PRONTO')}`}**\n${instance.messageHandler.get(guild, 'VOTO')}: **${voteCooldown < 43200000 ? `:red_circle: ${await msToTime(43200000 - voteCooldown)}` : `:green_circle: ${instance.messageHandler.get(guild, 'PRONTO')}`}**`
             })
             
             return embed
