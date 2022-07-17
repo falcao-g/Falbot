@@ -50,6 +50,10 @@ const userSchema = mongoose.Schema({
     lastReminder: {
         type: Number,
         default: 0
+    },
+    lastLootbox: {
+        type: Number,
+        default: 0
     }
 }, {
     versionKey: false,
