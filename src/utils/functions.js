@@ -90,7 +90,7 @@ async function msToTime(ms) {
   return time.trimEnd();
 }
 
-async function specialArg(arg, id, field) {
+async function specialArg(arg, id, field='falcoins') {
   await createUser(id)
   var user = await userSchema.findById(id)
 
@@ -108,6 +108,15 @@ async function specialArg(arg, id, field) {
     new_arg = user[field];
   } else if (new_arg == "metade" || new_arg == 'half') {
     new_arg = parseInt(user[field] / 2);
+  } else if (new_arg.slice(-1) === 'm') {
+    new_arg = new_arg.slice(0, -1)
+    new_arg += '000000'
+  } else if (new_arg.slice(-1) === 'b') {
+    new_arg = new_arg.slice(0, -1)
+    new_arg += '000000000'
+  } else if (new_arg.slice(-1) === 't') {
+    new_arg = new_arg.slice(0, -1)
+    new_arg += '000000000000'
   } else {
     for (c in new_arg) {
       if (new_arg[c] == "%") {
