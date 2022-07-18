@@ -743,6 +743,18 @@
       "portugues": "Resgate sua recompensa depois de votar usando o comando /vote",
       "english": "Claim your reward after voting by using /vote"
     },
+    "PLAYERS": {
+      "portugues": "Jogadores",
+      "english": "Players"
+    },
+    "UPTIME": {
+      "portugues": "Tempo de funcionamento",
+      "english": "Uptime"
+    },
+    "SERVERS": {
+      "portugues": "Servidores",
+      "english": "Servers"
+    },
     "1": {
       "portugues": ":potato: Plebeu",
       "english": ":potato: Peasent"
