@@ -5,7 +5,7 @@ const {testOnly} = require("../config.json")
 module.exports =  {
     aliases: ['roletarussa'],
     category: 'Economia',
-    description: 'play with your friend, last to survive wins',
+    description: 'Play with your friend, last to survive wins',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
@@ -16,7 +16,7 @@ module.exports =  {
     options: [
     {
         name: 'falcoins',
-        description: 'amount of falcoins to play with',
+        description: 'amount of falcoins to play with (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
         required: true,
         type: "STRING"
     }],

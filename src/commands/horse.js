@@ -22,7 +22,7 @@ module.exports =  {
     },
     {
         name: 'falcoins',
-        description: 'the amount of falcoins you want to bet',
+        description: 'the amount of falcoins you want to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
         required: true,
         type: "STRING"
     }

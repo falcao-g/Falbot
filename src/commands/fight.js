@@ -5,7 +5,7 @@ const {testOnly} = require("../config.json")
 module.exports =  {
     aliases: ['luta'],
     category: 'Economia',
-    description: 'challenge someone to a fight, win the fight and get the money',
+    description: 'Challenge someone to a fight, win the fight and get the money',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
@@ -21,7 +21,7 @@ module.exports =  {
     },
     {
         name: 'falcoins',
-        description: 'the amount of falcoins to bet',
+        description: 'the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
         required: true,
         type: "STRING"
     }   

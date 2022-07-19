@@ -5,7 +5,7 @@ const {testOnly} = require("../config.json")
 module.exports =  {
     aliases: ['cavalgada'],
     category: 'Economia',
-    description: 'challenge other users to a horse duel',
+    description: 'Challenge other users to a horse duel',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
@@ -16,7 +16,7 @@ module.exports =  {
     options: [
     {
         name: 'falcoins',
-        description: 'the amount of falcoins to bet',
+        description: 'the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
         required: true,
         type: "STRING"
     }   

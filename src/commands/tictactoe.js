@@ -6,7 +6,7 @@ const {testOnly} = require("../config.json")
 module.exports =  {
     aliases: ['velha'],
     category: 'Economia',
-    description: 'challenge someone to a game of tic tac toe',
+    description: 'Challenge someone to a game of tic tac toe',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
@@ -22,7 +22,7 @@ module.exports =  {
     },
     {
         name: 'falcoins',
-        description: 'amount of falcoins to bet in the game',
+        description: 'amount of falcoins to bet in the game (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
         required: true,
         type: "STRING"
     }   

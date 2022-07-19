@@ -5,7 +5,7 @@ const {testOnly} = require("../config.json")
 module.exports =  {
     aliases: ['roleta'],
     category: 'Economia',
-    description: 'bet on the roulette',
+    description: 'Bet on the roulette',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
@@ -15,13 +15,14 @@ module.exports =  {
     expectedArgsTypes: ['STRING', 'STRING'],
     options: [{
         name:'type',
-        description: 'bet type <black/red/green>, <0-36>, <high/low>, <even/odd>',
+        description: 'all bets have a 1-1 payout ratio, except green that has a 35-1 because you bet on a single number',
         required: true,
-        type: "STRING"
+        type: "STRING",
+        choices: [{name: "black", value: "black"}, {name: "red", value: "red"}, {name: "green", value: "green"}, {name: "high", value: "high"}, {name: "low", value: "low"}, {name: "even", value: "even"}, {name: "odd", value: "odd"}]
     },
     {
         name: 'falcoins',
-        description: 'amount of falcoins to bet',
+        description: 'amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
         required: true,
         type: "STRING"
     }
@@ -31,7 +32,7 @@ module.exports =  {
             args[0] = args[0].toLowerCase()
             if (args[0] === 'ímpar') {args[0] = 'impar'}
     
-            if (args[0] == 'preto' || args[0] == 'black' || args[0] == 'vermelho' || args[0] == 'red' || args[0] == 'verde' || args[0] == 'green' || args[0] == 'altos' || args[0] == 'high' || args[0] == 'baixos' || args[0] == 'low' || args[0] == 'par' || args[0] == 'even' || args[0] == 'impar' || args[0] == 'odd' || (parseInt(args[0]) >=0 && parseInt(args[0]) <= 36)) {
+            if (args[0] == 'preto' || args[0] == 'black' || args[0] == 'vermelho' || args[0] == 'red' || args[0] == 'verde' || args[0] == 'green' || args[0] == 'altos' || args[0] == 'high' || args[0] == 'baixos' || args[0] == 'low' || args[0] == 'par' || args[0] == 'even' || args[0] == 'impar' || args[0] == 'odd') {
                 try {
                     var bet = await specialArg(args[1], user.id, "falcoins")
                 } catch {
@@ -53,15 +54,13 @@ module.exports =  {
                         impar: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35],
                         odd: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35],
                         par: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36],
-                        even: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36],
-                        number: [parseInt(args[0])]
+                        even: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36]
                     }
-    
-                    if (parseInt(args[0]) === parseInt(args[0])) {
-                        var type = types['number']
+                    
+                    var type = types[args[0]]
+                    if (type === "verde" || type === "green") {
                         var profit = bet * 35
                     } else {
-                        var type = types[args[0]]
                         var profit = bet * 2
                     }
     
@@ -83,7 +82,7 @@ module.exports =  {
                          })
                          .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await readFile(user.id, 'falcoins', true)} falcoins`, false)
                     } else {
-                        await changeDB(user.id, 'falcoins', -bet  )
+                        await changeDB(user.id, 'falcoins', -bet)
                         var embed = new MessageEmbed()
                          .setColor(15158332)
                          .setAuthor({name: user.username, iconURL: user.avatarURL()})

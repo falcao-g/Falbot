@@ -5,7 +5,7 @@ const {testOnly} = require("../config.json")
 module.exports =  {
     aliases: ["banco"],
     category: 'Economia',
-    description: 'Deposit or withdraw your falcoins from the bank, money in the bank increase daily.',
+    description: 'Deposit or withdraw your falcoins from the bank, money in the bank increase daily',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,
@@ -18,13 +18,13 @@ module.exports =  {
         name:'deposit',
         description: 'deposit falcoins to the bank',
         type: "SUB_COMMAND",
-        options: [{name: 'falcoins', description: 'the amount of falcoins to deposit', type: "STRING", required: true}]
+        options: [{name: 'falcoins', description: 'the amount of falcoins to deposit (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)', type: "STRING", required: true}]
     },
     {
         name:'withdraw',
         description: 'withdraw falcoins from the bank',
         type: "SUB_COMMAND",
-        options: [{name: 'falcoins', description: 'the amount of falcoins to withdraw', type: "STRING", required: true}]
+        options: [{name: 'falcoins', description: 'the amount of falcoins to withdraw (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)', type: "STRING", required: true}]
     }, {
         name: 'view',
         description: "view bank balance and other useful stats",

@@ -20,7 +20,7 @@ module.exports =  {
     },
     {
         name: 'falcoins',
-        description: 'amount of falcoins to donate',
+        description: 'amount of falcoins to donate (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
         required: true,
         type: "STRING"
     }
