@@ -6,7 +6,7 @@ const {testOnly} = require("../config.json")
 module.exports =  {
     aliases: ['imagem', 'foto'],
     category: 'Fun',
-    description: 'show a random image from google based on the search query',
+    description: 'Show a random image from google based on the search query',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,

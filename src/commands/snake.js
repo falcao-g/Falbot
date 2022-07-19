@@ -4,7 +4,7 @@ const {testOnly} = require("../config.json")
 
 module.exports =  {
     category: 'Fun',
-    description: 'play a game of snake',
+    description: 'Play a game of snake',
     slash: 'both',
     cooldown: '1s',
     guildOnly: true,

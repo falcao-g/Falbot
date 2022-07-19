@@ -1,5 +1,3 @@
-const {MessageEmbed} = require('discord.js')
-const {getRoleColor} = require('../utils/functions.js')
 const {testOnly} = require("../config.json")
 
 module.exports = {
@@ -12,6 +10,7 @@ module.exports = {
     guildOnly: false,
     permissions: ['ADMINISTRATOR'],
     expectedArgsTypes: ['STRING'],
+    testOnly,
     options: [{
         name: 'language',
         description: 'the desired language of the server or the user',
