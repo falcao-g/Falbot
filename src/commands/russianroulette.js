@@ -28,7 +28,7 @@ module.exports =  {
                 } catch {
                     return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
                 } 
-                if (await readFile(user.id, 'falcoins')) {
+                if (await readFile(user.id, 'falcoins') >= bet && bet > 0) {
                     var pot = bet
                     const embed = new MessageEmbed()
                     .setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
