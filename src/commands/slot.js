@@ -32,6 +32,7 @@ module.exports =  {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             }
             if (await readFile(user.id, 'falcoins') >= bet && bet > 0) {
+                await changeDB(user.id, 'falcoins', -bet)
                 const choices = [[':money_mouth:', 30], [':gem:', 10], [':moneybag:', 15], [':coin:', 25], [':dollar:', 20]]
                 const emoji1 = pick(choices)
                 const emoji2 = pick(choices)
@@ -94,7 +95,7 @@ module.exports =  {
                     var winnings = 0
                 }
                 var profit = parseInt(bet * winnings)
-                await changeDB(user.id, 'falcoins', profit-bet)
+                await changeDB(user.id, 'falcoins', profit)
     
                 if (profit > 0) {
                     var embed2 = new MessageEmbed()

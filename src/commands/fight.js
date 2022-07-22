@@ -89,6 +89,8 @@ module.exports =  {
                                 })
                             }
                         } else {
+                            await changeDB(author.id, 'falcoins', -bet)
+                            await changeDB(member.id, 'falcoins', -bet)
                             const attacks = ['instantâneo', 'stun', 'roubo de vida', 'cura', 'self', 'escudo']
                             const player_1 = {
                                 hp: 100,
@@ -190,14 +192,12 @@ module.exports =  {
                             .setColor(3066993)
                             .setFooter({text: 'by Falcão ❤️'})
                             if (order[0]['hp'] <= 0) {
-                                await changeDB(order[0]['id'], 'falcoins', -bet)
-                                await changeDB(order[1]['id'], 'falcoins', bet)
+                                await changeDB(order[1]['id'], 'falcoins', bet*2)
                                 await changeDB(order[1]['id'], 'vitorias')
                                 embed2.addField(`${order[1]['name']}` + instance.messageHandler.get(guild, "GANHO"), instance.messageHandler.get(guild, "LUTA_DERROTOU", {USER: order[0]['mention']}), false)
                                 embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await readFile(order[1]['id'], 'falcoins', true)} falcoins`)
                             }  else if (order[1]['hp'] <= 0) {
-                                await changeDB(order[1]['id'], 'falcoins', -bet)
-                                await changeDB(order[0]['id'], 'falcoins', bet)
+                                await changeDB(order[0]['id'], 'falcoins', bet*2)
                                 await changeDB(order[0]['id'], 'vitorias')
                                 embed2.addField(`${order[0]['name']}` + instance.messageHandler.get(guild, "GANHO"), instance.messageHandler.get(guild, "LUTA_DERROTOU", {USER: order[1]['mention']}), false)
                                 embed2.addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await readFile(order[0]['id'], 'falcoins', true)} falcoins`)

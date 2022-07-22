@@ -36,6 +36,7 @@ module.exports =  {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[0]})
             }
             if (await readFile(user.id, 'falcoins') >= bet && bet > 0) {
+                await changeDB(user.id, 'falcoins', -bet)
                 const choices = [die1, die2, die3, die4, die5, die6]
                 random1 = randint(1, 6)
                 random2 = randint(1, 6)
@@ -66,7 +67,7 @@ module.exports =  {
                 await answer.edit({embeds: [embed]})
     
                 if (random1 === 1 && random2 === 1) {
-                    await changeDB(user.id, 'falcoins', bet*5)
+                    await changeDB(user.id, 'falcoins', bet*6)
                     var embed2 = new MessageEmbed()
                     .setColor("GOLD")
                     .addFields({
@@ -79,7 +80,7 @@ module.exports =  {
                         inline: true
                     })
                 } else if (random1 === 1 || random2 === 1) {
-                    await changeDB(user.id, 'falcoins', bet)
+                    await changeDB(user.id, 'falcoins', bet*2)
                     var embed2 = new MessageEmbed()
                      .setColor(3066993)
                      .addFields({
@@ -92,7 +93,6 @@ module.exports =  {
                          inline: true
                      })
                 } else {
-                    await changeDB(user.id, 'falcoins', -bet)
                     var embed2 = new MessageEmbed()
                      .setColor(15158332)
                      .addFields({

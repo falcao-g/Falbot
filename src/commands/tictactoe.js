@@ -92,6 +92,8 @@ module.exports =  {
                                 })
                             }
                         }else {
+                            await changeDB(user.id, 'falcoins', -bet)
+                            await changeDB(member.user.id, 'falcoins', -bet)
                             const row = new MessageActionRow()
                             const row2 = new MessageActionRow()
                             const row3 = new MessageActionRow()
@@ -222,18 +224,18 @@ module.exports =  {
                             collector2.on('end', async () => {
                                 if (board.hasWinner()) {
                                     if(board.winningPlayer() === 'X') {
-                                        await changeDB(first_player.id, 'falcoins', bet)
+                                        await changeDB(first_player.id, 'falcoins', bet*2)
                                         await changeDB(first_player.id, 'vitorias', 1)
-                                        await changeDB(second_player.id, 'falcoins', -bet)
                                     } else {
-                                        await changeDB(second_player.id, 'falcoins', bet)
+                                        await changeDB(second_player.id, 'falcoins', bet*2)
                                         await changeDB(second_player.id, 'vitorias', 1)
-                                        await changeDB(first_player.id, 'falcoins', -bet)
                                     }
                                     await answer2.edit({
                                         content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n**${instance.messageHandler.get(guild, "GANHOU", {WINNER: board.winningPlayer() === 'X' ? first_player.username : second_player.username, FALCOINS: bet})}**`,
                                     })  
                                 } else {
+                                    await changeDB(first_player.id, 'falcoins', bet)
+                                    await changeDB(second_player.id, 'falcoins', bet)
                                     await answer2.edit({
                                         content: `:older_woman: \`${author.username}\` **VS**  \`${member.user.username}\` \n\n${instance.messageHandler.get(guild, "VELHA_EMPATOU")}`
                                     })  

@@ -40,6 +40,7 @@ module.exports =  {
                 }
 
                 if (await readFile(user.id, 'falcoins') >= bet && bet > 0) {
+                    await changeDB(user.id, 'falcoins', -bet)
                     const types = {
                         verde: [0],
                         green: [0],
@@ -59,7 +60,7 @@ module.exports =  {
                     
                     var type = types[args[0]]
                     if (type === "verde" || type === "green") {
-                        var profit = bet * 35
+                        var profit = bet * 37
                     } else {
                         var profit = bet * 2
                     }
@@ -67,7 +68,7 @@ module.exports =  {
                     const luck = randint(0, 36)
     
                     if (type.includes(luck)) {
-                        await changeDB(user.id, 'falcoins', profit-bet)
+                        await changeDB(user.id, 'falcoins', profit)
                         var embed = new MessageEmbed()
                          .setColor(3066993)
                          .setAuthor({name: user.username, iconURL: user.avatarURL()})
@@ -82,7 +83,6 @@ module.exports =  {
                          })
                          .addField(instance.messageHandler.get(guild, "SALDO_ATUAL"), `${await readFile(user.id, 'falcoins', true)} falcoins`, false)
                     } else {
-                        await changeDB(user.id, 'falcoins', -bet)
                         var embed = new MessageEmbed()
                          .setColor(15158332)
                          .setAuthor({name: user.username, iconURL: user.avatarURL()})

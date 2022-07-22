@@ -35,6 +35,7 @@ module.exports =  {
                 return instance.messageHandler.get(guild, "VALOR_INVALIDO", {VALUE: args[1]})
             }
             if (await readFile(user.id, 'falcoins') >= bet && bet > 0) {
+                await changeDB(user.id, 'falcoins', -bet)
                 if (args[0] >= 1 && args[0] <= 5) {
                     let horse1 = '- - - - -'
                     let horse2 = '- - - - -'
@@ -94,14 +95,11 @@ module.exports =  {
                     }
     
                     if (args[0] == winner) {
-                        profit = bet * 5
-                        await changeDB(user.id, 'falcoins', profit-bet)
+                        await changeDB(user.id, 'falcoins', bet*5)
                         var embed2 = new MessageEmbed()
                          .setColor(3066993)
                          .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_GANHOU", {FALCOINS: await format(bet*5)}), false)
                     } else {
-                        profit = 0
-                        await changeDB(user.id, 'falcoins', -bet)
                         var embed2 = new MessageEmbed()
                          .setColor(15158332)
                          .addField(instance.messageHandler.get(guild, "CAVALO_GANHOU", {WINNER: winner}), instance.messageHandler.get(guild, "CAVALO_VOCE_PERDEU", {FALCOINS: await format(bet)}), false)
