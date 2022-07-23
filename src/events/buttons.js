@@ -9,7 +9,7 @@ module.exports = (client, instance) => {
 
             if (interaction.customId === "disableVoteReminder") {
                 await changeDB(interaction.user.id, "voteReminder", false, true)
-                await changeDB(user.id, "lastReminder", 0, true)
+                await changeDB(interaction.user.id, "lastReminder", 0, true)
 
                 const row = new MessageActionRow()
                  .addComponents(
