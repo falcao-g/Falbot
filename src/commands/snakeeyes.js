@@ -67,7 +67,7 @@ module.exports =  {
                 await answer.edit({embeds: [embed]})
     
                 if (random1 === 1 && random2 === 1) {
-                    await changeDB(user.id, 'falcoins', bet*6)
+                    await changeDB(user.id, 'falcoins', bet*5)
                     var embed2 = new MessageEmbed()
                     .setColor("GOLD")
                     .addFields({
@@ -89,7 +89,7 @@ module.exports =  {
                          inline: false
                      }, {
                          name: instance.messageHandler.get(guild, "GANHOS"),
-                         value: `${await format(bet)} falcoins`,
+                         value: `${await format(bet*2)} falcoins`,
                          inline: true
                      })
                 } else {
