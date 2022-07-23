@@ -1,5 +1,3 @@
-const {testOnly} = require("../config.json")
-
 module.exports = {
     category: 'uteis',
     description: 'Sets the language of the server or the user',
@@ -10,7 +8,6 @@ module.exports = {
     guildOnly: false,
     permissions: ['ADMINISTRATOR'],
     expectedArgsTypes: ['STRING'],
-    testOnly,
     options: [{
         name: 'language',
         description: 'the desired language of the server or the user',
