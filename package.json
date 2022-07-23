@@ -9,7 +9,7 @@
   "author": "Falcão",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^13.7.0",
+    "discord.js": "13.9.*",
     "dotenv": "^16.0.1",
     "google-img-scrap": "^1.0.6",
     "mathjs": "^10.6.0",
