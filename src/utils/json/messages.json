@@ -759,6 +759,14 @@
       "portugues": "ROLANDO",
       "english": "ROLLING"
     },
+    "ROLETA": {
+      "portugues": "Roleta",
+      "english": "Roulette"
+    },
+    "GIRANDO_ROLETA": {
+      "portugues": "Girando a roleta...",
+      "english": "Spinning the wheel..."
+    },
     "1": {
       "portugues": ":potato: Plebeu",
       "english": ":potato: Peasent"
