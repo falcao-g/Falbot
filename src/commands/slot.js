@@ -91,13 +91,11 @@ module.exports =  {
                     var winnings = 5
                 } else if (money_mouth == 2) {
                     var winnings = 0.5
-                } else {
-                    var winnings = 0
                 }
                 var profit = parseInt(bet * winnings)
-                await changeDB(user.id, 'falcoins', profit)
-    
+
                 if (profit > 0) {
+                    await changeDB(user.id, 'falcoins', profit)
                     var embed2 = new MessageEmbed()
                      .setColor(3066993)
                      .addFields({
