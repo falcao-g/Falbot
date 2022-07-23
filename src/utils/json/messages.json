@@ -612,8 +612,8 @@
       "english": ":arrow_double_up: Spend falcoins to rank up"
     },
     "HELP_RANK2": {
-      "portugues": "-Suba de rank com `/ranks rankup` para ganhar **várias recompensas** que te ajudam a ganhar falcoins\n-Você pode ver os próximos ranks com `/ranks view` e ver todos os ranks com `/ranks all`\n-Existe também uma leaderboard baseada em ranks, suba de rank para alcançar **posições mais altas!**",
-      "english": "-Rank up with `/ranks rankup` to receive **multiple rewards** that help you earn more falcoins\n-You can see upcoming ranks with `/ranks view` and all ranks with `/ranks all`\n-There is also a rank leaderboard, rank up to achieve a **higher position!**"
+      "portugues": "-Suba de rank com `/ranks rankup` para ganhar **várias recompensas** que te ajudam a ganhar falcoins\n-Você pode ver os próximos ranks com `/ranks view` e ver todos os ranks com `/ranks all`\n-Confira sua balança para ver quão longe você está do próximo rank\n-Existe também uma leaderboard baseada em ranks, suba de rank para alcançar **posições mais altas!**",
+      "english": "-Rank up with `/ranks rankup` to receive **multiple rewards** that help you earn more falcoins\n-You can see upcoming ranks with `/ranks view` and all ranks with `/ranks all`\n-Check your balance to see how far you are from the next rank\n-There is also a rank leaderboard, rank up to achieve a **higher position!**"
     },
     "HELP_LANGUAGE": {
       "portugues": ":earth_americas: Escolha a linguagem desejada",
