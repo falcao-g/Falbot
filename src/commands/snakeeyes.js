@@ -23,12 +23,12 @@ module.exports =  {
     callback: async ({instance, guild, message, interaction, client, user, args}) => {
         try {
             guild = client.guilds.cache.get('742332099788275732')
-            die1 = await guild.emojis.fetch('999796726711992350')
-            die2 = await guild.emojis.fetch('999796728519733349')
-            die3 = await guild.emojis.fetch('999796729882890320')
-            die4 = await guild.emojis.fetch('999796734035230781')
-            die5 = await guild.emojis.fetch('999796735629078629')
-            die6 = await guild.emojis.fetch('999796745296953485')
+            die1 = await guild.emojis.fetch('1000062195545165895')
+            die2 = await guild.emojis.fetch('1000063578797265046')
+            die3 = await guild.emojis.fetch('1000063580433023006')
+            die4 = await guild.emojis.fetch('1000063582278524969')
+            die5 = await guild.emojis.fetch('1000063583893344316')
+            die6 = await guild.emojis.fetch('1000063585147428926')
             diegif = await guild.emojis.fetch('999795233808203846')
             try {
                 var bet = await specialArg(args[0], user.id, "falcoins")
