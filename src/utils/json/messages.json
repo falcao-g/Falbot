@@ -1,830 +1,829 @@
 {
-    "LANGUAGE_NOT_SUPPORTED": {
-      "english": "This bot does not have support for {LANGUAGE} at this time.",
-      "portugues": "Este bot não é compatível com {LANGUAGE} por enquanto."
-    },
-    "CURRENT_LANGUAGE": {
-      "english": "The current language is set to {LANGUAGE}.",
-      "portugues": "O idioma atual está definido como {LANGUAGE}."
-    },
-    "NEW_LANGUAGE": {
-      "english": "Language set to {LANGUAGE}.",
-      "portugues": "Idioma configurado para {LANGUAGE}."
-    },
-    "BOT_OWNERS_ONLY": {
-      "english": "Only the bot owner can run this command.",
-      "portugues": "Apenas o proprietário do bot pode executar este comando."
-    },
-    "DISABLED_COMMAND": {
-      "english": "That command is currently disabled in this server.",
-      "portugues": "Este comando está atualmente desabilitado neste servidor."
-    },
-    "MISSING_PERMISSION": {
-      "english": "You must have the {PERM} permission in order to use this command.",
-      "portugues": "Você precisa ter a permissão {PERM} para utilizar este comando."
-    },
-    "MISSING_ROLES": {
-      "english": "You do not have the required roles to use this command! You need one of the following: {ROLES}",
-      "portugues": "Você não tem o cargo necessário para usar este comando! Você precisa de um dos seguintes: {ROLES}"
-    },
-    "COOLDOWN": {
-      "english": "You must wait {COOLDOWN} before using that command again.",
-      "portugues": "Você precisa esperar {COOLDOWN} antes de usar este comando novamente."
-    },
-    "ENABLE_DISABLE_STATE": {
-      "english": "The state must be either \"enable\" or \"disable\".",
-      "portugues": "O estado deve ser \"ativado\" ou \"desativado\"."
-    },
-    "CANNOT_ENABLE_DISABLE_IN_DMS": {
-      "english": "You cannot enable or disable commands in private messages.",
-      "portugues": "Você não pode ativar ou desativar comandos em mensagens privadas."
-    },
-    "COMMAND_ALREADY_ENABLED": {
-      "english": "That command is already enabled!",
-      "portugues": "Este comando já está ativado!"
-    },
-    "COMMAND_ALREADY_DISABLED": {
-      "english": "That command is already disabled!",
-      "portugues": "Este comando já está desativado!"
-    },
-    "COMMAND_NOW_ENABLED": {
-      "english": "{COMMAND} is now enabled!",
-      "portugues": "{COMMAND} agora está ativado!"
-    },
-    "COMMAND_NOW_DISABLED": {
-      "english": "{COMMAND} is now disabled!",
-      "portugues": "{COMMAND} agora está desativado!"
-    },
-    "UNKNOWN_COMMAND": {
-      "english": "Could not find command {COMMAND}!",
-      "portugues": "Não foi possível encontrar o comando {COMMAND}!"
-    },
-    "CURRENT_PREFIX": {
-      "english": "The current prefix is {PREFIX}.",
-      "portugues": "O prefixo atual é {PREFIX}."
-    },
-    "SET_PREFIX": {
-      "english": "Set the command prefix to {PREFIX}.",
-      "portugues": "Prefixo definido para {PREFIX}."
-    },
-    "CANNOT_SET_PREFIX_IN_DMS": {
-      "english": "You cannot set a prefix in a private message.",
-      "portugues": "Você não pode definir um prefixo em uma mensagem privada"
-    },
-    "CANNOT_CHANGE_REQUIRED_ROLES_IN_DMS": {
-      "english": "You cannot change required roles in private messages.",
-      "portugues": "Você não pode alterar os cargos necessários em mensagens privadas"
-    },
-    "REMOVED_ALL_REQUIRED_ROLES": {
-      "english": "Removed all required roles from command {COMMAND}.",
-      "portugues": "Removidas todas as permissões necessárias para o comando {COMMAND}."
-
-    },
-    "ADDED_REQUIRED_ROLE": {
-      "english": "Added role {ROLE} to command {COMMAND}.",
-      "portugues": "Adicionado o cargo {ROLE} para o comando {COMMAND}."
-    },
-    "SYNTAX_ERROR": {
-      "english": "Incorrect usage! Please use \"{PREFIX}{COMMAND} {ARGUMENTS}\"",
-      "portugues": "Uso incorreto! Utilize \"{PREFIX}{COMMAND} {ARGUMENTS}\""
-    },
-    "NO_DATABASE_FOUND": {
-      "english": "No database connection found!",
-      "portugues": "Conexão ao banco de dados não encontrada!"
-    },
-    "GUILD_ONLY_COMMAND": {
-      "english": "This command can only be used within a server.",
-      "portugues": "Este comando só pode ser usado em um servidor."
-    },
-    "NO_REACT_PERMS": {
-      "english": "This bot needs the \"Add Reactions\" permission to use the help menu.",
-      "portugues": "Este bot precisa da permissão \"Adicionar reações\" para usar o menu de ajuda."
-    },
-    "EXCEPTION": {
-      "english": "An error occurred when running this command! This error has been reported to the developers.",
-      "portugues": "Ocorreu um erro ao executar este comando! Este erro foi relatado aos desenvolvedores."
-    },
-    "NO_TAGGED_CHANNELS": {
-      "english": "Please tag at least one channel.",
-      "portugues": "Marque pelo menos um canal."
-    },
-    "NOT_CHANNEL_COMMAND": {
-      "english": "That command is currently not limited to any channel.",
-      "portugues": "Esse comando atualmente não está limitado a nenhum canal."
-    },
-    "NO_LONGER_CHANNEL_COMMAND": {
-      "english": "That command is no longer a channel specific command.",
-      "portugues": "Esse comando não é mais um comando específico do canal."
-    },
-    "NOW_CHANNEL_COMMAND": {
-      "english": "\"{COMMAND}\" can now only be ran in {CHANNELS}.",
-      "portugues": "\"{COMMAND}\" agora só pode ser executado em {CHANNELS}."
-    },
-    "ALLOWED_CHANNELS": {
-      "english": "You can only use that command in the following: {CHANNELS}.",
-      "portugues": "Você só pode usar esse comando nos seguintes: {CHANNELS}."
-    },
-    "CANNOT_DISABLE_THIS_COMMAND": {
-      "english": "This command cannot be disabled.",
-      "portugues": "Este comando não pode ser desabilitado."
-    },
-    "INVALID_SLASH_COMMAND": {
-      "english": "This slash command is not properly registered.",
-      "portugues": "Este comando de barra não está registrado corretamente."
-    },
-    "REQUIRE_ROLES": {
-      "english": "You must specify what roles can use this command with `{PREFIX}requiredroles {COMMAND} <role ID>`.",
-      "portugues": "Você deve especificar quais funções podem usar este comando com `{PREFIX} funções necessárias {COMANDO} <ID da função>`."
-    },
-    "NUMEROS": {
-      "portugues": "Números",
-      "english": "Numbers"
-    },
-    "VALOR_INVALIDO": {
-      "portugues": "{VALUE} não é um valor válido... :rage:",
-      "english": "{VALUE} is not a valid value... :rage:"
-    },
-    "FALCOINS_INSUFICIENTES": {
-      "portugues": "você não tem falcoins suficientes! :rage:",
-      "english": "you don't have enough falcoins! :rage:"
-    },
-    "BANCO_INSUFICIENTE": {
-      "portugues": "você não tem falcoins suficientes no banco! :rage:",
-      "english": "you don't have enough falcoins in the bank! :rage:"
-    },
-    "BANCO_DEPOSITOU": {
-      "portugues": "você depositou {VALUE} falcoins no banco! :smiley:",
-      "english": "You deposited {VALUE} falcoins in the bank! :smiley:"
-    },
-    "SALDO_ATUAL": {
-      "portugues": "Saldo atual",
-      "english": "Current balance"
-    },
-    "BANCO": {
-      "portugues": "Banco",
-      "english": "Bank"
-    },
-    "BANCO_SALDO": {
-      "portugues": "Você tem {VALUE} falcoins no banco",
-      "english": "You have {VALUE} falcoins in the bank"
-    },
-    "BANCO_SACOU": {
-      "portugues": "Você sacou {VALUE} falcoins do banco! :smiley:",
-      "english": "You withdrew {VALUE} falcoins from the bank! :smiley:"
-    },
-    "BONKED": {
-      "portugues": " você foi bonked por ",
-      "english": " you were bonked by "
-    },
-    "CAIXA_TITULO": {
-      "portugues": "Você abriu {QUANTITY} caixas, e encontrou:",
-      "english": "You opened {QUANTITY} crates, and found:"
-    },
-    "CAIXA_INSUFICIENTE": {
-      "portugues": "você não tem caixas e/ou chaves o suficiente para esta ação! :rage:",
-      "english": "you don't have enough crates and/or keys to do this action! :rage:"
-    },
-    "CAVALGADA": {
-      "portugues": "Cavalgada",
-      "english": "Horse race"
-    },
-    "CAVALGADA_DESAFIO": {
-      "portugues": "{USER} te desafia para uma cavalgada!",
-      "english": "{USER} challenges you to a horse race!"
-    },
-    "APOSTA": {
-      "portugues": "Aposta",
-      "english": "Bet"
-    },
-    "JOGADORES": {
-      "portugues": "Jogadores",
-      "english": "Players"
-    },
-    "GANHOU": {
-      "portugues": "{WINNER} ganhou {FALCOINS} falcoins!",
-      "english": "{WINNER} won {FALCOINS} falcoins!"
-    },
-    "CAVALO": {
-      "portugues": "Cavalo",
-      "english": "Horse"
-    },
-    "CAVALO_GANHOU": {
-      "portugues": "Cavalo {WINNER} ganhou!",
-      "english": "Horse {WINNER} won!"
-    },
-    "CAVALO_VOCE_GANHOU": {
-      "portugues": "Você ganhou {FALCOINS} falcoins!",
-      "english": "You won {FALCOINS} falcoins!"
-    },
-    "CAVALO_VOCE_PERDEU": {
-      "portugues": "Você perdeu {FALCOINS} falcoins!",
-      "english": "You lost {FALCOINS} falcoins!"
-    },
-    "COINFLIP": {
-      "portugues": ":coin: você tirou **{CARAS}** caras e **{COROAS}** coroas jogando **{TIMES}** vezes",
-      "english": ":coin: you flipped **{CARAS}** heads and **{COROAS}** tails from playing **{TIMES}** times"
-    },
-    "COINFLIP_LIMITE": {
-      "portugues": "calma lá amigão, o limite é 1000 vezes :wink:",
-      "english": "hold on there buddy, the limit is 1000 times :wink:"
-    },
-    "DOAR": {
-      "portugues": ":handshake: {FALCOINS} falcoins transferidos com sucesso para {USER}",
-      "english": ":handshake: {FALCOINS} falcoins transferred successfully to {USER}"
-    },
-    "ENQUETE": {
-      "portugues": "Nova enquete de: {USER}",
-      "english": "New poll by: {USER}"
-    },
-    "VITORIAS": {
-      "portugues": "Vitórias",
-      "english": "Wins"
-    },
-    "CAIXAS": {
-      "portugues": "Caixas",
-      "english": "Crates"
-    },
-    "CHAVES": {
-      "portugues": "Chaves",
-      "english": "Keys"
-    },
-    "LOOTBOX": {
-      "portugues": "Parabéns! Você ganhou **{FALCOINS}** falcoins :heart_eyes:",
-      "english": "Congratulations! You won **{FALCOINS}** falcoins :heart_eyes:"
-    },
-    "RESULTADO": {
-      "portugues": "Resultado",
-      "english": "Result"
-    },
-    "GIRANDO": {
-      "portugues": "GIRANDO",
-      "english": "SPINNING"
-    },
-    "VOCE_GANHOU": {
-      "portugues": "Você ganhou!",
-      "english": "You won!"
-    },
-    "VOCE_PERDEU": {
-      "portugues": "Você perdeu!",
-      "english": "You lost!"
-    },
-    "PERDAS": {
-      "portugues": "Perdas",
-      "english": "Losses"
-    },
-    "BOT_ROLOU": {
-      "portugues": "O bot rolou",
-      "english": "The bot rolled"
-    },
-    "VELHA_CHAMOU": {
-      "portugues": "{USER} chamou {USER2} para um jogo da velha apostando {FALCOINS} falcoins :older_woman:",
-      "english": "{USER} challenges {USER2} to a tic-tac-toe game for {FALCOINS} falcoins :older_woman:"
-    },
-    "VELHA_CANCELADO_DEMOROU": {
-      "portugues": "Jogo da velha cancelado. {USER} demorou muito para aceitar! :confounded:",
-      "english": "Tic-tac-toe cancelled. {USER} took to long to accept! :confounded:"
-    },
-    "VELHA_CANCELADO_RECUSOU": {
-      "portugues": "Jogo da velha cancelado. {USER} recusou o jogo! :confounded:",
-      "english": "Tic-tac-toe cancelled. {USER} declined the game! :confounded:"
-    },
-    "VELHA_EMPATOU": {
-      "portugues": "**O jogo empatou**",
-      "english": "**The game ended in a draw**"
-    },
-    "INSUFICIENTE_CONTAS": {
-      "portugues": "Saldo insuficiente em uma das contas! :grimacing:",
-      "english": "Insufficient balance in one of the accounts! :grimacing:"
-    },
-    "NAO_JOGAR_SOZINHO": {
-      "portugues": "Você não pode jogar com você mesmo, espertinho :rage:",
-      "english": "You can't play with yourself, smartass :rage:"
-    },
-    "ROLETA_RUSSA_COMECOU": {
-      "portugues": " começou uma roleta russa",
-      "english": " started a russian roulette"
-    },
-    "TEMPO_RESTANTE": {
-      "portugues": "Tempo restante",
-      "english": "Time remaining"
-    },
-    "ATIRANDO": {
-      "portugues": "atirando em alguém em 5 segundos",
-      "english": "shooting someone in 5 seconds"
-    },
-    "ROLETA_RUSSA": {
-      "portugues": "Roleta russa",
-      "english": "Russian roulette"
-    },
-    "BOLA8": {
-      "portugues": "Bola 8 mágica",
-      "english": "Magic 8-ball"
-    },
-    "PERGUNTA": {
-      "portugues": "Pergunta",
-      "english": "Question"
-    },
-    "PREVISAO": {
-      "portugues": "Previsão",
-      "english": "Prediction"
-    },
-    "GANHO": {
-      "portugues": " ganhou",
-      "english": " won"
-    },
-    "LUTA_DERROTOU": {
-      "portugues": "Você derrotou {USER} em uma luta",
-      "english": "You defeated {USER} in a fight"
-    },
-    "ATACA": {
-      "portugues": "ataca",
-      "english": "attacks"
-    },
-    "SE_PROTEGE": {
-      "portugues": "se protege",
-      "english": "protects themselves"
-    },
-    "SELF": {
-      "portugues": "acidentalmente dá **{VALUE}** de dano a si mesmo",
-      "english": "accidentally deals **{VALUE}** damage to themselves"
-    },
-    "CURA": {
-      "portugues": "se cura em **{VALUE}** de vida",
-      "english": "heals themselves for **{VALUE}** health"
-    },
-    "ROUBO_VIDA": {
-      "portugues": "rouba **{VALUE}** de vida do inimigo",
-      "english": "steals **{VALUE}** health from the enemy"
-    },
-    "ATAQUE_NOCAUTE": {
-      "portugues": "dá **{VALUE}** de dano ao inimigo e o deixa nocauteado",
-      "english": "deals **{VALUE}** damage to the enemy and puts them on cooldown"
-    },
-    "ATAQUE": {
-      "portugues": "dá **{VALUE}** de dano ao inimigo",
-      "english": "deals **{VALUE}** damage to the enemy"
-    },
-    "LUTA_CANCELADO_DEMOROU": {
-      "portugues": "Luta cancelada. {USER} demorou muito para aceitar! :confounded:",
-      "english": "Fight cancelled. {USER} took to long to accept! :confounded:"
-    },
-    "LUTA_CANCELADO_RECUSOU": {
-      "portugues": "Luta cancelada. {USER} recusou o duelo! :confounded:",
-      "english": "Fight cancelled. {USER} declined the duel! :confounded:"
-    },
-    "LUTA_CONVITE": {
-      "portugues": "{USER} chamou {USER2} para uma luta apostando {FALCOINS} falcoins :smiling_imp:",
-      "english": "{USER} challenges {USER2} to a fight for {FALCOINS} falcoins :smiling_imp:"
-    },
-    "ITEM_1": {
-      "portugues": "Item número 1: Caixa",
-      "english": "Item number 1: Crate"
-    },
-    "ITEM_1_DESCRICAO": {
-      "portugues": "Pelo custo de 5.000 falcoins você compra uma caixa que pode ser aberta usando uma chave",
-      "english": "For the cost of 5.000 falcoins you can buy a crate that can be opened using a key"
-    },
-    "ITEM_2": {
-      "portugues": "Item número 2: Chave",
-      "english": "Item number 2: Key"
-    },
-    "ITEM_2_DESCRICAO": {
-      "portugues": "Pelo custo de 20.000 falcoins você compra uma chave que pode ser usada para abrir uma caixa",
-      "english": "For the cost of 20.000 falcoins you can buy a key that can be used to open a crate"
-    },
-    "ITEM_3": {
-      "portugues": "Item número 3: Aumento da lootbox",
-      "english": "Item number 1: Lootbox increase"
-    },
-    "ITEM_3_DESCRICAO": {
-      "portugues": "Pelo custo de 50.000 falcoins você aumenta seu ganho na lootbox em 1000 falcoins",
-      "english": "For the cost of 50.000 falcoins you can increase your lootbox gain by 1000 falcoins"
-    },
-    "LOJA_USO_2": {
-      "portugues": "Use `?store [numero] [quantidade]` para comprar um item",
-      "english": "Use `?store [number] [quantity]` to buy an item"
-    },
-    "LOJA_ITEM_INVALIDO": {
-      "portugues": "item inválido! :rage:",
-      "english": "invalid item! :rage:"
-    },
-    "LOJA_QUANTIDADE_INVALIDA": {
-      "portugues": "quantidade inválida! coloque um número positivo ou deixe em branco para comprar 1 :face_with_monocle:",
-      "english": "invalid quantity! put a positive number or leave it blank to buy 1 :face_with_monocle:"
-    },
-    "LOJA_LIMITE": {
-      "portugues": "calma lá amigão, o limite é 100 itens por vez :wink:",
-      "english": "calm down there friend, the limit is 100 items per time :wink:"
-    },
-    "LOJA_COMPROU_CAIXA": {
-      "portugues": "Parabéns! Você comprou {AMOUNT} caixas :star_struck:",
-      "english": "Congratulations! You bought {AMOUNT} crates :star_struck:"
-    },
-    "LOJA_COMPROU_CHAVE": {
-      "portugues": "Parabéns! Você comprou {AMOUNT} chaves :star_struck:",
-      "english": "Congratulations! You bought {AMOUNT} keys :star_struck:"
-    },
-    "LOJA_COMPROU_AUMENTO": {
-      "portugues": "Parabéns! Você comprou {AMOUNT} aumentos da lootbox :star_struck:",
-      "english": "Congratulations! You bought {AMOUNT} lootbox increases :star_struck:"
-    },
-    "COOLDOWNS": {
-      "portugues": "Tempo de espera",
-      "english": "Cooldowns"
-    },
-    "VOTO": {
-      "portugues": "Voto",
-      "english": "Vote"
-    },
-    "PRONTO": {
-      "portugues": "Pronto!",
-      "english": "Ready!"
-    },
-    "SCORE": {
-      "portugues": "Pontuação",
-      "english": "Score"
-    },
-    "VELHA_MOVIMENTO": {
-      "portugues": "{USER}, escolha seu movimento:",
-      "english": "{USER}, choose your move:"
-    },
-    "8BALL": {
-      "portugues": [
-        "certamente.",
-        "sem dúvida.",
-        "sim, definitivamente.",
-        "você pode contar com isso.",
-        "a meu ver, sim.",
-        "provavelmente.",
-        "sim.",
-        "absolutamente.",
-        "destino nublado, tente de novo.",
-        "pergunte de novo mais tarde.",
-        "melhor não te dizer agora.",
-        "não posso prever agora.",
-        "se concentre e pergunte de novo.",
-        "não conte com isso.",
-        "não.",
-        "minhas fontes dizem que não.",
-        "cenário não muito bom.",
-        "muito duvidoso.",
-        "as chances não são boas."
-      ] ,
-      "english": [
-        "certainly.",
-        "without a doubt.",
-        "yes, definitely.",
-        "you may rely on it.",
-        "as I see it, yes.",
-        "most likely.",
-        "yes.",
-        "absolutely.",
-        "cloudy future, ask again.",
-        "try again later.",
-        "better not tell you now.",
-        "focus and try again",
-        "don't count on it.",
-        "no.",
-        "my sources say no.",
-        "outlook not so good.",
-        "very doubtful.",
-        "not in a million years."
-    ]
-    },
-    "RUSROL": {
-    "portugues": [
-      "morreu",
-      "colocou a cabeça no lugar errado",
-      "viajou pro EUA",
-      "não tinha o high ground",
-      "descobriu que o chão era lava",
-      "descobriu que a terra é plana",
-      "não usou máscara"
-    ],
-    "english": [
-      "died",
-      "put their head on the wrong side", 
-      "went to the USA", 
-      "didn\"t have the high ground", 
-      "found out that the floor was lava", 
-      "found out that the earth is flat", 
-      "didn\"t use a mask"
-    ] 
-    },
-    "MAX_RANK": {
-      "portugues": "{USER}, você já está no rank máximo",
-      "english": "{USER}, you are already at the maximum rank"
-    },
-    "NO_MONEY_RANK": {
-      "portugues": "Você precisa de mais **{FALCOINS} falcoins** para aumentar seu rank!",
-      "english": "You need more **{FALCOINS} falcoins** to increase your rank!"
-    },
-    "RANKUP_BANK": {
-      "portugues": "⬆️ *+100.000 falcoins de limite no banco*",
-      "english": "⬆️ *+100.000 falcoins of limit in the bank*"
-    },
-    "RANKUP_SUCESS": {
-      "portugues": "Você subiu de rank e agora é **{RANK}**!\nIsso te custou **{FALCOINS} falcoins**",
-      "english": "You have successfully increased your rank and now you are **{RANK}**!\nIt cost you **{FALCOINS} falcoins**"
-    },
-    "RANKUP_PERKS": {
-      "english": "Unlocked Perks",
-      "portugues": "Benefícios desbloqueados"
-    },
-    "BANK_INTEREST": {
-      "portugues": "10% de juros diários",
-      "english": "Daily interest of 10%"
-    },
-    "BANK_LIMIT": {
-      "portugues": "mais falcoins até maximizar",
-      "english": "more falcoins until you reach the maximum"
-    },
-    "BANK_DEPOSIT_LIMIT": {
-      "portugues": "Seu depósito máximo é de {FALCOINS} falcoins - suba de rank para aumentar!",
-      "english": "Your max deposit is {FALCOINS} falcoins - rank up to increase!"
-    },
-    "BANK_OVER_LIMIT": {
-      "portugues": ":raised_hand: Você não pode depositar mais falcoins no banco, pois está acima do seu limite de depósito",
-      "english": ":raised_hand: You can't deposit more falcoins in the bank, because you are over your deposit limit"
-    },
-    "RANKUP_CAIXA": {
-      "portugues": "⬆️ *+1 caixa e chave adicionadas ao seu inventário*",
-      "english": "⬆️ *+1 box and key added to your inventory*"
-    },
-    "RANKUP_LOOTBOX": {
-      "portugues": "⬆️ *+1000 falcoins adicionados a lootbox*",
-      "english": "⬆️ *+1000 falcoins added to lootbox*"
-    },
-    "ALL_RANKS": {
-      "portugues": ":sparkles: Todos os ranks",
-      "english": ":sparkles: All ranks"
-    },
-    "UPCOMING_RANKS": {
-      "portugues": ":arrow_up: Próximos ranks",
-      "english": ":arrow_up: Upcoming ranks"
-    },
-    "CURRENT_RANK": {
-      "portugues": " <- rank atual",
-      "english": " <- current rank"
-    },
-    "ALL_COMMANDS": {
-      "portugues": ":books: Todos os comandos",
-      "english": ":books: All commands"
-    },
-    "TOO_MANY": {
-      "portugues": ":confused: Existem muitos comandos para mostrar aqui...",
-      "english": ":confused: There are too many commands to show here..."
-    },
-    "LINK_COMMANDS": {
-      "portugues": "[Clique aqui para uma lista completa com todos os comandos](https://falbot.netlify.app/comandos)",
-      "english": "[Click here to see a complete list of all commands](https://falbot.netlify.app/commands)"
-    },
-    "WELCOME": {
-      "portugues": ":wave: Bem-vindo ao Falbot! ",
-      "english": ":wave: Welcome to Falbot!"
-    },
-    "ALREADY_COLLECTED": {
-      "portugues": "Você já coletou sua recompensa hoje",
-      "english": "You already collected your reward today"
-    },
-    "ALREADY_COLLECTED2": {
-      "portugues": "Recompensa: **5000** falcoins\nVocê pode coletar de novo em **{TIME}**",
-      "english": "Reward: **5000** falcoins\nYou can collect again in **{TIME}**"
-    },
-    "VOTE_FIRST": {
-      "portugues": "Você precisa votar primeiro para conseguir sua recompensa",
-      "english": "You need to vote first to get your reward"
-    },
-    "VOTE_HERE": {
-      "portugues": "[Você pode votar aqui](https://top.gg/bot/742331813539872798/vote)",
-      "english": "[You can vote here](https://top.gg/bot/742331813539872798/vote)"
-    },
-    "REWARD": {
-      "portugues": "Recompensa",
-      "english": "Reward"
-    },
-    "VOTE_FINAL": {
-      "portugues": "**5000** falcoins\nUse esse comando de novo após ter votado no bot",
-      "english": "**5000** falcoins\nUse this command again after you voted in the bot"
-    },
-    "HELP_RANK": {
-      "portugues": ":arrow_double_up: Gaste falcoins para subir de rank",
-      "english": ":arrow_double_up: Spend falcoins to rank up"
-    },
-    "HELP_RANK2": {
-      "portugues": "-Suba de rank com `/ranks rankup` para ganhar **várias recompensas** que te ajudam a ganhar falcoins\n-Você pode ver os próximos ranks com `/ranks view` e ver todos os ranks com `/ranks all`\n-Confira sua balança para ver quão longe você está do próximo rank\n-Existe também uma leaderboard baseada em ranks, suba de rank para alcançar **posições mais altas!**",
-      "english": "-Rank up with `/ranks rankup` to receive **multiple rewards** that help you earn more falcoins\n-You can see upcoming ranks with `/ranks view` and all ranks with `/ranks all`\n-Check your balance to see how far you are from the next rank\n-There is also a rank leaderboard, rank up to achieve a **higher position!**"
-    },
-    "HELP_LANGUAGE": {
-      "portugues": ":earth_americas: Escolha a linguagem desejada",
-      "english": ":earth_americas: Choose your desired language"
-    },
-    "HELP_LANGUAGE2": {
-      "portugues": "O falbot é um bot bilíngue!",
-      "english": "Falbot is a bilingual!"
-    },
-    "HELP_LANGUAGE3": {
-      "portugues": "-O idioma padrão do falbot é :flag_br: Português-Brasil, mas é possível mudar para inglês usando `/language english` e de volta para português com `/language portugues`\n-Para ver o idioma atual do servidor, utilize `/language`",
-      "english": "-Falbot's default language is :flag_br: Portuguese-Brazil, but it's possible to change to english using `/language english` and back to portuguese using `/language portugues`\n-To see which language your server is currently using, use `/language`"
-    },
-    "HELP_FUN": {
-      "portugues": ":tada: Quer se divertir sem se preocupar com falcoins?",
-      "english": ":tada: Want to have fun without worrying abou falcoins?"
-    },
-    "HELP_FUN2": {
-      "portugues": "-Preveja seu futuro com `/8ball`\n-Mande outro usuário (ou a si mesmo) para a horny jail com `/bonk`\n-Peça para o falbot procurar imagens no google pra você com `/image`\n-Jogue cara ou coroa com `/coinflip`\n-Faça uma pequena enquete com `/poll`",
-      "english": "-Forecast your future with `/8ball`\n-Send you or another user to the horny jail with `/bonk`\n-Ask falbot to search images on google for you with `/image`\n-Flip a coin with `/coinflip`\n-Do a pretty little poll with `/poll`"
-    },
-    "HELP_UTILS": {
-      "portugues": ":pencil: Falbot também pode ser útil no seu dia-a-dia",
-      "english": ":pencil: Falbot can also be useful in your daily life"
-    },
-    "HELP_UTILS2": {
-      "portugues": "-Mude o prefixo do falbot com `/prefix`\n-Deixe o falbot resolver expressões matemáticas para você com `/math`\n-Role dados usando `/roll`",
-      "english": "-Change falbot's prefix with `/prefix`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`"
-    },
-    "COMMANDS_ALL": {
-      "portugues": "Todos os comandos",
-      "english": "All commands"
-    },
-    "ECONOMY": {
-      "portugues": "Economia",
-      "english": "Economy"
-    },
-    "FUN": {
-      "portugues": "Diversão",
-      "english": "Fun"
-    },
-    "LANGUAGE": {
-      "portugues": "Idioma",
-      "english": "Language"
-    },
-    "UTILS": {
-      "portugues": "Úteis",
-      "english": "Utils"
-    },
-    "COMMANDS_ALL2": {
-      "portugues": "*Lista de comandos*",
-      "english": "*Detailed command list*"
-    },
-    "HELP_RANK3": {
-      "portugues": "*Subindo de rank*",
-      "english": "*Ranking up*"
-    },
-    "HELP_ECONOMY": {
-      "portugues": "*Mecânicas de gameplay*",
-      "english": "*Gameplay mechanics*"
-    },
-    "HELP_FUN3": {
-      "portugues": "*Diversão sem falcoins*",
-      "english": "*Fun without falcoins*"
-    },
-    "HELP_LANGUAGE4": {
-      "portugues": "*Configurando o idioma do servidor*",
-      "english": "*Configuring the server's language*"
-    },
-    "HELP_UTILS3": {
-      "portugues": "*Usando falbot no dia-a-dia*",
-      "english": "*Using falbot in your daily life*"
-    },
-    "FALBOT_WELCOME": {
-      "portugues": ":wave: Bem-vindo ao falbot! Use o menu para escolher uma página de ajuda",
-      "english": ":wave: Welcome to falbot! Use the menu to pick a help page"
-    },
-    "HELP_ECONOMY2": {
-      "portugues": ":money_with_wings: Ganhando mais falcoins",
-      "english": ":money_with_wings: Earning more falcoins"
-    },
-    "HELP_ECONOMY3": {
-      "portugues": "**:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/vote`\n:gift: Resgate sua lootbox a cada 12 horas para um bônus extra com `/lootbox`\n:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/bank`**\n**:stopwatch: Veja quanto tempo até poder executar ações de novo com `/cooldowns`**\n**:busts_in_silhouette: Interaja com outros usuários**\n-Compita com seus amigos com `/horseduel`, `/tictactoe`, `/russianroulette` e `/fight`\n-Se sentindo generoso? Doe dinheiro com `/donation`\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/slot`, `/roulette` e `/horse`**",
-      "english": "**:ballot_box: Vote every 12 hours to earn falcoins with `/vote`\n:gift: Claim your lootbox every 12 hours for more falcoins with `/lootbox`\n:bank: Deposit your money in the bank and watch as it increases with `/bank`**\n**:stopwatch: See how long until actions can be performed again with `/cooldowns`**\n**:busts_in_silhouette: Interact with another users**\n-Compete with your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`\n-Feeling generous? Donate money with `/donation`\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette` and `/horse`**"
-    },
-    "PICK_PAGE": {
-      "portugues": "Escolha uma página de ajuda...",
-      "english": "Pick a help page..."
-    },
-    "BALANCE_RANKUP": {
-      "portugues": "🎉 Você tem o suficiente para subir de rank!",
-      "english": "🎉 You have enough to rank up!"
-    },
-    "BALANCE_RANKUP2": {
-      "portugues": ":arrow_up: {FALCOINS} falcoins para o próximo rank",
-      "english": ":arrow_up: {FALCOINS} to the next rank"
-    },
-    "GANHOS": {
-      "portugues": "Ganhos",
-      "english": "Winnings"
-    },
-    "MAX_RANK2": {
-      "portugues": "Rank máximo",
-      "english": "Max rank"
-    },
-    "ENABLE_REMINDER": {
-      "portugues": "Ativar Lembrete",
-      "english": "Turn On"
-    },
-    "DISABLE_REMINDER": {
-      "portugues": "Desativar Lembrete",
-      "english": "Turn Off"
-    },
-    "REMINDER_ENABLED": {
-      "portugues": "O lembrete para votar foi ativado.",
-      "english": "DM vote reminder is now on."
-    },
-    "REMINDER_DISABLED": {
-      "portugues": "O lembrete para votar foi desativado.",
-      "english": "DM vote reminder is now off."
-    },
-    "VOTE_REMINDER": {
-      "portugues": "Lembrete para votar :bell:",
-      "english": "Vote reminder :bell:"
-    },
-    "REWARD_AFTER": {
-      "portugues": "Resgate sua recompensa depois de votar usando o comando /vote",
-      "english": "Claim your reward after voting by using /vote"
-    },
-    "PLAYERS": {
-      "portugues": "Jogadores",
-      "english": "Players"
-    },
-    "UPTIME": {
-      "portugues": "Tempo de funcionamento",
-      "english": "Uptime"
-    },
-    "SERVERS": {
-      "portugues": "Servidores",
-      "english": "Servers"
-    },
-    "ROLANDO": {
-      "portugues": "ROLANDO",
-      "english": "ROLLING"
-    },
-    "ROLETA": {
-      "portugues": "Roleta",
-      "english": "Roulette"
-    },
-    "GIRANDO_ROLETA": {
-      "portugues": "Girando a roleta...",
-      "english": "Spinning the wheel..."
-    },
-    "1": {
-      "portugues": ":potato: Plebeu",
-      "english": ":potato: Peasent"
-    },
-    "2": {
-      "portugues": ":bricks: Novato",
-      "english": ":bricks: Novice"
-    },
-    "3": {
-      "portugues": ":medal: Recruta",
-      "english": ":medal: Recruit"
-    },
-    "4": {
-      "portugues": ":hammer: Trabalhador",
-      "english": ":hammer: Worker"
-    },
-    "5": {
-      "portugues": ":money_with_wings: Comerciante",
-      "english": ":money_with_wings: Merchant"
-    },
-    "6": {
-      "portugues": ":map: Patrulheiro",
-      "english": ":map: Journeyman"
-    },
-    "7": {
-      "portugues": ":balloon: Patrão",
-      "english": ":balloon: Boss"
-    },
-    "8": {
-      "portugues": ":anchor: Capitão",
-      "english": ":anchor: Captain"
-    },
-    "9": {
-      "portugues": ":helmet_with_cross: Prefeito",
-      "english": ":helmet_with_cross: Warden"
-    },
-    "10": {
-      "portugues": ":moneybag: Governador",
-      "english": ":moneybag: Governor"
-    },
-    "11": {
-      "portugues": ":shield: Vice-rei",
-      "english": ":shield: Viceroy"
-    },
-    "12": {
-      "portugues": ":1234: Conde",
-      "english": ":1234: Count"
-    },
-    "13": {
-      "portugues": ":crystal_ball: Magistrado",
-      "english": ":crystal_ball: Magistrate"
-    },
-    "14": {
-      "portugues": ":vulcan: Coronel",
-      "english": ":vulcan: Colonel"
-    },
-    "15": {
-      "portugues": ":paperclip: Comandante",
-      "english": ":paperclip: Commander"
-    }
+	"LANGUAGE_NOT_SUPPORTED": {
+		"english": "This bot does not have support for {LANGUAGE} at this time.",
+		"portugues": "Este bot não é compatível com {LANGUAGE} por enquanto."
+	},
+	"CURRENT_LANGUAGE": {
+		"english": "The current language is set to {LANGUAGE}.",
+		"portugues": "O idioma atual está definido como {LANGUAGE}."
+	},
+	"NEW_LANGUAGE": {
+		"english": "Language set to {LANGUAGE}.",
+		"portugues": "Idioma configurado para {LANGUAGE}."
+	},
+	"BOT_OWNERS_ONLY": {
+		"english": "Only the bot owner can run this command.",
+		"portugues": "Apenas o proprietário do bot pode executar este comando."
+	},
+	"DISABLED_COMMAND": {
+		"english": "That command is currently disabled in this server.",
+		"portugues": "Este comando está atualmente desabilitado neste servidor."
+	},
+	"MISSING_PERMISSION": {
+		"english": "You must have the {PERM} permission in order to use this command.",
+		"portugues": "Você precisa ter a permissão {PERM} para utilizar este comando."
+	},
+	"MISSING_ROLES": {
+		"english": "You do not have the required roles to use this command! You need one of the following: {ROLES}",
+		"portugues": "Você não tem o cargo necessário para usar este comando! Você precisa de um dos seguintes: {ROLES}"
+	},
+	"COOLDOWN": {
+		"english": "You must wait {COOLDOWN} before using that command again.",
+		"portugues": "Você precisa esperar {COOLDOWN} antes de usar este comando novamente."
+	},
+	"ENABLE_DISABLE_STATE": {
+		"english": "The state must be either \"enable\" or \"disable\".",
+		"portugues": "O estado deve ser \"ativado\" ou \"desativado\"."
+	},
+	"CANNOT_ENABLE_DISABLE_IN_DMS": {
+		"english": "You cannot enable or disable commands in private messages.",
+		"portugues": "Você não pode ativar ou desativar comandos em mensagens privadas."
+	},
+	"COMMAND_ALREADY_ENABLED": {
+		"english": "That command is already enabled!",
+		"portugues": "Este comando já está ativado!"
+	},
+	"COMMAND_ALREADY_DISABLED": {
+		"english": "That command is already disabled!",
+		"portugues": "Este comando já está desativado!"
+	},
+	"COMMAND_NOW_ENABLED": {
+		"english": "{COMMAND} is now enabled!",
+		"portugues": "{COMMAND} agora está ativado!"
+	},
+	"COMMAND_NOW_DISABLED": {
+		"english": "{COMMAND} is now disabled!",
+		"portugues": "{COMMAND} agora está desativado!"
+	},
+	"UNKNOWN_COMMAND": {
+		"english": "Could not find command {COMMAND}!",
+		"portugues": "Não foi possível encontrar o comando {COMMAND}!"
+	},
+	"CURRENT_PREFIX": {
+		"english": "The current prefix is {PREFIX}.",
+		"portugues": "O prefixo atual é {PREFIX}."
+	},
+	"SET_PREFIX": {
+		"english": "Set the command prefix to {PREFIX}.",
+		"portugues": "Prefixo definido para {PREFIX}."
+	},
+	"CANNOT_SET_PREFIX_IN_DMS": {
+		"english": "You cannot set a prefix in a private message.",
+		"portugues": "Você não pode definir um prefixo em uma mensagem privada"
+	},
+	"CANNOT_CHANGE_REQUIRED_ROLES_IN_DMS": {
+		"english": "You cannot change required roles in private messages.",
+		"portugues": "Você não pode alterar os cargos necessários em mensagens privadas"
+	},
+	"REMOVED_ALL_REQUIRED_ROLES": {
+		"english": "Removed all required roles from command {COMMAND}.",
+		"portugues": "Removidas todas as permissões necessárias para o comando {COMMAND}."
+	},
+	"ADDED_REQUIRED_ROLE": {
+		"english": "Added role {ROLE} to command {COMMAND}.",
+		"portugues": "Adicionado o cargo {ROLE} para o comando {COMMAND}."
+	},
+	"SYNTAX_ERROR": {
+		"english": "Incorrect usage! Please use \"{PREFIX}{COMMAND} {ARGUMENTS}\"",
+		"portugues": "Uso incorreto! Utilize \"{PREFIX}{COMMAND} {ARGUMENTS}\""
+	},
+	"NO_DATABASE_FOUND": {
+		"english": "No database connection found!",
+		"portugues": "Conexão ao banco de dados não encontrada!"
+	},
+	"GUILD_ONLY_COMMAND": {
+		"english": "This command can only be used within a server.",
+		"portugues": "Este comando só pode ser usado em um servidor."
+	},
+	"NO_REACT_PERMS": {
+		"english": "This bot needs the \"Add Reactions\" permission to use the help menu.",
+		"portugues": "Este bot precisa da permissão \"Adicionar reações\" para usar o menu de ajuda."
+	},
+	"EXCEPTION": {
+		"english": "An error occurred when running this command! This error has been reported to the developers.",
+		"portugues": "Ocorreu um erro ao executar este comando! Este erro foi relatado aos desenvolvedores."
+	},
+	"NO_TAGGED_CHANNELS": {
+		"english": "Please tag at least one channel.",
+		"portugues": "Marque pelo menos um canal."
+	},
+	"NOT_CHANNEL_COMMAND": {
+		"english": "That command is currently not limited to any channel.",
+		"portugues": "Esse comando atualmente não está limitado a nenhum canal."
+	},
+	"NO_LONGER_CHANNEL_COMMAND": {
+		"english": "That command is no longer a channel specific command.",
+		"portugues": "Esse comando não é mais um comando específico do canal."
+	},
+	"NOW_CHANNEL_COMMAND": {
+		"english": "\"{COMMAND}\" can now only be ran in {CHANNELS}.",
+		"portugues": "\"{COMMAND}\" agora só pode ser executado em {CHANNELS}."
+	},
+	"ALLOWED_CHANNELS": {
+		"english": "You can only use that command in the following: {CHANNELS}.",
+		"portugues": "Você só pode usar esse comando nos seguintes: {CHANNELS}."
+	},
+	"CANNOT_DISABLE_THIS_COMMAND": {
+		"english": "This command cannot be disabled.",
+		"portugues": "Este comando não pode ser desabilitado."
+	},
+	"INVALID_SLASH_COMMAND": {
+		"english": "This slash command is not properly registered.",
+		"portugues": "Este comando de barra não está registrado corretamente."
+	},
+	"REQUIRE_ROLES": {
+		"english": "You must specify what roles can use this command with `{PREFIX}requiredroles {COMMAND} <role ID>`.",
+		"portugues": "Você deve especificar quais funções podem usar este comando com `{PREFIX} funções necessárias {COMANDO} <ID da função>`."
+	},
+	"NUMEROS": {
+		"portugues": "Números",
+		"english": "Numbers"
+	},
+	"VALOR_INVALIDO": {
+		"portugues": "{VALUE} não é um valor válido... :rage:",
+		"english": "{VALUE} is not a valid value... :rage:"
+	},
+	"FALCOINS_INSUFICIENTES": {
+		"portugues": "você não tem falcoins suficientes! :rage:",
+		"english": "you don't have enough falcoins! :rage:"
+	},
+	"BANCO_INSUFICIENTE": {
+		"portugues": "você não tem falcoins suficientes no banco! :rage:",
+		"english": "you don't have enough falcoins in the bank! :rage:"
+	},
+	"BANCO_DEPOSITOU": {
+		"portugues": "você depositou {VALUE} falcoins no banco! :smiley:",
+		"english": "You deposited {VALUE} falcoins in the bank! :smiley:"
+	},
+	"SALDO_ATUAL": {
+		"portugues": "Saldo atual",
+		"english": "Current balance"
+	},
+	"BANCO": {
+		"portugues": "Banco",
+		"english": "Bank"
+	},
+	"BANCO_SALDO": {
+		"portugues": "Você tem {VALUE} falcoins no banco",
+		"english": "You have {VALUE} falcoins in the bank"
+	},
+	"BANCO_SACOU": {
+		"portugues": "Você sacou {VALUE} falcoins do banco! :smiley:",
+		"english": "You withdrew {VALUE} falcoins from the bank! :smiley:"
+	},
+	"BONKED": {
+		"portugues": " você foi bonked por ",
+		"english": " you were bonked by "
+	},
+	"CAIXA_TITULO": {
+		"portugues": "Você abriu {QUANTITY} caixas, e encontrou:",
+		"english": "You opened {QUANTITY} crates, and found:"
+	},
+	"CAIXA_INSUFICIENTE": {
+		"portugues": "você não tem caixas e/ou chaves o suficiente para esta ação! :rage:",
+		"english": "you don't have enough crates and/or keys to do this action! :rage:"
+	},
+	"CAVALGADA": {
+		"portugues": "Cavalgada",
+		"english": "Horse race"
+	},
+	"CAVALGADA_DESAFIO": {
+		"portugues": "{USER} te desafia para uma cavalgada!",
+		"english": "{USER} challenges you to a horse race!"
+	},
+	"APOSTA": {
+		"portugues": "Aposta",
+		"english": "Bet"
+	},
+	"JOGADORES": {
+		"portugues": "Jogadores",
+		"english": "Players"
+	},
+	"GANHOU": {
+		"portugues": "{WINNER} ganhou {FALCOINS} falcoins!",
+		"english": "{WINNER} won {FALCOINS} falcoins!"
+	},
+	"CAVALO": {
+		"portugues": "Cavalo",
+		"english": "Horse"
+	},
+	"CAVALO_GANHOU": {
+		"portugues": "Cavalo {WINNER} ganhou!",
+		"english": "Horse {WINNER} won!"
+	},
+	"CAVALO_VOCE_GANHOU": {
+		"portugues": "Você ganhou {FALCOINS} falcoins!",
+		"english": "You won {FALCOINS} falcoins!"
+	},
+	"CAVALO_VOCE_PERDEU": {
+		"portugues": "Você perdeu {FALCOINS} falcoins!",
+		"english": "You lost {FALCOINS} falcoins!"
+	},
+	"COINFLIP": {
+		"portugues": ":coin: você tirou **{CARAS}** caras e **{COROAS}** coroas jogando **{TIMES}** vezes",
+		"english": ":coin: you flipped **{CARAS}** heads and **{COROAS}** tails from playing **{TIMES}** times"
+	},
+	"COINFLIP_LIMITE": {
+		"portugues": "calma lá amigão, o limite é 1000 vezes :wink:",
+		"english": "hold on there buddy, the limit is 1000 times :wink:"
+	},
+	"DOAR": {
+		"portugues": ":handshake: {FALCOINS} falcoins transferidos com sucesso para {USER}",
+		"english": ":handshake: {FALCOINS} falcoins transferred successfully to {USER}"
+	},
+	"ENQUETE": {
+		"portugues": "Nova enquete de: {USER}",
+		"english": "New poll by: {USER}"
+	},
+	"VITORIAS": {
+		"portugues": "Vitórias",
+		"english": "Wins"
+	},
+	"CAIXAS": {
+		"portugues": "Caixas",
+		"english": "Crates"
+	},
+	"CHAVES": {
+		"portugues": "Chaves",
+		"english": "Keys"
+	},
+	"LOOTBOX": {
+		"portugues": "Parabéns! Você ganhou **{FALCOINS}** falcoins :heart_eyes:",
+		"english": "Congratulations! You won **{FALCOINS}** falcoins :heart_eyes:"
+	},
+	"RESULTADO": {
+		"portugues": "Resultado",
+		"english": "Result"
+	},
+	"GIRANDO": {
+		"portugues": "GIRANDO",
+		"english": "SPINNING"
+	},
+	"VOCE_GANHOU": {
+		"portugues": "Você ganhou!",
+		"english": "You won!"
+	},
+	"VOCE_PERDEU": {
+		"portugues": "Você perdeu!",
+		"english": "You lost!"
+	},
+	"PERDAS": {
+		"portugues": "Perdas",
+		"english": "Losses"
+	},
+	"BOT_ROLOU": {
+		"portugues": "O bot rolou",
+		"english": "The bot rolled"
+	},
+	"VELHA_CHAMOU": {
+		"portugues": "{USER} chamou {USER2} para um jogo da velha apostando {FALCOINS} falcoins :older_woman:",
+		"english": "{USER} challenges {USER2} to a tic-tac-toe game for {FALCOINS} falcoins :older_woman:"
+	},
+	"VELHA_CANCELADO_DEMOROU": {
+		"portugues": "Jogo da velha cancelado. {USER} demorou muito para aceitar! :confounded:",
+		"english": "Tic-tac-toe cancelled. {USER} took to long to accept! :confounded:"
+	},
+	"VELHA_CANCELADO_RECUSOU": {
+		"portugues": "Jogo da velha cancelado. {USER} recusou o jogo! :confounded:",
+		"english": "Tic-tac-toe cancelled. {USER} declined the game! :confounded:"
+	},
+	"VELHA_EMPATOU": {
+		"portugues": "**O jogo empatou**",
+		"english": "**The game ended in a draw**"
+	},
+	"INSUFICIENTE_CONTAS": {
+		"portugues": "Saldo insuficiente em uma das contas! :grimacing:",
+		"english": "Insufficient balance in one of the accounts! :grimacing:"
+	},
+	"NAO_JOGAR_SOZINHO": {
+		"portugues": "Você não pode jogar com você mesmo, espertinho :rage:",
+		"english": "You can't play with yourself, smartass :rage:"
+	},
+	"ROLETA_RUSSA_COMECOU": {
+		"portugues": " começou uma roleta russa",
+		"english": " started a russian roulette"
+	},
+	"TEMPO_RESTANTE": {
+		"portugues": "Tempo restante",
+		"english": "Time remaining"
+	},
+	"ATIRANDO": {
+		"portugues": "atirando em alguém em 5 segundos",
+		"english": "shooting someone in 5 seconds"
+	},
+	"ROLETA_RUSSA": {
+		"portugues": "Roleta russa",
+		"english": "Russian roulette"
+	},
+	"BOLA8": {
+		"portugues": "Bola 8 mágica",
+		"english": "Magic 8-ball"
+	},
+	"PERGUNTA": {
+		"portugues": "Pergunta",
+		"english": "Question"
+	},
+	"PREVISAO": {
+		"portugues": "Previsão",
+		"english": "Prediction"
+	},
+	"GANHO": {
+		"portugues": " ganhou",
+		"english": " won"
+	},
+	"LUTA_DERROTOU": {
+		"portugues": "Você derrotou {USER} em uma luta",
+		"english": "You defeated {USER} in a fight"
+	},
+	"ATACA": {
+		"portugues": "ataca",
+		"english": "attacks"
+	},
+	"SE_PROTEGE": {
+		"portugues": "se protege",
+		"english": "protects themselves"
+	},
+	"SELF": {
+		"portugues": "acidentalmente dá **{VALUE}** de dano a si mesmo",
+		"english": "accidentally deals **{VALUE}** damage to themselves"
+	},
+	"CURA": {
+		"portugues": "se cura em **{VALUE}** de vida",
+		"english": "heals themselves for **{VALUE}** health"
+	},
+	"ROUBO_VIDA": {
+		"portugues": "rouba **{VALUE}** de vida do inimigo",
+		"english": "steals **{VALUE}** health from the enemy"
+	},
+	"ATAQUE_NOCAUTE": {
+		"portugues": "dá **{VALUE}** de dano ao inimigo e o deixa nocauteado",
+		"english": "deals **{VALUE}** damage to the enemy and puts them on cooldown"
+	},
+	"ATAQUE": {
+		"portugues": "dá **{VALUE}** de dano ao inimigo",
+		"english": "deals **{VALUE}** damage to the enemy"
+	},
+	"LUTA_CANCELADO_DEMOROU": {
+		"portugues": "Luta cancelada. {USER} demorou muito para aceitar! :confounded:",
+		"english": "Fight cancelled. {USER} took to long to accept! :confounded:"
+	},
+	"LUTA_CANCELADO_RECUSOU": {
+		"portugues": "Luta cancelada. {USER} recusou o duelo! :confounded:",
+		"english": "Fight cancelled. {USER} declined the duel! :confounded:"
+	},
+	"LUTA_CONVITE": {
+		"portugues": "{USER} chamou {USER2} para uma luta apostando {FALCOINS} falcoins :smiling_imp:",
+		"english": "{USER} challenges {USER2} to a fight for {FALCOINS} falcoins :smiling_imp:"
+	},
+	"ITEM_1": {
+		"portugues": "Item número 1: Caixa",
+		"english": "Item number 1: Crate"
+	},
+	"ITEM_1_DESCRICAO": {
+		"portugues": "Pelo custo de 5.000 falcoins você compra uma caixa que pode ser aberta usando uma chave",
+		"english": "For the cost of 5.000 falcoins you can buy a crate that can be opened using a key"
+	},
+	"ITEM_2": {
+		"portugues": "Item número 2: Chave",
+		"english": "Item number 2: Key"
+	},
+	"ITEM_2_DESCRICAO": {
+		"portugues": "Pelo custo de 20.000 falcoins você compra uma chave que pode ser usada para abrir uma caixa",
+		"english": "For the cost of 20.000 falcoins you can buy a key that can be used to open a crate"
+	},
+	"ITEM_3": {
+		"portugues": "Item número 3: Aumento da lootbox",
+		"english": "Item number 1: Lootbox increase"
+	},
+	"ITEM_3_DESCRICAO": {
+		"portugues": "Pelo custo de 50.000 falcoins você aumenta seu ganho na lootbox em 1000 falcoins",
+		"english": "For the cost of 50.000 falcoins you can increase your lootbox gain by 1000 falcoins"
+	},
+	"LOJA_USO_2": {
+		"portugues": "Use `?store [numero] [quantidade]` para comprar um item",
+		"english": "Use `?store [number] [quantity]` to buy an item"
+	},
+	"LOJA_ITEM_INVALIDO": {
+		"portugues": "item inválido! :rage:",
+		"english": "invalid item! :rage:"
+	},
+	"LOJA_QUANTIDADE_INVALIDA": {
+		"portugues": "quantidade inválida! coloque um número positivo ou deixe em branco para comprar 1 :face_with_monocle:",
+		"english": "invalid quantity! put a positive number or leave it blank to buy 1 :face_with_monocle:"
+	},
+	"LOJA_LIMITE": {
+		"portugues": "calma lá amigão, o limite é 100 itens por vez :wink:",
+		"english": "calm down there friend, the limit is 100 items per time :wink:"
+	},
+	"LOJA_COMPROU_CAIXA": {
+		"portugues": "Parabéns! Você comprou {AMOUNT} caixas :star_struck:",
+		"english": "Congratulations! You bought {AMOUNT} crates :star_struck:"
+	},
+	"LOJA_COMPROU_CHAVE": {
+		"portugues": "Parabéns! Você comprou {AMOUNT} chaves :star_struck:",
+		"english": "Congratulations! You bought {AMOUNT} keys :star_struck:"
+	},
+	"LOJA_COMPROU_AUMENTO": {
+		"portugues": "Parabéns! Você comprou {AMOUNT} aumentos da lootbox :star_struck:",
+		"english": "Congratulations! You bought {AMOUNT} lootbox increases :star_struck:"
+	},
+	"COOLDOWNS": {
+		"portugues": "Tempo de espera",
+		"english": "Cooldowns"
+	},
+	"VOTO": {
+		"portugues": "Voto",
+		"english": "Vote"
+	},
+	"PRONTO": {
+		"portugues": "Pronto!",
+		"english": "Ready!"
+	},
+	"SCORE": {
+		"portugues": "Pontuação",
+		"english": "Score"
+	},
+	"VELHA_MOVIMENTO": {
+		"portugues": "{USER}, escolha seu movimento:",
+		"english": "{USER}, choose your move:"
+	},
+	"8BALL": {
+		"portugues": [
+			"certamente.",
+			"sem dúvida.",
+			"sim, definitivamente.",
+			"você pode contar com isso.",
+			"a meu ver, sim.",
+			"provavelmente.",
+			"sim.",
+			"absolutamente.",
+			"destino nublado, tente de novo.",
+			"pergunte de novo mais tarde.",
+			"melhor não te dizer agora.",
+			"não posso prever agora.",
+			"se concentre e pergunte de novo.",
+			"não conte com isso.",
+			"não.",
+			"minhas fontes dizem que não.",
+			"cenário não muito bom.",
+			"muito duvidoso.",
+			"as chances não são boas."
+		],
+		"english": [
+			"certainly.",
+			"without a doubt.",
+			"yes, definitely.",
+			"you may rely on it.",
+			"as I see it, yes.",
+			"most likely.",
+			"yes.",
+			"absolutely.",
+			"cloudy future, ask again.",
+			"try again later.",
+			"better not tell you now.",
+			"focus and try again",
+			"don't count on it.",
+			"no.",
+			"my sources say no.",
+			"outlook not so good.",
+			"very doubtful.",
+			"not in a million years."
+		]
+	},
+	"RUSROL": {
+		"portugues": [
+			"morreu",
+			"colocou a cabeça no lugar errado",
+			"viajou pro EUA",
+			"não tinha o high ground",
+			"descobriu que o chão era lava",
+			"descobriu que a terra é plana",
+			"não usou máscara"
+		],
+		"english": [
+			"died",
+			"put their head on the wrong side",
+			"went to the USA",
+			"didn\"t have the high ground",
+			"found out that the floor was lava",
+			"found out that the earth is flat",
+			"didn\"t use a mask"
+		]
+	},
+	"MAX_RANK": {
+		"portugues": "{USER}, você já está no rank máximo",
+		"english": "{USER}, you are already at the maximum rank"
+	},
+	"NO_MONEY_RANK": {
+		"portugues": "Você precisa de mais **{FALCOINS} falcoins** para aumentar seu rank!",
+		"english": "You need more **{FALCOINS} falcoins** to increase your rank!"
+	},
+	"RANKUP_BANK": {
+		"portugues": "⬆️ *+100.000 falcoins de limite no banco*",
+		"english": "⬆️ *+100.000 falcoins of limit in the bank*"
+	},
+	"RANKUP_SUCESS": {
+		"portugues": "Você subiu de rank e agora é **{RANK}**!\nIsso te custou **{FALCOINS} falcoins**",
+		"english": "You have successfully increased your rank and now you are **{RANK}**!\nIt cost you **{FALCOINS} falcoins**"
+	},
+	"RANKUP_PERKS": {
+		"english": "Unlocked Perks",
+		"portugues": "Benefícios desbloqueados"
+	},
+	"BANK_INTEREST": {
+		"portugues": "10% de juros diários",
+		"english": "Daily interest of 10%"
+	},
+	"BANK_LIMIT": {
+		"portugues": "mais falcoins até maximizar",
+		"english": "more falcoins until you reach the maximum"
+	},
+	"BANK_DEPOSIT_LIMIT": {
+		"portugues": "Seu depósito máximo é de {FALCOINS} falcoins - suba de rank para aumentar!",
+		"english": "Your max deposit is {FALCOINS} falcoins - rank up to increase!"
+	},
+	"BANK_OVER_LIMIT": {
+		"portugues": ":raised_hand: Você não pode depositar mais falcoins no banco, pois está acima do seu limite de depósito",
+		"english": ":raised_hand: You can't deposit more falcoins in the bank, because you are over your deposit limit"
+	},
+	"RANKUP_CAIXA": {
+		"portugues": "⬆️ *+1 caixa e chave adicionadas ao seu inventário*",
+		"english": "⬆️ *+1 box and key added to your inventory*"
+	},
+	"RANKUP_LOOTBOX": {
+		"portugues": "⬆️ *+1000 falcoins adicionados a lootbox*",
+		"english": "⬆️ *+1000 falcoins added to lootbox*"
+	},
+	"ALL_RANKS": {
+		"portugues": ":sparkles: Todos os ranks",
+		"english": ":sparkles: All ranks"
+	},
+	"UPCOMING_RANKS": {
+		"portugues": ":arrow_up: Próximos ranks",
+		"english": ":arrow_up: Upcoming ranks"
+	},
+	"CURRENT_RANK": {
+		"portugues": " <- rank atual",
+		"english": " <- current rank"
+	},
+	"ALL_COMMANDS": {
+		"portugues": ":books: Todos os comandos",
+		"english": ":books: All commands"
+	},
+	"TOO_MANY": {
+		"portugues": ":confused: Existem muitos comandos para mostrar aqui...",
+		"english": ":confused: There are too many commands to show here..."
+	},
+	"LINK_COMMANDS": {
+		"portugues": "[Clique aqui para uma lista completa com todos os comandos](https://falbot.netlify.app/comandos)",
+		"english": "[Click here to see a complete list of all commands](https://falbot.netlify.app/commands)"
+	},
+	"WELCOME": {
+		"portugues": ":wave: Bem-vindo ao Falbot! ",
+		"english": ":wave: Welcome to Falbot!"
+	},
+	"ALREADY_COLLECTED": {
+		"portugues": "Você já coletou sua recompensa hoje",
+		"english": "You already collected your reward today"
+	},
+	"ALREADY_COLLECTED2": {
+		"portugues": "Recompensa: **5000** falcoins\nVocê pode coletar de novo em **{TIME}**",
+		"english": "Reward: **5000** falcoins\nYou can collect again in **{TIME}**"
+	},
+	"VOTE_FIRST": {
+		"portugues": "Você precisa votar primeiro para conseguir sua recompensa",
+		"english": "You need to vote first to get your reward"
+	},
+	"VOTE_HERE": {
+		"portugues": "[Você pode votar aqui](https://top.gg/bot/742331813539872798/vote)",
+		"english": "[You can vote here](https://top.gg/bot/742331813539872798/vote)"
+	},
+	"REWARD": {
+		"portugues": "Recompensa",
+		"english": "Reward"
+	},
+	"VOTE_FINAL": {
+		"portugues": "**5000** falcoins\nUse esse comando de novo após ter votado no bot",
+		"english": "**5000** falcoins\nUse this command again after you voted in the bot"
+	},
+	"HELP_RANK": {
+		"portugues": ":arrow_double_up: Gaste falcoins para subir de rank",
+		"english": ":arrow_double_up: Spend falcoins to rank up"
+	},
+	"HELP_RANK2": {
+		"portugues": "-Suba de rank com `/ranks rankup` para ganhar **várias recompensas** que te ajudam a ganhar falcoins\n-Você pode ver os próximos ranks com `/ranks view` e ver todos os ranks com `/ranks all`\n-Confira sua balança para ver quão longe você está do próximo rank\n-Existe também uma leaderboard baseada em ranks, suba de rank para alcançar **posições mais altas!**",
+		"english": "-Rank up with `/ranks rankup` to receive **multiple rewards** that help you earn more falcoins\n-You can see upcoming ranks with `/ranks view` and all ranks with `/ranks all`\n-Check your balance to see how far you are from the next rank\n-There is also a rank leaderboard, rank up to achieve a **higher position!**"
+	},
+	"HELP_LANGUAGE": {
+		"portugues": ":earth_americas: Escolha a linguagem desejada",
+		"english": ":earth_americas: Choose your desired language"
+	},
+	"HELP_LANGUAGE2": {
+		"portugues": "O falbot é um bot bilíngue!",
+		"english": "Falbot is a bilingual!"
+	},
+	"HELP_LANGUAGE3": {
+		"portugues": "-O idioma padrão do falbot é :flag_br: Português-Brasil, mas é possível mudar para inglês usando `/language english` e de volta para português com `/language portugues`\n-Para ver o idioma atual do servidor, utilize `/language`",
+		"english": "-Falbot's default language is :flag_br: Portuguese-Brazil, but it's possible to change to english using `/language english` and back to portuguese using `/language portugues`\n-To see which language your server is currently using, use `/language`"
+	},
+	"HELP_FUN": {
+		"portugues": ":tada: Quer se divertir sem se preocupar com falcoins?",
+		"english": ":tada: Want to have fun without worrying abou falcoins?"
+	},
+	"HELP_FUN2": {
+		"portugues": "-Preveja seu futuro com `/8ball`\n-Mande outro usuário (ou a si mesmo) para a horny jail com `/bonk`\n-Peça para o falbot procurar imagens no google pra você com `/image`\n-Jogue cara ou coroa com `/coinflip`\n-Faça uma pequena enquete com `/poll`",
+		"english": "-Forecast your future with `/8ball`\n-Send you or another user to the horny jail with `/bonk`\n-Ask falbot to search images on google for you with `/image`\n-Flip a coin with `/coinflip`\n-Do a pretty little poll with `/poll`"
+	},
+	"HELP_UTILS": {
+		"portugues": ":pencil: Falbot também pode ser útil no seu dia-a-dia",
+		"english": ":pencil: Falbot can also be useful in your daily life"
+	},
+	"HELP_UTILS2": {
+		"portugues": "-Mude o prefixo do falbot com `/prefix`\n-Deixe o falbot resolver expressões matemáticas para você com `/math`\n-Role dados usando `/roll`",
+		"english": "-Change falbot's prefix with `/prefix`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`"
+	},
+	"COMMANDS_ALL": {
+		"portugues": "Todos os comandos",
+		"english": "All commands"
+	},
+	"ECONOMY": {
+		"portugues": "Economia",
+		"english": "Economy"
+	},
+	"FUN": {
+		"portugues": "Diversão",
+		"english": "Fun"
+	},
+	"LANGUAGE": {
+		"portugues": "Idioma",
+		"english": "Language"
+	},
+	"UTILS": {
+		"portugues": "Úteis",
+		"english": "Utils"
+	},
+	"COMMANDS_ALL2": {
+		"portugues": "*Lista de comandos*",
+		"english": "*Detailed command list*"
+	},
+	"HELP_RANK3": {
+		"portugues": "*Subindo de rank*",
+		"english": "*Ranking up*"
+	},
+	"HELP_ECONOMY": {
+		"portugues": "*Mecânicas de gameplay*",
+		"english": "*Gameplay mechanics*"
+	},
+	"HELP_FUN3": {
+		"portugues": "*Diversão sem falcoins*",
+		"english": "*Fun without falcoins*"
+	},
+	"HELP_LANGUAGE4": {
+		"portugues": "*Configurando o idioma do servidor*",
+		"english": "*Configuring the server's language*"
+	},
+	"HELP_UTILS3": {
+		"portugues": "*Usando falbot no dia-a-dia*",
+		"english": "*Using falbot in your daily life*"
+	},
+	"FALBOT_WELCOME": {
+		"portugues": ":wave: Bem-vindo ao falbot! Use o menu para escolher uma página de ajuda",
+		"english": ":wave: Welcome to falbot! Use the menu to pick a help page"
+	},
+	"HELP_ECONOMY2": {
+		"portugues": ":money_with_wings: Ganhando mais falcoins",
+		"english": ":money_with_wings: Earning more falcoins"
+	},
+	"HELP_ECONOMY3": {
+		"portugues": "**:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/vote`\n:gift: Resgate sua lootbox a cada 12 horas para um bônus extra com `/lootbox`\n:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/bank`**\n**:stopwatch: Veja quanto tempo até poder executar ações de novo com `/cooldowns`**\n**:busts_in_silhouette: Interaja com outros usuários**\n-Compita com seus amigos com `/horseduel`, `/tictactoe`, `/russianroulette` e `/fight`\n-Se sentindo generoso? Doe dinheiro com `/donation`\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/slot`, `/roulette` e `/horse`**",
+		"english": "**:ballot_box: Vote every 12 hours to earn falcoins with `/vote`\n:gift: Claim your lootbox every 12 hours for more falcoins with `/lootbox`\n:bank: Deposit your money in the bank and watch as it increases with `/bank`**\n**:stopwatch: See how long until actions can be performed again with `/cooldowns`**\n**:busts_in_silhouette: Interact with another users**\n-Compete with your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`\n-Feeling generous? Donate money with `/donation`\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette` and `/horse`**"
+	},
+	"PICK_PAGE": {
+		"portugues": "Escolha uma página de ajuda...",
+		"english": "Pick a help page..."
+	},
+	"BALANCE_RANKUP": {
+		"portugues": "🎉 Você tem o suficiente para subir de rank!",
+		"english": "🎉 You have enough to rank up!"
+	},
+	"BALANCE_RANKUP2": {
+		"portugues": ":arrow_up: {FALCOINS} falcoins para o próximo rank",
+		"english": ":arrow_up: {FALCOINS} to the next rank"
+	},
+	"GANHOS": {
+		"portugues": "Ganhos",
+		"english": "Winnings"
+	},
+	"MAX_RANK2": {
+		"portugues": "Rank máximo",
+		"english": "Max rank"
+	},
+	"ENABLE_REMINDER": {
+		"portugues": "Ativar Lembrete",
+		"english": "Turn On"
+	},
+	"DISABLE_REMINDER": {
+		"portugues": "Desativar Lembrete",
+		"english": "Turn Off"
+	},
+	"REMINDER_ENABLED": {
+		"portugues": "O lembrete para votar foi ativado.",
+		"english": "DM vote reminder is now on."
+	},
+	"REMINDER_DISABLED": {
+		"portugues": "O lembrete para votar foi desativado.",
+		"english": "DM vote reminder is now off."
+	},
+	"VOTE_REMINDER": {
+		"portugues": "Lembrete para votar :bell:",
+		"english": "Vote reminder :bell:"
+	},
+	"REWARD_AFTER": {
+		"portugues": "Resgate sua recompensa depois de votar usando o comando /vote",
+		"english": "Claim your reward after voting by using /vote"
+	},
+	"PLAYERS": {
+		"portugues": "Jogadores",
+		"english": "Players"
+	},
+	"UPTIME": {
+		"portugues": "Tempo de funcionamento",
+		"english": "Uptime"
+	},
+	"SERVERS": {
+		"portugues": "Servidores",
+		"english": "Servers"
+	},
+	"ROLANDO": {
+		"portugues": "ROLANDO",
+		"english": "ROLLING"
+	},
+	"ROLETA": {
+		"portugues": "Roleta",
+		"english": "Roulette"
+	},
+	"GIRANDO_ROLETA": {
+		"portugues": "Girando a roleta...",
+		"english": "Spinning the wheel..."
+	},
+	"1": {
+		"portugues": ":potato: Plebeu",
+		"english": ":potato: Peasent"
+	},
+	"2": {
+		"portugues": ":bricks: Novato",
+		"english": ":bricks: Novice"
+	},
+	"3": {
+		"portugues": ":medal: Recruta",
+		"english": ":medal: Recruit"
+	},
+	"4": {
+		"portugues": ":hammer: Trabalhador",
+		"english": ":hammer: Worker"
+	},
+	"5": {
+		"portugues": ":money_with_wings: Comerciante",
+		"english": ":money_with_wings: Merchant"
+	},
+	"6": {
+		"portugues": ":map: Patrulheiro",
+		"english": ":map: Journeyman"
+	},
+	"7": {
+		"portugues": ":balloon: Patrão",
+		"english": ":balloon: Boss"
+	},
+	"8": {
+		"portugues": ":anchor: Capitão",
+		"english": ":anchor: Captain"
+	},
+	"9": {
+		"portugues": ":helmet_with_cross: Prefeito",
+		"english": ":helmet_with_cross: Warden"
+	},
+	"10": {
+		"portugues": ":moneybag: Governador",
+		"english": ":moneybag: Governor"
+	},
+	"11": {
+		"portugues": ":shield: Vice-rei",
+		"english": ":shield: Viceroy"
+	},
+	"12": {
+		"portugues": ":1234: Conde",
+		"english": ":1234: Count"
+	},
+	"13": {
+		"portugues": ":crystal_ball: Magistrado",
+		"english": ":crystal_ball: Magistrate"
+	},
+	"14": {
+		"portugues": ":vulcan: Coronel",
+		"english": ":vulcan: Colonel"
+	},
+	"15": {
+		"portugues": ":paperclip: Comandante",
+		"english": ":paperclip: Commander"
+	}
 }
