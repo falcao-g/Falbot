@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js")
 const { testOnly } = require("../config.json")
 const { msToTime } = require("../utils/functions.js")
+const userSchema = require("../schemas/user-schema")
 
 module.exports = {
 	category: "uteis",
@@ -24,7 +25,9 @@ module.exports = {
 					}\n:busts_in_silhouette: ${instance.messageHandler.get(
 						guild,
 						"PLAYERS"
-					)}: ${client.users.cache.size}\n:zap: ${instance.messageHandler.get(
+					)}: ${
+						(await userSchema.find({})).length
+					}\n:zap: ${instance.messageHandler.get(
 						guild,
 						"UPTIME"
 					)}: ${await msToTime(client.uptime)}**`
