@@ -80,20 +80,21 @@ module.exports = {
 							)} falcoins\n:bank: ${instance.messageHandler.get(
 								guild,
 								"BANK_INTEREST"
-							)}\n
-                        :money_with_wings: ${await format(
-													(await readFile(user.id, "limite_banco")) -
-														(await readFile(user.id, "banco"))
-												)} ${instance.messageHandler.get(guild, "BANK_LIMIT")}
-                        :atm: ${instance.messageHandler.get(
-													guild,
-													"BANK_DEPOSIT_LIMIT",
-													{
-														FALCOINS: await format(
-															(await readFile(user.id, "limite_banco")) / 2
-														),
-													}
-												)}**`,
+							)}\n\n:money_with_wings: ${await format(
+								(await readFile(user.id, "limite_banco")) -
+									(await readFile(user.id, "banco"))
+							)} ${instance.messageHandler.get(
+								guild,
+								"BANK_LIMIT"
+							)}\n:atm: ${instance.messageHandler.get(
+								guild,
+								"BANK_DEPOSIT_LIMIT",
+								{
+									FALCOINS: await format(
+										(await readFile(user.id, "limite_banco")) / 2
+									),
+								}
+							)}**`,
 						})
 					return embed
 				case "depositar":
