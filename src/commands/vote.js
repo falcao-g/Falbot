@@ -13,8 +13,11 @@ module.exports = {
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, user }) => {
+	callback: async ({ instance, guild, user, interaction, message }) => {
 		try {
+			if (interaction) {
+				await interaction.deferReply()
+			}
 			const topgg = new top.Client(Authorization)
 
 			if (
@@ -23,7 +26,7 @@ module.exports = {
 			) {
 				await changeDB(user.id, "lastVote", Date.now(), true)
 				await changeDB(user.id, "falcoins", 5000)
-				const embed = new MessageEmbed()
+				var embed = new MessageEmbed()
 					.setColor(3066993)
 					.addField(
 						instance.messageHandler.get(guild, "VOCE_GANHOU"),
@@ -34,12 +37,11 @@ module.exports = {
 						`**${await readFile(user.id, "falcoins", true)}** falcoins`
 					)
 					.setFooter({ text: "by Falcão ❤️" })
-				return embed
 			} else if (
 				(await topgg.isVoted(user.id)) &&
 				Date.now() - (await readFile(user.id, "lastVote")) < 43200000
 			) {
-				const embed = new MessageEmbed()
+				var embed = new MessageEmbed()
 					.setColor(15158332)
 					.addField(
 						instance.messageHandler.get(guild, "ALREADY_COLLECTED"),
@@ -50,9 +52,8 @@ module.exports = {
 						})
 					)
 					.setFooter({ text: "by Falcão ❤️" })
-				return embed
 			} else {
-				const embed = new MessageEmbed()
+				var embed = new MessageEmbed()
 					.setTitle(instance.messageHandler.get(guild, "VOTE_FIRST"))
 					.setColor("#0099ff")
 					.setDescription(instance.messageHandler.get(guild, "VOTE_HERE"))
@@ -61,7 +62,11 @@ module.exports = {
 						instance.messageHandler.get(guild, "VOTE_FINAL")
 					)
 					.setFooter({ text: "by Falcão ❤️" })
+			}
+			if (message) {
 				return embed
+			} else {
+				interaction.editReply({ embeds: [embed] })
 			}
 		} catch (error) {
 			console.error(`vote: ${error}`)
