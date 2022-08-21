@@ -12,10 +12,7 @@ module.exports = {
 	testOnly,
 	callback: async ({ instance, guild, user }) => {
 		try {
-			cooldownSchema = instance._mongoConnection.models["wokcommands-cooldowns"]
-			userCooldown = await cooldownSchema.findById(
-				`lootbox-${guild.id}-${user.id}`
-			)
+			lbCooldown = Date.now() - (await readFile(user.id, "lastLootbox"))
 			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
@@ -24,10 +21,8 @@ module.exports = {
 				.addFields({
 					name: instance.messageHandler.get(guild, "COOLDOWNS"),
 					value: `Lootbox: **${
-						userCooldown
-							? `:red_circle: ${await msToTime(
-									userCooldown["cooldown"] * 1000
-							  )}`
+						lbCooldown < 43200000
+							? `:red_circle: ${await msToTime(43200000 - lbCooldown)}`
 							: `:green_circle: ${instance.messageHandler.get(guild, "PRONTO")}`
 					}**\n${instance.messageHandler.get(guild, "VOTO")}: **${
 						voteCooldown < 43200000
