@@ -98,9 +98,15 @@ module.exports = {
 						.setFooter({ text: "by Falcão ❤️" })
 					for (let i = 0; i < rank.length; i++) {
 						try {
-							user = await client.users.fetch(rank[i]["_id"])
+							if (scope === "server") {
+								member = await getMember(guild, rank[i]["_id"])
+								username = member.displayName
+							} else {
+								user = await client.users.fetch(rank[i]["_id"])
+								username = user.username
+							}
 							embed.addField(
-								`${i + 1}º - ${user.username} falcoins:`,
+								`${i + 1}º - ${username} falcoins:`,
 								`${await format(rank[i]["falcoins"])}`,
 								false
 							)
@@ -130,9 +136,15 @@ module.exports = {
 						.setFooter({ text: "by Falcão ❤️" })
 					for (let i = 0; i < rank.length; i++) {
 						try {
-							user = await client.users.fetch(rank[i]["_id"])
+							if (scope === "server") {
+								member = await getMember(guild, rank[i]["_id"])
+								username = member.displayName
+							} else {
+								user = await client.users.fetch(rank[i]["_id"])
+								username = user.username
+							}
 							embed.addField(
-								`${i + 1}º - ${user.username} rank:`,
+								`${i + 1}º - ${username} rank:`,
 								`${instance.messageHandler.get(guild, rank[i]["rank"])}`,
 								false
 							)
@@ -163,9 +175,15 @@ module.exports = {
 						.setFooter({ text: "by Falcão ❤️" })
 					for (let i = 0; i < rank.length; i++) {
 						try {
-							user = await client.users.fetch(rank[i]["_id"])
+							if (scope === "server") {
+								member = await getMember(guild, rank[i]["_id"])
+								username = member.displayName
+							} else {
+								user = await client.users.fetch(rank[i]["_id"])
+								username = user.username
+							}
 							embed.addField(
-								`${i + 1}º - ${user.username} ` +
+								`${i + 1}º - ${username} ` +
 									instance.messageHandler.get(guild, "VITORIAS").toLowerCase() +
 									":",
 								`${await format(rank[i]["vitorias"])}`,

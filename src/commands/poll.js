@@ -21,14 +21,22 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, message, interaction, user, text }) => {
+	callback: async ({
+		instance,
+		guild,
+		message,
+		interaction,
+		user,
+		member,
+		text,
+	}) => {
 		try {
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
 				.setDescription(text)
 				.setAuthor({
 					name: instance.messageHandler.get(guild, "ENQUETE", {
-						USER: user.username,
+						USER: member.displayName,
 					}),
 					iconURL: user.avatarURL(),
 				})

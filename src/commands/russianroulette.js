@@ -35,6 +35,7 @@ module.exports = {
 		client,
 		user,
 		args,
+		member,
 	}) => {
 		try {
 			const author = user
@@ -50,7 +51,7 @@ module.exports = {
 				const embed = new MessageEmbed()
 					.setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
 					.setDescription(
-						`${author.username}` +
+						`${member.displayName}` +
 							instance.messageHandler.get(guild, "ROLETA_RUSSA_COMECOU")
 					)
 					.setColor("#0099ff")

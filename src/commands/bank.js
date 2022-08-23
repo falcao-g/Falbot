@@ -55,7 +55,15 @@ module.exports = {
 			type: "SUB_COMMAND",
 		},
 	],
-	callback: async ({ instance, guild, message, user, args, interaction }) => {
+	callback: async ({
+		instance,
+		guild,
+		message,
+		user,
+		member,
+		args,
+		interaction,
+	}) => {
 		try {
 			if (message) {
 				metodo = args[0].toLowerCase()
@@ -136,7 +144,10 @@ module.exports = {
 								})
 							)
 							.setColor(await getRoleColor(guild, user.id))
-							.setAuthor({ name: user.username, iconURL: user.avatarURL() })
+							.setAuthor({
+								name: member.displayName,
+								iconURL: user.avatarURL(),
+							})
 							.addField(
 								instance.messageHandler.get(guild, "SALDO_ATUAL"),
 								`${await readFile(user.id, "falcoins", true)} falcoins`,
@@ -174,7 +185,10 @@ module.exports = {
 								})
 							)
 							.setColor(await getRoleColor(guild, user.id))
-							.setAuthor({ name: user.username, iconURL: user.avatarURL() })
+							.setAuthor({
+								name: member.displayName,
+								iconURL: user.avatarURL(),
+							})
 							.addField(
 								instance.messageHandler.get(guild, "SALDO_ATUAL"),
 								`${await readFile(user.id, "falcoins", true)} falcoins`,

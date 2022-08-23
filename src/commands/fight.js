@@ -35,9 +35,16 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, message, interaction, user, args }) => {
+	callback: async ({
+		instance,
+		guild,
+		message,
+		interaction,
+		user,
+		member,
+		args,
+	}) => {
 		try {
-			const author = user
 			if (message) {
 				if (args[0][2] == "!") {
 					args[0] = args[0].slice(3, -1)
@@ -45,8 +52,8 @@ module.exports = {
 					args[0] = args[0].slice(2, -1)
 				}
 			}
-			var member = await getMember(guild, args[0])
-			if (member.user != author) {
+			var member2 = await getMember(guild, args[0])
+			if (member2.user != user) {
 				try {
 					var bet = await specialArg(args[1], user.id, "falcoins")
 				} catch {
@@ -56,22 +63,22 @@ module.exports = {
 				}
 				if (
 					(await readFile(user.id, "falcoins")) >= bet &&
-					(await readFile(member.user.id, "falcoins")) >= bet &&
+					(await readFile(member2.user.id, "falcoins")) >= bet &&
 					bet > 0
 				) {
 					if (message) {
 						var answer = await message.reply({
 							content: instance.messageHandler.get(guild, "LUTA_CONVITE", {
-								USER: author.username,
-								USER2: member.user.username,
+								USER: member.displayName,
+								USER2: member2.displayName,
 								FALCOINS: await format(bet),
 							}),
 						})
 					} else {
 						var answer = await interaction.reply({
 							content: instance.messageHandler.get(guild, "LUTA_CONVITE", {
-								USER: author.username,
-								USER2: member.user.username,
+								USER: member.displayName,
+								USER2: member2.displayName,
 								FALCOINS: await format(bet),
 							}),
 							fetchReply: true,
@@ -81,7 +88,7 @@ module.exports = {
 					answer.react("🚫")
 
 					const filter = (reaction, user) => {
-						return user.id === member.user.id
+						return user.id === member2.user.id
 					}
 
 					const collector = answer.createReactionCollector({
@@ -97,7 +104,7 @@ module.exports = {
 									content: instance.messageHandler.get(
 										guild,
 										"LUTA_CANCELADO_DEMOROU",
-										{ USER: member }
+										{ USER: member2 }
 									),
 								})
 							} else {
@@ -105,7 +112,7 @@ module.exports = {
 									content: instance.messageHandler.get(
 										guild,
 										"LUTA_CANCELADO_DEMOROU",
-										{ USER: member }
+										{ USER: member2 }
 									),
 								})
 							}
@@ -115,7 +122,7 @@ module.exports = {
 									content: instance.messageHandler.get(
 										guild,
 										"LUTA_CANCELADO_RECUSOU",
-										{ USER: member }
+										{ USER: member2 }
 									),
 								})
 							} else {
@@ -123,13 +130,13 @@ module.exports = {
 									content: instance.messageHandler.get(
 										guild,
 										"LUTA_CANCELADO_RECUSOU",
-										{ USER: member }
+										{ USER: member2 }
 									),
 								})
 							}
 						} else {
-							await changeDB(author.id, "falcoins", -bet)
-							await changeDB(member.id, "falcoins", -bet)
+							await changeDB(user.id, "falcoins", -bet)
+							await changeDB(member2.id, "falcoins", -bet)
 							const attacks = [
 								"instantâneo",
 								"stun",
@@ -140,18 +147,18 @@ module.exports = {
 							]
 							const player_1 = {
 								hp: 100,
-								name: author.username,
+								name: member.displayName,
 								stunned: false,
-								mention: author,
-								id: author.id,
+								mention: user,
+								id: user.id,
 								escudo: false,
 							}
 							const player_2 = {
 								hp: 100,
-								name: member.user.username,
+								name: member2.displayName,
 								stunned: false,
-								mention: member,
-								id: member.id,
+								mention: member2,
+								id: member2.id,
 								escudo: false,
 							}
 							const luck = Math.round(Math.random())

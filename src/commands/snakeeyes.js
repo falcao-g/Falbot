@@ -36,6 +36,7 @@ module.exports = {
 		client,
 		user,
 		args,
+		member,
 	}) => {
 		try {
 			guild = client.guilds.cache.get("742332099788275732")
@@ -63,7 +64,7 @@ module.exports = {
 
 				const embed = new MessageEmbed()
 					.setColor(await getRoleColor(guild, user.id))
-					.setAuthor({ name: user.username, iconURL: user.avatarURL() })
+					.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 					.addField(
 						`-------------------\n      | ${diegif} | ${diegif} |\n-------------------`,
 						`--- **${instance.messageHandler.get(guild, "ROLANDO")}** ---`
@@ -144,7 +145,10 @@ module.exports = {
 						}
 					)
 				}
-				embed2.setAuthor({ name: user.username, iconURL: user.avatarURL() })
+				embed2.setAuthor({
+					name: member.displayName,
+					iconURL: user.avatarURL(),
+				})
 				embed2.addField(
 					instance.messageHandler.get(guild, "SALDO_ATUAL"),
 					`${await readFile(user.id, "falcoins", true)}`

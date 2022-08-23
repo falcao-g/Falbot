@@ -48,7 +48,15 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, user, args, message, interaction }) => {
+	callback: async ({
+		instance,
+		guild,
+		user,
+		args,
+		message,
+		interaction,
+		member,
+	}) => {
 		try {
 			args[0] = args[0].toLowerCase()
 			if (args[0] === "ímpar") {
@@ -179,7 +187,10 @@ module.exports = {
 						var embed2 = new MessageEmbed()
 							.setTitle(instance.messageHandler.get(guild, "ROLETA"))
 							.setColor(3066993)
-							.setAuthor({ name: user.username, iconURL: user.avatarURL() })
+							.setAuthor({
+								name: member.displayName,
+								iconURL: user.avatarURL(),
+							})
 							.addFields(
 								{
 									name:
@@ -205,7 +216,10 @@ module.exports = {
 						var embed2 = new MessageEmbed()
 							.setTitle(instance.messageHandler.get(guild, "ROLETA"))
 							.setColor(15158332)
-							.setAuthor({ name: user.username, iconURL: user.avatarURL() })
+							.setAuthor({
+								name: member.displayName,
+								iconURL: user.avatarURL(),
+							})
 							.addFields(
 								{
 									name:

@@ -42,7 +42,15 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, message, interaction, user, args }) => {
+	callback: async ({
+		instance,
+		guild,
+		message,
+		interaction,
+		user,
+		member,
+		args,
+	}) => {
 		try {
 			try {
 				var bet = await specialArg(args[1], user.id, "falcoins")
@@ -65,7 +73,7 @@ module.exports = {
 							`:checkered_flag: ${horse1} :horse_racing:\n\u200b\n:checkered_flag: ${horse2} :horse_racing:\n\u200b\n:checkered_flag: ${horse3} :horse_racing:\n\u200b\n:checkered_flag: ${horse4} :horse_racing:\n\u200b\n:checkered_flag: ${horse5} :horse_racing:`
 						)
 						.setColor(await getRoleColor(guild, user.id))
-						.setAuthor({ name: user.username, iconURL: user.avatarURL() })
+						.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 						.setFooter({ text: "by Falcão ❤️" })
 
 					if (message) {
@@ -127,29 +135,25 @@ module.exports = {
 
 					if (args[0] == winner) {
 						await changeDB(user.id, "falcoins", bet * 5)
-						var embed2 = new MessageEmbed()
-							.setColor(3066993)
-							.addField(
-								instance.messageHandler.get(guild, "CAVALO_GANHOU", {
-									WINNER: winner,
-								}),
-								instance.messageHandler.get(guild, "CAVALO_VOCE_GANHOU", {
-									FALCOINS: await format(bet * 5),
-								}),
-								false
-							)
+						var embed2 = new MessageEmbed().setColor(3066993).addField(
+							instance.messageHandler.get(guild, "CAVALO_GANHOU", {
+								WINNER: winner,
+							}),
+							instance.messageHandler.get(guild, "CAVALO_VOCE_GANHOU", {
+								FALCOINS: await format(bet * 5),
+							}),
+							false
+						)
 					} else {
-						var embed2 = new MessageEmbed()
-							.setColor(15158332)
-							.addField(
-								instance.messageHandler.get(guild, "CAVALO_GANHOU", {
-									WINNER: winner,
-								}),
-								instance.messageHandler.get(guild, "CAVALO_VOCE_PERDEU", {
-									FALCOINS: await format(bet),
-								}),
-								false
-							)
+						var embed2 = new MessageEmbed().setColor(15158332).addField(
+							instance.messageHandler.get(guild, "CAVALO_GANHOU", {
+								WINNER: winner,
+							}),
+							instance.messageHandler.get(guild, "CAVALO_VOCE_PERDEU", {
+								FALCOINS: await format(bet),
+							}),
+							false
+						)
 					}
 
 					embed2
@@ -158,7 +162,7 @@ module.exports = {
 							`${await readFile(user.id, "falcoins", true)} falcoins`,
 							false
 						)
-						.setAuthor({ name: user.username, iconURL: user.avatarURL() })
+						.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 						.setFooter({ text: "by Falcão ❤️" })
 					if (message) {
 						await message.reply({

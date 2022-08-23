@@ -44,10 +44,10 @@ module.exports = {
 		client,
 		user,
 		args,
+		member,
 	}) => {
 		try {
 			var board = new Board.default()
-			const author = user
 			if (message) {
 				if (args[0][2] == "!") {
 					args[0] = args[0].slice(3, -1)
@@ -55,8 +55,8 @@ module.exports = {
 					args[0] = args[0].slice(2, -1)
 				}
 			}
-			const member = await getMember(guild, args[0])
-			if (member.user != author) {
+			const member2 = await getMember(guild, args[0])
+			if (member2.user != member) {
 				try {
 					var bet = await specialArg(args[1], user.id, "falcoins")
 				} catch {
@@ -65,23 +65,23 @@ module.exports = {
 					})
 				}
 				if (
-					(await readFile(user.id, "falcoins")) >= bet &&
 					(await readFile(member.user.id, "falcoins")) >= bet &&
+					(await readFile(member2.user.id, "falcoins")) >= bet &&
 					bet > 0
 				) {
 					if (message) {
 						var answer = await message.reply({
 							content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {
-								USER: author.username,
-								USER2: member.user.username,
+								USER: member.displayName,
+								USER2: member2.displayName,
 								FALCOINS: await format(bet),
 							}),
 						})
 					} else {
 						var answer = await interaction.reply({
 							content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {
-								USER: author.username,
-								USER2: member.user.username,
+								USER: member.displayName,
+								USER2: member2.displayName,
 								FALCOINS: await format(bet),
 							}),
 							fetchReply: true,
@@ -91,7 +91,7 @@ module.exports = {
 					answer.react("🚫")
 
 					const filter = (reaction, user) => {
-						return user.id === member.user.id && user.id !== client.user.id
+						return user.id === member2.user.id && user.id !== client.user.id
 					}
 
 					const collector = answer.createReactionCollector({
@@ -107,7 +107,7 @@ module.exports = {
 									content: instance.messageHandler.get(
 										guild,
 										"VELHA_CANCELADO_DEMOROU",
-										{ USER: member }
+										{ USER: member2 }
 									),
 								})
 							} else {
@@ -115,7 +115,7 @@ module.exports = {
 									content: instance.messageHandler.get(
 										guild,
 										"VELHA_CANCELADO_DEMOROU",
-										{ USER: member }
+										{ USER: member2 }
 									),
 								})
 							}
@@ -126,7 +126,7 @@ module.exports = {
 									content: instance.messageHandler.get(
 										guild,
 										"VELHA_CANCELADO_RECUSOU",
-										{ USER: member }
+										{ USER: member2 }
 									),
 								})
 							} else {
@@ -134,13 +134,13 @@ module.exports = {
 									content: instance.messageHandler.get(
 										guild,
 										"VELHA_CANCELADO_RECUSOU",
-										{ USER: member }
+										{ USER: member2 }
 									),
 								})
 							}
 						} else {
-							await changeDB(user.id, "falcoins", -bet)
 							await changeDB(member.user.id, "falcoins", -bet)
+							await changeDB(member2.user.id, "falcoins", -bet)
 							const row = new MessageActionRow()
 							const row2 = new MessageActionRow()
 							const row3 = new MessageActionRow()
@@ -176,32 +176,34 @@ module.exports = {
 							let second_player
 							let random = randint(0, 1)
 							if (random == 0) {
-								first_player = author
-								second_player = member.user
+								first_player = member
+								second_player = member2
 							} else {
-								first_player = member.user
-								second_player = author
+								first_player = member2
+								second_player = member
 							}
 
 							if (message) {
 								var answer2 = await message.reply({
-									content: `:older_woman: \`${author.username}\` **VS**  \`${
-										member.user.username
+									content: `:older_woman: \`${
+										member.displayName
+									}\` **VdS**  \`${
+										member2.displayName
 									}\` \n\n${instance.messageHandler.get(
 										guild,
 										"VELHA_MOVIMENTO",
-										{ USER: first_player.username }
+										{ USER: first_player.displayName }
 									)}`,
 									components: [row, row2, row3],
 								})
 							} else {
 								answer2 = await interaction.followUp({
-									content: `:older_woman: \`${author.username}\` **VS**  \`${
-										member.user.username
+									content: `:older_woman: \`${member.displayName}\` **VS**  \`${
+										member2.displayName
 									}\` \n\n${instance.messageHandler.get(
 										guild,
 										"VELHA_MOVIMENTO",
-										{ USER: first_player.username }
+										{ USER: first_player.displayName }
 									)}`,
 									components: [row, row2, row3],
 									fetchReply: true,
@@ -210,13 +212,13 @@ module.exports = {
 
 							const filter2 = (btInt) => {
 								if (
-									btInt.user.id === first_player.id &&
+									btInt.user.id === first_player.user.id &&
 									btInt.user.id !== client.user.id &&
 									board.currentMark() === "X"
 								) {
 									return true
 								} else if (
-									btInt.user.id === second_player.id &&
+									btInt.user.id === second_player.user.id &&
 									btInt.user.id !== client.user.id &&
 									board.currentMark() === "O"
 								) {
@@ -233,63 +235,63 @@ module.exports = {
 							collector2.on("collect", async (i) => {
 								if (i.customId === "1") {
 									row.components[0].setLabel(board.currentMark())
-									i.user.id === author.id
+									i.user.id === member.id
 										? row.components[0].setStyle("PRIMARY")
 										: row.components[0].setStyle("DANGER")
 									row.components[0].setDisabled(true)
 									board = board.makeMove(1, board.currentMark())
 								} else if (i.customId === "2") {
 									row.components[1].setLabel(board.currentMark())
-									i.user.id === author.id
+									i.user.id === member.id
 										? row.components[1].setStyle("PRIMARY")
 										: row.components[1].setStyle("DANGER")
 									row.components[1].setDisabled(true)
 									board = board.makeMove(2, board.currentMark())
 								} else if (i.customId === "3") {
 									row.components[2].setLabel(board.currentMark())
-									i.user.id === author.id
+									i.user.id === member.id
 										? row.components[2].setStyle("PRIMARY")
 										: row.components[2].setStyle("DANGER")
 									row.components[2].setDisabled(true)
 									board = board.makeMove(3, board.currentMark())
 								} else if (i.customId === "4") {
 									row2.components[0].setLabel(board.currentMark())
-									i.user.id === author.id
+									i.user.id === member.id
 										? row2.components[0].setStyle("PRIMARY")
 										: row2.components[0].setStyle("DANGER")
 									row2.components[0].setDisabled(true)
 									board = board.makeMove(4, board.currentMark())
 								} else if (i.customId === "5") {
 									row2.components[1].setLabel(board.currentMark())
-									i.user.id === author.id
+									i.user.id === member.id
 										? row2.components[1].setStyle("PRIMARY")
 										: row2.components[1].setStyle("DANGER")
 									row2.components[1].setDisabled(true)
 									board = board.makeMove(5, board.currentMark())
 								} else if (i.customId === "6") {
 									row2.components[2].setLabel(board.currentMark())
-									i.user.id === author.id
+									i.user.id === member.id
 										? row2.components[2].setStyle("PRIMARY")
 										: row2.components[2].setStyle("DANGER")
 									row2.components[2].setDisabled(true)
 									board = board.makeMove(6, board.currentMark())
 								} else if (i.customId === "7") {
 									row3.components[0].setLabel(board.currentMark())
-									i.user.id === author.id
+									i.user.id === member.id
 										? row3.components[0].setStyle("PRIMARY")
 										: row3.components[0].setStyle("DANGER")
 									row3.components[0].setDisabled(true)
 									board = board.makeMove(7, board.currentMark())
 								} else if (i.customId === "8") {
 									row3.components[1].setLabel(board.currentMark())
-									i.user.id === author.id
+									i.user.id === member.id
 										? row3.components[1].setStyle("PRIMARY")
 										: row3.components[1].setStyle("DANGER")
 									row3.components[1].setDisabled(true)
 									board = board.makeMove(8, board.currentMark())
 								} else if (i.customId === "9") {
 									row3.components[2].setLabel(board.currentMark())
-									i.user.id === author.id
+									i.user.id === member.id
 										? row3.components[2].setStyle("PRIMARY")
 										: row3.components[2].setStyle("DANGER")
 									row3.components[2].setDisabled(true)
@@ -297,16 +299,16 @@ module.exports = {
 								}
 
 								await i.update({
-									content: `:older_woman: \`${author.username}\` **VS**  \`${
-										member.user.username
+									content: `:older_woman: \`${member.displayName}\` **VS**  \`${
+										member2.displayName
 									}\` \n\n${instance.messageHandler.get(
 										guild,
 										"VELHA_MOVIMENTO",
 										{
 											USER:
 												board.currentMark() === "X"
-													? first_player.username
-													: second_player.username,
+													? first_player.displayName
+													: second_player.displayName,
 										}
 									)}`,
 									components: [row, row2, row3],
@@ -320,29 +322,33 @@ module.exports = {
 							collector2.on("end", async () => {
 								if (board.hasWinner()) {
 									if (board.winningPlayer() === "X") {
-										await changeDB(first_player.id, "falcoins", bet * 2)
-										await changeDB(first_player.id, "vitorias", 1)
+										await changeDB(first_player.user.id, "falcoins", bet * 2)
+										await changeDB(first_player.user.id, "vitorias", 1)
 									} else {
-										await changeDB(second_player.id, "falcoins", bet * 2)
-										await changeDB(second_player.id, "vitorias", 1)
+										await changeDB(second_player.user.id, "falcoins", bet * 2)
+										await changeDB(second_player.user.id, "vitorias", 1)
 									}
 									await answer2.edit({
-										content: `:older_woman: \`${author.username}\` **VS**  \`${
-											member.user.username
+										content: `:older_woman: \`${
+											member.displayName
+										}\` **VS**  \`${
+											member2.displayName
 										}\` \n\n**${instance.messageHandler.get(guild, "GANHOU", {
 											WINNER:
 												board.winningPlayer() === "X"
-													? first_player.username
-													: second_player.username,
+													? first_player.displayName
+													: second_player.displayName,
 											FALCOINS: bet,
 										})}**`,
 									})
 								} else {
-									await changeDB(first_player.id, "falcoins", bet)
-									await changeDB(second_player.id, "falcoins", bet)
+									await changeDB(first_player.user.id, "falcoins", bet)
+									await changeDB(second_player.user.id, "falcoins", bet)
 									await answer2.edit({
-										content: `:older_woman: \`${author.username}\` **VS**  \`${
-											member.user.username
+										content: `:older_woman: \`${
+											member.displayName
+										}\` **VS**  \`${
+											member2.displayName
 										}\` \n\n${instance.messageHandler.get(
 											guild,
 											"VELHA_EMPATOU"

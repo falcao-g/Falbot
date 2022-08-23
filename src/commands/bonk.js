@@ -20,7 +20,15 @@ module.exports = {
 			type: "USER",
 		},
 	],
-	callback: async ({ instance, guild, message, interaction, user, args }) => {
+	callback: async ({
+		instance,
+		guild,
+		message,
+		interaction,
+		user,
+		member,
+		args,
+	}) => {
 		try {
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
@@ -31,12 +39,12 @@ module.exports = {
 			if (message) {
 				return embed
 			} else {
-				const member = await getMember(guild, args[0])
+				const member2 = await getMember(guild, args[0])
 				await interaction.reply({
 					content:
-						`${member}` +
+						`${member2.displayName}` +
 						instance.messageHandler.get(guild, "BONKED") +
-						`${user.username}`,
+						`${member.displayName}`,
 					embeds: [embed],
 				})
 			}

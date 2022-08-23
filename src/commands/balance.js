@@ -27,7 +27,7 @@ module.exports = {
 			type: "USER",
 		},
 	],
-	callback: async ({ instance, guild, message, user, args }) => {
+	callback: async ({ instance, guild, message, member, args }) => {
 		try {
 			if (message && args[0]) {
 				if (args[0][2] == "!") {
@@ -36,16 +36,17 @@ module.exports = {
 					args[0] = args[0].slice(2, -1)
 				}
 			}
-			const member = args[0] ? (await getMember(guild, args[0])).user : user
-			const userFile = await readFile(member.id)
+
+			const realMember = args[0] ? await getMember(guild, args[0]) : member
+			const userFile = await readFile(realMember.user.id)
 
 			const embed = new MessageEmbed()
 				.setTitle(
 					instance.messageHandler.get(guild, userFile.rank) +
 						" " +
-						member.username
+						realMember.displayName
 				)
-				.setColor(await getRoleColor(guild, member.id))
+				.setColor(await getRoleColor(guild, realMember.user.id))
 				.setFooter({ text: "by Falcão ❤️" })
 				.addFields(
 					{

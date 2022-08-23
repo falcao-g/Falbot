@@ -10,13 +10,13 @@ module.exports = {
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, user }) => {
+	callback: async ({ instance, guild, user, member }) => {
 		try {
 			lbCooldown = Date.now() - (await readFile(user.id, "lastLootbox"))
 			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
-				.setAuthor({ name: user.username, iconURL: user.avatarURL() })
+				.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 				.setFooter({ text: "by Falcão ❤️" })
 				.addFields({
 					name: instance.messageHandler.get(guild, "COOLDOWNS"),

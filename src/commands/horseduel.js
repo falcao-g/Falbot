@@ -33,6 +33,7 @@ module.exports = {
 		message,
 		interaction,
 		client,
+		member,
 		user,
 		args,
 	}) => {
@@ -51,7 +52,7 @@ module.exports = {
 					.setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
 					.setDescription(
 						instance.messageHandler.get(guild, "CAVALGADA_DESAFIO", {
-							USER: author.username,
+							USER: member.displayName,
 						})
 					)
 					.setColor("#0099ff")
@@ -107,7 +108,7 @@ module.exports = {
 						.setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
 						.setDescription(
 							instance.messageHandler.get(guild, "CAVALGADA_DESAFIO", {
-								USER: author.username,
+								USER: member.displayName,
 							})
 						)
 						.setColor("#0099ff")
