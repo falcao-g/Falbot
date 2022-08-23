@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js")
+const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js")
 const builder = require("../utils/snake-builder.js")
 const { testOnly } = require("../config.json")
 
@@ -26,26 +26,45 @@ module.exports = {
 				)
 				.setFooter({ text: "by Falcão ❤️" })
 				.setColor("PURPLE")
+
+			const row = new MessageActionRow()
+			row.addComponents([
+				new MessageButton()
+					.setCustomId("up")
+					.setEmoji("⬆️")
+					.setStyle("SECONDARY"),
+				new MessageButton()
+					.setCustomId("left")
+					.setEmoji("⬅️")
+					.setStyle("SECONDARY"),
+				new MessageButton()
+					.setCustomId("right")
+					.setEmoji("➡️")
+					.setStyle("SECONDARY"),
+				new MessageButton()
+					.setCustomId("down")
+					.setEmoji("⬇️")
+					.setStyle("SECONDARY"),
+			])
+
 			if (message) {
 				var answer = await message.reply({
 					embeds: [embed],
+					components: [row],
 				})
 			} else {
 				var answer = await interaction.reply({
 					embeds: [embed],
+					components: [row],
 					fetchReply: true,
 				})
 			}
-			await answer.react("⬆")
-			await answer.react("⬅")
-			await answer.react("➡")
-			await answer.react("⬇")
 
-			const filter = (reaction, user) => {
-				return user.id === author.id
+			const filter = (btInt) => {
+				return btInt.user.id === author.id
 			}
 
-			const collector = answer.createReactionCollector({
+			const collector = answer.createMessageComponentCollector({
 				filter,
 				time: 1000 * 60 * 60,
 			})
@@ -74,14 +93,14 @@ module.exports = {
 				game.time -= 5
 			}, 1000 * 5)
 
-			collector.on("collect", async (reaction) => {
-				if (reaction._emoji.name === "⬆") {
+			collector.on("collect", async (i) => {
+				if (i.customId === "up") {
 					game.snakeMovement(game.snake, "N")
-				} else if (reaction._emoji.name === "⬅") {
+				} else if (i.customId === "left") {
 					game.snakeMovement(game.snake, "W")
-				} else if (reaction._emoji.name === "➡") {
+				} else if (i.customId === "right") {
 					game.snakeMovement(game.snake, "E")
-				} else if (reaction._emoji.name === "⬇") {
+				} else if (i.customId === "down") {
 					game.snakeMovement(game.snake, "S")
 				}
 
@@ -97,8 +116,9 @@ module.exports = {
 					)}: ${game.snake.length}`,
 				}
 
-				await answer.edit({
+				await i.update({
 					embeds: [embed],
+					components: [row],
 				})
 
 				if (game.gameEnded) {
