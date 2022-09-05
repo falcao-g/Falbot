@@ -3,10 +3,9 @@ const { readFile, getRoleColor, msToTime } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["espera"],
 	category: "uteis",
 	description: "Shows your commands cooldowns",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,

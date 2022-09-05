@@ -10,16 +10,12 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["caixa"],
 	category: "Economia",
 	description: "Spend 1 key and 1 crate for a chance to get some prizes",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
-	minArgs: 1,
 	testOnly,
-	expectedArgs: "<quantity>",
-	expectedArgsTypes: ["NUMBER"],
 	options: [
 		{
 			name: "quantity",

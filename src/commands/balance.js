@@ -9,15 +9,12 @@ const { testOnly } = require("../config.json")
 const levels = require("../utils/json/levels.json")
 
 module.exports = {
-	aliases: ["eu", "credits", "sobre"],
 	category: "Economia",
 	description: "Shows your or another user's balance",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	expectedArgs: "[user]",
-	expectedArgsTypes: ["USER"],
 	options: [
 		{
 			name: "user",
@@ -27,16 +24,8 @@ module.exports = {
 			type: "USER",
 		},
 	],
-	callback: async ({ instance, guild, message, member, args }) => {
+	callback: async ({ instance, guild, member, args }) => {
 		try {
-			if (message && args[0]) {
-				if (args[0][2] == "!") {
-					args[0] = args[0].slice(3, -1)
-				} else {
-					args[0] = args[0].slice(2, -1)
-				}
-			}
-
 			const realMember = args[0] ? await getMember(guild, args[0]) : member
 			const userFile = await readFile(realMember.user.id)
 

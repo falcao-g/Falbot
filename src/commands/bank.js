@@ -9,17 +9,13 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["banco"],
 	category: "Economia",
 	description:
 		"Deposit or withdraw your falcoins from the bank, money in the bank increase daily",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
-	minArgs: 1,
 	testOnly,
-	expectedArgs: "<option> <falcoins>",
-	expectedArgsTypes: ["SUB_COMMAND", "STRING"],
 	options: [
 		{
 			name: "deposit",
@@ -55,23 +51,10 @@ module.exports = {
 			type: "SUB_COMMAND",
 		},
 	],
-	callback: async ({
-		instance,
-		guild,
-		message,
-		user,
-		member,
-		args,
-		interaction,
-	}) => {
+	callback: async ({ instance, guild, user, member, args, interaction }) => {
 		try {
-			if (message) {
-				metodo = args[0].toLowerCase()
-				falcoins = args[1]
-			} else {
-				metodo = interaction.options.getSubcommand()
-				falcoins = interaction.options.getString("falcoins")
-			}
+			metodo = interaction.options.getSubcommand()
+			falcoins = interaction.options.getString("falcoins")
 
 			switch (metodo) {
 				case "view":

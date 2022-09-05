@@ -10,16 +10,12 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["luta"],
 	category: "Economia",
 	description: "Challenge someone to a fight, win the fight and get the money",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	minArgs: 2,
-	expectedArgs: "<user> <falcoins>",
-	expectedArgsTypes: ["USER", "STRING"],
 	options: [
 		{
 			name: "user",
@@ -35,23 +31,8 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({
-		instance,
-		guild,
-		message,
-		interaction,
-		user,
-		member,
-		args,
-	}) => {
+	callback: async ({ instance, guild, interaction, user, member, args }) => {
 		try {
-			if (message) {
-				if (args[0][2] == "!") {
-					args[0] = args[0].slice(3, -1)
-				} else {
-					args[0] = args[0].slice(2, -1)
-				}
-			}
 			var member2 = await getMember(guild, args[0])
 			if (member2.user != user) {
 				try {
@@ -66,24 +47,14 @@ module.exports = {
 					(await readFile(member2.user.id, "falcoins")) >= bet &&
 					bet > 0
 				) {
-					if (message) {
-						var answer = await message.reply({
-							content: instance.messageHandler.get(guild, "LUTA_CONVITE", {
-								USER: member.displayName,
-								USER2: member2.displayName,
-								FALCOINS: await format(bet),
-							}),
-						})
-					} else {
-						var answer = await interaction.reply({
-							content: instance.messageHandler.get(guild, "LUTA_CONVITE", {
-								USER: member.displayName,
-								USER2: member2.displayName,
-								FALCOINS: await format(bet),
-							}),
-							fetchReply: true,
-						})
-					}
+					var answer = await interaction.reply({
+						content: instance.messageHandler.get(guild, "LUTA_CONVITE", {
+							USER: member.displayName,
+							USER2: member2.displayName,
+							FALCOINS: await format(bet),
+						}),
+						fetchReply: true,
+					})
 					answer.react("✅")
 					answer.react("🚫")
 
@@ -99,41 +70,21 @@ module.exports = {
 
 					collector.on("end", async (collected) => {
 						if (collected.size === 0) {
-							if (message) {
-								message.reply({
-									content: instance.messageHandler.get(
-										guild,
-										"LUTA_CANCELADO_DEMOROU",
-										{ USER: member2 }
-									),
-								})
-							} else {
-								interaction.followUp({
-									content: instance.messageHandler.get(
-										guild,
-										"LUTA_CANCELADO_DEMOROU",
-										{ USER: member2 }
-									),
-								})
-							}
+							interaction.followUp({
+								content: instance.messageHandler.get(
+									guild,
+									"LUTA_CANCELADO_DEMOROU",
+									{ USER: member2 }
+								),
+							})
 						} else if (collected.first()._emoji.name === "🚫") {
-							if (message) {
-								message.reply({
-									content: instance.messageHandler.get(
-										guild,
-										"LUTA_CANCELADO_RECUSOU",
-										{ USER: member2 }
-									),
-								})
-							} else {
-								interaction.followUp({
-									content: instance.messageHandler.get(
-										guild,
-										"LUTA_CANCELADO_RECUSOU",
-										{ USER: member2 }
-									),
-								})
-							}
+							interaction.followUp({
+								content: instance.messageHandler.get(
+									guild,
+									"LUTA_CANCELADO_RECUSOU",
+									{ USER: member2 }
+								),
+							})
 						} else {
 							await changeDB(user.id, "falcoins", -bet)
 							await changeDB(member2.id, "falcoins", -bet)
@@ -278,15 +229,9 @@ module.exports = {
 										"HP",
 										`${order[0]["mention"]}: ${order[0]["hp"]} hp\n${order[1]["mention"]}: ${order[1]["hp"]} hp`
 									)
-									if (message) {
-										var answer = await message.channel.send({
-											embeds: [embed],
-										})
-									} else {
-										var answer = await interaction.channel.send({
-											embeds: [embed],
-										})
-									}
+									var answer = await interaction.channel.send({
+										embeds: [embed],
+									})
 									await new Promise((resolve) => setTimeout(resolve, 2500))
 								}
 							}
@@ -324,15 +269,9 @@ module.exports = {
 									`${await readFile(order[0]["id"], "falcoins", true)} falcoins`
 								)
 							}
-							if (message) {
-								await message.channel.send({
-									embeds: [embed2],
-								})
-							} else {
-								await interaction.channel.send({
-									embeds: [embed2],
-								})
-							}
+							await interaction.channel.send({
+								embeds: [embed2],
+							})
 						}
 					})
 				} else {

@@ -6,7 +6,7 @@ const userSchema = require("../schemas/user-schema")
 module.exports = {
 	category: "uteis",
 	description: "Check some bot stats",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,

@@ -3,13 +3,10 @@ const { testOnly } = require("../config.json")
 module.exports = {
 	category: "Fun",
 	description: "Flip a coin",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	minArgs: 1,
-	expectedArgs: "<quantity>",
-	expectedArgsTypes: ["NUMBER"],
 	options: [
 		{
 			name: "quantity",

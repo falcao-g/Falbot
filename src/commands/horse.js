@@ -10,16 +10,12 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["cavalo"],
 	category: "Economia",
 	description: "bet in what horse is going to win",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	minArgs: 2,
-	expectedArgs: "<horse_number> <falcoins>",
-	expectedArgsTypes: ["NUMBER", "STRING"],
 	options: [
 		{
 			name: "horse_number",
@@ -42,15 +38,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({
-		instance,
-		guild,
-		message,
-		interaction,
-		user,
-		member,
-		args,
-	}) => {
+	callback: async ({ instance, guild, interaction, user, member, args }) => {
 		try {
 			try {
 				var bet = await specialArg(args[1], user.id, "falcoins")
@@ -76,16 +64,10 @@ module.exports = {
 						.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 						.setFooter({ text: "by Falcão ❤️" })
 
-					if (message) {
-						answer = await message.reply({
-							embeds: [embed],
-						})
-					} else {
-						answer = await interaction.reply({
-							embeds: [embed],
-							fetchReply: true,
-						})
-					}
+					answer = await interaction.reply({
+						embeds: [embed],
+						fetchReply: true,
+					})
 
 					for (let i = 0; i <= 21; i++) {
 						let run = randint(1, 5)
@@ -164,15 +146,10 @@ module.exports = {
 						)
 						.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 						.setFooter({ text: "by Falcão ❤️" })
-					if (message) {
-						await message.reply({
-							embeds: [embed2],
-						})
-					} else {
-						await interaction.followUp({
-							embeds: [embed2],
-						})
-					}
+
+					await interaction.followUp({
+						embeds: [embed2],
+					})
 				}
 			} else {
 				return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")

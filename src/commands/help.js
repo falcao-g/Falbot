@@ -6,10 +6,9 @@ const {
 } = require("discord.js")
 
 module.exports = {
-	aliases: ["ajuda", "comandos", "commands"],
 	category: "uteis",
 	description: "Show commands help and information",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	options: [
@@ -29,19 +28,14 @@ module.exports = {
 		},
 	],
 	testOnly,
-	callback: async ({ args, message, instance, guild, interaction }) => {
+	callback: async ({ instance, guild, interaction }) => {
 		try {
-			if (!interaction) {
-				if (args[0] !== undefined) {
-					var page = args[0].toLowerCase()
-				}
+			if (interaction.options !== undefined) {
+				var page = interaction.options.getString("page")
 			} else {
-				if (interaction.options !== undefined) {
-					var page = interaction.options.getString("page")
-				} else {
-					var page = interaction.values[0]
-				}
+				var page = interaction.values[0]
 			}
+
 			const embed = new MessageEmbed()
 				.setColor("DARK_PURPLE")
 				.setFooter({ text: "by Falcão ❤️" })
@@ -155,11 +149,7 @@ module.exports = {
 						}
 					)
 			)
-			if (interaction) {
-				await interaction.reply({ embeds: [embed], components: [row] })
-			} else {
-				await message.reply({ embeds: [embed], components: [row] })
-			}
+			await interaction.reply({ embeds: [embed], components: [row] })
 		} catch (error) {
 			console.error(`Help: ${error}`)
 		}

@@ -8,16 +8,12 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["doar", "doacao"],
 	category: "Economia",
 	description: "Donate x falcoins to a user",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	minArgs: 2,
-	expectedArgs: "<usuario> <falcoins>",
-	expectedArgsTypes: ["USER", "STRING"],
 	options: [
 		{
 			name: "user",
@@ -33,15 +29,8 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, message, interaction, user, args }) => {
+	callback: async ({ instance, guild, interaction, user, args }) => {
 		try {
-			if (message) {
-				if (args[0][2] == "!") {
-					args[0] = args[0].slice(3, -1)
-				} else {
-					args[0] = args[0].slice(2, -1)
-				}
-			}
 			args[0] = await getMember(guild, args[0])
 
 			try {
@@ -65,17 +54,10 @@ module.exports = {
 					USER: args[0],
 				})
 			} else {
-				if (message) {
-					return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
-				} else {
-					interaction.reply({
-						content: instance.messageHandler.get(
-							guild,
-							"FALCOINS_INSUFICIENTES"
-						),
-						ephemeral: true,
-					})
-				}
+				interaction.reply({
+					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+					ephemeral: true,
+				})
 			}
 		} catch (error) {
 			console.error(`donation: ${error}`)
