@@ -152,7 +152,7 @@
 		"english": "you don't have enough falcoins in the bank! :rage:"
 	},
 	"BANCO_DEPOSITOU": {
-		"portugues": "você depositou {VALUE} falcoins no banco! :smiley:",
+		"portugues": "Você depositou {VALUE} falcoins no banco! :smiley:",
 		"english": "You deposited {VALUE} falcoins in the bank! :smiley:"
 	},
 	"SALDO_ATUAL": {
