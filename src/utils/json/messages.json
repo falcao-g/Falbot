@@ -554,6 +554,10 @@
 		"portugues": "⬆️ *+1000 falcoins adicionados a lootbox*",
 		"english": "⬆️ *+1000 falcoins added to lootbox*"
 	},
+	"RANKUP_NONE": {
+		"portugues": "*:arrow_up: +1 nada*",
+		"english": "*:arrow_up: +1 nothing*"
+	},
 	"ALL_RANKS": {
 		"portugues": ":sparkles: Todos os ranks",
 		"english": ":sparkles: All ranks"

@@ -293,6 +293,8 @@ async function rankPerks(rank, instance, guild) {
 		perks += instance.messageHandler.get(guild, "RANKUP_CAIXA")
 	} else if (rank.perks.includes("lootbox")) {
 		perks += instance.messageHandler.get(guild, "RANKUP_LOOTBOX")
+	} else if (rank.perks.includes("none")) {
+		perks += instance.messageHandler.get(guild, "RANKUP_NONE")
 	}
 
 	return perks

@@ -1,6 +1,7 @@
 [
 	{
-		"falcoinsToLevelUp": 200
+		"falcoinsToLevelUp": 200,
+		"perks": ["none"]
 	},
 	{
 		"falcoinsToLevelUp": 500,
