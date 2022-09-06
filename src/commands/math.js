@@ -6,13 +6,10 @@ const { testOnly } = require("../config.json")
 module.exports = {
 	category: "uteis",
 	description: "Resolve a mathematical expression",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	minArgs: 1,
-	expectedArgs: "<expression>",
-	expectedArgsTypes: ["STRING"],
 	options: [
 		{
 			name: "expression",

@@ -4,10 +4,9 @@ const { testOnly } = require("../config.json")
 const levels = require("../utils/json/levels.json")
 
 module.exports = {
-	aliases: ["levelup"],
 	category: "Economia",
 	description: "Increase your rank",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
@@ -28,13 +27,9 @@ module.exports = {
 			type: "SUB_COMMAND",
 		},
 	],
-	callback: async ({ instance, guild, user, interaction, args }) => {
+	callback: async ({ instance, guild, user, interaction }) => {
 		try {
-			if (!interaction) {
-				type = args[0].toLowerCase()
-			} else {
-				type = interaction.options.getSubcommand()
-			}
+			type = interaction.options.getSubcommand()
 
 			switch (type) {
 				case "rankup":

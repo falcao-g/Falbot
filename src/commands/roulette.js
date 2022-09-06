@@ -10,16 +10,12 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["roleta"],
 	category: "Economia",
 	description: "Bet on the roulette",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	minArgs: 2,
-	expectedArgs: "<type> <falcoins>",
-	expectedArgsTypes: ["STRING", "STRING"],
 	options: [
 		{
 			name: "type",
@@ -48,15 +44,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({
-		instance,
-		guild,
-		user,
-		args,
-		message,
-		interaction,
-		member,
-	}) => {
+	callback: async ({ instance, guild, user, args, interaction, member }) => {
 		try {
 			args[0] = args[0].toLowerCase()
 			if (args[0] === "ímpar") {
@@ -104,16 +92,10 @@ module.exports = {
 						)
 						.setFooter({ text: "by Falcão ❤️" })
 
-					if (message) {
-						answer = await message.reply({
-							embeds: [embed],
-						})
-					} else {
-						answer = await interaction.reply({
-							embeds: [embed],
-							fetchReply: true,
-						})
-					}
+					answer = await interaction.reply({
+						embeds: [embed],
+						fetchReply: true,
+					})
 
 					const types = {
 						verde: [0],

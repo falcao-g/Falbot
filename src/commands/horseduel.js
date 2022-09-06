@@ -8,16 +8,12 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["cavalgada"],
 	category: "Economia",
 	description: "Challenge other users to a horse duel",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	minArgs: 1,
-	expectedArgs: "<falcoins>",
-	expectedArgsTypes: ["STRING"],
 	options: [
 		{
 			name: "falcoins",
@@ -30,7 +26,6 @@ module.exports = {
 	callback: async ({
 		instance,
 		guild,
-		message,
 		interaction,
 		client,
 		member,
@@ -69,16 +64,12 @@ module.exports = {
 						}
 					)
 					.setFooter({ text: "by Falcão ❤️" })
-				if (message) {
-					var answer = await message.reply({
-						embeds: [embed],
-					})
-				} else {
-					var answer = await interaction.reply({
-						embeds: [embed],
-						fetchReply: true,
-					})
-				}
+
+				var answer = await interaction.reply({
+					embeds: [embed],
+					fetchReply: true,
+				})
+
 				answer.react("✅")
 				await changeDB(author.id, "falcoins", -bet)
 
@@ -190,15 +181,10 @@ module.exports = {
 							false
 						)
 						.setFooter({ text: "by Falcão ❤️" })
-					if (message) {
-						await message.reply({
-							embeds: [embed3],
-						})
-					} else {
-						await interaction.followUp({
-							embeds: [embed3],
-						})
-					}
+
+					await interaction.followUp({
+						embeds: [embed3],
+					})
 				})
 			} else {
 				return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")

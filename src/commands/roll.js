@@ -6,13 +6,10 @@ const { testOnly } = require("../config.json")
 module.exports = {
 	category: "Fun",
 	description: "Roll dice for you",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	minArgs: 1,
-	expectedArgs: "<dice>",
-	expectedArgsTypes: ["STRING"],
 	options: [
 		{
 			name: "dice",
@@ -21,7 +18,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, message, interaction, user, text }) => {
+	callback: async ({ instance, guild, interaction, user, text }) => {
 		try {
 			const roll = new Roll()
 			text = text.replace(/\s/g, "")
@@ -34,30 +31,24 @@ module.exports = {
 				rolled = roll.roll(text).result
 				rolled = rolled.toString()
 
-				if (message) {
-					message.reply({
-						content: `**${rolled}**`,
-					})
-				} else {
-					embed = new MessageEmbed()
-						.setColor(await getRoleColor(guild, user.id))
-						.addFields(
-							{
-								name: "🎲:",
-								value: text,
-								inline: false,
-							},
-							{
-								name: instance.messageHandler.get(guild, "RESULTADO"),
-								value: `**${rolled}**`,
-								inline: false,
-							}
-						)
-						.setFooter({ text: "by Falcão ❤️" })
-					interaction.reply({
-						embeds: [embed],
-					})
-				}
+				embed = new MessageEmbed()
+					.setColor(await getRoleColor(guild, user.id))
+					.addFields(
+						{
+							name: "🎲:",
+							value: text,
+							inline: false,
+						},
+						{
+							name: instance.messageHandler.get(guild, "RESULTADO"),
+							value: `**${rolled}**`,
+							inline: false,
+						}
+					)
+					.setFooter({ text: "by Falcão ❤️" })
+				interaction.reply({
+					embeds: [embed],
+				})
 			}
 		} catch (error) {
 			console.error(`roll: ${error}`)

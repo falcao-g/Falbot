@@ -1,13 +1,10 @@
 module.exports = {
 	category: "uteis",
 	description: "Sets the language of the server or the user",
-	expectedArgs: "[language]",
-	maxArgs: 1,
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: false,
 	permissions: ["ADMINISTRATOR"],
-	expectedArgsTypes: ["STRING"],
 	options: [
 		{
 			name: "language",

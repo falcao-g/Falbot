@@ -2,10 +2,9 @@ const { readFile, changeDB, msToTime } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["lb"],
 	category: "Economia",
 	description: "Claim your lootbox (available every 12 hours)",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,

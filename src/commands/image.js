@@ -4,16 +4,12 @@ const { randint, getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["imagem", "foto"],
 	category: "Fun",
 	description: "Show a random image from google based on the search query",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	minArgs: 1,
-	expectedArgs: "<search>",
-	expectedArgsTypes: ["STRING"],
 	options: [
 		{
 			name: "search",
@@ -24,9 +20,7 @@ module.exports = {
 	],
 	callback: async ({ message, interaction, user, guild, text }) => {
 		try {
-			if (interaction) {
-				await interaction.deferReply()
-			}
+			await interaction.deferReply()
 
 			text = text.trim()
 
@@ -41,11 +35,8 @@ module.exports = {
 				.setTitle(`${text}`)
 				.setImage(photos.result[randint(0, photos.result.length - 1)].url)
 				.setFooter({ text: "by Falcão ❤️" })
-			if (message) {
-				return embed
-			} else {
-				interaction.editReply({ embeds: [embed] })
-			}
+
+			interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`image: ${error}`)
 		}

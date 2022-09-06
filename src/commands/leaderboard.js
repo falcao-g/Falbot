@@ -6,12 +6,10 @@ const userSchema = require("../schemas/user-schema.js")
 module.exports = {
 	category: "Economia",
 	description: "show the global or local ranking of users",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	expectedArgs: "[scope]",
-	expectedArgsTypes: ["SUB_COMMAND"],
 	options: [
 		{
 			name: "money",
@@ -68,16 +66,8 @@ module.exports = {
 	callback: async ({ client, user, guild, args, interaction, instance }) => {
 		try {
 			rank = []
-			if (!interaction) {
-				scope = args[1].toLowerCase()
-			} else {
-				scope = interaction.options.getString("type").toLowerCase()
-			}
-			if (!interaction) {
-				type = args[0].toLowerCase()
-			} else {
-				type = interaction.options.getSubcommand()
-			}
+			scope = interaction.options.getString("type").toLowerCase()
+			type = interaction.options.getSubcommand()
 
 			switch (type) {
 				case "money":

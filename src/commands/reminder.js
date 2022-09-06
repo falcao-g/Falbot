@@ -3,15 +3,13 @@ const { changeDB, readFile } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["lembrete"],
 	category: "uteis",
 	description: "Toggle your vote reminder",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, user, message, interaction }) => {
-		messageInteraction = message ? message : interaction
+	callback: async ({ instance, guild, user, interaction }) => {
 		try {
 			if ((await readFile(user.id, "voteReminder")) === false) {
 				await changeDB(user.id, "voteReminder", true, true)
@@ -24,7 +22,7 @@ module.exports = {
 						.setStyle("PRIMARY")
 				)
 
-				messageInteraction.reply({
+				interaction.reply({
 					content: instance.messageHandler.get(guild, "REMINDER_ENABLED"),
 					ephemeral: true,
 					components: [row],
@@ -41,7 +39,7 @@ module.exports = {
 						.setStyle("PRIMARY")
 				)
 
-				messageInteraction.reply({
+				interaction.reply({
 					content: instance.messageHandler.get(guild, "REMINDER_DISABLED"),
 					ephemeral: true,
 					components: [row],
