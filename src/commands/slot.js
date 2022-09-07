@@ -11,16 +11,12 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["niquel", "níquel"],
 	category: "Economia",
 	description: "Bet your money in the slot machine",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	minArgs: 1,
-	expectedArgs: "<falcoins>",
-	expectedArgsTypes: ["STRING"],
 	options: [
 		{
 			name: "falcoins",
@@ -33,7 +29,6 @@ module.exports = {
 	callback: async ({
 		instance,
 		guild,
-		message,
 		interaction,
 		client,
 		user,
@@ -72,16 +67,11 @@ module.exports = {
 					)
 					.setFooter({ text: "by Falcão ❤️" })
 
-				if (message) {
-					var answer = await message.reply({
-						embeds: [embed],
-					})
-				} else {
-					var answer = await interaction.reply({
-						embeds: [embed],
-						fetchReply: true,
-					})
-				}
+				var answer = await interaction.reply({
+					embeds: [embed],
+					fetchReply: true,
+				})
+
 				await new Promise((resolve) => setTimeout(resolve, 1500))
 				embed.fields[0] = {
 					name: `-------------------\n | ${emoji1} | ${emojifoda} | ${emojifoda} |\n-------------------`,

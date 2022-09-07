@@ -11,16 +11,12 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["velha"],
 	category: "Economia",
 	description: "Challenge someone to a game of tic tac toe",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	minArgs: 2,
-	expectedArgs: "<user> <falcoins>",
-	expectedArgsTypes: ["USER", "STRING"],
 	options: [
 		{
 			name: "user",
@@ -39,7 +35,6 @@ module.exports = {
 	callback: async ({
 		instance,
 		guild,
-		message,
 		interaction,
 		client,
 		user,
@@ -48,13 +43,6 @@ module.exports = {
 	}) => {
 		try {
 			var board = new Board.default()
-			if (message) {
-				if (args[0][2] == "!") {
-					args[0] = args[0].slice(3, -1)
-				} else {
-					args[0] = args[0].slice(2, -1)
-				}
-			}
 			const member2 = await getMember(guild, args[0])
 			if (member2.user != member) {
 				try {
@@ -69,24 +57,15 @@ module.exports = {
 					(await readFile(member2.user.id, "falcoins")) >= bet &&
 					bet > 0
 				) {
-					if (message) {
-						var answer = await message.reply({
-							content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {
-								USER: member.displayName,
-								USER2: member2.displayName,
-								FALCOINS: await format(bet),
-							}),
-						})
-					} else {
-						var answer = await interaction.reply({
-							content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {
-								USER: member.displayName,
-								USER2: member2.displayName,
-								FALCOINS: await format(bet),
-							}),
-							fetchReply: true,
-						})
-					}
+					var answer = await interaction.reply({
+						content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {
+							USER: member.displayName,
+							USER2: member2.displayName,
+							FALCOINS: await format(bet),
+						}),
+						fetchReply: true,
+					})
+
 					answer.react("✅")
 					answer.react("🚫")
 
@@ -102,42 +81,22 @@ module.exports = {
 
 					collector.on("end", async (collected) => {
 						if (collected.size === 0) {
-							if (message) {
-								message.reply({
-									content: instance.messageHandler.get(
-										guild,
-										"VELHA_CANCELADO_DEMOROU",
-										{ USER: member2 }
-									),
-								})
-							} else {
-								interaction.followUp({
-									content: instance.messageHandler.get(
-										guild,
-										"VELHA_CANCELADO_DEMOROU",
-										{ USER: member2 }
-									),
-								})
-							}
+							interaction.followUp({
+								content: instance.messageHandler.get(
+									guild,
+									"VELHA_CANCELADO_DEMOROU",
+									{ USER: member2 }
+								),
+							})
 							return
 						} else if (collected.first()._emoji.name === "🚫") {
-							if (message) {
-								message.reply({
-									content: instance.messageHandler.get(
-										guild,
-										"VELHA_CANCELADO_RECUSOU",
-										{ USER: member2 }
-									),
-								})
-							} else {
-								interaction.followUp({
-									content: instance.messageHandler.get(
-										guild,
-										"VELHA_CANCELADO_RECUSOU",
-										{ USER: member2 }
-									),
-								})
-							}
+							interaction.followUp({
+								content: instance.messageHandler.get(
+									guild,
+									"VELHA_CANCELADO_RECUSOU",
+									{ USER: member2 }
+								),
+							})
 						} else {
 							await changeDB(member.user.id, "falcoins", -bet)
 							await changeDB(member2.user.id, "falcoins", -bet)
@@ -183,32 +142,17 @@ module.exports = {
 								second_player = member
 							}
 
-							if (message) {
-								var answer2 = await message.reply({
-									content: `:older_woman: \`${
-										member.displayName
-									}\` **VdS**  \`${
-										member2.displayName
-									}\` \n\n${instance.messageHandler.get(
-										guild,
-										"VELHA_MOVIMENTO",
-										{ USER: first_player.displayName }
-									)}`,
-									components: [row, row2, row3],
-								})
-							} else {
-								answer2 = await interaction.followUp({
-									content: `:older_woman: \`${member.displayName}\` **VS**  \`${
-										member2.displayName
-									}\` \n\n${instance.messageHandler.get(
-										guild,
-										"VELHA_MOVIMENTO",
-										{ USER: first_player.displayName }
-									)}`,
-									components: [row, row2, row3],
-									fetchReply: true,
-								})
-							}
+							answer2 = await interaction.followUp({
+								content: `:older_woman: \`${member.displayName}\` **VS**  \`${
+									member2.displayName
+								}\` \n\n${instance.messageHandler.get(
+									guild,
+									"VELHA_MOVIMENTO",
+									{ USER: first_player.displayName }
+								)}`,
+								components: [row, row2, row3],
+								fetchReply: true,
+							})
 
 							const filter2 = (btInt) => {
 								if (

@@ -3,15 +3,12 @@ const { getRoleColor, readFile, changeDB } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["loja", "shop"],
 	category: "Economia",
 	description: "Show the store",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	expectedArgs: "[number] [quantity]",
-	expectedArgsTypes: ["NUMBER", "NUMBER"],
 	options: [
 		{
 			name: "number",

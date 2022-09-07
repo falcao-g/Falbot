@@ -6,18 +6,15 @@ require("dotenv").config()
 const { Authorization } = process.env
 
 module.exports = {
-	aliases: ["voto"],
 	category: "Economia",
 	description: "Earn falcoins by voting for us on top.gg",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, user, interaction, message }) => {
+	callback: async ({ instance, guild, user, interaction }) => {
 		try {
-			if (interaction) {
-				await interaction.deferReply()
-			}
+			await interaction.deferReply()
 			const topgg = new top.Client(Authorization)
 
 			if (
@@ -63,11 +60,7 @@ module.exports = {
 					)
 					.setFooter({ text: "by Falcão ❤️" })
 			}
-			if (message) {
-				return embed
-			} else {
-				interaction.editReply({ embeds: [embed] })
-			}
+			interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`vote: ${error}`)
 		}

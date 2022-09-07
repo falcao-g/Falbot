@@ -5,11 +5,11 @@ const { testOnly } = require("../config.json")
 module.exports = {
 	category: "Fun",
 	description: "Play a game of snake",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, message, interaction, user }) => {
+	callback: async ({ instance, guild, interaction, user }) => {
 		try {
 			const author = user
 			const game = new builder.Game()
@@ -47,18 +47,11 @@ module.exports = {
 					.setStyle("SECONDARY"),
 			])
 
-			if (message) {
-				var answer = await message.reply({
-					embeds: [embed],
-					components: [row],
-				})
-			} else {
-				var answer = await interaction.reply({
-					embeds: [embed],
-					components: [row],
-					fetchReply: true,
-				})
-			}
+			var answer = await interaction.reply({
+				embeds: [embed],
+				components: [row],
+				fetchReply: true,
+			})
 
 			const filter = (btInt) => {
 				return btInt.user.id === author.id

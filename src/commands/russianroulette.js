@@ -8,16 +8,12 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	aliases: ["roletarussa"],
 	category: "Economia",
 	description: "Play with your friend, last to survive wins",
-	slash: "both",
+	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	minArgs: 1,
-	expectedArgs: "<falcoins>",
-	expectedArgsTypes: ["STRING"],
 	options: [
 		{
 			name: "falcoins",
@@ -30,7 +26,6 @@ module.exports = {
 	callback: async ({
 		instance,
 		guild,
-		message,
 		interaction,
 		client,
 		user,
@@ -68,16 +63,12 @@ module.exports = {
 						}
 					)
 					.setFooter({ text: "by Falcão ❤️" })
-				if (message) {
-					var answer = await message.reply({
-						embeds: [embed],
-					})
-				} else {
-					var answer = await interaction.reply({
-						embeds: [embed],
-						fetchReply: true,
-					})
-				}
+
+				var answer = await interaction.reply({
+					embeds: [embed],
+					fetchReply: true,
+				})
+
 				answer.react("✅")
 				await changeDB(author.id, "falcoins", -bet)
 
@@ -148,15 +139,10 @@ module.exports = {
 								}
 							)
 							.setFooter({ text: "by Falcão ❤️" })
-						if (message) {
-							var answer = await message.channel.send({
-								embeds: [embed2],
-							})
-						} else {
-							var answer = await interaction.channel.send({
-								embeds: [embed2],
-							})
-						}
+
+						await interaction.channel.send({
+							embeds: [embed2],
+						})
 						await new Promise((resolve) => setTimeout(resolve, 5000))
 					}
 					var winner = users[0]
@@ -172,15 +158,10 @@ module.exports = {
 							false
 						)
 						.setFooter({ text: "by Falcão ❤️" })
-					if (message) {
-						await message.reply({
-							embeds: [embed3],
-						})
-					} else {
-						await interaction.followUp({
-							embeds: [embed3],
-						})
-					}
+
+					await interaction.followUp({
+						embeds: [embed3],
+					})
 				})
 			} else if (bet <= 0) {
 				return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
