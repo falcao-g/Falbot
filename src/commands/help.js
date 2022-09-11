@@ -18,6 +18,7 @@ module.exports = {
 			required: false,
 			type: "STRING",
 			choices: [
+				{ name: "introduction", value: "introduction" },
 				{ name: "allcommands", value: "allcommands" },
 				{ name: "ranks", value: "ranks" },
 				{ name: "economy", value: "economy" },
@@ -39,7 +40,12 @@ module.exports = {
 			const embed = new MessageEmbed()
 				.setColor("DARK_PURPLE")
 				.setFooter({ text: "by Falcão ❤️" })
-			if (page === "allcommands") {
+			if (page === "introduction") {
+				embed.addField(
+					instance.messageHandler.get(guild, "WELCOME"),
+					instance.messageHandler.get(guild, "HELP_INTRODUCTION2")
+				)
+			} else if (page === "allcommands") {
 				embed.setTitle(instance.messageHandler.get(guild, "ALL_COMMANDS"))
 				embed.addField(
 					instance.messageHandler.get(guild, "TOO_MANY"),
@@ -75,6 +81,13 @@ module.exports = {
 			} else {
 				embed.setTitle(instance.messageHandler.get(guild, "FALBOT_WELCOME"))
 				embed.addFields(
+					{
+						name:
+							":diamond_shape_with_a_dot_inside: " +
+							instance.messageHandler.get(guild, "INTRODUCTION"),
+						value: instance.messageHandler.get(guild, "HELP_INTRODUCTION"),
+						inline: true,
+					},
 					{
 						name:
 							":books: " + instance.messageHandler.get(guild, "COMMANDS_ALL"),
@@ -117,6 +130,11 @@ module.exports = {
 					.setCustomId("page")
 					.setPlaceholder(instance.messageHandler.get(guild, "PICK_PAGE"))
 					.addOptions(
+						{
+							label: instance.messageHandler.get(guild, "INTRODUCTION"),
+							value: "introduction",
+							emoji: "💠",
+						},
 						{
 							label: instance.messageHandler.get(guild, "COMMANDS_ALL"),
 							value: "allcommands",

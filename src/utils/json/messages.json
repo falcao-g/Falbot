@@ -646,6 +646,10 @@
 		"portugues": "-Mude o prefixo do falbot com `/prefix`\n-Deixe o falbot resolver expressões matemáticas para você com `/math`\n-Role dados usando `/roll`",
 		"english": "-Change falbot's prefix with `/prefix`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`"
 	},
+	"INTRODUCTION": {
+		"portugues": "Introdução",
+		"english": "Introduction"
+	},
 	"COMMANDS_ALL": {
 		"portugues": "Todos os comandos",
 		"english": "All commands"
@@ -665,6 +669,14 @@
 	"UTILS": {
 		"portugues": "Úteis",
 		"english": "Utils"
+	},
+	"HELP_INTRODUCTION": {
+		"portugues": "*Introdução ao jogo*",
+		"english": "*Bot's gameplay introduction*"
+	},
+	"HELP_INTRODUCTION2": {
+		"portugues": "**:sparkles: Seu objetivo é subir nos ranks do jogo até se tornar o número um\n:partying_face: Ou só se divertir com seus amigos\n:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/balance`\n:stopwatch: O comando `/cooldowns` mostra o tempo até certas ações poderem serem feitas novamente\n:bank: Deposite regularmente no seu banco para coletar interesse no seu dinheiro\n:question: Veja as outras páginas desse comando para aprender a usar uma feature específica do Falbot\n:100: Nós cobrimos o básico, mas o Falbot oferece muito mais\n:fire: Continue jogando e experimentando, mas mais importante, se divirta!**",
+		"english": "**:sparkles: Your goal is to climb the ranks of the game to become number one\n:partying_face: Or just have fun with your friends\n:coin: See your falcoins and other information at any time using the '/balance'\n:stopwatch: The '/cooldowns' command shows the time until certain actions can be done again\n:bank: Deposit regularly in your bank to collect interest in your money\n:question: See the other pages of this command to learn how to use a specific feature of Falbot\n:100: We cover the basics, but Falbot offers much more\n:fire: Keep playing and experimenting, but more importantly, have fun!**"
 	},
 	"COMMANDS_ALL2": {
 		"portugues": "*Lista de comandos*",
