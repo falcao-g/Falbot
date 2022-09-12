@@ -711,8 +711,8 @@
 		"english": ":money_with_wings: Earning more falcoins"
 	},
 	"HELP_ECONOMY3": {
-		"portugues": "**:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/vote`\n:gift: Resgate sua lootbox a cada 12 horas para um bônus extra com `/lootbox`\n:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/bank`**\n**:stopwatch: Veja quanto tempo até poder executar ações de novo com `/cooldowns`**\n**:busts_in_silhouette: Interaja com outros usuários**\n-Compita com seus amigos com `/horseduel`, `/tictactoe`, `/russianroulette` e `/fight`\n-Se sentindo generoso? Doe dinheiro com `/donation`\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/slot`, `/roulette` e `/horse`**",
-		"english": "**:ballot_box: Vote every 12 hours to earn falcoins with `/vote`\n:gift: Claim your lootbox every 12 hours for more falcoins with `/lootbox`\n:bank: Deposit your money in the bank and watch as it increases with `/bank`**\n**:stopwatch: See how long until actions can be performed again with `/cooldowns`**\n**:busts_in_silhouette: Interact with another users**\n-Compete with your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`\n-Feeling generous? Donate money with `/donation`\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette` and `/horse`**"
+		"portugues": "**:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/vote`\n:gift: Resgate sua lootbox a cada 12 horas para um bônus extra com `/lootbox`\n:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/bank`**\n**:stopwatch: Veja quanto tempo até poder executar ações de novo com `/cooldowns`**\n**:busts_in_silhouette: Interaja com outros usuários**\n-Compita com seus amigos com `/horseduel`, `/tictactoe`, `/russianroulette` e `/fight`\n-Se sentindo generoso? Doe dinheiro com `/donation`\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/slot`, `/roulette`, `/horse`, `/snakeeyes` e `/crash`**",
+		"english": "**:ballot_box: Vote every 12 hours to earn falcoins with `/vote`\n:gift: Claim your lootbox every 12 hours for more falcoins with `/lootbox`\n:bank: Deposit your money in the bank and watch as it increases with `/bank`**\n**:stopwatch: See how long until actions can be performed again with `/cooldowns`**\n**:busts_in_silhouette: Interact with another users**\n-Compete with your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`\n-Feeling generous? Donate money with `/donation`\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes` and `/crash`**"
 	},
 	"PICK_PAGE": {
 		"portugues": "Escolha uma página de ajuda...",
@@ -781,6 +781,18 @@
 	"GIRANDO_ROLETA": {
 		"portugues": "Girando a roleta...",
 		"english": "Spinning the wheel..."
+	},
+	"CRASH_TEXT": {
+		"portugues": "A cada 2 segundos o multiplicador aumenta em 0.2x.\nToda vez que isso acontece você tem 15% de chance de perder seu dinheiro.\nPara coletar seu dinheiro, aperte o botão de vender.",
+		"english": "Every 2 seconds the multiplier goes up by 0.2x.\nEvery time this happens you have 15% chance to lose all money.\nTo claim the profits, press the sell button."
+	},
+	"MULTIPLIER": {
+		"portugues": "Multiplicador",
+		"english": "Multiplier"
+	},
+	"SELL": {
+		"portugues": "Vender",
+		"english": "Sell"
 	},
 	"1": {
 		"portugues": ":potato: Plebeu",
