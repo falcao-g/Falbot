@@ -11,12 +11,16 @@ module.exports = {
 			description: "the desired language of the server or the user",
 			required: false,
 			type: "STRING",
+			choices: [
+				{ name: "português", value: "portugues" },
+				{ name: "english", value: "english" },
+			],
 		},
 	],
-	callback: async ({ instance, guild, text, user }) => {
+	callback: async ({ instance, guild, user, interaction }) => {
 		try {
 			languageSchema = instance._mongoConnection.models["wokcommands-languages"]
-			const lang = text.toLowerCase()
+			const lang = interaction.options.getString("language")
 			if (guild) {
 				if (!lang) {
 					return instance.messageHandler.get(guild, "CURRENT_LANGUAGE", {
