@@ -24,9 +24,21 @@ Official website: https://falbot.netlify.app/
 
 You can add the bot's public instance by [clicking here](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=330816&scope=bot%20applications.commands), this way you don't have to worry about hosting and other stuff
 
-## 🚀 Self-hosting
+## 🚀 Self-hosting conditions and warnings
 
-If you want to contribute to the project, you can do so by hosting falbot on your own machine. However I won't give support for people that are trying to selfhost, I don't want to spend hours trying to troubleshoot other people issues that only happens on selfhosted instances, so you should at least know how to troubleshoot issues, if you find any.
+In addition to the project's license, here are some other things that you should keep in mind:
+
+1. I keep the source code open so people can see, learn and be inspired by how Falbot was made and, if they want to, they can help the project with features and bug fixes.
+
+2. If you change the code, you need to follow Falbot's license and keep the changes open source. And if you want to help in Falbot's development, why not create a pull request?
+
+3. I won't give support for selfhosted instances, you need to know how to troubleshoot the issues yourself, if you find any.
+
+4. Don't lie saying that you "created Falbot". Please give credits to the creator!
+
+5. Falbot's assets (emojis, images, etc) aren't distributed with the source code, you will need to create and include your own assets.
+
+Seems too hard but you really want to use Falbot? Don't worry, you can use our free public instance by [clicking here](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=330816&scope=bot%20applications.commands)!
 
 ## 👷 Requirements
 
@@ -35,9 +47,10 @@ If you want to contribute to the project, you can do so by hosting falbot on you
 
 ## 🧹 Preparing the enviroment
 
-Clone this git repository somewhere in your OS, then open the cloned folder with a terminal of your choice and run ```npm i```
+Clone this git repository somewhere in your OS, then open the cloned folder with a terminal of your choice and run `npm i`
 
-When all of the dependencies finish installing, you will need to create a ```config.json``` file inside the ```src``` folder and paste this on it: 
+When all of the dependencies finish installing, you will need to create a `config.json` file inside the `src` folder and paste this on it:
+
 ```
 {
  "PREFIX": "PREFIX",
@@ -57,7 +70,7 @@ When all of the dependencies finish installing, you will need to create a ```con
 }
 ```
 
-In addition, you will also need to create a .env file outside the ```src``` folder, where the index.js file is, and paste this on it:
+In addition, you will also need to create a .env file outside the `src` folder, where the index.js file is, and paste this on it:
 
 ```
 TOKEN="token"
@@ -70,11 +83,13 @@ Authorization="topgg-core-authorization"
 Falbot is made to be a really configurable bot:
 
 .env file:
+
 - "TOKEN": your discord bot token
 - "MONGODB_URI": your mongodb connection uri
 - "Authorization": this is only required if your bot is in top.gg and you plan to use the /vote command, in this case you go to https://top.gg/bot/:yourbotid/webhooks and put the token here, otherwise just ignore this
 
 config.json file:
+
 - "PREFIX": by default "?" is the default prefix, but you can change it here
 - "owners": put here your discord id and other people that will be involved in development, this will be important to manage slash commands
 - "someServers": the server or servers id that will be used to test the bot
@@ -87,4 +102,4 @@ config.json file:
 
 ## 🏃‍♂️ Running
 
-If everything was done correctly, you just need to open a terminal on the folder and run ```node .``` and the bot should be up and running!
+If everything was done correctly, you just need to open a terminal on the folder and run `node .` and the bot should be up and running!
