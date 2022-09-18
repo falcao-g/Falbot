@@ -36,7 +36,7 @@ In addition to the project's license, here are some other things that you should
 
 4. Don't lie saying that you "created Falbot". Please give credits to the creator!
 
-5. Falbot's assets (emojis, images, etc) aren't distributed with the source code, you will need to create and include your own assets.
+5. Falbot's emojis aren't distributed with the source code, you will need to create and include your own assets.
 
 Seems too hard but you really want to use Falbot? Don't worry, you can use our free public instance by [clicking here](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=330816&scope=bot%20applications.commands)!
 

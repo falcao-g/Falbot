@@ -48,7 +48,7 @@ module.exports = {
 					},
 					{
 						name: instance.messageHandler.get(guild, "GANHOS"),
-						value: `:coin: ${parseInt(bet * multiplier - bet)}`,
+						value: `:coin: ${parseInt(-bet)}`,
 						inline: true,
 					}
 				)
@@ -96,7 +96,7 @@ module.exports = {
 
 				random = await randint(1, 100)
 
-				if (random <= 15) {
+				if (random <= 20) {
 					crashed = true
 					lost = true
 				}
