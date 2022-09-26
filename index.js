@@ -45,7 +45,7 @@ client.on("ready", () => {
 	client.on("error", console.error)
 
 	setInterval(() => {
-		client.user.setActivity("?help | arte by: @kinsallum"),
+		client.user.setActivity("/help | arte by: @kinsallum"),
 			bankInterest(),
 			sendVoteReminders(wok, client)
 	}, 1000 * 60 * 15)

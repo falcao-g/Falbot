@@ -48,7 +48,7 @@ module.exports = {
 					},
 					{
 						name: instance.messageHandler.get(guild, "GANHOS"),
-						value: `:coin: ${parseInt(-bet)}`,
+						value: `:coin: ${parseInt(bet * multiplier - bet)}`,
 						inline: true,
 					}
 				)
