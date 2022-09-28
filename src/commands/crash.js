@@ -33,6 +33,7 @@ module.exports = {
 			})
 		}
 		if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
+			await changeDB(user.id, "falcoins", -bet)
 			multiplier = 0.8
 			const embed = new MessageEmbed()
 				.addFields(
@@ -121,10 +122,9 @@ module.exports = {
 			sell.setDisabled(true)
 
 			if (lost) {
-				profit = -bet
 				embed.setColor(15158332)
 			} else {
-				profit = parseInt(bet * multiplier - bet)
+				await changeDB(user.id, "falcoins", parseInt(bet * multiplier - bet))
 				embed.setColor(3066993)
 			}
 
@@ -132,8 +132,6 @@ module.exports = {
 				embeds: [embed],
 				components: [row],
 			})
-
-			await changeDB(user.id, "falcoins", profit)
 		} else {
 			return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
 		}
