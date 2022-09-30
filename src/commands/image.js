@@ -18,7 +18,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ message, interaction, user, guild, text }) => {
+	callback: async ({ interaction, user, guild, text }) => {
 		try {
 			await interaction.deferReply()
 
