@@ -4,7 +4,6 @@ const {
 	getRoleColor,
 	format,
 	paginate,
-	leaderboardEmbeds,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const userSchema = require("../schemas/user-schema.js")
@@ -138,6 +137,36 @@ module.exports = {
 					embeds = [embed1]
 				}
 
+				for (let i = 0; i < embeds.length; i++) {
+					if (embeds.length > 1) {
+						if (scope == "server") {
+							embeds[i].setTitle(
+								`${instance.messageHandler.get(
+									guild,
+									"LEADERBOARD_SERVER_TITLE"
+								)} - ${i + 1}/3`
+							)
+						} else {
+							embeds[i].setTitle(
+								`${instance.messageHandler.get(
+									guild,
+									"LEADERBOARD_GLOBAL_TITLE"
+								)} - ${i + 1}/3`
+							)
+						}
+					} else {
+						if (scope == "server") {
+							embed1.setTitle(
+								instance.messageHandler.get(guild, "LEADERBOARD_SERVER_TITLE")
+							)
+						} else {
+							embed1.setTitle(
+								instance.messageHandler.get(guild, "LEADERBOARD_GLOBAL_TITLE")
+							)
+						}
+					}
+				}
+
 				if (embeds.length > 1) {
 					const paginator = await paginate()
 					paginator.add(...embeds)
@@ -229,6 +258,36 @@ module.exports = {
 					embeds = [embed1, embed2]
 				} else {
 					embeds = [embed1]
+				}
+
+				for (let i = 0; i < embeds.length; i++) {
+					if (embeds.length > 1) {
+						if (scope == "server") {
+							embeds[i].setTitle(
+								`${instance.messageHandler.get(
+									guild,
+									"LEADERBOARD_SERVER_TITLE"
+								)} - ${i + 1}/3`
+							)
+						} else {
+							embeds[i].setTitle(
+								`${instance.messageHandler.get(
+									guild,
+									"LEADERBOARD_GLOBAL_TITLE"
+								)} - ${i + 1}/3`
+							)
+						}
+					} else {
+						if (scope == "server") {
+							embed1.setTitle(
+								instance.messageHandler.get(guild, "LEADERBOARD_SERVER_TITLE")
+							)
+						} else {
+							embed1.setTitle(
+								instance.messageHandler.get(guild, "LEADERBOARD_GLOBAL_TITLE")
+							)
+						}
+					}
 				}
 
 				if (embeds.length > 1) {
@@ -326,6 +385,36 @@ module.exports = {
 					embeds = [embed1, embed2]
 				} else {
 					embeds = [embed1]
+				}
+
+				for (let i = 0; i < embeds.length; i++) {
+					if (embeds.length > 1) {
+						if (scope == "server") {
+							embeds[i].setTitle(
+								`${instance.messageHandler.get(
+									guild,
+									"LEADERBOARD_SERVER_TITLE"
+								)} - ${i + 1}/3`
+							)
+						} else {
+							embeds[i].setTitle(
+								`${instance.messageHandler.get(
+									guild,
+									"LEADERBOARD_GLOBAL_TITLE"
+								)} - ${i + 1}/3`
+							)
+						}
+					} else {
+						if (scope == "server") {
+							embed1.setTitle(
+								instance.messageHandler.get(guild, "LEADERBOARD_SERVER_TITLE")
+							)
+						} else {
+							embed1.setTitle(
+								instance.messageHandler.get(guild, "LEADERBOARD_GLOBAL_TITLE")
+							)
+						}
+					}
 				}
 
 				if (embeds.length > 1) {

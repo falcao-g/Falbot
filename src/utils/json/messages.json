@@ -794,6 +794,14 @@
 		"portugues": "Vender",
 		"english": "Sell"
 	},
+	"LEADERBOARD_GLOBAL_TITLE": {
+		"portugues": ":earth_americas: Classificação global",
+		"english": ":earth_americas: Global leaderboard"
+	},
+	"LEADERBOARD_SERVER_TITLE": {
+		"portugues": ":desktop: Classificação do servidor",
+		"english": ":desktop: Server leaderboard"
+	},
 	"1": {
 		"portugues": ":potato: Plebeu",
 		"english": ":potato: Peasent"
