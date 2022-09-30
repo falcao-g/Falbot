@@ -1,5 +1,11 @@
-const { MessageEmbed } = require("discord.js")
-const { getMember, getRoleColor, format } = require("../utils/functions.js")
+const { MessageEmbed, MessageButton } = require("discord.js")
+const {
+	getMember,
+	getRoleColor,
+	format,
+	paginate,
+	leaderboardEmbeds,
+} = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const userSchema = require("../schemas/user-schema.js")
 
@@ -63,140 +69,299 @@ module.exports = {
 			],
 		},
 	],
-	callback: async ({ client, user, guild, args, interaction, instance }) => {
+	callback: async ({ client, user, guild, interaction, instance }) => {
 		try {
 			rank = []
 			scope = interaction.options.getString("type").toLowerCase()
 			type = interaction.options.getSubcommand()
+			await interaction.deferReply()
 
-			switch (type) {
-				case "money":
-				case "dinheiro":
-					if (scope === "server") {
-						users = await userSchema.find({}).sort({ falcoins: -1 }).limit(10)
+			if (type == "money") {
+				if (scope === "server") {
+					users = await userSchema.find({}).sort({ falcoins: -1 }).limit(30)
 
-						for (useri of users) {
-							if ((await getMember(guild, useri["_id"])) && rank.length < 10) {
-								rank.push(useri)
-							}
+					for (useri of users) {
+						if (await getMember(guild, useri["_id"])) {
+							rank.push(useri)
 						}
+					}
+				} else {
+					rank = await userSchema.find({}).sort({ falcoins: -1 }).limit(30)
+				}
+
+				var embed1 = new MessageEmbed()
+					.setColor(await getRoleColor(guild, user.id))
+					.setFooter({ text: "by Falcão ❤️" })
+				var embed2 = new MessageEmbed()
+					.setColor(await getRoleColor(guild, user.id))
+					.setFooter({ text: "by Falcão ❤️" })
+				var embed3 = new MessageEmbed()
+					.setColor(await getRoleColor(guild, user.id))
+					.setFooter({ text: "by Falcão ❤️" })
+
+				embeds = [embed1, embed2, embed3]
+
+				for (let i = 0; i < rank.length; i++) {
+					if (i <= 9) {
+						a = 0
+					} else if (i <= 19) {
+						a = 1
 					} else {
-						rank = await userSchema.find({}).sort({ falcoins: -1 }).limit(10)
+						a = 2
 					}
-					var embed = new MessageEmbed()
-						.setColor(await getRoleColor(guild, user.id))
-						.setFooter({ text: "by Falcão ❤️" })
-					for (let i = 0; i < rank.length; i++) {
-						try {
-							if (scope === "server") {
-								member = await getMember(guild, rank[i]["_id"])
-								username = member.displayName
-							} else {
-								user = await client.users.fetch(rank[i]["_id"])
-								username = user.username
-							}
-							embed.addField(
-								`${i + 1}º - ${username} falcoins:`,
-								`${await format(rank[i]["falcoins"])}`,
-								false
-							)
-						} catch {
-							embed.addField(
-								`${i + 1}º - Unknown user falcoins:`,
-								`${await format(rank[i]["falcoins"])}`,
-								false
-							)
+					try {
+						if (scope === "server") {
+							member = await getMember(guild, rank[i]["_id"])
+							username = member.displayName
+						} else {
+							user = await client.users.fetch(rank[i]["_id"])
+							username = user.username
 						}
+						embeds[a].addField(
+							`${i + 1}º - ${username} falcoins:`,
+							`${await format(rank[i]["falcoins"])}`,
+							false
+						)
+					} catch {
+						embeds[a].addField(
+							`${i + 1}º - Unknown user falcoins:`,
+							`${await format(rank[i]["falcoins"])}`,
+							false
+						)
 					}
-					return embed
-				case "rank":
-					if (scope === "server") {
-						users = await userSchema.find({}).sort({ rank: -1 }).limit(10)
+				}
+				if (embed3.fields.length != 0) {
+					embeds = [embed1, embed2, embed3]
+				} else if (embed2.fields.length != 0) {
+					embeds = [embed1, embed2]
+				} else {
+					embeds = [embed1]
+				}
 
-						for (useri of users) {
-							if ((await getMember(guild, useri["_id"])) && rank.length < 10) {
-								rank.push(useri)
+				if (embeds.length > 1) {
+					const paginator = await paginate()
+					paginator.add(...embeds)
+					const ids = [`${Date.now()}__left`, `${Date.now()}__right`]
+					await paginator.setTraverser([
+						new MessageButton()
+							.setEmoji("⬅️")
+							.setCustomId(ids[0])
+							.setStyle("SECONDARY"),
+						new MessageButton()
+							.setEmoji("➡️")
+							.setCustomId(ids[1])
+							.setStyle("SECONDARY"),
+						,
+					])
+					const message = await interaction.editReply(paginator.components())
+					paginator.setMessage(message)
+					message.channel
+						.createMessageComponentCollector()
+						.on("collect", async (i) => {
+							if (i.customId === ids[0]) {
+								await paginator.back()
+								await i.update(paginator.components())
+							} else if (i.customId === ids[1]) {
+								await paginator.next()
+								await i.update(paginator.components())
 							}
+						})
+				} else {
+					await interaction.editReply({ embeds: [embeds[0]] })
+				}
+			} else if (type == "rank") {
+				if (scope === "server") {
+					users = await userSchema.find({}).sort({ rank: -1 }).limit(30)
+
+					for (useri of users) {
+						if (await getMember(guild, useri["_id"])) {
+							rank.push(useri)
 						}
+					}
+				} else {
+					rank = await userSchema.find({}).sort({ rank: -1 }).limit(30)
+				}
+
+				var embed1 = new MessageEmbed()
+					.setColor(await getRoleColor(guild, user.id))
+					.setFooter({ text: "by Falcão ❤️" })
+				var embed2 = new MessageEmbed()
+					.setColor(await getRoleColor(guild, user.id))
+					.setFooter({ text: "by Falcão ❤️" })
+				var embed3 = new MessageEmbed()
+					.setColor(await getRoleColor(guild, user.id))
+					.setFooter({ text: "by Falcão ❤️" })
+
+				embeds = [embed1, embed2, embed3]
+
+				for (let i = 0; i < rank.length; i++) {
+					if (i <= 9) {
+						a = 0
+					} else if (i <= 19) {
+						a = 1
 					} else {
-						rank = await userSchema.find({}).sort({ rank: -1 }).limit(10)
+						a = 2
 					}
-					var embed = new MessageEmbed()
-						.setColor(await getRoleColor(guild, user.id))
-						.setFooter({ text: "by Falcão ❤️" })
-					for (let i = 0; i < rank.length; i++) {
-						try {
-							if (scope === "server") {
-								member = await getMember(guild, rank[i]["_id"])
-								username = member.displayName
-							} else {
-								user = await client.users.fetch(rank[i]["_id"])
-								username = user.username
+					try {
+						if (scope === "server") {
+							member = await getMember(guild, rank[i]["_id"])
+							username = member.displayName
+						} else {
+							user = await client.users.fetch(rank[i]["_id"])
+							username = user.username
+						}
+						embeds[a].addField(
+							`${i + 1}º - ${username} rank:`,
+							`${instance.messageHandler.get(guild, rank[i]["rank"])}`,
+							false
+						)
+					} catch {
+						embeds[a].addField(
+							`${i + 1}º - Unknown user rank:`,
+							`${instance.messageHandler.get(guild, rank[i]["rank"])}`,
+							false
+						)
+					}
+				}
+				if (embed3.fields.length != 0) {
+					embeds = [embed1, embed2, embed3]
+				} else if (embed2.fields.length != 0) {
+					embeds = [embed1, embed2]
+				} else {
+					embeds = [embed1]
+				}
+
+				if (embeds.length > 1) {
+					const paginator = await paginate()
+					paginator.add(...embeds)
+					const ids = [`${Date.now()}__left`, `${Date.now()}__right`]
+					await paginator.setTraverser([
+						new MessageButton()
+							.setEmoji("⬅️")
+							.setCustomId(ids[0])
+							.setStyle("SECONDARY"),
+						new MessageButton()
+							.setEmoji("➡️")
+							.setCustomId(ids[1])
+							.setStyle("SECONDARY"),
+						,
+					])
+					const message = await interaction.editReply(paginator.components())
+					paginator.setMessage(message)
+					message.channel
+						.createMessageComponentCollector()
+						.on("collect", async (i) => {
+							if (i.customId === ids[0]) {
+								await paginator.back()
+								await i.update(paginator.components())
+							} else if (i.customId === ids[1]) {
+								await paginator.next()
+								await i.update(paginator.components())
 							}
-							embed.addField(
-								`${i + 1}º - ${username} rank:`,
-								`${instance.messageHandler.get(guild, rank[i]["rank"])}`,
-								false
-							)
-						} catch {
-							embed.addField(
-								`${i + 1}º - Unknown user rank:`,
-								`${instance.messageHandler.get(guild, rank[i]["rank"])}`,
-								false
-							)
+						})
+				} else {
+					await interaction.editReply({ embeds: [embeds[0]] })
+				}
+			} else if (type == "wins") {
+				if (scope === "server") {
+					users = await userSchema.find({}).sort({ vitorias: -1 }).limit(30)
+
+					for (useri of users) {
+						if (await getMember(guild, useri["_id"])) {
+							rank.push(useri)
 						}
 					}
-					return embed
+				} else {
+					rank = await userSchema.find({}).sort({ vitorias: -1 }).limit(30)
+				}
 
-				case "wins":
-					if (scope === "server") {
-						users = await userSchema.find({}).sort({ vitorias: -1 }).limit(10)
+				var embed1 = new MessageEmbed()
+					.setColor(await getRoleColor(guild, user.id))
+					.setFooter({ text: "by Falcão ❤️" })
+				var embed2 = new MessageEmbed()
+					.setColor(await getRoleColor(guild, user.id))
+					.setFooter({ text: "by Falcão ❤️" })
+				var embed3 = new MessageEmbed()
+					.setColor(await getRoleColor(guild, user.id))
+					.setFooter({ text: "by Falcão ❤️" })
 
-						for (useri of users) {
-							if ((await getMember(guild, useri["_id"])) && rank.length < 10) {
-								rank.push(useri)
-							}
-						}
+				embeds = [embed1, embed2, embed3]
+
+				for (let i = 0; i < rank.length; i++) {
+					if (i <= 9) {
+						a = 0
+					} else if (i <= 19) {
+						a = 1
 					} else {
-						rank = await userSchema.find({}).sort({ vitorias: -1 }).limit(10)
+						a = 2
 					}
-					var embed = new MessageEmbed()
-						.setColor(await getRoleColor(guild, user.id))
-						.setFooter({ text: "by Falcão ❤️" })
-					for (let i = 0; i < rank.length; i++) {
-						try {
-							if (scope === "server") {
-								member = await getMember(guild, rank[i]["_id"])
-								username = member.displayName
-							} else {
-								user = await client.users.fetch(rank[i]["_id"])
-								username = user.username
-							}
-							embed.addField(
-								`${i + 1}º - ${username} ` +
-									instance.messageHandler.get(guild, "VITORIAS").toLowerCase() +
-									":",
-								`${await format(rank[i]["vitorias"])}`,
-								false
-							)
-						} catch {
-							embed.addField(
-								`${i + 1}º - Unknown user ` +
-									instance.messageHandler.get(guild, "VITORIAS").toLowerCase() +
-									":",
-								`${await format(rank[i]["vitorias"])}`,
-								false
-							)
+					try {
+						if (scope === "server") {
+							member = await getMember(guild, rank[i]["_id"])
+							username = member.displayName
+						} else {
+							user = await client.users.fetch(rank[i]["_id"])
+							username = user.username
 						}
+						embeds[a].addField(
+							`${i + 1}º - ${username} ` +
+								instance.messageHandler.get(guild, "VITORIAS").toLowerCase() +
+								":",
+							`${await format(rank[i]["vitorias"])}`,
+							false
+						)
+					} catch {
+						embeds[a].addField(
+							`${i + 1}º - Unknown user ` +
+								instance.messageHandler.get(guild, "VITORIAS").toLowerCase() +
+								":",
+							`${await format(rank[i]["vitorias"])}`,
+							false
+						)
 					}
-					return embed
-				default:
-					return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-						VALUE: args[0],
-					})
+				}
+				if (embed3.fields.length != 0) {
+					embeds = [embed1, embed2, embed3]
+				} else if (embed2.fields.length != 0) {
+					embeds = [embed1, embed2]
+				} else {
+					embeds = [embed1]
+				}
+
+				if (embeds.length > 1) {
+					const paginator = await paginate()
+					paginator.add(...embeds)
+					const ids = [`${Date.now()}__left`, `${Date.now()}__right`]
+					await paginator.setTraverser([
+						new MessageButton()
+							.setEmoji("⬅️")
+							.setCustomId(ids[0])
+							.setStyle("SECONDARY"),
+						new MessageButton()
+							.setEmoji("➡️")
+							.setCustomId(ids[1])
+							.setStyle("SECONDARY"),
+						,
+					])
+					const message = await interaction.editReply(paginator.components())
+					paginator.setMessage(message)
+					message.channel
+						.createMessageComponentCollector()
+						.on("collect", async (i) => {
+							if (i.customId === ids[0]) {
+								await paginator.back()
+								await i.update(paginator.components())
+							} else if (i.customId === ids[1]) {
+								await paginator.next()
+								await i.update(paginator.components())
+							}
+						})
+				} else {
+					await interaction.editReply({ embeds: [embeds[0]] })
+				}
 			}
 		} catch (error) {
-			console.error(`rank: ${error}`)
+			console.error(`leaderboard: ${error}`)
 		}
 	},
 }

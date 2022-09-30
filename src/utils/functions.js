@@ -300,6 +300,49 @@ async function rankPerks(rank, instance, guild) {
 	return perks
 }
 
+async function paginate() {
+	const __embeds = []
+	let cur = 0
+	let traverser
+	let message
+	return {
+		add(...embeds) {
+			__embeds.push(...embeds)
+			return this
+		},
+		setTraverser(tr) {
+			traverser = tr
+		},
+		setMessage(_message) {
+			message = _message
+		},
+		async next() {
+			cur++
+			if (cur >= __embeds.length) {
+				cur = 0
+			}
+		},
+		async back() {
+			cur--
+			if (cur <= -__embeds.length) {
+				cur = 0
+			}
+		},
+		at(num) {
+			return __embeds.at(num)
+		},
+		components() {
+			return {
+				embeds: [__embeds.at(cur)],
+				components: [
+					new MessageActionRow().addComponents(traverser[0], traverser[1]),
+				],
+				fetchReply: true,
+			}
+		},
+	}
+}
+
 module.exports = {
 	createUser,
 	changeDB,
@@ -315,4 +358,5 @@ module.exports = {
 	bankInterest,
 	rankPerks,
 	sendVoteReminders,
+	paginate,
 }
