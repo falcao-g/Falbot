@@ -64,7 +64,7 @@ When all of the dependencies finish installing, you will need to create a `confi
  "poupanca": {
   "last_interest": "1651946730515",
   "interest_time": "86400000",
-  "interest_rate": "0.01"
+  "interest_rate": "0.1"
  },
  "testOnly": true
 }
@@ -97,7 +97,7 @@ config.json file:
 - "poupanca": this defines some things about the bank's interest of the bot
 - - "last_interest": don't touch this, the code uses this to know when was the last interest increase
 - - "interest_time": how much time between interests in milisseconds, default is 24h
-- - "interest_rate": how much % the interest increases, default is 1%
+- - "interest_rate": how much % the interest increases, default is 10%
 - "testOnly": when you are only testing the slash commands put this as true this way you don't have to wait 1 hour for the command to register, it register instantly in the servers you put earlier
 
 ## 🏃‍♂️ Running
