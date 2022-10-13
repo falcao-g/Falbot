@@ -428,8 +428,8 @@
 		"english": "Congratulations! You bought {AMOUNT} lootbox increases :star_struck:"
 	},
 	"COOLDOWNS": {
-		"portugues": "Tempo de espera",
-		"english": "Cooldowns"
+		"portugues": ":stopwatch: Tempo de espera",
+		"english": ":stopwatch: Cooldowns"
 	},
 	"VOTO": {
 		"portugues": "Voto",
@@ -801,6 +801,10 @@
 	"LEADERBOARD_SERVER_TITLE": {
 		"portugues": ":desktop: Classificação do servidor",
 		"english": ":desktop: Server leaderboard"
+	},
+	"SCRATCH": {
+		"portugues": "Raspadinha",
+		"english": "Scratch"
 	},
 	"SCRATCH_TITLE": {
 		"portugues": ":black_joker: Raspadinha",
