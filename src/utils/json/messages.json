@@ -802,6 +802,58 @@
 		"portugues": ":desktop: Classificação do servidor",
 		"english": ":desktop: Server leaderboard"
 	},
+	"SCRATCH_TITLE": {
+		"portugues": ":black_joker: Raspadinha",
+		"english": ":black_joker: Scratch-off ticket"
+	},
+	"SCRATCH_DESCRIPTION": {
+		"portugues": ":question: Aperte o botão correto e ganhe uma **ENORME** recompensa!\n:confetti_ball: Adivinhe corretamente e ganhe até **500.000** falcoins!\n:bulb: Clique abaixo para jogar! As posições são resetadas a cada turno.",
+		"english": ":question: Hit the right button and win a **HUGE** jackpot!\n:confetti_ball: If you guess correctly you could win up to **500.000** falcoins!\n:bulb: Click below to play! Positions are reset each turn."
+	},
+	"SCRATCH_LOSE": {
+		"portugues": ["Droga!", "Aff!", "Ah não!", "Oof!", "Ops!", "Bah!"],
+		"english": ["Ugh!", "Oh no!", "Aw jeez!", "Aw crap!", "Argh!", "Frick!"]
+	},
+	"SCRATCH_LOSE_DESCRIPTION": {
+		"portugues": ":slot_machine: Você não achou o grande prêmio!\n:game_die: Você tem mais **{GUESSES}** tentativas.",
+		"english": ":slot_machine: You didn't hit the jackpot!\n:game_die: You have **{GUESSES}** more guesses."
+	},
+	"SCRATCH_LOSE_DESCRIPTION2": {
+		"portugues": ":slot_machine: Você não achou o grande prêmio e só ganhou **{FALCOINS}** falcoins!\n:game_die: Você tem mais **{GUESSES}** tentativas.",
+		"english": ":slot_machine: You didn't hit the jackpot and only won **{FALCOINS}** falcoins!\n:game_die: You have **{GUESSES}** more guesses."
+	},
+	"SCRATCH_KINDOF": {
+		"portugues": "Quase lá...",
+		"english": "Kind of..."
+	},
+	"SCRATCH_KINDOF_DESCRIPTION": {
+		"portugues": ":slot_machine: Você estava meio perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:game_die: Você tem mais **{GUESSES}** tentativas.",
+		"english": ":slot_machine: You didn't hit the jackpot but you were kinda close, so **{FALCOINS}** falcoins was earned!\n:game_die: You have **{GUESSES}** more guesses."
+	},
+	"SCRATCH_PRETTY": {
+		"portugues": "Muito perto!",
+		"english": "Pretty close!"
+	},
+	"SCRATCH_PRETTY_DESCRIPTION": {
+		"portugues": ":slot_machine: Você estava MUITO perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **8** horas.",
+		"english": ":slot_machine: You didn't hit the jackpot but you were PRETTY close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **8** hour cooldown."
+	},
+	"SCRATCH_SUPER": {
+		"portugues": "EXTREMAMENTE PERTO!",
+		"english": "SO CLOSE!"
+	},
+	"SCRATCH_SUPER_DESCRIPTION": {
+		"portugues": ":slot_machine: Você estava EXTREMAMENTE perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **8** horas.",
+		"english": ":slot_machine: You didn't hit the jackpot but you were SUPER close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **8** hour cooldown."
+	},
+	"SCRATCH_PRIZE": {
+		"portugues": "PARABÉNS!",
+		"english": "CONGRATULATIONS!"
+	},
+	"SCRATCH_PRIZE_DESCRIPTION": {
+		"portugues": ":slot_machine: Você encontrou o grande prêmio e ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **8** horas.",
+		"english": ":slot_machine: You hit the jackpot and won **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **8** hour cooldown."
+	},
 	"1": {
 		"portugues": ":potato: Plebeu",
 		"english": ":potato: Peasent"
