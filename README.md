@@ -16,9 +16,9 @@ Falbot is a economy and user interaction focused bot, with features like:
 
 Use /help to get started, Falbot is updated frequently, if you want to earn huge amounts of money or just have some fun with your friends, this bot is for you
 
-Add him in: https://top.gg/bot/742331813539872798
+Add him in: <https://top.gg/bot/742331813539872798>
 
-Official website: https://falbot.netlify.app/
+Official website: <https://falbot.netlify.app/>
 
 ## 📩 Inviting Falbot to your server
 
@@ -51,7 +51,7 @@ Clone this git repository somewhere in your OS, then open the cloned folder with
 
 When all of the dependencies finish installing, you will need to create a `config.json` file inside the `src` folder and paste this on it:
 
-```
+```json
 {
  "PREFIX": "PREFIX",
  "owners": [
@@ -72,7 +72,7 @@ When all of the dependencies finish installing, you will need to create a `confi
 
 In addition, you will also need to create a .env file outside the `src` folder, where the index.js file is, and paste this on it:
 
-```
+```json
 TOKEN="token"
 MONGODB_URI="mongodb_uri"
 Authorization="topgg-core-authorization"
@@ -86,7 +86,7 @@ Falbot is made to be a really configurable bot:
 
 - "TOKEN": your discord bot token
 - "MONGODB_URI": your mongodb connection uri
-- "Authorization": this is only required if your bot is in top.gg and you plan to use the /vote command, in this case you go to https://top.gg/bot/:yourbotid/webhooks and put the token here, otherwise just ignore this
+- "Authorization": this is only required if your bot is in top.gg and you plan to use the /vote command, in this case you go to <https://top.gg/bot/:yourbotid/webhooks> and put the token here, otherwise just ignore this
 
 config.json file:
 
@@ -95,9 +95,9 @@ config.json file:
 - "someServers": the server or servers id that will be used to test the bot
 - "language": the default language of the bot
 - "poupanca": this defines some things about the bank's interest of the bot
-- - "last_interest": don't touch this, the code uses this to know when was the last interest increase
-- - "interest_time": how much time between interests in milisseconds, default is 24h
-- - "interest_rate": how much % the interest increases, default is 10%
+  - "last_interest": don't touch this, the code uses this to know when was the last interest increase
+  - "interest_time": how much time between interests in milisseconds, default is 24h
+  - "interest_rate": how much % the interest increases, default is 10%
 - "testOnly": when you are only testing the slash commands put this as true this way you don't have to wait 1 hour for the command to register, it register instantly in the servers you put earlier
 
 ## 🏃‍♂️ Running
