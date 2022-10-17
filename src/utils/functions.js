@@ -209,24 +209,22 @@ async function bankInterest() {
 		console.log("poupança!")
 		config["poupanca"]["last_interest"] = Date.now().toString()
 
-		var users = await userSchema.find({})
+		var users = await userSchema.find({
+			banco: { $gt: 0 },
+		})
 
 		for (user of users) {
-			user_db = await userSchema.findById(user._id)
-
-			if (user_db.limite_banco > user_db.banco) {
-				user_db.banco += Math.floor(
-					parseInt(
-						user_db.banco * parseFloat(config["poupanca"]["interest_rate"])
-					)
+			if (user.limite_banco > user.banco) {
+				user.banco += Math.floor(
+					parseInt(user.banco * parseFloat(config["poupanca"]["interest_rate"]))
 				)
 			}
 
-			if (user_db.banco > user_db.limite_banco) {
-				user_db.banco = user_db.limite_banco
+			if (user.banco > user.limite_banco) {
+				user.banco = user.limite_banco
 			}
 
-			user_db.save()
+			user.save()
 		}
 
 		json2 = JSON.stringify(config, null, 1)
@@ -239,18 +237,17 @@ async function bankInterest() {
 
 async function sendVoteReminders(instance, client) {
 	try {
-		var users = await userSchema.find({})
+		var users = await userSchema.find({
+			voteReminder: true,
+		})
 
 		for (user of users) {
-			user_db = await userSchema.findById(user._id)
-
 			//send dm reminder vote if user wants to
 			if (
-				Date.now() - user_db.lastVote > 43200000 &&
-				user_db.voteReminder === true &&
-				user_db.lastReminder <= user_db.lastVote
+				Date.now() - user.lastVote > 43200000 &&
+				user.lastReminder <= user.lastVote
 			) {
-				discordUser = await client.users.fetch(user_db._id)
+				discordUser = await client.users.fetch(user._id)
 				const embed = new MessageEmbed()
 					.setColor("YELLOW")
 					.addField(
@@ -275,8 +272,8 @@ async function sendVoteReminders(instance, client) {
 					components: [row],
 				})
 
-				user_db.lastReminder = Date.now()
-				user_db.save()
+				user.lastReminder = Date.now()
+				user.save()
 			}
 		}
 	} catch (err) {
