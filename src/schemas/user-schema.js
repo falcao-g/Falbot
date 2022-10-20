@@ -56,6 +56,10 @@ const userSchema = mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
+		tickets: {
+			type: Number,
+			default: 0,
+		},
 	},
 	{
 		versionKey: false,

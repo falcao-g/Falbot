@@ -281,6 +281,70 @@ async function sendVoteReminders(instance, client) {
 	}
 }
 
+async function lotteryDraw(instance, client) {
+	var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
+	if (Date.now() > config["lottery"]["drawTime"]) {
+		console.log("loteria!")
+
+		var users = await userSchema.find({
+			tickets: { $gt: 0 },
+		})
+
+		if (users.length > 0) {
+			var numTickets = 0
+			for (user of users) {
+				numTickets += user.tickets
+			}
+
+			var winner
+			while (winner === undefined) {
+				for (user of users) {
+					if (randint(1, numTickets) <= user.tickets) {
+						winner = user
+					}
+				}
+			}
+
+			await changeDB(winner.id, "falcoins", config["lottery"]["prize"])
+
+			winnerUser = await client.users.fetch(winner.id)
+
+			const embed = new MessageEmbed()
+				.setColor("GOLD")
+				.addField(
+					instance.messageHandler.get(winnerUser, "CONGRATULATIONS"),
+					instance.messageHandler.get(winnerUser, "LOTTERY_WIN", {
+						PRIZE: await format(config["lottery"]["prize"]),
+						TICKETS: await format(winner.tickets),
+						TOTAL: await format(numTickets),
+					})
+				)
+				.setFooter({ text: "by Falcão ❤️" })
+
+			await userSchema.updateMany(
+				{
+					tickets: { $gt: 0 },
+				},
+				{
+					tickets: 0,
+				}
+			)
+
+			await winnerUser.send({
+				embeds: [embed],
+			})
+		}
+		config["lottery"]["drawTime"] += 604800000 //next one is next wee
+		config["lottery"]["prize"] = randint(1000000, 2000000)
+
+		json2 = JSON.stringify(config, null, 1)
+
+		fs.writeFileSync("./src/config.json", json2, "utf8", function (err) {
+			if (err) throw err
+		})
+	}
+}
+
 async function rankPerks(rank, instance, guild) {
 	perks = ""
 
@@ -356,4 +420,5 @@ module.exports = {
 	rankPerks,
 	sendVoteReminders,
 	paginate,
+	lotteryDraw,
 }

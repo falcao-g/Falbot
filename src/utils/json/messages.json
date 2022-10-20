@@ -858,6 +858,38 @@
 		"portugues": ":slot_machine: Você encontrou o grande prêmio e ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **8** horas.",
 		"english": ":slot_machine: You hit the jackpot and won **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **8** hour cooldown."
 	},
+	"LOTTERY": {
+		"portugues": ":tickets: Loteria",
+		"english": ":tickets: Lottery"
+	},
+	"PURCHASED": {
+		"portugues": "bilhetes comprados!",
+		"english": "tickets purchased!"
+	},
+	"LOTTERY_COST": {
+		"portugues": ":coin: Isso te custou **{COST} falcoins**",
+		"english": ":coin: This cost you **{COST} falcoins**"
+	},
+	"LOTTERY_POOL": {
+		"portugues": ":moneybag: O prêmio é de **{PRIZE}** falcoins",
+		"english": ":moneybag: There is **{PRIZE}** falcoins in the prize pool."
+	},
+	"LOTTERY_TICKETS": {
+		"portugues": "\n:gem: Você tem **{TICKETS}** bilhetes",
+		"english": "\n:gem: You own **{TICKETS}** tickets"
+	},
+	"LOTTERY_INFO": {
+		"portugues": ":timer: A loteria será sorteada em {TIME}.\n:money_with_wings: Cada bilhete custa 500 falcoins.",
+		"english": ":timer: Lottery will be drawn in {TIME}.\n:money_with_wings: Tickets cost 500 BC each."
+	},
+	"CONGRATULATIONS": {
+		"portugues": "Parabéns! :star_struck:",
+		"english": "Congratulations! :star_struck:"
+	},
+	"LOTTERY_WIN": {
+		"portugues": "Você ganhou {PRIZE} falcoins na loteria!\nVocê tinha {TICKETS}/{TOTAL} dos bilhetes totais.",
+		"english": "You won {PRIZE} falcoins in the lottery!\nYou had {TICKETS}/{TOTAL} of all tickets."
+	},
 	"1": {
 		"portugues": ":potato: Plebeu",
 		"english": ":potato: Peasent"

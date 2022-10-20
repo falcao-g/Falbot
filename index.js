@@ -10,7 +10,11 @@ const intents = new Intents([
 const client = new Client({ intents })
 const WOKCommands = require("wokcommands")
 const path = require("path")
-const { bankInterest, sendVoteReminders } = require("./src/utils/functions.js")
+const {
+	bankInterest,
+	sendVoteReminders,
+	lotteryDraw,
+} = require("./src/utils/functions.js")
 const mongoose = require("mongoose")
 
 client.on("ready", () => {
@@ -47,8 +51,9 @@ client.on("ready", () => {
 	setInterval(() => {
 		client.user.setActivity("/help | arte by: @kinsallum"),
 			bankInterest(),
-			sendVoteReminders(wok, client)
-	}, 1000 * 60 * 15)
+			sendVoteReminders(wok, client),
+			lotteryDraw(wok, client)
+	}, 1000 * 60 * 10)
 })
 
 client.login(TOKEN)
