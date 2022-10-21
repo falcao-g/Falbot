@@ -1,7 +1,7 @@
 const { Intents, Client } = require("discord.js")
 require("dotenv").config()
 const { MONGODB_URI, TOKEN } = process.env
-const { owners, someServers, language, PREFIX } = require("./src/config.json")
+const { owners, someServers, language } = require("./src/config.json")
 const intents = new Intents([
 	"GUILDS",
 	"GUILD_MESSAGES",
@@ -33,9 +33,10 @@ client.on("ready", () => {
 			"command",
 			"requiredrole",
 			"channelonly",
+			"prefix",
 		],
 		mongoUri: MONGODB_URI,
-	}).setDefaultPrefix(PREFIX)
+	})
 
 	wok.on("commandException", (command, error) => {
 		console.log(`Um erro ocorreu no comando "${command.names[0]}"! O erro foi:`)

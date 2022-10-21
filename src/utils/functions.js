@@ -334,7 +334,7 @@ async function lotteryDraw(instance, client) {
 				embeds: [embed],
 			})
 		}
-		config["lottery"]["drawTime"] += 604800000 //next one is next wee
+		config["lottery"]["drawTime"] = Date.now() + 604800000 //next one is next wee
 		config["lottery"]["prize"] = randint(1000000, 2000000)
 
 		json2 = JSON.stringify(config, null, 1)
