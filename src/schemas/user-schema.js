@@ -28,10 +28,6 @@ const userSchema = mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
-		lootbox: {
-			type: Number,
-			default: 1000,
-		},
 		lastVote: {
 			type: Number,
 			default: 0,
@@ -49,10 +45,6 @@ const userSchema = mongoose.Schema(
 			default: false,
 		},
 		lastReminder: {
-			type: Number,
-			default: 0,
-		},
-		lastLootbox: {
 			type: Number,
 			default: 0,
 		},

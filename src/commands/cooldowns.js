@@ -11,7 +11,6 @@ module.exports = {
 	testOnly,
 	callback: async ({ instance, guild, user, member }) => {
 		try {
-			lbCooldown = Date.now() - (await readFile(user.id, "lastLootbox"))
 			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
 			scratchSchema = instance._mongoConnection.models["wokcommands-cooldowns"]
 			scratchCooldown = await scratchSchema.findById(
@@ -22,15 +21,6 @@ module.exports = {
 				.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 				.setFooter({ text: "by Falcão ❤️" })
 				.setTitle(instance.messageHandler.get(guild, "COOLDOWNS"))
-				.addField(
-					":gift: Lootbox",
-					`**${
-						lbCooldown < 43200000
-							? `:red_circle: ${await msToTime(43200000 - lbCooldown)}`
-							: `:green_circle: ${instance.messageHandler.get(guild, "PRONTO")}`
-					}**`,
-					true
-				)
 				.addField(
 					":ballot_box: " + instance.messageHandler.get(guild, "VOTO"),
 					`**${

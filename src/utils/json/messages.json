@@ -247,10 +247,6 @@
 		"portugues": "Chaves",
 		"english": "Keys"
 	},
-	"LOOTBOX": {
-		"portugues": "Parabéns! Você ganhou **{FALCOINS}** falcoins :heart_eyes:",
-		"english": "Congratulations! You won **{FALCOINS}** falcoins :heart_eyes:"
-	},
 	"RESULTADO": {
 		"portugues": "Resultado",
 		"english": "Result"
@@ -391,21 +387,9 @@
 		"portugues": "Pelo custo de 20.000 falcoins você compra uma chave que pode ser usada para abrir uma caixa",
 		"english": "For the cost of 20.000 falcoins you can buy a key that can be used to open a crate"
 	},
-	"ITEM_3": {
-		"portugues": "Item número 3: Aumento da lootbox",
-		"english": "Item number 1: Lootbox increase"
-	},
-	"ITEM_3_DESCRICAO": {
-		"portugues": "Pelo custo de 50.000 falcoins você aumenta seu ganho na lootbox em 1000 falcoins",
-		"english": "For the cost of 50.000 falcoins you can increase your lootbox gain by 1000 falcoins"
-	},
 	"LOJA_USO_2": {
 		"portugues": "Use `?store [numero] [quantidade]` para comprar um item",
 		"english": "Use `?store [number] [quantity]` to buy an item"
-	},
-	"LOJA_ITEM_INVALIDO": {
-		"portugues": "item inválido! :rage:",
-		"english": "invalid item! :rage:"
 	},
 	"LOJA_QUANTIDADE_INVALIDA": {
 		"portugues": "quantidade inválida! coloque um número positivo ou deixe em branco para comprar 1 :face_with_monocle:",
@@ -422,10 +406,6 @@
 	"LOJA_COMPROU_CHAVE": {
 		"portugues": "Parabéns! Você comprou {AMOUNT} chaves :star_struck:",
 		"english": "Congratulations! You bought {AMOUNT} keys :star_struck:"
-	},
-	"LOJA_COMPROU_AUMENTO": {
-		"portugues": "Parabéns! Você comprou {AMOUNT} aumentos da lootbox :star_struck:",
-		"english": "Congratulations! You bought {AMOUNT} lootbox increases :star_struck:"
 	},
 	"COOLDOWNS": {
 		"portugues": ":stopwatch: Tempo de espera",
@@ -549,10 +529,6 @@
 	"RANKUP_CAIXA": {
 		"portugues": "⬆️ *+1 caixa e chave adicionadas ao seu inventário*",
 		"english": "⬆️ *+1 box and key added to your inventory*"
-	},
-	"RANKUP_LOOTBOX": {
-		"portugues": "⬆️ *+1000 falcoins adicionados a lootbox*",
-		"english": "⬆️ *+1000 falcoins added to lootbox*"
 	},
 	"RANKUP_NONE": {
 		"portugues": "*:arrow_up: +1 nada*",
@@ -711,8 +687,8 @@
 		"english": ":money_with_wings: Earning more falcoins"
 	},
 	"HELP_ECONOMY3": {
-		"portugues": "**:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/vote`\n:gift: Resgate sua lootbox a cada 12 horas para um bônus extra com `/lootbox`\n:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/bank`**\n**:stopwatch: Veja quanto tempo até poder executar ações de novo com `/cooldowns`**\n**:busts_in_silhouette: Interaja com outros usuários**\n-Compita com seus amigos com `/horseduel`, `/tictactoe`, `/russianroulette` e `/fight`\n-Se sentindo generoso? Doe dinheiro com `/donation`\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/slot`, `/roulette`, `/horse`, `/snakeeyes` e `/crash`**",
-		"english": "**:ballot_box: Vote every 12 hours to earn falcoins with `/vote`\n:gift: Claim your lootbox every 12 hours for more falcoins with `/lootbox`\n:bank: Deposit your money in the bank and watch as it increases with `/bank`**\n**:stopwatch: See how long until actions can be performed again with `/cooldowns`**\n**:busts_in_silhouette: Interact with another users**\n-Compete with your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`\n-Feeling generous? Donate money with `/donation`\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes` and `/crash`**"
+		"portugues": "**:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/vote`\n:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/bank`**\n**:stopwatch: Veja quanto tempo até poder executar ações de novo com `/cooldowns`**\n**:busts_in_silhouette: Interaja com outros usuários**\n-Compita com seus amigos com `/horseduel`, `/tictactoe`, `/russianroulette` e `/fight`\n-Se sentindo generoso? Doe dinheiro com `/donation`\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/slot`, `/roulette`, `/horse`, `/snakeeyes` e `/crash`**",
+		"english": "**:ballot_box: Vote every 12 hours to earn falcoins with `/vote`\n:bank: Deposit your money in the bank and watch as it increases with `/bank`**\n**:stopwatch: See how long until actions can be performed again with `/cooldowns`**\n**:busts_in_silhouette: Interact with another users**\n-Compete with your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`\n-Feeling generous? Donate money with `/donation`\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes` and `/crash`**"
 	},
 	"PICK_PAGE": {
 		"portugues": "Escolha uma página de ajuda...",
