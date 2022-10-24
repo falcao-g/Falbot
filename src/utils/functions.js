@@ -1,6 +1,7 @@
 const fs = require("fs")
 const userSchema = require("../schemas/user-schema")
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
+const levels = require("../utils/json/levels.json")
 
 async function createUser(id) {
 	try {
@@ -214,14 +215,16 @@ async function bankInterest() {
 		})
 
 		for (user of users) {
-			if (user.limite_banco > user.banco) {
+			var limit = levels[user.rank - 1].bankLimit
+
+			if (limit > user.banco) {
 				user.banco += Math.floor(
 					parseInt(user.banco * parseFloat(config["poupanca"]["interest_rate"]))
 				)
 			}
 
-			if (user.banco > user.limite_banco) {
-				user.banco = user.limite_banco
+			if (user.banco > limit) {
+				user.banco = limit
 			}
 
 			user.save()
@@ -345,18 +348,20 @@ async function lotteryDraw(instance, client) {
 	}
 }
 
-async function rankPerks(rank, instance, guild) {
+async function rankPerks(old_rank, rank, instance, guild) {
 	perks = ""
-
-	if (rank.perks.includes("bank")) {
-		perks += instance.messageHandler.get(guild, "RANKUP_BANK")
-	} else if (rank.perks.includes("caixa")) {
-		perks += instance.messageHandler.get(guild, "RANKUP_CAIXA")
-	} else if (rank.perks.includes("lootbox")) {
-		perks += instance.messageHandler.get(guild, "RANKUP_LOOTBOX")
-	} else if (rank.perks.includes("none")) {
-		perks += instance.messageHandler.get(guild, "RANKUP_NONE")
+	if (old_rank != undefined) {
+		if (old_rank.bankLimit < rank.bankLimit) {
+			perks += instance.messageHandler.get(guild, "RANKUP_BANK", {
+				FALCOINS: await format(rank.bankLimit - old_rank.bankLimit),
+			})
+			perks += "\n"
+		}
 	}
+
+	perks += `${instance.messageHandler.get(guild, "VOTO")}: ${await format(
+		rank.vote
+	)} Falcoins`
 
 	return perks
 }

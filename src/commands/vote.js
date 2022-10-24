@@ -1,9 +1,15 @@
 const { MessageEmbed } = require("discord.js")
 const top = require("top.gg-core")
-const { changeDB, readFile, msToTime } = require("../utils/functions.js")
+const {
+	changeDB,
+	readFile,
+	msToTime,
+	format,
+} = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 require("dotenv").config()
 const { Authorization } = process.env
+const levels = require("../utils/json/levels.json")
 
 module.exports = {
 	category: "Economia",
@@ -16,18 +22,20 @@ module.exports = {
 		try {
 			await interaction.deferReply()
 			const topgg = new top.Client(Authorization)
+			var rank_number = await readFile(user.id, "rank")
+			var reward = levels[rank_number - 1].vote
 
 			if (
 				(await topgg.isVoted(user.id)) &&
 				Date.now() - (await readFile(user.id, "lastVote")) > 43200000
 			) {
 				await changeDB(user.id, "lastVote", Date.now(), true)
-				await changeDB(user.id, "falcoins", 5000)
+				await changeDB(user.id, "falcoins", reward)
 				var embed = new MessageEmbed()
 					.setColor(3066993)
 					.addField(
 						instance.messageHandler.get(guild, "VOCE_GANHOU"),
-						`**5000** falcoins`
+						`**${await format(reward)}** falcoins`
 					)
 					.addField(
 						instance.messageHandler.get(guild, "SALDO_ATUAL"),
@@ -46,6 +54,7 @@ module.exports = {
 							TIME: await msToTime(
 								43200000 - (Date.now() - (await readFile(user.id, "lastVote")))
 							),
+							REWARD: await format(reward),
 						})
 					)
 					.setFooter({ text: "by Falcão ❤️" })
@@ -56,7 +65,9 @@ module.exports = {
 					.setDescription(instance.messageHandler.get(guild, "VOTE_HERE"))
 					.addField(
 						instance.messageHandler.get(guild, "REWARD"),
-						instance.messageHandler.get(guild, "VOTE_FINAL")
+						instance.messageHandler.get(guild, "VOTE_FINAL", {
+							REWARD: await format(reward),
+						})
 					)
 					.setFooter({ text: "by Falcão ❤️" })
 			}

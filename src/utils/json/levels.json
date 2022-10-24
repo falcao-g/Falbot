@@ -1,61 +1,76 @@
 [
 	{
 		"falcoinsToLevelUp": 200,
-		"perks": ["none"]
+		"vote": 5000,
+		"bankLimit": 100000
 	},
 	{
 		"falcoinsToLevelUp": 500,
-		"perks": ["lootbox"]
+		"vote": 5500,
+		"bankLimit": 100000
 	},
 	{
 		"falcoinsToLevelUp": 1000,
-		"perks": ["caixa"]
+		"vote": 6000,
+		"bankLimit": 100000
 	},
 	{
 		"falcoinsToLevelUp": 2600,
-		"perks": ["lootbox"]
+		"vote": 6500,
+		"bankLimit": 100000
 	},
 	{
 		"falcoinsToLevelUp": 5500,
-		"perks": ["bank"]
+		"vote": 7000,
+		"bankLimit": 150000
 	},
 	{
 		"falcoinsToLevelUp": 15000,
-		"perks": ["lootbox"]
+		"vote": 7500,
+		"bankLimit": 150000
 	},
 	{
 		"falcoinsToLevelUp": 22000,
-		"perks": ["bank", "lootbox"]
+		"vote": 8000,
+		"bankLimit": 200000
 	},
 	{
 		"falcoinsToLevelUp": 33000,
-		"perks": ["bank"]
+		"vote": 8500,
+		"bankLimit": 200000
 	},
 	{
 		"falcoinsToLevelUp": 45000,
-		"perks": ["caixa"]
+		"vote": 9000,
+		"bankLimit": 200000
 	},
 	{
 		"falcoinsToLevelUp": 60000,
-		"perks": ["bank", "lootbox"]
+		"vote": 9500,
+		"bankLimit": 200000
 	},
 	{
 		"falcoinsToLevelUp": 80000,
-		"perks": ["lootbox"]
+		"vote": 10000,
+		"bankLimit": 200000
 	},
 	{
 		"falcoinsToLevelUp": 105000,
-		"perks": ["bank", "caixa"]
+		"vote": 10500,
+		"bankLimit": 250000
 	},
 	{
 		"falcoinsToLevelUp": 130000,
-		"perks": ["lootbox"]
+		"vote": 11000,
+		"bankLimit": 250000
 	},
 	{
 		"falcoinsToLevelUp": 160000,
-		"perks": ["bank"]
+		"vote": 11500,
+		"bankLimit": 250000
 	},
 	{
-		"perks": ["bank", "lootbox"]
+		"vote": 12000,
+		"bankLimit": 300000
 	}
 ]

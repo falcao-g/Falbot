@@ -499,8 +499,8 @@
 		"english": "You need more **{FALCOINS} falcoins** to increase your rank!"
 	},
 	"RANKUP_BANK": {
-		"portugues": "⬆️ *+100.000 falcoins de limite no banco*",
-		"english": "⬆️ *+100.000 falcoins of limit in the bank*"
+		"portugues": "⬆️ *+{FALCOINS} falcoins de limite no banco*",
+		"english": "⬆️ *+{FALCOINS} falcoins of limit in the bank*"
 	},
 	"RANKUP_SUCESS": {
 		"portugues": "Você subiu de rank e agora é **{RANK}**!\nIsso te custou **{FALCOINS} falcoins**",
@@ -525,14 +525,6 @@
 	"BANK_OVER_LIMIT": {
 		"portugues": ":raised_hand: Você não pode depositar mais falcoins no banco, pois está acima do seu limite de depósito",
 		"english": ":raised_hand: You can't deposit more falcoins in the bank, because you are over your deposit limit"
-	},
-	"RANKUP_CAIXA": {
-		"portugues": "⬆️ *+1 caixa e chave adicionadas ao seu inventário*",
-		"english": "⬆️ *+1 box and key added to your inventory*"
-	},
-	"RANKUP_NONE": {
-		"portugues": "*:arrow_up: +1 nada*",
-		"english": "*:arrow_up: +1 nothing*"
 	},
 	"ALL_RANKS": {
 		"portugues": ":sparkles: Todos os ranks",
@@ -567,8 +559,8 @@
 		"english": "You already collected your reward today"
 	},
 	"ALREADY_COLLECTED2": {
-		"portugues": "Recompensa: **5000** falcoins\nVocê pode coletar de novo em **{TIME}**",
-		"english": "Reward: **5000** falcoins\nYou can collect again in **{TIME}**"
+		"portugues": "Recompensa: **{REWARD}** falcoins\nVocê pode coletar de novo em **{TIME}**",
+		"english": "Reward: **{REWARD}** falcoins\nYou can collect again in **{TIME}**"
 	},
 	"VOTE_FIRST": {
 		"portugues": "Você precisa votar primeiro para conseguir sua recompensa",
@@ -583,8 +575,8 @@
 		"english": "Reward"
 	},
 	"VOTE_FINAL": {
-		"portugues": "**5000** falcoins\nUse esse comando de novo após ter votado no bot",
-		"english": "**5000** falcoins\nUse this command again after you voted in the bot"
+		"portugues": "**{REWARD}** falcoins\nUse esse comando de novo após ter votado no bot",
+		"english": "**{REWARD}** falcoins\nUse this command again after you voted in the bot"
 	},
 	"HELP_RANK": {
 		"portugues": ":arrow_double_up: Gaste falcoins para subir de rank",

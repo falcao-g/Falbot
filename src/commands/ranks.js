@@ -53,17 +53,7 @@ module.exports = {
 						await changeDB(user.id, "falcoins", -rank.falcoinsToLevelUp)
 						await changeDB(user.id, "rank", rank_number + 1, true)
 
-						//give the perks to the user
-						if (new_rank.perks.includes("bank")) {
-							await changeDB(user.id, "limite_banco", 100000)
-						} else if (new_rank.perks.includes("caixa")) {
-							await changeDB(user.id, "caixas", 1)
-							await changeDB(user.id, "chaves", 1)
-						} else if (new_rank.perks.includes("lootbox")) {
-							await changeDB(user.id, "lootbox", 1000)
-						}
-
-						perks = await rankPerks(new_rank, instance, guild)
+						perks = await rankPerks(rank, new_rank, instance, guild)
 
 						var embed = new MessageEmbed().setColor("AQUA").addFields(
 							{
@@ -108,7 +98,12 @@ module.exports = {
 							levels[rank_number - 1].falcoinsToLevelUp +
 							" Falcoins" +
 							instance.messageHandler.get(guild, "CURRENT_RANK"),
-						await rankPerks(levels[rank_number - 1], instance, guild),
+						await rankPerks(
+							levels[rank_number - 2],
+							levels[rank_number - 1],
+							instance,
+							guild
+						),
 						false
 					)
 
@@ -121,7 +116,12 @@ module.exports = {
 								) +
 									" - " +
 									instance.messageHandler.get(guild, "MAX_RANK2"),
-								await rankPerks(levels[rank_number + i], instance, guild),
+								await rankPerks(
+									levels[i === 0 ? rank_number - 1 : rank_number],
+									levels[rank_number + i],
+									instance,
+									guild
+								),
 								false
 							)
 						} else {
@@ -133,7 +133,12 @@ module.exports = {
 									" - " +
 									levels[rank_number + i].falcoinsToLevelUp +
 									" Falcoins",
-								await rankPerks(levels[rank_number + i], instance, guild),
+								await rankPerks(
+									levels[i === 0 ? rank_number - 1 : rank_number],
+									levels[rank_number + i],
+									instance,
+									guild
+								),
 								false
 							)
 						}
@@ -162,10 +167,6 @@ module.exports = {
 					embed.addField(instance.messageHandler.get(guild, "ALL_RANKS"), ranks)
 					embed.setFooter({ text: "by Falcão ❤️" })
 					return embed
-				default:
-					return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-						VALUE: type,
-					})
 			}
 		} catch (err) {
 			console.error(`ranks: ${err}`)
