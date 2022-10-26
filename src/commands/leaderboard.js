@@ -116,17 +116,15 @@ module.exports = {
 							user = await client.users.fetch(rank[i]["_id"])
 							username = user.username
 						}
-						embeds[a].addField(
-							`${i + 1}º - ${username} falcoins:`,
-							`${await format(rank[i]["falcoins"])}`,
-							false
-						)
+						embeds[a].addFields({
+							name: `${i + 1}º - ${username} falcoins:`,
+							value: `${await format(rank[i]["falcoins"])}`,
+						})
 					} catch {
-						embeds[a].addField(
-							`${i + 1}º - Unknown user falcoins:`,
-							`${await format(rank[i]["falcoins"])}`,
-							false
-						)
+						embeds[a].addFields({
+							name: `${i + 1}º - Unknown user falcoins:`,
+							value: `${await format(rank[i]["falcoins"])}`,
+						})
 					}
 				}
 				if (embed3.fields.length != 0) {
@@ -239,17 +237,15 @@ module.exports = {
 							user = await client.users.fetch(rank[i]["_id"])
 							username = user.username
 						}
-						embeds[a].addField(
-							`${i + 1}º - ${username} rank:`,
-							`${instance.messageHandler.get(guild, rank[i]["rank"])}`,
-							false
-						)
+						embeds[a].addFields({
+							name: `${i + 1}º - ${username} rank:`,
+							value: `${instance.messageHandler.get(guild, rank[i]["rank"])}`,
+						})
 					} catch {
-						embeds[a].addField(
-							`${i + 1}º - Unknown user rank:`,
-							`${instance.messageHandler.get(guild, rank[i]["rank"])}`,
-							false
-						)
+						embeds[a].addFields({
+							name: `${i + 1}º - Unknown user rank:`,
+							value: `${instance.messageHandler.get(guild, rank[i]["rank"])}`,
+						})
 					}
 				}
 				if (embed3.fields.length != 0) {
@@ -362,21 +358,21 @@ module.exports = {
 							user = await client.users.fetch(rank[i]["_id"])
 							username = user.username
 						}
-						embeds[a].addField(
-							`${i + 1}º - ${username} ` +
+						embeds[a].addFields({
+							name:
+								`${i + 1}º - ${username} ` +
 								instance.messageHandler.get(guild, "VITORIAS").toLowerCase() +
 								":",
-							`${await format(rank[i]["vitorias"])}`,
-							false
-						)
+							value: `${await format(rank[i]["vitorias"])}`,
+						})
 					} catch {
-						embeds[a].addField(
-							`${i + 1}º - Unknown user ` +
+						embeds[a].addFields({
+							name:
+								`${i + 1}º - Unknown user ` +
 								instance.messageHandler.get(guild, "VITORIAS").toLowerCase() +
 								":",
-							`${await format(rank[i]["vitorias"])}`,
-							false
-						)
+							value: `${await format(rank[i]["vitorias"])}`,
+						})
 					}
 				}
 				if (embed3.fields.length != 0) {

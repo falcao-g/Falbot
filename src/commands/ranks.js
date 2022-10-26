@@ -91,56 +91,55 @@ module.exports = {
 					var embed = new MessageEmbed()
 						.setColor("DARK_PURPLE")
 						.setTitle(instance.messageHandler.get(guild, "UPCOMING_RANKS"))
-
-					embed.addField(
-						instance.messageHandler.get(guild, String(rank_number)) +
-							" - " +
-							levels[rank_number - 1].falcoinsToLevelUp +
-							" Falcoins" +
-							instance.messageHandler.get(guild, "CURRENT_RANK"),
-						await rankPerks(
-							levels[rank_number - 2],
-							levels[rank_number - 1],
-							instance,
-							guild
-						),
-						false
-					)
+						.addFields({
+							name:
+								instance.messageHandler.get(guild, String(rank_number)) +
+								" - " +
+								levels[rank_number - 1].falcoinsToLevelUp +
+								" Falcoins" +
+								instance.messageHandler.get(guild, "CURRENT_RANK"),
+							value: await rankPerks(
+								levels[rank_number - 2],
+								levels[rank_number - 1],
+								instance,
+								guild
+							),
+						})
 
 					for (var i = 0; i < quantity; i++) {
 						if (levels[rank_number + i].falcoinsToLevelUp === undefined) {
-							embed.addField(
-								instance.messageHandler.get(
-									guild,
-									String(rank_number + i + 1)
-								) +
+							embed.addFields({
+								name:
+									instance.messageHandler.get(
+										guild,
+										String(rank_number + i + 1)
+									) +
 									" - " +
 									instance.messageHandler.get(guild, "MAX_RANK2"),
-								await rankPerks(
+								value: await rankPerks(
 									levels[i === 0 ? rank_number - 1 : rank_number],
 									levels[rank_number + i],
 									instance,
 									guild
 								),
-								false
-							)
+							})
 						} else {
-							embed.addField(
-								instance.messageHandler.get(
-									guild,
-									String(rank_number + i + 1)
-								) +
+							embed.addFields({
+								name:
+									instance.messageHandler.get(
+										guild,
+										String(rank_number + i + 1)
+									) +
 									" - " +
 									levels[rank_number + i].falcoinsToLevelUp +
 									" Falcoins",
-								await rankPerks(
+								value: await rankPerks(
 									levels[i === 0 ? rank_number - 1 : rank_number],
 									levels[rank_number + i],
 									instance,
 									guild
 								),
-								false
-							)
+							})
 						}
 					}
 
@@ -163,9 +162,12 @@ module.exports = {
 							)}** - ${levels[i].falcoinsToLevelUp} falcoins\n`
 						}
 					}
-
-					embed.addField(instance.messageHandler.get(guild, "ALL_RANKS"), ranks)
-					embed.setFooter({ text: "by Falcão ❤️" })
+					embed
+						.addFields({
+							name: instance.messageHandler.get(guild, "ALL_RANKS"),
+							value: ranks,
+						})
+						.setFooter({ text: "by Falcão ❤️" })
 					return embed
 			}
 		} catch (err) {

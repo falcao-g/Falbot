@@ -39,10 +39,10 @@ module.exports = {
 			var embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
 				.setFooter({ text: "by Falcão ❤️" })
-				.addField(
-					instance.messageHandler.get(guild, "SCRATCH_TITLE"),
-					instance.messageHandler.get(guild, "SCRATCH_DESCRIPTION")
-				)
+				.addFields({
+					name: instance.messageHandler.get(guild, "SCRATCH_TITLE"),
+					value: instance.messageHandler.get(guild, "SCRATCH_DESCRIPTION"),
+				})
 
 			answer = await interaction.reply({
 				embeds: [embed],
@@ -71,91 +71,83 @@ module.exports = {
 					//jackpot
 					amount = randint(400000, 500000)
 					await changeDB(user.id, "falcoins", amount)
-					embed
-						.setColor("GOLD")
-						.addField(
-							instance.messageHandler.get(guild, "SCRATCH_PRIZE"),
-							`${instance.messageHandler.get(
-								guild,
-								"SCRATCH_PRIZE_DESCRIPTION",
-								{ FALCOINS: await format(amount) }
-							)}`
-						)
+					embed.setColor("GOLD").addFields({
+						name: instance.messageHandler.get(guild, "SCRATCH_PRIZE"),
+						value: `${instance.messageHandler.get(
+							guild,
+							"SCRATCH_PRIZE_DESCRIPTION",
+							{ FALCOINS: await format(amount) }
+						)}`,
+					})
 					cont = 0
 					collector.stop()
 				} else if (luck === 24) {
 					//super close
 					amount = randint(200000, 400000)
 					await changeDB(user.id, "falcoins", amount)
-					embed
-						.setColor(3066993)
-						.addField(
-							instance.messageHandler.get(guild, "SCRATCH_SUPER"),
-							`${instance.messageHandler.get(
-								guild,
-								"SCRATCH_SUPER_DESCRIPTION",
-								{ FALCOINS: await format(amount) }
-							)}`
-						)
+					embed.setColor(3066993).addFields({
+						name: instance.messageHandler.get(guild, "SCRATCH_SUPER"),
+						value: `${instance.messageHandler.get(
+							guild,
+							"SCRATCH_SUPER_DESCRIPTION",
+							{ FALCOINS: await format(amount) }
+						)}`,
+					})
 					cont = 0
 					collector.stop()
 				} else if (luck === 23 || luck === 22) {
 					//pretty close
 					amount = randint(100000, 200000)
 					await changeDB(user.id, "falcoins", amount)
-					embed
-						.setColor(3066993)
-						.addField(
-							instance.messageHandler.get(guild, "SCRATCH_PRETTY"),
-							`${instance.messageHandler.get(
-								guild,
-								"SCRATCH_PRETTY_DESCRIPTION",
-								{ FALCOINS: await format(amount) }
-							)}`
-						)
+					embed.setColor(3066993).addFields({
+						name: instance.messageHandler.get(guild, "SCRATCH_PRETTY"),
+						value: `${instance.messageHandler.get(
+							guild,
+							"SCRATCH_PRETTY_DESCRIPTION",
+							{ FALCOINS: await format(amount) }
+						)}`,
+					})
 					cont = 0
 					collector.stop()
 				} else if (luck === 21 || luck === 20) {
 					//kinda close
 					amount = randint(50000, 100000)
 					await changeDB(user.id, "falcoins", amount)
-					embed
-						.setColor(3066993)
-						.addField(
-							instance.messageHandler.get(guild, "SCRATCH_KINDOF"),
-							`${instance.messageHandler.get(
-								guild,
-								"SCRATCH_KINDOF_DESCRIPTION",
-								{ FALCOINS: await format(amount), GUESSES: cont }
-							)}`
-						)
+					embed.setColor(3066993).addFields({
+						name: instance.messageHandler.get(guild, "SCRATCH_KINDOF"),
+						value: `${instance.messageHandler.get(
+							guild,
+							"SCRATCH_KINDOF_DESCRIPTION",
+							{ FALCOINS: await format(amount), GUESSES: cont }
+						)}`,
+					})
 				} else {
 					//not found but still a chance to win some money
 					embed.setColor(15158332)
 					if (randint(1, 100) >= 80) {
 						amount = randint(25000, 50000)
 						await changeDB(user.id, "falcoins", amount)
-						embed.addField(
-							"Meh...",
-							`${instance.messageHandler.get(
+						embed.addFields({
+							name: "Meh...",
+							value: `${instance.messageHandler.get(
 								guild,
 								"SCRATCH_LOSE_DESCRIPTION2",
 								{ FALCOINS: await format(amount), GUESSES: cont }
-							)}`
-						)
+							)}`,
+						})
 					} else {
 						var lostMessages = instance.messageHandler.get(
 							guild,
 							"SCRATCH_LOSE"
 						)
-						embed.addField(
-							lostMessages[randint(0, 5)],
-							`${instance.messageHandler.get(
+						embed.addFields({
+							name: lostMessages[randint(0, 5)],
+							value: `${instance.messageHandler.get(
 								guild,
 								"SCRATCH_LOSE_DESCRIPTION",
 								{ GUESSES: cont }
-							)}`
-						)
+							)}`,
+						})
 					}
 				}
 

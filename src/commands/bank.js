@@ -121,16 +121,21 @@ module.exports = {
 								name: member.displayName,
 								iconURL: user.avatarURL(),
 							})
-							.addField(
-								instance.messageHandler.get(guild, "SALDO_ATUAL"),
-								`${await readFile(user.id, "falcoins", true)} falcoins`,
-								(inline = false)
-							)
-							.addField(
-								instance.messageHandler.get(guild, "BANCO"),
-								instance.messageHandler.get(guild, "BANCO_SALDO", {
-									VALUE: await readFile(user.id, "banco", true),
-								})
+							.addFields(
+								{
+									name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+									value: `${await readFile(
+										user.id,
+										"falcoins",
+										true
+									)} falcoins`,
+								},
+								{
+									name: instance.messageHandler.get(guild, "BANCO"),
+									value: instance.messageHandler.get(guild, "BANCO_SALDO", {
+										VALUE: await readFile(user.id, "banco", true),
+									}),
+								}
 							)
 							.setFooter({ text: "by Falcão ❤️" })
 
@@ -161,16 +166,21 @@ module.exports = {
 								name: member.displayName,
 								iconURL: user.avatarURL(),
 							})
-							.addField(
-								instance.messageHandler.get(guild, "SALDO_ATUAL"),
-								`${await readFile(user.id, "falcoins", true)} falcoins`,
-								(inline = false)
-							)
-							.addField(
-								instance.messageHandler.get(guild, "BANCO"),
-								instance.messageHandler.get(guild, "BANCO_SALDO", {
-									VALUE: await readFile(user.id, "banco", true),
-								})
+							.addFields(
+								{
+									name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+									value: `${await readFile(
+										user.id,
+										"falcoins",
+										true
+									)} falcoins`,
+								},
+								{
+									name: instance.messageHandler.get(guild, "BANCO"),
+									value: instance.messageHandler.get(guild, "BANCO_SALDO", {
+										VALUE: await readFile(user.id, "banco", true),
+									}),
+								}
 							)
 							.setFooter({ text: "by Falcão ❤️" })
 

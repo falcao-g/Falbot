@@ -53,14 +53,14 @@ module.exports = {
 				changeDB(user.id, "falcoins", falcoins)
 				const embed = new MessageEmbed()
 					.setColor(await getRoleColor(guild, user.id))
-					.addField(
-						instance.messageHandler.get(guild, "CAIXA_TITULO", {
+					.addFields({
+						name: instance.messageHandler.get(guild, "CAIXA_TITULO", {
 							QUANTITY: args[0],
 						}),
-						`:key: ${chaves}\n:coin: ${await format(
+						value: `:key: ${chaves}\n:coin: ${await format(
 							falcoins
-						)} \n:gift: ${caixas}`
-					)
+						)} \n:gift: ${caixas}`,
+					})
 					.setFooter({ text: "by Falcão ❤️" })
 				return embed
 			} else {

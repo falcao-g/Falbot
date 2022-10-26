@@ -41,43 +41,43 @@ module.exports = {
 				.setColor("DARK_PURPLE")
 				.setFooter({ text: "by Falcão ❤️" })
 			if (page === "introduction") {
-				embed.addField(
-					instance.messageHandler.get(guild, "WELCOME"),
-					instance.messageHandler.get(guild, "HELP_INTRODUCTION2")
-				)
+				embed.addFields({
+					name: instance.messageHandler.get(guild, "WELCOME"),
+					value: instance.messageHandler.get(guild, "HELP_INTRODUCTION2"),
+				})
 			} else if (page === "allcommands") {
 				embed.setTitle(instance.messageHandler.get(guild, "ALL_COMMANDS"))
-				embed.addField(
-					instance.messageHandler.get(guild, "TOO_MANY"),
-					instance.messageHandler.get(guild, "LINK_COMMANDS")
-				)
+				embed.addFields({
+					name: instance.messageHandler.get(guild, "TOO_MANY"),
+					value: instance.messageHandler.get(guild, "LINK_COMMANDS"),
+				})
 			} else if (page === "ranks") {
 				embed.setTitle(":magic_wand: Ranks")
-				embed.addField(
-					instance.messageHandler.get(guild, "HELP_RANK"),
-					instance.messageHandler.get(guild, "HELP_RANK2")
-				)
+				embed.addFields({
+					name: instance.messageHandler.get(guild, "HELP_RANK"),
+					value: instance.messageHandler.get(guild, "HELP_RANK2"),
+				})
 			} else if (page === "economy") {
-				embed.addField(
-					instance.messageHandler.get(guild, "HELP_ECONOMY2"),
-					instance.messageHandler.get(guild, "HELP_ECONOMY3")
-				)
+				embed.addFields({
+					name: instance.messageHandler.get(guild, "HELP_ECONOMY2"),
+					value: instance.messageHandler.get(guild, "HELP_ECONOMY3"),
+				})
 			} else if (page === "fun") {
-				embed.addField(
-					instance.messageHandler.get(guild, "HELP_FUN"),
-					instance.messageHandler.get(guild, "HELP_FUN2")
-				)
+				embed.addFields({
+					name: instance.messageHandler.get(guild, "HELP_FUN"),
+					value: instance.messageHandler.get(guild, "HELP_FUN2"),
+				})
 			} else if (page === "language") {
 				embed.setTitle(instance.messageHandler.get(guild, "HELP_LANGUAGE"))
-				embed.addField(
-					instance.messageHandler.get(guild, "HELP_LANGUAGE2"),
-					instance.messageHandler.get(guild, "HELP_LANGUAGE3")
-				)
+				embed.addFields({
+					name: instance.messageHandler.get(guild, "HELP_LANGUAGE2"),
+					value: instance.messageHandler.get(guild, "HELP_LANGUAGE3"),
+				})
 			} else if (page === "utils") {
-				embed.addField(
-					instance.messageHandler.get(guild, "HELP_UTILS"),
-					instance.messageHandler.get(guild, "HELP_UTILS2")
-				)
+				embed.addFields({
+					name: instance.messageHandler.get(guild, "HELP_UTILS"),
+					value: instance.messageHandler.get(guild, "HELP_UTILS2"),
+				})
 			} else {
 				embed.setTitle(instance.messageHandler.get(guild, "FALBOT_WELCOME"))
 				embed.addFields(

@@ -244,11 +244,16 @@ async function sendVoteReminders(instance, client) {
 				discordUser = await client.users.fetch(user._id)
 				const embed = new MessageEmbed()
 					.setColor("YELLOW")
-					.addField(
-						instance.messageHandler.get(discordUser, "VOTE_REMINDER"),
-						instance.messageHandler.get(discordUser, "REWARD_AFTER")
+					.addFields(
+						{
+							name: instance.messageHandler.get(discordUser, "VOTE_REMINDER"),
+							value: instance.messageHandler.get(discordUser, "REWARD_AFTER"),
+						},
+						{
+							name: "Link",
+							value: "https://top.gg/bot/742331813539872798/vote",
+						}
 					)
-					.addField("Link", "https://top.gg/bot/742331813539872798/vote", false)
 					.setFooter({ text: "by Falcão ❤️" })
 
 				const row = new MessageActionRow().addComponents(
@@ -305,14 +310,14 @@ async function lotteryDraw(instance, client) {
 
 			const embed = new MessageEmbed()
 				.setColor("GOLD")
-				.addField(
-					instance.messageHandler.get(winnerUser, "CONGRATULATIONS"),
-					instance.messageHandler.get(winnerUser, "LOTTERY_WIN", {
+				.addFields({
+					name: instance.messageHandler.get(winnerUser, "CONGRATULATIONS"),
+					value: instance.messageHandler.get(winnerUser, "LOTTERY_WIN", {
 						PRIZE: await format(config["lottery"]["prize"]),
 						TICKETS: await format(winner.tickets),
 						TOTAL: await format(numTickets),
-					})
-				)
+					}),
+				})
 				.setFooter({ text: "by Falcão ❤️" })
 
 			await userSchema.updateMany(

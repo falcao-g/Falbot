@@ -41,13 +41,14 @@ module.exports = {
 				) {
 					var embed = new MessageEmbed()
 						.setColor("GOLD")
-						.addField(
-							`:tickets: ${amount} ` +
+						.addFields({
+							name:
+								`:tickets: ${amount} ` +
 								instance.messageHandler.get(guild, "PURCHASED"),
-							instance.messageHandler.get(guild, "LOTTERY_COST", {
+							value: instance.messageHandler.get(guild, "LOTTERY_COST", {
 								COST: amount * 500,
-							})
-						)
+							}),
+						})
 						.setFooter({ text: "by Falcão ❤️" })
 
 					await changeDB(user.id, "falcoins", -(amount * 500))

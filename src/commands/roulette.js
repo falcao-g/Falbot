@@ -187,12 +187,15 @@ module.exports = {
 									name: instance.messageHandler.get(guild, "GANHOS"),
 									value: `${await format(profit)} falcoins`,
 									inline: true,
+								},
+								{
+									name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+									value: `${await readFile(
+										user.id,
+										"falcoins",
+										true
+									)} falcoins`,
 								}
-							)
-							.addField(
-								instance.messageHandler.get(guild, "SALDO_ATUAL"),
-								`${await readFile(user.id, "falcoins", true)} falcoins`,
-								false
 							)
 					} else {
 						var embed2 = new MessageEmbed()
@@ -216,12 +219,15 @@ module.exports = {
 									name: instance.messageHandler.get(guild, "PERDAS"),
 									value: `${await format(bet)} falcoins`,
 									inline: true,
+								},
+								{
+									name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+									value: `${await readFile(
+										user.id,
+										"falcoins",
+										true
+									)} falcoins`,
 								}
-							)
-							.addField(
-								instance.messageHandler.get(guild, "SALDO_ATUAL"),
-								`${await readFile(user.id, "falcoins", true)} falcoins`,
-								false
 							)
 					}
 					embed2.setFooter({ text: "by Falcão ❤️" })
