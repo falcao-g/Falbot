@@ -59,18 +59,6 @@
 		"english": "Could not find command {COMMAND}!",
 		"portugues": "Não foi possível encontrar o comando {COMMAND}!"
 	},
-	"CURRENT_PREFIX": {
-		"english": "The current prefix is {PREFIX}.",
-		"portugues": "O prefixo atual é {PREFIX}."
-	},
-	"SET_PREFIX": {
-		"english": "Set the command prefix to {PREFIX}.",
-		"portugues": "Prefixo definido para {PREFIX}."
-	},
-	"CANNOT_SET_PREFIX_IN_DMS": {
-		"english": "You cannot set a prefix in a private message.",
-		"portugues": "Você não pode definir um prefixo em uma mensagem privada"
-	},
 	"CANNOT_CHANGE_REQUIRED_ROLES_IN_DMS": {
 		"english": "You cannot change required roles in private messages.",
 		"portugues": "Você não pode alterar os cargos necessários em mensagens privadas"
@@ -603,16 +591,16 @@
 		"english": ":tada: Want to have fun without worrying abou falcoins?"
 	},
 	"HELP_FUN2": {
-		"portugues": "-Preveja seu futuro com `/8ball`\n-Mande outro usuário (ou a si mesmo) para a horny jail com `/bonk`\n-Peça para o falbot procurar imagens no google pra você com `/image`\n-Jogue cara ou coroa com `/coinflip`\n-Faça uma pequena enquete com `/poll`",
-		"english": "-Forecast your future with `/8ball`\n-Send you or another user to the horny jail with `/bonk`\n-Ask falbot to search images on google for you with `/image`\n-Flip a coin with `/coinflip`\n-Do a pretty little poll with `/poll`"
+		"portugues": "-Preveja seu futuro com `/8ball`\n-Mande outro usuário (ou a si mesmo) para a horny jail com `/bonk`\n-Peça para o falbot procurar imagens no google pra você com `/image`\n-Jogue cara ou coroa com `/coinflip`",
+		"english": "-Forecast your future with `/8ball`\n-Send you or another user to the horny jail with `/bonk`\n-Ask falbot to search images on google for you with `/image`\n-Flip a coin with `/coinflip`"
 	},
 	"HELP_UTILS": {
 		"portugues": ":pencil: Falbot também pode ser útil no seu dia-a-dia",
 		"english": ":pencil: Falbot can also be useful in your daily life"
 	},
 	"HELP_UTILS2": {
-		"portugues": "-Mude o prefixo do falbot com `/prefix`\n-Deixe o falbot resolver expressões matemáticas para você com `/math`\n-Role dados usando `/roll`",
-		"english": "-Change falbot's prefix with `/prefix`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`"
+		"portugues": "-Faça uma pequena enquete com `/poll`\n-Deixe o falbot resolver expressões matemáticas para você com `/math`\n-Role dados usando `/roll`",
+		"english": "-Do a pretty little poll with `/poll`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`"
 	},
 	"INTRODUCTION": {
 		"portugues": "Introdução",
