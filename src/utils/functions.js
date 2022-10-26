@@ -53,12 +53,6 @@ async function msToTime(ms) {
 	let time = ""
 
 	let n = 0
-	if (ms >= 31536000000) {
-		n = Math.floor(ms / 31536000000)
-		time = `${n}y `
-		ms -= n * 31536000000
-	}
-
 	if (ms >= 2592000000) {
 		n = Math.floor(ms / 2592000000)
 		time += `${n}mo `
@@ -88,9 +82,6 @@ async function msToTime(ms) {
 		time += `${n}m `
 		ms -= n * 60000
 	}
-
-	n = Math.ceil(ms / 1000)
-	time += n === 0 ? "" : `${n}s`
 
 	return time.trimEnd()
 }

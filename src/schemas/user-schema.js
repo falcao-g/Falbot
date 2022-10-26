@@ -36,10 +36,6 @@ const userSchema = mongoose.Schema(
 			type: Number,
 			default: 1,
 		},
-		limite_banco: {
-			type: Number,
-			default: 100000,
-		},
 		voteReminder: {
 			type: Boolean,
 			default: false,
