@@ -858,6 +858,14 @@
 		"portugues": "Você ganhou {PRIZE} falcoins na loteria!\nVocê tinha {TICKETS}/{TOTAL} dos bilhetes totais.",
 		"english": "You won {PRIZE} falcoins in the lottery!\nYou had {TICKETS}/{TOTAL} of all tickets."
 	},
+	"EVENTS": {
+		"portugues": "Eventos",
+		"english": "Events"
+	},
+	"LOTTERY_DRAWN": {
+		"portugues": "Sorteada em {TIME}.",
+		"english": "Drawn in {TIME}."
+	},
 	"1": {
 		"portugues": ":potato: Plebeu",
 		"english": ":potato: Peasent"
