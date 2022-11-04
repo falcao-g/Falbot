@@ -319,10 +319,6 @@
 		"portugues": "Você derrotou {USER} em uma luta",
 		"english": "You defeated {USER} in a fight"
 	},
-	"ATACA": {
-		"portugues": "ataca",
-		"english": "attacks"
-	},
 	"SE_PROTEGE": {
 		"portugues": "se protege",
 		"english": "protects themselves"
@@ -853,6 +849,18 @@
 	"LOTTERY_DRAWN": {
 		"portugues": "Sorteada em {TIME}.",
 		"english": "Drawn in {TIME}."
+	},
+	"TURN": {
+		"portugues": "Turno de {USER}",
+		"english": "{USER}'s turn"
+	},
+	"TENTOU_ATACAR": {
+		"portugues": "tenta atacar mas o inimigo estava protegido",
+		"english": "tried to attack but the enemy was protected"
+	},
+	"NOCAUTEADO": {
+		"portugues": "está inconsciente e não pode fazer nada",
+		"english": "is unconscious and can't do anything"
 	},
 	"1": {
 		"portugues": ":potato: Plebeu",
