@@ -55,14 +55,8 @@ async function msToTime(ms) {
 	let n = 0
 	if (ms >= 2592000000) {
 		n = Math.floor(ms / 2592000000)
-		time += `${n}mo `
+		time += `${n}m `
 		ms -= n * 2592000000
-	}
-
-	if (ms >= 604800000) {
-		n = Math.floor(ms / 604800000)
-		time += `${n}w `
-		ms -= n * 604800000
 	}
 
 	if (ms >= 86400000) {
@@ -333,7 +327,7 @@ async function lotteryDraw(instance, client) {
 				embeds: [embed],
 			})
 		}
-		config["lottery"]["drawTime"] = Date.now() + 604800000 //next one is next wee
+		config["lottery"]["drawTime"] = Date.now() + 604800000 //next one is next week
 		config["lottery"]["prize"] = randint(1000000, 2000000)
 
 		json2 = JSON.stringify(config, null, 1)

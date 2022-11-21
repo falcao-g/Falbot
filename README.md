@@ -53,18 +53,17 @@ When all of the dependencies finish installing, you will need to create a `confi
 
 ```json
 {
- "PREFIX": "PREFIX",
- "owners": [
-  "OWNERS_ID"
- ],
- "someServers": [
-  "SERVERS_ID"
- ],
+ "owners": ["OWNERS_ID"],
+ "someServers": ["SERVERS_ID"],
  "language": "portugues",
  "poupanca": {
-  "last_interest": "1651946730515",
+  "last_interest": "0",
   "interest_time": "86400000",
   "interest_rate": "0.1"
+ },
+ "lottery": {
+  "prize": 1415370,
+  "drawTime": 0
  },
  "testOnly": true
 }
@@ -90,7 +89,6 @@ Falbot is made to be a really configurable bot:
 
 config.json file:
 
-- "PREFIX": by default "?" is the default prefix, but you can change it here
 - "owners": put here your discord id and other people that will be involved in development, this will be important to manage slash commands
 - "someServers": the server or servers id that will be used to test the bot
 - "language": the default language of the bot
@@ -98,6 +96,9 @@ config.json file:
   - "last_interest": don't touch this, the code uses this to know when was the last interest increase
   - "interest_time": how much time between interests in milisseconds, default is 24h
   - "interest_rate": how much % the interest increases, default is 10%
+- "lottery": don't change things here, the bot uses this to make the lottery system work
+  - "prize": how much money the winner of the lottery is going to get
+  - "drawTime": when the lottery is going to be drawn
 - "testOnly": when you are only testing the slash commands put this as true this way you don't have to wait 1 hour for the command to register, it register instantly in the servers you put earlier
 
 ## 🏃‍♂️ Running
