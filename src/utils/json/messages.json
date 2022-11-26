@@ -862,6 +862,18 @@
 		"portugues": "está inconsciente e não pode fazer nada",
 		"english": "is unconscious and can't do anything"
 	},
+	"WORK": {
+		"portugues": ":coin: Você foi trabalhar e ganhou **{FALCOINS} falcoins!**",
+		"english": ":coin: You went to work and earned **{FALCOINS} falcoins!**"
+	},
+	"BONUS": {
+		"portugues": ":gift: Seu patrão te deu um bônus de **{FALCOINS} falcoins!**",
+		"english": ":gift: Your boss gave you a bonus of **{FALCOINS} falcoins!**"
+	},
+	"WORK_TITLE": {
+		"portugues": ":briefcase: {FALCOINS} falcoins ganhos!",
+		"english": ":briefcase: {FALCOINS} falcoins earned!"
+	},
 	"1": {
 		"portugues": ":potato: Plebeu",
 		"english": ":potato: Peasent"
