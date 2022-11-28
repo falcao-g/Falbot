@@ -84,8 +84,14 @@
 		"bankLimit": 250000
 	},
 	{
+		"falcoinsToLevelUp": 200000,
 		"vote": 12000,
 		"work": [2750, 5000],
 		"bankLimit": 300000
+	},
+	{
+		"vote": 12500,
+		"work": [2875, 5250],
+		"bankLimit": 30000
 	}
 ]
