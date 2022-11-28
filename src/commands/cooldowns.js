@@ -14,9 +14,13 @@ module.exports = {
 		try {
 			var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
 			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
-			scratchSchema = instance._mongoConnection.models["wokcommands-cooldowns"]
-			scratchCooldown = await scratchSchema.findById(
+			cooldownsSchema =
+				instance._mongoConnection.models["wokcommands-cooldowns"]
+			scratchCooldown = await cooldownsSchema.findById(
 				`scratch-${guild.id}-${user.id}`
+			)
+			workCooldown = await cooldownsSchema.findById(
+				`work-${guild.id}-${user.id}`
 			)
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
@@ -43,6 +47,21 @@ module.exports = {
 							scratchCooldown
 								? `:red_circle: ${await msToTime(
 										scratchCooldown["cooldown"] * 1000
+								  )}`
+								: `:green_circle: ${instance.messageHandler.get(
+										guild,
+										"PRONTO"
+								  )}`
+						}**`,
+						inline: true,
+					},
+					{
+						name:
+							":briefcase: " + instance.messageHandler.get(guild, "TRABALHO"),
+						value: `**${
+							workCooldown
+								? `:red_circle: ${await msToTime(
+										workCooldown["cooldown"] * 1000
 								  )}`
 								: `:green_circle: ${instance.messageHandler.get(
 										guild,

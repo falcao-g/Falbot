@@ -874,6 +874,10 @@
 		"portugues": ":briefcase: {FALCOINS} falcoins ganhos!",
 		"english": ":briefcase: {FALCOINS} falcoins earned!"
 	},
+	"TRABALHO": {
+		"portugues": "Trabalhar",
+		"english": "Work"
+	},
 	"1": {
 		"portugues": ":potato: Plebeu",
 		"english": ":potato: Peasent"

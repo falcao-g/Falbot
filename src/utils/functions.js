@@ -351,7 +351,11 @@ async function rankPerks(old_rank, rank, instance, guild) {
 
 	perks += `${instance.messageHandler.get(guild, "VOTO")}: ${await format(
 		rank.vote
-	)} Falcoins`
+	)} Falcoins\n`
+
+	perks += `${instance.messageHandler.get(guild, "TRABALHO")}: ${await format(
+		rank.work[0]
+	)}-${await format(rank.work[1])} Falcoins`
 
 	return perks
 }

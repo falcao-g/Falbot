@@ -13,7 +13,7 @@ module.exports = {
 	category: "Economia",
 	description: "Go to work to earn money",
 	slash: true,
-	cooldown: "1s",
+	cooldown: "1h",
 	guildOnly: true,
 	testOnly,
 	callback: async ({ instance, guild, user }) => {
