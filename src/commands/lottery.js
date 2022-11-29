@@ -1,6 +1,11 @@
 const fs = require("fs")
 const { MessageEmbed } = require("discord.js")
-const { readFile, changeDB, msToTime } = require("../utils/functions.js")
+const {
+	readFile,
+	changeDB,
+	msToTime,
+	format,
+} = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
@@ -43,10 +48,10 @@ module.exports = {
 						.setColor("GOLD")
 						.addFields({
 							name:
-								`:tickets: ${amount} ` +
+								`:tickets: ${await format(amount)} ` +
 								instance.messageHandler.get(guild, "PURCHASED"),
 							value: instance.messageHandler.get(guild, "LOTTERY_COST", {
-								COST: amount * 500,
+								COST: await format(amount * 500),
 							}),
 						})
 						.setFooter({ text: "by Falcão ❤️" })
@@ -72,7 +77,7 @@ module.exports = {
 						{
 							name: instance.messageHandler.get(guild, "LOTTERY"),
 							value: instance.messageHandler.get(guild, "LOTTERY_POOL", {
-								PRIZE: config["lottery"]["prize"],
+								PRIZE: await format(config["lottery"]["prize"]),
 							}),
 							inline: false,
 						},
