@@ -28,13 +28,16 @@ module.exports = {
 					iconURL:
 						"https://images.emojiterra.com/google/noto-emoji/unicode-13.1/128px/1f3b1.png",
 				})
-			embed.addField(
-				instance.messageHandler.get(guild, "PERGUNTA"),
-				text,
-				false
-			)
-			embed
-				.addField(instance.messageHandler.get(guild, "PREVISAO"), answer, false)
+				.addFields(
+					{
+						name: instance.messageHandler.get(guild, "PERGUNTA"),
+						value: text,
+					},
+					{
+						name: instance.messageHandler.get(guild, "PREVISAO"),
+						value: answer,
+					}
+				)
 				.setFooter({ text: "by Falcão ❤️" })
 			return embed
 		} catch (error) {

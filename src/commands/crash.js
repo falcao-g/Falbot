@@ -33,6 +33,7 @@ module.exports = {
 			})
 		}
 		if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
+			await changeDB(user.id, "falcoins", -bet)
 			multiplier = 0.8
 			const embed = new MessageEmbed()
 				.addFields(
@@ -48,7 +49,7 @@ module.exports = {
 					},
 					{
 						name: instance.messageHandler.get(guild, "GANHOS"),
-						value: `:coin: ${parseInt(-bet)}`,
+						value: `:coin: ${parseInt(bet * multiplier - bet)}`,
 						inline: true,
 					}
 				)
@@ -92,6 +93,10 @@ module.exports = {
 			while (!crashed) {
 				await new Promise((resolve) => setTimeout(resolve, 2000))
 
+				if (crashed) {
+					break
+				}
+
 				multiplier += 0.2
 
 				random = await randint(1, 100)
@@ -121,10 +126,9 @@ module.exports = {
 			sell.setDisabled(true)
 
 			if (lost) {
-				profit = -bet
 				embed.setColor(15158332)
 			} else {
-				profit = parseInt(bet * multiplier - bet)
+				await changeDB(user.id, "falcoins", parseInt(bet * multiplier))
 				embed.setColor(3066993)
 			}
 
@@ -132,8 +136,6 @@ module.exports = {
 				embeds: [embed],
 				components: [row],
 			})
-
-			await changeDB(user.id, "falcoins", profit)
 		} else {
 			return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
 		}

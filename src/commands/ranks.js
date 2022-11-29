@@ -1,5 +1,10 @@
 const { MessageEmbed } = require("discord.js")
-const { readFile, changeDB, rankPerks } = require("../utils/functions.js")
+const {
+	readFile,
+	changeDB,
+	rankPerks,
+	format,
+} = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const levels = require("../utils/json/levels.json")
 
@@ -44,8 +49,9 @@ module.exports = {
 						(await readFile(user.id, "falcoins")) < rank.falcoinsToLevelUp
 					) {
 						return instance.messageHandler.get(guild, "NO_MONEY_RANK", {
-							FALCOINS:
-								rank.falcoinsToLevelUp - (await readFile(user.id, "falcoins")),
+							FALCOINS: await format(
+								rank.falcoinsToLevelUp - (await readFile(user.id, "falcoins"))
+							),
 						})
 					} else {
 						new_rank = levels[rank_number]
@@ -53,17 +59,7 @@ module.exports = {
 						await changeDB(user.id, "falcoins", -rank.falcoinsToLevelUp)
 						await changeDB(user.id, "rank", rank_number + 1, true)
 
-						//give the perks to the user
-						if (new_rank.perks.includes("bank")) {
-							await changeDB(user.id, "limite_banco", 100000)
-						} else if (new_rank.perks.includes("caixa")) {
-							await changeDB(user.id, "caixas", 1)
-							await changeDB(user.id, "chaves", 1)
-						} else if (new_rank.perks.includes("lootbox")) {
-							await changeDB(user.id, "lootbox", 1000)
-						}
-
-						perks = await rankPerks(new_rank, instance, guild)
+						perks = await rankPerks(rank, new_rank, instance, guild)
 
 						var embed = new MessageEmbed().setColor("AQUA").addFields(
 							{
@@ -73,7 +69,7 @@ module.exports = {
 										guild,
 										String(rank_number + 1)
 									),
-									FALCOINS: rank.falcoinsToLevelUp,
+									FALCOINS: await format(rank.falcoinsToLevelUp),
 								}),
 							},
 							{
@@ -86,14 +82,14 @@ module.exports = {
 						return embed
 					}
 				case "view":
-					if ((await readFile(user.id, "rank")) === 15) {
+					var rank_number = await readFile(user.id, "rank")
+					if (rank_number === 16) {
 						return instance.messageHandler.get(guild, "MAX_RANK", {
 							USER: user,
 						})
 					}
 
-					var rank_number = await readFile(user.id, "rank")
-					quantity = 15 - rank_number
+					quantity = 16 - rank_number
 					if (quantity > 3) {
 						quantity = 3
 					}
@@ -101,41 +97,55 @@ module.exports = {
 					var embed = new MessageEmbed()
 						.setColor("DARK_PURPLE")
 						.setTitle(instance.messageHandler.get(guild, "UPCOMING_RANKS"))
-
-					embed.addField(
-						instance.messageHandler.get(guild, String(rank_number)) +
-							" - " +
-							levels[rank_number - 1].falcoinsToLevelUp +
-							" Falcoins" +
-							instance.messageHandler.get(guild, "CURRENT_RANK"),
-						await rankPerks(levels[rank_number - 1], instance, guild),
-						false
-					)
+						.addFields({
+							name:
+								instance.messageHandler.get(guild, String(rank_number)) +
+								" - " +
+								(await format(levels[rank_number - 1].falcoinsToLevelUp)) +
+								" Falcoins" +
+								instance.messageHandler.get(guild, "CURRENT_RANK"),
+							value: await rankPerks(
+								levels[rank_number - 2],
+								levels[rank_number - 1],
+								instance,
+								guild
+							),
+						})
 
 					for (var i = 0; i < quantity; i++) {
 						if (levels[rank_number + i].falcoinsToLevelUp === undefined) {
-							embed.addField(
-								instance.messageHandler.get(
-									guild,
-									String(rank_number + i + 1)
-								) +
+							embed.addFields({
+								name:
+									instance.messageHandler.get(
+										guild,
+										String(rank_number + i + 1)
+									) +
 									" - " +
 									instance.messageHandler.get(guild, "MAX_RANK2"),
-								await rankPerks(levels[rank_number + i], instance, guild),
-								false
-							)
+								value: await rankPerks(
+									levels[rank_number - 1 + i],
+									levels[rank_number + i],
+									instance,
+									guild
+								),
+							})
 						} else {
-							embed.addField(
-								instance.messageHandler.get(
-									guild,
-									String(rank_number + i + 1)
-								) +
+							embed.addFields({
+								name:
+									instance.messageHandler.get(
+										guild,
+										String(rank_number + i + 1)
+									) +
 									" - " +
-									levels[rank_number + i].falcoinsToLevelUp +
+									(await format(levels[rank_number + i].falcoinsToLevelUp)) +
 									" Falcoins",
-								await rankPerks(levels[rank_number + i], instance, guild),
-								false
-							)
+								value: await rankPerks(
+									levels[rank_number - 1 + i],
+									levels[rank_number + i],
+									instance,
+									guild
+								),
+							})
 						}
 					}
 
@@ -155,17 +165,16 @@ module.exports = {
 							ranks += `**${instance.messageHandler.get(
 								guild,
 								String(i + 1)
-							)}** - ${levels[i].falcoinsToLevelUp} falcoins\n`
+							)}** - ${await format(levels[i].falcoinsToLevelUp)} falcoins\n`
 						}
 					}
-
-					embed.addField(instance.messageHandler.get(guild, "ALL_RANKS"), ranks)
-					embed.setFooter({ text: "by Falcão ❤️" })
+					embed
+						.addFields({
+							name: instance.messageHandler.get(guild, "ALL_RANKS"),
+							value: ranks,
+						})
+						.setFooter({ text: "by Falcão ❤️" })
 					return embed
-				default:
-					return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-						VALUE: type,
-					})
 			}
 		} catch (err) {
 			console.error(`ranks: ${err}`)

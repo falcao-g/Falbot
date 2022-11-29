@@ -18,7 +18,6 @@ module.exports = {
 			choices: [
 				{ name: 1, value: 1 },
 				{ name: 2, value: 2 },
-				{ name: 3, value: 3 },
 			],
 		},
 		{
@@ -46,11 +45,6 @@ module.exports = {
 							inline: false,
 						},
 						{
-							name: instance.messageHandler.get(guild, "ITEM_3"),
-							value: instance.messageHandler.get(guild, "ITEM_3_DESCRICAO"),
-							inline: false,
-						},
-						{
 							name: "\u200b",
 							value: instance.messageHandler.get(guild, "LOJA_USO_2"),
 						}
@@ -59,10 +53,6 @@ module.exports = {
 				return embed
 			} else {
 				item = parseInt(args[0])
-				if (item <= 0 || item > 3 || item != item) {
-					return instance.messageHandler.get(guild, "LOJA_ITEM_INVALIDO")
-				}
-
 				amount = parseInt(args[1] || 1)
 				if (amount <= 0 || amount != amount) {
 					return instance.messageHandler.get(guild, "LOJA_QUANTIDADE_INVALIDA")
@@ -89,16 +79,6 @@ module.exports = {
 						await changeDB(user.id, "falcoins", -20000 * amount)
 						await changeDB(user.id, "chaves", 1 * amount)
 						return instance.messageHandler.get(guild, "LOJA_COMPROU_CHAVE", {
-							AMOUNT: amount,
-						})
-					} else {
-						return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
-					}
-				} else if (item === 3) {
-					if ((await readFile(user.id, "falcoins")) >= 50000 * amount) {
-						await changeDB(user.id, "falcoins", -50000 * amount)
-						await changeDB(user.id, "lootbox", 1000 * amount)
-						return instance.messageHandler.get(guild, "LOJA_COMPROU_AUMENTO", {
 							AMOUNT: amount,
 						})
 					} else {

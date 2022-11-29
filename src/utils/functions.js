@@ -1,6 +1,7 @@
 const fs = require("fs")
 const userSchema = require("../schemas/user-schema")
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
+const levels = require("../utils/json/levels.json")
 
 async function createUser(id) {
 	try {
@@ -52,22 +53,10 @@ async function msToTime(ms) {
 	let time = ""
 
 	let n = 0
-	if (ms >= 31536000000) {
-		n = Math.floor(ms / 31536000000)
-		time = `${n}y `
-		ms -= n * 31536000000
-	}
-
 	if (ms >= 2592000000) {
 		n = Math.floor(ms / 2592000000)
-		time += `${n}mo `
+		time += `${n}m `
 		ms -= n * 2592000000
-	}
-
-	if (ms >= 604800000) {
-		n = Math.floor(ms / 604800000)
-		time += `${n}w `
-		ms -= n * 604800000
 	}
 
 	if (ms >= 86400000) {
@@ -87,9 +76,6 @@ async function msToTime(ms) {
 		time += `${n}m `
 		ms -= n * 60000
 	}
-
-	n = Math.ceil(ms / 1000)
-	time += n === 0 ? "" : `${n}s`
 
 	return time.trimEnd()
 }
@@ -209,24 +195,24 @@ async function bankInterest() {
 		console.log("poupança!")
 		config["poupanca"]["last_interest"] = Date.now().toString()
 
-		var users = await userSchema.find({})
+		var users = await userSchema.find({
+			banco: { $gt: 0 },
+		})
 
 		for (user of users) {
-			user_db = await userSchema.findById(user._id)
+			var limit = levels[user.rank - 1].bankLimit
 
-			if (user_db.limite_banco > user_db.banco) {
-				user_db.banco += Math.floor(
-					parseInt(
-						user_db.banco * parseFloat(config["poupanca"]["interest_rate"])
-					)
+			if (limit > user.banco) {
+				user.banco += Math.floor(
+					parseInt(user.banco * parseFloat(config["poupanca"]["interest_rate"]))
 				)
 			}
 
-			if (user_db.banco > user_db.limite_banco) {
-				user_db.banco = user_db.limite_banco
+			if (user.banco > limit) {
+				user.banco = limit
 			}
 
-			user_db.save()
+			user.save()
 		}
 
 		json2 = JSON.stringify(config, null, 1)
@@ -239,25 +225,29 @@ async function bankInterest() {
 
 async function sendVoteReminders(instance, client) {
 	try {
-		var users = await userSchema.find({})
+		var users = await userSchema.find({
+			voteReminder: true,
+		})
 
 		for (user of users) {
-			user_db = await userSchema.findById(user._id)
-
 			//send dm reminder vote if user wants to
 			if (
-				Date.now() - user_db.lastVote > 43200000 &&
-				user_db.voteReminder === true &&
-				user_db.lastReminder <= user_db.lastVote
+				Date.now() - user.lastVote > 43200000 &&
+				user.lastReminder <= user.lastVote
 			) {
-				discordUser = await client.users.fetch(user_db._id)
+				discordUser = await client.users.fetch(user._id)
 				const embed = new MessageEmbed()
 					.setColor("YELLOW")
-					.addField(
-						instance.messageHandler.get(discordUser, "VOTE_REMINDER"),
-						instance.messageHandler.get(discordUser, "REWARD_AFTER")
+					.addFields(
+						{
+							name: instance.messageHandler.get(discordUser, "VOTE_REMINDER"),
+							value: instance.messageHandler.get(discordUser, "REWARD_AFTER"),
+						},
+						{
+							name: "Link",
+							value: "https://top.gg/bot/742331813539872798/vote",
+						}
 					)
-					.addField("Link", "https://top.gg/bot/742331813539872798/vote", false)
 					.setFooter({ text: "by Falcão ❤️" })
 
 				const row = new MessageActionRow().addComponents(
@@ -275,8 +265,8 @@ async function sendVoteReminders(instance, client) {
 					components: [row],
 				})
 
-				user_db.lastReminder = Date.now()
-				user_db.save()
+				user.lastReminder = Date.now()
+				user.save()
 			}
 		}
 	} catch (err) {
@@ -284,20 +274,133 @@ async function sendVoteReminders(instance, client) {
 	}
 }
 
-async function rankPerks(rank, instance, guild) {
-	perks = ""
+async function lotteryDraw(instance, client) {
+	var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
+	if (Date.now() > config["lottery"]["drawTime"]) {
+		console.log("loteria!")
 
-	if (rank.perks.includes("bank")) {
-		perks += instance.messageHandler.get(guild, "RANKUP_BANK")
-	} else if (rank.perks.includes("caixa")) {
-		perks += instance.messageHandler.get(guild, "RANKUP_CAIXA")
-	} else if (rank.perks.includes("lootbox")) {
-		perks += instance.messageHandler.get(guild, "RANKUP_LOOTBOX")
-	} else if (rank.perks.includes("none")) {
-		perks += instance.messageHandler.get(guild, "RANKUP_NONE")
+		var users = await userSchema.find({
+			tickets: { $gt: 0 },
+		})
+
+		if (users.length > 0) {
+			var numTickets = 0
+			for (user of users) {
+				numTickets += user.tickets
+			}
+
+			var winner
+			while (winner === undefined) {
+				for (user of users) {
+					if (randint(1, numTickets) <= user.tickets) {
+						winner = user
+					}
+				}
+			}
+
+			await changeDB(winner.id, "falcoins", config["lottery"]["prize"])
+
+			winnerUser = await client.users.fetch(winner.id)
+
+			const embed = new MessageEmbed()
+				.setColor("GOLD")
+				.addFields({
+					name: instance.messageHandler.get(winnerUser, "CONGRATULATIONS"),
+					value: instance.messageHandler.get(winnerUser, "LOTTERY_WIN", {
+						PRIZE: await format(config["lottery"]["prize"]),
+						TICKETS: await format(winner.tickets),
+						TOTAL: await format(numTickets),
+					}),
+				})
+				.setFooter({ text: "by Falcão ❤️" })
+
+			await userSchema.updateMany(
+				{
+					tickets: { $gt: 0 },
+				},
+				{
+					tickets: 0,
+				}
+			)
+
+			await winnerUser.send({
+				embeds: [embed],
+			})
+		}
+		config["lottery"]["drawTime"] = Date.now() + 604800000 //next one is next week
+		config["lottery"]["prize"] = randint(1000000, 2000000)
+
+		json2 = JSON.stringify(config, null, 1)
+
+		fs.writeFileSync("./src/config.json", json2, "utf8", function (err) {
+			if (err) throw err
+		})
+	}
+}
+
+async function rankPerks(old_rank, rank, instance, guild) {
+	perks = ""
+	if (old_rank != undefined) {
+		if (old_rank.bankLimit < rank.bankLimit) {
+			perks += instance.messageHandler.get(guild, "RANKUP_BANK", {
+				FALCOINS: await format(rank.bankLimit - old_rank.bankLimit),
+			})
+			perks += "\n"
+		}
 	}
 
+	perks += `${instance.messageHandler.get(guild, "VOTO")}: ${await format(
+		rank.vote
+	)} Falcoins\n`
+
+	perks += `${instance.messageHandler.get(guild, "TRABALHO")}: ${await format(
+		rank.work[0]
+	)}-${await format(rank.work[1])} Falcoins`
+
 	return perks
+}
+
+async function paginate() {
+	const __embeds = []
+	let cur = 0
+	let traverser
+	let message
+	return {
+		add(...embeds) {
+			__embeds.push(...embeds)
+			return this
+		},
+		setTraverser(tr) {
+			traverser = tr
+		},
+		setMessage(_message) {
+			message = _message
+		},
+		async next() {
+			cur++
+			if (cur >= __embeds.length) {
+				cur = 0
+			}
+		},
+		async back() {
+			cur--
+			if (cur <= -__embeds.length) {
+				cur = 0
+			}
+		},
+		at(num) {
+			return __embeds.at(num)
+		},
+		components() {
+			return {
+				embeds: [__embeds.at(cur)],
+				components: [
+					new MessageActionRow().addComponents(traverser[0], traverser[1]),
+				],
+				fetchReply: true,
+			}
+		},
+	}
 }
 
 module.exports = {
@@ -315,4 +418,6 @@ module.exports = {
 	bankInterest,
 	rankPerks,
 	sendVoteReminders,
+	paginate,
+	lotteryDraw,
 }

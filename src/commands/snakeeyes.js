@@ -61,10 +61,13 @@ module.exports = {
 				const embed = new MessageEmbed()
 					.setColor(await getRoleColor(guild, user.id))
 					.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
-					.addField(
-						`-------------------\n      | ${diegif} | ${diegif} |\n-------------------`,
-						`--- **${instance.messageHandler.get(guild, "ROLANDO")}** ---`
-					)
+					.addFields({
+						name: `-------------------\n      | ${diegif} | ${diegif} |\n-------------------`,
+						value: `--- **${instance.messageHandler.get(
+							guild,
+							"ROLANDO"
+						)}** ---`,
+					})
 					.setFooter({ text: "by Falcão ❤️" })
 
 				var answer = await interaction.reply({
@@ -136,14 +139,15 @@ module.exports = {
 						}
 					)
 				}
-				embed2.setAuthor({
-					name: member.displayName,
-					iconURL: user.avatarURL(),
-				})
-				embed2.addField(
-					instance.messageHandler.get(guild, "SALDO_ATUAL"),
-					`${await readFile(user.id, "falcoins", true)}`
-				)
+				embed2
+					.setAuthor({
+						name: member.displayName,
+						iconURL: user.avatarURL(),
+					})
+					.addFields({
+						name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+						value: `${await readFile(user.id, "falcoins", true)}`,
+					})
 				embed2.setFooter({ text: "by Falcão ❤️" })
 				await answer.edit({
 					embeds: [embed2],

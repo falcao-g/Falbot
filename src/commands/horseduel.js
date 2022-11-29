@@ -175,11 +175,10 @@ module.exports = {
 							})
 						)
 						.setColor(3066993)
-						.addField(
-							instance.messageHandler.get(guild, "SALDO_ATUAL"),
-							`${await readFile(winner.id, "falcoins", true)} falcoins`,
-							false
-						)
+						.addFields({
+							name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+							value: `${await readFile(winner.id, "falcoins", true)} falcoins`,
+						})
 						.setFooter({ text: "by Falcão ❤️" })
 
 					await interaction.followUp({

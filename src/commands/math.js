@@ -23,15 +23,12 @@ module.exports = {
 			text = text.replaceAll("**", "^")
 			answer = await math.evaluate(text).toString()
 
-			const embed = new MessageEmbed().setColor(
-				await getRoleColor(guild, user.id)
-			)
-			embed
-				.addField(
-					instance.messageHandler.get(guild, "RESULTADO"),
-					answer,
-					false
-				)
+			const embed = new MessageEmbed()
+				.setColor(await getRoleColor(guild, user.id))
+				.addFields({
+					name: instance.messageHandler.get(guild, "RESULTADO"),
+					value: answer,
+				})
 				.setFooter({ text: "by Falcão ❤️" })
 
 			return embed

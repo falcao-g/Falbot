@@ -28,10 +28,6 @@ const userSchema = mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
-		lootbox: {
-			type: Number,
-			default: 1000,
-		},
 		lastVote: {
 			type: Number,
 			default: 0,
@@ -39,10 +35,6 @@ const userSchema = mongoose.Schema(
 		rank: {
 			type: Number,
 			default: 1,
-		},
-		limite_banco: {
-			type: Number,
-			default: 100000,
 		},
 		voteReminder: {
 			type: Boolean,
@@ -52,7 +44,7 @@ const userSchema = mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
-		lastLootbox: {
+		tickets: {
 			type: Number,
 			default: 0,
 		},

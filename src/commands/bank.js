@@ -7,6 +7,7 @@ const {
 	getRoleColor,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const levels = require("../utils/json/levels.json")
 
 module.exports = {
 	category: "Economia",
@@ -51,14 +52,15 @@ module.exports = {
 			type: "SUB_COMMAND",
 		},
 	],
-	callback: async ({ instance, guild, user, member, args, interaction }) => {
+	callback: async ({ instance, guild, user, member, interaction }) => {
 		try {
 			metodo = interaction.options.getSubcommand()
 			falcoins = interaction.options.getString("falcoins")
+			var rank_number = await readFile(user.id, "rank")
+			var limit = levels[rank_number - 1].bankLimit
 
 			switch (metodo) {
 				case "view":
-				case "ver":
 					//send a message with the bank balance
 					const embed = new MessageEmbed()
 						.setColor(await getRoleColor(guild, user.id))
@@ -72,8 +74,7 @@ module.exports = {
 								guild,
 								"BANK_INTEREST"
 							)}\n\n:money_with_wings: ${await format(
-								(await readFile(user.id, "limite_banco")) -
-									(await readFile(user.id, "banco"))
+								limit - (await readFile(user.id, "banco"))
 							)} ${instance.messageHandler.get(
 								guild,
 								"BANK_LIMIT"
@@ -81,14 +82,11 @@ module.exports = {
 								guild,
 								"BANK_DEPOSIT_LIMIT",
 								{
-									FALCOINS: await format(
-										(await readFile(user.id, "limite_banco")) / 2
-									),
+									FALCOINS: await format(limit / 2),
 								}
 							)}**`,
 						})
 					return embed
-				case "depositar":
 				case "deposit":
 					try {
 						var quantity = await specialArg(falcoins, user.id, "falcoins")
@@ -102,20 +100,12 @@ module.exports = {
 						(await readFile(user.id, "falcoins")) >= quantity &&
 						quantity > 0
 					) {
-						if (
-							(await readFile(user.id, "banco")) >=
-							(await readFile(user.id, "limite_banco")) / 2
-						) {
+						if ((await readFile(user.id, "banco")) >= limit / 2) {
 							return instance.messageHandler.get(guild, "BANK_OVER_LIMIT")
 						}
 
-						if (
-							quantity + (await readFile(user.id, "banco")) >
-							(await readFile(user.id, "limite_banco")) / 2
-						) {
-							quantity =
-								(await readFile(user.id, "limite_banco")) / 2 -
-								(await readFile(user.id, "banco"))
+						if (quantity + (await readFile(user.id, "banco")) > limit / 2) {
+							quantity = limit / 2 - (await readFile(user.id, "banco"))
 						}
 
 						await takeAndGive(user.id, user.id, "falcoins", "banco", quantity)
@@ -131,16 +121,21 @@ module.exports = {
 								name: member.displayName,
 								iconURL: user.avatarURL(),
 							})
-							.addField(
-								instance.messageHandler.get(guild, "SALDO_ATUAL"),
-								`${await readFile(user.id, "falcoins", true)} falcoins`,
-								(inline = false)
-							)
-							.addField(
-								instance.messageHandler.get(guild, "BANCO"),
-								instance.messageHandler.get(guild, "BANCO_SALDO", {
-									VALUE: await readFile(user.id, "banco", true),
-								})
+							.addFields(
+								{
+									name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+									value: `${await readFile(
+										user.id,
+										"falcoins",
+										true
+									)} falcoins`,
+								},
+								{
+									name: instance.messageHandler.get(guild, "BANCO"),
+									value: instance.messageHandler.get(guild, "BANCO_SALDO", {
+										VALUE: await readFile(user.id, "banco", true),
+									}),
+								}
 							)
 							.setFooter({ text: "by Falcão ❤️" })
 
@@ -148,7 +143,6 @@ module.exports = {
 					} else {
 						return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
 					}
-				case "sacar":
 				case "withdraw":
 					try {
 						var quantity = await specialArg(falcoins, user.id, "banco")
@@ -172,16 +166,21 @@ module.exports = {
 								name: member.displayName,
 								iconURL: user.avatarURL(),
 							})
-							.addField(
-								instance.messageHandler.get(guild, "SALDO_ATUAL"),
-								`${await readFile(user.id, "falcoins", true)} falcoins`,
-								(inline = false)
-							)
-							.addField(
-								instance.messageHandler.get(guild, "BANCO"),
-								instance.messageHandler.get(guild, "BANCO_SALDO", {
-									VALUE: await readFile(user.id, "banco", true),
-								})
+							.addFields(
+								{
+									name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+									value: `${await readFile(
+										user.id,
+										"falcoins",
+										true
+									)} falcoins`,
+								},
+								{
+									name: instance.messageHandler.get(guild, "BANCO"),
+									value: instance.messageHandler.get(guild, "BANCO_SALDO", {
+										VALUE: await readFile(user.id, "banco", true),
+									}),
+								}
 							)
 							.setFooter({ text: "by Falcão ❤️" })
 
@@ -189,10 +188,6 @@ module.exports = {
 					} else {
 						return instance.messageHandler.get(guild, "BANCO_INSUFICIENTE")
 					}
-				default:
-					return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-						VALUE: args[0],
-					})
 			}
 		} catch (error) {
 			console.error(`bank: ${error}`)

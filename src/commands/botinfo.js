@@ -15,9 +15,9 @@ module.exports = {
 			const embed = new MessageEmbed()
 				.setColor("NAVY")
 				.setFooter({ text: "by Falcão ❤️" })
-				.addField(
-					"Falbot info",
-					`**:earth_americas: Site: https://falbot.netlify.app/\n:robot: Github: https://github.com/falcao-g/Falbot\n:bird: Twitter: https://twitter.com/falb0t\n:house: ${instance.messageHandler.get(
+				.addFields({
+					name: "Falbot info",
+					value: `**:earth_americas: Site: https://falbot.netlify.app/\n:robot: Github: https://github.com/falcao-g/Falbot\n:bird: Twitter: https://twitter.com/falb0t\n:house: ${instance.messageHandler.get(
 						guild,
 						"SERVERS"
 					)}: ${
@@ -30,8 +30,8 @@ module.exports = {
 					}\n:zap: ${instance.messageHandler.get(
 						guild,
 						"UPTIME"
-					)}: ${await msToTime(client.uptime)}**`
-				)
+					)}: ${await msToTime(client.uptime)}**`,
+				})
 			return embed
 		} catch (error) {
 			console.error(`botinfo: ${error}`)

@@ -125,11 +125,6 @@ module.exports = {
 										break
 									}
 
-									if (order[i]["stunned"] === true) {
-										order[i]["stunned"] = false
-										continue
-									}
-
 									if (order[i]["escudo"] === true) {
 										order[i]["escudo"] = false
 									}
@@ -147,126 +142,131 @@ module.exports = {
 										var enemy = 0
 									}
 
-									if (attack === "instantâneo") {
-										if (order[enemy]["escudo"] != true) {
-											order[enemy]["hp"] -= luck
-										}
-										embed.addField(
-											`${order[i]["name"]} ` +
-												instance.messageHandler.get(guild, "ATACA"),
+									field = {
+										name: instance.messageHandler.get(guild, "TURN", {
+											USER: order[i]["name"],
+										}),
+										value: "",
+									}
+
+									if (order[i]["stunned"] === true) {
+										order[i]["stunned"] = false
+										field.value =
 											`${order[i]["mention"]} ` +
-												instance.messageHandler.get(guild, "ATAQUE", {
-													VALUE: luck,
-												}),
-											false
-										)
+											instance.messageHandler.get(guild, "NOCAUTEADO")
+									} else if (
+										order[enemy]["escudo"] === true &&
+										!["self", "escudo", "cura"].includes(attack)
+									) {
+										field.value =
+											`${order[i]["mention"]} ` +
+											instance.messageHandler.get(guild, "TENTOU_ATACAR")
+									} else if (attack === "instantâneo") {
+										order[enemy]["hp"] -= luck
+										field.value =
+											`${order[i]["mention"]} ` +
+											instance.messageHandler.get(guild, "ATAQUE", {
+												VALUE: luck,
+											})
 									} else if (attack === "stun") {
-										if (order[enemy]["escudo"] != true) {
-											order[enemy]["hp"] -= luck
-											order[enemy]["stunned"] = true
-										}
-										embed.addField(
-											`${order[i]["name"]} ` +
-												instance.messageHandler.get(guild, "ATACA"),
+										order[enemy]["hp"] -= luck
+										order[enemy]["stunned"] = true
+										field.value =
 											`${order[i]["mention"]} ` +
-												instance.messageHandler.get(guild, "ATAQUE_NOCAUTE", {
-													VALUE: luck,
-												}),
-											false
-										)
+											instance.messageHandler.get(guild, "ATAQUE_NOCAUTE", {
+												VALUE: luck,
+											})
 									} else if (attack === "roubo de vida") {
-										if (order[enemy]["escudo"] != true) {
-											order[enemy]["hp"] -= luck
-											order[me]["hp"] += luck
-										}
-										embed.addField(
-											`${order[i]["name"]} ` +
-												instance.messageHandler.get(guild, "ATACA"),
+										order[enemy]["hp"] -= luck
+										order[me]["hp"] += luck
+										field.value =
 											`${order[i]["mention"]} ` +
-												instance.messageHandler.get(guild, "ROUBO_VIDA", {
-													VALUE: luck,
-												}),
-											false
-										)
+											instance.messageHandler.get(guild, "ROUBO_VIDA", {
+												VALUE: luck,
+											})
 									} else if (attack === "cura") {
 										order[i]["hp"] += luck
-										embed.addField(
-											`${order[i]["name"]} ` +
-												instance.messageHandler.get(guild, "ATACA"),
+										field.value =
 											`${order[i]["mention"]} ` +
-												instance.messageHandler.get(guild, "CURA", {
-													VALUE: luck,
-												}),
-											false
-										)
+											instance.messageHandler.get(guild, "CURA", {
+												VALUE: luck,
+											})
 									} else if (attack === "self") {
 										order[i]["hp"] -= luck
-										embed.addField(
-											`${order[i]["name"]} ` +
-												instance.messageHandler.get(guild, "ATACA"),
+										field.value =
 											`${order[i]["mention"]} ` +
-												instance.messageHandler.get(guild, "SELF", {
-													VALUE: luck,
-												}),
-											false
-										)
+											instance.messageHandler.get(guild, "SELF", {
+												VALUE: luck,
+											})
 									} else if (attack === "escudo") {
 										order[i]["escudo"] = true
-										embed.addField(
-											`${order[i]["name"]} ` +
-												instance.messageHandler.get(guild, "ATACA"),
+										field.value =
 											`${order[i]["mention"]} ` +
-												instance.messageHandler.get(guild, "SE_PROTEGE"),
-											false
-										)
+											instance.messageHandler.get(guild, "SE_PROTEGE")
 									}
+
+									embed.addFields(field)
 
 									if (order[i]["hp"] > 100) {
 										order[i]["hp"] = 100
 									}
 
-									embed.addField(
-										"HP",
-										`${order[0]["mention"]}: ${order[0]["hp"]} hp\n${order[1]["mention"]}: ${order[1]["hp"]} hp`
-									)
+									embed.addFields({
+										name: "HP",
+										value: `${order[0]["mention"]}: ${order[0]["hp"]} hp\n${order[1]["mention"]}: ${order[1]["hp"]} hp`,
+									})
+
 									var answer = await interaction.channel.send({
 										embeds: [embed],
 									})
 									await new Promise((resolve) => setTimeout(resolve, 2500))
 								}
 							}
+
 							const embed2 = new MessageEmbed()
 								.setColor(3066993)
 								.setFooter({ text: "by Falcão ❤️" })
 							if (order[0]["hp"] <= 0) {
 								await changeDB(order[1]["id"], "falcoins", bet * 2)
 								await changeDB(order[1]["id"], "vitorias")
-								embed2.addField(
-									`${order[1]["name"]}` +
-										instance.messageHandler.get(guild, "GANHO"),
-									instance.messageHandler.get(guild, "LUTA_DERROTOU", {
-										USER: order[0]["mention"],
-									}),
-									false
-								)
-								embed2.addField(
-									instance.messageHandler.get(guild, "SALDO_ATUAL"),
-									`${await readFile(order[1]["id"], "falcoins", true)} falcoins`
+								embed2.addFields(
+									{
+										name:
+											`${order[1]["name"]}` +
+											instance.messageHandler.get(guild, "GANHO"),
+										value: instance.messageHandler.get(guild, "LUTA_DERROTOU", {
+											USER: order[0]["mention"],
+										}),
+									},
+									{
+										name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+										value: `${await readFile(
+											order[1]["id"],
+											"falcoins",
+											true
+										)} falcoins`,
+									}
 								)
 							} else if (order[1]["hp"] <= 0) {
 								await changeDB(order[0]["id"], "falcoins", bet * 2)
 								await changeDB(order[0]["id"], "vitorias")
-								embed2.addField(
-									`${order[0]["name"]}` +
-										instance.messageHandler.get(guild, "GANHO"),
-									instance.messageHandler.get(guild, "LUTA_DERROTOU", {
-										USER: order[1]["mention"],
-									}),
-									false
-								)
-								embed2.addField(
-									instance.messageHandler.get(guild, "SALDO_ATUAL"),
-									`${await readFile(order[0]["id"], "falcoins", true)} falcoins`
+								embed2.addFields(
+									{
+										name:
+											`${order[0]["name"]}` +
+											instance.messageHandler.get(guild, "GANHO"),
+										value: instance.messageHandler.get(guild, "LUTA_DERROTOU", {
+											USER: order[1]["mention"],
+										}),
+									},
+									{
+										name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+										value: `${await readFile(
+											order[0]["id"],
+											"falcoins",
+											true
+										)} falcoins`,
+									}
 								)
 							}
 							await interaction.channel.send({
