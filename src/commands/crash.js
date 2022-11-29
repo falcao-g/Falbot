@@ -93,6 +93,10 @@ module.exports = {
 			while (!crashed) {
 				await new Promise((resolve) => setTimeout(resolve, 2000))
 
+				if (crashed) {
+					break
+				}
+
 				multiplier += 0.2
 
 				random = await randint(1, 100)
@@ -124,7 +128,7 @@ module.exports = {
 			if (lost) {
 				embed.setColor(15158332)
 			} else {
-				await changeDB(user.id, "falcoins", parseInt(bet * multiplier - bet))
+				await changeDB(user.id, "falcoins", parseInt(bet * multiplier))
 				embed.setColor(3066993)
 			}
 
