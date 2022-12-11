@@ -1,6 +1,5 @@
 const { Intents, Client } = require("discord.js")
 require("dotenv").config()
-const { MONGODB_URI, TOKEN } = process.env
 const { owners, someServers, language } = require("./src/config.json")
 const intents = new Intents([
 	"GUILDS",
@@ -18,6 +17,29 @@ const {
 const mongoose = require("mongoose")
 
 client.on("ready", () => {
+	try {
+		mongoose.set("strictQuery", false)
+		mongoose.connect(process.env.MONGODB_URI)
+	} catch {
+		console.log("A conexão caiu")
+		setTimeout(() => mongoose.connect(process.env.MONGODB_URI), 1000)
+	}
+
+	mongoose.connection.on("error", (err) => {
+		console.log(`Erro na conexão: ${err}`)
+		setTimeout(() => mongoose.connect(process.env.MONGODB_URI), 1000)
+	})
+
+	mongoose.connection.on("disconnected", () => {
+		console.log("A conexão caiu")
+		setTimeout(() => mongoose.connect(process.env.MONGODB_URI), 1000)
+	})
+
+	mongoose.connection.on("MongoNetworkError", () => {
+		console.log("A conexão caiu")
+		setTimeout(() => mongoose.connect(process.env.MONGODB_URI), 1000)
+	})
+
 	const wok = new WOKCommands(client, {
 		commandsDir: path.join(__dirname, "/src/commands"),
 		featuresDir: path.join(__dirname, "/src/events"),
@@ -35,17 +57,9 @@ client.on("ready", () => {
 			"channelonly",
 			"prefix",
 		],
-		mongoUri: MONGODB_URI,
 	})
 
-	wok.on("commandException", (command, error) => {
-		console.log(`Um erro ocorreu no comando "${command.names[0]}"! O erro foi:`)
-		console.error(error)
-	})
-
-	mongoose.connection.on("error", (err) => {
-		console.error(`Erro na conexão do mongoDB: ${err}`)
-	})
+	wok._mongoConnection = mongoose.connection
 
 	client.on("error", console.error)
 
@@ -57,4 +71,4 @@ client.on("ready", () => {
 	}, 1000 * 60 * 10)
 })
 
-client.login(TOKEN)
+client.login(process.env.TOKEN)
