@@ -11,6 +11,7 @@ module.exports = {
 	testOnly,
 	callback: async ({ instance, guild, interaction, user }) => {
 		try {
+			await interaction.deferReply()
 			const author = user
 			const game = new builder.Game()
 
@@ -35,25 +36,25 @@ module.exports = {
 
 			const row = new MessageActionRow()
 			row.addComponents([
-				new MessageButton()
+				(up = new MessageButton()
 					.setCustomId("up")
 					.setEmoji("⬆️")
-					.setStyle("SECONDARY"),
-				new MessageButton()
+					.setStyle("SECONDARY")),
+				(left = new MessageButton()
 					.setCustomId("left")
 					.setEmoji("⬅️")
-					.setStyle("SECONDARY"),
-				new MessageButton()
+					.setStyle("SECONDARY")),
+				(right = new MessageButton()
 					.setCustomId("right")
 					.setEmoji("➡️")
-					.setStyle("SECONDARY"),
-				new MessageButton()
+					.setStyle("SECONDARY")),
+				(down = new MessageButton()
 					.setCustomId("down")
 					.setEmoji("⬇️")
-					.setStyle("SECONDARY"),
+					.setStyle("SECONDARY")),
 			])
 
-			var answer = await interaction.reply({
+			var answer = await interaction.editReply({
 				embeds: [embed],
 				components: [row],
 				fetchReply: true,
@@ -86,7 +87,7 @@ module.exports = {
 					)}: ${game.snake.length}`,
 				}
 
-				await answer.edit({
+				await interaction.editReply({
 					embeds: [embed],
 				})
 				game.time -= 5
@@ -121,8 +122,17 @@ module.exports = {
 				})
 
 				if (game.gameEnded) {
+					up.setDisabled(true)
+					left.setDisabled(true)
+					right.setDisabled(true)
+					down.setDisabled(true)
 					clearInterval(myTimer)
 					collector.stop()
+
+					await interaction.editReply({
+						embeds: [embed],
+						components: [row],
+					})
 				}
 			})
 		} catch (error) {

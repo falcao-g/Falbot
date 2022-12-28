@@ -20,16 +20,18 @@ module.exports = {
 	],
 	callback: async ({ instance, guild, interaction, user, text }) => {
 		try {
+			await interaction.deferReply()
 			const roll = new Roll()
 			text = text.replace(/\s/g, "")
 
 			if (!roll.validate(text)) {
-				return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-					VALUE: text,
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+						VALUE: text,
+					}),
 				})
 			} else {
-				rolled = roll.roll(text).result
-				rolled = rolled.toString()
+				rolled = roll.roll(text).result.toString()
 
 				embed = new MessageEmbed()
 					.setColor(await getRoleColor(guild, user.id))
@@ -46,7 +48,7 @@ module.exports = {
 						}
 					)
 					.setFooter({ text: "by Falcão ❤️" })
-				interaction.reply({
+				await interaction.editReply({
 					embeds: [embed],
 				})
 			}

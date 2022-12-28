@@ -77,7 +77,7 @@ module.exports = {
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 			}
-			interaction.editReply({ embeds: [embed] })
+			await interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`vote: ${error}`)
 		}

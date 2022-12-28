@@ -16,8 +16,9 @@ module.exports = {
 	cooldown: "1h",
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, user }) => {
+	callback: async ({ instance, interaction, guild, user }) => {
 		try {
+			await interaction.deferReply()
 			var rank_number = await readFile(user.id, "rank")
 			var min = levels[rank_number - 1].work[0]
 			var max = levels[rank_number - 1].work[1]
@@ -50,7 +51,9 @@ module.exports = {
 				.setDescription(desc)
 				.setFooter({ text: "by Falcão ❤️" })
 
-			return embed
+			await interaction.editReply({
+				embeds: [embed],
+			})
 		} catch (err) {
 			console.error(`work: ${err}`)
 		}

@@ -24,14 +24,18 @@ module.exports = {
 			type: "NUMBER",
 		},
 	],
-	callback: async ({ instance, guild, user, args }) => {
+	callback: async ({ instance, guild, user, args, interaction }) => {
 		try {
+			await interaction.deferReply()
 			try {
 				var quantity = await specialArg(args[0], user.id, "caixas")
 			} catch {
-				return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-					VALUE: args[0],
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+						VALUE: args[0],
+					}),
 				})
+				return
 			}
 			if (
 				(await readFile(user.id, "caixas")) >= quantity &&
@@ -62,10 +66,12 @@ module.exports = {
 						)} \n:gift: ${caixas}`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
-				return embed
+				interaction.editReply({ embeds: [embed] })
 			} else {
-				return instance.messageHandler.get(guild, "CAIXA_INSUFICIENTE", {
-					VALUE: args[0],
+				interaction.editReply({
+					content: instance.messageHandler.get(guild, "CAIXA_INSUFICIENTE", {
+						VALUE: args[0],
+					}),
 				})
 			}
 		} catch (error) {

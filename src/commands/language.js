@@ -19,13 +19,17 @@ module.exports = {
 	],
 	callback: async ({ instance, guild, user, interaction }) => {
 		try {
+			await interaction.deferReply()
 			languageSchema = instance._mongoConnection.models["wokcommands-languages"]
 			const lang = interaction.options.getString("language")
 			if (guild) {
 				if (!lang) {
-					return instance.messageHandler.get(guild, "CURRENT_LANGUAGE", {
-						LANGUAGE: instance.messageHandler.getLanguage(guild),
+					await interaction.editReply({
+						content: instance.messageHandler.get(guild, "CURRENT_LANGUAGE", {
+							LANGUAGE: instance.messageHandler.getLanguage(guild),
+						}),
 					})
+					return
 				}
 				instance.messageHandler.setLanguage(guild, lang)
 
@@ -42,14 +46,19 @@ module.exports = {
 					}
 				)
 
-				return instance.messageHandler.get(guild, "NEW_LANGUAGE", {
-					LANGUAGE: lang,
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "NEW_LANGUAGE", {
+						LANGUAGE: lang,
+					}),
 				})
 			} else {
 				if (!lang) {
-					return instance.messageHandler.get(guild, "CURRENT_LANGUAGE", {
-						LANGUAGE: instance.messageHandler.getLanguage(guild),
+					await interaction.editReply({
+						content: instance.messageHandler.get(user, "CURRENT_LANGUAGE", {
+							LANGUAGE: instance.messageHandler.getLanguage(user),
+						}),
 					})
+					return
 				}
 				instance.messageHandler.setLanguage(user, lang)
 
@@ -66,8 +75,10 @@ module.exports = {
 					}
 				)
 
-				return instance.messageHandler.get(user, "NEW_LANGUAGE", {
-					LANGUAGE: lang,
+				await interaction.editReply({
+					content: instance.messageHandler.get(user, "NEW_LANGUAGE", {
+						LANGUAGE: lang,
+					}),
 				})
 			}
 		} catch (error) {

@@ -4,6 +4,7 @@ const {
 	readFile,
 	changeDB,
 	randint,
+	format,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
@@ -33,14 +34,20 @@ module.exports = {
 		args,
 	}) => {
 		try {
+			await interaction.deferReply()
 			const author = user
+
 			try {
 				var bet = await specialArg(args[0], user.id, "falcoins")
 			} catch {
-				return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-					VALUE: args[0],
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+						VALUE: args[0],
+					}),
 				})
+				return
 			}
+
 			if ((await readFile(user.id, "falcoins")) >= bet) {
 				var pot = bet
 				const embed = new MessageEmbed()
@@ -54,7 +61,7 @@ module.exports = {
 					.addFields(
 						{
 							name: instance.messageHandler.get(guild, "APOSTA"),
-							value: `${pot} Falcoins`,
+							value: `${await format(pot)} Falcoins`,
 							inline: false,
 						},
 						{
@@ -65,12 +72,13 @@ module.exports = {
 					)
 					.setFooter({ text: "by Falcão ❤️" })
 
-				var answer = await interaction.reply({
+				var answer = await interaction.editReply({
 					embeds: [embed],
 					fetchReply: true,
 				})
 
 				answer.react("✅")
+
 				await changeDB(author.id, "falcoins", -bet)
 
 				var users = [author]
@@ -95,34 +103,23 @@ module.exports = {
 					users.push(user)
 					path.push("- - - - -")
 					pot += bet
-					const embed2 = new MessageEmbed()
-						.setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
-						.setDescription(
-							instance.messageHandler.get(guild, "CAVALGADA_DESAFIO", {
-								USER: member.displayName,
-							})
-						)
-						.setColor("#0099ff")
-						.addFields(
-							{
-								name: instance.messageHandler.get(guild, "APOSTA"),
-								value: `${pot} Falcoins`,
-								inline: false,
-							},
-							{
-								name: instance.messageHandler.get(guild, "JOGADORES"),
-								value: `${users.join("\n")}`,
-								inline: false,
-							}
-						)
-						.setFooter({ text: "by Falcão ❤️" })
-					answer.edit({
-						embeds: [embed2],
+					embed.fields[0] = {
+						name: instance.messageHandler.get(guild, "APOSTA"),
+						value: `${await format(pot)} Falcoins`,
+						inline: false,
+					}
+					embed.fields[1] = {
+						name: instance.messageHandler.get(guild, "JOGADORES"),
+						value: `${users.join("\n")}`,
+						inline: false,
+					}
+					await interaction.editReply({
+						embeds: [embed],
 					})
 				})
 
 				collector.on("end", async () => {
-					loop1: while (true) {
+					while (true) {
 						var luck = randint(0, users.length - 1)
 						path[luck] = path[luck].slice(0, -2)
 
@@ -136,7 +133,7 @@ module.exports = {
 							.addFields(
 								{
 									name: instance.messageHandler.get(guild, "APOSTA"),
-									value: `${pot} Falcoins`,
+									value: `${await format(pot)} Falcoins`,
 									inline: false,
 								},
 								{
@@ -146,24 +143,23 @@ module.exports = {
 								}
 							)
 							.setFooter({ text: "by Falcão ❤️" })
-						await answer.edit({
+						await interaction.editReply({
 							embeds: [embed2],
 						})
 						await new Promise((resolve) => setTimeout(resolve, 250))
 
-						for (let i = 0; i < path.length; i++) {
-							if (path[i] === "") {
-								break loop1
-							}
-						}
-					}
-					for (let i = 0; i < path.length; i++) {
-						if (path[i] === "") {
-							var winner_path = i
+						if (path.includes("")) {
 							break
 						}
 					}
-					var winner = users[winner_path]
+
+					for (let i = 0; i < path.length; i++) {
+						if (path[i] === "") {
+							var winner = users[i]
+							break
+						}
+					}
+
 					await changeDB(winner.id, "falcoins", pot)
 					await changeDB(winner.id, "vitorias")
 					var embed3 = new MessageEmbed()
@@ -171,7 +167,7 @@ module.exports = {
 						.setDescription(
 							instance.messageHandler.get(guild, "GANHOU", {
 								WINNER: winner,
-								FALCOINS: pot,
+								FALCOINS: await format(pot),
 							})
 						)
 						.setColor(3066993)
@@ -186,7 +182,9 @@ module.exports = {
 					})
 				})
 			} else {
-				return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+				})
 			}
 		} catch (error) {
 			console.error(`Cavalgada: ${error}`)

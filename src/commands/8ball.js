@@ -17,8 +17,9 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, user, text }) => {
+	callback: async ({ instance, guild, user, text, interaction }) => {
 		try {
+			await interaction.deferReply()
 			answers = instance.messageHandler.get(guild, "8BALL")
 			let answer = `${answers[randint(0, answers.length - 1)]}`
 			const embed = new MessageEmbed()
@@ -39,7 +40,7 @@ module.exports = {
 					}
 				)
 				.setFooter({ text: "by Falcão ❤️" })
-			return embed
+			await interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`8ball: ${error}`)
 		}

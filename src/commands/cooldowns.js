@@ -10,8 +10,9 @@ module.exports = {
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, user, member }) => {
+	callback: async ({ instance, guild, user, member, interaction }) => {
 		try {
+			await interaction.deferReply()
 			var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
 			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
 			cooldownsSchema =
@@ -83,7 +84,7 @@ module.exports = {
 					}
 				)
 
-			return embed
+			interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`cooldowns: ${error}`)
 		}

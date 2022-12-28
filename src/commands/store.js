@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js")
+const { MessageEmbed, Interaction } = require("discord.js")
 const { getRoleColor, readFile, changeDB } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
@@ -27,8 +27,9 @@ module.exports = {
 			type: "NUMBER",
 		},
 	],
-	callback: async ({ instance, guild, user, args }) => {
+	callback: async ({ instance, guild, user, args, interaction }) => {
 		try {
+			await interaction.deferReply()
 			if (args[0] === undefined && args[1] === undefined) {
 				const embed = new MessageEmbed()
 					.setColor(await getRoleColor(guild, user.id))
@@ -50,16 +51,26 @@ module.exports = {
 						}
 					)
 					.setFooter({ text: "by Falcão ❤️" })
-				return embed
+				await interaction.editReply({
+					embeds: [embed],
+				})
 			} else {
 				item = parseInt(args[0])
-				amount = parseInt(args[1] || 1)
-				if (amount <= 0 || amount != amount) {
-					return instance.messageHandler.get(guild, "LOJA_QUANTIDADE_INVALIDA")
+				amount = parseInt(args[1])
+				if (amount <= 0) {
+					await interaction.editReply({
+						content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+							VALUE: args[1],
+						}),
+					})
+					return
 				}
 
 				if (amount > 100) {
-					return instance.messageHandler.get(guild, "LOJA_LIMITE")
+					await interaction.editReply({
+						content: instance.messageHandler.get(guild, "LOJA_LIMITE"),
+					})
+					return
 				}
 
 				if (item === 1) {
@@ -68,21 +79,43 @@ module.exports = {
 							await changeDB(user.id, "falcoins", -5000 * amount)
 							await changeDB(user.id, "caixas", 1 * amount)
 						}
-						return instance.messageHandler.get(guild, "LOJA_COMPROU_CAIXA", {
-							AMOUNT: amount,
+						await interaction.editReply({
+							content: instance.messageHandler.get(
+								guild,
+								"LOJA_COMPROU_CAIXA",
+								{
+									AMOUNT: amount,
+								}
+							),
 						})
 					} else {
-						return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
+						await interaction.editReply({
+							content: instance.messageHandler.get(
+								guild,
+								"FALCOINS_INSUFICIENTES"
+							),
+						})
 					}
 				} else if (item === 2) {
 					if ((await readFile(user.id, "falcoins")) >= 20000 * amount) {
 						await changeDB(user.id, "falcoins", -20000 * amount)
 						await changeDB(user.id, "chaves", 1 * amount)
-						return instance.messageHandler.get(guild, "LOJA_COMPROU_CHAVE", {
-							AMOUNT: amount,
+						await interaction.editReply({
+							content: instance.messageHandler.get(
+								guild,
+								"LOJA_COMPROU_CHAVE",
+								{
+									AMOUNT: amount,
+								}
+							),
 						})
 					} else {
-						return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
+						await interaction.editReply({
+							content: instance.messageHandler.get(
+								guild,
+								"FALCOINS_INSUFICIENTES"
+							),
+						})
 					}
 				}
 			}

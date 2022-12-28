@@ -37,6 +37,7 @@ module.exports = {
 	],
 	callback: async ({ instance, guild, user, interaction }) => {
 		try {
+			await interaction.deferReply()
 			type = interaction.options.getSubcommand()
 			if (type === "buy") {
 				amount = interaction.options.getNumber("amount")
@@ -59,15 +60,22 @@ module.exports = {
 					await changeDB(user.id, "falcoins", -(amount * 500))
 					await changeDB(user.id, "tickets", amount)
 
-					await interaction.reply({
+					await interaction.editReply({
 						embeds: [embed],
 					})
 				} else if (amount <= 0) {
-					return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-						VALUE: amount,
+					await interaction.editReply({
+						content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+							VALUE: amount,
+						}),
 					})
 				} else {
-					return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
+					await interaction.editReply({
+						content: instance.messageHandler.get(
+							guild,
+							"FALCOINS_INSUFICIENTES"
+						),
+					})
 				}
 			} else {
 				var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
@@ -103,7 +111,7 @@ module.exports = {
 					)
 				}
 
-				await interaction.reply({
+				await interaction.editReply({
 					embeds: [embed],
 				})
 			}

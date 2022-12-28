@@ -31,6 +31,7 @@ module.exports = {
 	testOnly,
 	callback: async ({ instance, guild, interaction }) => {
 		try {
+			await interaction.deferReply()
 			if (interaction.options !== undefined) {
 				var page = interaction.options.getString("page")
 			} else {
@@ -167,7 +168,7 @@ module.exports = {
 						}
 					)
 			)
-			await interaction.reply({ embeds: [embed], components: [row] })
+			await interaction.editReply({ embeds: [embed], components: [row] })
 		} catch (error) {
 			console.error(`Help: ${error}`)
 		}

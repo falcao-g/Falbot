@@ -4,6 +4,7 @@ module.exports = (client, instance) => {
 	client.on("interactionCreate", async (interaction) => {
 		try {
 			if (!interaction.isButton()) return
+			await interaction.deferReply({ ephemeral: true })
 
 			guildUser = interaction.guild ? interaction.guild : interaction.user
 
@@ -19,9 +20,8 @@ module.exports = (client, instance) => {
 						.setStyle("PRIMARY")
 				)
 
-				interaction.reply({
+				interaction.editReply({
 					content: instance.messageHandler.get(guildUser, "REMINDER_DISABLED"),
-					ephemeral: true,
 					components: [row],
 				})
 			}
@@ -39,9 +39,8 @@ module.exports = (client, instance) => {
 						.setStyle("PRIMARY")
 				)
 
-				interaction.reply({
+				interaction.editReply({
 					content: instance.messageHandler.get(guildUser, "REMINDER_ENABLED"),
-					ephemeral: true,
 					components: [row],
 				})
 			}

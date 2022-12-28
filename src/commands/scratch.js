@@ -16,6 +16,7 @@ module.exports = {
 	testOnly,
 	callback: async ({ instance, guild, interaction, user }) => {
 		try {
+			await interaction.deferReply()
 			const row = new MessageActionRow()
 			const row2 = new MessageActionRow()
 			const row3 = new MessageActionRow()
@@ -44,7 +45,7 @@ module.exports = {
 					value: instance.messageHandler.get(guild, "SCRATCH_DESCRIPTION"),
 				})
 
-			answer = await interaction.reply({
+			answer = await interaction.editReply({
 				embeds: [embed],
 				components: rows,
 				fetchReply: true,

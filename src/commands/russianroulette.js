@@ -4,6 +4,7 @@ const {
 	readFile,
 	changeDB,
 	randint,
+	format,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
@@ -33,12 +34,15 @@ module.exports = {
 		member,
 	}) => {
 		try {
+			await interaction.deferReply()
 			const author = user
 			try {
 				var bet = await specialArg(args[0], user.id, "falcoins")
 			} catch {
-				return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-					VALUE: args[1],
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+						VALUE: args[1],
+					}),
 				})
 			}
 			if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
@@ -53,7 +57,7 @@ module.exports = {
 					.addFields(
 						{
 							name: instance.messageHandler.get(guild, "APOSTA"),
-							value: `${pot} Falcoins`,
+							value: `${await format(pot)} Falcoins`,
 							inline: false,
 						},
 						{
@@ -64,7 +68,7 @@ module.exports = {
 					)
 					.setFooter({ text: "by Falcão ❤️" })
 
-				var answer = await interaction.reply({
+				var answer = await interaction.editReply({
 					embeds: [embed],
 					fetchReply: true,
 				})
@@ -97,7 +101,7 @@ module.exports = {
 					pot += bet
 					embed.fields[0] = {
 						name: instance.messageHandler.get(guild, "APOSTA"),
-						value: `${pot} falcoins`,
+						value: `${await format(pot)} falcoins`,
 						inline: false,
 					}
 					embed.fields[1] = {
@@ -105,7 +109,7 @@ module.exports = {
 						value: `${names.join("\n")}`,
 						inline: false,
 					}
-					answer.edit({
+					await interaction.editReply({
 						embeds: [embed],
 					})
 				})
@@ -124,7 +128,7 @@ module.exports = {
 							.addFields(
 								{
 									name: instance.messageHandler.get(guild, "APOSTA"),
-									value: `${pot} Falcoins`,
+									value: `${await format(pot)} Falcoins`,
 									inline: false,
 								},
 								{
@@ -150,7 +154,7 @@ module.exports = {
 					await changeDB(winner.id, "vitorias")
 					var embed3 = new MessageEmbed()
 						.setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
-						.setDescription(`${winner} ganhou ${pot} falcoins`)
+						.setDescription(`${winner} ganhou ${await format(pot)} falcoins`)
 						.setColor(3066993)
 						.addFields({
 							name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
@@ -163,11 +167,15 @@ module.exports = {
 					})
 				})
 			} else if (bet <= 0) {
-				return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-					VALUE: bet,
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+						VALUE: bet,
+					}),
 				})
 			} else {
-				return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+				})
 			}
 		} catch (error) {
 			console.error(`russianroulette: ${error}`)

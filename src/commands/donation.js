@@ -31,14 +31,18 @@ module.exports = {
 	],
 	callback: async ({ instance, guild, interaction, user, args }) => {
 		try {
+			await interaction.deferReply()
 			args[0] = await getMember(guild, args[0])
 
 			try {
 				var quantity = await specialArg(args[1], user.id, "falcoins")
 			} catch {
-				return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-					VALUE: args[1],
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+						VALUE: args[1],
+					}),
 				})
+				return
 			}
 
 			if ((await readFile(user.id, "falcoins")) >= quantity) {
@@ -49,12 +53,14 @@ module.exports = {
 					"falcoins",
 					quantity
 				)
-				return instance.messageHandler.get(guild, "DOAR", {
-					FALCOINS: await format(quantity),
-					USER: args[0],
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "DOAR", {
+						FALCOINS: await format(quantity),
+						USER: args[0],
+					}),
 				})
 			} else {
-				interaction.reply({
+				await interaction.editReply({
 					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
 					ephemeral: true,
 				})

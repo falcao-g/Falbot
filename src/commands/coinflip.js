@@ -15,8 +15,9 @@ module.exports = {
 			type: "NUMBER",
 		},
 	],
-	callback: async ({ instance, guild, args }) => {
+	callback: async ({ instance, guild, args, interaction }) => {
 		try {
+			await interaction.deferReply()
 			times = parseInt(args[0]) || 1
 			if (times <= 1000) {
 				let caras = 0
@@ -29,13 +30,17 @@ module.exports = {
 					}
 				}
 
-				return instance.messageHandler.get(guild, "COINFLIP", {
-					CARAS: caras,
-					COROAS: coroas,
-					TIMES: times,
+				interaction.editReply({
+					content: instance.messageHandler.get(guild, "COINFLIP", {
+						CARAS: caras,
+						COROAS: coroas,
+						TIMES: times,
+					}),
 				})
 			} else {
-				return instance.messageHandler.get(guild, "COINFLIP_LIMITE")
+				interaction.editReply({
+					content: instance.messageHandler.get(guild, "COINFLIP_LIMITE"),
+				})
 			}
 		} catch (error) {
 			console.error(`Coinflip: ${error}`)

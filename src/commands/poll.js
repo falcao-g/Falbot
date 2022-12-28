@@ -19,6 +19,7 @@ module.exports = {
 	],
 	callback: async ({ instance, guild, interaction, user, member, text }) => {
 		try {
+			await interaction.deferReply()
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
 				.setDescription(text)
@@ -30,7 +31,7 @@ module.exports = {
 				})
 				.setFooter({ text: "by Falcão ❤️" })
 
-			answer = await interaction.reply({
+			answer = await interaction.editReply({
 				embeds: [embed],
 				fetchReply: true,
 			})

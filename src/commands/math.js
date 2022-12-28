@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js")
+const { MessageEmbed, Interaction } = require("discord.js")
 const math = require("mathjs")
 const { getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
@@ -18,8 +18,9 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, user, text }) => {
+	callback: async ({ instance, interaction, guild, user, text }) => {
 		try {
+			await interaction.deferReply()
 			text = text.replaceAll("**", "^")
 			answer = await math.evaluate(text).toString()
 
@@ -31,7 +32,7 @@ module.exports = {
 				})
 				.setFooter({ text: "by Falcão ❤️" })
 
-			return embed
+			await interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`math: ${error}`)
 		}

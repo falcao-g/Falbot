@@ -372,12 +372,8 @@
 		"english": "For the cost of 20.000 falcoins you can buy a key that can be used to open a crate"
 	},
 	"LOJA_USO_2": {
-		"portugues": "Use `?store [numero] [quantidade]` para comprar um item",
-		"english": "Use `?store [number] [quantity]` to buy an item"
-	},
-	"LOJA_QUANTIDADE_INVALIDA": {
-		"portugues": "quantidade inválida! coloque um número positivo ou deixe em branco para comprar 1 :face_with_monocle:",
-		"english": "invalid quantity! put a positive number or leave it blank to buy 1 :face_with_monocle:"
+		"portugues": "Use `/store [numero] [quantidade]` para comprar um item",
+		"english": "Use `/store [number] [quantity]` to buy an item"
 	},
 	"LOJA_LIMITE": {
 		"portugues": "calma lá amigão, o limite é 100 itens por vez :wink:",

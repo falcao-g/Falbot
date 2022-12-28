@@ -19,6 +19,7 @@ module.exports = {
 	],
 	callback: async ({ instance, guild, interaction, user, member, args }) => {
 		try {
+			await interaction.deferReply()
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
 				.setImage(
@@ -26,7 +27,7 @@ module.exports = {
 				)
 				.setFooter({ text: "by Falcão ❤️" })
 			const member2 = await getMember(guild, args[0])
-			await interaction.reply({
+			await interaction.editReply({
 				content:
 					`${member2.displayName}` +
 					instance.messageHandler.get(guild, "BONKED") +

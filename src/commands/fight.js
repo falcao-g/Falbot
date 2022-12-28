@@ -33,21 +33,25 @@ module.exports = {
 	],
 	callback: async ({ instance, guild, interaction, user, member, args }) => {
 		try {
+			await interaction.deferReply()
 			var member2 = await getMember(guild, args[0])
 			if (member2.user != user) {
 				try {
 					var bet = await specialArg(args[1], user.id, "falcoins")
 				} catch {
-					return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-						VALUE: args[1],
+					await interaction.editReply({
+						content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+							VALUE: args[1],
+						}),
 					})
+					return
 				}
 				if (
 					(await readFile(user.id, "falcoins")) >= bet &&
 					(await readFile(member2.user.id, "falcoins")) >= bet &&
 					bet > 0
 				) {
-					var answer = await interaction.reply({
+					var answer = await interaction.editReply({
 						content: instance.messageHandler.get(guild, "LUTA_CONVITE", {
 							USER: member.displayName,
 							USER2: member2.displayName,
@@ -216,7 +220,7 @@ module.exports = {
 										value: `${order[0]["mention"]}: ${order[0]["hp"]} hp\n${order[1]["mention"]}: ${order[1]["hp"]} hp`,
 									})
 
-									var answer = await interaction.channel.send({
+									await interaction.channel.send({
 										embeds: [embed],
 									})
 									await new Promise((resolve) => setTimeout(resolve, 2500))
@@ -275,10 +279,14 @@ module.exports = {
 						}
 					})
 				} else {
-					return instance.messageHandler.get(guild, "INSUFICIENTE_CONTAS")
+					await interaction.editReply({
+						content: instance.messageHandler.get(guild, "INSUFICIENTE_CONTAS"),
+					})
 				}
 			} else {
-				return instance.messageHandler.get(guild, "NAO_JOGAR_SOZINHO")
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "NAO_JOGAR_SOZINHO"),
+				})
 			}
 		} catch (error) {
 			console.error(`fight: ${error}`)

@@ -25,12 +25,16 @@ module.exports = {
 		},
 	],
 	callback: async ({ instance, guild, interaction, user, args }) => {
+		await interaction.deferReply()
 		try {
 			var bet = await specialArg(args[0], user.id, "falcoins")
 		} catch {
-			return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-				VALUE: args[0],
+			await interaction.editReply({
+				content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+					VALUE: args[0],
+				}),
 			})
+			return
 		}
 		if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
 			await changeDB(user.id, "falcoins", -bet)
@@ -63,7 +67,7 @@ module.exports = {
 					.setStyle("DANGER"))
 			)
 
-			var answer = await interaction.reply({
+			var answer = await interaction.editReply({
 				embeds: [embed],
 				components: [row],
 				fetchReply: true,
@@ -117,12 +121,11 @@ module.exports = {
 					inline: true,
 				}
 
-				await answer.edit({
+				await interaction.editReply({
 					embeds: [embed],
 					components: [row],
 				})
 			}
-			collector.stop()
 			sell.setDisabled(true)
 
 			if (lost) {
@@ -132,12 +135,14 @@ module.exports = {
 				embed.setColor(3066993)
 			}
 
-			await answer.edit({
+			await interaction.editReply({
 				embeds: [embed],
 				components: [row],
 			})
 		} else {
-			return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
+			await interaction.editReply({
+				content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+			})
 		}
 	},
 }

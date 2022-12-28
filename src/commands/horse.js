@@ -40,12 +40,16 @@ module.exports = {
 	],
 	callback: async ({ instance, guild, interaction, user, member, args }) => {
 		try {
+			await interaction.deferReply()
 			try {
 				var bet = await specialArg(args[1], user.id, "falcoins")
 			} catch {
-				return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-					VALUE: args[1],
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+						VALUE: args[1],
+					}),
 				})
+				return
 			}
 			if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
 				await changeDB(user.id, "falcoins", -bet)
@@ -64,9 +68,8 @@ module.exports = {
 						.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 						.setFooter({ text: "by Falcão ❤️" })
 
-					answer = await interaction.reply({
+					await interaction.editReply({
 						embeds: [embed],
-						fetchReply: true,
 					})
 
 					for (let i = 0; i <= 21; i++) {
@@ -87,7 +90,7 @@ module.exports = {
 							name: instance.messageHandler.get(guild, "CAVALO"),
 							value: `:checkered_flag: ${horse1} :horse_racing:\n\u200b\n:checkered_flag: ${horse2} :horse_racing:\n\u200b\n:checkered_flag: ${horse3} :horse_racing:\n\u200b\n:checkered_flag: ${horse4} :horse_racing:\n\u200b\n:checkered_flag: ${horse5} :horse_racing:`,
 						}
-						await answer.edit({
+						await interaction.editReply({
 							embeds: [embed],
 						})
 
@@ -149,7 +152,9 @@ module.exports = {
 					})
 				}
 			} else {
-				return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
+				interaction.editReply({
+					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+				})
 			}
 		} catch (error) {
 			console.error(`horse: ${error}`)
