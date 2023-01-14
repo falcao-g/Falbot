@@ -543,20 +543,28 @@
 		"english": "Reward: **{REWARD}** falcoins\nYou can collect again in **{TIME}**"
 	},
 	"VOTE_FIRST": {
-		"portugues": "Você precisa votar primeiro para conseguir sua recompensa",
-		"english": "You need to vote first to get your reward"
+		"portugues": ":ballot_box: Vote no Falbot!",
+		"english": ":ballot_box: Vote for Falbot!"
+	},
+	"VOTE_DESCRIPTION": {
+		"portugues": "Votar vai te recompensar com **{FALCOINS} falcoins**!\nIsso também ajuda o bot a crescer e apoia o desenvolvedor :)",
+		"english": "Voting will grant you **{FALCOINS} falcoins**!\nThis also helps the bot grow and supports the developer :)"
 	},
 	"VOTE_HERE": {
-		"portugues": "[Você pode votar aqui](https://top.gg/bot/742331813539872798/vote)",
-		"english": "[You can vote here](https://top.gg/bot/742331813539872798/vote)"
-	},
-	"REWARD": {
-		"portugues": "Recompensa",
-		"english": "Reward"
+		"portugues": "Você pode votar aqui:",
+		"english": "You can vote here:"
 	},
 	"VOTE_FINAL": {
-		"portugues": "**{REWARD}** falcoins\nUse esse comando de novo após ter votado no bot",
-		"english": "**{REWARD}** falcoins\nUse this command again after you voted in the bot"
+		"portugues": "**Use esse comando de novo após ter votado no bot\n:fire: Você também receberá como bônus {PERCENTAGE}% falcoins a mais! Vote diariamente para aumentar a porcentagem.**",
+		"english": "**Use this command again after you voted in the bot\n:fire: You'll also earn {PERCENTAGE}% more falcoins as a bonus! Vote daily to increase the percentage**"
+	},
+	"VOTE_THANKS": {
+		"portugues": ":ballot_box: Obrigado por votar!",
+		"english": ":ballot_box: Thanks for voting!"
+	},
+	"VOTE_COLLECTED": {
+		"portugues": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:fire: +1 voto! Você vai receber outros 5% falcoins adicionais da próxima vez.**\n**:ballot_box: Vote diariamente para aumentar o seu bônus**\n**:bell: Ative os lembretes com `/reminder` para receber uma mensagem assim que você puder votar!**",
+		"english": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:fire: +1 streak! You'll earn another 5% additional falcoins next time!**\n**:ballot_box: Vote daily to increase your streak**\n**:bell: Enable reminders using `/reminder` to get a DM when you can vote!**"
 	},
 	"HELP_RANK": {
 		"portugues": ":arrow_double_up: Gaste falcoins para subir de rank",
