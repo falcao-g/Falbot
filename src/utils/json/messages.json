@@ -159,10 +159,6 @@
 		"portugues": "Você sacou {VALUE} falcoins do banco! :smiley:",
 		"english": "You withdrew {VALUE} falcoins from the bank! :smiley:"
 	},
-	"BONKED": {
-		"portugues": " você foi bonked por ",
-		"english": " you were bonked by "
-	},
 	"CAIXA_TITULO": {
 		"portugues": "Você abriu {QUANTITY} caixas, e encontrou:",
 		"english": "You opened {QUANTITY} crates, and found:"
@@ -355,29 +351,29 @@
 		"portugues": "{USER} chamou {USER2} para uma luta apostando {FALCOINS} falcoins :smiling_imp:",
 		"english": "{USER} challenges {USER2} to a fight for {FALCOINS} falcoins :smiling_imp:"
 	},
+	"LOJA": {
+		"portugues": "**Loja**",
+		"english": "**Store**"
+	},
 	"ITEM_1": {
-		"portugues": "Item número 1: Caixa",
-		"english": "Item number 1: Crate"
+		"portugues": ":gift: Caixa",
+		"english": ":gift: Crate"
 	},
 	"ITEM_1_DESCRICAO": {
 		"portugues": "Pelo custo de 5.000 falcoins você compra uma caixa que pode ser aberta usando uma chave",
 		"english": "For the cost of 5.000 falcoins you can buy a crate that can be opened using a key"
 	},
 	"ITEM_2": {
-		"portugues": "Item número 2: Chave",
-		"english": "Item number 2: Key"
+		"portugues": ":key: Chave",
+		"english": ":key: Key"
 	},
 	"ITEM_2_DESCRICAO": {
 		"portugues": "Pelo custo de 20.000 falcoins você compra uma chave que pode ser usada para abrir uma caixa",
 		"english": "For the cost of 20.000 falcoins you can buy a key that can be used to open a crate"
 	},
 	"LOJA_USO_2": {
-		"portugues": "Use `/store [numero] [quantidade]` para comprar um item",
-		"english": "Use `/store [number] [quantity]` to buy an item"
-	},
-	"LOJA_LIMITE": {
-		"portugues": "calma lá amigão, o limite é 100 itens por vez :wink:",
-		"english": "calm down there friend, the limit is 100 items per time :wink:"
+		"portugues": "Use `/store [item] [quantidade]` para comprar um item",
+		"english": "Use `/store [item] [quantity]` to buy an item"
 	},
 	"LOJA_COMPROU_CAIXA": {
 		"portugues": "Parabéns! Você comprou {AMOUNT} caixas :star_struck:",
@@ -591,8 +587,8 @@
 		"english": ":tada: Want to have fun without worrying abou falcoins?"
 	},
 	"HELP_FUN2": {
-		"portugues": "-Preveja seu futuro com `/8ball`\n-Mande outro usuário (ou a si mesmo) para a horny jail com `/bonk`\n-Peça para o falbot procurar imagens no google pra você com `/image`\n-Jogue cara ou coroa com `/coinflip`",
-		"english": "-Forecast your future with `/8ball`\n-Send you or another user to the horny jail with `/bonk`\n-Ask falbot to search images on google for you with `/image`\n-Flip a coin with `/coinflip`"
+		"portugues": "-Preveja seu futuro com `/8ball`\n-Peça para o falbot procurar imagens no google pra você com `/image`\n-Jogue cara ou coroa com `/coinflip`",
+		"english": "-Forecast your future with `/8ball`\n-Ask falbot to search images on google for you with `/image`\n-Flip a coin with `/coinflip`"
 	},
 	"HELP_UTILS": {
 		"portugues": ":pencil: Falbot também pode ser útil no seu dia-a-dia",

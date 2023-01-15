@@ -11,13 +11,13 @@ module.exports = {
 	testOnly,
 	options: [
 		{
-			name: "number",
-			description: "number of the item you want to buy",
+			name: "item",
+			description: "item that you want to buy",
 			required: false,
 			type: "NUMBER",
 			choices: [
-				{ name: 1, value: 1 },
-				{ name: 2, value: 2 },
+				{ name: "crate", value: 1 },
+				{ name: "key", value: 2 },
 			],
 		},
 		{
@@ -33,7 +33,7 @@ module.exports = {
 			if (args[0] === undefined && args[1] === undefined) {
 				const embed = new MessageEmbed()
 					.setColor(await getRoleColor(guild, user.id))
-					.setTitle("**Loja**")
+					.setTitle(instance.messageHandler.get(guild, "LOJA"))
 					.addFields(
 						{
 							name: instance.messageHandler.get(guild, "ITEM_1"),
@@ -66,19 +66,10 @@ module.exports = {
 					return
 				}
 
-				if (amount > 100) {
-					await interaction.editReply({
-						content: instance.messageHandler.get(guild, "LOJA_LIMITE"),
-					})
-					return
-				}
-
 				if (item === 1) {
 					if ((await readFile(user.id, "falcoins")) >= 5000 * amount) {
-						for (let i = 0; i < amount; i++) {
-							await changeDB(user.id, "falcoins", -5000 * amount)
-							await changeDB(user.id, "caixas", 1 * amount)
-						}
+						await changeDB(user.id, "falcoins", -5000 * amount)
+						await changeDB(user.id, "caixas", 1 * amount)
 						await interaction.editReply({
 							content: instance.messageHandler.get(
 								guild,
