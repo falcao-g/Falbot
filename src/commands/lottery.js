@@ -1,4 +1,3 @@
-const fs = require("fs")
 const { MessageEmbed } = require("discord.js")
 const {
 	readFile,
@@ -7,6 +6,7 @@ const {
 	format,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const lottoSchema = require("../schemas/lotto-schema")
 
 module.exports = {
 	category: "Economia",
@@ -78,23 +78,21 @@ module.exports = {
 					})
 				}
 			} else {
-				var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
+				lotto = await lottoSchema.findById("semanal")
 				var embed = new MessageEmbed()
 					.setColor("GOLD")
 					.addFields(
 						{
 							name: instance.messageHandler.get(guild, "LOTTERY"),
 							value: instance.messageHandler.get(guild, "LOTTERY_POOL", {
-								PRIZE: await format(config["lottery"]["prize"]),
+								PRIZE: await format(lotto.prize),
 							}),
 							inline: false,
 						},
 						{
 							name: "Info",
 							value: instance.messageHandler.get(guild, "LOTTERY_INFO", {
-								TIME: await msToTime(
-									config["lottery"]["drawTime"] - Date.now()
-								),
+								TIME: await msToTime(lotto.nextDraw - Date.now()),
 							}),
 							inline: false,
 						}

@@ -1,5 +1,6 @@
 const fs = require("fs")
 const userSchema = require("../schemas/user-schema")
+const lottoSchema = require("../schemas/lotto-schema")
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
 const levels = require("../utils/json/levels.json")
 
@@ -275,8 +276,9 @@ async function sendVoteReminders(instance, client) {
 }
 
 async function lotteryDraw(instance, client) {
-	var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
-	if (Date.now() > config["lottery"]["drawTime"]) {
+	lotto = await lottoSchema.findById("semanal")
+
+	if (Date.now() > lotto.nextDraw) {
 		console.log("loteria!")
 
 		var users = await userSchema.find({
@@ -298,7 +300,7 @@ async function lotteryDraw(instance, client) {
 				}
 			}
 
-			await changeDB(winner.id, "falcoins", config["lottery"]["prize"])
+			await changeDB(winner.id, "falcoins", lotto.prize)
 
 			winnerUser = await client.users.fetch(winner.id)
 
@@ -307,7 +309,7 @@ async function lotteryDraw(instance, client) {
 				.addFields({
 					name: instance.messageHandler.get(winnerUser, "CONGRATULATIONS"),
 					value: instance.messageHandler.get(winnerUser, "LOTTERY_WIN", {
-						PRIZE: await format(config["lottery"]["prize"]),
+						PRIZE: await format(lotto.prize),
 						TICKETS: await format(winner.tickets),
 						TOTAL: await format(numTickets),
 					}),
@@ -327,14 +329,10 @@ async function lotteryDraw(instance, client) {
 				embeds: [embed],
 			})
 		}
-		config["lottery"]["drawTime"] = Date.now() + 604800000 //next one is next week
-		config["lottery"]["prize"] = randint(1000000, 2000000)
+		lotto.nextDraw = Date.now() + 604800000 //next one is next week
+		lotto.prize = randint(1000000, 2000000)
 
-		json2 = JSON.stringify(config, null, 1)
-
-		fs.writeFileSync("./src/config.json", json2, "utf8", function (err) {
-			if (err) throw err
-		})
+		await lotto.save()
 	}
 }
 
