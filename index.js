@@ -57,6 +57,7 @@ client.on("ready", () => {
 			"channelonly",
 			"prefix",
 		],
+		showWarns: false,
 	})
 
 	wok._mongoConnection = mongoose.connection
