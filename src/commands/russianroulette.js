@@ -5,6 +5,7 @@ const {
 	changeDB,
 	randint,
 	format,
+	getRoleColor,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
@@ -24,18 +25,9 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({
-		instance,
-		guild,
-		interaction,
-		client,
-		user,
-		args,
-		member,
-	}) => {
+	callback: async ({ instance, guild, interaction, client, user, args }) => {
 		try {
 			await interaction.deferReply()
-			const author = user
 			try {
 				var bet = await specialArg(args[0], user.id, "falcoins")
 			} catch {
@@ -48,24 +40,18 @@ module.exports = {
 			if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
 				var pot = bet
 				const embed = new MessageEmbed()
-					.setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
 					.setDescription(
-						`${member.displayName}` +
-							instance.messageHandler.get(guild, "ROLETA_RUSSA_COMECOU")
+						instance.messageHandler.get(guild, "ROLETARUSSA_DESCRIPTION", {
+							USER: user,
+							BET: await format(pot),
+						})
 					)
 					.setColor("#0099ff")
-					.addFields(
-						{
-							name: instance.messageHandler.get(guild, "APOSTA"),
-							value: `${await format(pot)} Falcoins`,
-							inline: false,
-						},
-						{
-							name: instance.messageHandler.get(guild, "JOGADORES"),
-							value: `${author}`,
-							inline: false,
-						}
-					)
+					.addFields({
+						name: instance.messageHandler.get(guild, "JOGADORES"),
+						value: `${user}`,
+						inline: false,
+					})
 					.setFooter({ text: "by Falcão ❤️" })
 
 				var answer = await interaction.editReply({
@@ -74,18 +60,18 @@ module.exports = {
 				})
 
 				answer.react("✅")
-				await changeDB(author.id, "falcoins", -bet)
+				await changeDB(user.id, "falcoins", -bet)
 
-				var users = [author]
-				var names = [author]
+				var users = [user]
+				var names = [user]
 				mensagens = instance.messageHandler.get(guild, "RUSROL")
 
-				const filter = async (reaction, user) => {
+				const filter = async (reaction, newUser) => {
 					return (
-						(await readFile(user.id, "falcoins")) >= bet &&
+						(await readFile(newUser.id, "falcoins")) >= bet &&
 						reaction.emoji.name === "✅" &&
-						user.id !== client.user.id &&
-						!users.includes(user)
+						newUser.id !== client.user.id &&
+						!users.includes(newUser)
 					)
 				}
 
@@ -94,17 +80,18 @@ module.exports = {
 					time: 1000 * 60,
 				})
 
-				collector.on("collect", async (reaction, user) => {
-					await changeDB(user.id, "falcoins", -bet)
-					users.push(user)
-					names.push(user)
+				collector.on("collect", async (reaction, newUser) => {
+					await changeDB(newUser.id, "falcoins", -bet)
+					users.push(newUser)
+					names.push(newUser)
 					pot += bet
+					embed.setDescription(
+						instance.messageHandler.get(guild, "ROLETARUSSA_DESCRIPTION", {
+							USER: user,
+							BET: await format(pot),
+						})
+					)
 					embed.fields[0] = {
-						name: instance.messageHandler.get(guild, "APOSTA"),
-						value: `${await format(pot)} falcoins`,
-						inline: false,
-					}
-					embed.fields[1] = {
 						name: instance.messageHandler.get(guild, "JOGADORES"),
 						value: `${names.join("\n")}`,
 						inline: false,
@@ -120,50 +107,39 @@ module.exports = {
 						var eliminated = users[luck]
 						names[luck] = `~~${names[luck]}~~ :skull:`
 						users.splice(luck, 1)
-						var embed2 = new MessageEmbed()
-							.setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
-							.setDescription(
-								`${eliminated} ${mensagens[randint(0, mensagens.length - 1)]}`
-							)
-							.addFields(
-								{
-									name: instance.messageHandler.get(guild, "APOSTA"),
-									value: `${await format(pot)} Falcoins`,
-									inline: false,
-								},
-								{
-									name: instance.messageHandler.get(guild, "JOGADORES"),
-									value: names.join("\n"),
-									inline: false,
-								},
-								{
-									name: instance.messageHandler.get(guild, "TEMPO_RESTANTE"),
-									value: instance.messageHandler.get(guild, "ATIRANDO"),
-									inline: false,
-								}
-							)
-							.setFooter({ text: "by Falcão ❤️" })
+						embed.setDescription(
+							instance.messageHandler.get(guild, "ROLETARUSSA_DESCRIPTION2", {
+								BET: await format(pot),
+							}) +
+								`\n${eliminated} ${mensagens[randint(0, mensagens.length - 1)]}`
+						)
 
-						await interaction.channel.send({
-							embeds: [embed2],
+						embed.fields[0] = {
+							name: instance.messageHandler.get(guild, "JOGADORES"),
+							value: `${names.join("\n")}`,
+							inline: false,
+						}
+
+						await interaction.editReply({
+							embeds: [embed],
 						})
 						await new Promise((resolve) => setTimeout(resolve, 5000))
 					}
 					var winner = users[0]
 					await changeDB(winner.id, "falcoins", pot)
 					await changeDB(winner.id, "vitorias")
-					var embed3 = new MessageEmbed()
-						.setTitle(instance.messageHandler.get(guild, "ROLETA_RUSSA"))
-						.setDescription(`${winner} ganhou ${await format(pot)} falcoins`)
-						.setColor(3066993)
-						.addFields({
-							name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
-							value: `${await readFile(winner.id, "falcoins", true)} falcoins`,
-						})
-						.setFooter({ text: "by Falcão ❤️" })
+					embed
+						.setDescription(
+							instance.messageHandler.get(guild, "ROLETARUSSA_DESCRIPTION3", {
+								BET: await format(pot),
+								USER: winner,
+								SALDO: await readFile(winner.id, "falcoins", true),
+							})
+						)
+						.setColor(await getRoleColor(guild, winner.id))
 
-					await interaction.followUp({
-						embeds: [embed3],
+					await interaction.editReply({
+						embeds: [embed],
 					})
 				})
 			} else if (bet <= 0) {

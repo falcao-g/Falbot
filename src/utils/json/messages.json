@@ -167,10 +167,6 @@
 		"portugues": "você não tem caixas e/ou chaves o suficiente para esta ação! :rage:",
 		"english": "you don't have enough crates and/or keys to do this action! :rage:"
 	},
-	"APOSTA": {
-		"portugues": "Aposta",
-		"english": "Bet"
-	},
 	"JOGADORES": {
 		"portugues": "Jogadores",
 		"english": "Players"
@@ -192,7 +188,7 @@
 		"english": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: You lost!\n:bank: **Current balance**: {SALDO} falcoins"
 	},
 	"CAVALGADA_DESCRIPTION": {
-		"portugues": ":horse: {USER} começou uma **corrida de \ncavalos**, entre apertando o botão a baixo, o \nvencedor leva todos os **falcoins acumulados!**\n:moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Começando em `1m`",
+		"portugues": ":horse: {USER} começou uma **corrida de \ncavalos**, entre apertando o botão abaixo, o \nvencedor leva todos os **falcoins acumulados!**\n:moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Começando em `1m`",
 		"english": ":horse: {USER} started a **horse race**, \njoin by pressing the button below, the \nwinner gets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting in `1m`"
 	},
 	"CAVALGADA_DESCRIPTION2": {
@@ -279,6 +275,18 @@
 		"portugues": "Você não pode jogar com você mesmo, espertinho :rage:",
 		"english": "You can't play with yourself, smartass :rage:"
 	},
+	"ROLETARUSSA_DESCRIPTION": {
+		"portugues": ":drop_of_blood: {USER} começou uma **roleta russa**, \nentre apertando o botão abaixo, a cada 5 \nsegundos, **alguém morre**, o último vivo leva \ntodos os **falcoins acumulados!**\n:moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Começando em `1m`",
+		"english": ":drop_of_blood: {USER} started a **russian roulette**, \njoin by pressing the button below, each 5 \nseconds, **someone dies**, the last alive \ngets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting in `1m`"
+	},
+	"ROLETARUSSA_DESCRIPTION2": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Eliminando jogadores...",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Killing players..."
+	},
+	"ROLETARUSSA_DESCRIPTION3": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: {USER} sobreviveu!\n:bank: **Saldo atual**: {SALDO} falcoins",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: {USER} survived!\n:bank: **Current balance**: {SALDO} falcoins"
+	},
 	"ROLETA_RUSSA_COMECOU": {
 		"portugues": " começou uma roleta russa",
 		"english": " started a russian roulette"
@@ -290,10 +298,6 @@
 	"ATIRANDO": {
 		"portugues": "atirando em alguém em 5 segundos",
 		"english": "shooting someone in 5 seconds"
-	},
-	"ROLETA_RUSSA": {
-		"portugues": "Roleta russa",
-		"english": "Russian roulette"
 	},
 	"BOLA8": {
 		"portugues": "Bola 8 mágica",
@@ -454,7 +458,11 @@
 			"não tinha o high ground",
 			"descobriu que o chão era lava",
 			"descobriu que a terra é plana",
-			"não usou máscara"
+			"não usou máscara",
+			"explodiu",
+			"levou um tiro",
+			"tentou fugir",
+			"abriu o twitter"
 		],
 		"english": [
 			"died",
@@ -463,7 +471,11 @@
 			"didn\"t have the high ground",
 			"found out that the floor was lava",
 			"found out that the earth is flat",
-			"didn\"t use a mask"
+			"didn\"t use a mask",
+			"exploded",
+			"was shot",
+			"tried to escape",
+			"opened twitter"
 		]
 	},
 	"MAX_RANK": {
