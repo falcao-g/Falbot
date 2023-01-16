@@ -167,14 +167,6 @@
 		"portugues": "você não tem caixas e/ou chaves o suficiente para esta ação! :rage:",
 		"english": "you don't have enough crates and/or keys to do this action! :rage:"
 	},
-	"CAVALGADA": {
-		"portugues": "Cavalgada",
-		"english": "Horse race"
-	},
-	"CAVALGADA_DESAFIO": {
-		"portugues": "{USER} te desafia para uma cavalgada!",
-		"english": "{USER} challenges you to a horse race!"
-	},
 	"APOSTA": {
 		"portugues": "Aposta",
 		"english": "Bet"
@@ -198,6 +190,18 @@
 	"CAVALO_DESCRIPTION_LOST": {
 		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Você perdeu!\n:bank: **Saldo atual**: {SALDO} falcoins",
 		"english": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: You lost!\n:bank: **Current balance**: {SALDO} falcoins"
+	},
+	"CAVALGADA_DESCRIPTION": {
+		"portugues": ":horse: {USER} começou uma **corrida de \ncavalos**, entre apertando o botão a baixo, o \nvencedor leva todos os **falcoins acumulados!**\n:moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Começando em `1m`",
+		"english": ":horse: {USER} started a **horse race**, \njoin by pressing the button below, the \nwinner gets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting in `1m`"
+	},
+	"CAVALGADA_DESCRIPTION2": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Correndo...",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Racing..."
+	},
+	"CAVALGADA_DESCRIPTION3": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: {USER} ganhou!\n:bank: **Saldo atual**: {SALDO} falcoins",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: {USER} won!\n:bank: **Current balance**: {SALDO} falcoins"
 	},
 	"COINFLIP": {
 		"portugues": ":coin: você tirou **{CARAS}** caras e **{COROAS}** coroas jogando **{TIMES}** vezes",

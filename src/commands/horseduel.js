@@ -5,12 +5,13 @@ const {
 	changeDB,
 	randint,
 	format,
+	getRoleColor,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
 	category: "Economia",
-	description: "Challenge other users to a horse duel",
+	description: "Challenge other users to a horse race",
 	slash: true,
 	cooldown: "1s",
 	guildOnly: true,
@@ -24,18 +25,9 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({
-		instance,
-		guild,
-		interaction,
-		client,
-		member,
-		user,
-		args,
-	}) => {
+	callback: async ({ instance, guild, interaction, client, user, args }) => {
 		try {
 			await interaction.deferReply()
-			const author = user
 
 			try {
 				var bet = await specialArg(args[0], user.id, "falcoins")
@@ -51,25 +43,18 @@ module.exports = {
 			if ((await readFile(user.id, "falcoins")) >= bet) {
 				var pot = bet
 				const embed = new MessageEmbed()
-					.setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
 					.setDescription(
-						instance.messageHandler.get(guild, "CAVALGADA_DESAFIO", {
-							USER: member.displayName,
+						instance.messageHandler.get(guild, "CAVALGADA_DESCRIPTION", {
+							USER: user,
+							BET: await format(pot),
 						})
 					)
 					.setColor("#0099ff")
-					.addFields(
-						{
-							name: instance.messageHandler.get(guild, "APOSTA"),
-							value: `${await format(pot)} Falcoins`,
-							inline: false,
-						},
-						{
-							name: instance.messageHandler.get(guild, "JOGADORES"),
-							value: `${author}`,
-							inline: false,
-						}
-					)
+					.addFields({
+						name: instance.messageHandler.get(guild, "JOGADORES"),
+						value: `${user}`,
+						inline: false,
+					})
 					.setFooter({ text: "by Falcão ❤️" })
 
 				var answer = await interaction.editReply({
@@ -79,17 +64,17 @@ module.exports = {
 
 				answer.react("✅")
 
-				await changeDB(author.id, "falcoins", -bet)
+				await changeDB(user.id, "falcoins", -bet)
 
-				var users = [author]
+				var users = [user]
 				var path = ["- - - - -"]
 
-				const filter = async (reaction, user) => {
+				const filter = async (reaction, newUser) => {
 					return (
-						(await readFile(user.id, "falcoins")) >= bet &&
+						(await readFile(newUser.id, "falcoins")) >= bet &&
 						reaction.emoji.name === "✅" &&
-						user.id !== client.user.id &&
-						!users.includes(user)
+						newUser.id !== client.user.id &&
+						!users.includes(newUser)
 					)
 				}
 
@@ -98,17 +83,18 @@ module.exports = {
 					time: 1000 * 60,
 				})
 
-				collector.on("collect", async (reaction, user) => {
-					await changeDB(user.id, "falcoins", -bet)
-					users.push(user)
+				collector.on("collect", async (reaction, newUser) => {
+					await changeDB(newUser.id, "falcoins", -bet)
+					users.push(newUser)
 					path.push("- - - - -")
 					pot += bet
+					embed.setDescription(
+						instance.messageHandler.get(guild, "CAVALGADA_DESCRIPTION", {
+							USER: user,
+							BET: await format(pot),
+						})
+					)
 					embed.fields[0] = {
-						name: instance.messageHandler.get(guild, "APOSTA"),
-						value: `${await format(pot)} Falcoins`,
-						inline: false,
-					}
-					embed.fields[1] = {
 						name: instance.messageHandler.get(guild, "JOGADORES"),
 						value: `${users.join("\n")}`,
 						inline: false,
@@ -125,60 +111,45 @@ module.exports = {
 
 						var frase = ""
 						for (let i = 0; i < path.length; i++) {
-							frase += `${users[i]}\n:checkered_flag: ${path[i]}:horse_racing:\n`
+							frase += `${users[i]}\n:checkered_flag: ${path[i]}:horse_racing:\n\n`
 						}
 
-						var embed2 = new MessageEmbed()
-							.setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
-							.addFields(
-								{
-									name: instance.messageHandler.get(guild, "APOSTA"),
-									value: `${await format(pot)} Falcoins`,
-									inline: false,
-								},
-								{
-									name: instance.messageHandler.get(guild, "JOGADORES"),
-									value: `${frase}`,
-									inline: false,
-								}
-							)
-							.setFooter({ text: "by Falcão ❤️" })
+						embed.setDescription(
+							instance.messageHandler.get(guild, "CAVALGADA_DESCRIPTION2", {
+								BET: await format(pot),
+							})
+						)
+
+						embed.fields[0] = {
+							name: "\u200b",
+							value: `${frase}`,
+							inline: false,
+						}
+
 						await interaction.editReply({
-							embeds: [embed2],
+							embeds: [embed],
 						})
+
+						if (path[luck] === "") {
+							var winner = users[luck]
+							break
+						}
+
 						await new Promise((resolve) => setTimeout(resolve, 250))
-
-						if (path.includes("")) {
-							break
-						}
-					}
-
-					for (let i = 0; i < path.length; i++) {
-						if (path[i] === "") {
-							var winner = users[i]
-							break
-						}
 					}
 
 					await changeDB(winner.id, "falcoins", pot)
 					await changeDB(winner.id, "vitorias")
-					var embed3 = new MessageEmbed()
-						.setTitle(instance.messageHandler.get(guild, "CAVALGADA"))
-						.setDescription(
-							instance.messageHandler.get(guild, "GANHOU", {
-								WINNER: winner,
-								FALCOINS: await format(pot),
-							})
-						)
-						.setColor(3066993)
-						.addFields({
-							name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
-							value: `${await readFile(winner.id, "falcoins", true)} falcoins`,
+					embed.setColor(await getRoleColor(guild, winner.id)).setDescription(
+						instance.messageHandler.get(guild, "CAVALGADA_DESCRIPTION3", {
+							BET: await format(pot),
+							USER: winner,
+							SALDO: await readFile(winner.id, "falcoins", true),
 						})
-						.setFooter({ text: "by Falcão ❤️" })
+					)
 
-					await interaction.followUp({
-						embeds: [embed3],
+					await interaction.editReply({
+						embeds: [embed],
 					})
 				})
 			} else {
