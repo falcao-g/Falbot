@@ -18,8 +18,9 @@ module.exports = {
 	testOnly,
 	options: [
 		{
-			name: "horse_number",
-			description: "number of the horse you want to bet in (1-5)",
+			name: "horse",
+			description:
+				"number of the horse you want to bet in, order is top to bottom",
 			required: true,
 			type: "NUMBER",
 			choices: [
@@ -38,7 +39,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, interaction, user, member, args }) => {
+	callback: async ({ instance, guild, interaction, user, args }) => {
 		try {
 			await interaction.deferReply()
 			try {
@@ -60,12 +61,17 @@ module.exports = {
 					let horse4 = "- - - - -"
 					let horse5 = "- - - - -"
 					const embed = new MessageEmbed()
+						.setDescription(
+							instance.messageHandler.get(guild, "CAVALO_DESCRIPTION", {
+								BET: await format(bet),
+								HORSE: args[0],
+							})
+						)
 						.addFields({
-							name: instance.messageHandler.get(guild, "CAVALO"),
-							value: `:checkered_flag: ${horse1} :horse_racing:\n\u200b\n:checkered_flag: ${horse2} :horse_racing:\n\u200b\n:checkered_flag: ${horse3} :horse_racing:\n\u200b\n:checkered_flag: ${horse4} :horse_racing:\n\u200b\n:checkered_flag: ${horse5} :horse_racing:`,
+							name: "\u200b",
+							value: `**1.** :checkered_flag:  ${horse1} :horse_racing:\n\u200b\n**2.** :checkered_flag:  ${horse2} :horse_racing:\n\u200b\n**3.** :checkered_flag:  ${horse3} :horse_racing:\n\u200b\n**4.** :checkered_flag:  ${horse4} :horse_racing:\n\u200b\n**5.** :checkered_flag:  ${horse5}  :horse_racing:`,
 						})
 						.setColor(await getRoleColor(guild, user.id))
-						.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 						.setFooter({ text: "by Falcão ❤️" })
 
 					await interaction.editReply({
@@ -87,8 +93,8 @@ module.exports = {
 						}
 
 						embed.fields[0] = {
-							name: instance.messageHandler.get(guild, "CAVALO"),
-							value: `:checkered_flag: ${horse1} :horse_racing:\n\u200b\n:checkered_flag: ${horse2} :horse_racing:\n\u200b\n:checkered_flag: ${horse3} :horse_racing:\n\u200b\n:checkered_flag: ${horse4} :horse_racing:\n\u200b\n:checkered_flag: ${horse5} :horse_racing:`,
+							name: "\u200b",
+							value: `**1.** :checkered_flag:  ${horse1} :horse_racing:\n\u200b\n**2.** :checkered_flag:  ${horse2} :horse_racing:\n\u200b\n**3.** :checkered_flag:  ${horse3} :horse_racing:\n\u200b\n**4.** :checkered_flag:  ${horse4} :horse_racing:\n\u200b\n**5.** :checkered_flag:  ${horse5} :horse_racing:`,
 						}
 						await interaction.editReply({
 							embeds: [embed],
@@ -120,39 +126,30 @@ module.exports = {
 
 					if (args[0] == winner) {
 						await changeDB(user.id, "falcoins", bet * 5)
-						var embed2 = new MessageEmbed().setColor(3066993).addFields({
-							name: instance.messageHandler.get(guild, "CAVALO_GANHOU", {
-								WINNER: winner,
-							}),
-							value: instance.messageHandler.get(guild, "CAVALO_VOCE_GANHOU", {
+						embed.setColor(3066993).setDescription(
+							instance.messageHandler.get(guild, "CAVALO_DESCRIPTION_WON", {
+								BET: await format(bet),
+								HORSE: args[0],
 								FALCOINS: await format(bet * 5),
-							}),
-						})
+								SALDO: await readFile(user.id, "falcoins", true),
+							})
+						)
 					} else {
-						var embed2 = new MessageEmbed().setColor(15158332).addFields({
-							name: instance.messageHandler.get(guild, "CAVALO_GANHOU", {
-								WINNER: winner,
-							}),
-							value: instance.messageHandler.get(guild, "CAVALO_VOCE_PERDEU", {
-								FALCOINS: await format(bet),
-							}),
-						})
+						embed.setColor(15158332).setDescription(
+							instance.messageHandler.get(guild, "CAVALO_DESCRIPTION_LOST", {
+								BET: await format(bet),
+								HORSE: args[0],
+								SALDO: await readFile(user.id, "falcoins", true),
+							})
+						)
 					}
 
-					embed2
-						.addFields({
-							name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
-							value: `${await readFile(user.id, "falcoins", true)} falcoins`,
-						})
-						.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
-						.setFooter({ text: "by Falcão ❤️" })
-
-					await interaction.followUp({
-						embeds: [embed2],
+					await interaction.editReply({
+						embeds: [embed],
 					})
 				}
 			} else {
-				interaction.editReply({
+				await interaction.editReply({
 					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
 				})
 			}

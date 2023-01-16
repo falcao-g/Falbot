@@ -187,21 +187,17 @@
 		"portugues": "{WINNER} ganhou {FALCOINS} falcoins!",
 		"english": "{WINNER} won {FALCOINS} falcoins!"
 	},
-	"CAVALO": {
-		"portugues": "Cavalo",
-		"english": "Horse"
+	"CAVALO_DESCRIPTION": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Correndo...",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: Racing..."
 	},
-	"CAVALO_GANHOU": {
-		"portugues": "Cavalo {WINNER} ganhou!",
-		"english": "Horse {WINNER} won!"
+	"CAVALO_DESCRIPTION_WON": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Você ganhou {FALCOINS} falcoins!\n:bank: **Saldo atual**: {SALDO} falcoins",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: You won {FALCOINS} falcoins!\n:bank: **Current balance**: {SALDO} falcoins"
 	},
-	"CAVALO_VOCE_GANHOU": {
-		"portugues": "Você ganhou {FALCOINS} falcoins!",
-		"english": "You won {FALCOINS} falcoins!"
-	},
-	"CAVALO_VOCE_PERDEU": {
-		"portugues": "Você perdeu {FALCOINS} falcoins!",
-		"english": "You lost {FALCOINS} falcoins!"
+	"CAVALO_DESCRIPTION_LOST": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Você perdeu!\n:bank: **Saldo atual**: {SALDO} falcoins",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: You lost!\n:bank: **Current balance**: {SALDO} falcoins"
 	},
 	"COINFLIP": {
 		"portugues": ":coin: você tirou **{CARAS}** caras e **{COROAS}** coroas jogando **{TIMES}** vezes",
