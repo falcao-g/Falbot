@@ -22,22 +22,27 @@ client.on("ready", () => {
 		mongoose.connect(process.env.MONGODB_URI)
 	} catch {
 		console.log("A conexão caiu")
-		setTimeout(() => mongoose.connect(process.env.MONGODB_URI), 1000)
+		mongoose.connect(process.env.MONGODB_URI)
 	}
 
 	mongoose.connection.on("error", (err) => {
 		console.log(`Erro na conexão: ${err}`)
-		setTimeout(() => mongoose.connect(process.env.MONGODB_URI), 1000)
+		mongoose.connect(process.env.MONGODB_URI)
 	})
 
 	mongoose.connection.on("disconnected", () => {
 		console.log("A conexão caiu")
-		setTimeout(() => mongoose.connect(process.env.MONGODB_URI), 1000)
+		mongoose.connect(process.env.MONGODB_URI)
+	})
+
+	mongoose.connection.on("disconnecting", () => {
+		console.log("A conexão caiu")
+		mongoose.connect(process.env.MONGODB_URI)
 	})
 
 	mongoose.connection.on("MongoNetworkError", () => {
 		console.log("A conexão caiu")
-		setTimeout(() => mongoose.connect(process.env.MONGODB_URI), 1000)
+		mongoose.connect(process.env.MONGODB_URI)
 	})
 
 	const wok = new WOKCommands(client, {
