@@ -1,3 +1,5 @@
+const help = require("../commands/help")
+
 module.exports = (client, instance) => {
 	client.on("interactionCreate", async (interaction) => {
 		try {
@@ -5,9 +7,7 @@ module.exports = (client, instance) => {
 
 			if (interaction.customId === "page") {
 				guild = interaction.member.guild
-				instance.commandHandler
-					.getCommand("help")
-					.callback({ instance, guild, interaction })
+				await help.callback({ instance, guild, interaction })
 			}
 		} catch (error) {
 			console.error(`Select: ${error}`)
