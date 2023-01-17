@@ -2,6 +2,7 @@ const { MessageEmbed } = require("discord.js")
 const { readFile, getRoleColor, msToTime } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const lottoSchema = require("../schemas/lotto-schema")
+const { MessageButton, MessageActionRow } = require("discord.js")
 
 module.exports = {
 	category: "uteis",
@@ -10,7 +11,7 @@ module.exports = {
 	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, user, member, interaction }) => {
+	callback: async ({ instance, guild, user, interaction }) => {
 		try {
 			await interaction.deferReply()
 			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
@@ -25,7 +26,6 @@ module.exports = {
 			lotto = await lottoSchema.findById("semanal")
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
-				.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 				.setFooter({ text: "by Falcão ❤️" })
 				.setTitle(instance.messageHandler.get(guild, "COOLDOWNS"))
 				.addFields(
@@ -84,7 +84,25 @@ module.exports = {
 					}
 				)
 
-			interaction.editReply({ embeds: [embed] })
+			const row = new MessageActionRow().addComponents([
+				new MessageButton()
+					.setCustomId("vote")
+					.setEmoji("🗳️")
+					.setStyle(voteCooldown < 43200000 ? "DANGER" : "SUCCESS")
+					.setDisabled(voteCooldown < 43200000 ? true : false),
+				new MessageButton()
+					.setCustomId("scratch")
+					.setEmoji("🎰")
+					.setStyle(scratchCooldown ? "DANGER" : "SUCCESS")
+					.setDisabled(scratchCooldown ? true : false),
+				new MessageButton()
+					.setCustomId("work")
+					.setEmoji("💼")
+					.setStyle(workCooldown ? "DANGER" : "SUCCESS")
+					.setDisabled(workCooldown ? true : false),
+			])
+
+			interaction.editReply({ embeds: [embed], components: [row] })
 		} catch (error) {
 			console.error(`cooldowns: ${error}`)
 		}

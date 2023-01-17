@@ -4,6 +4,7 @@ const {
 	randint,
 	changeDB,
 	getRoleColor,
+	msToTime,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
@@ -11,12 +12,27 @@ module.exports = {
 	category: "Economia",
 	description: "Play scratch-off for a chance to win a huge jackpot",
 	slash: true,
-	cooldown: "8h",
 	guildOnly: true,
 	testOnly,
 	callback: async ({ instance, guild, interaction, user }) => {
 		try {
 			await interaction.deferReply()
+
+			cooldownsSchema =
+				instance._mongoConnection.models["wokcommands-cooldowns"]
+			scratchCooldown = await cooldownsSchema.findById(
+				`scratch-${guild.id}-${user.id}`
+			)
+
+			if (scratchCooldown) {
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "COOLDOWN", {
+						COOLDOWN: await msToTime(scratchCooldown.cooldown * 1000),
+					}),
+				})
+				return
+			}
+
 			const row = new MessageActionRow()
 			const row2 = new MessageActionRow()
 			const row3 = new MessageActionRow()
@@ -163,6 +179,13 @@ module.exports = {
 						components: [],
 					})
 				}
+
+				await new cooldownsSchema({
+					_id: `scratch-${guild.id}-${user.id}`,
+					name: "scratch",
+					type: "per-user",
+					cooldown: 60 * 60 * 8,
+				}).save()
 			})
 		} catch (error) {
 			console.error(`scratch: ${error}`)
