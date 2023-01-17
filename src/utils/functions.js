@@ -233,8 +233,8 @@ async function sendVoteReminders(instance, client) {
 		for (user of users) {
 			//send dm reminder vote if user wants to
 			if (
-				Date.now() - user.lastVote > 43200000 &&
-				user.lastReminder <= user.lastVote
+				Date.now() - user.lastVote > 1000 * 60 * 60 * 12 &&
+				Date.now() - user.lastReminder > 1000 * 60 * 60 * 12
 			) {
 				discordUser = await client.users.fetch(user._id)
 				const embed = new MessageEmbed()
