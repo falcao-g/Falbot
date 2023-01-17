@@ -45,6 +45,11 @@ client.on("ready", () => {
 		mongoose.connect(process.env.MONGODB_URI)
 	})
 
+	mongoose.connection.on("MongooseServerSelectionError", () => {
+		console.log("A conexão caiu")
+		mongoose.connect(process.env.MONGODB_URI)
+	})
+
 	const wok = new WOKCommands(client, {
 		commandsDir: path.join(__dirname, "/src/commands"),
 		featuresDir: path.join(__dirname, "/src/events"),
