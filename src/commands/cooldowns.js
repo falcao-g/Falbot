@@ -1,7 +1,7 @@
 const { MessageEmbed } = require("discord.js")
 const { readFile, getRoleColor, msToTime } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const fs = require("fs")
+const lottoSchema = require("../schemas/lotto-schema")
 
 module.exports = {
 	category: "uteis",
@@ -13,7 +13,6 @@ module.exports = {
 	callback: async ({ instance, guild, user, member, interaction }) => {
 		try {
 			await interaction.deferReply()
-			var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
 			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
 			cooldownsSchema =
 				instance._mongoConnection.models["wokcommands-cooldowns"]
@@ -23,6 +22,7 @@ module.exports = {
 			workCooldown = await cooldownsSchema.findById(
 				`work-${guild.id}-${user.id}`
 			)
+			lotto = await lottoSchema.findById("semanal")
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
 				.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
@@ -78,7 +78,7 @@ module.exports = {
 							guild,
 							"LOTTERY"
 						)}** - ${instance.messageHandler.get(guild, "LOTTERY_DRAWN", {
-							TIME: await msToTime(config["lottery"]["drawTime"] - Date.now()),
+							TIME: await msToTime(lotto.nextDraw - Date.now()),
 						})}`,
 						inline: false,
 					}
