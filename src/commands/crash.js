@@ -9,10 +9,8 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Sell at the right time before the market crashes",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [

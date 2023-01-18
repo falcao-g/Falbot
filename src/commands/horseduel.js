@@ -10,10 +10,8 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Challenge other users to a horse race",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [

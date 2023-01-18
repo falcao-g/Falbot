@@ -10,11 +10,9 @@ const { testOnly } = require("../config.json")
 const levels = require("../utils/json/levels.json")
 
 module.exports = {
-	category: "Economia",
 	description:
 		"Deposit or withdraw your falcoins from the bank, money in the bank increase daily",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [

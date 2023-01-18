@@ -11,10 +11,8 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Bet your money in the slot machine",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [

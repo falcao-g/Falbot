@@ -9,10 +9,8 @@ const { testOnly } = require("../config.json")
 const lottoSchema = require("../schemas/lotto-schema")
 
 module.exports = {
-	category: "Economia",
 	description: "Lottery",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [

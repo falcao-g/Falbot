@@ -9,10 +9,8 @@ const { testOnly } = require("../config.json")
 const levels = require("../utils/json/levels.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Increase your rank",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [

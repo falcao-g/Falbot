@@ -4,10 +4,8 @@ const { msToTime } = require("../utils/functions.js")
 const userSchema = require("../schemas/user-schema")
 
 module.exports = {
-	category: "uteis",
 	description: "Check some bot stats",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	callback: async ({ instance, guild, client, interaction }) => {

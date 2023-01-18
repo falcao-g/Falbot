@@ -3,10 +3,8 @@ const { getRoleColor, readFile, changeDB } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Show the store",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [

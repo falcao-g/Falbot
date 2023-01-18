@@ -5,10 +5,8 @@ const lottoSchema = require("../schemas/lotto-schema")
 const { MessageButton, MessageActionRow } = require("discord.js")
 
 module.exports = {
-	category: "uteis",
 	description: "Shows your commands cooldowns",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	callback: async ({ instance, guild, user, interaction }) => {

@@ -1,8 +1,6 @@
 module.exports = {
-	category: "uteis",
 	description: "Sets the language of the server or the user",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: false,
 	permissions: ["ADMINISTRATOR"],
 	options: [

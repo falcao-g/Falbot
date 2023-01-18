@@ -9,7 +9,6 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Play scratch-off for a chance to win a huge jackpot",
 	slash: true,
 	guildOnly: true,

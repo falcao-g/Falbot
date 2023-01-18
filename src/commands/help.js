@@ -6,10 +6,8 @@ const {
 } = require("discord.js")
 
 module.exports = {
-	category: "uteis",
 	description: "Show commands help and information",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	options: [
 		{

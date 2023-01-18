@@ -3,10 +3,8 @@ const builder = require("../utils/snake-builder.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Fun",
 	description: "Play a game of snake",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	callback: async ({ instance, guild, interaction, user }) => {

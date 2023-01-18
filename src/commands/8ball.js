@@ -3,10 +3,8 @@ const { randint, getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Fun",
 	description: "Forecast your future",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [

@@ -1,13 +1,11 @@
-const { MessageEmbed, Interaction } = require("discord.js")
+const { MessageEmbed } = require("discord.js")
 const math = require("mathjs")
 const { getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "uteis",
 	description: "Resolve a mathematical expression",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [

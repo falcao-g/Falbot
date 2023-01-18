@@ -8,20 +8,17 @@ const {
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 require("dotenv").config()
-const { Authorization } = process.env
 const levels = require("../utils/json/levels.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Earn falcoins by voting for us on top.gg",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	callback: async ({ instance, guild, user, interaction }) => {
 		try {
 			await interaction.deferReply()
-			const topgg = new top.Client(Authorization)
+			const topgg = new top.Client(process.env.Authorization)
 			var rank_number = await readFile(user.id, "rank")
 			var reward = levels[rank_number - 1].vote
 			lastVote = await readFile(user.id, "lastVote")

@@ -11,7 +11,6 @@ const { testOnly } = require("../config.json")
 const levels = require("../utils/json/levels.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Go to work to earn money",
 	slash: true,
 	guildOnly: true,

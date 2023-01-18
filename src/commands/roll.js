@@ -4,10 +4,8 @@ const { getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Fun",
 	description: "Roll dice for you",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [

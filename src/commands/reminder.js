@@ -3,10 +3,8 @@ const { changeDB, readFile } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "uteis",
 	description: "Toggle your vote reminder",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	callback: async ({ instance, guild, user, interaction }) => {
