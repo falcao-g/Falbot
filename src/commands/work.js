@@ -21,9 +21,7 @@ module.exports = {
 
 			cooldownsSchema =
 				instance._mongoConnection.models["wokcommands-cooldowns"]
-			workCooldown = await cooldownsSchema.findById(
-				`work-${guild.id}-${user.id}`
-			)
+			workCooldown = await cooldownsSchema.findById(`work-${user.id}`)
 
 			if (workCooldown) {
 				await interaction.editReply({
@@ -71,7 +69,7 @@ module.exports = {
 			})
 
 			await new cooldownsSchema({
-				_id: `work-${guild.id}-${user.id}`,
+				_id: `work-${user.id}`,
 				name: "work",
 				type: "per-user",
 				cooldown: 60 * 60,

@@ -19,9 +19,7 @@ module.exports = {
 
 			cooldownsSchema =
 				instance._mongoConnection.models["wokcommands-cooldowns"]
-			scratchCooldown = await cooldownsSchema.findById(
-				`scratch-${guild.id}-${user.id}`
-			)
+			scratchCooldown = await cooldownsSchema.findById(`scratch-${user.id}`)
 
 			if (scratchCooldown) {
 				await interaction.editReply({
@@ -178,14 +176,14 @@ module.exports = {
 						components: [],
 					})
 				}
-
-				await new cooldownsSchema({
-					_id: `scratch-${guild.id}-${user.id}`,
-					name: "scratch",
-					type: "per-user",
-					cooldown: 60 * 60 * 8,
-				}).save()
 			})
+
+			await new cooldownsSchema({
+				_id: `scratch-${user.id}`,
+				name: "scratch",
+				type: "per-user",
+				cooldown: 60 * 60 * 8,
+			}).save()
 		} catch (error) {
 			console.error(`scratch: ${error}`)
 		}

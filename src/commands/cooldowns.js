@@ -15,12 +15,8 @@ module.exports = {
 			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
 			cooldownsSchema =
 				instance._mongoConnection.models["wokcommands-cooldowns"]
-			scratchCooldown = await cooldownsSchema.findById(
-				`scratch-${guild.id}-${user.id}`
-			)
-			workCooldown = await cooldownsSchema.findById(
-				`work-${guild.id}-${user.id}`
-			)
+			scratchCooldown = await cooldownsSchema.findById(`scratch-${user.id}`)
+			workCooldown = await cooldownsSchema.findById(`work-${user.id}`)
 			lotto = await lottoSchema.findById("semanal")
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
