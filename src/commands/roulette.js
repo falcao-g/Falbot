@@ -18,7 +18,7 @@ module.exports = {
 		{
 			name: "type",
 			description:
-				"the columns have a 2-1 payout ratio, the green has a 35-1 (it's only one number) and the rest have a 1-1",
+				"the columns have a 2-1 payout ratio, the green has a 35-1 (only one number) and the rest have a 1-1",
 			required: true,
 			type: "STRING",
 			choices: [
