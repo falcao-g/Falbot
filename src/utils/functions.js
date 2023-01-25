@@ -412,6 +412,13 @@ async function paginate() {
 	}
 }
 
+async function reduceCooldowns(instance) {
+	cooldownsSchema = instance._mongoConnection.models["wokcommands-cooldowns"]
+
+	await cooldownsSchema.updateMany({}, { $inc: { cooldown: -5 } })
+	await cooldownsSchema.deleteMany({ cooldown: { $lt: 5 } })
+}
+
 module.exports = {
 	createUser,
 	changeDB,
@@ -429,4 +436,5 @@ module.exports = {
 	sendVoteReminders,
 	paginate,
 	lotteryDraw,
+	reduceCooldowns,
 }

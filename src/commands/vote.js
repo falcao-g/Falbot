@@ -23,7 +23,7 @@ module.exports = {
 			var reward = levels[rank_number - 1].vote
 			lastVote = await readFile(user.id, "lastVote")
 
-			if (Date.now() - lastVote > 1000 * 60 * 60 * 72) {
+			if (Date.now() - lastVote > 1000 * 60 * 60 * 48) {
 				await changeDB(user.id, "voteStreak", 0, true)
 			}
 

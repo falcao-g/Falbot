@@ -13,6 +13,7 @@ const {
 	bankInterest,
 	sendVoteReminders,
 	lotteryDraw,
+	reduceCooldowns,
 } = require("./src/utils/functions.js")
 const mongoose = require("mongoose")
 
@@ -80,6 +81,10 @@ client.on("ready", () => {
 			sendVoteReminders(wok, client),
 			lotteryDraw(wok, client)
 	}, 1000 * 60 * 10)
+
+	setInterval(() => {
+		reduceCooldowns(wok)
+	}, 5000)
 })
 
 client.login(process.env.TOKEN)
