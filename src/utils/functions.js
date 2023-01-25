@@ -328,6 +328,17 @@ async function lotteryDraw(instance, client) {
 			await winnerUser.send({
 				embeds: [embed],
 			})
+
+			if (lotto.history.length >= 10) {
+				lotto.history.pop()
+			}
+
+			lotto.history.unshift({
+				prize: lotto.prize,
+				winner: winnerUser.username,
+				userTickets: winner.tickets,
+				totalTickets: numTickets,
+			})
 		}
 		lotto.nextDraw = Date.now() + 604800000 //next one is next week
 		lotto.prize = randint(1000000, 2000000)

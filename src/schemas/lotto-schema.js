@@ -16,6 +16,11 @@ const lottoSchema = mongoose.Schema(
 			default: 0,
 			required: true,
 		},
+		history: {
+			type: Array,
+			default: [],
+			required: true,
+		},
 	},
 	{
 		versionKey: false,

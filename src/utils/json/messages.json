@@ -854,6 +854,14 @@
 		"portugues": "Você ganhou {PRIZE} falcoins na loteria!\nVocê tinha {TICKETS}/{TOTAL} dos bilhetes totais.",
 		"english": "You won {PRIZE} falcoins in the lottery!\nYou had {TICKETS}/{TOTAL} of all tickets."
 	},
+	"LOTTERY_WINNERS": {
+		"portugues": "Ganhadores da loteria",
+		"english": "Lottery winners"
+	},
+	"HISTORY": {
+		"portugues": ":confetti_ball: Loteria de {FALCOINS} falcoins ganha por **{USER}**! ({TICKETS}/{TOTAL} bilhetes)\n",
+		"english": ":confetti_ball: {FALCOINS} falcoins lotto won by **{USER}**! ({TICKETS}/{TOTAL} bilhetes)\n"
+	},
 	"EVENTS": {
 		"portugues": "Eventos",
 		"english": "Events"

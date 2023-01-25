@@ -32,10 +32,16 @@ module.exports = {
 				},
 			],
 		},
+		{
+			name: "history",
+			description: "See the last 10 winners of the lottery",
+			type: "SUB_COMMAND",
+		},
 	],
 	callback: async ({ instance, guild, user, interaction }) => {
 		try {
 			await interaction.deferReply()
+			lotto = await lottoSchema.findById("semanal")
 			type = interaction.options.getSubcommand()
 			if (type === "buy") {
 				amount = interaction.options.getNumber("amount")
@@ -75,8 +81,7 @@ module.exports = {
 						),
 					})
 				}
-			} else {
-				lotto = await lottoSchema.findById("semanal")
+			} else if (type === "view") {
 				var embed = new MessageEmbed()
 					.setColor("GOLD")
 					.addFields(
@@ -106,6 +111,28 @@ module.exports = {
 						}
 					)
 				}
+
+				await interaction.editReply({
+					embeds: [embed],
+				})
+			} else {
+				history = ""
+				for (winner of lotto.history) {
+					history += instance.messageHandler.get(guild, "HISTORY", {
+						FALCOINS: await format(winner.prize),
+						USER: winner.winner,
+						TICKETS: winner.userTickets,
+						TOTAL: winner.totalTickets,
+					})
+				}
+
+				var embed = new MessageEmbed()
+					.setColor("GOLD")
+					.setFooter({ text: "by Falcão ❤️" })
+					.addFields({
+						name: instance.messageHandler.get(guild, "LOTTERY_WINNERS"),
+						value: history,
+					})
 
 				await interaction.editReply({
 					embeds: [embed],
