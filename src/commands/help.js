@@ -16,13 +16,13 @@ module.exports = {
 			required: false,
 			type: "STRING",
 			choices: [
-				{ name: "introduction", value: "introduction" },
-				{ name: "allcommands", value: "allcommands" },
-				{ name: "ranks", value: "ranks" },
-				{ name: "economy", value: "economy" },
-				{ name: "fun", value: "fun" },
-				{ name: "language", value: "language" },
-				{ name: "utils", value: "utils" },
+				{ name: "💠 introduction", value: "introduction" },
+				{ name: "📚 allcommands", value: "allcommands" },
+				{ name: "📈 ranks", value: "ranks" },
+				{ name: "💸 economy", value: "economy" },
+				{ name: "🎉 fun", value: "fun" },
+				{ name: "🌎 language", value: "language" },
+				{ name: "📝 utils", value: "utils" },
 			],
 		},
 	],
@@ -51,7 +51,7 @@ module.exports = {
 					value: instance.messageHandler.get(guild, "LINK_COMMANDS"),
 				})
 			} else if (page === "ranks") {
-				embed.setTitle(":magic_wand: Ranks")
+				embed.setTitle(":chart_with_upwards_trend: Ranks")
 				embed.addFields({
 					name: instance.messageHandler.get(guild, "HELP_RANK"),
 					value: instance.messageHandler.get(guild, "HELP_RANK2"),
@@ -94,7 +94,7 @@ module.exports = {
 						inline: true,
 					},
 					{
-						name: ":magic_wand: Ranks",
+						name: ":chart_with_upwards_trend: Ranks",
 						value: instance.messageHandler.get(guild, "HELP_RANK3"),
 						inline: true,
 					},
@@ -142,7 +142,7 @@ module.exports = {
 						{
 							label: "Ranks",
 							value: "ranks",
-							emoji: "🪄",
+							emoji: "📈",
 						},
 						{
 							label: instance.messageHandler.get(guild, "ECONOMY"),
