@@ -4,10 +4,8 @@ const { getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Fun",
 	description: "Roll dice for you",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [
@@ -20,16 +18,18 @@ module.exports = {
 	],
 	callback: async ({ instance, guild, interaction, user, text }) => {
 		try {
+			await interaction.deferReply()
 			const roll = new Roll()
 			text = text.replace(/\s/g, "")
 
 			if (!roll.validate(text)) {
-				return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-					VALUE: text,
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+						VALUE: text,
+					}),
 				})
 			} else {
-				rolled = roll.roll(text).result
-				rolled = rolled.toString()
+				rolled = roll.roll(text).result.toString()
 
 				embed = new MessageEmbed()
 					.setColor(await getRoleColor(guild, user.id))
@@ -46,7 +46,7 @@ module.exports = {
 						}
 					)
 					.setFooter({ text: "by Falcão ❤️" })
-				interaction.reply({
+				await interaction.editReply({
 					embeds: [embed],
 				})
 			}

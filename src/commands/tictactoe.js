@@ -11,10 +11,8 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Challenge someone to a game of tic tac toe",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [
@@ -42,22 +40,26 @@ module.exports = {
 		member,
 	}) => {
 		try {
+			await interaction.deferReply()
 			var board = new Board.default()
 			const member2 = await getMember(guild, args[0])
-			if (member2.user != member) {
+			if (member2 != member) {
 				try {
 					var bet = await specialArg(args[1], user.id, "falcoins")
 				} catch {
-					return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-						VALUE: args[1],
+					await interaction.editReply({
+						content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+							VALUE: args[1],
+						}),
 					})
+					return
 				}
 				if (
 					(await readFile(member.user.id, "falcoins")) >= bet &&
 					(await readFile(member2.user.id, "falcoins")) >= bet &&
 					bet > 0
 				) {
-					var answer = await interaction.reply({
+					var answer = await interaction.editReply({
 						content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {
 							USER: member.displayName,
 							USER2: member2.displayName,
@@ -81,16 +83,15 @@ module.exports = {
 
 					collector.on("end", async (collected) => {
 						if (collected.size === 0) {
-							interaction.followUp({
+							await interaction.followUp({
 								content: instance.messageHandler.get(
 									guild,
 									"VELHA_CANCELADO_DEMOROU",
 									{ USER: member2 }
 								),
 							})
-							return
 						} else if (collected.first()._emoji.name === "🚫") {
-							interaction.followUp({
+							await interaction.followUp({
 								content: instance.messageHandler.get(
 									guild,
 									"VELHA_CANCELADO_RECUSOU",
@@ -303,10 +304,14 @@ module.exports = {
 						}
 					})
 				} else {
-					return instance.messageHandler.get(guild, "INSUFICIENTE_CONTAS")
+					await interaction.editReply({
+						content: instance.messageHandler.get(guild, "INSUFICIENTE_CONTAS"),
+					})
 				}
 			} else {
-				return instance.messageHandler.get(guild, "NAO_JOGAR_SOZINHO")
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "NAO_JOGAR_SOZINHO"),
+				})
 			}
 		} catch (error) {
 			console.error(`velha: ${error}`)

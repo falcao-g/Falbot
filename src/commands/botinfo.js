@@ -4,14 +4,13 @@ const { msToTime } = require("../utils/functions.js")
 const userSchema = require("../schemas/user-schema")
 
 module.exports = {
-	category: "uteis",
 	description: "Check some bot stats",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, client }) => {
+	callback: async ({ instance, guild, client, interaction }) => {
 		try {
+			await interaction.deferReply()
 			const embed = new MessageEmbed()
 				.setColor("NAVY")
 				.setFooter({ text: "by Falcão ❤️" })
@@ -32,7 +31,7 @@ module.exports = {
 						"UPTIME"
 					)}: ${await msToTime(client.uptime)}**`,
 				})
-			return embed
+			await interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`botinfo: ${error}`)
 		}

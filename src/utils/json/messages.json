@@ -159,10 +159,6 @@
 		"portugues": "Você sacou {VALUE} falcoins do banco! :smiley:",
 		"english": "You withdrew {VALUE} falcoins from the bank! :smiley:"
 	},
-	"BONKED": {
-		"portugues": " você foi bonked por ",
-		"english": " you were bonked by "
-	},
 	"CAIXA_TITULO": {
 		"portugues": "Você abriu {QUANTITY} caixas, e encontrou:",
 		"english": "You opened {QUANTITY} crates, and found:"
@@ -170,18 +166,6 @@
 	"CAIXA_INSUFICIENTE": {
 		"portugues": "você não tem caixas e/ou chaves o suficiente para esta ação! :rage:",
 		"english": "you don't have enough crates and/or keys to do this action! :rage:"
-	},
-	"CAVALGADA": {
-		"portugues": "Cavalgada",
-		"english": "Horse race"
-	},
-	"CAVALGADA_DESAFIO": {
-		"portugues": "{USER} te desafia para uma cavalgada!",
-		"english": "{USER} challenges you to a horse race!"
-	},
-	"APOSTA": {
-		"portugues": "Aposta",
-		"english": "Bet"
 	},
 	"JOGADORES": {
 		"portugues": "Jogadores",
@@ -191,21 +175,29 @@
 		"portugues": "{WINNER} ganhou {FALCOINS} falcoins!",
 		"english": "{WINNER} won {FALCOINS} falcoins!"
 	},
-	"CAVALO": {
-		"portugues": "Cavalo",
-		"english": "Horse"
+	"CAVALO_DESCRIPTION": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Correndo...",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: Racing..."
 	},
-	"CAVALO_GANHOU": {
-		"portugues": "Cavalo {WINNER} ganhou!",
-		"english": "Horse {WINNER} won!"
+	"CAVALO_DESCRIPTION_WON": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Você ganhou {FALCOINS} falcoins!\n:bank: **Saldo atual**: {SALDO} falcoins",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: You won {FALCOINS} falcoins!\n:bank: **Current balance**: {SALDO} falcoins"
 	},
-	"CAVALO_VOCE_GANHOU": {
-		"portugues": "Você ganhou {FALCOINS} falcoins!",
-		"english": "You won {FALCOINS} falcoins!"
+	"CAVALO_DESCRIPTION_LOST": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Você perdeu!\n:bank: **Saldo atual**: {SALDO} falcoins",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: You lost!\n:bank: **Current balance**: {SALDO} falcoins"
 	},
-	"CAVALO_VOCE_PERDEU": {
-		"portugues": "Você perdeu {FALCOINS} falcoins!",
-		"english": "You lost {FALCOINS} falcoins!"
+	"CAVALGADA_DESCRIPTION": {
+		"portugues": ":horse: {USER} começou uma **corrida de \ncavalos**, entre apertando o botão abaixo, o \nvencedor leva todos os **falcoins acumulados!**\n:moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Começando em `1m`",
+		"english": ":horse: {USER} started a **horse race**, \njoin by pressing the button below, the \nwinner gets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting in `1m`"
+	},
+	"CAVALGADA_DESCRIPTION2": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Correndo...",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Racing..."
+	},
+	"CAVALGADA_DESCRIPTION3": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: {USER} ganhou!\n:bank: **Saldo atual**: {SALDO} falcoins",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: {USER} won!\n:bank: **Current balance**: {SALDO} falcoins"
 	},
 	"COINFLIP": {
 		"portugues": ":coin: você tirou **{CARAS}** caras e **{COROAS}** coroas jogando **{TIMES}** vezes",
@@ -283,6 +275,18 @@
 		"portugues": "Você não pode jogar com você mesmo, espertinho :rage:",
 		"english": "You can't play with yourself, smartass :rage:"
 	},
+	"ROLETARUSSA_DESCRIPTION": {
+		"portugues": ":drop_of_blood: {USER} começou uma **roleta russa**, \nentre apertando o botão abaixo, a cada 5 \nsegundos, **alguém morre**, o último vivo leva \ntodos os **falcoins acumulados!**\n:moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Começando em `1m`",
+		"english": ":drop_of_blood: {USER} started a **russian roulette**, \njoin by pressing the button below, each 5 \nseconds, **someone dies**, the last alive \ngets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting in `1m`"
+	},
+	"ROLETARUSSA_DESCRIPTION2": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Eliminando jogadores...",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Killing players..."
+	},
+	"ROLETARUSSA_DESCRIPTION3": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: {USER} sobreviveu!\n:bank: **Saldo atual**: {SALDO} falcoins",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: {USER} survived!\n:bank: **Current balance**: {SALDO} falcoins"
+	},
 	"ROLETA_RUSSA_COMECOU": {
 		"portugues": " começou uma roleta russa",
 		"english": " started a russian roulette"
@@ -294,10 +298,6 @@
 	"ATIRANDO": {
 		"portugues": "atirando em alguém em 5 segundos",
 		"english": "shooting someone in 5 seconds"
-	},
-	"ROLETA_RUSSA": {
-		"portugues": "Roleta russa",
-		"english": "Russian roulette"
 	},
 	"BOLA8": {
 		"portugues": "Bola 8 mágica",
@@ -355,33 +355,29 @@
 		"portugues": "{USER} chamou {USER2} para uma luta apostando {FALCOINS} falcoins :smiling_imp:",
 		"english": "{USER} challenges {USER2} to a fight for {FALCOINS} falcoins :smiling_imp:"
 	},
+	"LOJA": {
+		"portugues": "**Loja**",
+		"english": "**Store**"
+	},
 	"ITEM_1": {
-		"portugues": "Item número 1: Caixa",
-		"english": "Item number 1: Crate"
+		"portugues": ":gift: Caixa",
+		"english": ":gift: Crate"
 	},
 	"ITEM_1_DESCRICAO": {
 		"portugues": "Pelo custo de 5.000 falcoins você compra uma caixa que pode ser aberta usando uma chave",
 		"english": "For the cost of 5.000 falcoins you can buy a crate that can be opened using a key"
 	},
 	"ITEM_2": {
-		"portugues": "Item número 2: Chave",
-		"english": "Item number 2: Key"
+		"portugues": ":key: Chave",
+		"english": ":key: Key"
 	},
 	"ITEM_2_DESCRICAO": {
 		"portugues": "Pelo custo de 20.000 falcoins você compra uma chave que pode ser usada para abrir uma caixa",
 		"english": "For the cost of 20.000 falcoins you can buy a key that can be used to open a crate"
 	},
 	"LOJA_USO_2": {
-		"portugues": "Use `?store [numero] [quantidade]` para comprar um item",
-		"english": "Use `?store [number] [quantity]` to buy an item"
-	},
-	"LOJA_QUANTIDADE_INVALIDA": {
-		"portugues": "quantidade inválida! coloque um número positivo ou deixe em branco para comprar 1 :face_with_monocle:",
-		"english": "invalid quantity! put a positive number or leave it blank to buy 1 :face_with_monocle:"
-	},
-	"LOJA_LIMITE": {
-		"portugues": "calma lá amigão, o limite é 100 itens por vez :wink:",
-		"english": "calm down there friend, the limit is 100 items per time :wink:"
+		"portugues": "Use `/store [item] [quantidade]` para comprar um item",
+		"english": "Use `/store [item] [quantity]` to buy an item"
 	},
 	"LOJA_COMPROU_CAIXA": {
 		"portugues": "Parabéns! Você comprou {AMOUNT} caixas :star_struck:",
@@ -462,7 +458,11 @@
 			"não tinha o high ground",
 			"descobriu que o chão era lava",
 			"descobriu que a terra é plana",
-			"não usou máscara"
+			"não usou máscara",
+			"explodiu",
+			"levou um tiro",
+			"tentou fugir",
+			"abriu o twitter"
 		],
 		"english": [
 			"died",
@@ -471,7 +471,11 @@
 			"didn\"t have the high ground",
 			"found out that the floor was lava",
 			"found out that the earth is flat",
-			"didn\"t use a mask"
+			"didn\"t use a mask",
+			"exploded",
+			"was shot",
+			"tried to escape",
+			"opened twitter"
 		]
 	},
 	"MAX_RANK": {
@@ -547,28 +551,36 @@
 		"english": "Reward: **{REWARD}** falcoins\nYou can collect again in **{TIME}**"
 	},
 	"VOTE_FIRST": {
-		"portugues": "Você precisa votar primeiro para conseguir sua recompensa",
-		"english": "You need to vote first to get your reward"
+		"portugues": ":ballot_box: Vote no Falbot!",
+		"english": ":ballot_box: Vote for Falbot!"
+	},
+	"VOTE_DESCRIPTION": {
+		"portugues": "Votar vai te recompensar com **{FALCOINS} falcoins**!\nIsso também ajuda o bot a crescer e apoia o desenvolvedor :)",
+		"english": "Voting will grant you **{FALCOINS} falcoins**!\nThis also helps the bot grow and supports the developer :)"
 	},
 	"VOTE_HERE": {
-		"portugues": "[Você pode votar aqui](https://top.gg/bot/742331813539872798/vote)",
-		"english": "[You can vote here](https://top.gg/bot/742331813539872798/vote)"
-	},
-	"REWARD": {
-		"portugues": "Recompensa",
-		"english": "Reward"
+		"portugues": "Você pode votar aqui:",
+		"english": "You can vote here:"
 	},
 	"VOTE_FINAL": {
-		"portugues": "**{REWARD}** falcoins\nUse esse comando de novo após ter votado no bot",
-		"english": "**{REWARD}** falcoins\nUse this command again after you voted in the bot"
+		"portugues": "**Use esse comando de novo após ter votado no bot\n:fire: Você também receberá como bônus {PERCENTAGE}% falcoins a mais! Vote diariamente para aumentar a porcentagem.**",
+		"english": "**Use this command again after you voted in the bot\n:fire: You'll also earn {PERCENTAGE}% more falcoins as a bonus! Vote daily to increase the percentage**"
+	},
+	"VOTE_THANKS": {
+		"portugues": ":ballot_box: Obrigado por votar!",
+		"english": ":ballot_box: Thanks for voting!"
+	},
+	"VOTE_COLLECTED": {
+		"portugues": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:fire: +1 voto! Você vai receber outros 5% falcoins adicionais da próxima vez.**\n**:ballot_box: Vote diariamente para aumentar o seu bônus**\n**:bell: Ative os lembretes com `/reminder` para receber uma mensagem assim que você puder votar!**",
+		"english": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:fire: +1 streak! You'll earn another 5% additional falcoins next time!**\n**:ballot_box: Vote daily to increase your streak**\n**:bell: Enable reminders using `/reminder` to get a DM when you can vote!**"
 	},
 	"HELP_RANK": {
 		"portugues": ":arrow_double_up: Gaste falcoins para subir de rank",
 		"english": ":arrow_double_up: Spend falcoins to rank up"
 	},
 	"HELP_RANK2": {
-		"portugues": "-Suba de rank com `/ranks rankup` para ganhar **várias recompensas** que te ajudam a ganhar falcoins\n-Você pode ver os próximos ranks com `/ranks view` e ver todos os ranks com `/ranks all`\n-Confira sua balança para ver quão longe você está do próximo rank\n-Existe também uma leaderboard baseada em ranks, suba de rank para alcançar **posições mais altas!**",
-		"english": "-Rank up with `/ranks rankup` to receive **multiple rewards** that help you earn more falcoins\n-You can see upcoming ranks with `/ranks view` and all ranks with `/ranks all`\n-Check your balance to see how far you are from the next rank\n-There is also a rank leaderboard, rank up to achieve a **higher position!**"
+		"portugues": "-Suba de rank com `/ranks rankup` para ganhar **várias recompensas** que te ajudam a ganhar mais falcoins\n-Você pode ver os próximos ranks com `/ranks view` e ver todos os ranks com `/ranks all`\n-`/balance` também mostra quão longe você está do próximo rank\n-Suba de rank para alcançar **posições mais altas** na `/leaderboard rank`",
+		"english": "-Rank up with `/ranks rankup` to receive **multiple rewards** that help you earn more falcoins\n-You can see upcoming ranks with `/ranks view` and all ranks with `/ranks all`\n-`/balance` also shows how far you are from the next rank\n-Rank up to achieve a **higher position** in the `/leaderboard rank`"
 	},
 	"HELP_LANGUAGE": {
 		"portugues": ":earth_americas: Escolha a linguagem desejada",
@@ -587,16 +599,16 @@
 		"english": ":tada: Want to have fun without worrying abou falcoins?"
 	},
 	"HELP_FUN2": {
-		"portugues": "-Preveja seu futuro com `/8ball`\n-Mande outro usuário (ou a si mesmo) para a horny jail com `/bonk`\n-Peça para o falbot procurar imagens no google pra você com `/image`\n-Jogue cara ou coroa com `/coinflip`",
-		"english": "-Forecast your future with `/8ball`\n-Send you or another user to the horny jail with `/bonk`\n-Ask falbot to search images on google for you with `/image`\n-Flip a coin with `/coinflip`"
+		"portugues": "-Preveja seu futuro com `/8ball`\n-Peça para o falbot procurar imagens no google pra você com `/image`\n-Jogue cara ou coroa com `/coinflip`\n-Jogue o famoso jogo da cobrinha com `/snake`",
+		"english": "-Forecast your future with `/8ball`\n-Ask falbot to search images on google for you with `/image`\n-Flip a coin with `/coinflip`\n-Play the famous snake game with `/snake`"
 	},
 	"HELP_UTILS": {
 		"portugues": ":pencil: Falbot também pode ser útil no seu dia-a-dia",
 		"english": ":pencil: Falbot can also be useful in your daily life"
 	},
 	"HELP_UTILS2": {
-		"portugues": "-Faça uma pequena enquete com `/poll`\n-Deixe o falbot resolver expressões matemáticas para você com `/math`\n-Role dados usando `/roll`",
-		"english": "-Do a pretty little poll with `/poll`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`"
+		"portugues": "-Faça uma pequena enquete com `/poll`\n-Deixe o falbot resolver expressões matemáticas para você com `/math`\n-Role dados usando `/roll`\n-Veja informações e links úteis sobre o bot com `/botinfo`",
+		"english": "-Do a pretty little poll with `/poll`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`\n-See stats and useful links regarding the bot with `/botinfo`"
 	},
 	"INTRODUCTION": {
 		"portugues": "Introdução",
@@ -627,8 +639,8 @@
 		"english": "*Bot's gameplay introduction*"
 	},
 	"HELP_INTRODUCTION2": {
-		"portugues": "**:sparkles: Seu objetivo é subir nos ranks do jogo até se tornar o número um\n:partying_face: Ou só se divertir com seus amigos\n:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/balance`\n:stopwatch: O comando `/cooldowns` mostra o tempo até certas ações poderem serem feitas novamente\n:bank: Deposite regularmente no seu banco para coletar interesse no seu dinheiro\n:question: Veja as outras páginas desse comando para aprender a usar uma feature específica do Falbot\n:100: Nós cobrimos o básico, mas o Falbot oferece muito mais\n:fire: Continue jogando e experimentando, mas mais importante, se divirta!**",
-		"english": "**:sparkles: Your goal is to climb the ranks of the game to become number one\n:partying_face: Or just have fun with your friends\n:coin: See your falcoins and other information at any time using '/balance'\n:stopwatch: The '/cooldowns' command shows the time until certain actions can be done again\n:bank: Deposit regularly in your bank to collect interest in your money\n:question: See the other pages of this command to learn how to use a specific feature of Falbot\n:100: We've covered the basics, but Falbot offers much more\n:fire: Keep playing and experimenting, but more importantly, have fun!**"
+		"portugues": "**:sparkles: Seu objetivo é subir nos ranks do jogo até se tornar o número um\n:partying_face: Ou só se divertir com seus amigos\n:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/balance`\n:stopwatch: O comando `/cooldowns` mostra eventos e certos comandos que tem um tempo de espera\n:bank: Deposite regularmente no seu banco para coletar interesse no seu dinheiro\n:arrow_double_up: Suba de rank sempre que possível para ótimos benefícios! Veja a página de ranks para saber mais`\n:question: Veja as outras páginas desse comando para aprender a usar uma feature específica do Falbot\n:100: Nós cobrimos o básico, mas o Falbot oferece muito mais\n:fire: Continue jogando e experimentando, mas mais importante, se divirta!**",
+		"english": "**:sparkles: Your goal is to climb the ranks of the game to become number one\n:partying_face: Or just have fun with your friends\n:coin: See your falcoins and other information at any time using `/balance`\n:stopwatch: The `/cooldowns` displays events and commands that have a cooldown\n:bank: Deposit regularly in your bank to collect interest in your money\n:arrow_double_up: Rank up whenever possible to earn awesome perks! See the ranks page for more details\n:question: See the other pages of this command to learn how to use a specific feature of Falbot\n:100: We've covered the basics, but Falbot offers much more\n:fire: Keep playing and experimenting, but more importantly, have fun!**"
 	},
 	"COMMANDS_ALL2": {
 		"portugues": "*Lista de comandos*",
@@ -663,8 +675,8 @@
 		"english": ":money_with_wings: Earning more falcoins"
 	},
 	"HELP_ECONOMY3": {
-		"portugues": "**:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/vote`\n:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/bank`**\n**:stopwatch: Veja quanto tempo até poder executar ações de novo com `/cooldowns`**\n**:busts_in_silhouette: Interaja com outros usuários**\n-Compita com seus amigos com `/horseduel`, `/tictactoe`, `/russianroulette` e `/fight`\n-Se sentindo generoso? Doe dinheiro com `/donation`\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/slot`, `/roulette`, `/horse`, `/snakeeyes` e `/crash`**",
-		"english": "**:ballot_box: Vote every 12 hours to earn falcoins with `/vote`\n:bank: Deposit your money in the bank and watch as it increases with `/bank`**\n**:stopwatch: See how long until actions can be performed again with `/cooldowns`**\n**:busts_in_silhouette: Interact with another users**\n-Compete with your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`\n-Feeling generous? Donate money with `/donation`\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes` and `/crash`**"
+		"portugues": "**:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/balance`**\n**:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/bank deposit`, `/bank view` para ver suas informações e `/bank withdraw` para sacar\n:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/vote`, use `/reminder` para ser lembrado quando isso for possível**\n**:stopwatch: `/cooldowns` mostra os eventos ativos e quanto tempo falta até você poder executar certos comandos novamente**\n\n**:busts_in_silhouette: Interaja com outros usuários**\n-Desafie seus amigos com `/horseduel`, `/tictactoe`, `/russianroulette` e `/fight`, ou doe dinheiro pra eles com `/donate`\n-Veja os melhores jogadores em diferentes categorias com `/leaderboard rank`, `/leaderboard falcoins` e `/leaderboard wins`\n\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/slot`, `/roulette`, `/horse`, `/snakeeyes` e `/crash`**",
+		"english": "**:coin: See your falcoins and other information at any time using `/balance`**\n**:bank: Deposit your money in the bank and watch as it increases with `/bank deposit`, `/bank view` to see yout info and `/bank withdraw` to withdraw\n:ballot_box: Vote every 12 hours to earn falcoins with `/vote`, use `/reminder` to be reminded everytime this is possible**\n**:stopwatch: `/cooldowns` shows active events and the time left for you to be able to execute some commands again**\n\n**:busts_in_silhouette: Interact with another users**\n-Challenge your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`, or give them money with `/donate`\n-See the top players in different categories using `/leaderboard rank`, `/leaderboard falcoins` and `/leaderboard wins`\n\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes` and `/crash`**"
 	},
 	"PICK_PAGE": {
 		"portugues": "Escolha uma página de ajuda...",
@@ -791,24 +803,24 @@
 		"english": "Pretty close!"
 	},
 	"SCRATCH_PRETTY_DESCRIPTION": {
-		"portugues": ":slot_machine: Você estava MUITO perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **8** horas.",
-		"english": ":slot_machine: You didn't hit the jackpot but you were PRETTY close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **8** hour cooldown."
+		"portugues": ":slot_machine: Você estava MUITO perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **10** horas.",
+		"english": ":slot_machine: You didn't hit the jackpot but you were PRETTY close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **10** hour cooldown."
 	},
 	"SCRATCH_SUPER": {
 		"portugues": "EXTREMAMENTE PERTO!",
 		"english": "SO CLOSE!"
 	},
 	"SCRATCH_SUPER_DESCRIPTION": {
-		"portugues": ":slot_machine: Você estava EXTREMAMENTE perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **8** horas.",
-		"english": ":slot_machine: You didn't hit the jackpot but you were SUPER close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **8** hour cooldown."
+		"portugues": ":slot_machine: Você estava EXTREMAMENTE perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **12** horas.",
+		"english": ":slot_machine: You didn't hit the jackpot but you were SUPER close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **12** hour cooldown."
 	},
 	"SCRATCH_PRIZE": {
 		"portugues": "PARABÉNS!",
 		"english": "CONGRATULATIONS!"
 	},
 	"SCRATCH_PRIZE_DESCRIPTION": {
-		"portugues": ":slot_machine: Você encontrou o grande prêmio e ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **8** horas.",
-		"english": ":slot_machine: You hit the jackpot and won **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **8** hour cooldown."
+		"portugues": ":slot_machine: Você encontrou o grande prêmio e ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **16** horas.",
+		"english": ":slot_machine: You hit the jackpot and won **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **16** hour cooldown."
 	},
 	"LOTTERY": {
 		"portugues": ":tickets: Loteria",
@@ -841,6 +853,14 @@
 	"LOTTERY_WIN": {
 		"portugues": "Você ganhou {PRIZE} falcoins na loteria!\nVocê tinha {TICKETS}/{TOTAL} dos bilhetes totais.",
 		"english": "You won {PRIZE} falcoins in the lottery!\nYou had {TICKETS}/{TOTAL} of all tickets."
+	},
+	"LOTTERY_WINNERS": {
+		"portugues": "Ganhadores da loteria",
+		"english": "Lottery winners"
+	},
+	"HISTORY": {
+		"portugues": ":confetti_ball: Loteria de {FALCOINS} falcoins ganha por **{USER}**! ({TICKETS}/{TOTAL} bilhetes)\n",
+		"english": ":confetti_ball: {FALCOINS} falcoins lotto won by **{USER}**! ({TICKETS}/{TOTAL} bilhetes)\n"
 	},
 	"EVENTS": {
 		"portugues": "Eventos",

@@ -1,3 +1,5 @@
+const { randint } = require("../utils/functions")
+
 class Game {
 	constructor() {
 		this.WWidth = 10
@@ -89,29 +91,22 @@ class Game {
 		this.time = 30
 		direction = direction || this.Sd
 		let head = snake[0]
-		switch (direction.toUpperCase()) {
-			// Column movement
-			case "N":
-				this.SHx = head[0] - 1
-				this.SHy = head[1]
-				this.Sd = "N"
-				break
-			case "S":
-				this.SHx = head[0] + 1
-				this.SHy = head[1]
-				this.Sd = "S"
-				break
-			// Row movement
-			case "W":
-				this.SHx = head[0]
-				this.SHy = head[1] - 1
-				this.Sd = "W"
-				break
-			case "E":
-				this.SHx = head[0]
-				this.SHy = head[1] + 1
-				this.Sd = "E"
-				break
+		if (direction === "N") {
+			this.SHx = head[0] - 1
+			this.SHy = head[1]
+			this.Sd = "N"
+		} else if (direction === "S") {
+			this.SHx = head[0] + 1
+			this.SHy = head[1]
+			this.Sd = "S"
+		} else if (direction === "W") {
+			this.SHx = head[0]
+			this.SHy = head[1] - 1
+			this.Sd = "W"
+		} else {
+			this.SHx = head[0]
+			this.SHy = head[1] + 1
+			this.Sd = "E"
 		}
 		// if is NOT valid (SHx, SHy) Game over
 		if (this.isTheFieldEmpty(this.SHx, this.SHy)) {
@@ -140,18 +135,21 @@ class Game {
 		return this.world[r][c] === this.SF
 	}
 
-	getRandomNumber(min, max) {
-		// Nice copy-paste, except that max is not the maximum but the supremum
-		return Math.floor(Math.random() * (max - min) + min)
-	}
-
 	spawnFood(r, c) {
 		if (!r || !c) {
+			let inSnake = false
 			do {
-				r = this.getRandomNumber(1, this.WHeight - 2)
-				c = this.getRandomNumber(1, this.WWidth - 2)
-			} while (this.isTheFieldEmpty(r, c) && !this._inSnake(r, c, this.snake))
-		} // TODO: Verify that the input is sane (0<r<H-1 && 0<c<W-1)
+				inSnake = false
+				r = randint(1, this.WHeight - 2)
+				c = randint(1, this.WWidth - 2)
+				for (let i = 0; i < this.snake.length; i++) {
+					if (this.snake[i][0] == r && this.snake[i][1] == c) {
+						inSnake = true
+						break
+					}
+				}
+			} while (inSnake)
+		}
 		this.world[r][c] = this.SF
 	}
 }

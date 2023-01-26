@@ -9,10 +9,8 @@ const { testOnly } = require("../config.json")
 const levels = require("../utils/json/levels.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Shows your or another user's balance",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [
@@ -24,8 +22,9 @@ module.exports = {
 			type: "USER",
 		},
 	],
-	callback: async ({ instance, guild, member, args }) => {
+	callback: async ({ instance, guild, member, args, interaction }) => {
 		try {
+			await interaction.deferReply()
 			const realMember = args[0] ? await getMember(guild, args[0]) : member
 			const userFile = await readFile(realMember.user.id)
 
@@ -83,7 +82,7 @@ module.exports = {
 					})
 				)
 			}
-			return embed
+			await interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`balance: ${error}`)
 		}

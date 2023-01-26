@@ -4,18 +4,34 @@ const {
 	randint,
 	changeDB,
 	getRoleColor,
+	msToTime,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Play scratch-off for a chance to win a huge jackpot",
 	slash: true,
-	cooldown: "8h",
 	guildOnly: true,
 	testOnly,
 	callback: async ({ instance, guild, interaction, user }) => {
 		try {
+			await interaction.deferReply()
+
+			cooldownsSchema =
+				instance._mongoConnection.models["wokcommands-cooldowns"]
+			scratchCooldown = await cooldownsSchema.findById(`scratch-${user.id}`)
+
+			if (scratchCooldown) {
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "COOLDOWN", {
+						COOLDOWN: await msToTime(scratchCooldown.cooldown * 1000),
+					}),
+				})
+				return
+			}
+
+			newCooldown = 60 * 60 * 8
+
 			const row = new MessageActionRow()
 			const row2 = new MessageActionRow()
 			const row3 = new MessageActionRow()
@@ -44,7 +60,7 @@ module.exports = {
 					value: instance.messageHandler.get(guild, "SCRATCH_DESCRIPTION"),
 				})
 
-			answer = await interaction.reply({
+			answer = await interaction.editReply({
 				embeds: [embed],
 				components: rows,
 				fetchReply: true,
@@ -80,6 +96,7 @@ module.exports = {
 						)}`,
 					})
 					cont = 0
+					newCooldown = 60 * 60 * 16
 					collector.stop()
 				} else if (luck === 24) {
 					//super close
@@ -94,6 +111,7 @@ module.exports = {
 						)}`,
 					})
 					cont = 0
+					newCooldown = 60 * 60 * 12
 					collector.stop()
 				} else if (luck === 23 || luck === 22) {
 					//pretty close
@@ -108,6 +126,7 @@ module.exports = {
 						)}`,
 					})
 					cont = 0
+					newCooldown = 60 * 60 * 10
 					collector.stop()
 				} else if (luck === 21 || luck === 20) {
 					//kinda close
@@ -162,6 +181,15 @@ module.exports = {
 						components: [],
 					})
 				}
+			})
+
+			collector.on("end", async () => {
+				await new cooldownsSchema({
+					_id: `scratch-${user.id}`,
+					name: "scratch",
+					type: "per-user",
+					cooldown: newCooldown,
+				}).save()
 			})
 		} catch (error) {
 			console.error(`scratch: ${error}`)

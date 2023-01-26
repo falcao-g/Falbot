@@ -4,10 +4,8 @@ const { getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "uteis",
 	description: "Resolve a mathematical expression",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [
@@ -18,8 +16,9 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, user, text }) => {
+	callback: async ({ instance, interaction, guild, user, text }) => {
 		try {
+			await interaction.deferReply()
 			text = text.replaceAll("**", "^")
 			answer = await math.evaluate(text).toString()
 
@@ -31,7 +30,7 @@ module.exports = {
 				})
 				.setFooter({ text: "by Falcão ❤️" })
 
-			return embed
+			await interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`math: ${error}`)
 		}

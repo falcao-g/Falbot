@@ -3,10 +3,8 @@ const { getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Fun",
 	description: "Create a little pretty poll",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [
@@ -19,6 +17,7 @@ module.exports = {
 	],
 	callback: async ({ instance, guild, interaction, user, member, text }) => {
 		try {
+			await interaction.deferReply()
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
 				.setDescription(text)
@@ -30,7 +29,7 @@ module.exports = {
 				})
 				.setFooter({ text: "by Falcão ❤️" })
 
-			answer = await interaction.reply({
+			answer = await interaction.editReply({
 				embeds: [embed],
 				fetchReply: true,
 			})

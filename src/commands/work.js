@@ -5,19 +5,33 @@ const {
 	getRoleColor,
 	randint,
 	format,
+	msToTime,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const levels = require("../utils/json/levels.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Go to work to earn money",
 	slash: true,
-	cooldown: "1h",
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, user }) => {
+	callback: async ({ instance, interaction, guild, user }) => {
 		try {
+			await interaction.deferReply()
+
+			cooldownsSchema =
+				instance._mongoConnection.models["wokcommands-cooldowns"]
+			workCooldown = await cooldownsSchema.findById(`work-${user.id}`)
+
+			if (workCooldown) {
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "COOLDOWN", {
+						COOLDOWN: await msToTime(workCooldown.cooldown * 1000),
+					}),
+				})
+				return
+			}
+
 			var rank_number = await readFile(user.id, "rank")
 			var min = levels[rank_number - 1].work[0]
 			var max = levels[rank_number - 1].work[1]
@@ -50,7 +64,16 @@ module.exports = {
 				.setDescription(desc)
 				.setFooter({ text: "by Falcão ❤️" })
 
-			return embed
+			await interaction.editReply({
+				embeds: [embed],
+			})
+
+			await new cooldownsSchema({
+				_id: `work-${user.id}`,
+				name: "work",
+				type: "per-user",
+				cooldown: 60 * 60,
+			}).save()
 		} catch (err) {
 			console.error(`work: ${err}`)
 		}

@@ -9,10 +9,8 @@ const { testOnly } = require("../config.json")
 const levels = require("../utils/json/levels.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Increase your rank",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [
@@ -34,6 +32,7 @@ module.exports = {
 	],
 	callback: async ({ instance, guild, user, interaction }) => {
 		try {
+			await interaction.deferReply()
 			type = interaction.options.getSubcommand()
 
 			switch (type) {
@@ -42,16 +41,20 @@ module.exports = {
 					rank = levels[rank_number - 1]
 
 					if (rank.falcoinsToLevelUp === undefined) {
-						return instance.messageHandler.get(guild, "MAX_RANK", {
-							USER: user,
+						await interaction.editReply({
+							content: instance.messageHandler.get(guild, "MAX_RANK", {
+								USER: user,
+							}),
 						})
 					} else if (
 						(await readFile(user.id, "falcoins")) < rank.falcoinsToLevelUp
 					) {
-						return instance.messageHandler.get(guild, "NO_MONEY_RANK", {
-							FALCOINS: await format(
-								rank.falcoinsToLevelUp - (await readFile(user.id, "falcoins"))
-							),
+						await interaction.editReply({
+							content: instance.messageHandler.get(guild, "NO_MONEY_RANK", {
+								FALCOINS: await format(
+									rank.falcoinsToLevelUp - (await readFile(user.id, "falcoins"))
+								),
+							}),
 						})
 					} else {
 						new_rank = levels[rank_number]
@@ -61,31 +64,38 @@ module.exports = {
 
 						perks = await rankPerks(rank, new_rank, instance, guild)
 
-						var embed = new MessageEmbed().setColor("AQUA").addFields(
-							{
-								name: "Rank Up!",
-								value: instance.messageHandler.get(guild, "RANKUP_SUCESS", {
-									RANK: instance.messageHandler.get(
-										guild,
-										String(rank_number + 1)
-									),
-									FALCOINS: await format(rank.falcoinsToLevelUp),
-								}),
-							},
-							{
-								name: instance.messageHandler.get(guild, "RANKUP_PERKS"),
-								value: perks,
-							}
-						)
+						var embed = new MessageEmbed()
+							.setColor("AQUA")
+							.addFields(
+								{
+									name: "Rank Up!",
+									value: instance.messageHandler.get(guild, "RANKUP_SUCESS", {
+										RANK: instance.messageHandler.get(
+											guild,
+											String(rank_number + 1)
+										),
+										FALCOINS: await format(rank.falcoinsToLevelUp),
+									}),
+								},
+								{
+									name: instance.messageHandler.get(guild, "RANKUP_PERKS"),
+									value: perks,
+								}
+							)
+							.setFooter({ text: "by Falcão ❤️" })
 
-						embed.setFooter({ text: "by Falcão ❤️" })
-						return embed
+						await interaction.editReply({
+							embeds: [embed],
+						})
+						return
 					}
 				case "view":
 					var rank_number = await readFile(user.id, "rank")
 					if (rank_number === 16) {
-						return instance.messageHandler.get(guild, "MAX_RANK", {
-							USER: user,
+						await interaction.editReply({
+							content: instance.messageHandler.get(guild, "MAX_RANK", {
+								USER: user,
+							}),
 						})
 					}
 
@@ -150,7 +160,8 @@ module.exports = {
 					}
 
 					embed.setFooter({ text: "by Falcão ❤️" })
-					return embed
+					await interaction.editReply({ embeds: [embed] })
+					return
 				case "all":
 					var embed = new MessageEmbed().setColor("DARK_PURPLE")
 
@@ -174,7 +185,7 @@ module.exports = {
 							value: ranks,
 						})
 						.setFooter({ text: "by Falcão ❤️" })
-					return embed
+					await interaction.editReply({ embeds: [embed] })
 			}
 		} catch (err) {
 			console.error(`ranks: ${err}`)

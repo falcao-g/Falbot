@@ -1,4 +1,3 @@
-const fs = require("fs")
 const { MessageEmbed } = require("discord.js")
 const {
 	readFile,
@@ -7,12 +6,11 @@ const {
 	format,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const lottoSchema = require("../schemas/lotto-schema")
 
 module.exports = {
-	category: "Economia",
 	description: "Lottery",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [
@@ -34,9 +32,16 @@ module.exports = {
 				},
 			],
 		},
+		{
+			name: "history",
+			description: "See the last 10 winners of the lottery",
+			type: "SUB_COMMAND",
+		},
 	],
 	callback: async ({ instance, guild, user, interaction }) => {
 		try {
+			await interaction.deferReply()
+			lotto = await lottoSchema.findById("semanal")
 			type = interaction.options.getSubcommand()
 			if (type === "buy") {
 				amount = interaction.options.getNumber("amount")
@@ -59,34 +64,38 @@ module.exports = {
 					await changeDB(user.id, "falcoins", -(amount * 500))
 					await changeDB(user.id, "tickets", amount)
 
-					await interaction.reply({
+					await interaction.editReply({
 						embeds: [embed],
 					})
 				} else if (amount <= 0) {
-					return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-						VALUE: amount,
+					await interaction.editReply({
+						content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+							VALUE: amount,
+						}),
 					})
 				} else {
-					return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
+					await interaction.editReply({
+						content: instance.messageHandler.get(
+							guild,
+							"FALCOINS_INSUFICIENTES"
+						),
+					})
 				}
-			} else {
-				var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
+			} else if (type === "view") {
 				var embed = new MessageEmbed()
 					.setColor("GOLD")
 					.addFields(
 						{
 							name: instance.messageHandler.get(guild, "LOTTERY"),
 							value: instance.messageHandler.get(guild, "LOTTERY_POOL", {
-								PRIZE: await format(config["lottery"]["prize"]),
+								PRIZE: await format(lotto.prize),
 							}),
 							inline: false,
 						},
 						{
 							name: "Info",
 							value: instance.messageHandler.get(guild, "LOTTERY_INFO", {
-								TIME: await msToTime(
-									config["lottery"]["drawTime"] - Date.now()
-								),
+								TIME: await msToTime(lotto.nextDraw - Date.now()),
 							}),
 							inline: false,
 						}
@@ -103,7 +112,29 @@ module.exports = {
 					)
 				}
 
-				await interaction.reply({
+				await interaction.editReply({
+					embeds: [embed],
+				})
+			} else {
+				history = ""
+				for (winner of lotto.history) {
+					history += instance.messageHandler.get(guild, "HISTORY", {
+						FALCOINS: await format(winner.prize),
+						USER: winner.winner,
+						TICKETS: winner.userTickets,
+						TOTAL: winner.totalTickets,
+					})
+				}
+
+				var embed = new MessageEmbed()
+					.setColor("GOLD")
+					.setFooter({ text: "by Falcão ❤️" })
+					.addFields({
+						name: instance.messageHandler.get(guild, "LOTTERY_WINNERS"),
+						value: history,
+					})
+
+				await interaction.editReply({
 					embeds: [embed],
 				})
 			}

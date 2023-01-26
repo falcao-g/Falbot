@@ -1,30 +1,25 @@
 const { MessageEmbed } = require("discord.js")
 const { readFile, getRoleColor, msToTime } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const fs = require("fs")
+const lottoSchema = require("../schemas/lotto-schema")
+const { MessageButton, MessageActionRow } = require("discord.js")
 
 module.exports = {
-	category: "uteis",
 	description: "Shows your commands cooldowns",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, user, member }) => {
+	callback: async ({ instance, guild, user, interaction }) => {
 		try {
-			var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
+			await interaction.deferReply()
 			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
 			cooldownsSchema =
 				instance._mongoConnection.models["wokcommands-cooldowns"]
-			scratchCooldown = await cooldownsSchema.findById(
-				`scratch-${guild.id}-${user.id}`
-			)
-			workCooldown = await cooldownsSchema.findById(
-				`work-${guild.id}-${user.id}`
-			)
+			scratchCooldown = await cooldownsSchema.findById(`scratch-${user.id}`)
+			workCooldown = await cooldownsSchema.findById(`work-${user.id}`)
+			lotto = await lottoSchema.findById("semanal")
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
-				.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 				.setFooter({ text: "by Falcão ❤️" })
 				.setTitle(instance.messageHandler.get(guild, "COOLDOWNS"))
 				.addFields(
@@ -77,13 +72,31 @@ module.exports = {
 							guild,
 							"LOTTERY"
 						)}** - ${instance.messageHandler.get(guild, "LOTTERY_DRAWN", {
-							TIME: await msToTime(config["lottery"]["drawTime"] - Date.now()),
+							TIME: await msToTime(lotto.nextDraw - Date.now()),
 						})}`,
 						inline: false,
 					}
 				)
 
-			return embed
+			const row = new MessageActionRow().addComponents([
+				new MessageButton()
+					.setCustomId("vote")
+					.setEmoji("🗳️")
+					.setStyle(voteCooldown < 43200000 ? "DANGER" : "SUCCESS")
+					.setDisabled(voteCooldown < 43200000 ? true : false),
+				new MessageButton()
+					.setCustomId("scratch")
+					.setEmoji("🎰")
+					.setStyle(scratchCooldown ? "DANGER" : "SUCCESS")
+					.setDisabled(scratchCooldown ? true : false),
+				new MessageButton()
+					.setCustomId("work")
+					.setEmoji("💼")
+					.setStyle(workCooldown ? "DANGER" : "SUCCESS")
+					.setDisabled(workCooldown ? true : false),
+			])
+
+			interaction.editReply({ embeds: [embed], components: [row] })
 		} catch (error) {
 			console.error(`cooldowns: ${error}`)
 		}

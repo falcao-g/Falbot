@@ -11,10 +11,8 @@ const {
 const { testOnly } = require("../config.json")
 
 module.exports = {
-	category: "Economia",
 	description: "Bet your money in the slot machine",
 	slash: true,
-	cooldown: "1s",
 	guildOnly: true,
 	testOnly,
 	options: [
@@ -36,14 +34,18 @@ module.exports = {
 		member,
 	}) => {
 		try {
+			await interaction.deferReply()
 			guild = client.guilds.cache.get("742332099788275732")
 			emojifoda = await guild.emojis.fetch("926953352774963310")
 			try {
 				var bet = await specialArg(args[0], user.id, "falcoins")
 			} catch {
-				return instance.messageHandler.get(guild, "VALOR_INVALIDO", {
-					VALUE: args[0],
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+						VALUE: args[0],
+					}),
 				})
+				return
 			}
 			if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
 				await changeDB(user.id, "falcoins", -bet)
@@ -70,9 +72,8 @@ module.exports = {
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
-				var answer = await interaction.reply({
+				await interaction.editReply({
 					embeds: [embed],
-					fetchReply: true,
 				})
 
 				await new Promise((resolve) => setTimeout(resolve, 1500))
@@ -80,19 +81,19 @@ module.exports = {
 					name: `-------------------\n | ${emoji1} | ${emojifoda} | ${emojifoda} |\n-------------------`,
 					value: `--- **${instance.messageHandler.get(guild, "GIRANDO")}** ---`,
 				}
-				await answer.edit({ embeds: [embed] })
+				await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
 				embed.fields[0] = {
 					name: `-------------------\n | ${emoji1} | ${emoji2} | ${emojifoda} |\n-------------------`,
 					value: `--- **${instance.messageHandler.get(guild, "GIRANDO")}** ---`,
 				}
-				await answer.edit({ embeds: [embed] })
+				await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
 				embed.fields[0] = {
 					name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
 					value: `--- **${instance.messageHandler.get(guild, "GIRANDO")}** ---`,
 				}
-				await answer.edit({ embeds: [embed] })
+				await interaction.editReply({ embeds: [embed] })
 
 				arrayEmojis = [emoji1, emoji2, emoji3]
 				var dollar = await count(arrayEmojis, ":dollar:")
@@ -167,12 +168,14 @@ module.exports = {
 						name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
 						value: `${await readFile(user.id, "falcoins", true)}`,
 					})
-				embed2.setFooter({ text: "by Falcão ❤️" })
-				await answer.edit({
+					.setFooter({ text: "by Falcão ❤️" })
+				await interaction.editReply({
 					embeds: [embed2],
 				})
 			} else {
-				return instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES")
+				await interaction.editReply({
+					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+				})
 			}
 		} catch (error) {
 			console.error(`slot: ${error}`)

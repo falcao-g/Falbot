@@ -61,10 +61,6 @@ When all of the dependencies finish installing, you will need to create a `confi
   "interest_time": "86400000",
   "interest_rate": "0.1"
  },
- "lottery": {
-  "prize": 1415370,
-  "drawTime": 0
- },
  "testOnly": true
 }
 ```
@@ -96,9 +92,6 @@ config.json file:
   - "last_interest": don't touch this, the code uses this to know when was the last interest increase
   - "interest_time": how much time between interests in milisseconds, default is 24h
   - "interest_rate": how much % the interest increases, default is 10%
-- "lottery": don't change things here, the bot uses this to make the lottery system work
-  - "prize": how much money the winner of the lottery is going to get
-  - "drawTime": when the lottery is going to be drawn
 - "testOnly": when you are only testing the slash commands put this as true this way you don't have to wait 1 hour for the command to register, it register instantly in the servers you put earlier
 
 ## 🏃‍♂️ Running
