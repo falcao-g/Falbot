@@ -8,6 +8,7 @@ const {
 	format,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "bet in what horse is going to win",
@@ -44,7 +45,7 @@ module.exports = {
 				var bet = await specialArg(args[1], user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: args[1],
 					}),
 				})
@@ -61,7 +62,7 @@ module.exports = {
 				]
 				const embed = new MessageEmbed()
 					.setDescription(
-						instance.messageHandler.get(guild, "CAVALO_DESCRIPTION", {
+						Falbot.getMessage(guild, "CAVALO_DESCRIPTION", {
 							BET: await format(bet),
 							HORSE: args[0],
 						})
@@ -100,7 +101,7 @@ module.exports = {
 				if (args[0] == winner) {
 					await changeDB(user.id, "falcoins", bet * 5)
 					embed.setColor(3066993).setDescription(
-						instance.messageHandler.get(guild, "CAVALO_DESCRIPTION_WON", {
+						Falbot.getMessage(guild, "CAVALO_DESCRIPTION_WON", {
 							BET: await format(bet),
 							HORSE: args[0],
 							FALCOINS: await format(bet * 5),
@@ -109,7 +110,7 @@ module.exports = {
 					)
 				} else {
 					embed.setColor(15158332).setDescription(
-						instance.messageHandler.get(guild, "CAVALO_DESCRIPTION_LOST", {
+						Falbot.getMessage(guild, "CAVALO_DESCRIPTION_LOST", {
 							BET: await format(bet),
 							HORSE: args[0],
 							SALDO: await readFile(user.id, "falcoins", true),
@@ -122,7 +123,7 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+					content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {

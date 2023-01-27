@@ -6,6 +6,7 @@ const {
 	takeAndGive,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Donate x falcoins to a user",
@@ -27,7 +28,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, interaction, user, args }) => {
+	callback: async ({ guild, interaction, user, args }) => {
 		try {
 			await interaction.deferReply()
 			args[0] = await getMember(guild, args[0])
@@ -36,7 +37,7 @@ module.exports = {
 				var quantity = await specialArg(args[1], user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: args[1],
 					}),
 				})
@@ -52,14 +53,14 @@ module.exports = {
 					quantity
 				)
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "DOAR", {
+					content: Falbot.getMessage(guild, "DOAR", {
 						FALCOINS: await format(quantity),
 						USER: args[0],
 					}),
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+					content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 					ephemeral: true,
 				})
 			}

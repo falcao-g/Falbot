@@ -184,28 +184,6 @@ function randint(low, high) {
 	return Math.floor(Math.random() * (high - low + 1) + low)
 }
 
-async function rankPerks(old_rank, rank, instance, guild) {
-	perks = ""
-	if (old_rank != undefined) {
-		if (old_rank.bankLimit < rank.bankLimit) {
-			perks += instance.messageHandler.get(guild, "RANKUP_BANK", {
-				FALCOINS: await format(rank.bankLimit - old_rank.bankLimit),
-			})
-			perks += "\n"
-		}
-	}
-
-	perks += `${instance.messageHandler.get(guild, "VOTO")}: ${await format(
-		rank.vote
-	)} Falcoins\n`
-
-	perks += `${instance.messageHandler.get(guild, "TRABALHO")}: ${await format(
-		rank.work[0]
-	)}-${await format(rank.work[1])} Falcoins`
-
-	return perks
-}
-
 async function paginate() {
 	const __embeds = []
 	let cur = 0
@@ -261,6 +239,5 @@ module.exports = {
 	takeAndGive,
 	count,
 	randint,
-	rankPerks,
 	paginate,
 }

@@ -1,9 +1,6 @@
 const fs = require("fs")
-const userSchema = require("./schemas/user-schema")
 const { randint, changeDB, format } = require("./utils/functions.js")
-const lottoSchema = require("./schemas/lotto-schema")
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
-const levels = require("./utils/json/levels.json")
 const path = require("path")
 const { owners, someServers, language } = require("./config.json")
 const WOKCommands = require("wokcommands")
@@ -24,6 +21,10 @@ class Falbot {
 	defaultLanguage = "portugues"
 	client = client
 	_messages = require(path.join(__dirname, "/utils/json/messages.json"))
+	_languages = new Map()
+	levels = require("./utils/json/levels.json")
+	userSchema = require("./schemas/user-schema")
+	lottoSchema = require("./schemas/lotto-schema")
 
 	constructor() {
 		try {
@@ -83,6 +84,13 @@ class Falbot {
 		this.wok = wok
 		this.languageSchema = wok._mongoConnection.models["wokcommands-languages"]
 		this.cooldownsSchema = wok._mongoConnection.models["wokcommands-cooldowns"]
+		;(async () => {
+			const results = await this.languageSchema.find()
+
+			for (const { _id, language } of results) {
+				this._languages.set(_id, language)
+			}
+		})()
 
 		setInterval(async () => {
 			await this.cooldownsSchema.updateMany({}, { $inc: { cooldown: -5 } })
@@ -106,13 +114,13 @@ class Falbot {
 			console.log("poupança!")
 			config["poupanca"]["last_interest"] = Date.now().toString()
 
-			var users = await userSchema.find({
+			var users = await this.userSchema.find({
 				banco: { $gt: 0 },
 			})
 
 			let user
 			for (user of users) {
-				var limit = levels[user.rank - 1].bankLimit
+				var limit = this.levels[user.rank - 1].bankLimit
 
 				if (limit > user.banco) {
 					user.banco += Math.floor(
@@ -139,7 +147,7 @@ class Falbot {
 
 	async sendVoteReminders() {
 		try {
-			var users = await userSchema.find({
+			var users = await this.userSchema.find({
 				voteReminder: true,
 			})
 
@@ -188,12 +196,12 @@ class Falbot {
 	}
 
 	async lotteryDraw() {
-		let lotto = await lottoSchema.findById("semanal")
+		let lotto = await this.lottoSchema.findById("semanal")
 
 		if (Date.now() > lotto.nextDraw) {
 			console.log("loteria!")
 
-			var users = await userSchema.find({
+			var users = await this.userSchema.find({
 				tickets: { $gt: 0 },
 			})
 
@@ -229,7 +237,7 @@ class Falbot {
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
-				await userSchema.updateMany(
+				await this.userSchema.updateMany(
 					{
 						tickets: { $gt: 0 },
 					},
@@ -260,19 +268,24 @@ class Falbot {
 		}
 	}
 
-	async getLanguage(id) {
-		if (id) {
-			const result = await this.languageSchema.findById(id)
+	setLanguage(guildUser, language) {
+		if (guildUser) {
+			this._languages.set(guildUser.id, language)
+		}
+	}
+
+	getLanguage(guildUser) {
+		if (guildUser) {
+			const result = this._languages.get(guildUser.id)
 			if (result) {
-				return result.language
+				return result
 			}
 		}
 		return this.defaultLanguage
 	}
 
-	async getMessage(guildUser, messageId, args = {}) {
-		var id = guildUser.id
-		const language = await this.getLanguage(id)
+	getMessage(guildUser, messageId, args = {}) {
+		const language = this.getLanguage(guildUser)
 		const translations = this._messages[messageId]
 		if (!translations) {
 			console.error(
@@ -289,6 +302,28 @@ class Falbot {
 		}
 
 		return result
+	}
+
+	async rankPerks(old_rank, rank, guild) {
+		var perks = ""
+		if (old_rank != undefined) {
+			if (old_rank.bankLimit < rank.bankLimit) {
+				perks += this.getMessage(guild, "RANKUP_BANK", {
+					FALCOINS: await format(rank.bankLimit - old_rank.bankLimit),
+				})
+				perks += "\n"
+			}
+		}
+
+		perks += `${this.getMessage(guild, "VOTO")}: ${await format(
+			rank.vote
+		)} Falcoins\n`
+
+		perks += `${this.getMessage(guild, "TRABALHO")}: ${await format(
+			rank.work[0]
+		)}-${await format(rank.work[1])} Falcoins`
+
+		return perks
 	}
 }
 

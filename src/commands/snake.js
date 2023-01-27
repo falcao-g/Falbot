@@ -1,13 +1,14 @@
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js")
 const builder = require("../utils/snake-builder.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Play a game of snake",
 	slash: true,
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, interaction, user }) => {
+	callback: async ({ guild, interaction, user }) => {
 		try {
 			await interaction.deferReply()
 			const author = user
@@ -22,11 +23,10 @@ module.exports = {
 					},
 					{
 						name: `\u200b`,
-						value: `:alarm_clock: ${
-							game.time
-						}s\n\n${instance.messageHandler.get(guild, "SCORE")}: ${
-							game.snake.length
-						}`,
+						value: `:alarm_clock: ${game.time}s\n\n${Falbot.getMessage(
+							guild,
+							"SCORE"
+						)}: ${game.snake.length}`,
 					}
 				)
 				.setFooter({ text: "by Falcão ❤️" })
@@ -79,7 +79,7 @@ module.exports = {
 				}
 				embed.fields[1] = {
 					name: `\u200b`,
-					value: `:alarm_clock: ${game.time}s\n\n${instance.messageHandler.get(
+					value: `:alarm_clock: ${game.time}s\n\n${Falbot.getMessage(
 						guild,
 						"SCORE"
 					)}: ${game.snake.length}`,
@@ -108,7 +108,7 @@ module.exports = {
 				}
 				embed.fields[1] = {
 					name: `\u200b`,
-					value: `:alarm_clock: ${game.time}s\n\n${instance.messageHandler.get(
+					value: `:alarm_clock: ${game.time}s\n\n${Falbot.getMessage(
 						guild,
 						"SCORE"
 					)}: ${game.snake.length}`,

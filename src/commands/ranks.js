@@ -1,12 +1,7 @@
 const { MessageEmbed } = require("discord.js")
-const {
-	readFile,
-	changeDB,
-	rankPerks,
-	format,
-} = require("../utils/functions.js")
+const { readFile, changeDB, format } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const levels = require("../utils/json/levels.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Increase your rank",
@@ -30,10 +25,11 @@ module.exports = {
 			type: "SUB_COMMAND",
 		},
 	],
-	callback: async ({ instance, guild, user, interaction }) => {
+	callback: async ({ guild, user, interaction }) => {
 		try {
 			await interaction.deferReply()
 			type = interaction.options.getSubcommand()
+			var levels = Falbot.levels
 
 			switch (type) {
 				case "rankup":
@@ -42,43 +38,42 @@ module.exports = {
 
 					if (rank.falcoinsToLevelUp === undefined) {
 						await interaction.editReply({
-							content: instance.messageHandler.get(guild, "MAX_RANK", {
+							content: Falbot.getMessage(guild, "MAX_RANK", {
 								USER: user,
 							}),
 						})
+						return
 					} else if (
 						(await readFile(user.id, "falcoins")) < rank.falcoinsToLevelUp
 					) {
 						await interaction.editReply({
-							content: instance.messageHandler.get(guild, "NO_MONEY_RANK", {
+							content: Falbot.getMessage(guild, "NO_MONEY_RANK", {
 								FALCOINS: await format(
 									rank.falcoinsToLevelUp - (await readFile(user.id, "falcoins"))
 								),
 							}),
 						})
+						return
 					} else {
 						new_rank = levels[rank_number]
 
 						await changeDB(user.id, "falcoins", -rank.falcoinsToLevelUp)
 						await changeDB(user.id, "rank", rank_number + 1, true)
 
-						perks = await rankPerks(rank, new_rank, instance, guild)
+						perks = await Falbot.rankPerks(rank, new_rank, guild)
 
 						var embed = new MessageEmbed()
 							.setColor("AQUA")
 							.addFields(
 								{
 									name: "Rank Up!",
-									value: instance.messageHandler.get(guild, "RANKUP_SUCESS", {
-										RANK: instance.messageHandler.get(
-											guild,
-											String(rank_number + 1)
-										),
+									value: Falbot.getMessage(guild, "RANKUP_SUCESS", {
+										RANK: Falbot.getMessage(guild, String(rank_number + 1)),
 										FALCOINS: await format(rank.falcoinsToLevelUp),
 									}),
 								},
 								{
-									name: instance.messageHandler.get(guild, "RANKUP_PERKS"),
+									name: Falbot.getMessage(guild, "RANKUP_PERKS"),
 									value: perks,
 								}
 							)
@@ -93,10 +88,11 @@ module.exports = {
 					var rank_number = await readFile(user.id, "rank")
 					if (rank_number === 16) {
 						await interaction.editReply({
-							content: instance.messageHandler.get(guild, "MAX_RANK", {
+							content: Falbot.getMessage(guild, "MAX_RANK", {
 								USER: user,
 							}),
 						})
+						return
 					}
 
 					quantity = 16 - rank_number
@@ -106,18 +102,17 @@ module.exports = {
 
 					var embed = new MessageEmbed()
 						.setColor("DARK_PURPLE")
-						.setTitle(instance.messageHandler.get(guild, "UPCOMING_RANKS"))
+						.setTitle(Falbot.getMessage(guild, "UPCOMING_RANKS"))
 						.addFields({
 							name:
-								instance.messageHandler.get(guild, String(rank_number)) +
+								Falbot.getMessage(guild, String(rank_number)) +
 								" - " +
 								(await format(levels[rank_number - 1].falcoinsToLevelUp)) +
 								" Falcoins" +
-								instance.messageHandler.get(guild, "CURRENT_RANK"),
-							value: await rankPerks(
+								Falbot.getMessage(guild, "CURRENT_RANK"),
+							value: await Falbot.rankPerks(
 								levels[rank_number - 2],
 								levels[rank_number - 1],
-								instance,
 								guild
 							),
 						})
@@ -126,33 +121,25 @@ module.exports = {
 						if (levels[rank_number + i].falcoinsToLevelUp === undefined) {
 							embed.addFields({
 								name:
-									instance.messageHandler.get(
-										guild,
-										String(rank_number + i + 1)
-									) +
+									Falbot.getMessage(guild, String(rank_number + i + 1)) +
 									" - " +
-									instance.messageHandler.get(guild, "MAX_RANK2"),
-								value: await rankPerks(
+									Falbot.getMessage(guild, "MAX_RANK2"),
+								value: await Falbot.rankPerks(
 									levels[rank_number - 1 + i],
 									levels[rank_number + i],
-									instance,
 									guild
 								),
 							})
 						} else {
 							embed.addFields({
 								name:
-									instance.messageHandler.get(
-										guild,
-										String(rank_number + i + 1)
-									) +
+									Falbot.getMessage(guild, String(rank_number + i + 1)) +
 									" - " +
 									(await format(levels[rank_number + i].falcoinsToLevelUp)) +
 									" Falcoins",
-								value: await rankPerks(
+								value: await Falbot.rankPerks(
 									levels[rank_number - 1 + i],
 									levels[rank_number + i],
-									instance,
 									guild
 								),
 							})
@@ -169,11 +156,11 @@ module.exports = {
 					for (var i = 0; i < levels.length; i++) {
 						if (levels[i].falcoinsToLevelUp === undefined) {
 							ranks +=
-								`**${instance.messageHandler.get(guild, String(i + 1))}** - ` +
-								instance.messageHandler.get(guild, "MAX_RANK2") +
+								`**${Falbot.getMessage(guild, String(i + 1))}** - ` +
+								Falbot.getMessage(guild, "MAX_RANK2") +
 								"\n"
 						} else {
-							ranks += `**${instance.messageHandler.get(
+							ranks += `**${Falbot.getMessage(
 								guild,
 								String(i + 1)
 							)}** - ${await format(levels[i].falcoinsToLevelUp)} falcoins\n`
@@ -181,7 +168,7 @@ module.exports = {
 					}
 					embed
 						.addFields({
-							name: instance.messageHandler.get(guild, "ALL_RANKS"),
+							name: Falbot.getMessage(guild, "ALL_RANKS"),
 							value: ranks,
 						})
 						.setFooter({ text: "by Falcão ❤️" })

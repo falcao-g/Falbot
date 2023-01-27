@@ -1,13 +1,14 @@
 const { MessageButton, MessageActionRow } = require("discord.js")
 const { changeDB, readFile } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Toggle your vote reminder",
 	slash: true,
 	guildOnly: true,
 	testOnly,
-	callback: async ({ instance, guild, user, interaction }) => {
+	callback: async ({ guild, user, interaction }) => {
 		try {
 			await interaction.deferReply({ ephemeral: true })
 			if ((await readFile(user.id, "voteReminder")) === false) {
@@ -16,13 +17,13 @@ module.exports = {
 				const row = new MessageActionRow().addComponents(
 					new MessageButton()
 						.setCustomId("disableVoteReminder")
-						.setLabel(instance.messageHandler.get(guild, "DISABLE_REMINDER"))
+						.setLabel(Falbot.getMessage(guild, "DISABLE_REMINDER"))
 						.setEmoji("🔕")
 						.setStyle("PRIMARY")
 				)
 
 				interaction.editReply({
-					content: instance.messageHandler.get(guild, "REMINDER_ENABLED"),
+					content: Falbot.getMessage(guild, "REMINDER_ENABLED"),
 					components: [row],
 				})
 			} else {
@@ -32,13 +33,13 @@ module.exports = {
 				const row = new MessageActionRow().addComponents(
 					new MessageButton()
 						.setCustomId("enableVoteReminder")
-						.setLabel(instance.messageHandler.get(guild, "ENABLE_REMINDER"))
+						.setLabel(Falbot.getMessage(guild, "ENABLE_REMINDER"))
 						.setEmoji("🔔")
 						.setStyle("PRIMARY")
 				)
 
 				interaction.editReply({
-					content: instance.messageHandler.get(guild, "REMINDER_DISABLED"),
+					content: Falbot.getMessage(guild, "REMINDER_DISABLED"),
 					components: [row],
 				})
 			}

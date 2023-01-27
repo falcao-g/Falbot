@@ -1,12 +1,7 @@
 const { MessageEmbed, MessageButton } = require("discord.js")
-const {
-	getMember,
-	getRoleColor,
-	format,
-	paginate,
-} = require("../utils/functions.js")
+const { getMember, format, paginate } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const userSchema = require("../schemas/user-schema.js")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "show the global or local ranking of usersasd",
@@ -66,27 +61,30 @@ module.exports = {
 			],
 		},
 	],
-	callback: async ({ client, user, guild, interaction, instance }) => {
+	callback: async ({ client, user, guild, interaction }) => {
 		rank = []
 		scope = interaction.options.getString("type").toLowerCase()
 		type = interaction.options.getSubcommand()
 		await interaction.deferReply()
 
 		var embed1 = new MessageEmbed()
-			.setColor(await getRoleColor(guild, user.id))
+			.setColor("DarkBlue")
 			.setFooter({ text: "by Falcão ❤️" })
 		var embed2 = new MessageEmbed()
-			.setColor(await getRoleColor(guild, user.id))
+			.setColor("DarkBlue")
 			.setFooter({ text: "by Falcão ❤️" })
 		var embed3 = new MessageEmbed()
-			.setColor(await getRoleColor(guild, user.id))
+			.setColor("DarkBlue")
 			.setFooter({ text: "by Falcão ❤️" })
 
 		embeds = [embed1, embed2, embed3]
 
 		if (type == "falcoins") {
 			if (scope === "server") {
-				users = await userSchema.find({}).sort({ falcoins: -1 }).limit(30)
+				users = await Falbot.userSchema
+					.find({})
+					.sort({ falcoins: -1 })
+					.limit(30)
 
 				for (useri of users) {
 					if (await getMember(guild, useri["_id"])) {
@@ -94,11 +92,11 @@ module.exports = {
 					}
 				}
 			} else {
-				rank = await userSchema.find({}).sort({ falcoins: -1 }).limit(30)
+				rank = await Falbot.userSchema.find({}).sort({ falcoins: -1 }).limit(30)
 			}
 		} else if (type == "rank") {
 			if (scope === "server") {
-				users = await userSchema.find({}).sort({ rank: -1 }).limit(30)
+				users = await Falbot.userSchema.find({}).sort({ rank: -1 }).limit(30)
 
 				for (useri of users) {
 					if (await getMember(guild, useri["_id"])) {
@@ -106,11 +104,14 @@ module.exports = {
 					}
 				}
 			} else {
-				rank = await userSchema.find({}).sort({ rank: -1 }).limit(30)
+				rank = await Falbot.userSchema.find({}).sort({ rank: -1 }).limit(30)
 			}
 		} else if (type == "wins") {
 			if (scope === "server") {
-				users = await userSchema.find({}).sort({ vitorias: -1 }).limit(30)
+				users = await Falbot.userSchema
+					.find({})
+					.sort({ vitorias: -1 })
+					.limit(30)
 
 				for (useri of users) {
 					if (await getMember(guild, useri["_id"])) {
@@ -118,7 +119,7 @@ module.exports = {
 					}
 				}
 			} else {
-				rank = await userSchema.find({}).sort({ vitorias: -1 }).limit(30)
+				rank = await Falbot.userSchema.find({}).sort({ vitorias: -1 }).limit(30)
 			}
 		}
 
@@ -143,12 +144,12 @@ module.exports = {
 					name:
 						type == "wins"
 							? `${i + 1}º - ${username} ` +
-							  instance.messageHandler.get(guild, "VITORIAS").toLowerCase() +
+							  Falbot.getMessage(guild, "VITORIAS").toLowerCase() +
 							  ":"
 							: `${i + 1}º - ${username} ${type}:`,
 					value:
 						type == "rank"
-							? `${instance.messageHandler.get(guild, rank[i][type])}`
+							? `${Falbot.getMessage(guild, rank[i][type])}`
 							: `${
 									type == "wins"
 										? rank[i]["vitorias"]
@@ -160,12 +161,12 @@ module.exports = {
 					name:
 						type === "vitorias"
 							? `${i + 1}º - Unknown user ` +
-							  instance.messageHandler.get(guild, "VITORIAS").toLowerCase() +
+							  Falbot.getMessage(guild, "VITORIAS").toLowerCase() +
 							  ":"
 							: `${i + 1}º - Unknown user ${type}:`,
 					value:
 						type === "rank"
-							? `${instance.messageHandler.get(guild, rank[i][type])}`
+							? `${Falbot.getMessage(guild, rank[i][type])}`
 							: `${
 									type == "wins"
 										? rank[i]["vitorias"]
@@ -187,17 +188,15 @@ module.exports = {
 			for (let i = 0; i < embeds.length; i++) {
 				if (scope == "server") {
 					embeds[i].setTitle(
-						`${instance.messageHandler.get(
-							guild,
-							"LEADERBOARD_SERVER_TITLE"
-						)} - ${i + 1}/3`
+						`${Falbot.getMessage(guild, "LEADERBOARD_SERVER_TITLE")} - ${
+							i + 1
+						}/3`
 					)
 				} else {
 					embeds[i].setTitle(
-						`${instance.messageHandler.get(
-							guild,
-							"LEADERBOARD_GLOBAL_TITLE"
-						)} - ${i + 1}/3`
+						`${Falbot.getMessage(guild, "LEADERBOARD_GLOBAL_TITLE")} - ${
+							i + 1
+						}/3`
 					)
 				}
 			}
@@ -231,13 +230,9 @@ module.exports = {
 				})
 		} else {
 			if (scope == "server") {
-				embed1.setTitle(
-					instance.messageHandler.get(guild, "LEADERBOARD_SERVER_TITLE")
-				)
+				embed1.setTitle(Falbot.getMessage(guild, "LEADERBOARD_SERVER_TITLE"))
 			} else {
-				embed1.setTitle(
-					instance.messageHandler.get(guild, "LEADERBOARD_GLOBAL_TITLE")
-				)
+				embed1.setTitle(Falbot.getMessage(guild, "LEADERBOARD_GLOBAL_TITLE"))
 			}
 
 			await interaction.editReply({ embeds: [embeds[0]] })

@@ -15,6 +15,9 @@ module.exports = {
 	slash: true,
 	guildOnly: true,
 	testOnly,
+	init: () => {
+		const { Falbot } = require("../../index.js")
+	},
 	callback: async ({ instance, interaction, guild, user }) => {
 		try {
 			await interaction.deferReply()
@@ -25,7 +28,7 @@ module.exports = {
 
 			if (workCooldown) {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "COOLDOWN", {
+					content: Falbot.getMessage(guild, "COOLDOWN", {
 						COOLDOWN: await msToTime(workCooldown.cooldown * 1000),
 					}),
 				})
@@ -38,7 +41,7 @@ module.exports = {
 			var salary = randint(min, max)
 
 			let bonus = 0
-			desc = instance.messageHandler.get(guild, "WORK", {
+			desc = Falbot.getMessage(guild, "WORK", {
 				FALCOINS: await format(salary),
 			})
 			luck = randint(0, 100)
@@ -47,7 +50,7 @@ module.exports = {
 				bonus = salary * 3
 				desc +=
 					"\n" +
-					instance.messageHandler.get(guild, "BONUS", {
+					Falbot.getMessage(guild, "BONUS", {
 						FALCOINS: await format(bonus),
 					})
 			}
@@ -57,7 +60,7 @@ module.exports = {
 			var embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
 				.setTitle(
-					instance.messageHandler.get(guild, "WORK_TITLE", {
+					Falbot.getMessage(guild, "WORK_TITLE", {
 						FALCOINS: await format(salary + bonus),
 					})
 				)

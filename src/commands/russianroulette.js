@@ -8,6 +8,7 @@ const {
 	getRoleColor,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Play with your friend, last to survive wins",
@@ -23,14 +24,14 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, interaction, client, user, args }) => {
+	callback: async ({ guild, interaction, client, user, args }) => {
 		try {
 			await interaction.deferReply()
 			try {
 				var bet = await specialArg(args[0], user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: args[1],
 					}),
 				})
@@ -39,14 +40,14 @@ module.exports = {
 				var pot = bet
 				const embed = new MessageEmbed()
 					.setDescription(
-						instance.messageHandler.get(guild, "ROLETARUSSA_DESCRIPTION", {
+						Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION", {
 							USER: user,
 							BET: await format(pot),
 						})
 					)
 					.setColor("#0099ff")
 					.addFields({
-						name: instance.messageHandler.get(guild, "JOGADORES"),
+						name: Falbot.getMessage(guild, "JOGADORES"),
 						value: `${user}`,
 						inline: false,
 					})
@@ -62,7 +63,7 @@ module.exports = {
 
 				var users = [user]
 				var names = [user]
-				mensagens = instance.messageHandler.get(guild, "RUSROL")
+				mensagens = Falbot.getMessage(guild, "RUSROL")
 
 				const filter = async (reaction, newUser) => {
 					return (
@@ -84,13 +85,13 @@ module.exports = {
 					names.push(newUser)
 					pot += bet
 					embed.setDescription(
-						instance.messageHandler.get(guild, "ROLETARUSSA_DESCRIPTION", {
+						Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION", {
 							USER: user,
 							BET: await format(pot),
 						})
 					)
 					embed.fields[0] = {
-						name: instance.messageHandler.get(guild, "JOGADORES"),
+						name: Falbot.getMessage(guild, "JOGADORES"),
 						value: `${names.join("\n")}`,
 						inline: false,
 					}
@@ -106,14 +107,14 @@ module.exports = {
 						names[luck] = `~~${names[luck]}~~ :skull:`
 						users.splice(luck, 1)
 						embed.setDescription(
-							instance.messageHandler.get(guild, "ROLETARUSSA_DESCRIPTION2", {
+							Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION2", {
 								BET: await format(pot),
 							}) +
 								`\n${eliminated} ${mensagens[randint(0, mensagens.length - 1)]}`
 						)
 
 						embed.fields[0] = {
-							name: instance.messageHandler.get(guild, "JOGADORES"),
+							name: Falbot.getMessage(guild, "JOGADORES"),
 							value: `${names.join("\n")}`,
 							inline: false,
 						}
@@ -128,7 +129,7 @@ module.exports = {
 					await changeDB(winner.id, "vitorias")
 					embed
 						.setDescription(
-							instance.messageHandler.get(guild, "ROLETARUSSA_DESCRIPTION3", {
+							Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION3", {
 								BET: await format(pot),
 								USER: winner,
 								SALDO: await readFile(winner.id, "falcoins", true),
@@ -142,13 +143,13 @@ module.exports = {
 				})
 			} else if (bet <= 0) {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: bet,
 					}),
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+					content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {

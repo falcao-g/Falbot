@@ -6,7 +6,7 @@ const {
 	format,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const lottoSchema = require("../schemas/lotto-schema")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Lottery",
@@ -38,10 +38,10 @@ module.exports = {
 			type: "SUB_COMMAND",
 		},
 	],
-	callback: async ({ instance, guild, user, interaction }) => {
+	callback: async ({ guild, user, interaction }) => {
 		try {
 			await interaction.deferReply()
-			lotto = await lottoSchema.findById("semanal")
+			lotto = await Falbot.lottoSchema.findById("semanal")
 			type = interaction.options.getSubcommand()
 			if (type === "buy") {
 				amount = interaction.options.getNumber("amount")
@@ -54,8 +54,8 @@ module.exports = {
 						.addFields({
 							name:
 								`:tickets: ${await format(amount)} ` +
-								instance.messageHandler.get(guild, "PURCHASED"),
-							value: instance.messageHandler.get(guild, "LOTTERY_COST", {
+								Falbot.getMessage(guild, "PURCHASED"),
+							value: Falbot.getMessage(guild, "LOTTERY_COST", {
 								COST: await format(amount * 500),
 							}),
 						})
@@ -69,16 +69,13 @@ module.exports = {
 					})
 				} else if (amount <= 0) {
 					await interaction.editReply({
-						content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+						content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
 							VALUE: amount,
 						}),
 					})
 				} else {
 					await interaction.editReply({
-						content: instance.messageHandler.get(
-							guild,
-							"FALCOINS_INSUFICIENTES"
-						),
+						content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 					})
 				}
 			} else if (type === "view") {
@@ -86,15 +83,15 @@ module.exports = {
 					.setColor("GOLD")
 					.addFields(
 						{
-							name: instance.messageHandler.get(guild, "LOTTERY"),
-							value: instance.messageHandler.get(guild, "LOTTERY_POOL", {
+							name: Falbot.getMessage(guild, "LOTTERY"),
+							value: Falbot.getMessage(guild, "LOTTERY_POOL", {
 								PRIZE: await format(lotto.prize),
 							}),
 							inline: false,
 						},
 						{
 							name: "Info",
-							value: instance.messageHandler.get(guild, "LOTTERY_INFO", {
+							value: Falbot.getMessage(guild, "LOTTERY_INFO", {
 								TIME: await msToTime(lotto.nextDraw - Date.now()),
 							}),
 							inline: false,
@@ -103,13 +100,9 @@ module.exports = {
 					.setFooter({ text: "by Falcão ❤️" })
 
 				if ((await readFile(user.id, "tickets")) > 0) {
-					embed.fields[0].value += instance.messageHandler.get(
-						guild,
-						"LOTTERY_TICKETS",
-						{
-							TICKETS: await readFile(user.id, "tickets", true),
-						}
-					)
+					embed.fields[0].value += Falbot.getMessage(guild, "LOTTERY_TICKETS", {
+						TICKETS: await readFile(user.id, "tickets", true),
+					})
 				}
 
 				await interaction.editReply({
@@ -118,7 +111,7 @@ module.exports = {
 			} else {
 				history = ""
 				for (winner of lotto.history) {
-					history += instance.messageHandler.get(guild, "HISTORY", {
+					history += Falbot.getMessage(guild, "HISTORY", {
 						FALCOINS: await format(winner.prize),
 						USER: winner.winner,
 						TICKETS: winner.userTickets,
@@ -130,7 +123,7 @@ module.exports = {
 					.setColor("GOLD")
 					.setFooter({ text: "by Falcão ❤️" })
 					.addFields({
-						name: instance.messageHandler.get(guild, "LOTTERY_WINNERS"),
+						name: Falbot.getMessage(guild, "LOTTERY_WINNERS"),
 						value: history,
 					})
 

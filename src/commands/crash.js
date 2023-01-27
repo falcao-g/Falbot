@@ -7,6 +7,7 @@ const {
 	changeDB,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Sell at the right time before the market crashes",
@@ -22,13 +23,13 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, interaction, user, args }) => {
+	callback: async ({ guild, interaction, user, args }) => {
 		await interaction.deferReply()
 		try {
 			var bet = await specialArg(args[0], user.id, "falcoins")
 		} catch {
 			await interaction.editReply({
-				content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+				content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
 					VALUE: args[0],
 				}),
 			})
@@ -41,16 +42,16 @@ module.exports = {
 				.addFields(
 					{
 						name: "Crash",
-						value: instance.messageHandler.get(guild, "CRASH_TEXT"),
+						value: Falbot.getMessage(guild, "CRASH_TEXT"),
 						inline: false,
 					},
 					{
-						name: instance.messageHandler.get(guild, "MULTIPLIER"),
+						name: Falbot.getMessage(guild, "MULTIPLIER"),
 						value: `${multiplier.toFixed(1)}x`,
 						inline: true,
 					},
 					{
-						name: instance.messageHandler.get(guild, "GANHOS"),
+						name: Falbot.getMessage(guild, "GANHOS"),
 						value: `:coin: ${parseInt(bet * multiplier - bet)}`,
 						inline: true,
 					}
@@ -61,7 +62,7 @@ module.exports = {
 			const row = new MessageActionRow().addComponents(
 				(sell = new MessageButton()
 					.setCustomId("sell")
-					.setLabel(instance.messageHandler.get(guild, "SELL"))
+					.setLabel(Falbot.getMessage(guild, "SELL"))
 					.setStyle("DANGER"))
 			)
 
@@ -109,12 +110,12 @@ module.exports = {
 				}
 
 				embed.fields[1] = {
-					name: instance.messageHandler.get(guild, "MULTIPLIER"),
+					name: Falbot.getMessage(guild, "MULTIPLIER"),
 					value: `${multiplier.toFixed(1)}x`,
 					inline: true,
 				}
 				embed.fields[2] = {
-					name: instance.messageHandler.get(guild, "GANHOS"),
+					name: Falbot.getMessage(guild, "GANHOS"),
 					value: `:coin: ${parseInt(bet * multiplier - bet)}`,
 					inline: true,
 				}
@@ -139,7 +140,7 @@ module.exports = {
 			})
 		} else {
 			await interaction.editReply({
-				content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+				content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 			})
 		}
 	},

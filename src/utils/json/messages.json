@@ -203,10 +203,6 @@
 		"portugues": ":coin: você tirou **{CARAS}** caras e **{COROAS}** coroas jogando **{TIMES}** vezes",
 		"english": ":coin: you flipped **{CARAS}** heads and **{COROAS}** tails from playing **{TIMES}** times"
 	},
-	"COINFLIP_LIMITE": {
-		"portugues": "calma lá amigão, o limite é 1000 vezes :wink:",
-		"english": "hold on there buddy, the limit is 1000 times :wink:"
-	},
 	"DOAR": {
 		"portugues": ":handshake: {FALCOINS} falcoins transferidos com sucesso para {USER}",
 		"english": ":handshake: {FALCOINS} falcoins transferred successfully to {USER}"
@@ -337,7 +333,7 @@
 	},
 	"ATAQUE_NOCAUTE": {
 		"portugues": "dá **{VALUE}** de dano ao inimigo e o deixa nocauteado",
-		"english": "deals **{VALUE}** damage to the enemy and puts them on cooldown"
+		"english": "deals **{VALUE}** damage to the enemy and stuns them"
 	},
 	"ATAQUE": {
 		"portugues": "dá **{VALUE}** de dano ao inimigo",

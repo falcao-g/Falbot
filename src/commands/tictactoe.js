@@ -9,6 +9,7 @@ const {
 	changeDB,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Challenge someone to a game of tic tac toe",
@@ -30,15 +31,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({
-		instance,
-		guild,
-		interaction,
-		client,
-		user,
-		args,
-		member,
-	}) => {
+	callback: async ({ guild, interaction, client, user, args, member }) => {
 		try {
 			await interaction.deferReply()
 			var board = new Board.default()
@@ -48,7 +41,7 @@ module.exports = {
 					var bet = await specialArg(args[1], user.id, "falcoins")
 				} catch {
 					await interaction.editReply({
-						content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+						content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
 							VALUE: args[1],
 						}),
 					})
@@ -60,7 +53,7 @@ module.exports = {
 					bet > 0
 				) {
 					var answer = await interaction.editReply({
-						content: instance.messageHandler.get(guild, "VELHA_CHAMOU", {
+						content: Falbot.getMessage(guild, "VELHA_CHAMOU", {
 							USER: member.displayName,
 							USER2: member2.displayName,
 							FALCOINS: await format(bet),
@@ -84,19 +77,15 @@ module.exports = {
 					collector.on("end", async (collected) => {
 						if (collected.size === 0) {
 							await interaction.followUp({
-								content: instance.messageHandler.get(
-									guild,
-									"VELHA_CANCELADO_DEMOROU",
-									{ USER: member2 }
-								),
+								content: Falbot.getMessage(guild, "VELHA_CANCELADO_DEMOROU", {
+									USER: member2,
+								}),
 							})
 						} else if (collected.first()._emoji.name === "🚫") {
 							await interaction.followUp({
-								content: instance.messageHandler.get(
-									guild,
-									"VELHA_CANCELADO_RECUSOU",
-									{ USER: member2 }
-								),
+								content: Falbot.getMessage(guild, "VELHA_CANCELADO_RECUSOU", {
+									USER: member2,
+								}),
 							})
 						} else {
 							await changeDB(member.user.id, "falcoins", -bet)
@@ -146,11 +135,9 @@ module.exports = {
 							answer2 = await interaction.followUp({
 								content: `:older_woman: \`${member.displayName}\` **VS**  \`${
 									member2.displayName
-								}\` \n\n${instance.messageHandler.get(
-									guild,
-									"VELHA_MOVIMENTO",
-									{ USER: first_player.displayName }
-								)}`,
+								}\` \n\n${Falbot.getMessage(guild, "VELHA_MOVIMENTO", {
+									USER: first_player.displayName,
+								})}`,
 								components: [row, row2, row3],
 								fetchReply: true,
 							})
@@ -246,16 +233,12 @@ module.exports = {
 								await i.update({
 									content: `:older_woman: \`${member.displayName}\` **VS**  \`${
 										member2.displayName
-									}\` \n\n${instance.messageHandler.get(
-										guild,
-										"VELHA_MOVIMENTO",
-										{
-											USER:
-												board.currentMark() === "X"
-													? first_player.displayName
-													: second_player.displayName,
-										}
-									)}`,
+									}\` \n\n${Falbot.getMessage(guild, "VELHA_MOVIMENTO", {
+										USER:
+											board.currentMark() === "X"
+												? first_player.displayName
+												: second_player.displayName,
+									})}`,
 									components: [row, row2, row3],
 								})
 
@@ -278,7 +261,7 @@ module.exports = {
 											member.displayName
 										}\` **VS**  \`${
 											member2.displayName
-										}\` \n\n**${instance.messageHandler.get(guild, "GANHOU", {
+										}\` \n\n**${Falbot.getMessage(guild, "GANHOU", {
 											WINNER:
 												board.winningPlayer() === "X"
 													? first_player.displayName
@@ -294,10 +277,7 @@ module.exports = {
 											member.displayName
 										}\` **VS**  \`${
 											member2.displayName
-										}\` \n\n${instance.messageHandler.get(
-											guild,
-											"VELHA_EMPATOU"
-										)}`,
+										}\` \n\n${Falbot.getMessage(guild, "VELHA_EMPATOU")}`,
 									})
 								}
 							})
@@ -305,12 +285,12 @@ module.exports = {
 					})
 				} else {
 					await interaction.editReply({
-						content: instance.messageHandler.get(guild, "INSUFICIENTE_CONTAS"),
+						content: Falbot.getMessage(guild, "INSUFICIENTE_CONTAS"),
 					})
 				}
 			} else {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "NAO_JOGAR_SOZINHO"),
+					content: Falbot.getMessage(guild, "NAO_JOGAR_SOZINHO"),
 				})
 			}
 		} catch (error) {

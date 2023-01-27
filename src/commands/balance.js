@@ -6,7 +6,7 @@ const {
 	readFile,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const levels = require("../utils/json/levels.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Shows your or another user's balance",
@@ -22,7 +22,7 @@ module.exports = {
 			type: "USER",
 		},
 	],
-	callback: async ({ instance, guild, member, args, interaction }) => {
+	callback: async ({ guild, member, args, interaction }) => {
 		try {
 			await interaction.deferReply()
 			const realMember = args[0] ? await getMember(guild, args[0]) : member
@@ -30,9 +30,7 @@ module.exports = {
 
 			const embed = new MessageEmbed()
 				.setTitle(
-					instance.messageHandler.get(guild, userFile.rank) +
-						" " +
-						realMember.displayName
+					Falbot.getMessage(guild, userFile.rank) + " " + realMember.displayName
 				)
 				.setColor(await getRoleColor(guild, realMember.user.id))
 				.setFooter({ text: "by Falcão ❤️" })
@@ -43,41 +41,40 @@ module.exports = {
 						inline: true,
 					},
 					{
-						name: ":trophy: " + instance.messageHandler.get(guild, "VITORIAS"),
+						name: ":trophy: " + Falbot.getMessage(guild, "VITORIAS"),
 						value: `${await format(userFile.vitorias)}`,
 						inline: true,
 					},
 					{
-						name: ":bank: " + instance.messageHandler.get(guild, "BANCO"),
+						name: ":bank: " + Falbot.getMessage(guild, "BANCO"),
 						value: `${await format(userFile.banco)}`,
 						inline: true,
 					},
 					{
-						name: ":gift: " + instance.messageHandler.get(guild, "CAIXAS"),
+						name: ":gift: " + Falbot.getMessage(guild, "CAIXAS"),
 						value: `${await format(userFile.caixas)}`,
 						inline: true,
 					},
 					{
-						name: ":key: " + instance.messageHandler.get(guild, "CHAVES"),
+						name: ":key: " + Falbot.getMessage(guild, "CHAVES"),
 						value: `${await format(userFile.chaves)}`,
 						inline: true,
 					}
 				)
-			if (levels[userFile.rank - 1].falcoinsToLevelUp === undefined) {
+			if (Falbot.levels[userFile.rank - 1].falcoinsToLevelUp === undefined) {
 				embed.setDescription(
-					":sparkles: " + instance.messageHandler.get(guild, "MAX_RANK2")
+					":sparkles: " + Falbot.getMessage(guild, "MAX_RANK2")
 				)
 			} else if (
-				levels[userFile.rank - 1].falcoinsToLevelUp <= userFile.falcoins
+				Falbot.levels[userFile.rank - 1].falcoinsToLevelUp <= userFile.falcoins
 			) {
-				embed.setDescription(
-					instance.messageHandler.get(guild, "BALANCE_RANKUP")
-				)
+				embed.setDescription(Falbot.getMessage(guild, "BALANCE_RANKUP"))
 			} else {
 				embed.setDescription(
-					instance.messageHandler.get(guild, "BALANCE_RANKUP2", {
+					Falbot.getMessage(guild, "BALANCE_RANKUP2", {
 						FALCOINS: await format(
-							levels[userFile.rank - 1].falcoinsToLevelUp - userFile.falcoins
+							Falbot.levels[userFile.rank - 1].falcoinsToLevelUp -
+								userFile.falcoins
 						),
 					})
 				)
