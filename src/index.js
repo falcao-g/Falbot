@@ -21,7 +21,6 @@ client.on("ready", () => {
 client.login(process.env.TOKEN)
 
 class Falbot {
-	_languages = []
 	defaultLanguage = "portugues"
 	client = client
 	_messages = require(path.join(__dirname, "/utils/json/messages.json"))
@@ -84,16 +83,6 @@ class Falbot {
 		this.wok = wok
 		this.languageSchema = wok._mongoConnection.models["wokcommands-languages"]
 		this.cooldownsSchema = wok._mongoConnection.models["wokcommands-cooldowns"]
-
-		for (const messageId of Object.keys(this._messages)) {
-			for (const language of Object.keys(this._messages[messageId])) {
-				this._languages.push(language.toLowerCase())
-			}
-		}
-
-		if (!this._languages.includes(this.defaultLanguage)) {
-			throw new Error(`The current default language defined is not supported.`)
-		}
 
 		setInterval(async () => {
 			await this.cooldownsSchema.updateMany({}, { $inc: { cooldown: -5 } })
@@ -281,12 +270,13 @@ class Falbot {
 		return this.defaultLanguage
 	}
 
-	async getMessage(id, messageId, args = {}) {
+	async getMessage(guildUser, messageId, args = {}) {
+		var id = guildUser.id
 		const language = await this.getLanguage(id)
 		const translations = this._messages[messageId]
 		if (!translations) {
 			console.error(
-				`WOKCommands > Could not find the correct message to send for "${messageId}"`
+				`Could not find the correct message to send for "${messageId}"`
 			)
 			return "Could not find the correct message to send. Please report this to the bot developer."
 		}
