@@ -1,5 +1,4 @@
 const { MessageEmbed } = require("discord.js")
-const pick = require("pick-random-weighted")
 const {
 	specialArg,
 	readFile,
@@ -7,6 +6,7 @@ const {
 	getRoleColor,
 	count,
 	format,
+	pick,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const { Falbot } = require("../../index.js")
@@ -67,23 +67,14 @@ module.exports = {
 				})
 
 				await new Promise((resolve) => setTimeout(resolve, 1500))
-				embed.fields[0] = {
-					name: `-------------------\n | ${emoji1} | ${emojifoda} | ${emojifoda} |\n-------------------`,
-					value: `--- **${Falbot.getMessage(guild, "GIRANDO")}** ---`,
-				}
-				await interaction.editReply({ embeds: [embed] })
+				;(embed.fields[0].name = `-------------------\n | ${emoji1} | ${emojifoda} | ${emojifoda} |\n-------------------`),
+					await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
-				embed.fields[0] = {
-					name: `-------------------\n | ${emoji1} | ${emoji2} | ${emojifoda} |\n-------------------`,
-					value: `--- **${Falbot.getMessage(guild, "GIRANDO")}** ---`,
-				}
-				await interaction.editReply({ embeds: [embed] })
+				;(embed.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emojifoda} |\n-------------------`),
+					await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
-				embed.fields[0] = {
-					name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
-					value: `--- **${Falbot.getMessage(guild, "GIRANDO")}** ---`,
-				}
-				await interaction.editReply({ embeds: [embed] })
+				;(embed.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`),
+					await interaction.editReply({ embeds: [embed] })
 
 				arrayEmojis = [emoji1, emoji2, emoji3]
 				var dollar = await count(arrayEmojis, ":dollar:")
@@ -102,9 +93,7 @@ module.exports = {
 					var winnings = 10
 				} else if (money_mouth == 3) {
 					var winnings = 2.5
-				} else if (dollar == 2) {
-					var winnings = 2
-				} else if (coin == 2) {
+				} else if (dollar == 2 || coin == 2) {
 					var winnings = 2
 				} else if (moneybag == 2) {
 					var winnings = 3
