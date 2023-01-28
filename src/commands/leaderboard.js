@@ -216,7 +216,6 @@ module.exports = {
 				,
 			])
 			const message = await interaction.editReply(paginator.components())
-			paginator.setMessage(message)
 			message.channel
 				.createMessageComponentCollector()
 				.on("collect", async (i) => {

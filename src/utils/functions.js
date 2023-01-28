@@ -188,7 +188,6 @@ async function paginate() {
 	const __embeds = []
 	let cur = 0
 	let traverser
-	let message
 	return {
 		add(...embeds) {
 			__embeds.push(...embeds)
@@ -196,9 +195,6 @@ async function paginate() {
 		},
 		setTraverser(tr) {
 			traverser = tr
-		},
-		setMessage(_message) {
-			message = _message
 		},
 		async next() {
 			cur++
@@ -211,9 +207,6 @@ async function paginate() {
 			if (cur <= -__embeds.length) {
 				cur = 0
 			}
-		},
-		at(num) {
-			return __embeds.at(num)
 		},
 		components() {
 			return {
