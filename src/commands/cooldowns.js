@@ -2,13 +2,15 @@ const { MessageEmbed } = require("discord.js")
 const { readFile, getRoleColor, msToTime } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const { MessageButton, MessageActionRow } = require("discord.js")
-const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Shows your commands cooldowns",
 	slash: true,
 	guildOnly: true,
 	testOnly,
+	init: () => {
+		const { Falbot } = require("../../index.js")
+	},
 	callback: async ({ instance, guild, user, interaction }) => {
 		try {
 			await interaction.deferReply()

@@ -1,6 +1,8 @@
 const vote = require("../commands/vote")
 const scratch = require("../commands/scratch")
 const work = require("../commands/work")
+const cooldowns = require("../commands/cooldowns")
+const help = require("../commands/help")
 
 module.exports = (client, instance) => {
 	const { changeDB } = require("../utils/functions.js")
@@ -62,6 +64,15 @@ module.exports = (client, instance) => {
 
 		if (interaction.customId === "work") {
 			await work.callback({ instance, interaction, guild, user })
+		}
+
+		if (interaction.customId === "cooldowns") {
+			await cooldowns.callback({ instance, guild, user, interaction })
+		}
+
+		if (interaction.customId === "help") {
+			interaction.values = [null]
+			await help.callback({ guild, interaction })
 		}
 	})
 }

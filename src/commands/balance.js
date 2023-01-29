@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js")
+const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js")
 const {
 	getMember,
 	getRoleColor,
@@ -79,7 +79,19 @@ module.exports = {
 					})
 				)
 			}
-			await interaction.editReply({ embeds: [embed] })
+
+			const row = new MessageActionRow().addComponents([
+				new MessageButton()
+					.setCustomId("cooldowns")
+					.setEmoji("⏱️")
+					.setStyle("SECONDARY"),
+				new MessageButton()
+					.setCustomId("help")
+					.setEmoji("📚")
+					.setStyle("SECONDARY"),
+			])
+
+			await interaction.editReply({ embeds: [embed], components: [row] })
 		} catch (error) {
 			console.error(`balance: ${error}`)
 		}
