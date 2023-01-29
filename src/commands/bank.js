@@ -50,7 +50,7 @@ module.exports = {
 			type: "SUB_COMMAND",
 		},
 	],
-	callback: async ({ guild, user, member, interaction }) => {
+	callback: async ({ guild, user, interaction }) => {
 		try {
 			metodo = interaction.options.getSubcommand()
 			falcoins = interaction.options.getString("falcoins")
@@ -113,10 +113,6 @@ module.exports = {
 							})
 						)
 						.setColor(await getRoleColor(guild, user.id))
-						.setAuthor({
-							name: member.displayName,
-							iconURL: user.avatarURL(),
-						})
 						.addFields(
 							{
 								name: Falbot.getMessage(guild, "SALDO_ATUAL"),
@@ -159,10 +155,6 @@ module.exports = {
 							})
 						)
 						.setColor(await getRoleColor(guild, user.id))
-						.setAuthor({
-							name: member.displayName,
-							iconURL: user.avatarURL(),
-						})
 						.addFields(
 							{
 								name: Falbot.getMessage(guild, "SALDO_ATUAL"),

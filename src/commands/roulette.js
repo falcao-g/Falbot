@@ -118,10 +118,6 @@ module.exports = {
 
 				var embed2 = new MessageEmbed()
 					.setTitle(Falbot.getMessage(guild, "ROLETA"))
-					.setAuthor({
-						name: member.displayName,
-						iconURL: user.avatarURL(),
-					})
 					.setFooter({ text: "by Falcão ❤️" })
 
 				if (type.includes(luck)) {

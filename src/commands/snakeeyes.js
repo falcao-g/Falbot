@@ -24,7 +24,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ guild, interaction, client, user, args, member }) => {
+	callback: async ({ guild, interaction, client, user, args }) => {
 		try {
 			await interaction.deferReply()
 			guild = client.guilds.cache.get("742332099788275732")
@@ -57,7 +57,6 @@ module.exports = {
 
 				const embed = new MessageEmbed()
 					.setColor(await getRoleColor(guild, user.id))
-					.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 					.addFields({
 						name: `-------------------\n      | ${diegif} | ${diegif} |\n-------------------`,
 						value: `--- **${Falbot.getMessage(guild, "ROLANDO")}** ---`,
@@ -124,10 +123,6 @@ module.exports = {
 					)
 				}
 				embed2
-					.setAuthor({
-						name: member.displayName,
-						iconURL: user.avatarURL(),
-					})
 					.addFields({
 						name: Falbot.getMessage(guild, "SALDO_ATUAL"),
 						value: `${await readFile(user.id, "falcoins", true)}`,
