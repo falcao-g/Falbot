@@ -94,42 +94,28 @@ module.exports = {
 							const row2 = new MessageActionRow()
 							const row3 = new MessageActionRow()
 
-							customIds = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-							for (var i = 0; i < 9; i++) {
-								if (i < 3) {
-									row.addComponents(
-										new MessageButton()
-											.setCustomId(customIds[i])
-											.setLabel("\u200b")
-											.setStyle("SECONDARY")
-									)
-								} else if (i < 6) {
-									row2.addComponents(
-										new MessageButton()
-											.setCustomId(customIds[i])
-											.setLabel("\u200b")
-											.setStyle("SECONDARY")
-									)
+							for (var i = 1; i < 10; i++) {
+								let button = new MessageButton()
+									.setCustomId(String(i))
+									.setLabel("\u200b")
+									.setStyle("SECONDARY")
+								if (i < 4) {
+									row.addComponents(button)
+								} else if (i < 7) {
+									row2.addComponents(button)
 								} else {
-									row3.addComponents(
-										new MessageButton()
-											.setCustomId(customIds[i])
-											.setLabel("\u200b")
-											.setStyle("SECONDARY")
-									)
+									row3.addComponents(button)
 								}
 							}
 
 							//randomizing who starts
-							let first_player
-							let second_player
 							let random = randint(0, 1)
 							if (random == 0) {
-								first_player = member
-								second_player = member2
+								var first_player = member
+								var second_player = member2
 							} else {
-								first_player = member2
-								second_player = member
+								var first_player = member2
+								var second_player = member
 							}
 
 							answer2 = await interaction.followUp({
@@ -266,7 +252,7 @@ module.exports = {
 												board.winningPlayer() === "X"
 													? first_player.displayName
 													: second_player.displayName,
-											FALCOINS: bet,
+											FALCOINS: await format(bet),
 										})}**`,
 									})
 								} else {

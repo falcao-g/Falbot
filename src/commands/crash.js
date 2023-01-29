@@ -5,6 +5,7 @@ const {
 	getRoleColor,
 	randint,
 	changeDB,
+	format,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const { Falbot } = require("../../index.js")
@@ -52,7 +53,7 @@ module.exports = {
 					},
 					{
 						name: Falbot.getMessage(guild, "GANHOS"),
-						value: `:coin: ${parseInt(bet * multiplier - bet)}`,
+						value: `:coin: ${format(parseInt(bet * multiplier - bet))}`,
 						inline: true,
 					}
 				)
@@ -116,7 +117,7 @@ module.exports = {
 				}
 				embed.fields[2] = {
 					name: Falbot.getMessage(guild, "GANHOS"),
-					value: `:coin: ${parseInt(bet * multiplier - bet)}`,
+					value: `:coin: ${format(parseInt(bet * multiplier - bet))}`,
 					inline: true,
 				}
 
