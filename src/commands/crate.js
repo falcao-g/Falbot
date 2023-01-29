@@ -60,7 +60,7 @@ module.exports = {
 						name: Falbot.getMessage(guild, "CAIXA_TITULO", {
 							QUANTITY: args[0],
 						}),
-						value: `:key: ${chaves}\n:coin: ${await format(
+						value: `:key: ${chaves}\n:coin: ${format(
 							falcoins
 						)} \n:gift: ${caixas}`,
 					})

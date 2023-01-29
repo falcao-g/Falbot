@@ -63,7 +63,7 @@ module.exports = {
 				const embed = new MessageEmbed()
 					.setDescription(
 						Falbot.getMessage(guild, "CAVALO_DESCRIPTION", {
-							BET: await format(bet),
+							BET: format(bet),
 							HORSE: args[0],
 						})
 					)
@@ -102,16 +102,16 @@ module.exports = {
 					await changeDB(user.id, "falcoins", bet * 5)
 					embed.setColor(3066993).setDescription(
 						Falbot.getMessage(guild, "CAVALO_DESCRIPTION_WON", {
-							BET: await format(bet),
+							BET: format(bet),
 							HORSE: args[0],
-							FALCOINS: await format(bet * 5),
+							FALCOINS: format(bet * 5),
 							SALDO: await readFile(user.id, "falcoins", true),
 						})
 					)
 				} else {
 					embed.setColor(15158332).setDescription(
 						Falbot.getMessage(guild, "CAVALO_DESCRIPTION_LOST", {
-							BET: await format(bet),
+							BET: format(bet),
 							HORSE: args[0],
 							SALDO: await readFile(user.id, "falcoins", true),
 						})

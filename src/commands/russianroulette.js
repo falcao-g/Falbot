@@ -42,7 +42,7 @@ module.exports = {
 					.setDescription(
 						Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION", {
 							USER: user,
-							BET: await format(pot),
+							BET: format(pot),
 						})
 					)
 					.setColor("#0099ff")
@@ -87,7 +87,7 @@ module.exports = {
 					embed.setDescription(
 						Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION", {
 							USER: user,
-							BET: await format(pot),
+							BET: format(pot),
 						})
 					)
 					embed.fields[0] = {
@@ -108,7 +108,7 @@ module.exports = {
 						users.splice(luck, 1)
 						embed.setDescription(
 							Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION2", {
-								BET: await format(pot),
+								BET: format(pot),
 							}) +
 								`\n${eliminated} ${mensagens[randint(0, mensagens.length - 1)]}`
 						)
@@ -130,7 +130,7 @@ module.exports = {
 					embed
 						.setDescription(
 							Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION3", {
-								BET: await format(pot),
+								BET: format(pot),
 								USER: winner,
 								SALDO: await readFile(winner.id, "falcoins", true),
 							})

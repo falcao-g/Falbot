@@ -56,7 +56,7 @@ module.exports = {
 						content: Falbot.getMessage(guild, "VELHA_CHAMOU", {
 							USER: member.displayName,
 							USER2: member2.displayName,
-							FALCOINS: await format(bet),
+							FALCOINS: format(bet),
 						}),
 						fetchReply: true,
 					})

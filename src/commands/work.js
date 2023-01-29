@@ -29,7 +29,7 @@ module.exports = {
 			if (workCooldown) {
 				await interaction.editReply({
 					content: Falbot.getMessage(guild, "COOLDOWN", {
-						COOLDOWN: await msToTime(workCooldown.cooldown * 1000),
+						COOLDOWN: msToTime(workCooldown.cooldown * 1000),
 					}),
 				})
 				return
@@ -42,7 +42,7 @@ module.exports = {
 
 			let bonus = 0
 			desc = Falbot.getMessage(guild, "WORK", {
-				FALCOINS: await format(salary),
+				FALCOINS: format(salary),
 			})
 			luck = randint(0, 100)
 
@@ -51,7 +51,7 @@ module.exports = {
 				desc +=
 					"\n" +
 					Falbot.getMessage(guild, "BONUS", {
-						FALCOINS: await format(bonus),
+						FALCOINS: format(bonus),
 					})
 			}
 
@@ -61,7 +61,7 @@ module.exports = {
 				.setColor(await getRoleColor(guild, user.id))
 				.setTitle(
 					Falbot.getMessage(guild, "WORK_TITLE", {
-						FALCOINS: await format(salary + bonus),
+						FALCOINS: format(salary + bonus),
 					})
 				)
 				.setDescription(desc)

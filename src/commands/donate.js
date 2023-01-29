@@ -54,7 +54,7 @@ module.exports = {
 				)
 				await interaction.editReply({
 					content: Falbot.getMessage(guild, "DOAR", {
-						FALCOINS: await format(quantity),
+						FALCOINS: format(quantity),
 						USER: args[0],
 					}),
 				})

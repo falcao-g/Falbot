@@ -151,9 +151,7 @@ module.exports = {
 						type == "rank"
 							? `${Falbot.getMessage(guild, rank[i][type])}`
 							: `${
-									type == "wins"
-										? rank[i]["vitorias"]
-										: await format(rank[i][type])
+									type == "wins" ? rank[i]["vitorias"] : format(rank[i][type])
 							  }`,
 				})
 			} catch {
@@ -168,9 +166,7 @@ module.exports = {
 						type === "rank"
 							? `${Falbot.getMessage(guild, rank[i][type])}`
 							: `${
-									type == "wins"
-										? rank[i]["vitorias"]
-										: await format(rank[i][type])
+									type == "wins" ? rank[i]["vitorias"] : format(rank[i][type])
 							  }`,
 				})
 			}
@@ -201,10 +197,10 @@ module.exports = {
 				}
 			}
 
-			const paginator = await paginate()
+			const paginator = paginate()
 			paginator.add(...embeds)
 			const ids = [`${Date.now()}__left`, `${Date.now()}__right`]
-			await paginator.setTraverser([
+			paginator.setTraverser([
 				new MessageButton()
 					.setEmoji("⬅️")
 					.setCustomId(ids[0])

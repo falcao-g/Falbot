@@ -47,7 +47,7 @@ async function takeAndGive(id, id2, field, field2, quantity = 1) {
 	}
 }
 
-async function msToTime(ms) {
+function msToTime(ms) {
 	let time = ""
 
 	let n = 0
@@ -121,7 +121,7 @@ async function specialArg(arg, id, field = "falcoins") {
 	}
 }
 
-async function format(falcoins) {
+function format(falcoins) {
 	if (parseInt(falcoins) < 0) {
 		falcoins = falcoins.toString()
 		pop = falcoins.slice(1)
@@ -170,7 +170,7 @@ async function getMember(guild, member_id) {
 	return guild.members.cache.get(member_id)
 }
 
-async function count(array, string) {
+function count(array, string) {
 	var amount = 0
 	for (let i = 0; i <= array.length; i++) {
 		if (array[i - 1] === string) {
@@ -184,7 +184,7 @@ function randint(low, high) {
 	return Math.floor(Math.random() * (high - low + 1) + low)
 }
 
-async function paginate() {
+function paginate() {
 	const __embeds = []
 	let cur = 0
 	let traverser

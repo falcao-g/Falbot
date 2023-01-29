@@ -27,7 +27,7 @@ module.exports = {
 			if (scratchCooldown) {
 				await interaction.editReply({
 					content: Falbot.getMessage(guild, "COOLDOWN", {
-						COOLDOWN: await msToTime(scratchCooldown.cooldown * 1000),
+						COOLDOWN: msToTime(scratchCooldown.cooldown * 1000),
 					}),
 				})
 				return
@@ -93,7 +93,7 @@ module.exports = {
 					embed.setColor("GOLD").addFields({
 						name: Falbot.getMessage(guild, "SCRATCH_PRIZE"),
 						value: `${Falbot.getMessage(guild, "SCRATCH_PRIZE_DESCRIPTION", {
-							FALCOINS: await format(amount),
+							FALCOINS: format(amount),
 						})}`,
 					})
 					cont = 0
@@ -106,7 +106,7 @@ module.exports = {
 					embed.setColor(3066993).addFields({
 						name: Falbot.getMessage(guild, "SCRATCH_SUPER"),
 						value: `${Falbot.getMessage(guild, "SCRATCH_SUPER_DESCRIPTION", {
-							FALCOINS: await format(amount),
+							FALCOINS: format(amount),
 						})}`,
 					})
 					cont = 0
@@ -119,7 +119,7 @@ module.exports = {
 					embed.setColor(3066993).addFields({
 						name: Falbot.getMessage(guild, "SCRATCH_PRETTY"),
 						value: `${Falbot.getMessage(guild, "SCRATCH_PRETTY_DESCRIPTION", {
-							FALCOINS: await format(amount),
+							FALCOINS: format(amount),
 						})}`,
 					})
 					cont = 0
@@ -132,7 +132,7 @@ module.exports = {
 					embed.setColor(3066993).addFields({
 						name: Falbot.getMessage(guild, "SCRATCH_KINDOF"),
 						value: `${Falbot.getMessage(guild, "SCRATCH_KINDOF_DESCRIPTION", {
-							FALCOINS: await format(amount),
+							FALCOINS: format(amount),
 							GUESSES: cont,
 						})}`,
 					})
@@ -145,7 +145,7 @@ module.exports = {
 						embed.addFields({
 							name: "Meh...",
 							value: `${Falbot.getMessage(guild, "SCRATCH_LOSE_DESCRIPTION2", {
-								FALCOINS: await format(amount),
+								FALCOINS: format(amount),
 								GUESSES: cont,
 							})}`,
 						})

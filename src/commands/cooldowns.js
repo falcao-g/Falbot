@@ -27,7 +27,7 @@ module.exports = {
 						name: ":ballot_box: " + Falbot.getMessage(guild, "VOTO"),
 						value: `**${
 							voteCooldown < 43200000
-								? `:red_circle: ${await msToTime(43200000 - voteCooldown)}`
+								? `:red_circle: ${msToTime(43200000 - voteCooldown)}`
 								: `:green_circle: ${Falbot.getMessage(guild, "PRONTO")}`
 						}**`,
 						inline: true,
@@ -36,9 +36,7 @@ module.exports = {
 						name: ":slot_machine: " + Falbot.getMessage(guild, "SCRATCH"),
 						value: `**${
 							scratchCooldown
-								? `:red_circle: ${await msToTime(
-										scratchCooldown["cooldown"] * 1000
-								  )}`
+								? `:red_circle: ${msToTime(scratchCooldown["cooldown"] * 1000)}`
 								: `:green_circle: ${Falbot.getMessage(guild, "PRONTO")}`
 						}**`,
 						inline: true,
@@ -47,9 +45,7 @@ module.exports = {
 						name: ":briefcase: " + Falbot.getMessage(guild, "TRABALHO"),
 						value: `**${
 							workCooldown
-								? `:red_circle: ${await msToTime(
-										workCooldown["cooldown"] * 1000
-								  )}`
+								? `:red_circle: ${msToTime(workCooldown["cooldown"] * 1000)}`
 								: `:green_circle: ${Falbot.getMessage(guild, "PRONTO")}`
 						}**`,
 						inline: true,
@@ -60,7 +56,7 @@ module.exports = {
 							guild,
 							"LOTTERY"
 						)}** - ${Falbot.getMessage(guild, "LOTTERY_DRAWN", {
-							TIME: await msToTime(lotto.nextDraw - Date.now()),
+							TIME: msToTime(lotto.nextDraw - Date.now()),
 						})}`,
 						inline: false,
 					}

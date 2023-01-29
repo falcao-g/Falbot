@@ -54,7 +54,7 @@ module.exports = {
 						content: Falbot.getMessage(guild, "LUTA_CONVITE", {
 							USER: member.displayName,
 							USER2: member2.displayName,
-							FALCOINS: await format(bet),
+							FALCOINS: format(bet),
 						}),
 						fetchReply: true,
 					})

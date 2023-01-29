@@ -46,7 +46,7 @@ module.exports = {
 				) {
 					await interaction.editReply({
 						content: Falbot.getMessage(guild, "NO_MONEY_RANK", {
-							FALCOINS: await format(
+							FALCOINS: format(
 								rank.falcoinsToLevelUp - (await readFile(user.id, "falcoins"))
 							),
 						}),
@@ -66,7 +66,7 @@ module.exports = {
 								name: "Rank Up!",
 								value: Falbot.getMessage(guild, "RANKUP_SUCESS", {
 									RANK: Falbot.getMessage(guild, String(rank_number + 1)),
-									FALCOINS: await format(rank.falcoinsToLevelUp),
+									FALCOINS: format(rank.falcoinsToLevelUp),
 								}),
 							},
 							{
@@ -103,7 +103,7 @@ module.exports = {
 						name:
 							Falbot.getMessage(guild, String(rank_number)) +
 							" - " +
-							(await format(levels[rank_number - 1].falcoinsToLevelUp)) +
+							format(levels[rank_number - 1].falcoinsToLevelUp) +
 							" Falcoins" +
 							Falbot.getMessage(guild, "CURRENT_RANK"),
 						value: await Falbot.rankPerks(
@@ -131,7 +131,7 @@ module.exports = {
 							name:
 								Falbot.getMessage(guild, String(rank_number + i + 1)) +
 								" - " +
-								(await format(levels[rank_number + i].falcoinsToLevelUp)) +
+								format(levels[rank_number + i].falcoinsToLevelUp) +
 								" Falcoins",
 							value: await Falbot.rankPerks(
 								levels[rank_number - 1 + i],
@@ -155,10 +155,9 @@ module.exports = {
 							Falbot.getMessage(guild, "MAX_RANK2") +
 							"\n"
 					} else {
-						ranks += `**${Falbot.getMessage(
-							guild,
-							String(i + 1)
-						)}** - ${await format(levels[i].falcoinsToLevelUp)} falcoins\n`
+						ranks += `**${Falbot.getMessage(guild, String(i + 1))}** - ${format(
+							levels[i].falcoinsToLevelUp
+						)} falcoins\n`
 					}
 				}
 				embed

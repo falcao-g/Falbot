@@ -90,7 +90,7 @@ module.exports = {
 						},
 						{
 							name: Falbot.getMessage(guild, "GANHOS"),
-							value: `${await format(bet * 5)} falcoins`,
+							value: `${format(bet * 5)} falcoins`,
 							inline: true,
 						}
 					)
@@ -104,7 +104,7 @@ module.exports = {
 						},
 						{
 							name: Falbot.getMessage(guild, "GANHOS"),
-							value: `${await format(bet * 2)} falcoins`,
+							value: `${format(bet * 2)} falcoins`,
 							inline: true,
 						}
 					)
@@ -117,7 +117,7 @@ module.exports = {
 						},
 						{
 							name: Falbot.getMessage(guild, "PERDAS"),
-							value: `${await format(bet)} falcoins`,
+							value: `${format(bet)} falcoins`,
 							inline: true,
 						}
 					)

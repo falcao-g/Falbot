@@ -46,7 +46,7 @@ module.exports = {
 					.addFields({
 						name: Falbot.getMessage(guild, "VOTE_THANKS"),
 						value: Falbot.getMessage(guild, "VOTE_COLLECTED", {
-							REWARD: await format(reward),
+							REWARD: format(reward),
 							PERCENTAGE: (await readFile(user.id, "voteStreak")) * 5,
 						}),
 					})
@@ -60,10 +60,8 @@ module.exports = {
 					.addFields({
 						name: Falbot.getMessage(guild, "ALREADY_COLLECTED"),
 						value: Falbot.getMessage(guild, "ALREADY_COLLECTED2", {
-							TIME: await msToTime(
-								1000 * 60 * 60 * 12 - (Date.now() - lastVote)
-							),
-							REWARD: await format(reward),
+							TIME: msToTime(1000 * 60 * 60 * 12 - (Date.now() - lastVote)),
+							REWARD: format(reward),
 						}),
 					})
 					.setFooter({ text: "by Falcão ❤️" })
@@ -73,7 +71,7 @@ module.exports = {
 					.addFields({
 						name: Falbot.getMessage(guild, "VOTE_FIRST"),
 						value: Falbot.getMessage(guild, "VOTE_DESCRIPTION", {
-							FALCOINS: await format(reward),
+							FALCOINS: format(reward),
 						}),
 					})
 					.addFields({

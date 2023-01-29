@@ -45,7 +45,7 @@ module.exports = {
 					.setDescription(
 						Falbot.getMessage(guild, "CAVALGADA_DESCRIPTION", {
 							USER: user,
-							BET: await format(pot),
+							BET: format(pot),
 						})
 					)
 					.setColor("#0099ff")
@@ -90,7 +90,7 @@ module.exports = {
 					embed.setDescription(
 						Falbot.getMessage(guild, "CAVALGADA_DESCRIPTION", {
 							USER: user,
-							BET: await format(pot),
+							BET: format(pot),
 						})
 					)
 					embed.fields[0] = {
@@ -115,7 +115,7 @@ module.exports = {
 
 						embed.setDescription(
 							Falbot.getMessage(guild, "CAVALGADA_DESCRIPTION2", {
-								BET: await format(pot),
+								BET: format(pot),
 							})
 						)
 
@@ -141,7 +141,7 @@ module.exports = {
 					await changeDB(winner.id, "vitorias")
 					embed.setColor(await getRoleColor(guild, winner.id)).setDescription(
 						Falbot.getMessage(guild, "CAVALGADA_DESCRIPTION3", {
-							BET: await format(pot),
+							BET: format(pot),
 							USER: winner,
 							SALDO: await readFile(winner.id, "falcoins", true),
 						})

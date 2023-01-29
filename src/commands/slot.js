@@ -76,11 +76,11 @@ module.exports = {
 					await interaction.editReply({ embeds: [embed] })
 
 				arrayEmojis = [emoji1, emoji2, emoji3]
-				var dollar = await count(arrayEmojis, ":dollar:")
-				var coin = await count(arrayEmojis, ":coin:")
-				var moneybag = await count(arrayEmojis, ":moneybag:")
-				var gem = await count(arrayEmojis, ":gem:")
-				var money_mouth = await count(arrayEmojis, ":money_mouth:")
+				var dollar = count(arrayEmojis, ":dollar:")
+				var coin = count(arrayEmojis, ":coin:")
+				var moneybag = count(arrayEmojis, ":moneybag:")
+				var gem = count(arrayEmojis, ":gem:")
+				var money_mouth = count(arrayEmojis, ":money_mouth:")
 
 				if (dollar == 3) {
 					var winnings = 3
@@ -113,7 +113,7 @@ module.exports = {
 						},
 						{
 							name: Falbot.getMessage(guild, "GANHOS"),
-							value: `${await format(profit)} falcoins`,
+							value: `${format(profit)} falcoins`,
 							inline: true,
 						}
 					)
@@ -126,7 +126,7 @@ module.exports = {
 						},
 						{
 							name: Falbot.getMessage(guild, "PERDAS"),
-							value: `${await format(bet)} falcoins`,
+							value: `${format(bet)} falcoins`,
 							inline: true,
 						}
 					)

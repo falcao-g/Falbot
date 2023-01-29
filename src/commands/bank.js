@@ -70,13 +70,13 @@ module.exports = {
 						)} falcoins\n:bank: ${Falbot.getMessage(
 							guild,
 							"BANK_INTEREST"
-						)}\n\n:money_with_wings: ${await format(
+						)}\n\n:money_with_wings: ${format(
 							limit - (await readFile(user.id, "banco"))
 						)} ${Falbot.getMessage(
 							guild,
 							"BANK_LIMIT"
 						)}\n:atm: ${Falbot.getMessage(guild, "BANK_DEPOSIT_LIMIT", {
-							FALCOINS: await format(limit / 2),
+							FALCOINS: format(limit / 2),
 						})}**`,
 					})
 				await interaction.editReply({ embeds: [embed] })
@@ -109,7 +109,7 @@ module.exports = {
 					const embed = new MessageEmbed()
 						.setTitle(
 							Falbot.getMessage(guild, "BANCO_DEPOSITOU", {
-								VALUE: await format(quantity),
+								VALUE: format(quantity),
 							})
 						)
 						.setColor(await getRoleColor(guild, user.id))
@@ -151,7 +151,7 @@ module.exports = {
 					const embed = new MessageEmbed()
 						.setTitle(
 							Falbot.getMessage(guild, "BANCO_SACOU", {
-								VALUE: await format(quantity),
+								VALUE: format(quantity),
 							})
 						)
 						.setColor(await getRoleColor(guild, user.id))

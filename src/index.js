@@ -230,9 +230,9 @@ class Falbot {
 					.addFields({
 						name: await this.getMessage(winnerUser, "CONGRATULATIONS"),
 						value: await this.getMessage(winnerUser, "LOTTERY_WIN", {
-							PRIZE: await format(lotto.prize),
-							TICKETS: await format(winner.tickets),
-							TOTAL: await format(numTickets),
+							PRIZE: format(lotto.prize),
+							TICKETS: format(winner.tickets),
+							TOTAL: format(numTickets),
 						}),
 					})
 					.setFooter({ text: "by Falcão ❤️" })
@@ -309,19 +309,19 @@ class Falbot {
 		if (old_rank != undefined) {
 			if (old_rank.bankLimit < rank.bankLimit) {
 				perks += this.getMessage(guild, "RANKUP_BANK", {
-					FALCOINS: await format(rank.bankLimit - old_rank.bankLimit),
+					FALCOINS: format(rank.bankLimit - old_rank.bankLimit),
 				})
 				perks += "\n"
 			}
 		}
 
-		perks += `${this.getMessage(guild, "VOTO")}: ${await format(
+		perks += `${this.getMessage(guild, "VOTO")}: ${format(
 			rank.vote
 		)} Falcoins\n`
 
-		perks += `${this.getMessage(guild, "TRABALHO")}: ${await format(
+		perks += `${this.getMessage(guild, "TRABALHO")}: ${format(
 			rank.work[0]
-		)}-${await format(rank.work[1])} Falcoins`
+		)}-${format(rank.work[1])} Falcoins`
 
 		return perks
 	}

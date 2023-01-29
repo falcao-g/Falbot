@@ -22,7 +22,7 @@ module.exports = {
 						client.guilds.cache.size
 					}\n:busts_in_silhouette: ${Falbot.getMessage(guild, "PLAYERS")}: ${
 						(await Falbot.userSchema.find({})).length
-					}\n:zap: ${Falbot.getMessage(guild, "UPTIME")}: ${await msToTime(
+					}\n:zap: ${Falbot.getMessage(guild, "UPTIME")}: ${msToTime(
 						client.uptime
 					)}**`,
 				})

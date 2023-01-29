@@ -102,7 +102,7 @@ module.exports = {
 
 				multiplier += 0.2
 
-				random = await randint(1, 100)
+				random = randint(1, 100)
 
 				if (random <= 20) {
 					crashed = true

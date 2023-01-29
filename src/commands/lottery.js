@@ -53,10 +53,10 @@ module.exports = {
 						.setColor("GOLD")
 						.addFields({
 							name:
-								`:tickets: ${await format(amount)} ` +
+								`:tickets: ${format(amount)} ` +
 								Falbot.getMessage(guild, "PURCHASED"),
 							value: Falbot.getMessage(guild, "LOTTERY_COST", {
-								COST: await format(amount * 500),
+								COST: format(amount * 500),
 							}),
 						})
 						.setFooter({ text: "by Falcão ❤️" })
@@ -85,14 +85,14 @@ module.exports = {
 						{
 							name: Falbot.getMessage(guild, "LOTTERY"),
 							value: Falbot.getMessage(guild, "LOTTERY_POOL", {
-								PRIZE: await format(lotto.prize),
+								PRIZE: format(lotto.prize),
 							}),
 							inline: false,
 						},
 						{
 							name: "Info",
 							value: Falbot.getMessage(guild, "LOTTERY_INFO", {
-								TIME: await msToTime(lotto.nextDraw - Date.now()),
+								TIME: msToTime(lotto.nextDraw - Date.now()),
 							}),
 							inline: false,
 						}
@@ -112,7 +112,7 @@ module.exports = {
 				history = ""
 				for (winner of lotto.history) {
 					history += Falbot.getMessage(guild, "HISTORY", {
-						FALCOINS: await format(winner.prize),
+						FALCOINS: format(winner.prize),
 						USER: winner.winner,
 						TICKETS: winner.userTickets,
 						TOTAL: winner.totalTickets,

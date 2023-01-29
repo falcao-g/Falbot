@@ -37,27 +37,27 @@ module.exports = {
 				.addFields(
 					{
 						name: ":coin: Falcoins",
-						value: `${await format(userFile.falcoins)}`,
+						value: `${format(userFile.falcoins)}`,
 						inline: true,
 					},
 					{
 						name: ":trophy: " + Falbot.getMessage(guild, "VITORIAS"),
-						value: `${await format(userFile.vitorias)}`,
+						value: `${format(userFile.vitorias)}`,
 						inline: true,
 					},
 					{
 						name: ":bank: " + Falbot.getMessage(guild, "BANCO"),
-						value: `${await format(userFile.banco)}`,
+						value: `${format(userFile.banco)}`,
 						inline: true,
 					},
 					{
 						name: ":gift: " + Falbot.getMessage(guild, "CAIXAS"),
-						value: `${await format(userFile.caixas)}`,
+						value: `${format(userFile.caixas)}`,
 						inline: true,
 					},
 					{
 						name: ":key: " + Falbot.getMessage(guild, "CHAVES"),
-						value: `${await format(userFile.chaves)}`,
+						value: `${format(userFile.chaves)}`,
 						inline: true,
 					}
 				)
@@ -72,7 +72,7 @@ module.exports = {
 			} else {
 				embed.setDescription(
 					Falbot.getMessage(guild, "BALANCE_RANKUP2", {
-						FALCOINS: await format(
+						FALCOINS: format(
 							Falbot.levels[userFile.rank - 1].falcoinsToLevelUp -
 								userFile.falcoins
 						),
