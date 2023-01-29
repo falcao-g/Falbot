@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js")
-const { randint, getRoleColor } = require("../utils/functions.js")
+const { randint } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Forecast your future",
@@ -15,25 +16,25 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, user, text, interaction }) => {
+	callback: async ({ guild, text, interaction }) => {
 		try {
 			await interaction.deferReply()
-			answers = instance.messageHandler.get(guild, "8BALL")
+			let answers = Falbot.getMessage(guild, "8BALL")
 			let answer = `${answers[randint(0, answers.length - 1)]}`
 			const embed = new MessageEmbed()
-				.setColor(await getRoleColor(guild, user.id))
+				.setColor("BLACK")
 				.setAuthor({
-					name: instance.messageHandler.get(guild, "BOLA8"),
+					name: Falbot.getMessage(guild, "BOLA8"),
 					iconURL:
 						"https://images.emojiterra.com/google/noto-emoji/unicode-13.1/128px/1f3b1.png",
 				})
 				.addFields(
 					{
-						name: instance.messageHandler.get(guild, "PERGUNTA"),
+						name: Falbot.getMessage(guild, "PERGUNTA"),
 						value: text,
 					},
 					{
-						name: instance.messageHandler.get(guild, "PREVISAO"),
+						name: Falbot.getMessage(guild, "PREVISAO"),
 						value: answer,
 					}
 				)

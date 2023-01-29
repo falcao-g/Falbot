@@ -8,6 +8,7 @@ const {
 	randint,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Roll two dice, if either of them roll a one, you win",
@@ -23,15 +24,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({
-		instance,
-		guild,
-		interaction,
-		client,
-		user,
-		args,
-		member,
-	}) => {
+	callback: async ({ guild, interaction, client, user, args }) => {
 		try {
 			await interaction.deferReply()
 			guild = client.guilds.cache.get("742332099788275732")
@@ -47,7 +40,7 @@ module.exports = {
 				var bet = await specialArg(args[0], user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: args[0],
 					}),
 				})
@@ -64,13 +57,9 @@ module.exports = {
 
 				const embed = new MessageEmbed()
 					.setColor(await getRoleColor(guild, user.id))
-					.setAuthor({ name: member.displayName, iconURL: user.avatarURL() })
 					.addFields({
 						name: `-------------------\n      | ${diegif} | ${diegif} |\n-------------------`,
-						value: `--- **${instance.messageHandler.get(
-							guild,
-							"ROLANDO"
-						)}** ---`,
+						value: `--- **${Falbot.getMessage(guild, "ROLANDO")}** ---`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
@@ -81,13 +70,13 @@ module.exports = {
 				await new Promise((resolve) => setTimeout(resolve, 1500))
 				embed.fields[0] = {
 					name: `-------------------\n      | ${emoji1} | ${diegif} |\n-------------------`,
-					value: `--- **${instance.messageHandler.get(guild, "ROLANDO")}** ---`,
+					value: `--- **${Falbot.getMessage(guild, "ROLANDO")}** ---`,
 				}
 				await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
 				embed.fields[0] = {
 					name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-					value: `--- **${instance.messageHandler.get(guild, "ROLANDO")}** ---`,
+					value: `--- **${Falbot.getMessage(guild, "ROLANDO")}** ---`,
 				}
 				await interaction.editReply({ embeds: [embed] })
 
@@ -96,15 +85,12 @@ module.exports = {
 					var embed2 = new MessageEmbed().setColor("GOLD").addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-							value: `--- **${instance.messageHandler.get(
-								guild,
-								"VOCE_GANHOU"
-							)}** ---`,
+							value: `--- **${Falbot.getMessage(guild, "VOCE_GANHOU")}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.messageHandler.get(guild, "GANHOS"),
-							value: `${await format(bet * 5)} falcoins`,
+							name: Falbot.getMessage(guild, "GANHOS"),
+							value: `${format(bet * 5)} falcoins`,
 							inline: true,
 						}
 					)
@@ -113,15 +99,12 @@ module.exports = {
 					var embed2 = new MessageEmbed().setColor(3066993).addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-							value: `--- **${instance.messageHandler.get(
-								guild,
-								"VOCE_GANHOU"
-							)}** ---`,
+							value: `--- **${Falbot.getMessage(guild, "VOCE_GANHOU")}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.messageHandler.get(guild, "GANHOS"),
-							value: `${await format(bet * 2)} falcoins`,
+							name: Falbot.getMessage(guild, "GANHOS"),
+							value: `${format(bet * 2)} falcoins`,
 							inline: true,
 						}
 					)
@@ -129,26 +112,19 @@ module.exports = {
 					var embed2 = new MessageEmbed().setColor(15158332).addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-							value: `--- **${instance.messageHandler.get(
-								guild,
-								"VOCE_PERDEU"
-							)}** ---`,
+							value: `--- **${Falbot.getMessage(guild, "VOCE_PERDEU")}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.messageHandler.get(guild, "PERDAS"),
-							value: `${await format(bet)} falcoins`,
+							name: Falbot.getMessage(guild, "PERDAS"),
+							value: `${format(bet)} falcoins`,
 							inline: true,
 						}
 					)
 				}
 				embed2
-					.setAuthor({
-						name: member.displayName,
-						iconURL: user.avatarURL(),
-					})
 					.addFields({
-						name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+						name: Falbot.getMessage(guild, "SALDO_ATUAL"),
 						value: `${await readFile(user.id, "falcoins", true)}`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
@@ -157,7 +133,7 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+					content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {

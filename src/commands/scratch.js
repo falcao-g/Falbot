@@ -13,6 +13,9 @@ module.exports = {
 	slash: true,
 	guildOnly: true,
 	testOnly,
+	init: () => {
+		const { Falbot } = require("../../index.js")
+	},
 	callback: async ({ instance, guild, interaction, user }) => {
 		try {
 			await interaction.deferReply()
@@ -23,8 +26,8 @@ module.exports = {
 
 			if (scratchCooldown) {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "COOLDOWN", {
-						COOLDOWN: await msToTime(scratchCooldown.cooldown * 1000),
+					content: Falbot.getMessage(guild, "COOLDOWN", {
+						COOLDOWN: msToTime(scratchCooldown.cooldown * 1000),
 					}),
 				})
 				return
@@ -56,8 +59,8 @@ module.exports = {
 				.setColor(await getRoleColor(guild, user.id))
 				.setFooter({ text: "by Falcão ❤️" })
 				.addFields({
-					name: instance.messageHandler.get(guild, "SCRATCH_TITLE"),
-					value: instance.messageHandler.get(guild, "SCRATCH_DESCRIPTION"),
+					name: Falbot.getMessage(guild, "SCRATCH_TITLE"),
+					value: Falbot.getMessage(guild, "SCRATCH_DESCRIPTION"),
 				})
 
 			answer = await interaction.editReply({
@@ -88,12 +91,10 @@ module.exports = {
 					amount = randint(400000, 500000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor("GOLD").addFields({
-						name: instance.messageHandler.get(guild, "SCRATCH_PRIZE"),
-						value: `${instance.messageHandler.get(
-							guild,
-							"SCRATCH_PRIZE_DESCRIPTION",
-							{ FALCOINS: await format(amount) }
-						)}`,
+						name: Falbot.getMessage(guild, "SCRATCH_PRIZE"),
+						value: `${Falbot.getMessage(guild, "SCRATCH_PRIZE_DESCRIPTION", {
+							FALCOINS: format(amount),
+						})}`,
 					})
 					cont = 0
 					newCooldown = 60 * 60 * 16
@@ -103,12 +104,10 @@ module.exports = {
 					amount = randint(200000, 400000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(3066993).addFields({
-						name: instance.messageHandler.get(guild, "SCRATCH_SUPER"),
-						value: `${instance.messageHandler.get(
-							guild,
-							"SCRATCH_SUPER_DESCRIPTION",
-							{ FALCOINS: await format(amount) }
-						)}`,
+						name: Falbot.getMessage(guild, "SCRATCH_SUPER"),
+						value: `${Falbot.getMessage(guild, "SCRATCH_SUPER_DESCRIPTION", {
+							FALCOINS: format(amount),
+						})}`,
 					})
 					cont = 0
 					newCooldown = 60 * 60 * 12
@@ -118,12 +117,10 @@ module.exports = {
 					amount = randint(100000, 200000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(3066993).addFields({
-						name: instance.messageHandler.get(guild, "SCRATCH_PRETTY"),
-						value: `${instance.messageHandler.get(
-							guild,
-							"SCRATCH_PRETTY_DESCRIPTION",
-							{ FALCOINS: await format(amount) }
-						)}`,
+						name: Falbot.getMessage(guild, "SCRATCH_PRETTY"),
+						value: `${Falbot.getMessage(guild, "SCRATCH_PRETTY_DESCRIPTION", {
+							FALCOINS: format(amount),
+						})}`,
 					})
 					cont = 0
 					newCooldown = 60 * 60 * 10
@@ -133,12 +130,11 @@ module.exports = {
 					amount = randint(50000, 100000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(3066993).addFields({
-						name: instance.messageHandler.get(guild, "SCRATCH_KINDOF"),
-						value: `${instance.messageHandler.get(
-							guild,
-							"SCRATCH_KINDOF_DESCRIPTION",
-							{ FALCOINS: await format(amount), GUESSES: cont }
-						)}`,
+						name: Falbot.getMessage(guild, "SCRATCH_KINDOF"),
+						value: `${Falbot.getMessage(guild, "SCRATCH_KINDOF_DESCRIPTION", {
+							FALCOINS: format(amount),
+							GUESSES: cont,
+						})}`,
 					})
 				} else {
 					//not found but still a chance to win some money
@@ -148,24 +144,18 @@ module.exports = {
 						await changeDB(user.id, "falcoins", amount)
 						embed.addFields({
 							name: "Meh...",
-							value: `${instance.messageHandler.get(
-								guild,
-								"SCRATCH_LOSE_DESCRIPTION2",
-								{ FALCOINS: await format(amount), GUESSES: cont }
-							)}`,
+							value: `${Falbot.getMessage(guild, "SCRATCH_LOSE_DESCRIPTION2", {
+								FALCOINS: format(amount),
+								GUESSES: cont,
+							})}`,
 						})
 					} else {
-						var lostMessages = instance.messageHandler.get(
-							guild,
-							"SCRATCH_LOSE"
-						)
+						var lostMessages = Falbot.getMessage(guild, "SCRATCH_LOSE")
 						embed.addFields({
 							name: lostMessages[randint(0, 5)],
-							value: `${instance.messageHandler.get(
-								guild,
-								"SCRATCH_LOSE_DESCRIPTION",
-								{ GUESSES: cont }
-							)}`,
+							value: `${Falbot.getMessage(guild, "SCRATCH_LOSE_DESCRIPTION", {
+								GUESSES: cont,
+							})}`,
 						})
 					}
 				}

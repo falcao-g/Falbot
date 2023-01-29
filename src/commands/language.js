@@ -1,3 +1,5 @@
+const { Falbot } = require("../../index.js")
+
 module.exports = {
 	description: "Sets the language of the server or the user",
 	slash: true,
@@ -23,13 +25,13 @@ module.exports = {
 			if (guild) {
 				if (!lang) {
 					await interaction.editReply({
-						content: instance.messageHandler.get(guild, "CURRENT_LANGUAGE", {
-							LANGUAGE: instance.messageHandler.getLanguage(guild),
+						content: Falbot.getMessage(guild, "CURRENT_LANGUAGE", {
+							LANGUAGE: Falbot.getLanguage(guild),
 						}),
 					})
 					return
 				}
-				instance.messageHandler.setLanguage(guild, lang)
+				Falbot.setLanguage(guild, lang)
 
 				await languageSchema.findOneAndUpdate(
 					{
@@ -45,20 +47,20 @@ module.exports = {
 				)
 
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "NEW_LANGUAGE", {
+					content: Falbot.getMessage(guild, "NEW_LANGUAGE", {
 						LANGUAGE: lang,
 					}),
 				})
 			} else {
 				if (!lang) {
 					await interaction.editReply({
-						content: instance.messageHandler.get(user, "CURRENT_LANGUAGE", {
-							LANGUAGE: instance.messageHandler.getLanguage(user),
+						content: Falbot.getMessage(user, "CURRENT_LANGUAGE", {
+							LANGUAGE: Falbot.getLanguage(user),
 						}),
 					})
 					return
 				}
-				instance.messageHandler.setLanguage(user, lang)
+				Falbot.setLanguage(user, lang)
 
 				await languageSchema.findOneAndUpdate(
 					{
@@ -74,7 +76,7 @@ module.exports = {
 				)
 
 				await interaction.editReply({
-					content: instance.messageHandler.get(user, "NEW_LANGUAGE", {
+					content: Falbot.getMessage(user, "NEW_LANGUAGE", {
 						LANGUAGE: lang,
 					}),
 				})

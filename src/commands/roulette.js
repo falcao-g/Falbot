@@ -8,6 +8,7 @@ const {
 	getRoleColor,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Bet on the roulette",
@@ -42,14 +43,14 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, user, args, interaction, member }) => {
+	callback: async ({ guild, user, args, interaction, member }) => {
 		try {
 			await interaction.deferReply()
 			try {
 				var bet = await specialArg(args[1], user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: args[1],
 					}),
 				})
@@ -59,8 +60,8 @@ module.exports = {
 				await changeDB(user.id, "falcoins", -bet)
 
 				const embed = new MessageEmbed()
-					.setTitle(instance.messageHandler.get(guild, "ROLETA"))
-					.setDescription(instance.messageHandler.get(guild, "GIRANDO_ROLETA"))
+					.setTitle(Falbot.getMessage(guild, "ROLETA"))
+					.setDescription(Falbot.getMessage(guild, "GIRANDO_ROLETA"))
 					.setColor(await getRoleColor(guild, user.id))
 					.setImage(
 						"https://media3.giphy.com/media/26uf2YTgF5upXUTm0/giphy.gif"
@@ -116,32 +117,24 @@ module.exports = {
 				await new Promise((resolve) => setTimeout(resolve, 3000))
 
 				var embed2 = new MessageEmbed()
-					.setTitle(instance.messageHandler.get(guild, "ROLETA"))
-					.setAuthor({
-						name: member.displayName,
-						iconURL: user.avatarURL(),
-					})
+					.setTitle(Falbot.getMessage(guild, "ROLETA"))
 					.setFooter({ text: "by Falcão ❤️" })
 
 				if (type.includes(luck)) {
 					await changeDB(user.id, "falcoins", profit)
 					embed2.setColor(3066993).addFields(
 						{
-							name:
-								instance.messageHandler.get(guild, "VOCE_GANHOU") +
-								" :sunglasses:",
-							value:
-								instance.messageHandler.get(guild, "BOT_ROLOU") +
-								` **${luck}**`,
+							name: Falbot.getMessage(guild, "VOCE_GANHOU") + " :sunglasses:",
+							value: Falbot.getMessage(guild, "BOT_ROLOU") + ` **${luck}**`,
 							inline: true,
 						},
 						{
-							name: instance.messageHandler.get(guild, "GANHOS"),
-							value: `${await format(profit)} falcoins`,
+							name: Falbot.getMessage(guild, "GANHOS"),
+							value: `${format(profit)} falcoins`,
 							inline: true,
 						},
 						{
-							name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+							name: Falbot.getMessage(guild, "SALDO_ATUAL"),
 							value: `${await readFile(user.id, "falcoins", true)} falcoins`,
 						}
 					)
@@ -151,21 +144,17 @@ module.exports = {
 
 						.addFields(
 							{
-								name:
-									instance.messageHandler.get(guild, "VOCE_PERDEU") +
-									" :pensive:",
-								value:
-									instance.messageHandler.get(guild, "BOT_ROLOU") +
-									` **${luck}**`,
+								name: Falbot.getMessage(guild, "VOCE_PERDEU") + " :pensive:",
+								value: Falbot.getMessage(guild, "BOT_ROLOU") + ` **${luck}**`,
 								inline: true,
 							},
 							{
-								name: instance.messageHandler.get(guild, "PERDAS"),
-								value: `${await format(bet)} falcoins`,
+								name: Falbot.getMessage(guild, "PERDAS"),
+								value: `${format(bet)} falcoins`,
 								inline: true,
 							},
 							{
-								name: instance.messageHandler.get(guild, "SALDO_ATUAL"),
+								name: Falbot.getMessage(guild, "SALDO_ATUAL"),
 								value: `${await readFile(user.id, "falcoins", true)} falcoins`,
 							}
 						)
@@ -176,7 +165,7 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+					content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {

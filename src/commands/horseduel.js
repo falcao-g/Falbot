@@ -8,6 +8,7 @@ const {
 	getRoleColor,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Challenge other users to a horse race",
@@ -23,7 +24,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, interaction, client, user, args }) => {
+	callback: async ({ guild, interaction, client, user, args }) => {
 		try {
 			await interaction.deferReply()
 
@@ -31,7 +32,7 @@ module.exports = {
 				var bet = await specialArg(args[0], user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: args[0],
 					}),
 				})
@@ -42,14 +43,14 @@ module.exports = {
 				var pot = bet
 				const embed = new MessageEmbed()
 					.setDescription(
-						instance.messageHandler.get(guild, "CAVALGADA_DESCRIPTION", {
+						Falbot.getMessage(guild, "CAVALGADA_DESCRIPTION", {
 							USER: user,
-							BET: await format(pot),
+							BET: format(pot),
 						})
 					)
 					.setColor("#0099ff")
 					.addFields({
-						name: instance.messageHandler.get(guild, "JOGADORES"),
+						name: Falbot.getMessage(guild, "JOGADORES"),
 						value: `${user}`,
 						inline: false,
 					})
@@ -87,13 +88,13 @@ module.exports = {
 					path.push("- - - - -")
 					pot += bet
 					embed.setDescription(
-						instance.messageHandler.get(guild, "CAVALGADA_DESCRIPTION", {
+						Falbot.getMessage(guild, "CAVALGADA_DESCRIPTION", {
 							USER: user,
-							BET: await format(pot),
+							BET: format(pot),
 						})
 					)
 					embed.fields[0] = {
-						name: instance.messageHandler.get(guild, "JOGADORES"),
+						name: Falbot.getMessage(guild, "JOGADORES"),
 						value: `${users.join("\n")}`,
 						inline: false,
 					}
@@ -113,8 +114,8 @@ module.exports = {
 						}
 
 						embed.setDescription(
-							instance.messageHandler.get(guild, "CAVALGADA_DESCRIPTION2", {
-								BET: await format(pot),
+							Falbot.getMessage(guild, "CAVALGADA_DESCRIPTION2", {
+								BET: format(pot),
 							})
 						)
 
@@ -139,8 +140,8 @@ module.exports = {
 					await changeDB(winner.id, "falcoins", pot)
 					await changeDB(winner.id, "vitorias")
 					embed.setColor(await getRoleColor(guild, winner.id)).setDescription(
-						instance.messageHandler.get(guild, "CAVALGADA_DESCRIPTION3", {
-							BET: await format(pot),
+						Falbot.getMessage(guild, "CAVALGADA_DESCRIPTION3", {
+							BET: format(pot),
 							USER: winner,
 							SALDO: await readFile(winner.id, "falcoins", true),
 						})
@@ -152,7 +153,7 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "FALCOINS_INSUFICIENTES"),
+					content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {

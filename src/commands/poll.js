@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js")
 const { getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Create a little pretty poll",
@@ -15,14 +16,14 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, interaction, user, member, text }) => {
+	callback: async ({ guild, interaction, user, member, text }) => {
 		try {
 			await interaction.deferReply()
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
 				.setDescription(text)
 				.setAuthor({
-					name: instance.messageHandler.get(guild, "ENQUETE", {
+					name: Falbot.getMessage(guild, "ENQUETE", {
 						USER: member.displayName,
 					}),
 					iconURL: user.avatarURL(),

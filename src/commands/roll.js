@@ -2,6 +2,7 @@ const { MessageEmbed } = require("discord.js")
 const Roll = require("roll")
 const { getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Roll dice for you",
@@ -16,7 +17,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, interaction, user, text }) => {
+	callback: async ({ guild, interaction, user, text }) => {
 		try {
 			await interaction.deferReply()
 			const roll = new Roll()
@@ -24,7 +25,7 @@ module.exports = {
 
 			if (!roll.validate(text)) {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: text,
 					}),
 				})
@@ -40,7 +41,7 @@ module.exports = {
 							inline: false,
 						},
 						{
-							name: instance.messageHandler.get(guild, "RESULTADO"),
+							name: Falbot.getMessage(guild, "RESULTADO"),
 							value: `**${rolled}**`,
 							inline: false,
 						}

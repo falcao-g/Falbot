@@ -1,3 +1,4 @@
+const { randint } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 
 module.exports = {
@@ -13,33 +14,20 @@ module.exports = {
 			type: "NUMBER",
 		},
 	],
-	callback: async ({ instance, guild, args, interaction }) => {
+	callback: async ({ guild, args, interaction }) => {
 		try {
 			await interaction.deferReply()
-			times = parseInt(args[0]) || 1
-			if (times <= 1000) {
-				let caras = 0
-				let coroas = 0
-				for (var i = 0; i < times; i++) {
-					if (Math.random() > 0.5) {
-						caras = ++caras
-					} else {
-						coroas = ++coroas
-					}
-				}
+			times = args[0] > 0 ? args[0] : -args[0]
+			let caras = randint(0, times)
+			let coroas = times - caras
 
-				interaction.editReply({
-					content: instance.messageHandler.get(guild, "COINFLIP", {
-						CARAS: caras,
-						COROAS: coroas,
-						TIMES: times,
-					}),
-				})
-			} else {
-				interaction.editReply({
-					content: instance.messageHandler.get(guild, "COINFLIP_LIMITE"),
-				})
-			}
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "COINFLIP", {
+					CARAS: caras,
+					COROAS: coroas,
+					TIMES: times,
+				}),
+			})
 		} catch (error) {
 			console.error(`Coinflip: ${error}`)
 		}

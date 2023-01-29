@@ -1,8 +1,5 @@
-const fs = require("fs")
 const userSchema = require("../schemas/user-schema")
-const lottoSchema = require("../schemas/lotto-schema")
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
-const levels = require("../utils/json/levels.json")
+const { MessageActionRow } = require("discord.js")
 
 async function createUser(id) {
 	try {
@@ -50,7 +47,7 @@ async function takeAndGive(id, id2, field, field2, quantity = 1) {
 	}
 }
 
-async function msToTime(ms) {
+function msToTime(ms) {
 	let time = ""
 
 	let n = 0
@@ -124,7 +121,7 @@ async function specialArg(arg, id, field = "falcoins") {
 	}
 }
 
-async function format(falcoins) {
+function format(falcoins) {
 	if (parseInt(falcoins) < 0) {
 		falcoins = falcoins.toString()
 		pop = falcoins.slice(1)
@@ -173,7 +170,7 @@ async function getMember(guild, member_id) {
 	return guild.members.cache.get(member_id)
 }
 
-async function count(array, string) {
+function count(array, string) {
 	var amount = 0
 	for (let i = 0; i <= array.length; i++) {
 		if (array[i - 1] === string) {
@@ -187,193 +184,10 @@ function randint(low, high) {
 	return Math.floor(Math.random() * (high - low + 1) + low)
 }
 
-async function bankInterest() {
-	var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
-	if (
-		Date.now() - config["poupanca"]["last_interest"] >
-		config["poupanca"]["interest_time"]
-	) {
-		console.log("poupança!")
-		config["poupanca"]["last_interest"] = Date.now().toString()
-
-		var users = await userSchema.find({
-			banco: { $gt: 0 },
-		})
-
-		for (user of users) {
-			var limit = levels[user.rank - 1].bankLimit
-
-			if (limit > user.banco) {
-				user.banco += Math.floor(
-					parseInt(user.banco * parseFloat(config["poupanca"]["interest_rate"]))
-				)
-			}
-
-			if (user.banco > limit) {
-				user.banco = limit
-			}
-
-			user.save()
-		}
-
-		json2 = JSON.stringify(config, null, 1)
-
-		fs.writeFileSync("./src/config.json", json2, "utf8", function (err) {
-			if (err) throw err
-		})
-	}
-}
-
-async function sendVoteReminders(instance, client) {
-	try {
-		var users = await userSchema.find({
-			voteReminder: true,
-		})
-
-		for (user of users) {
-			//send dm reminder vote if user wants to
-			if (
-				Date.now() - user.lastVote > 1000 * 60 * 60 * 12 &&
-				Date.now() - user.lastReminder > 1000 * 60 * 60 * 12
-			) {
-				discordUser = await client.users.fetch(user._id)
-				const embed = new MessageEmbed()
-					.setColor("YELLOW")
-					.addFields(
-						{
-							name: instance.messageHandler.get(discordUser, "VOTE_REMINDER"),
-							value: instance.messageHandler.get(discordUser, "REWARD_AFTER"),
-						},
-						{
-							name: "Link",
-							value: "https://top.gg/bot/742331813539872798/vote",
-						}
-					)
-					.setFooter({ text: "by Falcão ❤️" })
-
-				const row = new MessageActionRow().addComponents(
-					new MessageButton()
-						.setCustomId("disableVoteReminder")
-						.setLabel(
-							instance.messageHandler.get(discordUser, "DISABLE_REMINDER")
-						)
-						.setEmoji("🔕")
-						.setStyle("DANGER")
-				)
-
-				await discordUser.send({
-					embeds: [embed],
-					components: [row],
-				})
-
-				user.lastReminder = Date.now()
-				user.save()
-			}
-		}
-	} catch (err) {
-		console.log(`Sending reminders: ${err}`)
-	}
-}
-
-async function lotteryDraw(instance, client) {
-	lotto = await lottoSchema.findById("semanal")
-
-	if (Date.now() > lotto.nextDraw) {
-		console.log("loteria!")
-
-		var users = await userSchema.find({
-			tickets: { $gt: 0 },
-		})
-
-		if (users.length > 0) {
-			var numTickets = 0
-			for (user of users) {
-				numTickets += user.tickets
-			}
-
-			var winner
-			while (winner === undefined) {
-				for (user of users) {
-					if (randint(1, numTickets) <= user.tickets) {
-						winner = user
-					}
-				}
-			}
-
-			await changeDB(winner.id, "falcoins", lotto.prize)
-
-			winnerUser = await client.users.fetch(winner.id)
-
-			const embed = new MessageEmbed()
-				.setColor("GOLD")
-				.addFields({
-					name: instance.messageHandler.get(winnerUser, "CONGRATULATIONS"),
-					value: instance.messageHandler.get(winnerUser, "LOTTERY_WIN", {
-						PRIZE: await format(lotto.prize),
-						TICKETS: await format(winner.tickets),
-						TOTAL: await format(numTickets),
-					}),
-				})
-				.setFooter({ text: "by Falcão ❤️" })
-
-			await userSchema.updateMany(
-				{
-					tickets: { $gt: 0 },
-				},
-				{
-					tickets: 0,
-				}
-			)
-
-			await winnerUser.send({
-				embeds: [embed],
-			})
-
-			if (lotto.history.length >= 10) {
-				lotto.history.pop()
-			}
-
-			lotto.history.unshift({
-				prize: lotto.prize,
-				winner: winnerUser.username,
-				userTickets: winner.tickets,
-				totalTickets: numTickets,
-			})
-		}
-		lotto.nextDraw = Date.now() + 604800000 //next one is next week
-		lotto.prize = randint(1000000, 2000000)
-
-		await lotto.save()
-	}
-}
-
-async function rankPerks(old_rank, rank, instance, guild) {
-	perks = ""
-	if (old_rank != undefined) {
-		if (old_rank.bankLimit < rank.bankLimit) {
-			perks += instance.messageHandler.get(guild, "RANKUP_BANK", {
-				FALCOINS: await format(rank.bankLimit - old_rank.bankLimit),
-			})
-			perks += "\n"
-		}
-	}
-
-	perks += `${instance.messageHandler.get(guild, "VOTO")}: ${await format(
-		rank.vote
-	)} Falcoins\n`
-
-	perks += `${instance.messageHandler.get(guild, "TRABALHO")}: ${await format(
-		rank.work[0]
-	)}-${await format(rank.work[1])} Falcoins`
-
-	return perks
-}
-
-async function paginate() {
+function paginate() {
 	const __embeds = []
 	let cur = 0
 	let traverser
-	let message
 	return {
 		add(...embeds) {
 			__embeds.push(...embeds)
@@ -381,9 +195,6 @@ async function paginate() {
 		},
 		setTraverser(tr) {
 			traverser = tr
-		},
-		setMessage(_message) {
-			message = _message
 		},
 		async next() {
 			cur++
@@ -397,9 +208,6 @@ async function paginate() {
 				cur = 0
 			}
 		},
-		at(num) {
-			return __embeds.at(num)
-		},
 		components() {
 			return {
 				embeds: [__embeds.at(cur)],
@@ -412,11 +220,20 @@ async function paginate() {
 	}
 }
 
-async function reduceCooldowns(instance) {
-	cooldownsSchema = instance._mongoConnection.models["wokcommands-cooldowns"]
+function pick(data) {
+	// Split input into two separate arrays of values and weights.
+	const values = data.map((d) => d[0])
+	const weights = data.map((d) => d[1])
 
-	await cooldownsSchema.updateMany({}, { $inc: { cooldown: -5 } })
-	await cooldownsSchema.deleteMany({ cooldown: { $lt: 5 } })
+	let acc = 0
+	const sum = weights.reduce((acc, element) => acc + element, 0)
+	const weightsSum = weights.map((element) => {
+		acc = element + acc
+		return acc
+	})
+	const rand = Math.random() * sum
+
+	return values[weightsSum.filter((element) => element <= rand).length]
 }
 
 module.exports = {
@@ -431,10 +248,6 @@ module.exports = {
 	takeAndGive,
 	count,
 	randint,
-	bankInterest,
-	rankPerks,
-	sendVoteReminders,
 	paginate,
-	lotteryDraw,
-	reduceCooldowns,
+	pick,
 }

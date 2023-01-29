@@ -1,7 +1,6 @@
 const { MessageEmbed } = require("discord.js")
 const { readFile, getRoleColor, msToTime } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const lottoSchema = require("../schemas/lotto-schema")
 const { MessageButton, MessageActionRow } = require("discord.js")
 
 module.exports = {
@@ -9,6 +8,9 @@ module.exports = {
 	slash: true,
 	guildOnly: true,
 	testOnly,
+	init: () => {
+		const { Falbot } = require("../../index.js")
+	},
 	callback: async ({ instance, guild, user, interaction }) => {
 		try {
 			await interaction.deferReply()
@@ -17,62 +19,46 @@ module.exports = {
 				instance._mongoConnection.models["wokcommands-cooldowns"]
 			scratchCooldown = await cooldownsSchema.findById(`scratch-${user.id}`)
 			workCooldown = await cooldownsSchema.findById(`work-${user.id}`)
-			lotto = await lottoSchema.findById("semanal")
+			lotto = await Falbot.lottoSchema.findById("semanal")
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))
 				.setFooter({ text: "by Falcão ❤️" })
-				.setTitle(instance.messageHandler.get(guild, "COOLDOWNS"))
+				.setTitle(Falbot.getMessage(guild, "COOLDOWNS"))
 				.addFields(
 					{
-						name: ":ballot_box: " + instance.messageHandler.get(guild, "VOTO"),
+						name: ":ballot_box: " + Falbot.getMessage(guild, "VOTO"),
 						value: `**${
 							voteCooldown < 43200000
-								? `:red_circle: ${await msToTime(43200000 - voteCooldown)}`
-								: `:green_circle: ${instance.messageHandler.get(
-										guild,
-										"PRONTO"
-								  )}`
+								? `:red_circle: ${msToTime(43200000 - voteCooldown)}`
+								: `:green_circle: ${Falbot.getMessage(guild, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name:
-							":slot_machine: " + instance.messageHandler.get(guild, "SCRATCH"),
+						name: ":slot_machine: " + Falbot.getMessage(guild, "SCRATCH"),
 						value: `**${
 							scratchCooldown
-								? `:red_circle: ${await msToTime(
-										scratchCooldown["cooldown"] * 1000
-								  )}`
-								: `:green_circle: ${instance.messageHandler.get(
-										guild,
-										"PRONTO"
-								  )}`
+								? `:red_circle: ${msToTime(scratchCooldown["cooldown"] * 1000)}`
+								: `:green_circle: ${Falbot.getMessage(guild, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name:
-							":briefcase: " + instance.messageHandler.get(guild, "TRABALHO"),
+						name: ":briefcase: " + Falbot.getMessage(guild, "TRABALHO"),
 						value: `**${
 							workCooldown
-								? `:red_circle: ${await msToTime(
-										workCooldown["cooldown"] * 1000
-								  )}`
-								: `:green_circle: ${instance.messageHandler.get(
-										guild,
-										"PRONTO"
-								  )}`
+								? `:red_circle: ${msToTime(workCooldown["cooldown"] * 1000)}`
+								: `:green_circle: ${Falbot.getMessage(guild, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name:
-							":loudspeaker: " + instance.messageHandler.get(guild, "EVENTS"),
-						value: `**${instance.messageHandler.get(
+						name: ":loudspeaker: " + Falbot.getMessage(guild, "EVENTS"),
+						value: `**${Falbot.getMessage(
 							guild,
 							"LOTTERY"
-						)}** - ${instance.messageHandler.get(guild, "LOTTERY_DRAWN", {
-							TIME: await msToTime(lotto.nextDraw - Date.now()),
+						)}** - ${Falbot.getMessage(guild, "LOTTERY_DRAWN", {
+							TIME: msToTime(lotto.nextDraw - Date.now()),
 						})}`,
 						inline: false,
 					}

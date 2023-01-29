@@ -8,6 +8,7 @@ const {
 	format,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { Falbot } = require("../../index.js")
 
 module.exports = {
 	description: "Spend 1 key and 1 crate for a chance to get some prizes",
@@ -22,14 +23,14 @@ module.exports = {
 			type: "NUMBER",
 		},
 	],
-	callback: async ({ instance, guild, user, args, interaction }) => {
+	callback: async ({ guild, user, args, interaction }) => {
 		try {
 			await interaction.deferReply()
 			try {
 				var quantity = await specialArg(args[0], user.id, "caixas")
 			} catch {
 				await interaction.editReply({
-					content: instance.messageHandler.get(guild, "VALOR_INVALIDO", {
+					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: args[0],
 					}),
 				})
@@ -56,10 +57,10 @@ module.exports = {
 				const embed = new MessageEmbed()
 					.setColor(await getRoleColor(guild, user.id))
 					.addFields({
-						name: instance.messageHandler.get(guild, "CAIXA_TITULO", {
+						name: Falbot.getMessage(guild, "CAIXA_TITULO", {
 							QUANTITY: args[0],
 						}),
-						value: `:key: ${chaves}\n:coin: ${await format(
+						value: `:key: ${chaves}\n:coin: ${format(
 							falcoins
 						)} \n:gift: ${caixas}`,
 					})
@@ -67,7 +68,7 @@ module.exports = {
 				interaction.editReply({ embeds: [embed] })
 			} else {
 				interaction.editReply({
-					content: instance.messageHandler.get(guild, "CAIXA_INSUFICIENTE", {
+					content: Falbot.getMessage(guild, "CAIXA_INSUFICIENTE", {
 						VALUE: args[0],
 					}),
 				})
