@@ -11,14 +11,12 @@ module.exports = {
 	init: () => {
 		const { Falbot } = require("../../index.js")
 	},
-	callback: async ({ instance, guild, user, interaction }) => {
+	callback: async ({ guild, user, interaction }) => {
 		try {
 			await interaction.deferReply()
 			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
-			cooldownsSchema =
-				instance._mongoConnection.models["wokcommands-cooldowns"]
-			scratchCooldown = await cooldownsSchema.findById(`scratch-${user.id}`)
-			workCooldown = await cooldownsSchema.findById(`work-${user.id}`)
+			scratchCooldown = await Falbot.coolSchema.findById(`scratch-${user.id}`)
+			workCooldown = await Falbot.coolSchema.findById(`work-${user.id}`)
 			lotto = await Falbot.lottoSchema.findById("semanal")
 			const embed = new MessageEmbed()
 				.setColor(await getRoleColor(guild, user.id))

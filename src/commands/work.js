@@ -18,13 +18,10 @@ module.exports = {
 	init: () => {
 		const { Falbot } = require("../../index.js")
 	},
-	callback: async ({ instance, interaction, guild, user }) => {
+	callback: async ({ interaction, guild, user }) => {
 		try {
 			await interaction.deferReply()
-
-			cooldownsSchema =
-				instance._mongoConnection.models["wokcommands-cooldowns"]
-			workCooldown = await cooldownsSchema.findById(`work-${user.id}`)
+			workCooldown = await Falbot.coolSchema.findById(`work-${user.id}`)
 
 			if (workCooldown) {
 				await interaction.editReply({
@@ -71,7 +68,7 @@ module.exports = {
 				embeds: [embed],
 			})
 
-			await new cooldownsSchema({
+			await new Falbot.coolSchema({
 				_id: `work-${user.id}`,
 				name: "work",
 				type: "per-user",

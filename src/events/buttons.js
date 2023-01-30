@@ -4,7 +4,7 @@ const work = require("../commands/work")
 const cooldowns = require("../commands/cooldowns")
 const help = require("../commands/help")
 
-module.exports = (client, instance) => {
+module.exports = (client) => {
 	const { changeDB } = require("../utils/functions.js")
 	const { MessageActionRow, MessageButton } = require("discord.js")
 	client.on("interactionCreate", async (interaction) => {
@@ -59,15 +59,15 @@ module.exports = (client, instance) => {
 		}
 
 		if (interaction.customId === "scratch") {
-			await scratch.callback({ instance, guild, interaction, user })
+			await scratch.callback({ guild, interaction, user })
 		}
 
 		if (interaction.customId === "work") {
-			await work.callback({ instance, interaction, guild, user })
+			await work.callback({ interaction, guild, user })
 		}
 
 		if (interaction.customId === "cooldowns") {
-			await cooldowns.callback({ instance, guild, user, interaction })
+			await cooldowns.callback({ guild, user, interaction })
 		}
 
 		if (interaction.customId === "help") {

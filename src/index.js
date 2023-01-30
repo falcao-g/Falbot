@@ -25,6 +25,7 @@ class Falbot {
 	levels = require("./utils/json/levels.json")
 	userSchema = require("./schemas/user-schema")
 	lottoSchema = require("./schemas/lotto-schema")
+	coolSchema = require("./schemas/cool-schema.js")
 
 	constructor() {
 		try {
@@ -83,7 +84,6 @@ class Falbot {
 		wok._mongoConnection = mongoose.connection
 		this.wok = wok
 		this.languageSchema = wok._mongoConnection.models["wokcommands-languages"]
-		this.cooldownsSchema = wok._mongoConnection.models["wokcommands-cooldowns"]
 		;(async () => {
 			const results = await this.languageSchema.find()
 
@@ -93,8 +93,8 @@ class Falbot {
 		})()
 
 		setInterval(async () => {
-			await this.cooldownsSchema.updateMany({}, { $inc: { cooldown: -5 } })
-			await this.cooldownsSchema.deleteMany({ cooldown: { $lt: 5 } })
+			await this.coolSchema.updateMany({}, { $inc: { cooldown: -5 } })
+			await this.coolSchema.deleteMany({ cooldown: { $lt: 5 } })
 		}, 5000)
 
 		setInterval(() => {
