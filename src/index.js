@@ -26,6 +26,7 @@ class Falbot {
 	userSchema = require("./schemas/user-schema")
 	lottoSchema = require("./schemas/lotto-schema")
 	coolSchema = require("./schemas/cool-schema.js")
+	langSchema = require("./schemas/lang-schema.js")
 
 	constructor() {
 		try {
@@ -83,9 +84,8 @@ class Falbot {
 
 		wok._mongoConnection = mongoose.connection
 		this.wok = wok
-		this.languageSchema = wok._mongoConnection.models["wokcommands-languages"]
 		;(async () => {
-			const results = await this.languageSchema.find()
+			const results = await this.langSchema.find()
 
 			for (const { _id, language } of results) {
 				this._languages.set(_id, language)

@@ -17,10 +17,9 @@ module.exports = {
 			],
 		},
 	],
-	callback: async ({ instance, guild, user, interaction }) => {
+	callback: async ({ guild, user, interaction }) => {
 		try {
 			await interaction.deferReply()
-			languageSchema = instance._mongoConnection.models["wokcommands-languages"]
 			const lang = interaction.options.getString("language")
 			if (guild) {
 				if (!lang) {
@@ -33,7 +32,7 @@ module.exports = {
 				}
 				Falbot.setLanguage(guild, lang)
 
-				await languageSchema.findOneAndUpdate(
+				await Falbot.langSchema.findOneAndUpdate(
 					{
 						_id: guild.id,
 					},
@@ -62,7 +61,7 @@ module.exports = {
 				}
 				Falbot.setLanguage(user, lang)
 
-				await languageSchema.findOneAndUpdate(
+				await Falbot.langSchema.findOneAndUpdate(
 					{
 						_id: user.id,
 					},
