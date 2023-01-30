@@ -88,10 +88,6 @@ config.json file:
 - "owners": put here your discord id and other people that will be involved in development, this will be important to manage slash commands
 - "someServers": the server or servers id that will be used to test the bot
 - "language": the default language of the bot
-- "poupanca": this defines some things about the bank's interest of the bot
-  - "last_interest": don't touch this, the code uses this to know when was the last interest increase
-  - "interest_time": how much time between interests in milisseconds, default is 24h
-  - "interest_rate": how much % the interest increases, default is 10%
 - "testOnly": when you are only testing the slash commands put this as true this way you don't have to wait 1 hour for the command to register, it register instantly in the servers you put earlier
 
 ## 🏃‍♂️ Running

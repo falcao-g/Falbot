@@ -1,4 +1,3 @@
-const fs = require("fs")
 const { randint, changeDB, format } = require("./utils/functions.js")
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
 const path = require("path")
@@ -18,7 +17,7 @@ client.on("ready", () => {
 client.login(process.env.TOKEN)
 
 class Falbot {
-	defaultLanguage = "portugues"
+	defaultLanguage = language
 	client = client
 	_messages = require(path.join(__dirname, "/utils/json/messages.json"))
 	_languages = new Map()
@@ -27,6 +26,7 @@ class Falbot {
 	lottoSchema = require("./schemas/lotto-schema")
 	coolSchema = require("./schemas/cool-schema.js")
 	langSchema = require("./schemas/lang-schema.js")
+	interestSchema = require("./schemas/interest-schema.js")
 
 	constructor() {
 		try {
@@ -106,13 +106,10 @@ class Falbot {
 	}
 
 	async bankInterest() {
-		var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
-		if (
-			Date.now() - config["poupanca"]["last_interest"] >
-			config["poupanca"]["interest_time"]
-		) {
+		let interest = await this.interestSchema.findById("interest")
+		if (Date.now() - interest.lastInterest > interest.interestTime) {
 			console.log("poupança!")
-			config["poupanca"]["last_interest"] = Date.now().toString()
+			interest.lastInterest = Date.now().toString()
 
 			var users = await this.userSchema.find({
 				banco: { $gt: 0 },
@@ -124,9 +121,7 @@ class Falbot {
 
 				if (limit > user.banco) {
 					user.banco += Math.floor(
-						parseInt(
-							user.banco * parseFloat(config["poupanca"]["interest_rate"])
-						)
+						parseInt(user.banco * parseFloat(interest.interestRate))
 					)
 				}
 
@@ -136,12 +131,7 @@ class Falbot {
 
 				user.save()
 			}
-
-			let json2 = JSON.stringify(config, null, 1)
-
-			fs.writeFileSync("./src/config.json", json2, "utf8", (err) => {
-				if (err) throw err
-			})
+			interest.save()
 		}
 	}
 
