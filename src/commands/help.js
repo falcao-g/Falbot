@@ -31,8 +31,8 @@ module.exports = {
 		const { Falbot } = require("../../index.js")
 	},
 	callback: async ({ guild, interaction }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
 			if (interaction.options !== undefined) {
 				var page = interaction.options.getString("page")
 			} else {
@@ -167,6 +167,11 @@ module.exports = {
 			await interaction.editReply({ embeds: [embed], components: [row] })
 		} catch (error) {
 			console.error(`Help: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+				components: [],
+			})
 		}
 	},
 }

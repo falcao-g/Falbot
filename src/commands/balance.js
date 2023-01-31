@@ -23,8 +23,8 @@ module.exports = {
 		},
 	],
 	callback: async ({ guild, member, args, interaction }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
 			const realMember = args[0] ? await getMember(guild, args[0]) : member
 			const userFile = await readFile(realMember.user.id)
 
@@ -94,6 +94,11 @@ module.exports = {
 			await interaction.editReply({ embeds: [embed], components: [row] })
 		} catch (error) {
 			console.error(`balance: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+				components: [],
+			})
 		}
 	},
 }

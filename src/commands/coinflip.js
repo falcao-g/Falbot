@@ -15,8 +15,8 @@ module.exports = {
 		},
 	],
 	callback: async ({ guild, args, interaction }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
 			times = args[0] > 0 ? args[0] : -args[0]
 			let caras = randint(0, times)
 			let coroas = times - caras
@@ -30,6 +30,9 @@ module.exports = {
 			})
 		} catch (error) {
 			console.error(`Coinflip: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+			})
 		}
 	},
 }

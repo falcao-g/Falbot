@@ -170,6 +170,10 @@ module.exports = {
 			}
 		} catch (err) {
 			console.error(`ranks: ${err}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

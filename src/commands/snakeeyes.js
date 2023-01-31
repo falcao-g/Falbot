@@ -138,6 +138,10 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`snakeeyes: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

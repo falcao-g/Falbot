@@ -31,8 +31,8 @@ module.exports = {
 		},
 	],
 	callback: async ({ guild, interaction, user, member, args }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
 			var member2 = await getMember(guild, args[0])
 			if (member2.user != user) {
 				try {
@@ -283,6 +283,10 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`fight: ${error}`)
+			interaction.channel.send({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

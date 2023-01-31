@@ -154,6 +154,10 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`russianroulette: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

@@ -76,6 +76,10 @@ module.exports = {
 			}).save()
 		} catch (err) {
 			console.error(`work: ${err}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

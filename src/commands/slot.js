@@ -147,6 +147,10 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`slot: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

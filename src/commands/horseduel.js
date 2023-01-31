@@ -25,9 +25,8 @@ module.exports = {
 		},
 	],
 	callback: async ({ guild, interaction, client, user, args }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
-
 			try {
 				var bet = await specialArg(args[0], user.id, "falcoins")
 			} catch {
@@ -157,7 +156,11 @@ module.exports = {
 				})
 			}
 		} catch (error) {
-			console.error(`Cavalgada: ${error}`)
+			console.error(`horseduel: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

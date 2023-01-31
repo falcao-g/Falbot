@@ -180,6 +180,11 @@ module.exports = {
 			})
 		} catch (error) {
 			console.error(`scratch: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+				components: [],
+			})
 		}
 	},
 }

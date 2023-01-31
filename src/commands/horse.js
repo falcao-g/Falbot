@@ -38,9 +38,9 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ instance, guild, interaction, user, args }) => {
+	callback: async ({ guild, interaction, user, args }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
 			try {
 				var bet = await specialArg(args[1], user.id, "falcoins")
 			} catch {
@@ -128,6 +128,10 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`horse: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

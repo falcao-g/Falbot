@@ -133,6 +133,10 @@ module.exports = {
 			}
 		} catch (err) {
 			console.error(`lottery: ${err}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

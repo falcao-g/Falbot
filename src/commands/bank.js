@@ -51,12 +51,12 @@ module.exports = {
 		},
 	],
 	callback: async ({ guild, user, interaction }) => {
+		await interaction.deferReply()
 		try {
 			metodo = interaction.options.getSubcommand()
 			falcoins = interaction.options.getString("falcoins")
 			var rank_number = await readFile(user.id, "rank")
 			var limit = Falbot.levels[rank_number - 1].bankLimit
-			await interaction.deferReply()
 
 			if (metodo === "view") {
 				const embed = new MessageEmbed()
@@ -178,6 +178,10 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`bank: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

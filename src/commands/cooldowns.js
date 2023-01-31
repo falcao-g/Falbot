@@ -12,8 +12,8 @@ module.exports = {
 		const { Falbot } = require("../../index.js")
 	},
 	callback: async ({ guild, user, interaction }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
 			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
 			scratchCooldown = await Falbot.coolSchema.findById(`scratch-${user.id}`)
 			workCooldown = await Falbot.coolSchema.findById(`work-${user.id}`)
@@ -83,6 +83,10 @@ module.exports = {
 			interaction.editReply({ embeds: [embed], components: [row] })
 		} catch (error) {
 			console.error(`cooldowns: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

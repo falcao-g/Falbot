@@ -170,6 +170,10 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`roulette: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

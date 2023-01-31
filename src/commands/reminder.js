@@ -45,6 +45,10 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`reminder: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				components: [],
+			})
 		}
 	},
 }

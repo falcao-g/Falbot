@@ -39,6 +39,10 @@ module.exports = {
 			answer.react("👎")
 		} catch (error) {
 			console.error(`poll: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

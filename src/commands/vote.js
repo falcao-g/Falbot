@@ -87,6 +87,10 @@ module.exports = {
 			await interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`vote: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

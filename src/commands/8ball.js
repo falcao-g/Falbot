@@ -17,8 +17,8 @@ module.exports = {
 		},
 	],
 	callback: async ({ guild, text, interaction }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
 			let answers = Falbot.getMessage(guild, "8BALL")
 			let answer = `${answers[randint(0, answers.length - 1)]}`
 			const embed = new MessageEmbed()
@@ -42,6 +42,10 @@ module.exports = {
 			await interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`8ball: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }
