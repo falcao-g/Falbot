@@ -172,8 +172,8 @@
 		"english": "The bot rolled"
 	},
 	"VELHA_CHAMOU": {
-		"portugues": "{USER} chamou {USER2} para um jogo da velha apostando {FALCOINS} falcoins :older_woman:",
-		"english": "{USER} challenges {USER2} to a tic-tac-toe game for {FALCOINS} falcoins :older_woman:"
+		"portugues": "{USER2}, você foi desafiado para um jogo da velha por {USER}\n*Se você entrar, você apostará {FALCOINS} falcoins :older_woman:*",
+		"english": "{USER2}, you've been challenged to a tic-tac-toe game by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins* :older_woman:"
 	},
 	"VELHA_CANCELADO_DEMOROU": {
 		"portugues": "Jogo da velha cancelado. {USER} demorou muito para aceitar! :confounded:",
@@ -268,12 +268,12 @@
 		"english": "Fight cancelled. {USER} took to long to accept! :confounded:"
 	},
 	"LUTA_CANCELADO_RECUSOU": {
-		"portugues": "Luta cancelada. {USER} recusou o duelo! :confounded:",
-		"english": "Fight cancelled. {USER} declined the duel! :confounded:"
+		"portugues": "Luta cancelada. {USER} recusou o duelo! :face_with_monocle:",
+		"english": "Fight cancelled. {USER} declined the duel! :face_with_monocle:"
 	},
 	"LUTA_CONVITE": {
-		"portugues": "{USER} chamou {USER2} para uma luta apostando {FALCOINS} falcoins :smiling_imp:",
-		"english": "{USER} challenges {USER2} to a fight for {FALCOINS} falcoins :smiling_imp:"
+		"portugues": "{USER2}, você foi desafiado para uma luta por {USER}\n*Se você entrar, você apostará {FALCOINS} falcoins :smiling_imp:*",
+		"english": "{USER2}, you've been challenged to a fight by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins :smiling_imp:*"
 	},
 	"LOJA": {
 		"portugues": "**Loja**",

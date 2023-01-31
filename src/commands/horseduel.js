@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js")
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -24,7 +24,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ guild, interaction, client, user, args }) => {
+	callback: async ({ guild, interaction, user, args }) => {
 		await interaction.deferReply()
 		try {
 			try {
@@ -55,35 +55,39 @@ module.exports = {
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
+				const row = new MessageActionRow().addComponents(
+					new MessageButton()
+						.setCustomId("join")
+						.setEmoji("✅")
+						.setStyle("SUCCESS")
+				)
+
 				var answer = await interaction.editReply({
 					embeds: [embed],
+					components: [row],
 					fetchReply: true,
 				})
-
-				answer.react("✅")
 
 				await changeDB(user.id, "falcoins", -bet)
 
 				var users = [user]
 				var path = ["- - - - -"]
 
-				const filter = async (reaction, newUser) => {
+				const filter = async (btInt) => {
 					return (
-						(await readFile(newUser.id, "falcoins")) >= bet &&
-						reaction.emoji.name === "✅" &&
-						newUser.id !== client.user.id &&
-						!users.includes(newUser)
+						(await readFile(btInt.user.id, "falcoins")) >= bet &&
+						!users.includes(btInt.user)
 					)
 				}
 
-				const collector = answer.createReactionCollector({
+				const collector = answer.createMessageComponentCollector({
 					filter,
 					time: 1000 * 60,
 				})
 
-				collector.on("collect", async (reaction, newUser) => {
-					await changeDB(newUser.id, "falcoins", -bet)
-					users.push(newUser)
+				collector.on("collect", async (i) => {
+					await changeDB(i.user.id, "falcoins", -bet)
+					users.push(i.user)
 					path.push("- - - - -")
 					pot += bet
 					embed.setDescription(
@@ -97,7 +101,7 @@ module.exports = {
 						value: `${users.join("\n")}`,
 						inline: false,
 					}
-					await interaction.editReply({
+					await i.update({
 						embeds: [embed],
 					})
 				})
@@ -160,6 +164,7 @@ module.exports = {
 			interaction.editReply({
 				content: Falbot.getMessage(guild, "EXCEPTION"),
 				embeds: [],
+				components: [],
 			})
 		}
 	},

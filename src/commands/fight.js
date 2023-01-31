@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js")
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
 const {
 	getMember,
 	specialArg,
@@ -50,25 +50,34 @@ module.exports = {
 					(await readFile(member2.user.id, "falcoins")) >= bet &&
 					bet > 0
 				) {
+					const row = new MessageActionRow().addComponents([
+						new MessageButton()
+							.setCustomId("join")
+							.setEmoji("✅")
+							.setStyle("SUCCESS"),
+						new MessageButton()
+							.setCustomId("refuse")
+							.setEmoji("⛔")
+							.setStyle("DANGER"),
+					])
 					var answer = await interaction.editReply({
 						content: Falbot.getMessage(guild, "LUTA_CONVITE", {
-							USER: member.displayName,
-							USER2: member2.displayName,
+							USER: member,
+							USER2: member2,
 							FALCOINS: format(bet),
 						}),
+						components: [row],
 						fetchReply: true,
 					})
-					answer.react("✅")
-					answer.react("🚫")
 
-					const filter = (reaction, user) => {
-						return user.id === member2.user.id
+					const filter = (btInt) => {
+						return btInt.user.id === member2.user.id
 					}
 
-					const collector = answer.createReactionCollector({
+					const collector = answer.createMessageComponentCollector({
 						filter,
 						max: 1,
-						time: 1000 * 60,
+						time: 1000 * 300,
 					})
 
 					collector.on("end", async (collected) => {
@@ -78,7 +87,7 @@ module.exports = {
 									USER: member2,
 								}),
 							})
-						} else if (collected.first()._emoji.name === "🚫") {
+						} else if (collected.first().customId === "refuse") {
 							interaction.followUp({
 								content: Falbot.getMessage(guild, "LUTA_CANCELADO_RECUSOU", {
 									USER: member2,
@@ -118,6 +127,7 @@ module.exports = {
 								var order = [player_2, player_1]
 							}
 
+							first = true
 							while (order[0]["hp"] > 0 && order[1]["hp"] > 0) {
 								for (let i = 0; i < order.length; i++) {
 									if (order[0]["hp"] <= 0 || order[1]["hp"] <= 0) {
@@ -215,9 +225,18 @@ module.exports = {
 										value: `${order[0]["mention"]}: ${order[0]["hp"]} hp\n${order[1]["mention"]}: ${order[1]["hp"]} hp`,
 									})
 
-									await interaction.channel.send({
-										embeds: [embed],
-									})
+									if (first) {
+										await collected.first().reply({
+											embeds: [embed],
+											components: [],
+										})
+										first = false
+									} else {
+										await interaction.channel.send({
+											embeds: [embed],
+										})
+									}
+
 									await new Promise((resolve) => setTimeout(resolve, 2500))
 								}
 							}
@@ -285,7 +304,6 @@ module.exports = {
 			console.error(`fight: ${error}`)
 			interaction.channel.send({
 				content: Falbot.getMessage(guild, "EXCEPTION"),
-				embeds: [],
 			})
 		}
 	},

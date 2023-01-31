@@ -31,7 +31,7 @@ module.exports = {
 			type: "STRING",
 		},
 	],
-	callback: async ({ guild, interaction, client, user, args, member }) => {
+	callback: async ({ guild, interaction, user, args, member }) => {
 		try {
 			await interaction.deferReply()
 			var board = new Board.default()
@@ -52,23 +52,31 @@ module.exports = {
 					(await readFile(member2.user.id, "falcoins")) >= bet &&
 					bet > 0
 				) {
+					const row4 = new MessageActionRow().addComponents([
+						new MessageButton()
+							.setCustomId("join")
+							.setEmoji("✅")
+							.setStyle("SUCCESS"),
+						new MessageButton()
+							.setCustomId("refuse")
+							.setEmoji("⛔")
+							.setStyle("DANGER"),
+					])
 					var answer = await interaction.editReply({
 						content: Falbot.getMessage(guild, "VELHA_CHAMOU", {
-							USER: member.displayName,
-							USER2: member2.displayName,
+							USER: member,
+							USER2: member2,
 							FALCOINS: format(bet),
 						}),
+						components: [row4],
 						fetchReply: true,
 					})
 
-					answer.react("✅")
-					answer.react("🚫")
-
-					const filter = (reaction, user) => {
-						return user.id === member2.user.id && user.id !== client.user.id
+					const filter = (btInt) => {
+						return btInt.user.id === member2.user.id
 					}
 
-					const collector = answer.createReactionCollector({
+					const collector = answer.createMessageComponentCollector({
 						filter,
 						max: 1,
 						time: 1000 * 300,
@@ -81,7 +89,7 @@ module.exports = {
 									USER: member2,
 								}),
 							})
-						} else if (collected.first()._emoji.name === "🚫") {
+						} else if (collected.first().customId === "refuse") {
 							await interaction.followUp({
 								content: Falbot.getMessage(guild, "VELHA_CANCELADO_RECUSOU", {
 									USER: member2,
@@ -118,7 +126,7 @@ module.exports = {
 								var second_player = member
 							}
 
-							answer2 = await interaction.followUp({
+							answer2 = await collected.first().reply({
 								content: `:older_woman: \`${member.displayName}\` **VS**  \`${
 									member2.displayName
 								}\` \n\n${Falbot.getMessage(guild, "VELHA_MOVIMENTO", {
@@ -131,13 +139,11 @@ module.exports = {
 							const filter2 = (btInt) => {
 								if (
 									btInt.user.id === first_player.user.id &&
-									btInt.user.id !== client.user.id &&
 									board.currentMark() === "X"
 								) {
 									return true
 								} else if (
 									btInt.user.id === second_player.user.id &&
-									btInt.user.id !== client.user.id &&
 									board.currentMark() === "O"
 								) {
 									return true
@@ -252,7 +258,7 @@ module.exports = {
 												board.winningPlayer() === "X"
 													? first_player.displayName
 													: second_player.displayName,
-											FALCOINS: await format(bet),
+											FALCOINS: await format(bet * 2),
 										})}**`,
 									})
 								} else {

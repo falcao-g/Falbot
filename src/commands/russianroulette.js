@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js")
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -53,36 +53,41 @@ module.exports = {
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
+				const row = new MessageActionRow().addComponents(
+					new MessageButton()
+						.setCustomId("join")
+						.setEmoji("✅")
+						.setStyle("SUCCESS")
+				)
+
 				var answer = await interaction.editReply({
 					embeds: [embed],
+					components: [row],
 					fetchReply: true,
 				})
 
-				answer.react("✅")
 				await changeDB(user.id, "falcoins", -bet)
 
 				var users = [user]
 				var names = [user]
 				mensagens = Falbot.getMessage(guild, "RUSROL")
 
-				const filter = async (reaction, newUser) => {
+				const filter = async (btInt) => {
 					return (
-						(await readFile(newUser.id, "falcoins")) >= bet &&
-						reaction.emoji.name === "✅" &&
-						newUser.id !== client.user.id &&
-						!users.includes(newUser)
+						(await readFile(btInt.user.id, "falcoins")) >= bet &&
+						!users.includes(btInt.user)
 					)
 				}
 
-				const collector = answer.createReactionCollector({
+				const collector = answer.createMessageComponentCollector({
 					filter,
 					time: 1000 * 60,
 				})
 
-				collector.on("collect", async (reaction, newUser) => {
-					await changeDB(newUser.id, "falcoins", -bet)
-					users.push(newUser)
-					names.push(newUser)
+				collector.on("collect", async (i) => {
+					await changeDB(i.user.id, "falcoins", -bet)
+					users.push(i.user)
+					names.push(i.user)
 					pot += bet
 					embed.setDescription(
 						Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION", {
@@ -95,7 +100,7 @@ module.exports = {
 						value: `${names.join("\n")}`,
 						inline: false,
 					}
-					await interaction.editReply({
+					await i.update({
 						embeds: [embed],
 					})
 				})
