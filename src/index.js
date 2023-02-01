@@ -1,24 +1,11 @@
 const { randint, changeDB, format } = require("./utils/functions.js")
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
 const path = require("path")
-const { owners, someServers, language } = require("./config.json")
-const WOKCommands = require("wokcommands")
-const mongoose = require("mongoose")
-const { Intents, Client } = require("discord.js")
+const { language } = require("./config.json")
 require("dotenv").config()
-const client = new Client({
-	intents: new Intents(["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS"]),
-})
-
-client.on("ready", () => {
-	client.on("error", console.error)
-})
-
-client.login(process.env.TOKEN)
 
 class Falbot {
 	defaultLanguage = language
-	client = client
 	_messages = require(path.join(__dirname, "/utils/json/messages.json"))
 	_languages = new Map()
 	levels = require("./utils/json/levels.json")
@@ -28,62 +15,9 @@ class Falbot {
 	langSchema = require("./schemas/lang-schema.js")
 	interestSchema = require("./schemas/interest-schema.js")
 
-	constructor() {
-		try {
-			mongoose.set("strictQuery", false)
-			mongoose.connect(process.env.MONGODB_URI)
-		} catch {
-			console.log("A conexão caiu")
-			mongoose.connect(process.env.MONGODB_URI)
-		}
-
-		mongoose.connection.on("error", (err) => {
-			console.log(`Erro na conexão: ${err}`)
-			mongoose.connect(process.env.MONGODB_URI)
-		})
-
-		mongoose.connection.on("disconnected", () => {
-			console.log("A conexão caiu")
-			mongoose.connect(process.env.MONGODB_URI)
-		})
-
-		mongoose.connection.on("disconnecting", () => {
-			console.log("A conexão caiu")
-			mongoose.connect(process.env.MONGODB_URI)
-		})
-
-		mongoose.connection.on("MongoNetworkError", () => {
-			console.log("A conexão caiu")
-			mongoose.connect(process.env.MONGODB_URI)
-		})
-
-		mongoose.connection.on("MongooseServerSelectionError", () => {
-			console.log("A conexão caiu")
-			mongoose.connect(process.env.MONGODB_URI)
-		})
-
-		const wok = new WOKCommands(client, {
-			commandsDir: path.join(__dirname, "/commands"),
-			featuresDir: path.join(__dirname, "/events"),
-			ignoreBots: true,
-			ephemeral: false,
-			botOwners: owners,
-			testServers: someServers,
-			defaultLanguage: language,
-			messagesPath: path.join(__dirname, "/utils/json/messages.json"),
-			disabledDefaultCommands: [
-				"language",
-				"help",
-				"command",
-				"requiredrole",
-				"channelonly",
-				"prefix",
-			],
-			showWarns: false,
-		})
-
-		wok._mongoConnection = mongoose.connection
+	constructor(wok, client) {
 		this.wok = wok
+		this.client = client
 		;(async () => {
 			const results = await this.langSchema.find()
 
@@ -98,7 +32,7 @@ class Falbot {
 		}, 5000)
 
 		setInterval(() => {
-			client.user.setActivity("/help | arte by: @kinsallum"),
+			this.client.user.setActivity("/help | arte by: @kinsallum"),
 				this.bankInterest(),
 				this.sendVoteReminders(),
 				this.lotteryDraw()
@@ -148,7 +82,7 @@ class Falbot {
 					Date.now() - user.lastVote > 1000 * 60 * 60 * 12 &&
 					Date.now() - user.lastReminder > 1000 * 60 * 60 * 12
 				) {
-					var discordUser = await client.users.fetch(user._id)
+					var discordUser = await this.client.users.fetch(user._id)
 					const embed = new MessageEmbed()
 						.setColor("YELLOW")
 						.addFields(
@@ -213,7 +147,7 @@ class Falbot {
 
 				await changeDB(winner.id, "falcoins", lotto.prize)
 
-				var winnerUser = await client.users.fetch(winner.id)
+				var winnerUser = await this.client.users.fetch(winner.id)
 
 				const embed = new MessageEmbed()
 					.setColor("GOLD")
