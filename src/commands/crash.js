@@ -54,7 +54,9 @@ module.exports = {
 						},
 						{
 							name: Falbot.getMessage(guild, "GANHOS"),
-							value: `:coin: ${format(parseInt(bet * multiplier - bet))}`,
+							value: `:coin: ${multiplier == 0.8 ? "-" : ""}${format(
+								parseInt(bet * multiplier - bet)
+							)}`,
 							inline: true,
 						}
 					)
