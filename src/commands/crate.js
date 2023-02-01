@@ -24,8 +24,8 @@ module.exports = {
 		},
 	],
 	callback: async ({ guild, user, args, interaction }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
 			try {
 				var quantity = await specialArg(args[0], user.id, "caixas")
 			} catch {
@@ -75,6 +75,10 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`crate: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

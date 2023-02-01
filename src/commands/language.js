@@ -17,72 +17,44 @@ module.exports = {
 			],
 		},
 	],
-	callback: async ({ instance, guild, user, interaction }) => {
+	callback: async ({ guild, user, interaction }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
-			languageSchema = instance._mongoConnection.models["wokcommands-languages"]
 			const lang = interaction.options.getString("language")
-			if (guild) {
-				if (!lang) {
-					await interaction.editReply({
-						content: Falbot.getMessage(guild, "CURRENT_LANGUAGE", {
-							LANGUAGE: Falbot.getLanguage(guild),
-						}),
-					})
-					return
-				}
-				Falbot.setLanguage(guild, lang)
-
-				await languageSchema.findOneAndUpdate(
-					{
-						_id: guild.id,
-					},
-					{
-						_id: guild.id,
-						language: lang,
-					},
-					{
-						upsert: true,
-					}
-				)
-
+			guildUser = guild ? guild : user
+			if (!lang) {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "NEW_LANGUAGE", {
-						LANGUAGE: lang,
+					content: Falbot.getMessage(guildUser, "CURRENT_LANGUAGE", {
+						LANGUAGE: Falbot.getLanguage(guildUser),
 					}),
 				})
-			} else {
-				if (!lang) {
-					await interaction.editReply({
-						content: Falbot.getMessage(user, "CURRENT_LANGUAGE", {
-							LANGUAGE: Falbot.getLanguage(user),
-						}),
-					})
-					return
-				}
-				Falbot.setLanguage(user, lang)
-
-				await languageSchema.findOneAndUpdate(
-					{
-						_id: user.id,
-					},
-					{
-						_id: user.id,
-						language: lang,
-					},
-					{
-						upsert: true,
-					}
-				)
-
-				await interaction.editReply({
-					content: Falbot.getMessage(user, "NEW_LANGUAGE", {
-						LANGUAGE: lang,
-					}),
-				})
+				return
 			}
+			Falbot.setLanguage(guildUser, lang)
+
+			await Falbot.langSchema.findOneAndUpdate(
+				{
+					_id: guildUser.id,
+				},
+				{
+					_id: guildUser.id,
+					language: lang,
+				},
+				{
+					upsert: true,
+				}
+			)
+
+			await interaction.editReply({
+				content: Falbot.getMessage(guildUser, "NEW_LANGUAGE", {
+					LANGUAGE: lang,
+				}),
+			})
 		} catch (error) {
 			console.error(`language: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+			})
 		}
 	},
 }

@@ -11,6 +11,9 @@ module.exports = (client) => {
 			}
 		} catch (error) {
 			console.error(`Select: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+			})
 		}
 	})
 }

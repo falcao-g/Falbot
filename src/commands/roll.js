@@ -53,6 +53,10 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`roll: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

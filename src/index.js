@@ -1,91 +1,25 @@
-const fs = require("fs")
 const { randint, changeDB, format } = require("./utils/functions.js")
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
 const path = require("path")
-const { owners, someServers, language } = require("./config.json")
-const WOKCommands = require("wokcommands")
-const mongoose = require("mongoose")
-const { Intents, Client } = require("discord.js")
+const { language } = require("./config.json")
 require("dotenv").config()
-const client = new Client({
-	intents: new Intents(["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS"]),
-})
-
-client.on("ready", () => {
-	client.on("error", console.error)
-})
-
-client.login(process.env.TOKEN)
 
 class Falbot {
-	defaultLanguage = "portugues"
-	client = client
+	defaultLanguage = language
 	_messages = require(path.join(__dirname, "/utils/json/messages.json"))
 	_languages = new Map()
 	levels = require("./utils/json/levels.json")
 	userSchema = require("./schemas/user-schema")
 	lottoSchema = require("./schemas/lotto-schema")
+	coolSchema = require("./schemas/cool-schema.js")
+	langSchema = require("./schemas/lang-schema.js")
+	interestSchema = require("./schemas/interest-schema.js")
 
-	constructor() {
-		try {
-			mongoose.set("strictQuery", false)
-			mongoose.connect(process.env.MONGODB_URI)
-		} catch {
-			console.log("A conexão caiu")
-			mongoose.connect(process.env.MONGODB_URI)
-		}
-
-		mongoose.connection.on("error", (err) => {
-			console.log(`Erro na conexão: ${err}`)
-			mongoose.connect(process.env.MONGODB_URI)
-		})
-
-		mongoose.connection.on("disconnected", () => {
-			console.log("A conexão caiu")
-			mongoose.connect(process.env.MONGODB_URI)
-		})
-
-		mongoose.connection.on("disconnecting", () => {
-			console.log("A conexão caiu")
-			mongoose.connect(process.env.MONGODB_URI)
-		})
-
-		mongoose.connection.on("MongoNetworkError", () => {
-			console.log("A conexão caiu")
-			mongoose.connect(process.env.MONGODB_URI)
-		})
-
-		mongoose.connection.on("MongooseServerSelectionError", () => {
-			console.log("A conexão caiu")
-			mongoose.connect(process.env.MONGODB_URI)
-		})
-
-		const wok = new WOKCommands(client, {
-			commandsDir: path.join(__dirname, "/commands"),
-			featuresDir: path.join(__dirname, "/events"),
-			ignoreBots: true,
-			ephemeral: false,
-			botOwners: owners,
-			testServers: someServers,
-			defaultLanguage: language,
-			messagesPath: path.join(__dirname, "/utils/json/messages.json"),
-			disabledDefaultCommands: [
-				"language",
-				"help",
-				"command",
-				"requiredrole",
-				"channelonly",
-				"prefix",
-			],
-			showWarns: false,
-		})
-
-		wok._mongoConnection = mongoose.connection
+	constructor(wok, client) {
 		this.wok = wok
-		this.languageSchema = wok._mongoConnection.models["wokcommands-languages"]
-		this.cooldownsSchema = wok._mongoConnection.models["wokcommands-cooldowns"]
+		this.client = client
 		;(async () => {
-			const results = await this.languageSchema.find()
+			const results = await this.langSchema.find()
 
 			for (const { _id, language } of results) {
 				this._languages.set(_id, language)
@@ -93,12 +27,12 @@ class Falbot {
 		})()
 
 		setInterval(async () => {
-			await this.cooldownsSchema.updateMany({}, { $inc: { cooldown: -5 } })
-			await this.cooldownsSchema.deleteMany({ cooldown: { $lt: 5 } })
+			await this.coolSchema.updateMany({}, { $inc: { cooldown: -5 } })
+			await this.coolSchema.deleteMany({ cooldown: { $lt: 5 } })
 		}, 5000)
 
 		setInterval(() => {
-			client.user.setActivity("/help | arte by: @kinsallum"),
+			this.client.user.setActivity("/help | arte by: @kinsallum"),
 				this.bankInterest(),
 				this.sendVoteReminders(),
 				this.lotteryDraw()
@@ -106,13 +40,10 @@ class Falbot {
 	}
 
 	async bankInterest() {
-		var config = JSON.parse(fs.readFileSync("./src/config.json", "utf8"))
-		if (
-			Date.now() - config["poupanca"]["last_interest"] >
-			config["poupanca"]["interest_time"]
-		) {
+		let interest = await this.interestSchema.findById("interest")
+		if (Date.now() - interest.lastInterest > interest.interestTime) {
 			console.log("poupança!")
-			config["poupanca"]["last_interest"] = Date.now().toString()
+			interest.lastInterest = Date.now().toString()
 
 			var users = await this.userSchema.find({
 				banco: { $gt: 0 },
@@ -124,9 +55,7 @@ class Falbot {
 
 				if (limit > user.banco) {
 					user.banco += Math.floor(
-						parseInt(
-							user.banco * parseFloat(config["poupanca"]["interest_rate"])
-						)
+						parseInt(user.banco * parseFloat(interest.interestRate))
 					)
 				}
 
@@ -136,12 +65,7 @@ class Falbot {
 
 				user.save()
 			}
-
-			let json2 = JSON.stringify(config, null, 1)
-
-			fs.writeFileSync("./src/config.json", json2, "utf8", (err) => {
-				if (err) throw err
-			})
+			interest.save()
 		}
 	}
 
@@ -158,7 +82,7 @@ class Falbot {
 					Date.now() - user.lastVote > 1000 * 60 * 60 * 12 &&
 					Date.now() - user.lastReminder > 1000 * 60 * 60 * 12
 				) {
-					var discordUser = await client.users.fetch(user._id)
+					var discordUser = await this.client.users.fetch(user._id)
 					const embed = new MessageEmbed()
 						.setColor("YELLOW")
 						.addFields(
@@ -223,7 +147,7 @@ class Falbot {
 
 				await changeDB(winner.id, "falcoins", lotto.prize)
 
-				var winnerUser = await client.users.fetch(winner.id)
+				var winnerUser = await this.client.users.fetch(winner.id)
 
 				const embed = new MessageEmbed()
 					.setColor("GOLD")

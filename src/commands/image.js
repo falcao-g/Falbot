@@ -17,9 +17,8 @@ module.exports = {
 		},
 	],
 	callback: async ({ interaction, user, guild, text }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
-
 			text = text.trim()
 
 			const photos = await GOOGLE_IMG_SCRAP({
@@ -37,6 +36,10 @@ module.exports = {
 			interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`image: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }

@@ -29,8 +29,8 @@ module.exports = {
 		},
 	],
 	callback: async ({ guild, interaction, user, args }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
 			args[0] = await getMember(guild, args[0])
 
 			try {
@@ -66,6 +66,9 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`donation: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+			})
 		}
 	},
 }

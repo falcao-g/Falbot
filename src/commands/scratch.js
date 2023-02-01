@@ -16,13 +16,10 @@ module.exports = {
 	init: () => {
 		const { Falbot } = require("../../index.js")
 	},
-	callback: async ({ instance, guild, interaction, user }) => {
+	callback: async ({ guild, interaction, user }) => {
 		try {
 			await interaction.deferReply()
-
-			cooldownsSchema =
-				instance._mongoConnection.models["wokcommands-cooldowns"]
-			scratchCooldown = await cooldownsSchema.findById(`scratch-${user.id}`)
+			scratchCooldown = await Falbot.coolSchema.findById(`scratch-${user.id}`)
 
 			if (scratchCooldown) {
 				await interaction.editReply({
@@ -174,7 +171,7 @@ module.exports = {
 			})
 
 			collector.on("end", async () => {
-				await new cooldownsSchema({
+				await new Falbot.coolSchema({
 					_id: `scratch-${user.id}`,
 					name: "scratch",
 					type: "per-user",
@@ -183,6 +180,11 @@ module.exports = {
 			})
 		} catch (error) {
 			console.error(`scratch: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+				components: [],
+			})
 		}
 	},
 }

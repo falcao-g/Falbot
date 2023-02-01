@@ -23,57 +23,13 @@
 		"english": "You must have the {PERM} permission in order to use this command.",
 		"portugues": "Você precisa ter a permissão {PERM} para utilizar este comando."
 	},
-	"MISSING_ROLES": {
-		"english": "You do not have the required roles to use this command! You need one of the following: {ROLES}",
-		"portugues": "Você não tem o cargo necessário para usar este comando! Você precisa de um dos seguintes: {ROLES}"
-	},
 	"COOLDOWN": {
 		"english": "You must wait {COOLDOWN} before using that command again.",
 		"portugues": "Você precisa esperar {COOLDOWN} antes de usar este comando novamente."
 	},
-	"ENABLE_DISABLE_STATE": {
-		"english": "The state must be either \"enable\" or \"disable\".",
-		"portugues": "O estado deve ser \"ativado\" ou \"desativado\"."
-	},
-	"CANNOT_ENABLE_DISABLE_IN_DMS": {
-		"english": "You cannot enable or disable commands in private messages.",
-		"portugues": "Você não pode ativar ou desativar comandos em mensagens privadas."
-	},
-	"COMMAND_ALREADY_ENABLED": {
-		"english": "That command is already enabled!",
-		"portugues": "Este comando já está ativado!"
-	},
-	"COMMAND_ALREADY_DISABLED": {
-		"english": "That command is already disabled!",
-		"portugues": "Este comando já está desativado!"
-	},
-	"COMMAND_NOW_ENABLED": {
-		"english": "{COMMAND} is now enabled!",
-		"portugues": "{COMMAND} agora está ativado!"
-	},
-	"COMMAND_NOW_DISABLED": {
-		"english": "{COMMAND} is now disabled!",
-		"portugues": "{COMMAND} agora está desativado!"
-	},
 	"UNKNOWN_COMMAND": {
 		"english": "Could not find command {COMMAND}!",
 		"portugues": "Não foi possível encontrar o comando {COMMAND}!"
-	},
-	"CANNOT_CHANGE_REQUIRED_ROLES_IN_DMS": {
-		"english": "You cannot change required roles in private messages.",
-		"portugues": "Você não pode alterar os cargos necessários em mensagens privadas"
-	},
-	"REMOVED_ALL_REQUIRED_ROLES": {
-		"english": "Removed all required roles from command {COMMAND}.",
-		"portugues": "Removidas todas as permissões necessárias para o comando {COMMAND}."
-	},
-	"ADDED_REQUIRED_ROLE": {
-		"english": "Added role {ROLE} to command {COMMAND}.",
-		"portugues": "Adicionado o cargo {ROLE} para o comando {COMMAND}."
-	},
-	"SYNTAX_ERROR": {
-		"english": "Incorrect usage! Please use \"{PREFIX}{COMMAND} {ARGUMENTS}\"",
-		"portugues": "Uso incorreto! Utilize \"{PREFIX}{COMMAND} {ARGUMENTS}\""
 	},
 	"NO_DATABASE_FOUND": {
 		"english": "No database connection found!",
@@ -83,45 +39,13 @@
 		"english": "This command can only be used within a server.",
 		"portugues": "Este comando só pode ser usado em um servidor."
 	},
-	"NO_REACT_PERMS": {
-		"english": "This bot needs the \"Add Reactions\" permission to use the help menu.",
-		"portugues": "Este bot precisa da permissão \"Adicionar reações\" para usar o menu de ajuda."
-	},
 	"EXCEPTION": {
-		"english": "An error occurred when running this command! This error has been reported to the developers.",
-		"portugues": "Ocorreu um erro ao executar este comando! Este erro foi relatado aos desenvolvedores."
-	},
-	"NO_TAGGED_CHANNELS": {
-		"english": "Please tag at least one channel.",
-		"portugues": "Marque pelo menos um canal."
-	},
-	"NOT_CHANNEL_COMMAND": {
-		"english": "That command is currently not limited to any channel.",
-		"portugues": "Esse comando atualmente não está limitado a nenhum canal."
-	},
-	"NO_LONGER_CHANNEL_COMMAND": {
-		"english": "That command is no longer a channel specific command.",
-		"portugues": "Esse comando não é mais um comando específico do canal."
-	},
-	"NOW_CHANNEL_COMMAND": {
-		"english": "\"{COMMAND}\" can now only be ran in {CHANNELS}.",
-		"portugues": "\"{COMMAND}\" agora só pode ser executado em {CHANNELS}."
-	},
-	"ALLOWED_CHANNELS": {
-		"english": "You can only use that command in the following: {CHANNELS}.",
-		"portugues": "Você só pode usar esse comando nos seguintes: {CHANNELS}."
-	},
-	"CANNOT_DISABLE_THIS_COMMAND": {
-		"english": "This command cannot be disabled.",
-		"portugues": "Este comando não pode ser desabilitado."
+		"english": "An error occurred when running this command! This error has been reported to the developer.",
+		"portugues": "Ocorreu um erro ao executar este comando! Este erro foi relatado ao desenvolvedor."
 	},
 	"INVALID_SLASH_COMMAND": {
 		"english": "This slash command is not properly registered.",
 		"portugues": "Este comando de barra não está registrado corretamente."
-	},
-	"REQUIRE_ROLES": {
-		"english": "You must specify what roles can use this command with `{PREFIX}requiredroles {COMMAND} <role ID>`.",
-		"portugues": "Você deve especificar quais funções podem usar este comando com `{PREFIX} funções necessárias {COMANDO} <ID da função>`."
 	},
 	"NUMEROS": {
 		"portugues": "Números",
@@ -248,8 +172,8 @@
 		"english": "The bot rolled"
 	},
 	"VELHA_CHAMOU": {
-		"portugues": "{USER} chamou {USER2} para um jogo da velha apostando {FALCOINS} falcoins :older_woman:",
-		"english": "{USER} challenges {USER2} to a tic-tac-toe game for {FALCOINS} falcoins :older_woman:"
+		"portugues": "{USER2}, você foi desafiado para um jogo da velha por {USER}\n*Se você entrar, você apostará {FALCOINS} falcoins :older_woman:*",
+		"english": "{USER2}, you've been challenged to a tic-tac-toe game by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins* :older_woman:"
 	},
 	"VELHA_CANCELADO_DEMOROU": {
 		"portugues": "Jogo da velha cancelado. {USER} demorou muito para aceitar! :confounded:",
@@ -344,12 +268,12 @@
 		"english": "Fight cancelled. {USER} took to long to accept! :confounded:"
 	},
 	"LUTA_CANCELADO_RECUSOU": {
-		"portugues": "Luta cancelada. {USER} recusou o duelo! :confounded:",
-		"english": "Fight cancelled. {USER} declined the duel! :confounded:"
+		"portugues": "Luta cancelada. {USER} recusou o duelo! :face_with_monocle:",
+		"english": "Fight cancelled. {USER} declined the duel! :face_with_monocle:"
 	},
 	"LUTA_CONVITE": {
-		"portugues": "{USER} chamou {USER2} para uma luta apostando {FALCOINS} falcoins :smiling_imp:",
-		"english": "{USER} challenges {USER2} to a fight for {FALCOINS} falcoins :smiling_imp:"
+		"portugues": "{USER2}, você foi desafiado para uma luta por {USER}\n*Se você entrar, você apostará {FALCOINS} falcoins :smiling_imp:*",
+		"english": "{USER2}, you've been challenged to a fight by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins :smiling_imp:*"
 	},
 	"LOJA": {
 		"portugues": "**Loja**",

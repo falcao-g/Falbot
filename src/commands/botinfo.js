@@ -9,8 +9,8 @@ module.exports = {
 	guildOnly: true,
 	testOnly,
 	callback: async ({ guild, client, interaction }) => {
+		await interaction.deferReply()
 		try {
-			await interaction.deferReply()
 			const embed = new MessageEmbed()
 				.setColor("NAVY")
 				.addFields({
@@ -30,6 +30,10 @@ module.exports = {
 			await interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`botinfo: ${error}`)
+			interaction.editReply({
+				content: Falbot.getMessage(guild, "EXCEPTION"),
+				embeds: [],
+			})
 		}
 	},
 }
