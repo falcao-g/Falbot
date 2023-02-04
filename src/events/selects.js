@@ -1,13 +1,13 @@
-const help = require("../commands/help")
-
-module.exports = (client) => {
-	client.on("interactionCreate", async (interaction) => {
+module.exports = {
+	name: "interactionCreate",
+	execute: async (interaction, instance, client) => {
 		try {
-			if (!interaction.isSelectMenu()) return
+			if (!interaction.isStringSelectMenu()) return
 
 			if (interaction.customId === "page") {
 				guild = interaction.member.guild
-				await help.callback({ guild, interaction })
+				const help = client.commands.get("help")
+				help.execute({ guild, interaction, instance })
 			}
 		} catch (error) {
 			console.error(`Select: ${error}`)
@@ -15,5 +15,5 @@ module.exports = (client) => {
 				content: Falbot.getMessage(guild, "EXCEPTION"),
 			})
 		}
-	})
+	},
 }

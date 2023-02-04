@@ -1,23 +1,24 @@
 const { randint } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Flip a coin",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	options: [
-		{
-			name: "quantity",
-			description: "quantity of coins to flip",
-			required: false,
-			type: "NUMBER",
-		},
-	],
-	callback: async ({ guild, args, interaction }) => {
+	data: new SlashCommandBuilder()
+		.setName("coinflip")
+		.setDescription("Flip a coin")
+		.setDMPermission(false)
+		.addIntegerOption((option) =>
+			option
+				.setName("quantity")
+				.setDescription("quantity of coins to flip")
+				.setMinValue(1)
+				.setRequired(false)
+		),
+	execute: async ({ guild, interaction }) => {
 		await interaction.deferReply()
 		try {
-			times = args[0] > 0 ? args[0] : -args[0]
+			times = interaction.options.getInteger("quantity")
 			let caras = randint(0, times)
 			let coroas = times - caras
 

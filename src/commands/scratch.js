@@ -7,16 +7,18 @@ const {
 	msToTime,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Play scratch-off for a chance to win a huge jackpot",
-	slash: true,
-	guildOnly: true,
 	testOnly,
+	data: new SlashCommandBuilder()
+		.setName("scratch")
+		.setDescription("Play scratch-off for a chance to win a huge jackpot")
+		.setDMPermission(false),
 	init: () => {
 		const { Falbot } = require("../../index.js")
 	},
-	callback: async ({ guild, interaction, user }) => {
+	execute: async ({ guild, interaction, user }) => {
 		try {
 			await interaction.deferReply()
 			scratchCooldown = await Falbot.coolSchema.findById(`scratch-${user.id}`)

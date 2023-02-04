@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js")
+const { EmbedBuilder } = require("discord.js")
 const {
 	readFile,
 	changeDB,
@@ -6,56 +6,52 @@ const {
 	format,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Lottery",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	options: [
-		{
-			name: "view",
-			description: "View lottery info",
-			type: "SUB_COMMAND",
-		},
-		{
-			name: "buy",
-			description: "Buy lottery tickets",
-			type: "SUB_COMMAND",
-			options: [
-				{
-					name: "amount",
-					description: "Amount of lottery tickets to buy",
-					required: true,
-					type: "NUMBER",
-				},
-			],
-		},
-		{
-			name: "history",
-			description: "See the last 10 winners of the lottery",
-			type: "SUB_COMMAND",
-		},
-	],
-	callback: async ({ guild, user, interaction }) => {
+	data: new SlashCommandBuilder()
+		.setName("lottery")
+		.setDescription("Lottery")
+		.setDMPermission(false)
+		.addSubcommand((subcommand) =>
+			subcommand.setName("view").setDescription("View lottery info")
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName("buy")
+				.setDescription("Buy lottery info")
+				.addIntegerOption((option) =>
+					option
+						.setName("amount")
+						.setDescription("Amount of lottery tickets to buy")
+						.setMinValue(1)
+						.setRequired(true)
+				)
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName("history")
+				.setDescription("See the last 10 winners of the lottery")
+		),
+	execute: async ({ guild, user, interaction, instance }) => {
 		try {
 			await interaction.deferReply()
-			lotto = await Falbot.lottoSchema.findById("semanal")
+			lotto = await instance.lottoSchema.findById("semanal")
 			type = interaction.options.getSubcommand()
 			if (type === "buy") {
-				amount = interaction.options.getNumber("amount")
+				amount = interaction.options.getInteger("amount")
 				if (
 					(await readFile(user.id, "falcoins")) > amount * 500 &&
 					amount > 0
 				) {
-					var embed = new MessageEmbed()
-						.setColor("GOLD")
+					var embed = new EmbedBuilder()
+						.setColor(15844367)
 						.addFields({
 							name:
 								`:tickets: ${format(amount)} ` +
-								Falbot.getMessage(guild, "PURCHASED"),
-							value: Falbot.getMessage(guild, "LOTTERY_COST", {
+								instance.getMessage(guild, "PURCHASED"),
+							value: instance.getMessage(guild, "LOTTERY_COST", {
 								COST: format(amount * 500),
 							}),
 						})
@@ -69,29 +65,29 @@ module.exports = {
 					})
 				} else if (amount <= 0) {
 					await interaction.editReply({
-						content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
+						content: instance.getMessage(guild, "VALOR_INVALIDO", {
 							VALUE: amount,
 						}),
 					})
 				} else {
 					await interaction.editReply({
-						content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+						content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 					})
 				}
 			} else if (type === "view") {
-				var embed = new MessageEmbed()
-					.setColor("GOLD")
+				var embed = new EmbedBuilder()
+					.setColor(15844367)
 					.addFields(
 						{
-							name: Falbot.getMessage(guild, "LOTTERY"),
-							value: Falbot.getMessage(guild, "LOTTERY_POOL", {
+							name: instance.getMessage(guild, "LOTTERY"),
+							value: instance.getMessage(guild, "LOTTERY_POOL", {
 								PRIZE: format(lotto.prize),
 							}),
 							inline: false,
 						},
 						{
 							name: "Info",
-							value: Falbot.getMessage(guild, "LOTTERY_INFO", {
+							value: instance.getMessage(guild, "LOTTERY_INFO", {
 								TIME: msToTime(lotto.nextDraw - Date.now()),
 							}),
 							inline: false,
@@ -100,9 +96,13 @@ module.exports = {
 					.setFooter({ text: "by Falcão ❤️" })
 
 				if ((await readFile(user.id, "tickets")) > 0) {
-					embed.fields[0].value += Falbot.getMessage(guild, "LOTTERY_TICKETS", {
-						TICKETS: await readFile(user.id, "tickets", true),
-					})
+					embed.data.fields[0].value += instance.getMessage(
+						guild,
+						"LOTTERY_TICKETS",
+						{
+							TICKETS: await readFile(user.id, "tickets", true),
+						}
+					)
 				}
 
 				await interaction.editReply({
@@ -111,7 +111,7 @@ module.exports = {
 			} else {
 				history = ""
 				for (winner of lotto.history) {
-					history += Falbot.getMessage(guild, "HISTORY", {
+					history += instance.getMessage(guild, "HISTORY", {
 						FALCOINS: format(winner.prize),
 						USER: winner.winner,
 						TICKETS: winner.userTickets,
@@ -119,11 +119,11 @@ module.exports = {
 					})
 				}
 
-				var embed = new MessageEmbed()
-					.setColor("GOLD")
+				var embed = new EmbedBuilder()
+					.setColor(15844367)
 					.setFooter({ text: "by Falcão ❤️" })
 					.addFields({
-						name: Falbot.getMessage(guild, "LOTTERY_WINNERS"),
+						name: instance.getMessage(guild, "LOTTERY_WINNERS"),
 						value: history,
 					})
 
@@ -134,7 +134,7 @@ module.exports = {
 		} catch (err) {
 			console.error(`lottery: ${err}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

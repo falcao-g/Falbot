@@ -1,5 +1,5 @@
 const userSchema = require("../schemas/user-schema")
-const { MessageActionRow } = require("discord.js")
+const { ActionRowBuilder } = require("discord.js")
 
 async function createUser(id) {
 	try {
@@ -212,7 +212,7 @@ function paginate() {
 			return {
 				embeds: [__embeds.at(cur)],
 				components: [
-					new MessageActionRow().addComponents(traverser[0], traverser[1]),
+					new ActionRowBuilder().addComponents(traverser[0], traverser[1]),
 				],
 				fetchReply: true,
 			}

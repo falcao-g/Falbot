@@ -10,22 +10,23 @@ const {
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Bet your money in the slot machine",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	options: [
-		{
-			name: "falcoins",
-			description:
-				'amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
-			required: true,
-			type: "STRING",
-		},
-	],
-	callback: async ({ guild, interaction, client, user, args }) => {
+	data: new SlashCommandBuilder()
+		.setName("slot")
+		.setDescription("Bet your money in the slot machine")
+		.setDMPermission(false)
+		.addStringOption((option) =>
+			option
+				.setName("falcoins")
+				.setDescription(
+					'amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setRequired(true)
+		),
+	execute: async ({ guild, interaction, client, user, args }) => {
 		try {
 			await interaction.deferReply()
 			guild = client.guilds.cache.get("742332099788275732")

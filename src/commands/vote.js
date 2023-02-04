@@ -8,12 +8,14 @@ const {
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 require("dotenv").config()
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Earn falcoins by voting for us on top.gg",
-	slash: true,
-	guildOnly: true,
 	testOnly,
+	data: new SlashCommandBuilder()
+		.setName("vote")
+		.setDescription("Earn falcoins by voting for us on top.gg")
+		.setDMPermission(false),
 	init: () => {
 		const { Falbot } = require("../../index.js")
 	},

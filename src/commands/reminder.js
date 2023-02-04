@@ -1,52 +1,53 @@
-const { MessageButton, MessageActionRow } = require("discord.js")
+const { ButtonBuilder, ActionRowBuilder } = require("discord.js")
 const { changeDB, readFile } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Toggle your vote reminder",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	callback: async ({ guild, user, interaction }) => {
+	data: new SlashCommandBuilder()
+		.setName("reminder")
+		.setDescription("Toggle your vote reminder")
+		.setDMPermission(false),
+	execute: async ({ guild, user, interaction, instance }) => {
 		try {
 			await interaction.deferReply({ ephemeral: true })
 			if ((await readFile(user.id, "voteReminder")) === false) {
 				await changeDB(user.id, "voteReminder", true, true)
 
-				const row = new MessageActionRow().addComponents(
-					new MessageButton()
+				const row = new ActionRowBuilder().addComponents(
+					new ButtonBuilder()
 						.setCustomId("disableVoteReminder")
-						.setLabel(Falbot.getMessage(guild, "DISABLE_REMINDER"))
+						.setLabel(instance.getMessage(guild, "DISABLE_REMINDER"))
 						.setEmoji("🔕")
-						.setStyle("PRIMARY")
+						.setStyle("Primary")
 				)
 
 				interaction.editReply({
-					content: Falbot.getMessage(guild, "REMINDER_ENABLED"),
+					content: instance.getMessage(guild, "REMINDER_ENABLED"),
 					components: [row],
 				})
 			} else {
 				await changeDB(user.id, "voteReminder", false, true)
 				await changeDB(user.id, "lastReminder", 0, true)
 
-				const row = new MessageActionRow().addComponents(
-					new MessageButton()
+				const row = new ActionRowBuilder().addComponents(
+					new ButtonBuilder()
 						.setCustomId("enableVoteReminder")
-						.setLabel(Falbot.getMessage(guild, "ENABLE_REMINDER"))
+						.setLabel(instance.getMessage(guild, "ENABLE_REMINDER"))
 						.setEmoji("🔔")
-						.setStyle("PRIMARY")
+						.setStyle("Primary")
 				)
 
 				interaction.editReply({
-					content: Falbot.getMessage(guild, "REMINDER_DISABLED"),
+					content: instance.getMessage(guild, "REMINDER_DISABLED"),
 					components: [row],
 				})
 			}
 		} catch (error) {
 			console.error(`reminder: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				components: [],
 			})
 		}

@@ -9,22 +9,23 @@ const {
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Play with your friend, last to survive wins",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	options: [
-		{
-			name: "falcoins",
-			description:
-				'amount of falcoins to play with (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
-			required: true,
-			type: "STRING",
-		},
-	],
-	callback: async ({ guild, interaction, client, user, args }) => {
+	data: new SlashCommandBuilder()
+		.setName("russianroulette")
+		.setDescription("Play with your friend, last to survive wins")
+		.setDMPermission(false)
+		.addStringOption((option) =>
+			option
+				.setName("falcoins")
+				.setDescription(
+					'amount of falcoins to play with (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setRequired(true)
+		),
+	execute: async ({ guild, interaction, user, args }) => {
 		try {
 			await interaction.deferReply()
 			try {

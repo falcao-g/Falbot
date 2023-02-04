@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js")
+const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require("discord.js")
 const {
 	getMember,
 	getRoleColor,
@@ -6,29 +6,31 @@ const {
 	readFile,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Shows your or another user's balance",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	options: [
-		{
-			name: "user",
-			description:
-				"the user you want to get info about, leave blank to get your balance",
-			required: false,
-			type: "USER",
-		},
-	],
-	callback: async ({ guild, member, args, interaction }) => {
+	data: new SlashCommandBuilder()
+		.setName("balance")
+		.setDescription("Shows your or another user's balance")
+		.setDMPermission(false)
+		.addUserOption((option) =>
+			option
+				.setName("user")
+				.setDescription(
+					"the user you want to get info about, leave blank to get your balance"
+				)
+				.setRequired(false)
+		),
+	execute: async ({ guild, member, interaction }) => {
 		await interaction.deferReply()
 		try {
-			const realMember = args[0] ? await getMember(guild, args[0]) : member
+			const realMember = interaction.options.getUser("user")
+				? await getMember(guild, args[0])
+				: member
 			const userFile = await readFile(realMember.user.id)
 
-			const embed = new MessageEmbed()
+			const embed = new EmbedBuilder()
 				.setTitle(
 					Falbot.getMessage(guild, userFile.rank) + " " + realMember.displayName
 				)
@@ -80,15 +82,15 @@ module.exports = {
 				)
 			}
 
-			const row = new MessageActionRow().addComponents([
-				new MessageButton()
+			const row = new ActionRowBuilder().addComponents([
+				new ButtonBuilder()
 					.setCustomId("cooldowns")
 					.setEmoji("⏱️")
-					.setStyle("SECONDARY"),
-				new MessageButton()
+					.setStyle("Secondary"),
+				new ButtonBuilder()
 					.setCustomId("help")
 					.setEmoji("📚")
-					.setStyle("SECONDARY"),
+					.setStyle("Secondary"),
 			])
 
 			await interaction.editReply({ embeds: [embed], components: [row] })

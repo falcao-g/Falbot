@@ -1,13 +1,20 @@
 const { randint, changeDB, format } = require("./utils/functions.js")
+const { Client, GatewayIntentBits, Collection } = require("discord.js")
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
 const path = require("path")
-const { language } = require("./config.json")
 require("dotenv").config()
+const mongoose = require("mongoose")
+const { loadEvents } = require("./handlers/eventHandler.js")
+const { loadCommands } = require("./handlers/commandHandler.js")
 
 class Falbot {
-	defaultLanguage = language
+	config = require("./config.json")
+	defaultLanguage = this.config.language
 	_messages = require(path.join(__dirname, "/utils/json/messages.json"))
 	_languages = new Map()
+	client = new Client({
+		intents: [GatewayIntentBits.Guilds],
+	})
 	levels = require("./utils/json/levels.json")
 	userSchema = require("./schemas/user-schema")
 	lottoSchema = require("./schemas/lotto-schema")
@@ -15,9 +22,52 @@ class Falbot {
 	langSchema = require("./schemas/lang-schema.js")
 	interestSchema = require("./schemas/interest-schema.js")
 
-	constructor(wok, client) {
-		this.wok = wok
-		this.client = client
+	constructor() {
+		this.client.on("ready", () => {
+			console.log("Bot online")
+			this.client.on("error", console.error)
+
+			try {
+				mongoose.set("strictQuery", false)
+				mongoose.connect(process.env.MONGODB_URI)
+			} catch {
+				console.log("A conexão caiu")
+				mongoose.connect(process.env.MONGODB_URI)
+			}
+
+			mongoose.connection.on("error", (err) => {
+				console.log(`Erro na conexão: ${err}`)
+				mongoose.connect(process.env.MONGODB_URI)
+			})
+
+			mongoose.connection.on("disconnected", () => {
+				console.log("A conexão caiu")
+				mongoose.connect(process.env.MONGODB_URI)
+			})
+
+			mongoose.connection.on("disconnecting", () => {
+				console.log("A conexão caiu")
+				mongoose.connect(process.env.MONGODB_URI)
+			})
+
+			mongoose.connection.on("MongoNetworkError", () => {
+				console.log("A conexão caiu")
+				mongoose.connect(process.env.MONGODB_URI)
+			})
+
+			mongoose.connection.on("MongooseServerSelectionError", () => {
+				console.log("A conexão caiu")
+				mongoose.connect(process.env.MONGODB_URI)
+			})
+
+			this.client.events = new Collection()
+			this.client.commands = new Collection()
+
+			loadEvents(this, this.client)
+			loadCommands(this.client)
+		})
+
+		this.client.login(process.env.TOKEN)
 		;(async () => {
 			const results = await this.langSchema.find()
 

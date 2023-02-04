@@ -1,31 +1,28 @@
 const { MessageEmbed } = require("discord.js")
 const { getRoleColor, readFile, changeDB } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Show the store",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	options: [
-		{
-			name: "item",
-			description: "item that you want to buy",
-			required: false,
-			type: "NUMBER",
-			choices: [
-				{ name: "crate", value: 1 },
-				{ name: "key", value: 2 },
-			],
-		},
-		{
-			name: "quantity",
-			description: "how many items you want to buy",
-			required: false,
-			type: "NUMBER",
-		},
-	],
-	callback: async ({ guild, user, args, interaction }) => {
+	data: new SlashCommandBuilder()
+		.setName("store")
+		.setDescription("Show the store")
+		.setDMPermission(false)
+		.addIntegerOption((option) =>
+			option
+				.setName("item")
+				.setDescription("item that you want to buy")
+				.setRequired(false)
+				.addChoices({ name: "crate", value: 1 }, { name: "key", value: 2 })
+		)
+		.addIntegerOption((option) =>
+			option
+				.setName("quantity")
+				.setDescription("how many items you want to buy")
+				.setRequired(false)
+		),
+	execute: async ({ guild, user, args, interaction }) => {
 		try {
 			await interaction.deferReply()
 			if (args[0] === undefined && args[1] === undefined) {

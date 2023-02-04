@@ -1,18 +1,19 @@
-const { MessageEmbed } = require("discord.js")
+const { EmbedBuilder } = require("discord.js")
 const { testOnly } = require("../config.json")
 const { msToTime } = require("../utils/functions.js")
-const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Check some bot stats",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	callback: async ({ guild, client, interaction }) => {
+	data: new SlashCommandBuilder()
+		.setName("botinfo")
+		.setDescription("Check some bot stats")
+		.setDMPermission(false),
+	execute: async ({ guild, client, interaction, instance }) => {
 		await interaction.deferReply()
 		try {
-			const embed = new MessageEmbed()
-				.setColor("NAVY")
+			const embed = new EmbedBuilder()
+				.setColor(3426654)
 				.addFields({
 					name: "Falbot info",
 					value: `**:earth_americas: Site: https://falbot.netlify.app/\n:robot: Github: https://github.com/falcao-g/Falbot\n:bird: Twitter: https://twitter.com/falb0t\n:house: ${Falbot.getMessage(
@@ -20,9 +21,9 @@ module.exports = {
 						"SERVERS"
 					)}: ${
 						client.guilds.cache.size
-					}\n:busts_in_silhouette: ${Falbot.getMessage(guild, "PLAYERS")}: ${
-						(await Falbot.userSchema.find({})).length
-					}\n:zap: ${Falbot.getMessage(guild, "UPTIME")}: ${msToTime(
+					}\n:busts_in_silhouette: ${instance.getMessage(guild, "PLAYERS")}: ${
+						(await instance.userSchema.find({})).length
+					}\n:zap: ${instance.getMessage(guild, "UPTIME")}: ${msToTime(
 						client.uptime
 					)}**`,
 				})
@@ -31,7 +32,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`botinfo: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

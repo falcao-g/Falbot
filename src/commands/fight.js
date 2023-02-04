@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js")
 const {
 	getMember,
 	specialArg,
@@ -8,39 +8,43 @@ const {
 	changeDB,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Challenge someone to a fight, win the fight and get the money",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	options: [
-		{
-			name: "user",
-			description: "the user to challenge",
-			required: true,
-			type: "USER",
-		},
-		{
-			name: "falcoins",
-			description:
-				'the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
-			required: true,
-			type: "STRING",
-		},
-	],
-	callback: async ({ guild, interaction, user, member, args }) => {
+	data: new SlashCommandBuilder()
+		.setName("fight")
+		.setDescription(
+			"Challenge someone to a fight, win the fight and get the money"
+		)
+		.setDMPermission(false)
+		.addUserOption((option) =>
+			option
+				.setName("user")
+				.setDescription("the user to challenge")
+				.setRequired(true)
+		)
+		.addStringOption((option) =>
+			option
+				.setName("falcoins")
+				.setDescription(
+					'the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setRequired(true)
+		),
+	execute: async ({ guild, interaction, user, member, instance }) => {
 		await interaction.deferReply()
 		try {
-			var member2 = await getMember(guild, args[0])
+			falcoins = interaction.options.getString("falcoins")
+			member2 = interaction.options.getUser("user")
+			var member2 = await getMember(guild, member2.id)
 			if (member2.user != user) {
 				try {
-					var bet = await specialArg(args[1], user.id, "falcoins")
+					var bet = await specialArg(falcoins, user.id, "falcoins")
 				} catch {
 					await interaction.editReply({
-						content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
-							VALUE: args[1],
+						content: instance.getMessage(guild, "VALOR_INVALIDO", {
+							VALUE: falcoins,
 						}),
 					})
 					return
@@ -50,18 +54,18 @@ module.exports = {
 					(await readFile(member2.user.id, "falcoins")) >= bet &&
 					bet > 0
 				) {
-					const row = new MessageActionRow().addComponents([
-						new MessageButton()
+					const row = new ActionRowBuilder().addComponents([
+						new ButtonBuilder()
 							.setCustomId("join")
 							.setEmoji("✅")
-							.setStyle("SUCCESS"),
-						new MessageButton()
+							.setStyle("Success"),
+						new ButtonBuilder()
 							.setCustomId("refuse")
 							.setEmoji("⛔")
-							.setStyle("DANGER"),
+							.setStyle("Danger"),
 					])
 					var answer = await interaction.editReply({
-						content: Falbot.getMessage(guild, "LUTA_CONVITE", {
+						content: instance.getMessage(guild, "LUTA_CONVITE", {
 							USER: member,
 							USER2: member2,
 							FALCOINS: format(bet),
@@ -83,13 +87,13 @@ module.exports = {
 					collector.on("end", async (collected) => {
 						if (collected.size === 0) {
 							interaction.followUp({
-								content: Falbot.getMessage(guild, "LUTA_CANCELADO_DEMOROU", {
+								content: instance.getMessage(guild, "LUTA_CANCELADO_DEMOROU", {
 									USER: member2,
 								}),
 							})
 						} else if (collected.first().customId === "refuse") {
 							interaction.followUp({
-								content: Falbot.getMessage(guild, "LUTA_CANCELADO_RECUSOU", {
+								content: instance.getMessage(guild, "LUTA_CANCELADO_RECUSOU", {
 									USER: member2,
 								}),
 							})
@@ -142,17 +146,17 @@ module.exports = {
 									const luck = randint(1, 50)
 
 									if (i === 0) {
-										var embed = new MessageEmbed().setColor(3447003)
+										var embed = new EmbedBuilder().setColor(3447003)
 										var me = 0
 										var enemy = 1
 									} else {
-										var embed = new MessageEmbed().setColor(15105570)
+										var embed = new EmbedBuilder().setColor(15105570)
 										var me = 1
 										var enemy = 0
 									}
 
 									field = {
-										name: Falbot.getMessage(guild, "TURN", {
+										name: instance.getMessage(guild, "TURN", {
 											USER: order[i]["name"],
 										}),
 										value: "",
@@ -162,19 +166,19 @@ module.exports = {
 										order[i]["stunned"] = false
 										field.value =
 											`${order[i]["mention"]} ` +
-											Falbot.getMessage(guild, "NOCAUTEADO")
+											instance.getMessage(guild, "NOCAUTEADO")
 									} else if (
 										order[enemy]["escudo"] === true &&
 										!["self", "escudo", "cura"].includes(attack)
 									) {
 										field.value =
 											`${order[i]["mention"]} ` +
-											Falbot.getMessage(guild, "TENTOU_ATACAR")
+											instance.getMessage(guild, "TENTOU_ATACAR")
 									} else if (attack === "instantâneo") {
 										order[enemy]["hp"] -= luck
 										field.value =
 											`${order[i]["mention"]} ` +
-											Falbot.getMessage(guild, "ATAQUE", {
+											instance.getMessage(guild, "ATAQUE", {
 												VALUE: luck,
 											})
 									} else if (attack === "stun") {
@@ -182,7 +186,7 @@ module.exports = {
 										order[enemy]["stunned"] = true
 										field.value =
 											`${order[i]["mention"]} ` +
-											Falbot.getMessage(guild, "ATAQUE_NOCAUTE", {
+											instance.getMessage(guild, "ATAQUE_NOCAUTE", {
 												VALUE: luck,
 											})
 									} else if (attack === "roubo de vida") {
@@ -190,28 +194,28 @@ module.exports = {
 										order[me]["hp"] += luck
 										field.value =
 											`${order[i]["mention"]} ` +
-											Falbot.getMessage(guild, "ROUBO_VIDA", {
+											instance.getMessage(guild, "ROUBO_VIDA", {
 												VALUE: luck,
 											})
 									} else if (attack === "cura") {
 										order[i]["hp"] += luck
 										field.value =
 											`${order[i]["mention"]} ` +
-											Falbot.getMessage(guild, "CURA", {
+											instance.getMessage(guild, "CURA", {
 												VALUE: luck,
 											})
 									} else if (attack === "self") {
 										order[i]["hp"] -= luck
 										field.value =
 											`${order[i]["mention"]} ` +
-											Falbot.getMessage(guild, "SELF", {
+											instance.getMessage(guild, "SELF", {
 												VALUE: luck,
 											})
 									} else if (attack === "escudo") {
 										order[i]["escudo"] = true
 										field.value =
 											`${order[i]["mention"]} ` +
-											Falbot.getMessage(guild, "SE_PROTEGE")
+											instance.getMessage(guild, "SE_PROTEGE")
 									}
 
 									embed.addFields(field)
@@ -241,7 +245,7 @@ module.exports = {
 								}
 							}
 
-							const embed2 = new MessageEmbed()
+							const embed2 = new EmbedBuilder()
 								.setColor(3066993)
 								.setFooter({ text: "by Falcão ❤️" })
 							if (order[0]["hp"] <= 0) {
@@ -250,13 +254,14 @@ module.exports = {
 								embed2.addFields(
 									{
 										name:
-											`${order[1]["name"]}` + Falbot.getMessage(guild, "GANHO"),
-										value: Falbot.getMessage(guild, "LUTA_DERROTOU", {
+											`${order[1]["name"]}` +
+											instance.getMessage(guild, "GANHO"),
+										value: instance.getMessage(guild, "LUTA_DERROTOU", {
 											USER: order[0]["mention"],
 										}),
 									},
 									{
-										name: Falbot.getMessage(guild, "SALDO_ATUAL"),
+										name: instance.getMessage(guild, "SALDO_ATUAL"),
 										value: `${await readFile(
 											order[1]["id"],
 											"falcoins",
@@ -270,13 +275,14 @@ module.exports = {
 								embed2.addFields(
 									{
 										name:
-											`${order[0]["name"]}` + Falbot.getMessage(guild, "GANHO"),
-										value: Falbot.getMessage(guild, "LUTA_DERROTOU", {
+											`${order[0]["name"]}` +
+											instance.getMessage(guild, "GANHO"),
+										value: instance.getMessage(guild, "LUTA_DERROTOU", {
 											USER: order[1]["mention"],
 										}),
 									},
 									{
-										name: Falbot.getMessage(guild, "SALDO_ATUAL"),
+										name: instance.getMessage(guild, "SALDO_ATUAL"),
 										value: `${await readFile(
 											order[0]["id"],
 											"falcoins",
@@ -292,18 +298,18 @@ module.exports = {
 					})
 				} else {
 					await interaction.editReply({
-						content: Falbot.getMessage(guild, "INSUFICIENTE_CONTAS"),
+						content: instance.getMessage(guild, "INSUFICIENTE_CONTAS"),
 					})
 				}
 			} else {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "NAO_JOGAR_SOZINHO"),
+					content: instance.getMessage(guild, "NAO_JOGAR_SOZINHO"),
 				})
 			}
 		} catch (error) {
 			console.error(`fight: ${error}`)
 			interaction.channel.send({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 			})
 		}
 	},

@@ -1,82 +1,80 @@
-const { MessageEmbed } = require("discord.js")
+const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require("discord.js")
 const { readFile, getRoleColor, msToTime } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const { MessageButton, MessageActionRow } = require("discord.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Shows your commands cooldowns",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	init: () => {
-		const { Falbot } = require("../../index.js")
-	},
-	callback: async ({ guild, user, interaction }) => {
+	data: new SlashCommandBuilder()
+		.setName("cooldowns")
+		.setDescription("Shows your commands cooldowns")
+		.setDMPermission(false),
+	execute: async ({ guild, user, interaction, instance }) => {
 		await interaction.deferReply()
 		try {
 			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
-			scratchCooldown = await Falbot.coolSchema.findById(`scratch-${user.id}`)
-			workCooldown = await Falbot.coolSchema.findById(`work-${user.id}`)
-			lotto = await Falbot.lottoSchema.findById("semanal")
-			const embed = new MessageEmbed()
+			scratchCooldown = await instance.coolSchema.findById(`scratch-${user.id}`)
+			workCooldown = await instance.coolSchema.findById(`work-${user.id}`)
+			lotto = await instance.lottoSchema.findById("semanal")
+			const embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, user.id))
 				.setFooter({ text: "by Falcão ❤️" })
-				.setTitle(Falbot.getMessage(guild, "COOLDOWNS"))
+				.setTitle(instance.getMessage(guild, "COOLDOWNS"))
 				.addFields(
 					{
-						name: ":ballot_box: " + Falbot.getMessage(guild, "VOTO"),
+						name: ":ballot_box: " + instance.getMessage(guild, "VOTO"),
 						value: `**${
 							voteCooldown < 43200000
 								? `:red_circle: ${msToTime(43200000 - voteCooldown)}`
-								: `:green_circle: ${Falbot.getMessage(guild, "PRONTO")}`
+								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name: ":slot_machine: " + Falbot.getMessage(guild, "SCRATCH"),
+						name: ":slot_machine: " + instance.getMessage(guild, "SCRATCH"),
 						value: `**${
 							scratchCooldown
 								? `:red_circle: ${msToTime(scratchCooldown["cooldown"] * 1000)}`
-								: `:green_circle: ${Falbot.getMessage(guild, "PRONTO")}`
+								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name: ":briefcase: " + Falbot.getMessage(guild, "TRABALHO"),
+						name: ":briefcase: " + instance.getMessage(guild, "TRABALHO"),
 						value: `**${
 							workCooldown
 								? `:red_circle: ${msToTime(workCooldown["cooldown"] * 1000)}`
-								: `:green_circle: ${Falbot.getMessage(guild, "PRONTO")}`
+								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name: ":loudspeaker: " + Falbot.getMessage(guild, "EVENTS"),
-						value: `**${Falbot.getMessage(
+						name: ":loudspeaker: " + instance.getMessage(guild, "EVENTS"),
+						value: `**${instance.getMessage(
 							guild,
 							"LOTTERY"
-						)}** - ${Falbot.getMessage(guild, "LOTTERY_DRAWN", {
+						)}** - ${instance.getMessage(guild, "LOTTERY_DRAWN", {
 							TIME: msToTime(lotto.nextDraw - Date.now()),
 						})}`,
 						inline: false,
 					}
 				)
 
-			const row = new MessageActionRow().addComponents([
-				new MessageButton()
+			const row = new ActionRowBuilder().addComponents([
+				new ButtonBuilder()
 					.setCustomId("vote")
 					.setEmoji("🗳️")
-					.setStyle(voteCooldown < 43200000 ? "DANGER" : "SUCCESS")
+					.setStyle(voteCooldown < 43200000 ? "Danger" : "Success")
 					.setDisabled(voteCooldown < 43200000 ? true : false),
-				new MessageButton()
+				new ButtonBuilder()
 					.setCustomId("scratch")
 					.setEmoji("🎰")
-					.setStyle(scratchCooldown ? "DANGER" : "SUCCESS")
+					.setStyle(scratchCooldown ? "Danger" : "Success")
 					.setDisabled(scratchCooldown ? true : false),
-				new MessageButton()
+				new ButtonBuilder()
 					.setCustomId("work")
 					.setEmoji("💼")
-					.setStyle(workCooldown ? "DANGER" : "SUCCESS")
+					.setStyle(workCooldown ? "Danger" : "Success")
 					.setDisabled(workCooldown ? true : false),
 			])
 
@@ -84,7 +82,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`cooldowns: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

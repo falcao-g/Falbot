@@ -9,16 +9,18 @@ const {
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const levels = require("../utils/json/levels.json")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Go to work to earn money",
-	slash: true,
-	guildOnly: true,
 	testOnly,
+	data: new SlashCommandBuilder()
+		.setName("work")
+		.setDescription("Go to work to earn money")
+		.setDMPermission(false),
 	init: () => {
 		const { Falbot } = require("../../index.js")
 	},
-	callback: async ({ interaction, guild, user }) => {
+	execute: async ({ interaction, guild, user }) => {
 		try {
 			await interaction.deferReply()
 			workCooldown = await Falbot.coolSchema.findById(`work-${user.id}`)

@@ -1,29 +1,28 @@
-const { MessageEmbed } = require("discord.js")
+const { EmbedBuilder } = require("discord.js")
 const { getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Create a little pretty poll",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	options: [
-		{
-			name: "theme",
-			description: "theme of the poll",
-			required: true,
-			type: "STRING",
-		},
-	],
-	callback: async ({ guild, interaction, user, member, text }) => {
+	data: new SlashCommandBuilder()
+		.setName("poll")
+		.setDescription("Create a little pretty poll")
+		.setDMPermission(false)
+		.addStringOption((option) =>
+			option
+				.setName("theme")
+				.setDescription("theme of the poll")
+				.setRequired(true)
+		),
+	execute: async ({ guild, interaction, user, member, instance }) => {
 		try {
 			await interaction.deferReply()
-			const embed = new MessageEmbed()
+			const embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, user.id))
-				.setDescription(text)
+				.setDescription(interaction.options.getString("theme"))
 				.setAuthor({
-					name: Falbot.getMessage(guild, "ENQUETE", {
+					name: instance.getMessage(guild, "ENQUETE", {
 						USER: member.displayName,
 					}),
 					iconURL: user.avatarURL(),
@@ -40,7 +39,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`poll: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

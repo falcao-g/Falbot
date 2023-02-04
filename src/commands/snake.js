@@ -2,13 +2,15 @@ const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js")
 const builder = require("../utils/snake-builder.js")
 const { testOnly } = require("../config.json")
 const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Play a game of snake",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	callback: async ({ guild, interaction, user }) => {
+	data: new SlashCommandBuilder()
+		.setName("snake")
+		.setDescription("Play a game of snake")
+		.setDMPermission(false),
+	execute: async ({ guild, interaction, user }) => {
 		try {
 			await interaction.deferReply()
 			const author = user

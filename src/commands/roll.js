@@ -1,38 +1,37 @@
-const { MessageEmbed } = require("discord.js")
+const { EmbedBuilder } = require("discord.js")
 const Roll = require("roll")
 const { getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Roll dice for you",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	options: [
-		{
-			name: "dice",
-			description: "dice to be rolled",
-			required: true,
-			type: "STRING",
-		},
-	],
-	callback: async ({ guild, interaction, user, text }) => {
+	data: new SlashCommandBuilder()
+		.setName("roll")
+		.setDescription("Roll dice for you")
+		.setDMPermission(false)
+		.addStringOption((option) =>
+			option
+				.setName("dice")
+				.setDescription("dice to be rolled")
+				.setRequired(true)
+		),
+	execute: async ({ guild, interaction, user, instance }) => {
 		try {
 			await interaction.deferReply()
 			const roll = new Roll()
-			text = text.replace(/\s/g, "")
+			text = interaction.options.getString("dice").replace(/\s/g, "")
 
 			if (!roll.validate(text)) {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: text,
 					}),
 				})
 			} else {
 				rolled = roll.roll(text).result.toString()
 
-				embed = new MessageEmbed()
+				embed = new EmbedBuilder()
 					.setColor(await getRoleColor(guild, user.id))
 					.addFields(
 						{
@@ -41,7 +40,7 @@ module.exports = {
 							inline: false,
 						},
 						{
-							name: Falbot.getMessage(guild, "RESULTADO"),
+							name: instance.getMessage(guild, "RESULTADO"),
 							value: `**${rolled}**`,
 							inline: false,
 						}
@@ -54,7 +53,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`roll: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

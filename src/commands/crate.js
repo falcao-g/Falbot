@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js")
+const { EmbedBuilder } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -8,30 +8,31 @@ const {
 	format,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Spend 1 key and 1 crate for a chance to get some prizes",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	options: [
-		{
-			name: "quantity",
-			description: "quantity of crates you wish to open",
-			required: true,
-			type: "NUMBER",
-		},
-	],
-	callback: async ({ guild, user, args, interaction }) => {
+	data: new SlashCommandBuilder()
+		.setName("crate")
+		.setDescription("Spend 1 key and 1 crate for a chance to get some prizes")
+		.setDMPermission(false)
+		.addIntegerOption((option) =>
+			option
+				.setName("quantity")
+				.setDescription("quantity of crates you wish to open")
+				.setMinValue(1)
+				.setRequired(true)
+		),
+	execute: async ({ guild, user, interaction, instance }) => {
 		await interaction.deferReply()
 		try {
+			crates = interaction.options.getInteger("quantity")
 			try {
-				var quantity = await specialArg(args[0], user.id, "caixas")
+				var quantity = await specialArg(crates, user.id, "caixas")
 			} catch {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
-						VALUE: args[0],
+					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+						VALUE: crates,
 					}),
 				})
 				return
@@ -54,11 +55,11 @@ module.exports = {
 				changeDB(user.id, "chaves", chaves - quantity)
 				changeDB(user.id, "caixas", caixas - quantity)
 				changeDB(user.id, "falcoins", falcoins)
-				const embed = new MessageEmbed()
+				const embed = new EmbedBuilder()
 					.setColor(await getRoleColor(guild, user.id))
 					.addFields({
-						name: Falbot.getMessage(guild, "CAIXA_TITULO", {
-							QUANTITY: args[0],
+						name: instance.getMessage(guild, "CAIXA_TITULO", {
+							QUANTITY: crates,
 						}),
 						value: `:key: ${chaves}\n:coin: ${format(
 							falcoins
@@ -68,15 +69,15 @@ module.exports = {
 				interaction.editReply({ embeds: [embed] })
 			} else {
 				interaction.editReply({
-					content: Falbot.getMessage(guild, "CAIXA_INSUFICIENTE", {
-						VALUE: args[0],
+					content: instance.getMessage(guild, "CAIXA_INSUFICIENTE", {
+						VALUE: crates,
 					}),
 				})
 			}
 		} catch (error) {
 			console.error(`crate: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

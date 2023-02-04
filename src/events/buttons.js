@@ -1,14 +1,9 @@
-const vote = require("../commands/vote")
-const scratch = require("../commands/scratch")
-const work = require("../commands/work")
-const cooldowns = require("../commands/cooldowns")
-const help = require("../commands/help")
+const { changeDB } = require("../utils/functions.js")
+const { ActionRowBuilder, ButtonBuilder } = require("discord.js")
 
-module.exports = (client) => {
-	const { changeDB } = require("../utils/functions.js")
-	const { MessageActionRow, MessageButton } = require("discord.js")
-	client.on("interactionCreate", async (interaction) => {
-		const { Falbot } = require("../../index.js")
+module.exports = {
+	name: "interactionCreate",
+	execute: async (interaction, instance, client) => {
 		try {
 			if (!interaction.isButton()) return
 
@@ -23,16 +18,16 @@ module.exports = (client) => {
 				await changeDB(interaction.user.id, "voteReminder", false, true)
 				await changeDB(interaction.user.id, "lastReminder", 0, true)
 
-				const row = new MessageActionRow().addComponents(
-					new MessageButton()
+				const row = new ActionRowBuilder().addComponents(
+					new ButtonBuilder()
 						.setCustomId("enableVoteReminder")
-						.setLabel(Falbot.getMessage(guildUser, "ENABLE_REMINDER"))
+						.setLabel(instance.getMessage(guildUser, "ENABLE_REMINDER"))
 						.setEmoji("🔔")
-						.setStyle("PRIMARY")
+						.setStyle("Primary")
 				)
 
 				interaction.editReply({
-					content: Falbot.getMessage(guildUser, "REMINDER_DISABLED"),
+					content: instance.getMessage(guildUser, "REMINDER_DISABLED"),
 					components: [row],
 				})
 			}
@@ -41,46 +36,51 @@ module.exports = (client) => {
 				await interaction.deferReply({ ephemeral: true })
 				await changeDB(interaction.user.id, "voteReminder", true, true)
 
-				const row = new MessageActionRow().addComponents(
-					new MessageButton()
+				const row = new ActionRowBuilder().addComponents(
+					new ButtonBuilder()
 						.setCustomId("disableVoteReminder")
-						.setLabel(Falbot.getMessage(guildUser, "DISABLE_REMINDER"))
+						.setLabel(instance.getMessage(guildUser, "DISABLE_REMINDER"))
 						.setEmoji("🔕")
-						.setStyle("PRIMARY")
+						.setStyle("Primary")
 				)
 
 				interaction.editReply({
-					content: Falbot.getMessage(guildUser, "REMINDER_ENABLED"),
+					content: instance.getMessage(guildUser, "REMINDER_ENABLED"),
 					components: [row],
 				})
 			}
 
 			if (interaction.customId === "vote") {
-				await vote.callback({ guild, user, interaction })
+				const vote = client.commands.get("vote")
+				await vote.execute({ guild, user, interaction, instance })
 			}
 
 			if (interaction.customId === "scratch") {
-				await scratch.callback({ guild, interaction, user })
+				const scratch = client.commands.get("scratch")
+				await scratch.execute({ guild, interaction, user, instance })
 			}
 
 			if (interaction.customId === "work") {
-				await work.callback({ interaction, guild, user })
+				const work = client.commands.get("work")
+				await work.execute({ interaction, guild, user, instance })
 			}
 
 			if (interaction.customId === "cooldowns") {
-				await cooldowns.callback({ guild, user, interaction })
+				const cooldowns = client.commands.get("cooldowns")
+				await cooldowns.execute({ guild, user, interaction, instance })
 			}
 
 			if (interaction.customId === "help") {
 				interaction.values = [null]
-				await help.callback({ guild, interaction })
+				const help = client.commands.get("help")
+				await help.execute({ guild, interaction, instance })
 			}
-		} catch {
+		} catch (error) {
 			console.error(`Buttons: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				components: [],
 			})
 		}
-	})
+	},
 }

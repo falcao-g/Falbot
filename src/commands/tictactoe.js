@@ -10,28 +10,29 @@ const {
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Challenge someone to a game of tic tac toe",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	options: [
-		{
-			name: "user",
-			description: "user to challenge",
-			required: true,
-			type: "USER",
-		},
-		{
-			name: "falcoins",
-			description:
-				'amount of falcoins to bet in the game (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
-			required: true,
-			type: "STRING",
-		},
-	],
-	callback: async ({ guild, interaction, user, args, member }) => {
+	data: new SlashCommandBuilder()
+		.setName("tictactoe")
+		.setDescription("Challenge someone to a game of tic tac toe")
+		.setDMPermission(false)
+		.addUserOption((option) =>
+			option
+				.setName("user")
+				.setDescription("user to challeng")
+				.setRequired(true)
+		)
+		.addStringOption((option) =>
+			option
+				.setName("falcoins")
+				.setDescription(
+					'amount of falcoins to bet in the game (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setRequired(true)
+		),
+	execute: async ({ guild, interaction, user, args, member }) => {
 		try {
 			await interaction.deferReply()
 			var board = new Board.default()

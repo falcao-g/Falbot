@@ -1,32 +1,31 @@
-const { MessageEmbed } = require("discord.js")
+const { EmbedBuilder } = require("discord.js")
 const math = require("mathjs")
 const { getRoleColor } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Resolve a mathematical expression",
-	slash: true,
-	guildOnly: true,
 	testOnly,
-	options: [
-		{
-			name: "expression",
-			description: "the mathematical expression to be solved",
-			required: true,
-			type: "STRING",
-		},
-	],
-	callback: async ({ interaction, guild, user, text }) => {
+	data: new SlashCommandBuilder()
+		.setName("math")
+		.setDescription("Resolve a mathematical expression")
+		.setDMPermission(false)
+		.addStringOption((option) =>
+			option
+				.setName("expression")
+				.setDescription("the mathematical expression to be solved")
+				.setRequired(true)
+		),
+	execute: async ({ interaction, guild, user, instance }) => {
 		try {
 			await interaction.deferReply()
-			text = text.replaceAll("**", "^")
+			text = interaction.options.getString("expression").replaceAll("**", "^")
 			answer = await math.evaluate(text).toString()
 
-			const embed = new MessageEmbed()
+			const embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, user.id))
 				.addFields({
-					name: Falbot.getMessage(guild, "RESULTADO"),
+					name: instance.getMessage(guild, "RESULTADO"),
 					value: answer,
 				})
 				.setFooter({ text: "by Falcão ❤️" })
@@ -35,7 +34,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`math: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}
