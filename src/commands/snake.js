@@ -1,7 +1,6 @@
-const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js")
+const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require("discord.js")
 const builder = require("../utils/snake-builder.js")
 const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
@@ -10,13 +9,13 @@ module.exports = {
 		.setName("snake")
 		.setDescription("Play a game of snake")
 		.setDMPermission(false),
-	execute: async ({ guild, interaction, user }) => {
+	execute: async ({ guild, interaction, instance, user }) => {
 		try {
 			await interaction.deferReply()
 			const author = user
 			const game = new builder.Game()
 
-			const embed = new MessageEmbed()
+			const embed = new EmbedBuilder()
 				.setTitle(":snake:")
 				.addFields(
 					{
@@ -25,33 +24,33 @@ module.exports = {
 					},
 					{
 						name: `\u200b`,
-						value: `:alarm_clock: ${game.time}s\n\n${Falbot.getMessage(
+						value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(
 							guild,
 							"SCORE"
 						)}: ${game.snake.length}`,
 					}
 				)
 				.setFooter({ text: "by Falcão ❤️" })
-				.setColor("PURPLE")
+				.setColor(10181046)
 
-			const row = new MessageActionRow()
+			const row = new ActionRowBuilder()
 			row.addComponents([
-				(up = new MessageButton()
+				(up = new ButtonBuilder()
 					.setCustomId("up")
 					.setEmoji("⬆️")
-					.setStyle("SECONDARY")),
-				(left = new MessageButton()
+					.setStyle("Secondary")),
+				(left = new ButtonBuilder()
 					.setCustomId("left")
 					.setEmoji("⬅️")
-					.setStyle("SECONDARY")),
-				(right = new MessageButton()
+					.setStyle("Secondary")),
+				(right = new ButtonBuilder()
 					.setCustomId("right")
 					.setEmoji("➡️")
-					.setStyle("SECONDARY")),
-				(down = new MessageButton()
+					.setStyle("Secondary")),
+				(down = new ButtonBuilder()
 					.setCustomId("down")
 					.setEmoji("⬇️")
-					.setStyle("SECONDARY")),
+					.setStyle("Secondary")),
 			])
 
 			var answer = await interaction.editReply({
@@ -75,13 +74,13 @@ module.exports = {
 					game.time = 30
 				}
 
-				embed.fields[0] = {
+				embed.data.fields[0] = {
 					name: "\u200b",
 					value: game.world2string(game.world, game.snake),
 				}
-				embed.fields[1] = {
+				embed.data.fields[1] = {
 					name: `\u200b`,
-					value: `:alarm_clock: ${game.time}s\n\n${Falbot.getMessage(
+					value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(
 						guild,
 						"SCORE"
 					)}: ${game.snake.length}`,
@@ -104,13 +103,13 @@ module.exports = {
 					game.snakeMovement(game.snake, "S")
 				}
 
-				embed.fields[0] = {
+				embed.data.fields[0] = {
 					name: "\u200b",
 					value: game.world2string(game.world, game.snake),
 				}
-				embed.fields[1] = {
+				embed.data.fields[1] = {
 					name: `\u200b`,
-					value: `:alarm_clock: ${game.time}s\n\n${Falbot.getMessage(
+					value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(
 						guild,
 						"SCORE"
 					)}: ${game.snake.length}`,
@@ -138,7 +137,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`snake: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 				components: [],
 			})

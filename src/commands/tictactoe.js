@@ -1,4 +1,4 @@
-const { MessageActionRow, MessageButton } = require("discord.js")
+const { ActionRowBuilder, ButtonBuilder } = require("discord.js")
 const Board = require("tictactoe-board")
 const {
 	getMember,
@@ -32,18 +32,22 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, user, args, member }) => {
+	execute: async ({ guild, interaction, user, member }) => {
 		try {
 			await interaction.deferReply()
 			var board = new Board.default()
-			const member2 = await getMember(guild, args[0])
+			const member2 = await getMember(
+				guild,
+				interaction.options.getUser("user").id
+			)
+			var falcoins = interaction.options.getString("falcoins")
 			if (member2 != member) {
 				try {
-					var bet = await specialArg(args[1], user.id, "falcoins")
+					var bet = await specialArg(falcoins, user.id, "falcoins")
 				} catch {
 					await interaction.editReply({
 						content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
-							VALUE: args[1],
+							VALUE: falcoins,
 						}),
 					})
 					return
@@ -53,15 +57,15 @@ module.exports = {
 					(await readFile(member2.user.id, "falcoins")) >= bet &&
 					bet > 0
 				) {
-					const row4 = new MessageActionRow().addComponents([
-						new MessageButton()
+					const row4 = new ActionRowBuilder().addComponents([
+						new ButtonBuilder()
 							.setCustomId("join")
 							.setEmoji("✅")
-							.setStyle("SUCCESS"),
-						new MessageButton()
+							.setStyle("Success"),
+						new ButtonBuilder()
 							.setCustomId("refuse")
 							.setEmoji("⛔")
-							.setStyle("DANGER"),
+							.setStyle("Danger"),
 					])
 					var answer = await interaction.editReply({
 						content: Falbot.getMessage(guild, "VELHA_CHAMOU", {
@@ -99,15 +103,15 @@ module.exports = {
 						} else {
 							await changeDB(member.user.id, "falcoins", -bet)
 							await changeDB(member2.user.id, "falcoins", -bet)
-							const row = new MessageActionRow()
-							const row2 = new MessageActionRow()
-							const row3 = new MessageActionRow()
+							const row = new ActionRowBuilder()
+							const row2 = new ActionRowBuilder()
+							const row3 = new ActionRowBuilder()
 
 							for (var i = 1; i < 10; i++) {
-								let button = new MessageButton()
+								let button = new ButtonBuilder()
 									.setCustomId(String(i))
 									.setLabel("\u200b")
-									.setStyle("SECONDARY")
+									.setStyle("Secondary")
 								if (i < 4) {
 									row.addComponents(button)
 								} else if (i < 7) {
@@ -161,64 +165,64 @@ module.exports = {
 								if (i.customId === "1") {
 									row.components[0].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row.components[0].setStyle("PRIMARY")
-										: row.components[0].setStyle("DANGER")
+										? row.components[0].setStyle("Primary")
+										: row.components[0].setStyle("Danger")
 									row.components[0].setDisabled(true)
 									board = board.makeMove(1, board.currentMark())
 								} else if (i.customId === "2") {
 									row.components[1].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row.components[1].setStyle("PRIMARY")
-										: row.components[1].setStyle("DANGER")
+										? row.components[1].setStyle("Primary")
+										: row.components[1].setStyle("Danger")
 									row.components[1].setDisabled(true)
 									board = board.makeMove(2, board.currentMark())
 								} else if (i.customId === "3") {
 									row.components[2].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row.components[2].setStyle("PRIMARY")
-										: row.components[2].setStyle("DANGER")
+										? row.components[2].setStyle("Primary")
+										: row.components[2].setStyle("Danger")
 									row.components[2].setDisabled(true)
 									board = board.makeMove(3, board.currentMark())
 								} else if (i.customId === "4") {
 									row2.components[0].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row2.components[0].setStyle("PRIMARY")
-										: row2.components[0].setStyle("DANGER")
+										? row2.components[0].setStyle("Primary")
+										: row2.components[0].setStyle("Danger")
 									row2.components[0].setDisabled(true)
 									board = board.makeMove(4, board.currentMark())
 								} else if (i.customId === "5") {
 									row2.components[1].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row2.components[1].setStyle("PRIMARY")
-										: row2.components[1].setStyle("DANGER")
+										? row2.components[1].setStyle("Primary")
+										: row2.components[1].setStyle("Danger")
 									row2.components[1].setDisabled(true)
 									board = board.makeMove(5, board.currentMark())
 								} else if (i.customId === "6") {
 									row2.components[2].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row2.components[2].setStyle("PRIMARY")
-										: row2.components[2].setStyle("DANGER")
+										? row2.components[2].setStyle("Primary")
+										: row2.components[2].setStyle("Danger")
 									row2.components[2].setDisabled(true)
 									board = board.makeMove(6, board.currentMark())
 								} else if (i.customId === "7") {
 									row3.components[0].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row3.components[0].setStyle("PRIMARY")
-										: row3.components[0].setStyle("DANGER")
+										? row3.components[0].setStyle("Primary")
+										: row3.components[0].setStyle("Danger")
 									row3.components[0].setDisabled(true)
 									board = board.makeMove(7, board.currentMark())
 								} else if (i.customId === "8") {
 									row3.components[1].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row3.components[1].setStyle("PRIMARY")
-										: row3.components[1].setStyle("DANGER")
+										? row3.components[1].setStyle("Primary")
+										: row3.components[1].setStyle("Danger")
 									row3.components[1].setDisabled(true)
 									board = board.makeMove(8, board.currentMark())
 								} else if (i.customId === "9") {
 									row3.components[2].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row3.components[2].setStyle("PRIMARY")
-										: row3.components[2].setStyle("DANGER")
+										? row3.components[2].setStyle("Primary")
+										: row3.components[2].setStyle("Danger")
 									row3.components[2].setDisabled(true)
 									board = board.makeMove(9, board.currentMark())
 								}

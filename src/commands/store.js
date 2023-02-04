@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js")
+const { EmbedBuilder } = require("discord.js")
 const { getRoleColor, readFile, changeDB } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
@@ -20,29 +20,32 @@ module.exports = {
 			option
 				.setName("quantity")
 				.setDescription("how many items you want to buy")
+				.setMinValue(1)
 				.setRequired(false)
 		),
-	execute: async ({ guild, user, args, interaction }) => {
+	execute: async ({ guild, user, instance, interaction }) => {
 		try {
 			await interaction.deferReply()
-			if (args[0] === undefined && args[1] === undefined) {
-				const embed = new MessageEmbed()
+			var item = interaction.options.getInteger("item")
+			var quantity = interaction.options.getInteger("quantity")
+			if (item === null && quantity === null) {
+				const embed = new EmbedBuilder()
 					.setColor(await getRoleColor(guild, user.id))
-					.setTitle(Falbot.getMessage(guild, "LOJA"))
+					.setTitle(instance.getMessage(guild, "LOJA"))
 					.addFields(
 						{
-							name: Falbot.getMessage(guild, "ITEM_1"),
-							value: Falbot.getMessage(guild, "ITEM_1_DESCRICAO"),
+							name: instance.getMessage(guild, "ITEM_1"),
+							value: instance.getMessage(guild, "ITEM_1_DESCRICAO"),
 							inline: false,
 						},
 						{
-							name: Falbot.getMessage(guild, "ITEM_2"),
-							value: Falbot.getMessage(guild, "ITEM_2_DESCRICAO"),
+							name: instance.getMessage(guild, "ITEM_2"),
+							value: instance.getMessage(guild, "ITEM_2_DESCRICAO"),
 							inline: false,
 						},
 						{
 							name: "\u200b",
-							value: Falbot.getMessage(guild, "LOJA_USO_2"),
+							value: instance.getMessage(guild, "LOJA_USO_2"),
 						}
 					)
 					.setFooter({ text: "by Falcão ❤️" })
@@ -50,29 +53,21 @@ module.exports = {
 					embeds: [embed],
 				})
 			} else {
-				item = parseInt(args[0])
-				amount = parseInt(args[1])
-				if (amount <= 0) {
-					await interaction.editReply({
-						content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
-							VALUE: args[1],
-						}),
-					})
-					return
-				}
+				item = parseInt(item)
+				amount = parseInt(quantity)
 
 				if (item === 1) {
 					if ((await readFile(user.id, "falcoins")) >= 5000 * amount) {
 						await changeDB(user.id, "falcoins", -5000 * amount)
 						await changeDB(user.id, "caixas", 1 * amount)
 						await interaction.editReply({
-							content: Falbot.getMessage(guild, "LOJA_COMPROU_CAIXA", {
+							content: instance.getMessage(guild, "LOJA_COMPROU_CAIXA", {
 								AMOUNT: amount,
 							}),
 						})
 					} else {
 						await interaction.editReply({
-							content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+							content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 						})
 					}
 				} else if (item === 2) {
@@ -80,13 +75,13 @@ module.exports = {
 						await changeDB(user.id, "falcoins", -20000 * amount)
 						await changeDB(user.id, "chaves", 1 * amount)
 						await interaction.editReply({
-							content: Falbot.getMessage(guild, "LOJA_COMPROU_CHAVE", {
+							content: instance.getMessage(guild, "LOJA_COMPROU_CHAVE", {
 								AMOUNT: amount,
 							}),
 						})
 					} else {
 						await interaction.editReply({
-							content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+							content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 						})
 					}
 				}
@@ -94,7 +89,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`store: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

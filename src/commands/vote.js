@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js")
+const { EmbedBuilder } = require("discord.js")
 const top = require("top.gg-core")
 const {
 	changeDB,
@@ -16,15 +16,12 @@ module.exports = {
 		.setName("vote")
 		.setDescription("Earn falcoins by voting for us on top.gg")
 		.setDMPermission(false),
-	init: () => {
-		const { Falbot } = require("../../index.js")
-	},
-	callback: async ({ guild, user, interaction }) => {
+	execute: async ({ guild, user, instance, interaction }) => {
 		try {
 			await interaction.deferReply()
 			const topgg = new top.Client(process.env.Authorization)
 			var rank_number = await readFile(user.id, "rank")
-			var reward = Falbot.levels[rank_number - 1].vote
+			var reward = instance.levels[rank_number - 1].vote
 			lastVote = await readFile(user.id, "lastVote")
 
 			if (Date.now() - lastVote > 1000 * 60 * 60 * 48) {
@@ -43,11 +40,11 @@ module.exports = {
 					reward +
 						reward * (((await readFile(user.id, "voteStreak")) * 5) / 100)
 				)
-				var embed = new MessageEmbed()
+				var embed = new EmbedBuilder()
 					.setColor(3066993)
 					.addFields({
-						name: Falbot.getMessage(guild, "VOTE_THANKS"),
-						value: Falbot.getMessage(guild, "VOTE_COLLECTED", {
+						name: instance.getMessage(guild, "VOTE_THANKS"),
+						value: instance.getMessage(guild, "VOTE_COLLECTED", {
 							REWARD: format(reward),
 							PERCENTAGE: (await readFile(user.id, "voteStreak")) * 5,
 						}),
@@ -57,30 +54,30 @@ module.exports = {
 				(await topgg.isVoted(user.id)) &&
 				Date.now() - lastVote < 1000 * 60 * 60 * 12
 			) {
-				var embed = new MessageEmbed()
+				var embed = new EmbedBuilder()
 					.setColor(15158332)
 					.addFields({
-						name: Falbot.getMessage(guild, "ALREADY_COLLECTED"),
-						value: Falbot.getMessage(guild, "ALREADY_COLLECTED2", {
+						name: instance.getMessage(guild, "ALREADY_COLLECTED"),
+						value: instance.getMessage(guild, "ALREADY_COLLECTED2", {
 							TIME: msToTime(1000 * 60 * 60 * 12 - (Date.now() - lastVote)),
 							REWARD: format(reward),
 						}),
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 			} else {
-				var embed = new MessageEmbed()
+				var embed = new EmbedBuilder()
 					.setColor("#0099ff")
 					.addFields({
-						name: Falbot.getMessage(guild, "VOTE_FIRST"),
-						value: Falbot.getMessage(guild, "VOTE_DESCRIPTION", {
+						name: instance.getMessage(guild, "VOTE_FIRST"),
+						value: instance.getMessage(guild, "VOTE_DESCRIPTION", {
 							FALCOINS: format(reward),
 						}),
 					})
 					.addFields({
-						name: Falbot.getMessage(guild, "VOTE_HERE"),
+						name: instance.getMessage(guild, "VOTE_HERE"),
 						value:
 							"https://top.gg/bot/742331813539872798/vote\n\n" +
-							Falbot.getMessage(guild, "VOTE_FINAL", {
+							instance.getMessage(guild, "VOTE_FINAL", {
 								PERCENTAGE: (await readFile(user.id, "voteStreak")) * 5,
 							}),
 					})
@@ -90,7 +87,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`vote: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

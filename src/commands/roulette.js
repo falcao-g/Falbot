@@ -141,25 +141,22 @@ module.exports = {
 						}
 					)
 				} else {
-					embed2
-						.setColor(15158332)
-
-						.addFields(
-							{
-								name: instance.getMessage(guild, "VOCE_PERDEU") + " :pensive:",
-								value: instance.getMessage(guild, "BOT_ROLOU") + ` **${luck}**`,
-								inline: true,
-							},
-							{
-								name: instance.getMessage(guild, "PERDAS"),
-								value: `${format(bet)} falcoins`,
-								inline: true,
-							},
-							{
-								name: instance.getMessage(guild, "SALDO_ATUAL"),
-								value: `${await readFile(user.id, "falcoins", true)} falcoins`,
-							}
-						)
+					embed2.setColor(15158332).addFields(
+						{
+							name: instance.getMessage(guild, "VOCE_PERDEU") + " :pensive:",
+							value: instance.getMessage(guild, "BOT_ROLOU") + ` **${luck}**`,
+							inline: true,
+						},
+						{
+							name: instance.getMessage(guild, "PERDAS"),
+							value: `${format(bet)} falcoins`,
+							inline: true,
+						},
+						{
+							name: instance.getMessage(guild, "SALDO_ATUAL"),
+							value: `${await readFile(user.id, "falcoins", true)} falcoins`,
+						}
+					)
 				}
 
 				await interaction.editReply({

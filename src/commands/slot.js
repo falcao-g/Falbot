@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js")
+const { EmbedBuilder } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -9,7 +9,6 @@ const {
 	pick,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
@@ -26,17 +25,18 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, client, user, args }) => {
+	execute: async ({ guild, interaction, client, instance, user }) => {
 		try {
 			await interaction.deferReply()
-			guild = client.guilds.cache.get("742332099788275732")
-			emojifoda = await guild.emojis.fetch("926953352774963310")
+			var guild = client.guilds.cache.get("742332099788275732")
+			var emojifoda = await guild.emojis.fetch("926953352774963310")
+			var falcoins = interaction.options.getString("falcoins")
 			try {
-				var bet = await specialArg(args[0], user.id, "falcoins")
+				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
-						VALUE: args[0],
+					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+						VALUE: falcoins,
 					}),
 				})
 				return
@@ -54,11 +54,11 @@ module.exports = {
 				const emoji2 = pick(choices)
 				const emoji3 = pick(choices)
 
-				const embed = new MessageEmbed()
+				const embed = new EmbedBuilder()
 					.setColor(await getRoleColor(guild, user.id))
 					.addFields({
 						name: `-------------------\n | ${emojifoda} | ${emojifoda} | ${emojifoda} |\n-------------------`,
-						value: `--- **${Falbot.getMessage(guild, "GIRANDO")}** ---`,
+						value: `--- **${instance.getMessage(guild, "GIRANDO")}** ---`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
@@ -67,13 +67,13 @@ module.exports = {
 				})
 
 				await new Promise((resolve) => setTimeout(resolve, 1500))
-				;(embed.fields[0].name = `-------------------\n | ${emoji1} | ${emojifoda} | ${emojifoda} |\n-------------------`),
+				;(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emojifoda} | ${emojifoda} |\n-------------------`),
 					await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
-				;(embed.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emojifoda} |\n-------------------`),
+				;(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emojifoda} |\n-------------------`),
 					await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
-				;(embed.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`),
+				;(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`),
 					await interaction.editReply({ embeds: [embed] })
 
 				arrayEmojis = [emoji1, emoji2, emoji3]
@@ -106,27 +106,27 @@ module.exports = {
 
 				if (profit > 0) {
 					await changeDB(user.id, "falcoins", profit)
-					var embed2 = new MessageEmbed().setColor(3066993).addFields(
+					var embed2 = new EmbedBuilder().setColor(3066993).addFields(
 						{
 							name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
-							value: `--- **${Falbot.getMessage(guild, "VOCE_GANHOU")}** ---`,
+							value: `--- **${instance.getMessage(guild, "VOCE_GANHOU")}** ---`,
 							inline: false,
 						},
 						{
-							name: Falbot.getMessage(guild, "GANHOS"),
+							name: instance.getMessage(guild, "GANHOS"),
 							value: `${format(profit)} falcoins`,
 							inline: true,
 						}
 					)
 				} else {
-					var embed2 = new MessageEmbed().setColor(15158332).addFields(
+					var embed2 = new EmbedBuilder().setColor(15158332).addFields(
 						{
 							name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
-							value: `--- **${Falbot.getMessage(guild, "VOCE_PERDEU")}** ---`,
+							value: `--- **${instance.getMessage(guild, "VOCE_PERDEU")}** ---`,
 							inline: false,
 						},
 						{
-							name: Falbot.getMessage(guild, "PERDAS"),
+							name: instance.getMessage(guild, "PERDAS"),
 							value: `${format(bet)} falcoins`,
 							inline: true,
 						}
@@ -134,7 +134,7 @@ module.exports = {
 				}
 				embed2
 					.addFields({
-						name: Falbot.getMessage(guild, "SALDO_ATUAL"),
+						name: instance.getMessage(guild, "SALDO_ATUAL"),
 						value: `${await readFile(user.id, "falcoins", true)}`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
@@ -143,13 +143,13 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {
 			console.error(`slot: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

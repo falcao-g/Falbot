@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -8,7 +8,6 @@ const {
 	getRoleColor,
 } = require("../utils/functions.js")
 const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
@@ -25,21 +24,22 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, user, args }) => {
+	execute: async ({ guild, interaction, user, instance }) => {
 		try {
 			await interaction.deferReply()
+			var falcoins = interaction.options.getString("falcoins")
 			try {
-				var bet = await specialArg(args[0], user.id, "falcoins")
+				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
 					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
-						VALUE: args[1],
+						VALUE: falcoins,
 					}),
 				})
 			}
 			if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
 				var pot = bet
-				const embed = new MessageEmbed()
+				const embed = new EmbedBuilder()
 					.setDescription(
 						Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION", {
 							USER: user,
@@ -54,11 +54,11 @@ module.exports = {
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
-				const row = new MessageActionRow().addComponents(
-					new MessageButton()
+				const row = new ActionRowBuilder().addComponents(
+					new ButtonBuilder()
 						.setCustomId("join")
 						.setEmoji("✅")
-						.setStyle("SUCCESS")
+						.setStyle("Success")
 				)
 
 				var answer = await interaction.editReply({
@@ -96,7 +96,7 @@ module.exports = {
 							BET: format(pot),
 						})
 					)
-					embed.fields[0] = {
+					embed.data.fields[0] = {
 						name: Falbot.getMessage(guild, "JOGADORES"),
 						value: `${names.join("\n")}`,
 						inline: false,
@@ -119,7 +119,7 @@ module.exports = {
 								`\n${eliminated} ${mensagens[randint(0, mensagens.length - 1)]}`
 						)
 
-						embed.fields[0] = {
+						embed.data.fields[0] = {
 							name: Falbot.getMessage(guild, "JOGADORES"),
 							value: `${names.join("\n")}`,
 							inline: false,

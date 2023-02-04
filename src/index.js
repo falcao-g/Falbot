@@ -1,6 +1,6 @@
 const { randint, changeDB, format } = require("./utils/functions.js")
 const { Client, GatewayIntentBits, Collection } = require("discord.js")
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js")
 const path = require("path")
 require("dotenv").config()
 const mongoose = require("mongoose")
@@ -133,8 +133,8 @@ class Falbot {
 					Date.now() - user.lastReminder > 1000 * 60 * 60 * 12
 				) {
 					var discordUser = await this.client.users.fetch(user._id)
-					const embed = new MessageEmbed()
-						.setColor("YELLOW")
+					const embed = new EmbedBuilder()
+						.setColor(16776960)
 						.addFields(
 							{
 								name: await this.getMessage(discordUser, "VOTE_REMINDER"),
@@ -147,12 +147,12 @@ class Falbot {
 						)
 						.setFooter({ text: "by Falcão ❤️" })
 
-					const row = new MessageActionRow().addComponents(
-						new MessageButton()
+					const row = new ActionRowBuilder().addComponents(
+						new ButtonBuilder()
 							.setCustomId("disableVoteReminder")
 							.setLabel(await this.getMessage(discordUser, "DISABLE_REMINDER"))
 							.setEmoji("🔕")
-							.setStyle("DANGER")
+							.setStyle("Danger")
 					)
 
 					await discordUser.send({
@@ -199,8 +199,8 @@ class Falbot {
 
 				var winnerUser = await this.client.users.fetch(winner.id)
 
-				const embed = new MessageEmbed()
-					.setColor("GOLD")
+				const embed = new EmbedBuilder()
+					.setColor(15844367)
 					.addFields({
 						name: await this.getMessage(winnerUser, "CONGRATULATIONS"),
 						value: await this.getMessage(winnerUser, "LOTTERY_WIN", {
