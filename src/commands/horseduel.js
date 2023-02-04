@@ -15,7 +15,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("horseduel")
 		.setDescription("Challenge other users to a horse race")
-		.setDMPermission(true)
+		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("falcoins")

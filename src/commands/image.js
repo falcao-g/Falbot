@@ -9,6 +9,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("image")
 		.setDescription("Show a random image from google based on the search query")
+		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("search")
