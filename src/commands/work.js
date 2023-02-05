@@ -42,8 +42,8 @@ module.exports = {
 			})
 			luck = randint(0, 100)
 
-			if (luck <= 20) {
-				bonus = salary * 3
+			if (luck <= 25) {
+				bonus = salary * 2
 				desc +=
 					"\n" +
 					instance.getMessage(guild, "BONUS", {

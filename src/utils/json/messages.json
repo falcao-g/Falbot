@@ -695,8 +695,8 @@
 		"english": ":black_joker: Scratch-off ticket"
 	},
 	"SCRATCH_DESCRIPTION": {
-		"portugues": ":question: Aperte o botão correto e ganhe uma **ENORME** recompensa!\n:confetti_ball: Adivinhe corretamente e ganhe até **500.000** falcoins!\n:bulb: Clique abaixo para jogar! As posições são resetadas a cada turno.",
-		"english": ":question: Hit the right button and win a **HUGE** jackpot!\n:confetti_ball: If you guess correctly you could win up to **500.000** falcoins!\n:bulb: Click below to play! Positions are reset each turn."
+		"portugues": ":question: Aperte o botão correto e ganhe uma **ENORME** recompensa!\n:confetti_ball: Adivinhe corretamente e ganhe até **300.000** falcoins!\n:bulb: Clique abaixo para jogar! As posições são resetadas a cada turno.",
+		"english": ":question: Hit the right button and win a **HUGE** jackpot!\n:confetti_ball: If you guess correctly you could win up to **300.000** falcoins!\n:bulb: Click below to play! Positions are reset each turn."
 	},
 	"SCRATCH_LOSE": {
 		"portugues": ["Droga!", "Aff!", "Ah não!", "Oof!", "Ops!", "Bah!"],

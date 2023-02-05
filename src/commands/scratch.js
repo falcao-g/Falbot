@@ -84,9 +84,9 @@ module.exports = {
 
 				if (luck === 25) {
 					//jackpot
-					amount = randint(400000, 500000)
+					amount = randint(200000, 300000)
 					await changeDB(user.id, "falcoins", amount)
-					embed.setColor("GOLD").addFields({
+					embed.setColor(15844367).addFields({
 						name: instance.getMessage(guild, "SCRATCH_PRIZE"),
 						value: `${instance.getMessage(guild, "SCRATCH_PRIZE_DESCRIPTION", {
 							FALCOINS: format(amount),
@@ -97,7 +97,7 @@ module.exports = {
 					collector.stop()
 				} else if (luck === 24) {
 					//super close
-					amount = randint(200000, 400000)
+					amount = randint(100000, 190000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(3066993).addFields({
 						name: instance.getMessage(guild, "SCRATCH_SUPER"),
@@ -110,7 +110,7 @@ module.exports = {
 					collector.stop()
 				} else if (luck === 23 || luck === 22) {
 					//pretty close
-					amount = randint(100000, 200000)
+					amount = randint(50000, 90000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(3066993).addFields({
 						name: instance.getMessage(guild, "SCRATCH_PRETTY"),
@@ -123,7 +123,7 @@ module.exports = {
 					collector.stop()
 				} else if (luck === 21 || luck === 20) {
 					//kinda close
-					amount = randint(50000, 100000)
+					amount = randint(30000, 45000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(3066993).addFields({
 						name: instance.getMessage(guild, "SCRATCH_KINDOF"),
@@ -136,7 +136,7 @@ module.exports = {
 					//not found but still a chance to win some money
 					embed.setColor(15158332)
 					if (randint(1, 100) >= 80) {
-						amount = randint(25000, 50000)
+						amount = randint(10000, 20000)
 						await changeDB(user.id, "falcoins", amount)
 						embed.addFields({
 							name: "Meh...",
