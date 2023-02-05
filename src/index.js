@@ -64,7 +64,7 @@ class Falbot {
 			this.client.commands = new Collection()
 
 			loadEvents(this, this.client)
-			loadCommands(this.client)
+			loadCommands(this, this.client)
 		})
 
 		this.client.login(process.env.TOKEN)

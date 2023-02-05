@@ -1,4 +1,6 @@
-async function loadCommands(client) {
+require("dotenv").config()
+
+async function loadCommands(instance, client) {
 	const { loadFiles } = require("../utils/fileLoader")
 
 	await client.commands.clear()
@@ -19,6 +21,20 @@ async function loadCommands(client) {
 	})
 
 	client.application.commands.set(commandsArray)
+
+	fetch(
+		`https://discordbotlist.com/api/v1/bots/${instance.config.botId}/commands`,
+		{
+			method: "POST",
+			headers: {
+				Authorization: process.env.Authorization2,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(commandsArray),
+		}
+	)
+		.then((response) => response.json())
+		.then((response) => console.log(JSON.stringify(response)))
 }
 
 module.exports = { loadCommands }
