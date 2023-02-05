@@ -5,11 +5,9 @@ const {
 	format,
 	readFile,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("balance")
 		.setDescription("Shows your or another user's balance")

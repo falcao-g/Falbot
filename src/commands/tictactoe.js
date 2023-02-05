@@ -8,12 +8,10 @@ const {
 	randint,
 	changeDB,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { Falbot } = require("../../index.js")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("tictactoe")
 		.setDescription("Challenge someone to a game of tic tac toe")

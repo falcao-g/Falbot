@@ -1,11 +1,9 @@
 const { EmbedBuilder } = require("discord.js")
 const { GOOGLE_IMG_SCRAP } = require("google-img-scrap")
 const { randint, getRoleColor } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("image")
 		.setDescription("Show a random image from google based on the search query")

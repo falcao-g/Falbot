@@ -1,4 +1,3 @@
-const { testOnly } = require("../config.json")
 const {
 	EmbedBuilder,
 	ActionRowBuilder,
@@ -7,7 +6,6 @@ const {
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("help")
 		.setDescription("Show commands help and information")

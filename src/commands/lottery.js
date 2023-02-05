@@ -5,11 +5,9 @@ const {
 	msToTime,
 	format,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("lottery")
 		.setDescription("Lottery")
@@ -20,7 +18,7 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName("buy")
-				.setDescription("Buy lottery info")
+				.setDescription("Buy lottery tickets")
 				.addIntegerOption((option) =>
 					option
 						.setName("amount")

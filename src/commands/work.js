@@ -7,11 +7,9 @@ const {
 	format,
 	msToTime,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("work")
 		.setDescription("Go to work to earn money")

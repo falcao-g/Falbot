@@ -5,11 +5,9 @@ const {
 	format,
 	takeAndGive,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("donate")
 		.setDescription("Donate x falcoins to a user")

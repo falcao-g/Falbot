@@ -7,11 +7,9 @@ const {
 	format,
 	randint,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("snakeeyes")
 		.setDescription("Roll two dice, if either of them roll a one, you win")

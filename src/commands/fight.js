@@ -7,15 +7,13 @@ const {
 	randint,
 	changeDB,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("fight")
 		.setDescription(
-			"Challenge someone to a fight, win the fight and get the money"
+			"Challenge someone to a fight, whoever wins the fight gets the money"
 		)
 		.setDMPermission(false)
 		.addUserOption((option) =>

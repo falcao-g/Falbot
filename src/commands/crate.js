@@ -7,11 +7,9 @@ const {
 	getRoleColor,
 	format,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("crate")
 		.setDescription("Spend 1 key and 1 crate for a chance to get some prizes")

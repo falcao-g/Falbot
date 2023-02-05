@@ -1,10 +1,8 @@
 const { EmbedBuilder } = require("discord.js")
 const { readFile, changeDB, format } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("ranks")
 		.setDescription("Increase you rank")

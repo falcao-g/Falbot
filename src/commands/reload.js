@@ -14,17 +14,17 @@ module.exports = {
 		.addSubcommand((options) =>
 			options.setName("commands").setDescription("reload your commands")
 		),
-	execute({ interaction, client }) {
+	execute({ interaction, instance, client }) {
 		const subCommand = interaction.options.getSubcommand()
 
 		if (subCommand === "events") {
 			for (const [key, value] of client.events) {
 				client.removeListener(`${key}`, value, true)
 			}
-			loadEvents(client)
+			loadEvents(instance, client)
 			interaction.reply({ content: "events reloaded" })
 		} else {
-			loadCommands(client)
+			loadCommands(instance, client)
 			interaction.reply({ content: "commands reloaded" })
 		}
 	},

@@ -1,10 +1,8 @@
 const { EmbedBuilder, ButtonBuilder } = require("discord.js")
 const { getMember, format, paginate } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("leaderboard")
 		.setDescription("show the global or local ranking of users")

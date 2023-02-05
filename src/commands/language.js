@@ -1,8 +1,6 @@
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("language")
 		.setDescription("Sets the language of the server or the user")

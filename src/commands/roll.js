@@ -1,11 +1,9 @@
 const { EmbedBuilder } = require("discord.js")
 const Roll = require("roll")
 const { getRoleColor } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("roll")
 		.setDescription("Roll dice for you")

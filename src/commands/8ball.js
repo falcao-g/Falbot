@@ -1,10 +1,8 @@
 const { EmbedBuilder } = require("discord.js")
 const { randint } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("8ball")
 		.setDescription("Forecast your future")

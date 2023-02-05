@@ -1,10 +1,8 @@
 const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require("discord.js")
 const builder = require("../utils/snake-builder.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("snake")
 		.setDescription("Play a game of snake")

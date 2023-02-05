@@ -7,14 +7,12 @@ const {
 	changeDB,
 	format,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("horse")
-		.setDescription("bet in what horse is going to win")
+		.setDescription("Bet in what horse is going to win")
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option

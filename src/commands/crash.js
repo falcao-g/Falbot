@@ -7,11 +7,9 @@ const {
 	changeDB,
 	format,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("crash")
 		.setDescription("Sell at the right time before the market crashes")

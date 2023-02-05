@@ -1,10 +1,8 @@
 const { EmbedBuilder } = require("discord.js")
-const { testOnly } = require("../config.json")
 const { msToTime } = require("../utils/functions.js")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("botinfo")
 		.setDescription("Check some bot stats")

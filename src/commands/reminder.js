@@ -1,10 +1,8 @@
 const { ButtonBuilder, ActionRowBuilder } = require("discord.js")
 const { changeDB, readFile } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	testOnly,
 	data: new SlashCommandBuilder()
 		.setName("reminder")
 		.setDescription("Toggle your vote reminder")
