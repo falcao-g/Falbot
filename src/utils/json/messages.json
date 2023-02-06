@@ -1,8 +1,4 @@
 {
-	"LANGUAGE_NOT_SUPPORTED": {
-		"english": "This bot does not have support for {LANGUAGE} at this time.",
-		"portugues": "Este bot não é compatível com {LANGUAGE} por enquanto."
-	},
 	"CURRENT_LANGUAGE": {
 		"english": "The current language is set to {LANGUAGE}.",
 		"portugues": "O idioma atual está definido como {LANGUAGE}."
@@ -12,40 +8,16 @@
 		"portugues": "Idioma configurado para {LANGUAGE}."
 	},
 	"BOT_OWNERS_ONLY": {
-		"english": "Only the bot owner can run this command.",
-		"portugues": "Apenas o proprietário do bot pode executar este comando."
-	},
-	"DISABLED_COMMAND": {
-		"english": "That command is currently disabled in this server.",
-		"portugues": "Este comando está atualmente desabilitado neste servidor."
-	},
-	"MISSING_PERMISSION": {
-		"english": "You must have the {PERM} permission in order to use this command.",
-		"portugues": "Você precisa ter a permissão {PERM} para utilizar este comando."
+		"english": "Only the bot developer can run this command.",
+		"portugues": "Apenas o desenvolvedor do bot pode executar este comando."
 	},
 	"COOLDOWN": {
 		"english": "You must wait {COOLDOWN} before using that command again.",
 		"portugues": "Você precisa esperar {COOLDOWN} antes de usar este comando novamente."
 	},
-	"UNKNOWN_COMMAND": {
-		"english": "Could not find command {COMMAND}!",
-		"portugues": "Não foi possível encontrar o comando {COMMAND}!"
-	},
-	"NO_DATABASE_FOUND": {
-		"english": "No database connection found!",
-		"portugues": "Conexão ao banco de dados não encontrada!"
-	},
-	"GUILD_ONLY_COMMAND": {
-		"english": "This command can only be used within a server.",
-		"portugues": "Este comando só pode ser usado em um servidor."
-	},
 	"EXCEPTION": {
 		"english": "An error occurred when running this command! This error has been reported to the developer.",
 		"portugues": "Ocorreu um erro ao executar este comando! Este erro foi relatado ao desenvolvedor."
-	},
-	"INVALID_SLASH_COMMAND": {
-		"english": "This slash command is not properly registered.",
-		"portugues": "Este comando de barra não está registrado corretamente."
 	},
 	"NUMEROS": {
 		"portugues": "Números",
