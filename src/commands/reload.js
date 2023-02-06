@@ -22,10 +22,10 @@ module.exports = {
 				client.removeListener(`${key}`, value, true)
 			}
 			loadEvents(instance, client)
-			interaction.reply({ content: "events reloaded" })
+			interaction.reply({ content: "events reloaded", ephemeral: true })
 		} else {
 			loadCommands(instance, client)
-			interaction.reply({ content: "commands reloaded" })
+			interaction.reply({ content: "commands reloaded", ephemeral: true })
 		}
 	},
 }

@@ -7,15 +7,23 @@ module.exports = {
 		)
 			return
 
+		if (interaction.guild) {
+			var guildUser = interaction.guild
+		} else {
+			var guildUser = interaction.user
+		}
+
 		const command = client.commands.get(interaction.commandName)
-		if (!command)
-			return interaction.reply({ content: "This command fucking died" })
 
 		if (
 			command.developer &&
 			!instance.config.devs.includes(interaction.user.id)
-		)
-			return interaction.reply({ content: "DENIED" })
+		) {
+			return interaction.reply({
+				content: instance.getMessage(guildUser, "BOT_OWNERS_ONLY"),
+				ephemeral: true,
+			})
+		}
 
 		command.execute({
 			interaction,
