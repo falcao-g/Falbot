@@ -73,7 +73,7 @@ module.exports = {
 				}
 			} else if (type === "view") {
 				var rank_number = await readFile(user.id, "rank")
-				if (rank_number === 16) {
+				if (levels[rank_number + 1].falcoinsToLevelUp === undefined) {
 					await interaction.editReply({
 						content: instance.getMessage(guild, "MAX_RANK", {
 							USER: user,
@@ -82,7 +82,7 @@ module.exports = {
 					return
 				}
 
-				quantity = 16 - rank_number
+				quantity = levels.length - rank_number
 				if (quantity > 3) {
 					quantity = 3
 				}
