@@ -790,6 +790,10 @@
 		"portugues": "Trabalhar",
 		"english": "Work"
 	},
+	"MATH_ERROR": {
+		"portugues": "Desculpa, mas eu não sei como calcular isso no momemnto",
+		"english": "Sorry, I can't calculate this at the moment"
+	},
 	"1": {
 		"portugues": ":potato: Plebeu",
 		"english": ":potato: Peasent"

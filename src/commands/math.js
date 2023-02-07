@@ -13,6 +13,7 @@ module.exports = {
 				.setName("expression")
 				.setDescription("the mathematical expression to be solved")
 				.setRequired(true)
+				.setAutocomplete(true)
 		),
 	execute: async ({ interaction, guild, user, instance }) => {
 		try {
@@ -32,9 +33,27 @@ module.exports = {
 		} catch (error) {
 			console.error(`math: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "MATH_ERROR"),
 				embeds: [],
 			})
+		}
+	},
+	autocomplete: async ({ interaction, instance }) => {
+		const focusedValue = interaction.options.getFocused().replaceAll("**", "^")
+		try {
+			await interaction.respond([
+				{
+					name: `= ${await math.evaluate(focusedValue)}`,
+					value: await math.evaluate(focusedValue).toString(),
+				},
+			])
+		} catch {
+			await interaction.respond([
+				{
+					name: instance.getMessage(interaction.guild, "MATH_ERROR"),
+					value: focusedValue,
+				},
+			])
 		}
 	},
 }
