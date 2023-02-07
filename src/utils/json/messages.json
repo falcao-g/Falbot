@@ -843,15 +843,27 @@
 		"english": ":crystal_ball: Magistrate"
 	},
 	"14": {
+		"portugues": ":robot: Expert",
+		"english": ":robot: Expert"
+	},
+	"15": {
 		"portugues": ":vulcan: Coronel",
 		"english": ":vulcan: Colonel"
 	},
-	"15": {
+	"16": {
 		"portugues": ":paperclip: Comandante",
 		"english": ":paperclip: Commander"
 	},
-	"16": {
+	"17": {
 		"portugues": ":cherry_blossom: Flor",
 		"english": ":cherry_blossom: Flower"
+	},
+	"18": {
+		"portugues": ":crossed_swords: Cavaleiro",
+		"english": ":crossed_swords: Knight"
+	},
+	"19": {
+		"portugues": ":telescope: Supervisor",
+		"english": ":telescope: Overseer"
 	}
 }
