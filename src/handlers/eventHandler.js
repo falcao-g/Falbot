@@ -8,7 +8,6 @@ async function loadEvents(instance, client) {
 	Files.forEach((file) => {
 		const event = require(file)
 
-		//pass the falbot class here somehow
 		const execute = (...args) => event.execute(...args, instance, client)
 		client.events.set(event.name, execute)
 
