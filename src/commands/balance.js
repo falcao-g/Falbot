@@ -10,22 +10,31 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("balance")
+		.setNameLocalization("pt-BR", "conta")
 		.setDescription("Shows your or another user's balance")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Mostra a sua conta ou a de outro usuário"
+		)
 		.setDMPermission(false)
 		.addUserOption((option) =>
 			option
 				.setName("user")
+				.setNameLocalization("pt-BR", "usuário")
 				.setDescription(
 					"the user you want to get info about, leave blank to get your balance"
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					"o usuário que você deseja ver a conta, deixe vazio para ver a sua"
 				)
 				.setRequired(false)
 		),
 	execute: async ({ guild, member, interaction }) => {
 		await interaction.deferReply()
 		try {
-			const realMember = interaction.options.getUser("user")
-				? await getMember(guild, args[0])
-				: member
+			user = interaction.options.getUser("user")
+			const realMember = user ? await getMember(guild, user.id) : member
 			const userFile = await readFile(realMember.user.id)
 
 			const embed = new EmbedBuilder()

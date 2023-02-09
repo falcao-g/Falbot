@@ -5,12 +5,19 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("8ball")
+		.setNameLocalization("pt-BR", "bola8")
 		.setDescription("Forecast your future")
+		.setDescriptionLocalization("pt-BR", "Preveja seu futuro")
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("question")
+				.setNameLocalization("pt-BR", "pergunta")
 				.setDescription("the question you want to ask the 8ball")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"a pergunta que a bola8 deve responder"
+				)
 				.setRequired(true)
 		),
 	execute: async ({ interaction, guild, instance }) => {

@@ -6,6 +6,10 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("cooldowns")
 		.setDescription("Shows your commands cooldowns")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Veja o tempo que falta para poder usar certos comandos"
+		)
 		.setDMPermission(false),
 	execute: async ({ guild, user, interaction, instance }) => {
 		await interaction.deferReply()

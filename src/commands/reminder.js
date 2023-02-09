@@ -5,7 +5,9 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("reminder")
+		.setNameLocalization("pt-BR", "lembrete")
 		.setDescription("Toggle your vote reminder")
+		.setDescriptionLocalization("pt-BR", "Liga/desliga seu lembrete para votar")
 		.setDMPermission(false),
 	execute: async ({ guild, user, interaction, instance }) => {
 		try {

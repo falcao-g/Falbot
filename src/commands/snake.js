@@ -5,7 +5,9 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("snake")
+		.setNameLocalization("pt-BR", "cobrinha")
 		.setDescription("Play a game of snake")
+		.setDescriptionLocalization("pt-BR", "Jogue o jogo da cobrinha")
 		.setDMPermission(false),
 	execute: async ({ guild, interaction, instance, user }) => {
 		try {

@@ -13,13 +13,19 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("slot")
-		.setDescription("Bet your money in the slot machine")
+		.setNameLocalization("pt-BR", "níquel")
+		.setDescription("Bet your falcoins in the slot machine")
+		.setDescriptionLocalization("pt-BR", "Aposte falcoins no caça-níquel")
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("falcoins")
 				.setDescription(
 					'amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
 				.setRequired(true)
 		),

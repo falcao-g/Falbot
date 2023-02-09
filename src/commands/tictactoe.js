@@ -14,12 +14,19 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("tictactoe")
+		.setNameLocalization("pt-BR", "velha")
 		.setDescription("Challenge someone to a game of tic tac toe")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Desafie outro usuário para um jogo da velha"
+		)
 		.setDMPermission(false)
 		.addUserOption((option) =>
 			option
 				.setName("user")
-				.setDescription("user to challeng")
+				.setNameLocalization("pt-BR", "usuário")
+				.setDescription("user to challenge")
+				.setDescriptionLocalization("pt-BR", "usuário para desafiar")
 				.setRequired(true)
 		)
 		.addStringOption((option) =>
@@ -27,6 +34,10 @@ module.exports = {
 				.setName("falcoins")
 				.setDescription(
 					'amount of falcoins to bet in the game (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
 				.setRequired(true)
 		),

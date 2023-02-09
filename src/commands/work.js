@@ -12,7 +12,9 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("work")
-		.setDescription("Go to work to earn money")
+		.setNameLocalization("pt-BR", "trabalhar")
+		.setDescription("Go to work to earn falcoins")
+		.setDescriptionLocalization("pt-BR", "Vá trabalhar para ganhar falcoins")
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, guild, user }) => {
 		try {

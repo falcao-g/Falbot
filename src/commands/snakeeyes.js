@@ -12,13 +12,22 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("snakeeyes")
+		.setNameLocalization("pt-BR", "olhoscobra")
 		.setDescription("Roll two dice, if either of them roll a one, you win")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Role dois dados, se algum dos dois der 1, você ganha"
+		)
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("falcoins")
 				.setDescription(
 					'amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
 				.setRequired(true)
 		),

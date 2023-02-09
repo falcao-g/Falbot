@@ -12,7 +12,12 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("vote")
+		.setNameLocalization("pt-BR", "voto")
 		.setDescription("Earn falcoins by voting for us on top.gg")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Ganhe falcois votando no bot no top.gg"
+		)
 		.setDMPermission(false),
 	execute: async ({ guild, user, instance, interaction }) => {
 		try {

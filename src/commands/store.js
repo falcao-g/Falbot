@@ -5,19 +5,27 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("store")
+		.setNameLocalization("pt-BR", "loja")
 		.setDescription("Show the store")
+		.setDescriptionLocalization("pt-BR", "Mostra a loja")
 		.setDMPermission(false)
 		.addIntegerOption((option) =>
 			option
 				.setName("item")
 				.setDescription("item that you want to buy")
+				.setDescriptionLocalization("pt-BR", "item que você quer comprar")
 				.setRequired(false)
 				.addChoices({ name: "crate", value: 1 }, { name: "key", value: 2 })
 		)
 		.addIntegerOption((option) =>
 			option
 				.setName("quantity")
+				.setNameLocalization("pt-BR", "quantidade")
 				.setDescription("how many items you want to buy")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"a quantidade de items que você quer comprar"
+				)
 				.setMinValue(1)
 				.setRequired(false)
 		),

@@ -10,19 +10,32 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("lottery")
+		.setNameLocalization("pt-BR", "loteria")
 		.setDescription("Lottery")
+		.setDescriptionLocalization("pt-BR", "Loteria")
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
-			subcommand.setName("view").setDescription("View lottery info")
+			subcommand
+				.setName("view")
+				.setNameLocalization("pt-BR", "ver")
+				.setDescription("View lottery info")
+				.setDescriptionLocalization("pt-BR", "Veja as informações da loteria")
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName("buy")
+				.setNameLocalization("pt-BR", "comprar")
 				.setDescription("Buy lottery tickets")
+				.setDescriptionLocalization("pt-BR", "Compre bilhetes de loteria")
 				.addIntegerOption((option) =>
 					option
 						.setName("amount")
-						.setDescription("Amount of lottery tickets to buy")
+						.setNameLocalization("pt-BR", "quantidade")
+						.setDescription("amount of lottery tickets to buy")
+						.setDescriptionLocalization(
+							"pt-BR",
+							"quantidade de bilhetes para comprar"
+						)
 						.setMinValue(1)
 						.setRequired(true)
 				)
@@ -30,7 +43,12 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName("history")
+				.setNameLocalization("pt-BR", "histórico")
 				.setDescription("See the last 10 winners of the lottery")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"Veja os 10 últimos gahnadores da loteria"
+				)
 		),
 	execute: async ({ guild, user, interaction, instance }) => {
 		try {

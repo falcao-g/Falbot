@@ -12,13 +12,23 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("horse")
+		.setNameLocalization("pt-BR", "cavalo")
 		.setDescription("Bet in what horse is going to win")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Aposte em qual cavalo é o mais rápido"
+		)
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("horse")
+				.setNameLocalization("pt-BR", "cavalo")
 				.setDescription(
 					"number of the horse you want to bet in, order is top to bottom"
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					"número do cavalo que você vai apostar"
 				)
 				.setRequired(true)
 				.addChoices(

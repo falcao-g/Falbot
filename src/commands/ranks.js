@@ -8,13 +8,24 @@ module.exports = {
 		.setDescription("Increase you rank")
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
-			subcommand.setName("rankup").setDescription("Increase you rank")
+			subcommand
+				.setName("rankup")
+				.setDescription("Increase you rank")
+				.setDescriptionLocalization("pt-BR", "Suba de rank")
 		)
 		.addSubcommand((subcommand) =>
-			subcommand.setName("view").setDescription("View upcoming ranks")
+			subcommand
+				.setName("view")
+				.setNameLocalization("pt-BR", "ver")
+				.setDescription("View upcoming ranks")
+				.setDescriptionLocalization("pt-BR", "Veja os próximos ranks")
 		)
 		.addSubcommand((subcommand) =>
-			subcommand.setName("all").setDescription("View all ranks")
+			subcommand
+				.setName("all")
+				.setNameLocalization("pt-BR", "todos")
+				.setDescription("View all ranks")
+				.setDescriptionLocalization("pt-BR", "Veja todos os ranks")
 		),
 	execute: async ({ guild, user, interaction, instance }) => {
 		try {

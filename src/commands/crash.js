@@ -12,13 +12,22 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("crash")
+		.setNameLocalization("pt-BR", "colapso")
 		.setDescription("Sell at the right time before the market crashes")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Venda no momento certo antes que o mercado colapse"
+		)
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("falcoins")
 				.setDescription(
 					'the amount of falcoins you want to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
 				.setRequired(true)
 		),

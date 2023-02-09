@@ -8,6 +8,7 @@ const {
 module.exports = {
 	data: new ContextMenuCommandBuilder()
 		.setName("See user's balance")
+		.setNameLocalization("pt-BR", "Ver a conta do usuário")
 		.setType(ApplicationCommandType.User)
 		.setDMPermission(false),
 	execute: async ({ guild, interaction }) => {

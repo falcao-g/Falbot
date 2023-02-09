@@ -12,13 +12,22 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("horseduel")
-		.setDescription("Challenge other users to a horse race")
+		.setNameLocalization("pt-BR", "corrida")
+		.setDescription("Starts a horse race that other users can join")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Inicie uma corrida de cavalos que outros usuários podem participar"
+		)
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("falcoins")
 				.setDescription(
 					'the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
 				.setRequired(true)
 		),

@@ -12,26 +12,73 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("roulette")
+		.setNameLocalization("pt-BR", "roleta")
 		.setDescription("Bet on the roulette")
+		.setDescriptionLocalization("pt-BR", "Aposte na roleta")
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("type")
+				.setNameLocalization("pt-BR", "tipo")
 				.setDescription(
 					"the columns have a 2-1 payout ratio, the green has a 35-1 (only one number) and the rest have a 1-1"
 				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					"as colunas tem uma taxa de retorno de 2-1, o verde é 35-1 (só um número) e o resto 1-1"
+				)
 				.setRequired(true)
 				.addChoices(
-					{ name: "black", value: "black" },
-					{ name: "red", value: "red" },
-					{ name: "green", value: "green" },
-					{ name: "high", value: "high" },
-					{ name: "low", value: "low" },
-					{ name: "even", value: "even" },
-					{ name: "odd", value: "odd" },
-					{ name: "1st column", value: "first" },
-					{ name: "2nd column", value: "second" },
-					{ name: "3rd column", value: "third" }
+					{
+						name: "black",
+						name_localizations: { "pt-BR": "preto" },
+						value: "black",
+					},
+					{
+						name: "red",
+						name_localizations: { "pt-BR": "vermelho" },
+						value: "red",
+					},
+					{
+						name: "green",
+						name_localizations: { "pt-BR": "verde" },
+						value: "green",
+					},
+					{
+						name: "high",
+						name_localizations: { "pt-BR": "altos" },
+						value: "high",
+					},
+					{
+						name: "low",
+						name_localizations: { "pt-BR": "baixos" },
+						value: "low",
+					},
+					{
+						name: "even",
+						name_localizations: { "pt-BR": "par" },
+						value: "even",
+					},
+					{
+						name: "odd",
+						name_localizations: { "pt-BR": "ímpar" },
+						value: "odd",
+					},
+					{
+						name: "1st column",
+						name_localizations: { "pt-BR": "1ª coluna" },
+						value: "first",
+					},
+					{
+						name: "2nd column",
+						name_localizations: { "pt-BR": "2ª coluna" },
+						value: "second",
+					},
+					{
+						name: "3rd column",
+						name_localizations: { "pt-BR": "3ª coluna" },
+						value: "third",
+					}
 				)
 		)
 		.addStringOption((option) =>
@@ -39,6 +86,10 @@ module.exports = {
 				.setName("falcoins")
 				.setDescription(
 					'amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
 				.setRequired(true)
 		),

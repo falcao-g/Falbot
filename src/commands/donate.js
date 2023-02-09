@@ -10,12 +10,16 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("donate")
+		.setNameLocalization("pt-BR", "doar")
 		.setDescription("Donate x falcoins to a user")
+		.setDescriptionLocalization("pt-BR", "Doe x falcoins para outro usuário")
 		.setDMPermission(false)
 		.addUserOption((option) =>
 			option
 				.setName("user")
+				.setNameLocalization("pt-BR", "usuário")
 				.setDescription("user to donate to")
+				.setDescriptionLocalization("pt-BR", "quem vai receber a doação")
 				.setRequired(true)
 		)
 		.addStringOption((option) =>
@@ -23,6 +27,10 @@ module.exports = {
 				.setName("falcoins")
 				.setDescription(
 					'amount of falcoins to donate (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
 				.setRequired(true)
 		),

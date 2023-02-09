@@ -12,13 +12,24 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("russianroulette")
-		.setDescription("Play with other users, last to survive wins all the money")
+		.setNameLocalization("pt-BR", "roletarussa")
+		.setDescription(
+			"Play with other users, last to survive wins all the falcoins"
+		)
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Jogue roleta russa com outros usuários, o sovrevivente leva os falcoins"
+		)
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("falcoins")
 				.setDescription(
 					'amount of falcoins to play with (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
 				.setRequired(true)
 		),

@@ -6,11 +6,17 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("image")
-		.setDescription("Show a random image from google based on the search query")
+		.setNameLocalization("pt-BR", "imagem")
+		.setDescription("Show a imagem from google photos based on your search")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Mostra uma imagem do google fotos de acordo com a sua pesquisa"
+		)
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("search")
+				.setNameLocalization("pt-BR", "pesquisa")
 				.setDescription("the search query")
 				.setRequired(true)
 		),

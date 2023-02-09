@@ -3,12 +3,22 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("language")
+		.setNameLocalization("pt-BR", "idioma")
 		.setDescription("Sets the language of the server or the user")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Configura o idioma do server ou do usuário"
+		)
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.addStringOption((option) =>
 			option
 				.setName("language")
+				.setNameLocalization("pt-BR", "idioma")
 				.setDescription("the desired language of the server or the user")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"o idioma desejado para o servidor ou usuário"
+				)
 				.setRequired(false)
 				.addChoices(
 					{ name: "português", value: "portugues" },

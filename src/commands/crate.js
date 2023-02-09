@@ -12,12 +12,22 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("crate")
+		.setNameLocalization("pt-BR", "caixa")
 		.setDescription("Spend 1 key and 1 crate for a chance to get some prizes")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Gaste 1 chave e caixa para ter a chance de ganhar prêmios"
+		)
 		.setDMPermission(false)
 		.addIntegerOption((option) =>
 			option
 				.setName("quantity")
+				.setNameLocalization("pt-BR", "quantidade")
 				.setDescription("quantity of crates you wish to open")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"quantidade de caixas que você quer abrir"
+				)
 				.setMinValue(1)
 				.setRequired(true)
 		),

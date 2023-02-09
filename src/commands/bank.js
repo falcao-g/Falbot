@@ -11,19 +11,30 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("bank")
+		.setNameLocalization("pt-BR", "banco")
 		.setDescription(
 			"Deposit or withdraw your falcoins from the bank, falcoins in the bank increases daily"
+		)
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Deposite ou saque falcoins do banco, falcoins no banco aumenta diariamente"
 		)
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName("deposit")
-				.setDescription("deposit falcoins to the bank")
+				.setNameLocalization("pt-BR", "depositar")
+				.setDescription("Deposit falcoins to the bank")
+				.setDescriptionLocalization("pt-BR", "Deposite falcoins no banco")
 				.addStringOption((option) =>
 					option
 						.setName("falcoins")
 						.setDescription(
 							'the amount of falcoins to deposit (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+						)
+						.setDescriptionLocalization(
+							"pt-BR",
+							'a quantidade de falcoins para depositar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 						)
 						.setRequired(true)
 				)
@@ -31,12 +42,18 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName("withdraw")
-				.setDescription("withdraw falcoins to the bank")
+				.setNameLocalization("pt-BR", "sacar")
+				.setDescription("Withdraw falcoins to the bank")
+				.setDescriptionLocalization("pt-BR", "Saque falcoins do banco")
 				.addStringOption((option) =>
 					option
 						.setName("falcoins")
 						.setDescription(
-							'the amount of falcoins to deposit (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+							'the amount of falcoins to withdraw (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+						)
+						.setDescriptionLocalization(
+							"pt-BR",
+							'a quantidade de falcoins para sacar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 						)
 						.setRequired(true)
 				)
@@ -44,7 +61,12 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName("view")
-				.setDescription("view bank balance and other useful stats")
+				.setNameLocalization("pt-BR", "ver")
+				.setDescription("View bank balance and other useful stats")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"Veja o saldo bancário e outras informações"
+				)
 		),
 	execute: async ({ guild, user, interaction, instance }) => {
 		await interaction.deferReply()

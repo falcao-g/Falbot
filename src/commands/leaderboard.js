@@ -5,19 +5,37 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("leaderboard")
-		.setDescription("show the global or local ranking of users")
+		.setNameLocalization("pt-BR", "classificação")
+		.setDescription("Show the global or local ranking of users")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Mostra a classicação global ou local de usuários"
+		)
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName("falcoins")
 				.setDescription("View users ranked by falcoins")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"Veja a classificação de usuários por falcoins"
+				)
 				.addStringOption((option) =>
 					option
 						.setName("type")
-						.setDescription("server or global")
+						.setNameLocalization("pt-BR", "tipo")
+						.setDescription("leaderboard of the server or global")
+						.setDescriptionLocalization(
+							"pt-BR",
+							"classificação do servidor ou global"
+						)
 						.setRequired(true)
 						.addChoices(
-							{ name: "server", value: "server" },
+							{
+								name: "server",
+								name_localizations: { "pt-BR": "servidor" },
+								value: "server",
+							},
 							{ name: "global", value: "global" }
 						)
 				)
@@ -26,13 +44,26 @@ module.exports = {
 			subcommand
 				.setName("rank")
 				.setDescription("View users ranked by ranks")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"Veja a classificação de usuários por rank"
+				)
 				.addStringOption((option) =>
 					option
 						.setName("type")
-						.setDescription("server or global")
+						.setNameLocalization("pt-BR", "tipo")
+						.setDescription("leaderboard of the server or global")
+						.setDescriptionLocalization(
+							"pt-BR",
+							"classificação do servidor ou global"
+						)
 						.setRequired(true)
 						.addChoices(
-							{ name: "server", value: "server" },
+							{
+								name: "server",
+								name_localizations: { "pt-BR": "servidor" },
+								value: "server",
+							},
 							{ name: "global", value: "global" }
 						)
 				)
@@ -40,14 +71,28 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName("wins")
+				.setNameLocalization("pt-BR", "vitórias")
 				.setDescription("View users ranked by wins")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"Veja a classificação de usuários por vitórias"
+				)
 				.addStringOption((option) =>
 					option
 						.setName("type")
-						.setDescription("server or global")
+						.setNameLocalization("pt-BR", "tipo")
+						.setDescription("leaderboard of the server or global")
+						.setDescriptionLocalization(
+							"pt-BR",
+							"classificação do servidor ou global"
+						)
 						.setRequired(true)
 						.addChoices(
-							{ name: "server", value: "server" },
+							{
+								name: "server",
+								name_localizations: { "pt-BR": "servidor" },
+								value: "server",
+							},
 							{ name: "global", value: "global" }
 						)
 				)

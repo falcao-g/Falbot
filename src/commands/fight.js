@@ -12,14 +12,21 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("fight")
+		.setNameLocalization("pt-BR", "luta")
 		.setDescription(
-			"Challenge someone to a fight, whoever wins the fight gets the money"
+			"Challenge someone to a fight, whoever wins the fight gets all falcoins bet"
+		)
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Desafie outro usuário para uma luta, quem ganhar leva todos os falcoins apostados"
 		)
 		.setDMPermission(false)
 		.addUserOption((option) =>
 			option
 				.setName("user")
+				.setNameLocalization("pt-BR", "usuário")
 				.setDescription("the user to challenge")
+				.setDescriptionLocalization("pt-BR", "quem você quer desafiar")
 				.setRequired(true)
 		)
 		.addStringOption((option) =>
@@ -27,6 +34,10 @@ module.exports = {
 				.setName("falcoins")
 				.setDescription(
 					'the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
 				.setRequired(true)
 		),

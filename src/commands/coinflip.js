@@ -4,14 +4,18 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("coinflip")
+		.setNameLocalization("pt-BR", "girarmoeda")
 		.setDescription("Flip a coin")
+		.setDescriptionLocalization("pt-BR", "Jogue cara ou coroa")
 		.setDMPermission(false)
 		.addIntegerOption((option) =>
 			option
 				.setName("quantity")
+				.setNameLocalization("pt-BR", "quantidade")
 				.setDescription("quantity of coins to flip")
+				.setDescriptionLocalization("pt-BR", "quantidade de moedas para girar")
 				.setMinValue(1)
-				.setRequired(false)
+				.setRequired(true)
 		),
 	execute: async ({ guild, interaction }) => {
 		await interaction.deferReply()

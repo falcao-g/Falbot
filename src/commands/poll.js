@@ -5,12 +5,16 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("poll")
+		.setNameLocalization("pt-BR", "enquete")
 		.setDescription("Create a little pretty poll")
+		.setDescriptionLocalization("pt-BR", "Crie uma bonita pequena enquete")
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("theme")
+				.setNameLocalization("pt-BR", "tema")
 				.setDescription("theme of the poll")
+				.setDescriptionLocalization("pt-BR", "tema da enquete")
 				.setRequired(true)
 		),
 	execute: async ({ guild, interaction, user, member, instance }) => {

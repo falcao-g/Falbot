@@ -8,21 +8,55 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("help")
+		.setNameLocalization("pt-BR", "ajuda")
 		.setDescription("Show commands help and information")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Mostra informações sobre os comandos e sistemas do bot"
+		)
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("page")
-				.setDescription("Which help page you want to see")
+				.setNameLocalization("pt-BR", "página")
+				.setDescription("which help page you want to see")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"qual página de ajuda você quer ver"
+				)
 				.setRequired(false)
 				.addChoices(
-					{ name: "💠 introduction", value: "introduction" },
-					{ name: "📚 allcommands", value: "allcommands" },
+					{
+						name: "💠 introduction",
+						name_localizations: { "pt-BR": "💠 introdução" },
+						value: "introduction",
+					},
+					{
+						name: "📚 all commands",
+						name_localizations: { "pt-BR": "📚 todos os comandos" },
+						value: "allcommands",
+					},
 					{ name: "📈 ranks", value: "ranks" },
-					{ name: "💸 economy", value: "economy" },
-					{ name: "🎉 fun", value: "fun" },
-					{ name: "🌎 language", value: "language" },
-					{ name: "📝 utils", value: "utils" }
+					{
+						name: "💸 economy",
+						name_localizations: { "pt-BR": "💸 economia" },
+						value: "economy",
+					},
+					{
+						name: "🎉 fun",
+						name_localizations: { "pt-BR": "🎉 diversão" },
+						value: "fun",
+					},
+					{
+						name: "🌎 languages",
+						name_localizations: { "pt-BR": "🌎 idiomas" },
+						value: "language",
+					},
+					{
+						name: "📝 utils",
+						name_localizations: { "pt-BR": "📝 úteis" },
+						value: "utils",
+					}
 				)
 		),
 	execute: async ({ guild, interaction, instance }) => {

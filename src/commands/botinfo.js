@@ -6,6 +6,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("botinfo")
 		.setDescription("Check some bot stats")
+		.setDescriptionLocalization("pt-BR", "Veja informações úteis sobre o bot")
 		.setDMPermission(false),
 	execute: async ({ guild, client, interaction, instance }) => {
 		await interaction.deferReply()

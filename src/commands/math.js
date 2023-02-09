@@ -6,12 +6,19 @@ const { SlashCommandBuilder } = require("discord.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("math")
+		.setNameLocalization("pt-BR", "mat")
 		.setDescription("Resolve a mathematical expression")
+		.setDescriptionLocalization("pt-BR", "Calcule uma expressão matemática")
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("expression")
+				.setNameLocalization("pt-BR", "expressão")
 				.setDescription("the mathematical expression to be solved")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"a expressão matemática a ser resolvida"
+				)
 				.setRequired(true)
 				.setAutocomplete(true)
 		),
