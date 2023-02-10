@@ -1,24 +1,30 @@
 # Falbot 🪙
 
-Falbot is a economy and user interaction focused bot, with features like:
+Falbot is a fun brazilian bot, with major focus in economy, featuring:
 
 🎲 Gamble commands
 
-⚔️ User interaction betting falcoins
+⚔️ Competitive commands
+
+📈 Engaging rank-up and progression system
+
+🏛️ Dynamic economy run by player activity
+
+👑 Global and local user leaderboards
 
 🎉 Fun commands
 
 ⚙️ Useful commands
 
-👑 Engaging level-up and progression system
-
 🌎 All features available in both portuguese and english
 
-Use /help to get started, Falbot is updated frequently, if you want to earn huge amounts of money or just have some fun with your friends, this bot is for you
+See the introduction page in /help command to get started, don’t miss the opportunity to have a unique and enriching experience on your Discord server with Falbot!
 
 Add him in: <https://top.gg/bot/742331813539872798>
 
 Official website: <https://falbot.netlify.app/>
+
+![Discord Bots](https://top.gg/api/widget/upvotes/742331813539872798.svg)
 
 ## 📩 Inviting Falbot to your server
 
@@ -53,16 +59,13 @@ When all of the dependencies finish installing, you will need to create a `confi
 
 ```json
 {
- "owners": ["OWNERS_ID"],
- "someServers": ["SERVERS_ID"],
+ "botId": "",
+ "devs": [""],
+ "testGuild": "",
  "language": "portugues",
- "poupanca": {
-  "last_interest": "0",
-  "interest_time": "86400000",
-  "interest_rate": "0.1"
- },
  "testOnly": true
 }
+
 ```
 
 In addition, you will also need to create a .env file outside the `src` folder, where the index.js file is, and paste this on it:
@@ -71,6 +74,7 @@ In addition, you will also need to create a .env file outside the `src` folder, 
 TOKEN="token"
 MONGODB_URI="mongodb_uri"
 Authorization="topgg-core-authorization"
+Authorization2="discordbotlist-token"
 ```
 
 ## ⚙ Configuring
@@ -82,12 +86,14 @@ Falbot is made to be a really configurable bot:
 - "TOKEN": your discord bot token
 - "MONGODB_URI": your mongodb connection uri
 - "Authorization": this is only required if your bot is in top.gg and you plan to use the /vote command, in this case you go to <https://top.gg/bot/:yourbotid/webhooks> and put the token here, otherwise just ignore this
+- "Authorization2": this is used to send your commands to discorbotlist.com, if you want this, publish your bot in the site and generate a token
 
 config.json file:
 
-- "owners": put here your discord id and other people that will be involved in development, this will be important to manage slash commands
-- "someServers": the server or servers id that will be used to test the bot
-- "language": the default language of the bot
+- "botId": put here your bot id, this is used to send the command list to discordbotlist.com
+- "devs": put here the discord id of all developers of the bot, this will be important to manage slash commands
+- "testGuild": id of the guild used to test commands
+- "language": the default language of the bot (portuguese or english)
 - "testOnly": when you are only testing the slash commands put this as true this way you don't have to wait 1 hour for the command to register, it register instantly in the servers you put earlier
 
 ## 🏃‍♂️ Running
