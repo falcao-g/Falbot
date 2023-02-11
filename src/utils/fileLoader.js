@@ -1,14 +1,28 @@
-const { glob } = require("glob")
-//change this to use fs
+const fs = require("fs")
 const { promisify } = require("util")
-const proGlob = promisify(glob)
+const readdir = promisify(fs.readdir)
+const stat = promisify(fs.stat)
 
 async function loadFiles(dirName) {
-	const Files = await proGlob(
-		`${process.cwd().replace(/\\/g, "/")}/src/${dirName}/**/*.js`
-	)
-	Files.forEach((file) => delete require.cache[require.resolve(file)])
-	return Files
+	const basePath = `${process.cwd().replace(/\\/g, "/")}/src/${dirName}`
+
+	let files = []
+	const readDirectory = async (dir) => {
+		const items = await readdir(dir)
+		for (const item of items) {
+			const itemPath = `${dir}/${item}`
+			const itemStat = await stat(itemPath)
+			if (itemStat.isDirectory()) {
+				await readDirectory(itemPath)
+			} else if (itemPath.endsWith(".js")) {
+				files.push(itemPath)
+				delete require.cache[require.resolve(itemPath)]
+			}
+		}
+	}
+	await readDirectory(basePath)
+
+	return files
 }
 
 module.exports = { loadFiles }
