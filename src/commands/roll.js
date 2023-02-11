@@ -1,6 +1,4 @@
-const { EmbedBuilder } = require("discord.js")
-const Roll = require("roll")
-const { getRoleColor } = require("../utils/functions.js")
+const { rollDice } = require("../utils/functions.js")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
@@ -21,42 +19,24 @@ module.exports = {
 	execute: async ({ guild, interaction, user, instance }) => {
 		try {
 			await interaction.deferReply()
-			const roll = new Roll()
-			text = interaction.options.getString("dice").replace(/\s/g, "")
+			text = interaction.options.getString("dice")
 
-			if (!roll.validate(text)) {
+			try {
+				var rolled = rollDice(text)
+			} catch {
 				await interaction.editReply({
 					content: instance.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: text,
 					}),
 				})
-			} else {
-				rolled = roll.roll(text).result.toString()
-
-				embed = new EmbedBuilder()
-					.setColor(await getRoleColor(guild, user.id))
-					.addFields(
-						{
-							name: "🎲:",
-							value: text,
-							inline: false,
-						},
-						{
-							name: instance.getMessage(guild, "RESULTADO"),
-							value: `**${rolled}**`,
-							inline: false,
-						}
-					)
-					.setFooter({ text: "by Falcão ❤️" })
-				await interaction.editReply({
-					embeds: [embed],
-				})
 			}
+			await interaction.editReply({
+				content: `**${instance.getMessage(guild, "RESULTADO")}:** ${rolled}`,
+			})
 		} catch (error) {
 			console.error(`roll: ${error}`)
 			interaction.editReply({
 				content: instance.getMessage(guild, "EXCEPTION"),
-				embeds: [],
 			})
 		}
 	},
