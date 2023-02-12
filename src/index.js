@@ -9,7 +9,6 @@ const { loadCommands } = require("./handlers/commandHandler.js")
 
 class Falbot {
 	config = require("./config.json")
-	defaultLanguage = this.config.language
 	_messages = require(path.join(__dirname, "/utils/json/messages.json"))
 	_languages = new Map()
 	client = new Client({
@@ -86,7 +85,7 @@ class Falbot {
 				this.bankInterest(),
 				this.sendVoteReminders(),
 				this.lotteryDraw()
-		}, 1000 * 60 * 10)
+		}, 1000 * 60 * 5)
 	}
 
 	async bankInterest() {
@@ -255,7 +254,7 @@ class Falbot {
 				return result
 			}
 		}
-		return this.defaultLanguage
+		return this.config.language
 	}
 
 	getMessage(guildUser, messageId, args = {}) {
@@ -301,4 +300,4 @@ class Falbot {
 	}
 }
 
-module.exports = { Falbot }
+Falbot = new Falbot()

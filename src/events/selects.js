@@ -12,7 +12,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`Select: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 			})
 		}
 	},

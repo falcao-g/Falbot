@@ -41,7 +41,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: falcoins,
 					}),
 				})
@@ -50,14 +50,14 @@ module.exports = {
 				var pot = bet
 				const embed = new EmbedBuilder()
 					.setDescription(
-						Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION", {
+						instance.getMessage(guild, "ROLETARUSSA_DESCRIPTION", {
 							USER: user,
 							BET: format(pot),
 						})
 					)
 					.setColor("#0099ff")
 					.addFields({
-						name: Falbot.getMessage(guild, "JOGADORES"),
+						name: instance.getMessage(guild, "JOGADORES"),
 						value: `${user}`,
 						inline: false,
 					})
@@ -80,7 +80,7 @@ module.exports = {
 
 				var users = [user]
 				var names = [user]
-				mensagens = Falbot.getMessage(guild, "RUSROL")
+				mensagens = instance.getMessage(guild, "RUSROL")
 
 				const filter = async (btInt) => {
 					return (
@@ -100,13 +100,13 @@ module.exports = {
 					names.push(i.user)
 					pot += bet
 					embed.setDescription(
-						Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION", {
+						instance.getMessage(guild, "ROLETARUSSA_DESCRIPTION", {
 							USER: user,
 							BET: format(pot),
 						})
 					)
 					embed.data.fields[0] = {
-						name: Falbot.getMessage(guild, "JOGADORES"),
+						name: instance.getMessage(guild, "JOGADORES"),
 						value: `${names.join("\n")}`,
 						inline: false,
 					}
@@ -122,14 +122,14 @@ module.exports = {
 						names[luck] = `~~${names[luck]}~~ :skull:`
 						users.splice(luck, 1)
 						embed.setDescription(
-							Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION2", {
+							instance.getMessage(guild, "ROLETARUSSA_DESCRIPTION2", {
 								BET: format(pot),
 							}) +
 								`\n${eliminated} ${mensagens[randint(0, mensagens.length - 1)]}`
 						)
 
 						embed.data.fields[0] = {
-							name: Falbot.getMessage(guild, "JOGADORES"),
+							name: instance.getMessage(guild, "JOGADORES"),
 							value: `${names.join("\n")}`,
 							inline: false,
 						}
@@ -144,7 +144,7 @@ module.exports = {
 					await changeDB(winner.id, "vitorias")
 					embed
 						.setDescription(
-							Falbot.getMessage(guild, "ROLETARUSSA_DESCRIPTION3", {
+							instance.getMessage(guild, "ROLETARUSSA_DESCRIPTION3", {
 								BET: format(pot),
 								USER: winner,
 								SALDO: await readFile(winner.id, "falcoins", true),
@@ -158,19 +158,19 @@ module.exports = {
 				})
 			} else if (bet <= 0) {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: bet,
 					}),
 				})
 			} else {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {
 			console.error(`russianroulette: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

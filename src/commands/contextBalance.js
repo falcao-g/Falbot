@@ -11,7 +11,7 @@ module.exports = {
 		.setNameLocalization("pt-BR", "Ver a conta do usuário")
 		.setType(ApplicationCommandType.User)
 		.setDMPermission(false),
-	execute: async ({ guild, interaction }) => {
+	execute: async ({ guild, instance, interaction }) => {
 		await interaction.deferReply()
 		try {
 			const target = interaction.targetMember
@@ -19,7 +19,7 @@ module.exports = {
 
 			const embed = new EmbedBuilder()
 				.setTitle(
-					Falbot.getMessage(guild, userFile.rank) + " " + target.displayName
+					instance.getMessage(guild, userFile.rank) + " " + target.displayName
 				)
 				.setColor(await getRoleColor(guild, target.user.id))
 				.setFooter({ text: "by Falcão ❤️" })
@@ -30,39 +30,40 @@ module.exports = {
 						inline: true,
 					},
 					{
-						name: ":trophy: " + Falbot.getMessage(guild, "VITORIAS"),
+						name: ":trophy: " + instance.getMessage(guild, "VITORIAS"),
 						value: `${format(userFile.vitorias)}`,
 						inline: true,
 					},
 					{
-						name: ":bank: " + Falbot.getMessage(guild, "BANCO"),
+						name: ":bank: " + instance.getMessage(guild, "BANCO"),
 						value: `${format(userFile.banco)}`,
 						inline: true,
 					},
 					{
-						name: ":gift: " + Falbot.getMessage(guild, "CAIXAS"),
+						name: ":gift: " + instance.getMessage(guild, "CAIXAS"),
 						value: `${format(userFile.caixas)}`,
 						inline: true,
 					},
 					{
-						name: ":key: " + Falbot.getMessage(guild, "CHAVES"),
+						name: ":key: " + instance.getMessage(guild, "CHAVES"),
 						value: `${format(userFile.chaves)}`,
 						inline: true,
 					}
 				)
-			if (Falbot.levels[userFile.rank - 1].falcoinsToLevelUp === undefined) {
+			if (instance.levels[userFile.rank - 1].falcoinsToLevelUp === undefined) {
 				embed.setDescription(
-					":sparkles: " + Falbot.getMessage(guild, "MAX_RANK2")
+					":sparkles: " + instance.getMessage(guild, "MAX_RANK2")
 				)
 			} else if (
-				Falbot.levels[userFile.rank - 1].falcoinsToLevelUp <= userFile.falcoins
+				instance.levels[userFile.rank - 1].falcoinsToLevelUp <=
+				userFile.falcoins
 			) {
-				embed.setDescription(Falbot.getMessage(guild, "BALANCE_RANKUP"))
+				embed.setDescription(instance.getMessage(guild, "BALANCE_RANKUP"))
 			} else {
 				embed.setDescription(
-					Falbot.getMessage(guild, "BALANCE_RANKUP2", {
+					instance.getMessage(guild, "BALANCE_RANKUP2", {
 						FALCOINS: format(
-							Falbot.levels[userFile.rank - 1].falcoinsToLevelUp -
+							instance.levels[userFile.rank - 1].falcoinsToLevelUp -
 								userFile.falcoins
 						),
 					})
@@ -84,7 +85,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`balance: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 				components: [],
 			})
