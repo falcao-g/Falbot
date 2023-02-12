@@ -2,12 +2,12 @@
   "name": "falbot",
   "version": "2.8",
   "description": "https://falbot.netlify.app/",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./src/index"
   },
   "author": "Falcão",
-  "license": "MIT",
+  "license": "GNU 3.0",
   "dependencies": {
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.1",
