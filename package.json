@@ -13,7 +13,6 @@
     "dotenv": "^16.0.1",
     "mathjs": "^10.6.0",
     "mongoose": "^6.8.0",
-    "tictactoe-board": "^1.1.0",
-    "top.gg-core": "^1.0.0"
+    "tictactoe-board": "^1.1.0"
   }
 }

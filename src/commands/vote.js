@@ -1,5 +1,4 @@
 const { EmbedBuilder } = require("discord.js")
-const top = require("top.gg-core")
 const {
 	changeDB,
 	readFile,
@@ -22,7 +21,18 @@ module.exports = {
 	execute: async ({ guild, user, instance, interaction }) => {
 		try {
 			await interaction.deferReply()
-			const topgg = new top.Client(process.env.Authorization)
+
+			var request = await fetch(
+				`https://top.gg/api/bots/check?userId=${user.id}`,
+				{
+					method: "GET",
+					headers: {
+						Authorization: process.env.Authorization,
+					},
+				}
+			)
+
+			var voted = !!(await request.text())
 			var rank_number = await readFile(user.id, "rank")
 			var reward = instance.levels[rank_number - 1].vote
 			lastVote = await readFile(user.id, "lastVote")
@@ -31,10 +41,7 @@ module.exports = {
 				await changeDB(user.id, "voteStreak", 0, true)
 			}
 
-			if (
-				(await topgg.isVoted(user.id)) &&
-				Date.now() - lastVote > 1000 * 60 * 60 * 12
-			) {
+			if (voted && Date.now() - lastVote > 1000 * 60 * 60 * 12) {
 				await changeDB(user.id, "lastVote", Date.now(), true)
 				await changeDB(user.id, "voteStreak", 1)
 				await changeDB(
@@ -53,10 +60,7 @@ module.exports = {
 						}),
 					})
 					.setFooter({ text: "by Falcão ❤️" })
-			} else if (
-				(await topgg.isVoted(user.id)) &&
-				Date.now() - lastVote < 1000 * 60 * 60 * 12
-			) {
+			} else if (voted && Date.now() - lastVote < 1000 * 60 * 60 * 12) {
 				var embed = new EmbedBuilder()
 					.setColor(15158332)
 					.addFields({
