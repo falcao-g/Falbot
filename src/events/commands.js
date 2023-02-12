@@ -5,6 +5,10 @@ module.exports = {
 			interaction.isChatInputCommand() ||
 			interaction.isContextMenuCommand()
 		) {
+			if (interaction.user.bot) {
+				return
+			}
+
 			if (interaction.guild) {
 				var guildUser = interaction.guild
 			} else {
