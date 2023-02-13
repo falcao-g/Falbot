@@ -86,7 +86,7 @@ module.exports = {
 					})
 
 					const filter = (btInt) => {
-						return btInt.user.id === member2.user.id
+						return btInt.user.id === member2.user.id && !btInt.user.bot
 					}
 
 					const collector = answer.createMessageComponentCollector({
@@ -152,12 +152,14 @@ module.exports = {
 							const filter2 = (btInt) => {
 								if (
 									btInt.user.id === first_player.user.id &&
-									board.currentMark() === "X"
+									board.currentMark() === "X" &&
+									!btInt.user.bot
 								) {
 									return true
 								} else if (
 									btInt.user.id === second_player.user.id &&
-									board.currentMark() === "O"
+									board.currentMark() === "O" &&
+									!btInt.user.bot
 								) {
 									return true
 								}

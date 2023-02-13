@@ -7,6 +7,10 @@ module.exports = {
 		try {
 			if (!interaction.isButton()) return
 
+			if (interaction.user.bot) {
+				return
+			}
+
 			guildUser = interaction.guild ? interaction.guild : interaction.user
 			if (interaction.member) {
 				guild = interaction.member.guild

@@ -84,7 +84,7 @@ module.exports = {
 					})
 
 					const filter = (btInt) => {
-						return btInt.user.id === member2.user.id
+						return btInt.user.id === member2.user.id && !btInt.user.bot
 					}
 
 					const collector = answer.createMessageComponentCollector({

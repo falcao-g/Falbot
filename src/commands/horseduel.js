@@ -84,7 +84,8 @@ module.exports = {
 				const filter = async (btInt) => {
 					return (
 						(await readFile(btInt.user.id, "falcoins")) >= bet &&
-						!users.includes(btInt.user)
+						!users.includes(btInt.user) &&
+						!btInt.user.bot
 					)
 				}
 

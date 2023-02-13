@@ -4,6 +4,10 @@ module.exports = {
 		try {
 			if (!interaction.isStringSelectMenu()) return
 
+			if (interaction.user.bot) {
+				return
+			}
+
 			if (interaction.customId === "page") {
 				guild = interaction.member.guild
 				const help = client.commands.get("help")
