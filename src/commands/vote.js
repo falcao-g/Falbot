@@ -32,7 +32,7 @@ module.exports = {
 				}
 			)
 
-			var voted = !!(await request.text())
+			var voted = (await request.json()).voted
 			var rank_number = await readFile(user.id, "rank")
 			var reward = instance.levels[rank_number - 1].vote
 			lastVote = await readFile(user.id, "lastVote")

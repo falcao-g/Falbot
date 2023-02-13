@@ -1,114 +1,114 @@
 [
 	{
 		"falcoinsToLevelUp": 200,
-		"vote": 5000,
+		"vote": 10000,
 		"work": [1000, 1500],
 		"bankLimit": 100000
 	},
 	{
 		"falcoinsToLevelUp": 5000,
-		"vote": 5500,
+		"vote": 10500,
 		"work": [1125, 1750],
 		"bankLimit": 100000
 	},
 	{
 		"falcoinsToLevelUp": 10000,
-		"vote": 6000,
+		"vote": 11000,
 		"work": [1250, 2000],
 		"bankLimit": 100000
 	},
 	{
 		"falcoinsToLevelUp": 26000,
-		"vote": 6500,
+		"vote": 11500,
 		"work": [1375, 2250],
 		"bankLimit": 100000
 	},
 	{
 		"falcoinsToLevelUp": 55000,
-		"vote": 7000,
+		"vote": 12000,
 		"work": [1500, 2500],
 		"bankLimit": 150000
 	},
 	{
 		"falcoinsToLevelUp": 150000,
-		"vote": 7500,
+		"vote": 12500,
 		"work": [1625, 2750],
 		"bankLimit": 150000
 	},
 	{
 		"falcoinsToLevelUp": 220000,
-		"vote": 8000,
+		"vote": 13000,
 		"work": [1750, 3000],
 		"bankLimit": 200000
 	},
 	{
 		"falcoinsToLevelUp": 330000,
-		"vote": 8500,
+		"vote": 13500,
 		"work": [1875, 3250],
 		"bankLimit": 200000
 	},
 	{
 		"falcoinsToLevelUp": 450000,
-		"vote": 9000,
+		"vote": 14000,
 		"work": [2000, 3500],
 		"bankLimit": 200000
 	},
 	{
 		"falcoinsToLevelUp": 600000,
-		"vote": 9500,
+		"vote": 14500,
 		"work": [2125, 3750],
 		"bankLimit": 200000
 	},
 	{
 		"falcoinsToLevelUp": 800000,
-		"vote": 10000,
+		"vote": 15000,
 		"work": [2250, 4000],
 		"bankLimit": 200000
 	},
 	{
 		"falcoinsToLevelUp": 1050000,
-		"vote": 10500,
+		"vote": 15500,
 		"work": [2375, 4250],
 		"bankLimit": 250000
 	},
 	{
 		"falcoinsToLevelUp": 1300000,
-		"vote": 11000,
+		"vote": 16000,
 		"work": [2500, 4500],
 		"bankLimit": 250000
 	},
 	{
 		"falcoinsToLevelUp": 1600000,
-		"vote": 11500,
+		"vote": 16500,
 		"work": [2625, 4750],
 		"bankLimit": 250000
 	},
 	{
 		"falcoinsToLevelUp": 2000000,
-		"vote": 12000,
+		"vote": 17000,
 		"work": [2750, 5000],
 		"bankLimit": 250000
 	},
 	{
 		"falcoinsToLevelUp": 2500000,
-		"vote": 12500,
+		"vote": 17500,
 		"work": [2875, 5250],
 		"bankLimit": 300000
 	},
 	{
 		"falcoinsToLevelUp": 3100000,
-		"vote": 13000,
+		"vote": 18000,
 		"work": [3000, 5500],
 		"bankLimit": 300000
 	},
 	{
 		"falcoinsToLevelUp": 4000000,
-		"vote": 13500,
+		"vote": 18500,
 		"work": [3125, 5750],
 		"bankLimit": 300000
 	},
 	{
-		"vote": 14000,
+		"vote": 19000,
 		"work": [3250, 6000],
 		"bankLimit": 350000
 	}
