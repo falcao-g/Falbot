@@ -1,4 +1,8 @@
 {
+	"YOU_ARE_BOT": {
+		"english": "You can't use Falbot's commands because you are a bot",
+		"portugues": "Outros bots não podem usar os comandos do Falbot"
+	},
 	"CURRENT_LANGUAGE": {
 		"english": "The current language is set to {LANGUAGE}.",
 		"portugues": "O idioma atual está definido como {LANGUAGE}."
