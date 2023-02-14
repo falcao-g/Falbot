@@ -14,6 +14,14 @@ module.exports = {
 			return
 		}
 
+		if (instance._banned.includes(interaction.user.id)) {
+			interaction.reply({
+				content: instance.getMessage(guildUser, "YOU_ARE_BANNED"),
+				ephemeral: true,
+			})
+			return
+		}
+
 		if (
 			interaction.isChatInputCommand() ||
 			interaction.isContextMenuCommand()
