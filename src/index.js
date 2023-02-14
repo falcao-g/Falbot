@@ -11,6 +11,7 @@ class Falbot {
 	config = require("./config.json")
 	_messages = require(path.join(__dirname, "/utils/json/messages.json"))
 	_languages = new Map()
+	_banned = new Array()
 	client = new Client({
 		intents: [GatewayIntentBits.Guilds],
 	})
@@ -20,6 +21,7 @@ class Falbot {
 	coolSchema = require("./schemas/cool-schema.js")
 	langSchema = require("./schemas/lang-schema.js")
 	interestSchema = require("./schemas/interest-schema.js")
+	bannedSchema = require("./schemas/banned-schema.js")
 
 	constructor() {
 		this.client.on("ready", () => {
@@ -72,6 +74,12 @@ class Falbot {
 
 			for (const { _id, language } of results) {
 				this._languages.set(_id, language)
+			}
+
+			const banned = await this.bannedSchema.find()
+
+			for (const result of banned) {
+				this._banned.push(result.id)
 			}
 		})()
 
@@ -242,9 +250,15 @@ class Falbot {
 	}
 
 	setLanguage(guildUser, language) {
-		if (guildUser) {
-			this._languages.set(guildUser.id, language)
-		}
+		this._languages.set(guildUser.id, language)
+	}
+
+	ban(userId) {
+		this._banned.push(userId)
+	}
+
+	unban(userId) {
+		this._banned = this._banned.filter((id) => id != userId)
 	}
 
 	getLanguage(guildUser) {

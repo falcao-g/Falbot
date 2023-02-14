@@ -85,7 +85,8 @@ module.exports = {
 					return (
 						(await readFile(btInt.user.id, "falcoins")) >= bet &&
 						!users.includes(btInt.user) &&
-						!btInt.user.bot
+						!btInt.user.bot &&
+						!instance._banned.includes(btInt.user.id)
 					)
 				}
 

@@ -86,7 +86,11 @@ module.exports = {
 					})
 
 					const filter = (btInt) => {
-						return btInt.user.id === member2.user.id && !btInt.user.bot
+						return (
+							btInt.user.id === member2.user.id &&
+							!btInt.user.bot &&
+							!instance._banned.includes(btInt.user.id)
+						)
 					}
 
 					const collector = answer.createMessageComponentCollector({
@@ -153,13 +157,15 @@ module.exports = {
 								if (
 									btInt.user.id === first_player.user.id &&
 									board.currentMark() === "X" &&
-									!btInt.user.bot
+									!btInt.user.bot &&
+									!instance._banned.includes(btInt.user.id)
 								) {
 									return true
 								} else if (
 									btInt.user.id === second_player.user.id &&
 									board.currentMark() === "O" &&
-									!btInt.user.bot
+									!btInt.user.bot &&
+									!instance._banned.includes(btInt.user.id)
 								) {
 									return true
 								}
