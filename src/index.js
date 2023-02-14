@@ -285,7 +285,7 @@ class Falbot {
 			result.push(channel.id)
 			this._disabledChannels.set(guild.id, result)
 		} else {
-			this._disabledChannels.set(guild.id, channel.id)
+			this._disabledChannels.set(guild.id, [channel.id])
 		}
 	}
 
