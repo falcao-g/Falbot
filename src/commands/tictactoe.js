@@ -87,9 +87,7 @@ module.exports = {
 
 					const filter = (btInt) => {
 						return (
-							btInt.user.id === member2.user.id &&
-							!btInt.user.bot &&
-							!instance._banned.includes(btInt.user.id)
+							instance.defaultFilter(btInt) && btInt.user.id === member2.user.id
 						)
 					}
 
@@ -155,17 +153,15 @@ module.exports = {
 
 							const filter2 = (btInt) => {
 								if (
+									instance.defaultFilter(btInt) &&
 									btInt.user.id === first_player.user.id &&
-									board.currentMark() === "X" &&
-									!btInt.user.bot &&
-									!instance._banned.includes(btInt.user.id)
+									board.currentMark() === "X"
 								) {
 									return true
 								} else if (
+									instance.defaultFilter(btInt) &&
 									btInt.user.id === second_player.user.id &&
-									board.currentMark() === "O" &&
-									!btInt.user.bot &&
-									!instance._banned.includes(btInt.user.id)
+									board.currentMark() === "O"
 								) {
 									return true
 								}

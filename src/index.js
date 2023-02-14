@@ -12,6 +12,7 @@ class Falbot {
 	_messages = require(path.join(__dirname, "/utils/json/messages.json"))
 	_languages = new Map()
 	_banned = new Array()
+	_disabledChannels = new Map()
 	client = new Client({
 		intents: [GatewayIntentBits.Guilds],
 	})
@@ -22,6 +23,7 @@ class Falbot {
 	langSchema = require("./schemas/lang-schema.js")
 	interestSchema = require("./schemas/interest-schema.js")
 	bannedSchema = require("./schemas/banned-schema.js")
+	guildsSchema = require("./schemas/guilds-schema.js")
 
 	constructor() {
 		this.client.on("ready", () => {
@@ -80,6 +82,12 @@ class Falbot {
 
 			for (const result of banned) {
 				this._banned.push(result.id)
+			}
+
+			const guilds = await this.guildsSchema.find()
+
+			for (const { _id, disabledChannels } of guilds) {
+				this._disabledChannels.set(_id, disabledChannels)
 			}
 		})()
 
@@ -259,6 +267,32 @@ class Falbot {
 
 	unban(userId) {
 		this._banned = this._banned.filter((id) => id != userId)
+	}
+
+	defaultFilter(interaction) {
+		return (
+			!interaction.user.bot &&
+			!this._banned.includes(interaction.user.id) &&
+			!this._disabledChannels
+				.get(interaction.guild.id)
+				.includes(interaction.channel.id)
+		)
+	}
+
+	disableChannel(guild, channel) {
+		const result = this._disabledChannels.get(guild.id)
+		if (result) {
+			result.push(channel.id)
+			this._disabledChannels.set(guild.id, result)
+		} else {
+			this._disabledChannels.set(guild.id, channel.id)
+		}
+	}
+
+	enableChannel(guild, channel) {
+		var result = this._disabledChannels.get(guild.id)
+		result = result.filter((channelId) => channelId != channel.id)
+		this._disabledChannels.set(guild.id, result)
 	}
 
 	getLanguage(guildUser) {

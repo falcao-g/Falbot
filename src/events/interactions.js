@@ -23,6 +23,18 @@ module.exports = {
 		}
 
 		if (
+			instance._disabledChannels
+				.get(interaction.guild.id)
+				.includes(interaction.channel.id)
+		) {
+			interaction.reply({
+				content: instance.getMessage(guildUser, "THIS_CHANNEL_IS_DISABLED"),
+				ephemeral: true,
+			})
+			return
+		}
+
+		if (
 			interaction.isChatInputCommand() ||
 			interaction.isContextMenuCommand()
 		) {

@@ -7,6 +7,18 @@
 		"english": "You are banned from using Falbot, if you think this is a mistake, contact the bot developers",
 		"portugues": "Você está banido de usar o Falbot, se você acha que isso é um engano, entre em contato com os desenvolvedores"
 	},
+	"DISABLED_CHANNEL": {
+		"english": "{CHANNEL} was disabled!",
+		"portugues": "{CHANNEL} foi desativado!"
+	},
+	"ENABLED_CHANNEL": {
+		"english": "{CHANNEL} was renabled!",
+		"portugues": "{CHANNEL} foi reativado!"
+	},
+	"THIS_CHANNEL_IS_DISABLED": {
+		"english": "You can't use Falbot in this channel because is disabled",
+		"portugues": "Você não pode usar o Falbot nesse canal porque ele está desativado"
+	},
 	"CURRENT_LANGUAGE": {
 		"english": "The current language is set to {LANGUAGE}.",
 		"portugues": "O idioma atual está definido como {LANGUAGE}."

@@ -60,11 +60,7 @@ module.exports = {
 			})
 
 			const filter = (btInt) => {
-				return (
-					btInt.user.id === author.id &&
-					!btInt.user.bot &&
-					!instance._banned.includes(btInt.user.id)
-				)
+				return instance.defaultFilter(btInt) && btInt.user.id === author.id
 			}
 
 			const collector = answer.createMessageComponentCollector({
