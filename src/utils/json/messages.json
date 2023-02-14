@@ -16,7 +16,7 @@
 		"portugues": "{CHANNEL} foi reativado!"
 	},
 	"THIS_CHANNEL_IS_DISABLED": {
-		"english": "You can't use Falbot in this channel because is disabled",
+		"english": "You can't use Falbot in this channel because it's disabled",
 		"portugues": "Você não pode usar o Falbot nesse canal porque ele está desativado"
 	},
 	"CURRENT_LANGUAGE": {

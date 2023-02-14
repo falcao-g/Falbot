@@ -270,13 +270,13 @@ class Falbot {
 	}
 
 	defaultFilter(interaction) {
-		return (
-			!interaction.user.bot &&
+		var disabledChannels = this._disabledChannels.get(interaction.guild.id)
+
+		return !interaction.user.bot &&
 			!this._banned.includes(interaction.user.id) &&
-			!this._disabledChannels
-				.get(interaction.guild.id)
-				.includes(interaction.channel.id)
-		)
+			disabledChannels != undefined
+			? !disabledChannels.includes(interaction.channel.id)
+			: true
 	}
 
 	disableChannel(guild, channel) {

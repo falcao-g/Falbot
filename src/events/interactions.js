@@ -22,10 +22,12 @@ module.exports = {
 			return
 		}
 
+		var disabledChannels = instance._disabledChannels.get(interaction.guild.id)
+
 		if (
-			instance._disabledChannels
-				.get(interaction.guild.id)
-				.includes(interaction.channel.id)
+			disabledChannels != undefined
+				? disabledChannels.includes(interaction.channel.id)
+				: false
 		) {
 			interaction.reply({
 				content: instance.getMessage(guildUser, "THIS_CHANNEL_IS_DISABLED"),
