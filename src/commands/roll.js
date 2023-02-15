@@ -15,6 +15,7 @@ module.exports = {
 				.setDescription("dice to be rolled")
 				.setDescriptionLocalization("pt-BR", "dados a serem rolados")
 				.setRequired(true)
+				.setMaxLength(500)
 		),
 	execute: async ({ guild, interaction, instance }) => {
 		try {
@@ -23,13 +24,22 @@ module.exports = {
 
 			try {
 				var rolled = rollDice(text)
+
+				if (rolled.length > 2000) {
+					await interaction.editReply({
+						content: instance.getMessage(guild, "ROLL_LIMIT"),
+					})
+					return
+				}
 			} catch {
 				await interaction.editReply({
 					content: instance.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: text,
 					}),
 				})
+				return
 			}
+
 			await interaction.editReply({
 				content: `**${instance.getMessage(guild, "RESULTADO")}:** ${rolled}`,
 			})

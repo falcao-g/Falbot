@@ -814,6 +814,10 @@
 		"portugues": "Desculpa, mas eu não sei como calcular isso no momento",
 		"english": "Sorry, I can't calculate this at the moment"
 	},
+	"ROLL_LIMIT": {
+		"portugues": "Você está tentando rolar dados demais! :confounded:",
+		"english": "You are trying to roll too many dice! :confounded:"
+	},
 	"1": {
 		"portugues": ":potato: Plebeu",
 		"english": ":potato: Peasent"

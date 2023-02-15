@@ -237,7 +237,6 @@ function pick(data) {
 }
 
 function rollDice(expressionRaw) {
-	//a limit here would be nice
 	var expression = ""
 	for (let c = 0; c < expressionRaw.length; c++) {
 		if (["+", "-"].includes(expressionRaw[c]) && expressionRaw[c - 1] !== " ") {
