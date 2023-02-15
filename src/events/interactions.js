@@ -30,7 +30,10 @@ module.exports = {
 				: false
 		) {
 			interaction.reply({
-				content: instance.getMessage(guildUser, "THIS_CHANNEL_IS_DISABLED"),
+				content: instance.getMessage(
+					interaction.guild,
+					"THIS_CHANNEL_IS_DISABLED"
+				),
 				ephemeral: true,
 			})
 			return
@@ -47,7 +50,7 @@ module.exports = {
 				!instance.config.devs.includes(interaction.user.id)
 			) {
 				return interaction.reply({
-					content: instance.getMessage(guildUser, "BOT_OWNERS_ONLY"),
+					content: instance.getMessage(interaction.guild, "BOT_OWNERS_ONLY"),
 					ephemeral: true,
 				})
 			}
