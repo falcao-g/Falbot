@@ -1,4 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -7,7 +6,7 @@ const {
 	getRoleColor,
 	format,
 } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -34,7 +33,7 @@ module.exports = {
 	execute: async ({ guild, user, interaction, instance }) => {
 		await interaction.deferReply()
 		try {
-			crates = interaction.options.getInteger("quantity")
+			const crates = interaction.options.getInteger("quantity")
 			try {
 				var quantity = await specialArg(crates, user.id, "caixas")
 			} catch {
@@ -49,12 +48,11 @@ module.exports = {
 				(await readFile(user.id, "caixas")) >= quantity &&
 				(await readFile(user.id, "chaves")) >= quantity
 			) {
-				caixas = 0
-				chaves = 0
-				falcoins = 0
+				var caixas = 0
+				var chaves = 0
+				var falcoins = 0
 				for (let i = 0; i < quantity; i++) {
-					var luck = randint(1, 60)
-					if (luck <= 40) {
+					if (randint(1, 60) <= 40) {
 						chaves += Math.round(Math.random())
 						caixas += Math.round(Math.random())
 						falcoins += randint(500, 15000)

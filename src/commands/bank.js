@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js")
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -6,7 +6,6 @@ const {
 	format,
 	getRoleColor,
 } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -71,12 +70,12 @@ module.exports = {
 	execute: async ({ guild, user, interaction, instance }) => {
 		await interaction.deferReply()
 		try {
-			metodo = interaction.options.getSubcommand()
-			falcoins = interaction.options.getString("falcoins")
-			var rank_number = await readFile(user.id, "rank")
-			var limit = instance.levels[rank_number - 1].bankLimit
+			const subcommand = interaction.options.getSubcommand()
+			const falcoins = interaction.options.getString("falcoins")
+			const rank = await readFile(user.id, "rank")
+			const limit = instance.levels[rank - 1].bankLimit
 
-			if (metodo === "view") {
+			if (subcommand === "view") {
 				const embed = new EmbedBuilder()
 					.setColor(await getRoleColor(guild, user.id))
 					.addFields({
@@ -98,7 +97,7 @@ module.exports = {
 						})}**`,
 					})
 				await interaction.editReply({ embeds: [embed] })
-			} else if (metodo === "deposit") {
+			} else if (subcommand === "deposit") {
 				try {
 					var quantity = await specialArg(falcoins, user.id, "falcoins")
 				} catch {
@@ -110,7 +109,7 @@ module.exports = {
 					return
 				}
 
-				if ((await readFile(user.id, "falcoins")) >= quantity && quantity > 0) {
+				if ((await readFile(user.id, "falcoins")) >= quantity) {
 					if ((await readFile(user.id, "banco")) >= limit / 2) {
 						await interaction.editReply({
 							content: instance.getMessage(guild, "BANK_OVER_LIMIT"),
@@ -151,7 +150,7 @@ module.exports = {
 						content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 					})
 				}
-			} else if (metodo === "withdraw") {
+			} else if (subcommand === "withdraw") {
 				try {
 					var quantity = await specialArg(falcoins, user.id, "banco")
 				} catch {
@@ -163,7 +162,7 @@ module.exports = {
 					return
 				}
 
-				if ((await readFile(user.id, "banco")) >= quantity && quantity > 0) {
+				if ((await readFile(user.id, "banco")) >= quantity) {
 					await takeAndGive(user.id, user.id, "banco", "falcoins", quantity)
 
 					const embed = new EmbedBuilder()

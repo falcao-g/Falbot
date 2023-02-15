@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js")
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -7,7 +7,6 @@ const {
 	changeDB,
 	format,
 } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -50,8 +49,8 @@ module.exports = {
 	execute: async ({ guild, interaction, user, instance }) => {
 		await interaction.deferReply()
 		try {
-			var horse = interaction.options.getString("horse")
-			var falcoins = interaction.options.getString("falcoins")
+			const horse = interaction.options.getString("horse")
+			const falcoins = interaction.options.getString("falcoins")
 			try {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
@@ -62,7 +61,7 @@ module.exports = {
 				})
 				return
 			}
-			if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
+			if ((await readFile(user.id, "falcoins")) >= bet) {
 				await changeDB(user.id, "falcoins", -bet)
 				const horses = [
 					"- - - - -",

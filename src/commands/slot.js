@@ -1,4 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -8,7 +7,7 @@ const {
 	format,
 	pick,
 } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -32,9 +31,9 @@ module.exports = {
 	execute: async ({ guild, interaction, client, instance, user }) => {
 		try {
 			await interaction.deferReply()
-			var guild = client.guilds.cache.get("742332099788275732")
-			var emojifoda = await guild.emojis.fetch("926953352774963310")
-			var falcoins = interaction.options.getString("falcoins")
+			const guild = client.guilds.cache.get("742332099788275732")
+			const emojifoda = await guild.emojis.fetch("926953352774963310")
+			const falcoins = interaction.options.getString("falcoins")
 			try {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
@@ -45,7 +44,7 @@ module.exports = {
 				})
 				return
 			}
-			if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
+			if ((await readFile(user.id, "falcoins")) >= bet) {
 				await changeDB(user.id, "falcoins", -bet)
 				const choices = [
 					[":money_mouth:", 30],
@@ -80,27 +79,23 @@ module.exports = {
 				;(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`),
 					await interaction.editReply({ embeds: [embed] })
 
-				arrayEmojis = [emoji1, emoji2, emoji3]
+				const arrayEmojis = [emoji1, emoji2, emoji3]
 				var dollar = count(arrayEmojis, ":dollar:")
 				var coin = count(arrayEmojis, ":coin:")
 				var moneybag = count(arrayEmojis, ":moneybag:")
 				var gem = count(arrayEmojis, ":gem:")
 				var money_mouth = count(arrayEmojis, ":money_mouth:")
 
-				if (dollar == 3) {
+				if (dollar == 3 || moneybag == 2) {
 					var winnings = 3
-				} else if (coin == 3) {
+				} else if (coin == 3 || money_mouth == 3) {
 					var winnings = 2.5
 				} else if (moneybag == 3) {
 					var winnings = 7
 				} else if (gem == 3) {
 					var winnings = 10
-				} else if (money_mouth == 3) {
-					var winnings = 2.5
 				} else if (dollar == 2 || coin == 2) {
 					var winnings = 2
-				} else if (moneybag == 2) {
-					var winnings = 3
 				} else if (gem == 2) {
 					var winnings = 5
 				} else if (money_mouth == 2) {

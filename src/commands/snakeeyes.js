@@ -1,4 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -7,7 +6,7 @@ const {
 	format,
 	randint,
 } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -34,15 +33,9 @@ module.exports = {
 	execute: async ({ guild, interaction, client, instance, user }) => {
 		try {
 			await interaction.deferReply()
-			guild = client.guilds.cache.get("742332099788275732")
-			die1 = await guild.emojis.fetch("1000062195545165895")
-			die2 = await guild.emojis.fetch("1000063578797265046")
-			die3 = await guild.emojis.fetch("1000063580433023006")
-			die4 = await guild.emojis.fetch("1000063582278524969")
-			die5 = await guild.emojis.fetch("1000063583893344316")
-			die6 = await guild.emojis.fetch("1000063585147428926")
-			diegif = await guild.emojis.fetch("999795233808203846")
-			var falcoins = interaction.options.getString("falcoins")
+			const guild = client.guilds.cache.get("742332099788275732")
+			const diegif = await guild.emojis.fetch("999795233808203846")
+			const falcoins = interaction.options.getString("falcoins")
 
 			try {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
@@ -55,9 +48,16 @@ module.exports = {
 				return
 			}
 
-			if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
+			if ((await readFile(user.id, "falcoins")) >= bet) {
 				await changeDB(user.id, "falcoins", -bet)
-				const choices = [die1, die2, die3, die4, die5, die6]
+				const choices = [
+					await guild.emojis.fetch("1000062195545165895"),
+					await guild.emojis.fetch("1000063578797265046"),
+					await guild.emojis.fetch("1000063580433023006"),
+					await guild.emojis.fetch("1000063582278524969"),
+					await guild.emojis.fetch("1000063583893344316"),
+					await guild.emojis.fetch("1000063585147428926"),
+				]
 				random1 = randint(1, 6)
 				random2 = randint(1, 6)
 				emoji1 = choices[random1 - 1]

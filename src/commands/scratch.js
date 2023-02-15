@@ -1,4 +1,9 @@
-const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require("discord.js")
+const {
+	ActionRowBuilder,
+	ButtonBuilder,
+	EmbedBuilder,
+	SlashCommandBuilder,
+} = require("discord.js")
 const {
 	format,
 	randint,
@@ -6,7 +11,6 @@ const {
 	getRoleColor,
 	msToTime,
 } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()

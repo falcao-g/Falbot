@@ -1,11 +1,15 @@
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require("discord.js")
+const {
+	EmbedBuilder,
+	ButtonBuilder,
+	ActionRowBuilder,
+	SlashCommandBuilder,
+} = require("discord.js")
 const {
 	getMember,
 	getRoleColor,
 	format,
 	readFile,
 } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -33,60 +37,53 @@ module.exports = {
 	execute: async ({ guild, member, instance, interaction }) => {
 		await interaction.deferReply()
 		try {
-			user = interaction.options.getUser("user")
-			const realMember = user ? await getMember(guild, user.id) : member
-			const userFile = await readFile(realMember.user.id)
+			const user = interaction.options.getUser("user")
+			const target = user ? await getMember(guild, user.id) : member
+			const { rank, falcoins, vitorias, banco, caixas, chaves } =
+				await readFile(target.user.id)
 
 			const embed = new EmbedBuilder()
-				.setTitle(
-					instance.getMessage(guild, userFile.rank) +
-						" " +
-						realMember.displayName
-				)
-				.setColor(await getRoleColor(guild, realMember.user.id))
+				.setTitle(instance.getMessage(guild, rank) + " " + target.displayName)
+				.setColor(await getRoleColor(guild, target.user.id))
 				.setFooter({ text: "by Falcão ❤️" })
 				.addFields(
 					{
 						name: ":coin: Falcoins",
-						value: `${format(userFile.falcoins)}`,
+						value: `${format(falcoins)}`,
 						inline: true,
 					},
 					{
 						name: ":trophy: " + instance.getMessage(guild, "VITORIAS"),
-						value: `${format(userFile.vitorias)}`,
+						value: `${format(vitorias)}`,
 						inline: true,
 					},
 					{
 						name: ":bank: " + instance.getMessage(guild, "BANCO"),
-						value: `${format(userFile.banco)}`,
+						value: `${format(banco)}`,
 						inline: true,
 					},
 					{
 						name: ":gift: " + instance.getMessage(guild, "CAIXAS"),
-						value: `${format(userFile.caixas)}`,
+						value: `${format(caixas)}`,
 						inline: true,
 					},
 					{
 						name: ":key: " + instance.getMessage(guild, "CHAVES"),
-						value: `${format(userFile.chaves)}`,
+						value: `${format(chaves)}`,
 						inline: true,
 					}
 				)
-			if (instance.levels[userFile.rank - 1].falcoinsToLevelUp === undefined) {
+			if (instance.levels[rank - 1].falcoinsToLevelUp === undefined) {
 				embed.setDescription(
 					":sparkles: " + instance.getMessage(guild, "MAX_RANK2")
 				)
-			} else if (
-				instance.levels[userFile.rank - 1].falcoinsToLevelUp <=
-				userFile.falcoins
-			) {
+			} else if (instance.levels[rank - 1].falcoinsToLevelUp <= falcoins) {
 				embed.setDescription(instance.getMessage(guild, "BALANCE_RANKUP"))
 			} else {
 				embed.setDescription(
 					instance.getMessage(guild, "BALANCE_RANKUP2", {
 						FALCOINS: format(
-							instance.levels[userFile.rank - 1].falcoinsToLevelUp -
-								userFile.falcoins
+							instance.levels[rank - 1].falcoinsToLevelUp - falcoins
 						),
 					})
 				)

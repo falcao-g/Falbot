@@ -37,8 +37,8 @@ module.exports = {
 	execute: async ({ guild, interaction, user, instance }) => {
 		await interaction.deferReply()
 		try {
-			falcoins = interaction.options.getString("falcoins")
-			target = interaction.options.getUser("user")
+			const falcoins = interaction.options.getString("falcoins")
+			var target = interaction.options.getUser("user")
 			target = await getMember(guild, target.id)
 			try {
 				var quantity = await specialArg(falcoins, user.id, "falcoins")

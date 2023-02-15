@@ -1,4 +1,9 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js")
+const {
+	EmbedBuilder,
+	ActionRowBuilder,
+	ButtonBuilder,
+	SlashCommandBuilder,
+} = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -7,7 +12,6 @@ const {
 	format,
 	getRoleColor,
 } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -36,7 +40,7 @@ module.exports = {
 	execute: async ({ guild, interaction, user, instance }) => {
 		try {
 			await interaction.deferReply()
-			var falcoins = interaction.options.getString("falcoins")
+			const falcoins = interaction.options.getString("falcoins")
 			try {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
@@ -46,7 +50,7 @@ module.exports = {
 					}),
 				})
 			}
-			if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
+			if ((await readFile(user.id, "falcoins")) >= bet) {
 				var pot = bet
 				const embed = new EmbedBuilder()
 					.setDescription(

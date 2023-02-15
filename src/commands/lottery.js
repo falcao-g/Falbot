@@ -1,11 +1,10 @@
-const { EmbedBuilder } = require("discord.js")
 const {
 	readFile,
 	changeDB,
 	msToTime,
 	format,
 } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -53,14 +52,11 @@ module.exports = {
 	execute: async ({ guild, user, interaction, instance }) => {
 		try {
 			await interaction.deferReply()
-			lotto = await instance.lottoSchema.findById("semanal")
-			type = interaction.options.getSubcommand()
+			const lotto = await instance.lottoSchema.findById("semanal")
+			const type = interaction.options.getSubcommand()
 			if (type === "buy") {
-				amount = interaction.options.getInteger("amount")
-				if (
-					(await readFile(user.id, "falcoins")) > amount * 500 &&
-					amount > 0
-				) {
+				const amount = interaction.options.getInteger("amount")
+				if ((await readFile(user.id, "falcoins")) > amount * 500) {
 					var embed = new EmbedBuilder()
 						.setColor(15844367)
 						.addFields({
@@ -78,12 +74,6 @@ module.exports = {
 
 					await interaction.editReply({
 						embeds: [embed],
-					})
-				} else if (amount <= 0) {
-					await interaction.editReply({
-						content: instance.getMessage(guild, "VALOR_INVALIDO", {
-							VALUE: amount,
-						}),
 					})
 				} else {
 					await interaction.editReply({

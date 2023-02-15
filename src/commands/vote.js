@@ -1,4 +1,3 @@
-const { EmbedBuilder } = require("discord.js")
 const {
 	changeDB,
 	readFile,
@@ -6,7 +5,7 @@ const {
 	format,
 } = require("../utils/functions.js")
 require("dotenv").config()
-const { SlashCommandBuilder } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()

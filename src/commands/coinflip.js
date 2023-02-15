@@ -20,9 +20,9 @@ module.exports = {
 	execute: async ({ guild, interaction, instance }) => {
 		await interaction.deferReply()
 		try {
-			times = interaction.options.getInteger("quantity")
-			let caras = randint(0, times)
-			let coroas = times - caras
+			const times = interaction.options.getInteger("quantity")
+			const caras = randint(0, times)
+			const coroas = times - caras
 
 			interaction.editReply({
 				content: instance.getMessage(guild, "COINFLIP", {

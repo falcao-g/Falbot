@@ -1,6 +1,9 @@
-const { EmbedBuilder, ButtonBuilder } = require("discord.js")
+const {
+	EmbedBuilder,
+	ButtonBuilder,
+	SlashCommandBuilder,
+} = require("discord.js")
 const { getMember, format, paginate } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -99,9 +102,9 @@ module.exports = {
 		),
 	execute: async ({ client, user, guild, interaction, instance }) => {
 		await interaction.deferReply()
-		rank = []
-		scope = interaction.options.getString("type").toLowerCase()
-		type = interaction.options.getSubcommand()
+		var rank = []
+		const scope = interaction.options.getString("type")
+		const type = interaction.options.getSubcommand()
 
 		var embed1 = new EmbedBuilder()
 			.setColor("DarkBlue")
@@ -117,10 +120,7 @@ module.exports = {
 
 		if (type == "falcoins") {
 			if (scope === "server") {
-				users = await instance.userSchema
-					.find({})
-					.sort({ falcoins: -1 })
-					.limit(30)
+				users = await instance.userSchema.find({}).sort({ falcoins: -1 })
 
 				for (useri of users) {
 					if (await getMember(guild, useri["_id"])) {
@@ -135,7 +135,7 @@ module.exports = {
 			}
 		} else if (type == "rank") {
 			if (scope === "server") {
-				users = await instance.userSchema.find({}).sort({ rank: -1 }).limit(30)
+				users = await instance.userSchema.find({}).sort({ rank: -1 })
 
 				for (useri of users) {
 					if (await getMember(guild, useri["_id"])) {
@@ -147,10 +147,7 @@ module.exports = {
 			}
 		} else if (type == "wins") {
 			if (scope === "server") {
-				users = await instance.userSchema
-					.find({})
-					.sort({ vitorias: -1 })
-					.limit(30)
+				users = await instance.userSchema.find({}).sort({ vitorias: -1 })
 
 				for (useri of users) {
 					if (await getMember(guild, useri["_id"])) {
@@ -199,7 +196,7 @@ module.exports = {
 			} catch {
 				embeds[a].addFields({
 					name:
-						type === "vitorias"
+						type === "wins"
 							? `${i + 1}º - Unknown user ` +
 							  instance.getMessage(guild, "VITORIAS").toLowerCase() +
 							  ":"

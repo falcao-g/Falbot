@@ -1,6 +1,5 @@
-const { EmbedBuilder } = require("discord.js")
 const { randint } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -35,7 +34,7 @@ module.exports = {
 				.addFields(
 					{
 						name: instance.getMessage(guild, "PERGUNTA"),
-						value: (scope = interaction.options.getString("question")),
+						value: interaction.options.getString("question"),
 					},
 					{
 						name: instance.getMessage(guild, "PREVISAO"),

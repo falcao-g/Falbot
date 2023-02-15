@@ -1,6 +1,10 @@
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require("discord.js")
+const {
+	EmbedBuilder,
+	ButtonBuilder,
+	ActionRowBuilder,
+	SlashCommandBuilder,
+} = require("discord.js")
 const builder = require("../utils/snake-builder.js")
-const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()

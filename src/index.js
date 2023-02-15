@@ -1,6 +1,12 @@
 const { randint, changeDB, format } = require("./utils/functions.js")
-const { Client, GatewayIntentBits, Collection } = require("discord.js")
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js")
+const {
+	Client,
+	GatewayIntentBits,
+	Collection,
+	EmbedBuilder,
+	ActionRowBuilder,
+	ButtonBuilder,
+} = require("discord.js")
 const path = require("path")
 require("dotenv").config()
 const mongoose = require("mongoose")

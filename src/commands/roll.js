@@ -16,7 +16,7 @@ module.exports = {
 				.setDescriptionLocalization("pt-BR", "dados a serem rolados")
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, user, instance }) => {
+	execute: async ({ guild, interaction, instance }) => {
 		try {
 			await interaction.deferReply()
 			text = interaction.options.getString("dice")

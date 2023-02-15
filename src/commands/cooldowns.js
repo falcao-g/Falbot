@@ -1,6 +1,10 @@
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder } = require("discord.js")
+const {
+	EmbedBuilder,
+	ButtonBuilder,
+	ActionRowBuilder,
+	SlashCommandBuilder,
+} = require("discord.js")
 const { readFile, getRoleColor, msToTime } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -14,10 +18,12 @@ module.exports = {
 	execute: async ({ guild, user, interaction, instance }) => {
 		await interaction.deferReply()
 		try {
-			voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
-			scratchCooldown = await instance.coolSchema.findById(`scratch-${user.id}`)
-			workCooldown = await instance.coolSchema.findById(`work-${user.id}`)
-			lotto = await instance.lottoSchema.findById("semanal")
+			const voteCooldown = Date.now() - (await readFile(user.id, "lastVote"))
+			const scratchCooldown = await instance.coolSchema.findById(
+				`scratch-${user.id}`
+			)
+			const workCooldown = await instance.coolSchema.findById(`work-${user.id}`)
+			const lotto = await instance.lottoSchema.findById("semanal")
 			const embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, user.id))
 				.setFooter({ text: "by Falcão ❤️" })

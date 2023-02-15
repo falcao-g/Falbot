@@ -1,4 +1,3 @@
-const { expression } = require("mathjs")
 const userSchema = require("../schemas/user-schema")
 const { ActionRowBuilder } = require("discord.js")
 
@@ -115,8 +114,8 @@ async function specialArg(arg, id, field = "falcoins") {
 			}
 		}
 	}
-	if (parseInt(new_arg) < 0 || isNaN(parseInt(new_arg))) {
-		throw Error("Argumento inválido!")
+	if (parseInt(new_arg) <= 0 || isNaN(parseInt(new_arg))) {
+		throw Error("Invalid value!")
 	} else {
 		return parseInt(new_arg)
 	}
@@ -238,7 +237,7 @@ function pick(data) {
 }
 
 function rollDice(expressionRaw) {
-//a limit here would be nice
+	//a limit here would be nice
 	var expression = ""
 	for (let c = 0; c < expressionRaw.length; c++) {
 		if (["+", "-"].includes(expressionRaw[c]) && expressionRaw[c - 1] !== " ") {

@@ -1,4 +1,8 @@
-const { ActionRowBuilder, ButtonBuilder } = require("discord.js")
+const {
+	ActionRowBuilder,
+	ButtonBuilder,
+	SlashCommandBuilder,
+} = require("discord.js")
 const Board = require("tictactoe-board")
 const {
 	getMember,
@@ -8,7 +12,6 @@ const {
 	randint,
 	changeDB,
 } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -48,7 +51,7 @@ module.exports = {
 				guild,
 				interaction.options.getUser("user").id
 			)
-			var falcoins = interaction.options.getString("falcoins")
+			const falcoins = interaction.options.getString("falcoins")
 			if (member2 != member) {
 				try {
 					var bet = await specialArg(falcoins, user.id, "falcoins")
@@ -62,8 +65,7 @@ module.exports = {
 				}
 				if (
 					(await readFile(member.user.id, "falcoins")) >= bet &&
-					(await readFile(member2.user.id, "falcoins")) >= bet &&
-					bet > 0
+					(await readFile(member2.user.id, "falcoins")) >= bet
 				) {
 					const row4 = new ActionRowBuilder().addComponents([
 						new ButtonBuilder()

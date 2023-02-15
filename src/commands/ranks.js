@@ -1,6 +1,5 @@
-const { EmbedBuilder } = require("discord.js")
 const { readFile, changeDB, format } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,11 +29,11 @@ module.exports = {
 	execute: async ({ guild, user, interaction, instance }) => {
 		try {
 			await interaction.deferReply()
-			type = interaction.options.getSubcommand()
-			var levels = instance.levels
+			const type = interaction.options.getSubcommand()
+			const levels = instance.levels
 
 			if (type === "rankup") {
-				var rank_number = await readFile(user.id, "rank")
+				const rank_number = await readFile(user.id, "rank")
 				rank = levels[rank_number - 1]
 
 				if (rank.falcoinsToLevelUp === undefined) {
@@ -54,7 +53,7 @@ module.exports = {
 						}),
 					})
 				} else {
-					new_rank = levels[rank_number]
+					const new_rank = levels[rank_number]
 
 					await changeDB(user.id, "falcoins", -rank.falcoinsToLevelUp)
 					await changeDB(user.id, "rank", rank_number + 1, true)
@@ -62,7 +61,7 @@ module.exports = {
 					perks = await instance.rankPerks(rank, new_rank, guild)
 
 					var embed = new EmbedBuilder()
-						.setColor("AQUA")
+						.setColor(1752220)
 						.addFields(
 							{
 								name: "Rank Up!",
@@ -83,8 +82,8 @@ module.exports = {
 					})
 				}
 			} else if (type === "view") {
-				var rank_number = await readFile(user.id, "rank")
-				if (levels[rank_number + 1].falcoinsToLevelUp === undefined) {
+				const rank_number = await readFile(user.id, "rank")
+				if (levels[rank_number - 1].falcoinsToLevelUp === undefined) {
 					await interaction.editReply({
 						content: instance.getMessage(guild, "MAX_RANK", {
 							USER: user,
@@ -93,7 +92,7 @@ module.exports = {
 					return
 				}
 
-				quantity = levels.length - rank_number
+				var quantity = levels.length - rank_number
 				if (quantity > 3) {
 					quantity = 3
 				}

@@ -1,4 +1,3 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -7,7 +6,12 @@ const {
 	changeDB,
 	format,
 } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
+const {
+	SlashCommandBuilder,
+	EmbedBuilder,
+	ActionRowBuilder,
+	ButtonBuilder,
+} = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -34,7 +38,7 @@ module.exports = {
 	execute: async ({ guild, interaction, instance, user }) => {
 		await interaction.deferReply()
 		try {
-			falcoins = interaction.options.getString("falcoins")
+			const falcoins = interaction.options.getString("falcoins")
 			try {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
@@ -45,7 +49,7 @@ module.exports = {
 				})
 				return
 			}
-			if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
+			if ((await readFile(user.id, "falcoins")) >= bet) {
 				await changeDB(user.id, "falcoins", -bet)
 				multiplier = 0.8
 				const embed = new EmbedBuilder()
@@ -93,8 +97,8 @@ module.exports = {
 					max: 1,
 				})
 
-				crashed = false
-				lost = false
+				var crashed = false
+				var lost = false
 
 				collector.on("collect", async (i) => {
 					crashed = true

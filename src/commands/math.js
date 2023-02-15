@@ -1,7 +1,6 @@
-const { EmbedBuilder } = require("discord.js")
 const math = require("mathjs")
 const { getRoleColor } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -25,8 +24,10 @@ module.exports = {
 	execute: async ({ interaction, guild, user, instance }) => {
 		try {
 			await interaction.deferReply()
-			text = interaction.options.getString("expression").replaceAll("**", "^")
-			answer = await math.evaluate(text).toString()
+			const text = interaction.options
+				.getString("expression")
+				.replaceAll("**", "^")
+			const answer = await math.evaluate(text).toString()
 
 			const embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, user.id))

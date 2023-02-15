@@ -1,6 +1,5 @@
-const { EmbedBuilder } = require("discord.js")
 const { getRoleColor, readFile, changeDB } = require("../utils/functions.js")
-const { SlashCommandBuilder } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
