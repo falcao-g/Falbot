@@ -260,6 +260,8 @@ class Falbot {
 
 	ban(userId) {
 		this._banned.push(userId)
+		//ensure banned users don't get vote reminders, because it would be a spam
+		changeDB(userId, "voteReminder", false, true)
 	}
 
 	unban(userId) {
