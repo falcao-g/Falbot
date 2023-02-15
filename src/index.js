@@ -106,7 +106,7 @@ class Falbot {
 
 	async bankInterest() {
 		let interest = await this.interestSchema.findById("interest")
-		if (Date.now() - interest.lastInterest > interest.interestTime) {
+		if (Date.now() - interest.lastInterest > 1000 * 60 * 60 * 24) {
 			console.log("poupança!")
 			interest.lastInterest = Date.now().toString()
 
@@ -114,14 +114,11 @@ class Falbot {
 				banco: { $gt: 0 },
 			})
 
-			let user
-			for (user of users) {
+			for (let user of users) {
 				var limit = this.levels[user.rank - 1].bankLimit
 
 				if (limit > user.banco) {
-					user.banco += Math.floor(
-						parseInt(user.banco * parseFloat(interest.interestRate))
-					)
+					user.banco += Math.floor(parseInt(user.banco * 0.1))
 				}
 
 				if (user.banco > limit) {
@@ -140,9 +137,7 @@ class Falbot {
 				voteReminder: true,
 			})
 
-			let user
-			for (user of users) {
-				//send dm reminder vote if user wants to
+			for (let user of users) {
 				if (
 					Date.now() - user.lastVote > 1000 * 60 * 60 * 12 &&
 					Date.now() - user.lastReminder > 1000 * 60 * 60 * 12
@@ -190,20 +185,16 @@ class Falbot {
 		if (Date.now() > lotto.nextDraw) {
 			console.log("loteria!")
 
-			var users = await this.userSchema.find({
+			const users = await this.userSchema.find({
 				tickets: { $gt: 0 },
 			})
 
 			if (users.length > 0) {
-				var numTickets = 0
-				let user
-				for (user of users) {
-					numTickets += user.tickets
-				}
+				const numTickets = users.reduce((acc, user) => acc + user.tickets, 0)
 
 				var winner
 				while (winner === undefined) {
-					for (user of users) {
+					for (let user of users) {
 						if (randint(1, numTickets) <= user.tickets) {
 							winner = user
 						}
