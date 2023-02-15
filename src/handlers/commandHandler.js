@@ -25,22 +25,6 @@ async function loadCommands(instance, client) {
 
 	client.application.commands.set(commandsArray)
 	client.application.commands.set(commandsGuild, instance.config.testGuild)
-
-	if (commandsArray.length > 0) {
-		fetch(
-			`https://discordbotlist.com/api/v1/bots/${instance.config.botId}/commands`,
-			{
-				method: "POST",
-				headers: {
-					Authorization: process.env.Authorization2,
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(commandsArray),
-			}
-		)
-			.then((response) => response.json())
-			.then((response) => console.log(JSON.stringify(response)))
-	}
 }
 
 module.exports = { loadCommands }
