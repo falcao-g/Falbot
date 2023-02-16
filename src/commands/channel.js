@@ -1,4 +1,8 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js")
+const {
+	SlashCommandBuilder,
+	PermissionFlagsBits,
+	ChannelType,
+} = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -29,6 +33,7 @@ module.exports = {
 						.setDescription("channel to be deactivated")
 						.setDescriptionLocalization("pt-BR", "canal para ser desativado")
 						.setRequired(true)
+						.addChannelTypes(ChannelType.GuildText)
 				)
 		)
 		.addSubcommand((subcommand) =>
@@ -47,6 +52,7 @@ module.exports = {
 						.setDescription("channel to be deactivated")
 						.setDescriptionLocalization("pt-BR", "canal para ser reativado")
 						.setRequired(true)
+						.addChannelTypes(ChannelType.GuildText)
 				)
 		),
 	execute: async ({ guild, interaction, instance }) => {
