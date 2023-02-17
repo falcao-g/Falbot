@@ -167,7 +167,11 @@ async function getRoleColor(guild, member_id) {
 }
 
 async function getMember(guild, member_id) {
-	return guild.members.cache.get(member_id)
+	try {
+		return await guild.members.fetch(member_id)
+	} catch {
+		return undefined
+	}
 }
 
 function count(array, string) {
