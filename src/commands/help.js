@@ -48,14 +48,14 @@ module.exports = {
 						value: "fun",
 					},
 					{
-						name: "🌎 languages",
-						name_localizations: { "pt-BR": "🌎 idiomas" },
-						value: "language",
-					},
-					{
 						name: "📝 utils",
 						name_localizations: { "pt-BR": "📝 úteis" },
 						value: "utils",
+					},
+					{
+						name: "⚙️ config",
+						name_localizations: { "pt-BR": "⚙️ configuração" },
+						value: "config",
 					}
 				)
 		),
@@ -98,16 +98,15 @@ module.exports = {
 					name: instance.getMessage(guild, "HELP_FUN"),
 					value: instance.getMessage(guild, "HELP_FUN2"),
 				})
-			} else if (page === "language") {
-				embed.setTitle(instance.getMessage(guild, "HELP_LANGUAGE"))
-				embed.addFields({
-					name: instance.getMessage(guild, "HELP_LANGUAGE2"),
-					value: instance.getMessage(guild, "HELP_LANGUAGE3"),
-				})
 			} else if (page === "utils") {
 				embed.addFields({
 					name: instance.getMessage(guild, "HELP_UTILS"),
 					value: instance.getMessage(guild, "HELP_UTILS2"),
+				})
+			} else if (page === "config") {
+				embed.addFields({
+					name: instance.getMessage(guild, "HELP_CONFIG"),
+					value: instance.getMessage(guild, "HELP_CONFIG2"),
 				})
 			} else {
 				embed.setTitle(instance.getMessage(guild, "FALBOT_WELCOME"))
@@ -140,13 +139,13 @@ module.exports = {
 						inline: true,
 					},
 					{
-						name: ":earth_americas: " + instance.getMessage(guild, "LANGUAGE"),
-						value: instance.getMessage(guild, "HELP_LANGUAGE4"),
+						name: ":pencil: " + instance.getMessage(guild, "UTILS"),
+						value: instance.getMessage(guild, "HELP_UTILS3"),
 						inline: true,
 					},
 					{
-						name: ":pencil: " + instance.getMessage(guild, "UTILS"),
-						value: instance.getMessage(guild, "HELP_UTILS3"),
+						name: ":gear: " + instance.getMessage(guild, "CONFIG"),
+						value: instance.getMessage(guild, "HELP_CONFIG3"),
 						inline: true,
 					}
 				)
@@ -182,14 +181,14 @@ module.exports = {
 							emoji: "🎉",
 						},
 						{
-							label: instance.getMessage(guild, "LANGUAGE"),
-							value: "language",
-							emoji: "🌎",
-						},
-						{
 							label: instance.getMessage(guild, "UTILS"),
 							value: "utils",
 							emoji: "📝",
+						},
+						{
+							label: instance.getMessage(guild, "CONFIG"),
+							value: "config",
+							emoji: "⚙️",
 						}
 					)
 			)

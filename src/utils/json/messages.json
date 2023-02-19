@@ -494,18 +494,6 @@
 		"portugues": "-Suba de rank com `/ranks rankup` para ganhar **várias recompensas** que te ajudam a ganhar mais falcoins\n-Você pode ver os próximos ranks com `/ranks ver` e ver todos os ranks com `/ranks todos`\n-`/conta` também mostra quão longe você está do próximo rank\n-Suba de rank para alcançar **posições mais altas** na `/classificação rank`",
 		"english": "-Rank up with `/ranks rankup` to receive **multiple rewards** that help you earn more falcoins\n-You can see upcoming ranks with `/ranks view` and all ranks with `/ranks all`\n-`/balance` also shows how far you are from the next rank\n-Rank up to achieve a **higher position** in the `/leaderboard rank`"
 	},
-	"HELP_LANGUAGE": {
-		"portugues": ":earth_americas: Escolha a linguagem desejada",
-		"english": ":earth_americas: Choose your desired language"
-	},
-	"HELP_LANGUAGE2": {
-		"portugues": "O falbot é um bot bilíngue!",
-		"english": "Falbot is a bilingual!"
-	},
-	"HELP_LANGUAGE3": {
-		"portugues": "-O idioma padrão do falbot é :flag_br: Português-Brasil, mas é possível mudar para inglês usando `/idioma english` e de volta para português com `/idioma portugues`\n-Para ver o idioma atual do servidor, utilize `/idioma`",
-		"english": "-Falbot's default language is :flag_br: Portuguese-Brazil, but it's possible to change to english using `/language english` and back to portuguese using `/language portugues`\n-To see which language your server is currently using, use `/language`"
-	},
 	"HELP_FUN": {
 		"portugues": ":tada: Quer se divertir sem se preocupar com falcoins?",
 		"english": ":tada: Want to have fun without worrying abou falcoins?"
@@ -521,6 +509,14 @@
 	"HELP_UTILS2": {
 		"portugues": "-Faça uma pequena enquete com `/enquete`\n-Deixe o falbot resolver expressões matemáticas para você com `/mat`\n-Role dados usando `/rolar`\n-Veja informações e links úteis sobre o bot com `/botinfo`",
 		"english": "-Do a pretty little poll with `/poll`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`\n-See stats and useful links regarding the bot with `/botinfo`"
+	},
+	"HELP_CONFIG": {
+		"portugues": ":gear: Configurando o Falbot para o seu servidor",
+		"english": ":gear: Configuring Falbot to your server"
+	},
+	"HELP_CONFIG2": {
+		"portugues": "-Escolha o idioma a ser usado nesse servidor com `/idioma`\n-Desative/reative canais com `/canal`, canais desativados seram ignorados pelo bot",
+		"english": "-Choose the language to be used in your server with `/language`\n-Disable/enable channels with `/channel`, disabled channels will be ignored by the bot"
 	},
 	"INTRODUCTION": {
 		"portugues": "Introdução",
@@ -538,20 +534,20 @@
 		"portugues": "Diversão",
 		"english": "Fun"
 	},
-	"LANGUAGE": {
-		"portugues": "Idioma",
-		"english": "Language"
-	},
 	"UTILS": {
 		"portugues": "Úteis",
 		"english": "Utils"
+	},
+	"CONFIG": {
+		"portugues": "Configuração",
+		"english": "Configuration"
 	},
 	"HELP_INTRODUCTION": {
 		"portugues": "*Introdução ao jogo*",
 		"english": "*Bot's gameplay introduction*"
 	},
 	"HELP_INTRODUCTION2": {
-		"portugues": "**:sparkles: Seu objetivo é subir nos ranks do jogo até se tornar o número um\n:partying_face: Ou só se divertir com seus amigos\n:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/conta`\n:stopwatch: O comando `/cooldowns` mostra eventos e certos comandos que tem um tempo de espera\n:bank: Deposite regularmente no seu banco para coletar interesse no seu dinheiro\n:arrow_double_up: Suba de rank sempre que possível para ótimos benefícios! Veja a página de ranks para saber mais`\n:question: Veja as outras páginas desse comando para aprender a usar uma feature específica do Falbot\n:100: Nós cobrimos o básico, mas o Falbot oferece muito mais\n:fire: Continue jogando e experimentando, mas mais importante, se divirta!**",
+		"portugues": "**:sparkles: Seu objetivo é subir nos ranks do jogo até se tornar o número um\n:partying_face: Ou só se divertir com seus amigos\n:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/conta`\n:stopwatch: O comando `/cooldowns` mostra eventos e certos comandos que tem um tempo de espera\n:bank: Deposite regularmente no seu banco para coletar interesse no seu dinheiro\n:arrow_double_up: Suba de rank sempre que possível para ótimos benefícios! Veja a página de ranks para saber mais\n:question: Veja as outras páginas desse comando para aprender a usar uma feature específica do Falbot\n:100: Nós cobrimos o básico, mas o Falbot oferece muito mais\n:fire: Continue jogando e experimentando, mas mais importante, se divirta!**",
 		"english": "**:sparkles: Your goal is to climb the ranks of the game to become number one\n:partying_face: Or just have fun with your friends\n:coin: See your falcoins and other information at any time using `/balance`\n:stopwatch: The `/cooldowns` displays events and commands that have a cooldown\n:bank: Deposit regularly in your bank to collect interest in your money\n:arrow_double_up: Rank up whenever possible to earn awesome perks! See the ranks page for more details\n:question: See the other pages of this command to learn how to use a specific feature of Falbot\n:100: We've covered the basics, but Falbot offers much more\n:fire: Keep playing and experimenting, but more importantly, have fun!**"
 	},
 	"COMMANDS_ALL2": {
@@ -570,13 +566,13 @@
 		"portugues": "*Diversão sem falcoins*",
 		"english": "*Fun without falcoins*"
 	},
-	"HELP_LANGUAGE4": {
-		"portugues": "*Configurando o idioma do servidor*",
-		"english": "*Configuring the server's language*"
-	},
 	"HELP_UTILS3": {
 		"portugues": "*Usando falbot no dia-a-dia*",
 		"english": "*Using falbot in your daily life*"
+	},
+	"HELP_CONFIG3": {
+		"portugues": "*Configurando falbot para o seu servidor*",
+		"english": "*Configuring falbot for your server*"
 	},
 	"FALBOT_WELCOME": {
 		"portugues": ":wave: Bem-vindo ao falbot! Use o menu para escolher uma página de ajuda",
@@ -587,8 +583,8 @@
 		"english": ":money_with_wings: Earning more falcoins"
 	},
 	"HELP_ECONOMY3": {
-		"portugues": "**:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/conta`**\n**:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/banco depositar`, `/banco ver` para ver suas informações e `/banco sacar` para sacar\n:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/voto`, use `/lembrete` para ser lembrado quando isso for possível**\n**:stopwatch: `/cooldowns` mostra os eventos ativos e quanto tempo falta até você poder executar certos comandos novamente**\n\n**:busts_in_silhouette: Interaja com outros usuários**\n-Desafie seus amigos com `/corrida`, `/velha`, `/roletarussa` e `/luta`, ou doe dinheiro pra eles com `/doar`\n-Veja os melhores jogadores em diferentes categorias com `/classificação rank`, `/classificação falcoins` e `/classificação wins`\n\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/níquel`, `/roleta`, `/cavalo`, `/olhoscobra` e `/colapso`**",
-		"english": "**:coin: See your falcoins and other information at any time using `/balance`**\n**:bank: Deposit your money in the bank and watch as it increases with `/bank deposit`, `/bank view` to see yout info and `/bank withdraw` to withdraw\n:ballot_box: Vote every 12 hours to earn falcoins with `/vote`, use `/reminder` to be reminded everytime this is possible**\n**:stopwatch: `/cooldowns` shows active events and the time left for you to be able to execute some commands again**\n\n**:busts_in_silhouette: Interact with another users**\n-Challenge your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`, or give them money with `/donate`\n-See the top players in different categories using `/leaderboard rank`, `/leaderboard falcoins` and `/leaderboard wins`\n\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes` and `/crash`**"
+		"portugues": "**:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/conta`**\n**:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/banco depositar`, `/banco ver` para ver suas informações e `/banco sacar` para sacar\n:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/voto`, use `/lembrete` para ser lembrado quando isso for possível**\n**:stopwatch: `/cooldowns` mostra os eventos ativos e quanto tempo falta até você poder executar certos comandos novamente**\n\n**:busts_in_silhouette: Interaja com outros usuários**\n-Desafie seus amigos com `/corrida`, `/velha`, `/roletarussa` e `/luta`, ou doe dinheiro pra eles com `/doar`\n-Veja os melhores jogadores em diferentes categorias com `/classificação rank`, `/classificação falcoins` e `/classificação wins`\n\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/níquel`, `/roleta`, `/cavalo`, `/olhoscobra`, `blackjack` e `/colapso`**",
+		"english": "**:coin: See your falcoins and other information at any time using `/balance`**\n**:bank: Deposit your money in the bank and watch as it increases with `/bank deposit`, `/bank view` to see yout info and `/bank withdraw` to withdraw\n:ballot_box: Vote every 12 hours to earn falcoins with `/vote`, use `/reminder` to be reminded everytime this is possible**\n**:stopwatch: `/cooldowns` shows active events and the time left for you to be able to execute some commands again**\n\n**:busts_in_silhouette: Interact with another users**\n-Challenge your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`, or give them money with `/donate`\n-See the top players in different categories using `/leaderboard rank`, `/leaderboard falcoins` and `/leaderboard wins`\n\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes`, `/blackjack` and `/crash`**"
 	},
 	"PICK_PAGE": {
 		"portugues": "Escolha uma página de ajuda...",
