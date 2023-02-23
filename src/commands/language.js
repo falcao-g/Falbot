@@ -45,7 +45,6 @@ module.exports = {
 					_id: guildUser.id,
 				},
 				{
-					_id: guildUser.id,
 					language: lang,
 				},
 				{
