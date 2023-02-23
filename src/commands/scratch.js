@@ -10,6 +10,7 @@ const {
 	changeDB,
 	getRoleColor,
 	msToTime,
+	cooldown,
 } = require("../utils/functions.js")
 
 module.exports = {
@@ -36,7 +37,7 @@ module.exports = {
 				return
 			}
 
-			newCooldown = 60 * 60 * 8
+			cooldown(user.id, "scratch", 60 * 60 * 8)
 
 			const row = new ActionRowBuilder()
 			const row2 = new ActionRowBuilder()
@@ -98,7 +99,7 @@ module.exports = {
 						})}`,
 					})
 					cont = 0
-					newCooldown = 60 * 60 * 16
+					cooldown(user.id, "scratch", 60 * 60 * 16)
 					collector.stop()
 				} else if (luck === 24) {
 					//super close
@@ -111,7 +112,7 @@ module.exports = {
 						})}`,
 					})
 					cont = 0
-					newCooldown = 60 * 60 * 12
+					cooldown(user.id, "scratch", 60 * 60 * 12)
 					collector.stop()
 				} else if (luck === 23 || luck === 22) {
 					//pretty close
@@ -124,7 +125,7 @@ module.exports = {
 						})}`,
 					})
 					cont = 0
-					newCooldown = 60 * 60 * 10
+					cooldown(user.id, "scratch", 60 * 60 * 10)
 					collector.stop()
 				} else if (luck === 21 || luck === 20) {
 					//kinda close
@@ -176,15 +177,6 @@ module.exports = {
 						components: [],
 					})
 				}
-			})
-
-			collector.on("end", async () => {
-				await new instance.coolSchema({
-					_id: `scratch-${user.id}`,
-					name: "scratch",
-					type: "per-user",
-					cooldown: newCooldown,
-				}).save()
 			})
 		} catch (error) {
 			console.error(`scratch: ${error}`)

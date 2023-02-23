@@ -5,6 +5,7 @@ const {
 	randint,
 	format,
 	msToTime,
+	cooldown,
 } = require("../utils/functions.js")
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
@@ -66,12 +67,7 @@ module.exports = {
 				embeds: [embed],
 			})
 
-			await new instance.coolSchema({
-				_id: `work-${user.id}`,
-				name: "work",
-				type: "per-user",
-				cooldown: 60 * 60,
-			}).save()
+			cooldown(user.id, "work", 60 * 60)
 		} catch (err) {
 			console.error(`work: ${err}`)
 			interaction.editReply({

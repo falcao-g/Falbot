@@ -1,4 +1,5 @@
 const userSchema = require("../schemas/user-schema")
+const coolSchema = require("../schemas/cool-schema")
 const { ActionRowBuilder } = require("discord.js")
 
 async function createUser(id) {
@@ -319,6 +320,20 @@ function rollDice(expressionRaw) {
 	return result
 }
 
+async function cooldown(id, command, cooldown) {
+	await coolSchema.findOneAndUpdate(
+		{
+			_id: `${command}-${id}`,
+		},
+		{
+			cooldown: cooldown,
+		},
+		{
+			upsert: true,
+		}
+	)
+}
+
 module.exports = {
 	createUser,
 	changeDB,
@@ -334,4 +349,5 @@ module.exports = {
 	paginate,
 	pick,
 	rollDice,
+	cooldown,
 }
