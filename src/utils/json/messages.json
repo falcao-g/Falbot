@@ -815,8 +815,8 @@
 		"english": "You are trying to roll too many dice! :confounded:"
 	},
 	"BLACKJACK_TITLE": {
-		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:boom: `Comprar` **- compra uma nova carta**\n:no_entry: `Parar` **- termina o jogo**\n:money_with_wings: `Dobrar` **- dobra sua aposta, compra uma carta e depois para**",
-		"english": ":moneybag: **Bet: {BET} falcoins**\n:boom: `Hit` **- take another card**\n:no_entry: `Stand` **- end the game**\n:money_with_wings: `Double Down` **- double your bet, hit once, then stand**"
+		"portugues": ":moneybag: `Aposta` **- {BET} falcoins**\n:boom: `Comprar` **- compra uma nova carta**\n:no_entry: `Parar` **- termina o jogo**\n:money_with_wings: `Dobrar` **- dobra sua aposta, compra uma carta e depois para**",
+		"english": ":moneybag: `Bet` **- {BET} falcoins**\n:boom: `Hit` **- take another card**\n:no_entry: `Stand` **- end the game**\n:money_with_wings: `Double Down` **- double your bet, hit once, then stand**"
 	},
 	"PLAYER_HAND": {
 		"portugues": "Sua mão\n{CARDS}",
@@ -827,7 +827,7 @@
 		"english": "Dealer's hand\n{CARDS}"
 	},
 	"VALUE": {
-		"portugues": "**Valor: {VALUE}**",
+		"portugues": "**Total: {VALUE}**",
 		"english": "**Value: {VALUE}**"
 	},
 	"HIT": {

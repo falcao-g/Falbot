@@ -68,10 +68,11 @@ module.exports = {
 					7: await guild.emojis.fetch("1078109882999373854"),
 					8: await guild.emojis.fetch("1078116894546067466"),
 					9: await guild.emojis.fetch("1078110567555928176"),
-					10: await guild.emojis.fetch("1078119199471308970"),
+					10: await guild.emojis.fetch("1078374320394485790"),
 					J: await guild.emojis.fetch("1078109887390810232"),
 					Q: await guild.emojis.fetch("1078109891513827460"),
 					K: await guild.emojis.fetch("1078109890066776155"),
+					hidden: await guild.emojis.fetch("1078109885734064128"),
 				}
 
 				var player_cards = []
@@ -84,6 +85,7 @@ module.exports = {
 				Game.table.dealer.cards.forEach((element) => {
 					dealer_cards.push(enum_cards[element.name.substr(0, 2).trim()])
 				})
+				dealer_cards.push(enum_cards["hidden"])
 
 				const embed = new EmbedBuilder()
 					.addFields(
@@ -163,10 +165,10 @@ module.exports = {
 								player_cards.push(enum_cards[element.name.substr(0, 2).trim()])
 							})
 
-							//push the hidden card
 							Game.table.dealer.cards.forEach((element) => {
 								dealer_cards.push(enum_cards[element.name.substr(0, 2).trim()])
 							})
+							dealer_cards.push(enum_cards["hidden"])
 
 							embed.data.fields[1] = {
 								name: instance.getMessage(guild, "PLAYER_HAND", {
@@ -247,7 +249,7 @@ module.exports = {
 						inline: true,
 					}
 
-					if (results.state === "draw" || results.state === "waiting") {
+					if (results.state === "draw") {
 						embed.data.fields[0].value = instance.getMessage(
 							guild,
 							"BLACKJACK_DRAW",
