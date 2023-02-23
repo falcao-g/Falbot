@@ -814,6 +814,62 @@
 		"portugues": "Você está tentando rolar dados demais! :confounded:",
 		"english": "You are trying to roll too many dice! :confounded:"
 	},
+	"BLACKJACK_TITLE": {
+		"portugues": ":moneybag: **Aposta: {BET} falcoins**\n:boom: `Comprar` **- compra uma nova carta**\n:no_entry: `Parar` **- termina o jogo**\n:money_with_wings: `Dobrar` **- dobra sua aposta, compra uma carta e depois para**",
+		"english": ":moneybag: **Bet: {BET} falcoins**\n:boom: `Hit` **- take another card**\n:no_entry: `Stand` **- end the game**\n:money_with_wings: `Double Down` **- double your bet, hit once, then stand**"
+	},
+	"PLAYER_HAND": {
+		"portugues": "Sua mão\n{CARDS}",
+		"english": "Your hand\n{CARDS}"
+	},
+	"DEALER_HAND": {
+		"portugues": "Mão do dealer\n{CARDS}",
+		"english": "Dealer's hand\n{CARDS}"
+	},
+	"VALUE": {
+		"portugues": "**Valor: {VALUE}**",
+		"english": "**Value: {VALUE}**"
+	},
+	"HIT": {
+		"portugues": "Comprar",
+		"english": "Hit"
+	},
+	"STAND": {
+		"portugues": "Parar",
+		"english": "Stand"
+	},
+	"DOUBLE": {
+		"portugues": "Dobrar",
+		"english": "Double down"
+	},
+	"BLACKJACK_DRAW": {
+		"portugues": "Empate, você recebeu de volta {FALCOINS} falcoins",
+		"english": "Draw, you received back {FALCOINS} falcoins"
+	},
+	"PLAYER_BLACKJACK": {
+		"portugues": "21! Você ganhou {FALCOINS} falcoins",
+		"english": "Blackjack! you won {FALCOINS} falcoins"
+	},
+	"DEALER_BUST": {
+		"portugues": "O dealer estorou! Você ganhou {FALCOINS} falcoins",
+		"english": "Dealer bust! you won {FALCOINS} falcoins"
+	},
+	"YOU_WON": {
+		"portugues": "Você ganhou {FALCOINS} falcoins",
+		"english": "You won {FALCOINS} falcoins"
+	},
+	"PLAYER_BUST": {
+		"portugues": "Você estorou! Você perdeu {FALCOINS} falcoins",
+		"english": "You busted! You lost {FALCOINS} falcoins"
+	},
+	"YOU_LOST": {
+		"portugues": "Você perdeu {FALCOINS} falcoins",
+		"english": "You lost {FALCOINS} falcoins"
+	},
+	"DEALER_BLACKJACK": {
+		"portugues": "21 do dealer! Você perdeu {FALCOINS} falcoins",
+		"english": "Dealer blackjack! you lost {FALCOINS} falcoins"
+	},
 	"1": {
 		"portugues": ":potato: Plebeu",
 		"english": ":potato: Peasent"
