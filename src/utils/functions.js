@@ -1,5 +1,6 @@
 const userSchema = require("../schemas/user-schema")
-const { MessageActionRow } = require("discord.js")
+const coolSchema = require("../schemas/cool-schema")
+const { ActionRowBuilder } = require("discord.js")
 
 async function createUser(id) {
 	try {
@@ -96,6 +97,9 @@ async function specialArg(arg, id, field = "falcoins") {
 		new_arg = user[field]
 	} else if (new_arg == "metade" || new_arg == "half") {
 		new_arg = parseInt(user[field] / 2)
+	} else if (new_arg.slice(-1) === "k") {
+		new_arg = new_arg.slice(0, -1)
+		new_arg += "000"
 	} else if (new_arg.slice(-1) === "m") {
 		new_arg = new_arg.slice(0, -1)
 		new_arg += "000000"
@@ -114,8 +118,8 @@ async function specialArg(arg, id, field = "falcoins") {
 			}
 		}
 	}
-	if (parseInt(new_arg) < 0 || isNaN(parseInt(new_arg))) {
-		throw Error("Argumento inválido!")
+	if (parseInt(new_arg) <= 0 || isNaN(parseInt(new_arg))) {
+		throw Error("Invalid value!")
 	} else {
 		return parseInt(new_arg)
 	}
@@ -167,7 +171,11 @@ async function getRoleColor(guild, member_id) {
 }
 
 async function getMember(guild, member_id) {
-	return guild.members.cache.get(member_id)
+	try {
+		return await guild.members.fetch(member_id)
+	} catch {
+		return undefined
+	}
 }
 
 function count(array, string) {
@@ -212,7 +220,7 @@ function paginate() {
 			return {
 				embeds: [__embeds.at(cur)],
 				components: [
-					new MessageActionRow().addComponents(traverser[0], traverser[1]),
+					new ActionRowBuilder().addComponents(traverser[0], traverser[1]),
 				],
 				fetchReply: true,
 			}
@@ -236,6 +244,99 @@ function pick(data) {
 	return values[weightsSum.filter((element) => element <= rand).length]
 }
 
+function rollDice(expressionRaw) {
+	var expression = ""
+	for (let c = 0; c < expressionRaw.length; c++) {
+		if (["+", "-"].includes(expressionRaw[c]) && expressionRaw[c - 1] !== " ") {
+			expression += ` ${expressionRaw[c]} `
+			continue
+		}
+		expression += expressionRaw[c]
+	}
+
+	const parts = expression.split(" ")
+	let result = ""
+	let total = 0
+	let add = true
+
+	for (let i = 0; i < parts.length; i++) {
+		let part = parts[i]
+		let matches
+
+		if (part.startsWith("d")) {
+			part = "1" + part
+		}
+
+		if (part === "+") {
+			add = true
+			result += ` + `
+			continue
+		} else if (part === "-") {
+			add = false
+			result += ` - `
+			continue
+		}
+
+		if ((matches = part.match(/^(\d+)d(\d+)$/))) {
+			let count = parseInt(matches[1])
+			let sides = parseInt(matches[2])
+			let rolls = []
+
+			for (let j = 0; j < count; j++) {
+				let roll = randint(1, sides)
+				rolls.push(roll)
+				if (add) {
+					total += roll
+				} else {
+					total -= roll
+				}
+			}
+
+			result += part + " ("
+			for (let j = 0; j < rolls.length; j++) {
+				if (rolls[j] === 1) {
+					result += "**" + rolls[j] + "**"
+				} else if (rolls[j] === sides) {
+					result += "**" + rolls[j] + "**"
+				} else {
+					result += rolls[j]
+				}
+				if (j < rolls.length - 1) {
+					result += ", "
+				}
+			}
+			result += ")"
+		} else if ((matches = part.match(/^\d+$/))) {
+			let value = parseInt(part)
+			result += value
+			if (add) {
+				total += value
+			} else {
+				total -= value
+			}
+		} else {
+			throw new Error("Invalid expression: " + part)
+		}
+	}
+
+	result += " = " + "`" + total + "`"
+	return result
+}
+
+async function cooldown(id, command, cooldown) {
+	await coolSchema.findOneAndUpdate(
+		{
+			_id: `${command}-${id}`,
+		},
+		{
+			cooldown: cooldown,
+		},
+		{
+			upsert: true,
+		}
+	)
+}
+
 module.exports = {
 	createUser,
 	changeDB,
@@ -250,4 +351,6 @@ module.exports = {
 	randint,
 	paginate,
 	pick,
+	rollDice,
+	cooldown,
 }

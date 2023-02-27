@@ -1,61 +1,52 @@
-const { MessageEmbed } = require("discord.js")
-const Roll = require("roll")
-const { getRoleColor } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
+const { rollDice } = require("../utils/functions.js")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Roll dice for you",
-	slash: true,
-	guildOnly: true,
-	testOnly,
-	options: [
-		{
-			name: "dice",
-			description: "dice to be rolled",
-			required: true,
-			type: "STRING",
-		},
-	],
-	callback: async ({ guild, interaction, user, text }) => {
+	data: new SlashCommandBuilder()
+		.setName("roll")
+		.setNameLocalization("pt-BR", "rolar")
+		.setDescription("Roll dice for you")
+		.setDescriptionLocalization("pt-BR", "Rola dados para você")
+		.setDMPermission(false)
+		.addStringOption((option) =>
+			option
+				.setName("dice")
+				.setNameLocalization("pt-BR", "dados")
+				.setDescription("dice to be rolled")
+				.setDescriptionLocalization("pt-BR", "dados a serem rolados")
+				.setRequired(true)
+				.setMaxLength(500)
+		),
+	execute: async ({ guild, interaction, instance }) => {
 		try {
 			await interaction.deferReply()
-			const roll = new Roll()
-			text = text.replace(/\s/g, "")
+			text = interaction.options.getString("dice")
 
-			if (!roll.validate(text)) {
+			try {
+				var rolled = rollDice(text)
+
+				if (rolled.length > 2000) {
+					await interaction.editReply({
+						content: instance.getMessage(guild, "ROLL_LIMIT"),
+					})
+					return
+				}
+			} catch {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(guild, "VALOR_INVALIDO", {
 						VALUE: text,
 					}),
 				})
-			} else {
-				rolled = roll.roll(text).result.toString()
-
-				embed = new MessageEmbed()
-					.setColor(await getRoleColor(guild, user.id))
-					.addFields(
-						{
-							name: "🎲:",
-							value: text,
-							inline: false,
-						},
-						{
-							name: Falbot.getMessage(guild, "RESULTADO"),
-							value: `**${rolled}**`,
-							inline: false,
-						}
-					)
-					.setFooter({ text: "by Falcão ❤️" })
-				await interaction.editReply({
-					embeds: [embed],
-				})
+				return
 			}
+
+			await interaction.editReply({
+				content: `**${instance.getMessage(guild, "RESULTADO")}:** ${rolled}`,
+			})
 		} catch (error) {
 			console.error(`roll: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
-				embeds: [],
+				content: instance.getMessage(guild, "EXCEPTION"),
 			})
 		}
 	},

@@ -1,4 +1,8 @@
-const { MessageActionRow, MessageButton } = require("discord.js")
+const {
+	ActionRowBuilder,
+	ButtonBuilder,
+	SlashCommandBuilder,
+} = require("discord.js")
 const Board = require("tictactoe-board")
 const {
 	getMember,
@@ -8,62 +12,73 @@ const {
 	randint,
 	changeDB,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
 
 module.exports = {
-	description: "Challenge someone to a game of tic tac toe",
-	slash: true,
-	guildOnly: true,
-	testOnly,
-	options: [
-		{
-			name: "user",
-			description: "user to challenge",
-			required: true,
-			type: "USER",
-		},
-		{
-			name: "falcoins",
-			description:
-				'amount of falcoins to bet in the game (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
-			required: true,
-			type: "STRING",
-		},
-	],
-	callback: async ({ guild, interaction, user, args, member }) => {
+	data: new SlashCommandBuilder()
+		.setName("tictactoe")
+		.setNameLocalization("pt-BR", "velha")
+		.setDescription("Challenge someone to a game of tic tac toe")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Desafie outro usuário para um jogo da velha"
+		)
+		.setDMPermission(false)
+		.addUserOption((option) =>
+			option
+				.setName("user")
+				.setNameLocalization("pt-BR", "usuário")
+				.setDescription("user to challenge")
+				.setDescriptionLocalization("pt-BR", "usuário para desafiar")
+				.setRequired(true)
+		)
+		.addStringOption((option) =>
+			option
+				.setName("falcoins")
+				.setDescription(
+					'amount of falcoins to bet in the game (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
+				)
+				.setRequired(true)
+		),
+	execute: async ({ guild, interaction, instance, user, member }) => {
 		try {
 			await interaction.deferReply()
 			var board = new Board.default()
-			const member2 = await getMember(guild, args[0])
+			const member2 = await getMember(
+				guild,
+				interaction.options.getUser("user").id
+			)
+			const falcoins = interaction.options.getString("falcoins")
 			if (member2 != member) {
 				try {
-					var bet = await specialArg(args[1], user.id, "falcoins")
+					var bet = await specialArg(falcoins, user.id, "falcoins")
 				} catch {
 					await interaction.editReply({
-						content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
-							VALUE: args[1],
+						content: instance.getMessage(guild, "VALOR_INVALIDO", {
+							VALUE: falcoins,
 						}),
 					})
 					return
 				}
 				if (
 					(await readFile(member.user.id, "falcoins")) >= bet &&
-					(await readFile(member2.user.id, "falcoins")) >= bet &&
-					bet > 0
+					(await readFile(member2.user.id, "falcoins")) >= bet
 				) {
-					const row4 = new MessageActionRow().addComponents([
-						new MessageButton()
+					const row4 = new ActionRowBuilder().addComponents([
+						new ButtonBuilder()
 							.setCustomId("join")
 							.setEmoji("✅")
-							.setStyle("SUCCESS"),
-						new MessageButton()
+							.setStyle("Success"),
+						new ButtonBuilder()
 							.setCustomId("refuse")
 							.setEmoji("⛔")
-							.setStyle("DANGER"),
+							.setStyle("Danger"),
 					])
 					var answer = await interaction.editReply({
-						content: Falbot.getMessage(guild, "VELHA_CHAMOU", {
+						content: instance.getMessage(guild, "VELHA_CHAMOU", {
 							USER: member,
 							USER2: member2,
 							FALCOINS: format(bet),
@@ -73,7 +88,9 @@ module.exports = {
 					})
 
 					const filter = (btInt) => {
-						return btInt.user.id === member2.user.id
+						return (
+							instance.defaultFilter(btInt) && btInt.user.id === member2.user.id
+						)
 					}
 
 					const collector = answer.createMessageComponentCollector({
@@ -85,28 +102,28 @@ module.exports = {
 					collector.on("end", async (collected) => {
 						if (collected.size === 0) {
 							await interaction.followUp({
-								content: Falbot.getMessage(guild, "VELHA_CANCELADO_DEMOROU", {
+								content: instance.getMessage(guild, "VELHA_CANCELADO_DEMOROU", {
 									USER: member2,
 								}),
 							})
 						} else if (collected.first().customId === "refuse") {
 							await interaction.followUp({
-								content: Falbot.getMessage(guild, "VELHA_CANCELADO_RECUSOU", {
+								content: instance.getMessage(guild, "VELHA_CANCELADO_RECUSOU", {
 									USER: member2,
 								}),
 							})
 						} else {
 							await changeDB(member.user.id, "falcoins", -bet)
 							await changeDB(member2.user.id, "falcoins", -bet)
-							const row = new MessageActionRow()
-							const row2 = new MessageActionRow()
-							const row3 = new MessageActionRow()
+							const row = new ActionRowBuilder()
+							const row2 = new ActionRowBuilder()
+							const row3 = new ActionRowBuilder()
 
 							for (var i = 1; i < 10; i++) {
-								let button = new MessageButton()
+								let button = new ButtonBuilder()
 									.setCustomId(String(i))
 									.setLabel("\u200b")
-									.setStyle("SECONDARY")
+									.setStyle("Secondary")
 								if (i < 4) {
 									row.addComponents(button)
 								} else if (i < 7) {
@@ -129,7 +146,7 @@ module.exports = {
 							answer2 = await collected.first().reply({
 								content: `:older_woman: \`${member.displayName}\` **VS**  \`${
 									member2.displayName
-								}\` \n\n${Falbot.getMessage(guild, "VELHA_MOVIMENTO", {
+								}\` \n\n${instance.getMessage(guild, "VELHA_MOVIMENTO", {
 									USER: first_player.displayName,
 								})}`,
 								components: [row, row2, row3],
@@ -138,11 +155,13 @@ module.exports = {
 
 							const filter2 = (btInt) => {
 								if (
+									instance.defaultFilter(btInt) &&
 									btInt.user.id === first_player.user.id &&
 									board.currentMark() === "X"
 								) {
 									return true
 								} else if (
+									instance.defaultFilter(btInt) &&
 									btInt.user.id === second_player.user.id &&
 									board.currentMark() === "O"
 								) {
@@ -160,64 +179,64 @@ module.exports = {
 								if (i.customId === "1") {
 									row.components[0].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row.components[0].setStyle("PRIMARY")
-										: row.components[0].setStyle("DANGER")
+										? row.components[0].setStyle("Primary")
+										: row.components[0].setStyle("Danger")
 									row.components[0].setDisabled(true)
 									board = board.makeMove(1, board.currentMark())
 								} else if (i.customId === "2") {
 									row.components[1].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row.components[1].setStyle("PRIMARY")
-										: row.components[1].setStyle("DANGER")
+										? row.components[1].setStyle("Primary")
+										: row.components[1].setStyle("Danger")
 									row.components[1].setDisabled(true)
 									board = board.makeMove(2, board.currentMark())
 								} else if (i.customId === "3") {
 									row.components[2].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row.components[2].setStyle("PRIMARY")
-										: row.components[2].setStyle("DANGER")
+										? row.components[2].setStyle("Primary")
+										: row.components[2].setStyle("Danger")
 									row.components[2].setDisabled(true)
 									board = board.makeMove(3, board.currentMark())
 								} else if (i.customId === "4") {
 									row2.components[0].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row2.components[0].setStyle("PRIMARY")
-										: row2.components[0].setStyle("DANGER")
+										? row2.components[0].setStyle("Primary")
+										: row2.components[0].setStyle("Danger")
 									row2.components[0].setDisabled(true)
 									board = board.makeMove(4, board.currentMark())
 								} else if (i.customId === "5") {
 									row2.components[1].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row2.components[1].setStyle("PRIMARY")
-										: row2.components[1].setStyle("DANGER")
+										? row2.components[1].setStyle("Primary")
+										: row2.components[1].setStyle("Danger")
 									row2.components[1].setDisabled(true)
 									board = board.makeMove(5, board.currentMark())
 								} else if (i.customId === "6") {
 									row2.components[2].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row2.components[2].setStyle("PRIMARY")
-										: row2.components[2].setStyle("DANGER")
+										? row2.components[2].setStyle("Primary")
+										: row2.components[2].setStyle("Danger")
 									row2.components[2].setDisabled(true)
 									board = board.makeMove(6, board.currentMark())
 								} else if (i.customId === "7") {
 									row3.components[0].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row3.components[0].setStyle("PRIMARY")
-										: row3.components[0].setStyle("DANGER")
+										? row3.components[0].setStyle("Primary")
+										: row3.components[0].setStyle("Danger")
 									row3.components[0].setDisabled(true)
 									board = board.makeMove(7, board.currentMark())
 								} else if (i.customId === "8") {
 									row3.components[1].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row3.components[1].setStyle("PRIMARY")
-										: row3.components[1].setStyle("DANGER")
+										? row3.components[1].setStyle("Primary")
+										: row3.components[1].setStyle("Danger")
 									row3.components[1].setDisabled(true)
 									board = board.makeMove(8, board.currentMark())
 								} else if (i.customId === "9") {
 									row3.components[2].setLabel(board.currentMark())
 									i.user.id === member.id
-										? row3.components[2].setStyle("PRIMARY")
-										: row3.components[2].setStyle("DANGER")
+										? row3.components[2].setStyle("Primary")
+										: row3.components[2].setStyle("Danger")
 									row3.components[2].setDisabled(true)
 									board = board.makeMove(9, board.currentMark())
 								}
@@ -225,7 +244,7 @@ module.exports = {
 								await i.update({
 									content: `:older_woman: \`${member.displayName}\` **VS**  \`${
 										member2.displayName
-									}\` \n\n${Falbot.getMessage(guild, "VELHA_MOVIMENTO", {
+									}\` \n\n${instance.getMessage(guild, "VELHA_MOVIMENTO", {
 										USER:
 											board.currentMark() === "X"
 												? first_player.displayName
@@ -253,7 +272,7 @@ module.exports = {
 											member.displayName
 										}\` **VS**  \`${
 											member2.displayName
-										}\` \n\n**${Falbot.getMessage(guild, "GANHOU", {
+										}\` \n\n**${instance.getMessage(guild, "GANHOU", {
 											WINNER:
 												board.winningPlayer() === "X"
 													? first_player.displayName
@@ -269,7 +288,7 @@ module.exports = {
 											member.displayName
 										}\` **VS**  \`${
 											member2.displayName
-										}\` \n\n${Falbot.getMessage(guild, "VELHA_EMPATOU")}`,
+										}\` \n\n${instance.getMessage(guild, "VELHA_EMPATOU")}`,
 									})
 								}
 							})
@@ -277,18 +296,18 @@ module.exports = {
 					})
 				} else {
 					await interaction.editReply({
-						content: Falbot.getMessage(guild, "INSUFICIENTE_CONTAS"),
+						content: instance.getMessage(guild, "INSUFICIENTE_CONTAS"),
 					})
 				}
 			} else {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "NAO_JOGAR_SOZINHO"),
+					content: instance.getMessage(guild, "NAO_JOGAR_SOZINHO"),
 				})
 			}
 		} catch (error) {
 			console.error(`velha: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				components: [],
 			})
 		}

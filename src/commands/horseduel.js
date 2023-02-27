@@ -1,4 +1,9 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js")
+const {
+	EmbedBuilder,
+	ActionRowBuilder,
+	ButtonBuilder,
+	SlashCommandBuilder,
+} = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -7,32 +12,39 @@ const {
 	format,
 	getRoleColor,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
 
 module.exports = {
-	description: "Challenge other users to a horse race",
-	slash: true,
-	guildOnly: true,
-	testOnly,
-	options: [
-		{
-			name: "falcoins",
-			description:
-				'the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
-			required: true,
-			type: "STRING",
-		},
-	],
-	callback: async ({ guild, interaction, user, args }) => {
+	data: new SlashCommandBuilder()
+		.setName("horseduel")
+		.setNameLocalization("pt-BR", "corrida")
+		.setDescription("Starts a horse race that other users can join")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Inicie uma corrida de cavalos que outros usuários podem participar"
+		)
+		.setDMPermission(false)
+		.addStringOption((option) =>
+			option
+				.setName("falcoins")
+				.setDescription(
+					'the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
+				)
+				.setRequired(true)
+		),
+	execute: async ({ guild, interaction, user, instance }) => {
 		await interaction.deferReply()
 		try {
+			const falcoins = interaction.options.getString("falcoins")
 			try {
-				var bet = await specialArg(args[0], user.id, "falcoins")
+				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
-						VALUE: args[0],
+					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+						VALUE: falcoins,
 					}),
 				})
 				return
@@ -40,26 +52,26 @@ module.exports = {
 
 			if ((await readFile(user.id, "falcoins")) >= bet) {
 				var pot = bet
-				const embed = new MessageEmbed()
+				const embed = new EmbedBuilder()
 					.setDescription(
-						Falbot.getMessage(guild, "CAVALGADA_DESCRIPTION", {
+						instance.getMessage(guild, "CAVALGADA_DESCRIPTION", {
 							USER: user,
 							BET: format(pot),
 						})
 					)
 					.setColor("#0099ff")
 					.addFields({
-						name: Falbot.getMessage(guild, "JOGADORES"),
+						name: instance.getMessage(guild, "JOGADORES"),
 						value: `${user}`,
 						inline: false,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
-				const row = new MessageActionRow().addComponents(
-					new MessageButton()
+				const row = new ActionRowBuilder().addComponents(
+					new ButtonBuilder()
 						.setCustomId("join")
 						.setEmoji("✅")
-						.setStyle("SUCCESS")
+						.setStyle("Success")
 				)
 
 				var answer = await interaction.editReply({
@@ -75,6 +87,7 @@ module.exports = {
 
 				const filter = async (btInt) => {
 					return (
+						instance.defaultFilter(btInt) &&
 						(await readFile(btInt.user.id, "falcoins")) >= bet &&
 						!users.includes(btInt.user)
 					)
@@ -91,13 +104,13 @@ module.exports = {
 					path.push("- - - - -")
 					pot += bet
 					embed.setDescription(
-						Falbot.getMessage(guild, "CAVALGADA_DESCRIPTION", {
+						instance.getMessage(guild, "CAVALGADA_DESCRIPTION", {
 							USER: user,
 							BET: format(pot),
 						})
 					)
-					embed.fields[0] = {
-						name: Falbot.getMessage(guild, "JOGADORES"),
+					embed.data.fields[0] = {
+						name: instance.getMessage(guild, "JOGADORES"),
 						value: `${users.join("\n")}`,
 						inline: false,
 					}
@@ -117,12 +130,12 @@ module.exports = {
 						}
 
 						embed.setDescription(
-							Falbot.getMessage(guild, "CAVALGADA_DESCRIPTION2", {
+							instance.getMessage(guild, "CAVALGADA_DESCRIPTION2", {
 								BET: format(pot),
 							})
 						)
 
-						embed.fields[0] = {
+						embed.data.fields[0] = {
 							name: "\u200b",
 							value: `${frase}`,
 							inline: false,
@@ -143,7 +156,7 @@ module.exports = {
 					await changeDB(winner.id, "falcoins", pot)
 					await changeDB(winner.id, "vitorias")
 					embed.setColor(await getRoleColor(guild, winner.id)).setDescription(
-						Falbot.getMessage(guild, "CAVALGADA_DESCRIPTION3", {
+						instance.getMessage(guild, "CAVALGADA_DESCRIPTION3", {
 							BET: format(pot),
 							USER: winner,
 							SALDO: await readFile(winner.id, "falcoins", true),
@@ -156,13 +169,13 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {
 			console.error(`horseduel: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 				components: [],
 			})

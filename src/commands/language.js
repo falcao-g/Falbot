@@ -1,43 +1,50 @@
-const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder, PermissionFlagsBits } = require("discord.js")
 
 module.exports = {
-	description: "Sets the language of the server or the user",
-	slash: true,
-	guildOnly: false,
-	permissions: ["ADMINISTRATOR"],
-	options: [
-		{
-			name: "language",
-			description: "the desired language of the server or the user",
-			required: false,
-			type: "STRING",
-			choices: [
-				{ name: "português", value: "portugues" },
-				{ name: "english", value: "english" },
-			],
-		},
-	],
-	callback: async ({ guild, user, interaction }) => {
+	data: new SlashCommandBuilder()
+		.setName("language")
+		.setNameLocalization("pt-BR", "idioma")
+		.setDescription("Sets the language of the server or the user")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Configura o idioma do server ou do usuário"
+		)
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+		.addStringOption((option) =>
+			option
+				.setName("language")
+				.setNameLocalization("pt-BR", "idioma")
+				.setDescription("the desired language of the server or the user")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"o idioma desejado para o servidor ou usuário"
+				)
+				.setRequired(false)
+				.addChoices(
+					{ name: "português", value: "portugues" },
+					{ name: "english", value: "english" }
+				)
+		),
+	execute: async ({ guild, user, interaction, instance }) => {
 		await interaction.deferReply()
 		try {
 			const lang = interaction.options.getString("language")
 			guildUser = guild ? guild : user
 			if (!lang) {
 				await interaction.editReply({
-					content: Falbot.getMessage(guildUser, "CURRENT_LANGUAGE", {
-						LANGUAGE: Falbot.getLanguage(guildUser),
+					content: instance.getMessage(guildUser, "CURRENT_LANGUAGE", {
+						LANGUAGE: instance.getLanguage(guildUser),
 					}),
 				})
 				return
 			}
-			Falbot.setLanguage(guildUser, lang)
+			instance.setLanguage(guildUser, lang)
 
-			await Falbot.langSchema.findOneAndUpdate(
+			await instance.langSchema.findOneAndUpdate(
 				{
 					_id: guildUser.id,
 				},
 				{
-					_id: guildUser.id,
 					language: lang,
 				},
 				{
@@ -46,14 +53,14 @@ module.exports = {
 			)
 
 			await interaction.editReply({
-				content: Falbot.getMessage(guildUser, "NEW_LANGUAGE", {
+				content: instance.getMessage(guildUser, "NEW_LANGUAGE", {
 					LANGUAGE: lang,
 				}),
 			})
 		} catch (error) {
 			console.error(`language: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 			})
 		}
 	},

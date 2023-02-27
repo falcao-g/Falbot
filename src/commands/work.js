@@ -1,4 +1,3 @@
-const { MessageEmbed } = require("discord.js")
 const {
 	readFile,
 	changeDB,
@@ -6,26 +5,26 @@ const {
 	randint,
 	format,
 	msToTime,
+	cooldown,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
-const levels = require("../utils/json/levels.json")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Go to work to earn money",
-	slash: true,
-	guildOnly: true,
-	testOnly,
-	init: () => {
-		const { Falbot } = require("../../index.js")
-	},
-	callback: async ({ interaction, guild, user }) => {
+	data: new SlashCommandBuilder()
+		.setName("work")
+		.setNameLocalization("pt-BR", "trabalhar")
+		.setDescription("Go to work to earn falcoins")
+		.setDescriptionLocalization("pt-BR", "Vá trabalhar para ganhar falcoins")
+		.setDMPermission(false),
+	execute: async ({ interaction, instance, guild, user }) => {
 		try {
 			await interaction.deferReply()
-			workCooldown = await Falbot.coolSchema.findById(`work-${user.id}`)
+			var workCooldown = await instance.coolSchema.findById(`work-${user.id}`)
+			var levels = instance.levels
 
 			if (workCooldown) {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "COOLDOWN", {
+					content: instance.getMessage(guild, "COOLDOWN", {
 						COOLDOWN: msToTime(workCooldown.cooldown * 1000),
 					}),
 				})
@@ -38,26 +37,26 @@ module.exports = {
 			var salary = randint(min, max)
 
 			let bonus = 0
-			desc = Falbot.getMessage(guild, "WORK", {
+			desc = instance.getMessage(guild, "WORK", {
 				FALCOINS: format(salary),
 			})
 			luck = randint(0, 100)
 
-			if (luck <= 20) {
-				bonus = salary * 3
+			if (luck <= 25) {
+				bonus = salary * 2
 				desc +=
 					"\n" +
-					Falbot.getMessage(guild, "BONUS", {
+					instance.getMessage(guild, "BONUS", {
 						FALCOINS: format(bonus),
 					})
 			}
 
 			changeDB(user.id, "falcoins", salary + bonus)
 
-			var embed = new MessageEmbed()
+			var embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, user.id))
 				.setTitle(
-					Falbot.getMessage(guild, "WORK_TITLE", {
+					instance.getMessage(guild, "WORK_TITLE", {
 						FALCOINS: format(salary + bonus),
 					})
 				)
@@ -68,16 +67,11 @@ module.exports = {
 				embeds: [embed],
 			})
 
-			await new Falbot.coolSchema({
-				_id: `work-${user.id}`,
-				name: "work",
-				type: "per-user",
-				cooldown: 60 * 60,
-			}).save()
+			cooldown(user.id, "work", 60 * 60)
 		} catch (err) {
 			console.error(`work: ${err}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

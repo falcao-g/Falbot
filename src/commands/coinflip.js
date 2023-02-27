@@ -1,28 +1,31 @@
 const { randint } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
+const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Flip a coin",
-	slash: true,
-	guildOnly: true,
-	testOnly,
-	options: [
-		{
-			name: "quantity",
-			description: "quantity of coins to flip",
-			required: false,
-			type: "NUMBER",
-		},
-	],
-	callback: async ({ guild, args, interaction }) => {
+	data: new SlashCommandBuilder()
+		.setName("coinflip")
+		.setNameLocalization("pt-BR", "girarmoeda")
+		.setDescription("Flip a coin")
+		.setDescriptionLocalization("pt-BR", "Jogue cara ou coroa")
+		.setDMPermission(false)
+		.addIntegerOption((option) =>
+			option
+				.setName("quantity")
+				.setNameLocalization("pt-BR", "quantidade")
+				.setDescription("quantity of coins to flip")
+				.setDescriptionLocalization("pt-BR", "quantidade de moedas para girar")
+				.setMinValue(1)
+				.setRequired(true)
+		),
+	execute: async ({ guild, interaction, instance }) => {
 		await interaction.deferReply()
 		try {
-			times = args[0] > 0 ? args[0] : -args[0]
-			let caras = randint(0, times)
-			let coroas = times - caras
+			const times = interaction.options.getInteger("quantity")
+			const caras = randint(0, times)
+			const coroas = times - caras
 
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "COINFLIP", {
+				content: instance.getMessage(guild, "COINFLIP", {
 					CARAS: caras,
 					COROAS: coroas,
 					TIMES: times,
@@ -31,7 +34,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`Coinflip: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 			})
 		}
 	},

@@ -1,42 +1,49 @@
-const { MessageActionRow, MessageButton, MessageEmbed } = require("discord.js")
+const {
+	ActionRowBuilder,
+	ButtonBuilder,
+	EmbedBuilder,
+	SlashCommandBuilder,
+} = require("discord.js")
 const {
 	format,
 	randint,
 	changeDB,
 	getRoleColor,
 	msToTime,
+	cooldown,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
 
 module.exports = {
-	description: "Play scratch-off for a chance to win a huge jackpot",
-	slash: true,
-	guildOnly: true,
-	testOnly,
-	init: () => {
-		const { Falbot } = require("../../index.js")
-	},
-	callback: async ({ guild, interaction, user }) => {
+	data: new SlashCommandBuilder()
+		.setName("scratch")
+		.setNameLocalization("pt-BR", "raspadinha")
+		.setDescription("Play scratch-off for a chance to win a huge jackpot")
+		.setDescriptionLocalization(
+			"pt-BR",
+			"Jogue raspadinha para uma chance de ganhar muitos falcoins"
+		)
+		.setDMPermission(false),
+	execute: async ({ guild, interaction, instance, user }) => {
 		try {
 			await interaction.deferReply()
-			scratchCooldown = await Falbot.coolSchema.findById(`scratch-${user.id}`)
+			scratchCooldown = await instance.coolSchema.findById(`scratch-${user.id}`)
 
 			if (scratchCooldown) {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "COOLDOWN", {
+					content: instance.getMessage(guild, "COOLDOWN", {
 						COOLDOWN: msToTime(scratchCooldown.cooldown * 1000),
 					}),
 				})
 				return
 			}
 
-			newCooldown = 60 * 60 * 8
+			cooldown(user.id, "scratch", 60 * 60 * 8)
 
-			const row = new MessageActionRow()
-			const row2 = new MessageActionRow()
-			const row3 = new MessageActionRow()
-			const row4 = new MessageActionRow()
-			const row5 = new MessageActionRow()
+			const row = new ActionRowBuilder()
+			const row2 = new ActionRowBuilder()
+			const row3 = new ActionRowBuilder()
+			const row4 = new ActionRowBuilder()
+			const row5 = new ActionRowBuilder()
 
 			rows = [row, row2, row3, row4, row5]
 			cr = 0
@@ -45,19 +52,19 @@ module.exports = {
 					++cr
 				}
 				rows[cr].addComponents(
-					new MessageButton()
+					new ButtonBuilder()
 						.setCustomId(String(i))
-						.setStyle("SUCCESS")
+						.setStyle("Success")
 						.setEmoji("❓")
 				)
 			}
 
-			var embed = new MessageEmbed()
+			var embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, user.id))
 				.setFooter({ text: "by Falcão ❤️" })
 				.addFields({
-					name: Falbot.getMessage(guild, "SCRATCH_TITLE"),
-					value: Falbot.getMessage(guild, "SCRATCH_DESCRIPTION"),
+					name: instance.getMessage(guild, "SCRATCH_TITLE"),
+					value: instance.getMessage(guild, "SCRATCH_DESCRIPTION"),
 				})
 
 			answer = await interaction.editReply({
@@ -67,9 +74,7 @@ module.exports = {
 			})
 
 			const filter = (btInt) => {
-				if (btInt.user.id === user.id) {
-					return true
-				}
+				return instance.defaultFilter(btInt) && btInt.user.id === user.id
 			}
 
 			const collector = answer.createMessageComponentCollector({
@@ -81,54 +86,54 @@ module.exports = {
 			collector.on("collect", async (i) => {
 				let luck = randint(1, 25)
 				cont = 6 - collector.total
-				var embed = new MessageEmbed().setFooter({ text: "by Falcão ❤️" })
+				var embed = new EmbedBuilder().setFooter({ text: "by Falcão ❤️" })
 
 				if (luck === 25) {
 					//jackpot
-					amount = randint(400000, 500000)
+					amount = randint(200000, 300000)
 					await changeDB(user.id, "falcoins", amount)
-					embed.setColor("GOLD").addFields({
-						name: Falbot.getMessage(guild, "SCRATCH_PRIZE"),
-						value: `${Falbot.getMessage(guild, "SCRATCH_PRIZE_DESCRIPTION", {
+					embed.setColor(15844367).addFields({
+						name: instance.getMessage(guild, "SCRATCH_PRIZE"),
+						value: `${instance.getMessage(guild, "SCRATCH_PRIZE_DESCRIPTION", {
 							FALCOINS: format(amount),
 						})}`,
 					})
 					cont = 0
-					newCooldown = 60 * 60 * 16
+					cooldown(user.id, "scratch", 60 * 60 * 16)
 					collector.stop()
 				} else if (luck === 24) {
 					//super close
-					amount = randint(200000, 400000)
+					amount = randint(100000, 190000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(3066993).addFields({
-						name: Falbot.getMessage(guild, "SCRATCH_SUPER"),
-						value: `${Falbot.getMessage(guild, "SCRATCH_SUPER_DESCRIPTION", {
+						name: instance.getMessage(guild, "SCRATCH_SUPER"),
+						value: `${instance.getMessage(guild, "SCRATCH_SUPER_DESCRIPTION", {
 							FALCOINS: format(amount),
 						})}`,
 					})
 					cont = 0
-					newCooldown = 60 * 60 * 12
+					cooldown(user.id, "scratch", 60 * 60 * 12)
 					collector.stop()
 				} else if (luck === 23 || luck === 22) {
 					//pretty close
-					amount = randint(100000, 200000)
+					amount = randint(50000, 90000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(3066993).addFields({
-						name: Falbot.getMessage(guild, "SCRATCH_PRETTY"),
-						value: `${Falbot.getMessage(guild, "SCRATCH_PRETTY_DESCRIPTION", {
+						name: instance.getMessage(guild, "SCRATCH_PRETTY"),
+						value: `${instance.getMessage(guild, "SCRATCH_PRETTY_DESCRIPTION", {
 							FALCOINS: format(amount),
 						})}`,
 					})
 					cont = 0
-					newCooldown = 60 * 60 * 10
+					cooldown(user.id, "scratch", 60 * 60 * 10)
 					collector.stop()
 				} else if (luck === 21 || luck === 20) {
 					//kinda close
-					amount = randint(50000, 100000)
+					amount = randint(30000, 45000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(3066993).addFields({
-						name: Falbot.getMessage(guild, "SCRATCH_KINDOF"),
-						value: `${Falbot.getMessage(guild, "SCRATCH_KINDOF_DESCRIPTION", {
+						name: instance.getMessage(guild, "SCRATCH_KINDOF"),
+						value: `${instance.getMessage(guild, "SCRATCH_KINDOF_DESCRIPTION", {
 							FALCOINS: format(amount),
 							GUESSES: cont,
 						})}`,
@@ -137,20 +142,24 @@ module.exports = {
 					//not found but still a chance to win some money
 					embed.setColor(15158332)
 					if (randint(1, 100) >= 80) {
-						amount = randint(25000, 50000)
+						amount = randint(10000, 20000)
 						await changeDB(user.id, "falcoins", amount)
 						embed.addFields({
 							name: "Meh...",
-							value: `${Falbot.getMessage(guild, "SCRATCH_LOSE_DESCRIPTION2", {
-								FALCOINS: format(amount),
-								GUESSES: cont,
-							})}`,
+							value: `${instance.getMessage(
+								guild,
+								"SCRATCH_LOSE_DESCRIPTION2",
+								{
+									FALCOINS: format(amount),
+									GUESSES: cont,
+								}
+							)}`,
 						})
 					} else {
-						var lostMessages = Falbot.getMessage(guild, "SCRATCH_LOSE")
+						var lostMessages = instance.getMessage(guild, "SCRATCH_LOSE")
 						embed.addFields({
 							name: lostMessages[randint(0, 5)],
-							value: `${Falbot.getMessage(guild, "SCRATCH_LOSE_DESCRIPTION", {
+							value: `${instance.getMessage(guild, "SCRATCH_LOSE_DESCRIPTION", {
 								GUESSES: cont,
 							})}`,
 						})
@@ -169,19 +178,10 @@ module.exports = {
 					})
 				}
 			})
-
-			collector.on("end", async () => {
-				await new Falbot.coolSchema({
-					_id: `scratch-${user.id}`,
-					name: "scratch",
-					type: "per-user",
-					cooldown: newCooldown,
-				}).save()
-			})
 		} catch (error) {
 			console.error(`scratch: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 				components: [],
 			})

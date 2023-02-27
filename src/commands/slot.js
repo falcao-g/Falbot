@@ -1,4 +1,3 @@
-const { MessageEmbed } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -8,39 +7,44 @@ const {
 	format,
 	pick,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Bet your money in the slot machine",
-	slash: true,
-	guildOnly: true,
-	testOnly,
-	options: [
-		{
-			name: "falcoins",
-			description:
-				'amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
-			required: true,
-			type: "STRING",
-		},
-	],
-	callback: async ({ guild, interaction, client, user, args }) => {
+	data: new SlashCommandBuilder()
+		.setName("slot")
+		.setNameLocalization("pt-BR", "níquel")
+		.setDescription("Bet your falcoins in the slot machine")
+		.setDescriptionLocalization("pt-BR", "Aposte falcoins no caça-níquel")
+		.setDMPermission(false)
+		.addStringOption((option) =>
+			option
+				.setName("falcoins")
+				.setDescription(
+					'amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
+				)
+				.setRequired(true)
+		),
+	execute: async ({ guild, interaction, client, instance, user }) => {
 		try {
 			await interaction.deferReply()
-			guild = client.guilds.cache.get("742332099788275732")
-			emojifoda = await guild.emojis.fetch("926953352774963310")
+			const guild = client.guilds.cache.get("742332099788275732")
+			const emojifoda = await guild.emojis.fetch("926953352774963310")
+			const falcoins = interaction.options.getString("falcoins")
 			try {
-				var bet = await specialArg(args[0], user.id, "falcoins")
+				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
-						VALUE: args[0],
+					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+						VALUE: falcoins,
 					}),
 				})
 				return
 			}
-			if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
+			if ((await readFile(user.id, "falcoins")) >= bet) {
 				await changeDB(user.id, "falcoins", -bet)
 				const choices = [
 					[":money_mouth:", 30],
@@ -53,11 +57,11 @@ module.exports = {
 				const emoji2 = pick(choices)
 				const emoji3 = pick(choices)
 
-				const embed = new MessageEmbed()
+				const embed = new EmbedBuilder()
 					.setColor(await getRoleColor(guild, user.id))
 					.addFields({
 						name: `-------------------\n | ${emojifoda} | ${emojifoda} | ${emojifoda} |\n-------------------`,
-						value: `--- **${Falbot.getMessage(guild, "GIRANDO")}** ---`,
+						value: `--- **${instance.getMessage(guild, "GIRANDO")}** ---`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
@@ -66,36 +70,32 @@ module.exports = {
 				})
 
 				await new Promise((resolve) => setTimeout(resolve, 1500))
-				;(embed.fields[0].name = `-------------------\n | ${emoji1} | ${emojifoda} | ${emojifoda} |\n-------------------`),
+				;(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emojifoda} | ${emojifoda} |\n-------------------`),
 					await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
-				;(embed.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emojifoda} |\n-------------------`),
+				;(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emojifoda} |\n-------------------`),
 					await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
-				;(embed.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`),
+				;(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`),
 					await interaction.editReply({ embeds: [embed] })
 
-				arrayEmojis = [emoji1, emoji2, emoji3]
+				const arrayEmojis = [emoji1, emoji2, emoji3]
 				var dollar = count(arrayEmojis, ":dollar:")
 				var coin = count(arrayEmojis, ":coin:")
 				var moneybag = count(arrayEmojis, ":moneybag:")
 				var gem = count(arrayEmojis, ":gem:")
 				var money_mouth = count(arrayEmojis, ":money_mouth:")
 
-				if (dollar == 3) {
+				if (dollar == 3 || moneybag == 2) {
 					var winnings = 3
-				} else if (coin == 3) {
+				} else if (coin == 3 || money_mouth == 3) {
 					var winnings = 2.5
 				} else if (moneybag == 3) {
 					var winnings = 7
 				} else if (gem == 3) {
 					var winnings = 10
-				} else if (money_mouth == 3) {
-					var winnings = 2.5
 				} else if (dollar == 2 || coin == 2) {
 					var winnings = 2
-				} else if (moneybag == 2) {
-					var winnings = 3
 				} else if (gem == 2) {
 					var winnings = 5
 				} else if (money_mouth == 2) {
@@ -105,27 +105,27 @@ module.exports = {
 
 				if (profit > 0) {
 					await changeDB(user.id, "falcoins", profit)
-					var embed2 = new MessageEmbed().setColor(3066993).addFields(
+					var embed2 = new EmbedBuilder().setColor(3066993).addFields(
 						{
 							name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
-							value: `--- **${Falbot.getMessage(guild, "VOCE_GANHOU")}** ---`,
+							value: `--- **${instance.getMessage(guild, "VOCE_GANHOU")}** ---`,
 							inline: false,
 						},
 						{
-							name: Falbot.getMessage(guild, "GANHOS"),
+							name: instance.getMessage(guild, "GANHOS"),
 							value: `${format(profit)} falcoins`,
 							inline: true,
 						}
 					)
 				} else {
-					var embed2 = new MessageEmbed().setColor(15158332).addFields(
+					var embed2 = new EmbedBuilder().setColor(15158332).addFields(
 						{
 							name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
-							value: `--- **${Falbot.getMessage(guild, "VOCE_PERDEU")}** ---`,
+							value: `--- **${instance.getMessage(guild, "VOCE_PERDEU")}** ---`,
 							inline: false,
 						},
 						{
-							name: Falbot.getMessage(guild, "PERDAS"),
+							name: instance.getMessage(guild, "PERDAS"),
 							value: `${format(bet)} falcoins`,
 							inline: true,
 						}
@@ -133,7 +133,7 @@ module.exports = {
 				}
 				embed2
 					.addFields({
-						name: Falbot.getMessage(guild, "SALDO_ATUAL"),
+						name: instance.getMessage(guild, "SALDO_ATUAL"),
 						value: `${await readFile(user.id, "falcoins", true)}`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
@@ -142,13 +142,13 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {
 			console.error(`slot: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

@@ -1,4 +1,3 @@
-const { MessageEmbed } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -7,61 +6,112 @@ const {
 	format,
 	getRoleColor,
 } = require("../utils/functions.js")
-const { testOnly } = require("../config.json")
-const { Falbot } = require("../../index.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
-	description: "Bet on the roulette",
-	slash: true,
-	guildOnly: true,
-	testOnly,
-	options: [
-		{
-			name: "type",
-			description:
-				"the columns have a 2-1 payout ratio, the green has a 35-1 (only one number) and the rest have a 1-1",
-			required: true,
-			type: "STRING",
-			choices: [
-				{ name: "black", value: "black" },
-				{ name: "red", value: "red" },
-				{ name: "green", value: "green" },
-				{ name: "high", value: "high" },
-				{ name: "low", value: "low" },
-				{ name: "even", value: "even" },
-				{ name: "odd", value: "odd" },
-				{ name: "1st column", value: "first" },
-				{ name: "2nd column", value: "second" },
-				{ name: "3rd column", value: "third" },
-			],
-		},
-		{
-			name: "falcoins",
-			description:
-				'amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)',
-			required: true,
-			type: "STRING",
-		},
-	],
-	callback: async ({ guild, user, args, interaction, member }) => {
+	data: new SlashCommandBuilder()
+		.setName("roulette")
+		.setNameLocalization("pt-BR", "roleta")
+		.setDescription("Bet on the roulette")
+		.setDescriptionLocalization("pt-BR", "Aposte na roleta")
+		.setDMPermission(false)
+		.addStringOption((option) =>
+			option
+				.setName("type")
+				.setNameLocalization("pt-BR", "tipo")
+				.setDescription(
+					"the columns have a 2-1 payout ratio, the green has a 35-1 (only one number) and the rest have a 1-1"
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					"as colunas tem uma taxa de retorno de 2-1, o verde é 35-1 (só um número) e o resto 1-1"
+				)
+				.setRequired(true)
+				.addChoices(
+					{
+						name: "black",
+						name_localizations: { "pt-BR": "preto" },
+						value: "black",
+					},
+					{
+						name: "red",
+						name_localizations: { "pt-BR": "vermelho" },
+						value: "red",
+					},
+					{
+						name: "green",
+						name_localizations: { "pt-BR": "verde" },
+						value: "green",
+					},
+					{
+						name: "high",
+						name_localizations: { "pt-BR": "altos" },
+						value: "high",
+					},
+					{
+						name: "low",
+						name_localizations: { "pt-BR": "baixos" },
+						value: "low",
+					},
+					{
+						name: "even",
+						name_localizations: { "pt-BR": "par" },
+						value: "even",
+					},
+					{
+						name: "odd",
+						name_localizations: { "pt-BR": "ímpar" },
+						value: "odd",
+					},
+					{
+						name: "1st column",
+						name_localizations: { "pt-BR": "1ª coluna" },
+						value: "first",
+					},
+					{
+						name: "2nd column",
+						name_localizations: { "pt-BR": "2ª coluna" },
+						value: "second",
+					},
+					{
+						name: "3rd column",
+						name_localizations: { "pt-BR": "3ª coluna" },
+						value: "third",
+					}
+				)
+		)
+		.addStringOption((option) =>
+			option
+				.setName("falcoins")
+				.setDescription(
+					'amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
+				)
+				.setDescriptionLocalization(
+					"pt-BR",
+					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
+				)
+				.setRequired(true)
+		),
+	execute: async ({ guild, user, interaction, instance }) => {
 		try {
 			await interaction.deferReply()
+			const falcoins = interaction.options.getString("falcoins")
 			try {
-				var bet = await specialArg(args[1], user.id, "falcoins")
+				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "VALOR_INVALIDO", {
-						VALUE: args[1],
+					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+						VALUE: falcoins,
 					}),
 				})
 			}
 
-			if ((await readFile(user.id, "falcoins")) >= bet && bet > 0) {
+			if ((await readFile(user.id, "falcoins")) >= bet) {
 				await changeDB(user.id, "falcoins", -bet)
 
-				const embed = new MessageEmbed()
-					.setTitle(Falbot.getMessage(guild, "ROLETA"))
-					.setDescription(Falbot.getMessage(guild, "GIRANDO_ROLETA"))
+				const embed = new EmbedBuilder()
+					.setTitle(instance.getMessage(guild, "ROLETA"))
+					.setDescription(instance.getMessage(guild, "GIRANDO_ROLETA"))
 					.setColor(await getRoleColor(guild, user.id))
 					.setImage(
 						"https://media3.giphy.com/media/26uf2YTgF5upXUTm0/giphy.gif"
@@ -99,7 +149,7 @@ module.exports = {
 					third: [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36],
 				}
 
-				var type = types[args[0]]
+				var type = types[interaction.options.getString("type")]
 				if (type === types["green"]) {
 					var profit = bet * 36
 				} else if (
@@ -116,48 +166,45 @@ module.exports = {
 
 				await new Promise((resolve) => setTimeout(resolve, 3000))
 
-				var embed2 = new MessageEmbed()
-					.setTitle(Falbot.getMessage(guild, "ROLETA"))
+				var embed2 = new EmbedBuilder()
+					.setTitle(instance.getMessage(guild, "ROLETA"))
 					.setFooter({ text: "by Falcão ❤️" })
 
 				if (type.includes(luck)) {
 					await changeDB(user.id, "falcoins", profit)
 					embed2.setColor(3066993).addFields(
 						{
-							name: Falbot.getMessage(guild, "VOCE_GANHOU") + " :sunglasses:",
-							value: Falbot.getMessage(guild, "BOT_ROLOU") + ` **${luck}**`,
+							name: instance.getMessage(guild, "VOCE_GANHOU") + " :sunglasses:",
+							value: instance.getMessage(guild, "BOT_ROLOU") + ` **${luck}**`,
 							inline: true,
 						},
 						{
-							name: Falbot.getMessage(guild, "GANHOS"),
+							name: instance.getMessage(guild, "GANHOS"),
 							value: `${format(profit)} falcoins`,
 							inline: true,
 						},
 						{
-							name: Falbot.getMessage(guild, "SALDO_ATUAL"),
+							name: instance.getMessage(guild, "SALDO_ATUAL"),
 							value: `${await readFile(user.id, "falcoins", true)} falcoins`,
 						}
 					)
 				} else {
-					embed2
-						.setColor(15158332)
-
-						.addFields(
-							{
-								name: Falbot.getMessage(guild, "VOCE_PERDEU") + " :pensive:",
-								value: Falbot.getMessage(guild, "BOT_ROLOU") + ` **${luck}**`,
-								inline: true,
-							},
-							{
-								name: Falbot.getMessage(guild, "PERDAS"),
-								value: `${format(bet)} falcoins`,
-								inline: true,
-							},
-							{
-								name: Falbot.getMessage(guild, "SALDO_ATUAL"),
-								value: `${await readFile(user.id, "falcoins", true)} falcoins`,
-							}
-						)
+					embed2.setColor(15158332).addFields(
+						{
+							name: instance.getMessage(guild, "VOCE_PERDEU") + " :pensive:",
+							value: instance.getMessage(guild, "BOT_ROLOU") + ` **${luck}**`,
+							inline: true,
+						},
+						{
+							name: instance.getMessage(guild, "PERDAS"),
+							value: `${format(bet)} falcoins`,
+							inline: true,
+						},
+						{
+							name: instance.getMessage(guild, "SALDO_ATUAL"),
+							value: `${await readFile(user.id, "falcoins", true)} falcoins`,
+						}
+					)
 				}
 
 				await interaction.editReply({
@@ -165,13 +212,13 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: Falbot.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {
 			console.error(`roulette: ${error}`)
 			interaction.editReply({
-				content: Falbot.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
 			})
 		}

@@ -2,43 +2,21 @@ const {
 	EmbedBuilder,
 	ButtonBuilder,
 	ActionRowBuilder,
-	SlashCommandBuilder,
+	ContextMenuCommandBuilder,
+	ApplicationCommandType,
 } = require("discord.js")
-const {
-	getMember,
-	getRoleColor,
-	format,
-	readFile,
-} = require("../utils/functions.js")
+const { getRoleColor, format, readFile } = require("../utils/functions.js")
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName("balance")
-		.setNameLocalization("pt-BR", "conta")
-		.setDescription("Shows your or another user's balance")
-		.setDescriptionLocalization(
-			"pt-BR",
-			"Mostra a sua conta ou a de outro usuário"
-		)
-		.setDMPermission(false)
-		.addUserOption((option) =>
-			option
-				.setName("user")
-				.setNameLocalization("pt-BR", "usuário")
-				.setDescription(
-					"the user you want to get info about, leave blank to get your balance"
-				)
-				.setDescriptionLocalization(
-					"pt-BR",
-					"o usuário que você deseja ver a conta, deixe vazio para ver a sua"
-				)
-				.setRequired(false)
-		),
-	execute: async ({ guild, member, instance, interaction }) => {
+	data: new ContextMenuCommandBuilder()
+		.setName("See user's balance")
+		.setNameLocalization("pt-BR", "Ver a conta do usuário")
+		.setType(ApplicationCommandType.User)
+		.setDMPermission(false),
+	execute: async ({ guild, instance, interaction }) => {
 		await interaction.deferReply()
 		try {
-			const user = interaction.options.getUser("user")
-			const target = user ? await getMember(guild, user.id) : member
+			const target = interaction.targetMember
 			const { rank, falcoins, vitorias, banco, caixas, chaves } =
 				await readFile(target.user.id)
 
