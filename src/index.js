@@ -248,7 +248,7 @@ class Falbot {
 				})
 			}
 			lotto.nextDraw = Date.now() + 604800000 //next one is next week
-			lotto.prize = randint(3000000, 5000000)
+			lotto.prize = randint(3500000, 5000000)
 
 			await lotto.save()
 		}

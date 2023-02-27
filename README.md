@@ -59,7 +59,6 @@ When all of the dependencies finish installing, you will need to create a `confi
 
 ```json
 {
- "botId": "",
  "devs": [""],
  "testGuild": "",
  "language": "portugues",
@@ -74,7 +73,6 @@ In addition, you will also need to create a .env file outside the `src` folder, 
 TOKEN="token"
 MONGODB_URI="mongodb_uri"
 Authorization="topgg-core-authorization"
-Authorization2="discordbotlist-token"
 ```
 
 ## ⚙ Configuring
@@ -86,11 +84,9 @@ Falbot is made to be a really configurable bot:
 - "TOKEN": your discord bot token
 - "MONGODB_URI": your mongodb connection uri
 - "Authorization": this is only required if your bot is in top.gg and you plan to use the /vote command, in this case you go to <https://top.gg/bot/:yourbotid/webhooks> and put the token here, otherwise just ignore this
-- "Authorization2": this is used to send your commands to discorbotlist.com, if you want this, publish your bot in the site and generate a token
 
 config.json file:
 
-- "botId": put here your bot id, this is used to send the command list to discordbotlist.com
 - "devs": put here the discord id of all developers of the bot, this will be important to manage slash commands
 - "testGuild": id of the guild used to test commands
 - "language": the default language of the bot (portuguese or english)

@@ -40,7 +40,7 @@ module.exports = {
 				.setDescription("reload your commands")
 		),
 	execute: async ({ guild, interaction, instance, client }) => {
-		await interaction.deferReply()
+		await interaction.deferReply({ ephemeral: true })
 		try {
 			subcommand = interaction.options.getSubcommand()
 			const userId = interaction.options.getString("user")
@@ -61,7 +61,6 @@ module.exports = {
 
 				interaction.editReply({
 					content: `User ${userId} was banned sucessfully`,
-					ephemeral: true,
 				})
 			} else if (subcommand === "unban") {
 				instance.unban(userId)
@@ -72,17 +71,16 @@ module.exports = {
 
 				interaction.editReply({
 					content: `User ${userId} was unbanned sucessfully`,
-					ephemeral: true,
 				})
 			} else if (subcommand === "reload_events") {
 				for (const [key, value] of client.events) {
 					client.removeListener(`${key}`, value, true)
 				}
 				loadEvents(instance, client)
-				interaction.editReply({ content: "Events reloaded", ephemeral: true })
+				interaction.editReply({ content: "Events reloaded" })
 			} else {
 				loadCommands(instance, client)
-				interaction.editReply({ content: "Commands reloaded", ephemeral: true })
+				interaction.editReply({ content: "Commands reloaded" })
 			}
 		} catch (error) {
 			console.error(`tools: ${error}`)

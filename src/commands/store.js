@@ -14,7 +14,18 @@ module.exports = {
 				.setDescription("item that you want to buy")
 				.setDescriptionLocalization("pt-BR", "item que você quer comprar")
 				.setRequired(false)
-				.addChoices({ name: "crate", value: 1 }, { name: "key", value: 2 })
+				.addChoices(
+					{
+						name: "crate",
+						name_localizations: { "pt-BR": "caixa" },
+						value: 1,
+					},
+					{
+						name: "key",
+						name_localizations: { "pt-BR": "chave" },
+						value: 2,
+					}
+				)
 		)
 		.addIntegerOption((option) =>
 			option
