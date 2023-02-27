@@ -97,6 +97,9 @@ async function specialArg(arg, id, field = "falcoins") {
 		new_arg = user[field]
 	} else if (new_arg == "metade" || new_arg == "half") {
 		new_arg = parseInt(user[field] / 2)
+	} else if (new_arg.slice(-1) === "k") {
+		new_arg = new_arg.slice(0, -1)
+		new_arg += "000"
 	} else if (new_arg.slice(-1) === "m") {
 		new_arg = new_arg.slice(0, -1)
 		new_arg += "000000"
