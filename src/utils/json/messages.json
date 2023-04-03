@@ -75,14 +75,6 @@
 		"portugues": "Você sacou {VALUE} falcoins do banco! :smiley:",
 		"english": "You withdrew {VALUE} falcoins from the bank! :smiley:"
 	},
-	"CAIXA_TITULO": {
-		"portugues": "Você abriu {QUANTITY} caixas, e encontrou:",
-		"english": "You opened {QUANTITY} crates, and found:"
-	},
-	"CAIXA_INSUFICIENTE": {
-		"portugues": "você não tem caixas e/ou chaves o suficiente para esta ação! :rage:",
-		"english": "you don't have enough crates and/or keys to do this action! :rage:"
-	},
 	"JOGADORES": {
 		"portugues": "Jogadores",
 		"english": "Players"
@@ -130,14 +122,6 @@
 	"VITORIAS": {
 		"portugues": "Vitórias",
 		"english": "Wins"
-	},
-	"CAIXAS": {
-		"portugues": "Caixas",
-		"english": "Crates"
-	},
-	"CHAVES": {
-		"portugues": "Chaves",
-		"english": "Keys"
 	},
 	"RESULTADO": {
 		"portugues": "Resultado",
@@ -267,38 +251,6 @@
 		"portugues": "{USER2}, você foi desafiado para uma luta por {USER}\n*Se você entrar, você apostará {FALCOINS} falcoins :smiling_imp:*",
 		"english": "{USER2}, you've been challenged to a fight by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins :smiling_imp:*"
 	},
-	"LOJA": {
-		"portugues": "**Loja**",
-		"english": "**Store**"
-	},
-	"ITEM_1": {
-		"portugues": ":gift: Caixa",
-		"english": ":gift: Crate"
-	},
-	"ITEM_1_DESCRICAO": {
-		"portugues": "Pelo custo de 5.000 falcoins você compra uma caixa que pode ser aberta usando uma chave",
-		"english": "For the cost of 5.000 falcoins you can buy a crate that can be opened using a key"
-	},
-	"ITEM_2": {
-		"portugues": ":key: Chave",
-		"english": ":key: Key"
-	},
-	"ITEM_2_DESCRICAO": {
-		"portugues": "Pelo custo de 20.000 falcoins você compra uma chave que pode ser usada para abrir uma caixa",
-		"english": "For the cost of 20.000 falcoins you can buy a key that can be used to open a crate"
-	},
-	"LOJA_USO_2": {
-		"portugues": "Use `/loja [item] [quantidade]` para comprar um item",
-		"english": "Use `/store [item] [quantity]` to buy an item"
-	},
-	"LOJA_COMPROU_CAIXA": {
-		"portugues": "Parabéns! Você comprou {AMOUNT} caixas :star_struck:",
-		"english": "Congratulations! You bought {AMOUNT} crates :star_struck:"
-	},
-	"LOJA_COMPROU_CHAVE": {
-		"portugues": "Parabéns! Você comprou {AMOUNT} chaves :star_struck:",
-		"english": "Congratulations! You bought {AMOUNT} keys :star_struck:"
-	},
 	"COOLDOWNS": {
 		"portugues": ":stopwatch: Tempo de espera",
 		"english": ":stopwatch: Cooldowns"
@@ -399,8 +351,8 @@
 		"english": "You need more **{FALCOINS} falcoins** to increase your rank!"
 	},
 	"RANKUP_BANK": {
-		"portugues": "⬆️ *+{FALCOINS} falcoins de limite no banco*",
-		"english": "⬆️ *+{FALCOINS} falcoins of limit in the bank*"
+		"portugues": ":bank: *+{FALCOINS} falcoins de limite no banco*",
+		"english": ":bank: *+{FALCOINS} falcoins of limit in the bank*"
 	},
 	"RANKUP_SUCESS": {
 		"portugues": "Você subiu de rank e agora é **{RANK}**!\nIsso te custou **{FALCOINS} falcoins**",
@@ -510,6 +462,14 @@
 		"portugues": "-Faça uma pequena enquete com `/enquete`\n-Deixe o falbot resolver expressões matemáticas para você com `/mat`\n-Role dados usando `/rolar`\n-Veja informações e links úteis sobre o bot com `/botinfo`",
 		"english": "-Do a pretty little poll with `/poll`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`\n-See stats and useful links regarding the bot with `/botinfo`"
 	},
+	"HELP_ITEMS": {
+		"portugues": ":school_satchel: Sistema de items",
+		"english": ":school_satchel: Items system"
+	},
+	"HELP_ITEMS2": {
+		"portugues": "**:compass: Consiga items usando `/pescar`, `/caçar`, `/explorar`, `/minerar`\n:luggage: Veja todos os items que você ou outra pessoa tem com `/inventário ver`\n:moneybag: Items podem ser vendidos com `/inventário vender`\n:book: Veja todas as informações sobre um item como valores, raridade e usos com `/iteminfo`\n:hammer_pick: Items podem ser construídos com `/inventário construir`**\n-Muitos items que são construídos podem ser equipados para garantir benefícios com `/inventário equipar`\n**:abacus: Calcule a quantidade de materiais necessários para construir uma quantidade de items com `/inventário calcular`**",
+		"english": "**:compass: Get items using `/fish`, `/hunt`, `/explore`, `/mine`\n:luggage: See all the items you or another person has with `/inventory view`\n:moneybag: Items can be sold with `/inventory sell`\n:book: See all the information about an item like values, rarity and uses with `/iteminfo`\n:hammer_pick: Items can be crafted with `/inventory craft`**\n-Many items that are crafted can be equipped to guarantee benefits with `/inventory equip`\n**:abacus: Calculate the amount of materials needed to craft a certain amount of items with `/inventory calc`**"
+	},
 	"HELP_CONFIG": {
 		"portugues": ":gear: Configurando o Falbot para o seu servidor",
 		"english": ":gear: Configuring Falbot to your server"
@@ -538,6 +498,10 @@
 		"portugues": "Úteis",
 		"english": "Utils"
 	},
+	"ITEMS": {
+		"portugues": "Items e Inventário",
+		"english": "Items and Inventory"
+	},
 	"CONFIG": {
 		"portugues": "Configuração",
 		"english": "Configuration"
@@ -547,8 +511,8 @@
 		"english": "*Bot's gameplay introduction*"
 	},
 	"HELP_INTRODUCTION2": {
-		"portugues": "**:sparkles: Seu objetivo é subir nos ranks do jogo até se tornar o número um\n:partying_face: Ou só se divertir com seus amigos\n:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/conta`\n:stopwatch: O comando `/cooldowns` mostra eventos e certos comandos que tem um tempo de espera\n:bank: Deposite regularmente no seu banco para coletar interesse no seu dinheiro\n:arrow_double_up: Suba de rank sempre que possível para ótimos benefícios! Veja a página de ranks para saber mais\n:question: Veja as outras páginas desse comando para aprender a usar uma feature específica do Falbot\n:100: Nós cobrimos o básico, mas o Falbot oferece muito mais\n:fire: Continue jogando e experimentando, mas mais importante, se divirta!**",
-		"english": "**:sparkles: Your goal is to climb the ranks of the game to become number one\n:partying_face: Or just have fun with your friends\n:coin: See your falcoins and other information at any time using `/balance`\n:stopwatch: The `/cooldowns` displays events and commands that have a cooldown\n:bank: Deposit regularly in your bank to collect interest in your money\n:arrow_double_up: Rank up whenever possible to earn awesome perks! See the ranks page for more details\n:question: See the other pages of this command to learn how to use a specific feature of Falbot\n:100: We've covered the basics, but Falbot offers much more\n:fire: Keep playing and experimenting, but more importantly, have fun!**"
+		"portugues": "**:sparkles: Seu objetivo é subir nos ranks do jogo até se tornar o número um\n:partying_face: Ou só se divertir com seus amigos\n:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/conta`\n:stopwatch: O comando `/intervalos` mostra eventos e certos comandos que tem um tempo de espera\n:school_satchel: Você tem um inventário nesse jogo, ganhe items com `/pescar`, `caçar`, `minerar` e `/explorar`! Veja a página de items para saber mais\n:bank: Deposite regularmente no seu banco para coletar interesse no seu dinheiro\n:arrow_double_up: Suba de rank sempre que possível para ótimos benefícios! Veja a página de ranks para saber mais\n:question: Veja as outras páginas desse comando para aprender a usar uma feature específica do Falbot\n:100: Nós cobrimos o básico, mas o Falbot oferece muito mais\n:fire: Continue jogando e experimentando, mas mais importante, se divirta!**",
+		"english": "**:sparkles: Your goal is to climb the ranks of the game to become number one\n:partying_face: Or just have fun with your friends\n:coin: See your falcoins and other information at any time using `/balance`\n:stopwatch: The `/cooldowns` displays events and commands that have a cooldown\n:school_satchel: You have an inventory in this game, earn items using `/fish`, `/hunt`, `mine` and `/explore`! See the items page for more info\n:bank: Deposit regularly in your bank to collect interest in your money\n:arrow_double_up: Rank up whenever possible to earn awesome perks! See the ranks page for more details\n:question: See the other pages of this command to learn how to use a specific feature of Falbot\n:100: We've covered the basics, but Falbot offers much more\n:fire: Keep playing and experimenting, but more importantly, have fun!**"
 	},
 	"COMMANDS_ALL2": {
 		"portugues": "*Lista de comandos*",
@@ -570,6 +534,10 @@
 		"portugues": "*Usando falbot no dia-a-dia*",
 		"english": "*Using falbot in your daily life*"
 	},
+	"HELP_ITEMS3": {
+		"portugues": "*Inventário e items*",
+		"english": "*Inventory and item help*"
+	},
 	"HELP_CONFIG3": {
 		"portugues": "*Configurando falbot para o seu servidor*",
 		"english": "*Configuring falbot for your server*"
@@ -583,8 +551,8 @@
 		"english": ":money_with_wings: Earning more falcoins"
 	},
 	"HELP_ECONOMY3": {
-		"portugues": "**:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/conta`**\n**:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/banco depositar`, `/banco ver` para ver suas informações e `/banco sacar` para sacar\n:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/voto`, use `/lembrete` para ser lembrado quando isso for possível**\n**:stopwatch: `/cooldowns` mostra os eventos ativos e quanto tempo falta até você poder executar certos comandos novamente**\n\n**:busts_in_silhouette: Interaja com outros usuários**\n-Desafie seus amigos com `/corrida`, `/velha`, `/roletarussa` e `/luta`, ou doe dinheiro pra eles com `/doar`\n-Veja os melhores jogadores em diferentes categorias com `/classificação rank`, `/classificação falcoins` e `/classificação wins`\n\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/níquel`, `/roleta`, `/cavalo`, `/olhoscobra`, `blackjack` e `/colapso`**",
-		"english": "**:coin: See your falcoins and other information at any time using `/balance`**\n**:bank: Deposit your money in the bank and watch as it increases with `/bank deposit`, `/bank view` to see yout info and `/bank withdraw` to withdraw\n:ballot_box: Vote every 12 hours to earn falcoins with `/vote`, use `/reminder` to be reminded everytime this is possible**\n**:stopwatch: `/cooldowns` shows active events and the time left for you to be able to execute some commands again**\n\n**:busts_in_silhouette: Interact with another users**\n-Challenge your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`, or give them money with `/donate`\n-See the top players in different categories using `/leaderboard rank`, `/leaderboard falcoins` and `/leaderboard wins`\n\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes`, `/blackjack` and `/crash`**"
+		"portugues": "**:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/conta`**\n**:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/banco depositar`, `/banco ver` para ver suas informações e `/banco sacar` para sacar\n:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/voto`, use `/lembrete` para ser lembrado quando isso for possível**\n**:stopwatch: `/intervalos` mostra os eventos ativos e certos comandos especiais**\n**:school_satchel: Veja a página de inventário e items para mais informações**\n\n**:busts_in_silhouette: Interaja com outros usuários**\n-Desafie seus amigos com `/corrida`, `/velha`, `/roletarussa` e `/luta`, ou doe dinheiro pra eles com `/doar`\n-Veja os melhores jogadores em diferentes categorias com `/classificação rank`, `/classificação falcoins` e `/classificação wins`\n\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/níquel`, `/roleta`, `/cavalo`, `/olhoscobra`, `blackjack` e `/colapso`**",
+		"english": "**:coin: See your falcoins and other information at any time using `/balance`**\n**:bank: Deposit your money in the bank and watch as it increases with `/bank deposit`, `/bank view` to see yout info and `/bank withdraw` to withdraw\n:ballot_box: Vote every 12 hours to earn falcoins with `/vote`, use `/reminder` to be reminded everytime this is possible**\n**:stopwatch: `/cooldowns` shows active events and some special commands**\n**:school_satchel: Check the items and inventory page for more info**\n\n**:busts_in_silhouette: Interact with another users**\n-Challenge your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`, or give them money with `/donate`\n-See the top players in different categories using `/leaderboard rank`, `/leaderboard falcoins` and `/leaderboard wins`\n\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes`, `/blackjack` and `/crash`**"
 	},
 	"PICK_PAGE": {
 		"portugues": "Escolha uma página de ajuda...",
@@ -823,7 +791,7 @@
 		"english": "Your hand\n{CARDS}"
 	},
 	"DEALER_HAND": {
-		"portugues": "Mão do dealer\n{CARDS}",
+		"portugues": "Mão do banco\n{CARDS}",
 		"english": "Dealer's hand\n{CARDS}"
 	},
 	"VALUE": {
@@ -851,7 +819,7 @@
 		"english": "Blackjack! you won {FALCOINS} falcoins"
 	},
 	"DEALER_BUST": {
-		"portugues": "O dealer estorou! Você ganhou {FALCOINS} falcoins",
+		"portugues": "O banco estorou! Você ganhou {FALCOINS} falcoins",
 		"english": "Dealer bust! you won {FALCOINS} falcoins"
 	},
 	"YOU_WON": {
@@ -867,8 +835,220 @@
 		"english": "You lost {FALCOINS} falcoins"
 	},
 	"DEALER_BLACKJACK": {
-		"portugues": "21 do dealer! Você perdeu {FALCOINS} falcoins",
+		"portugues": "21 do banco! Você perdeu {FALCOINS} falcoins",
 		"english": "Dealer blackjack! you lost {FALCOINS} falcoins"
+	},
+	"NO_ITEMS": {
+		"portugues": "O inventário está vazio! :confounded:",
+		"english": "The inventory is empty! :confounded:"
+	},
+	"INVENTORY_TITLE": {
+		"portugues": "Inventário de {MEMBER} (Parte {NUMBER} de {TOTAL})\n:money_with_wings: Valor Total: {WORTH}/{LIMIT} falcoins",
+		"english": "{MEMBER}'s Inventory (Part {NUMBER} of {TOTAL})\n:money_with_wings: Total Worth: {WORTH}/{LIMIT} falcoins"
+	},
+	"MARKET": {
+		"portugues": "Mercado",
+		"english": "Market"
+	},
+	"SELLITEMS": {
+		"portugues": "Vender Items",
+		"english": "Sell Items"
+	},
+	"CRAFT": {
+		"portugues": "Construir",
+		"english": "Craft"
+	},
+	"CALCULATOR": {
+		"portugues": ":abacus: Calculadora de Items",
+		"english": ":abacus: Item Calculator"
+	},
+	"INVALID": {
+		"portugues": "Seleção Inválida!",
+		"english": "Invalid Selection!"
+	},
+	"INGREDIENTS": {
+		"portugues": "Ingredientes:",
+		"english": "Ingredients:"
+	},
+	"COST": {
+		"portugues": "Custo base:",
+		"english": "Raw cost:"
+	},
+	"SOLD_TITLE": {
+		"portugues": "Você vendeu {AMOUNT} {ITEM} por {FALCOINS} falcoins!",
+		"english": "You sold {AMOUNT} {ITEM} for {FALCOINS} falcoins!"
+	},
+	"SOLD_FIELD": {
+		"portugues": ":school_satchel: Você tem **{REMAINING} sobrando** no seu inventário\n:clipboard: Cada item foi vendido por um valor médio de **{FALCOINS2} falcoins**",
+		"english": ":school_satchel: There's **{REMAINING} left** in your inventory\n:clipboard: Eacch item was sold at an average of **{FALCOINS2} falcoins**"
+	},
+	"FOUND": {
+		"portugues": "{AMOUNT} items encontrados!",
+		"english": "{AMOUNT} items found!"
+	},
+	"PROFILE": {
+		"portugues": "Perfil de {USER}",
+		"english": "{USER}'s profile"
+	},
+	"PROFILE_INFOS": {
+		"portugues": "**:coin: Falcoins:** {FALCOINS}\n**:trophy: Vitórias:** {WINS}\n**:bank: Banco:** {BANK}/{LIMIT} falcoins\n**:tickets: Bilhetes de loteria:** {TICKETS}\n**:gem: Inventário:** `{QUANTITY} items` com um valor total de {WORTH} falcoins\n**:sparkles: Votos diários:** {STREAK} dias\n:person_in_tuxedo: **Jogador desde: {CREATED}**",
+		"english": "**:coin: Falcoins:** {FALCOINS}\n**:trophy: Wins:** {WINS}\n**:bank: Bank:** {BANK}/{LIMIT} falcoins\n**:tickets: Lottery tickets:** {TICKETS}\n**:gem: Inventory worth:** `{QUANTITY} items` valued at {WORTH} falcoins\n**:sparkles: Vote streak:** {STREAK} days\n:person_in_tuxedo: **Player since: {CREATED}**"
+	},
+	"FISH": {
+		"portugues": "Pescar",
+		"english": "Fish"
+	},
+	"EXPLORE": {
+		"portugues": "Explorar",
+		"english": "Explore"
+	},
+	"MINE": {
+		"portugues": "Minerar",
+		"english": "Mine"
+	},
+	"HUNT": {
+		"portugues": "Caçar",
+		"english": "Hunt"
+	},
+	"NO_ITEM": {
+		"portugues": "Você não tem esse item no seu inventário! :empty_nest:",
+		"english": "You don't have this item in your inventory! :empty_nest:"
+	},
+	"RANKUP_INVENTORY": {
+		"portugues": ":school_satchel: *+{FALCOINS} falcoins de espaço no seu inventário*",
+		"english": ":school_satchel: *+{FALCOINS} falcoins of inventory space*"
+	},
+	"OVER_LIMIT": {
+		"portugues": "Você não pode usar esse comando pois está acima do seu limite! :rage:",
+		"english": "You can't use this command because you are over your limit! :rage:"
+	},
+	"COMMON": {
+		"portugues": "Loot comum",
+		"english": "Common loot"
+	},
+	"UNCOMMON": {
+		"portugues": "Loot incomun",
+		"english": "Uncommon loot"
+	},
+	"RARE": {
+		"portugues": "Loot raro",
+		"english": "Rare loot"
+	},
+	"EPIC": {
+		"portugues": "Loot épico",
+		"english": "Epic loot"
+	},
+	"LEGENDARY": {
+		"portugues": "Loot lendário",
+		"english": "Legendary loot"
+	},
+	"USEABLE": {
+		"portugues": ":white_check_mark: Equipável",
+		"english": ":white_check_mark: Equipable"
+	},
+	"INFO": {
+		"portugues": "Informações:",
+		"english": "Information:"
+	},
+	"OWNED": {
+		"portugues": ":school_satchel: {AMOUNT} no inventário",
+		"english": ":school_satchel: {AMOUNT} owned"
+	},
+	"MINE-2": {
+		"portugues": ":pick: 2x loot ao minerar",
+		"english": ":pick: 2x mining boost"
+	},
+	"MINE-4": {
+		"portugues": ":pick: 4x loot ao minerar",
+		"english": ":pick: 4x mining boost"
+	},
+	"FISH-2": {
+		"portugues": ":fishing_pole_and_fish: 2x loot ao pescar",
+		"english": ":fishing_pole_and_fish: 2x fishing boost"
+	},
+	"FISH-4": {
+		"portugues": ":fishing_pole_and_fish: 4x loot ao pescar",
+		"english": ":fishing_pole_and_fish: 4x fishing boost"
+	},
+	"EXPLORE-2": {
+		"portugues": ":compass: 2x loot ao explorar",
+		"english": ":compass: 2x exploring boost"
+	},
+	"EXPLORE-4": {
+		"portugues": ":compass: 4x loot ao explorar",
+		"english": ":compass: 4x exploring boost"
+	},
+	"HUNT-2": {
+		"portugues": ":dagger: 2x loot ao caçar",
+		"english": ":dagger: 2x hunting boost"
+	},
+	"HUNT-4": {
+		"portugues": ":dagger: 4x loot ao caçar",
+		"english": ":dagger: 4x hunting boost"
+	},
+	"USED": {
+		"portugues": "Usado para craftar:",
+		"english": "Used to craft:"
+	},
+	"AND_MORE": {
+		"portugues": "\n*...e mais*",
+		"english": "\n*...and more*"
+	},
+	"CANT_EQUIP": {
+		"portugues": "Esse item não pode ser equipado... :confused:",
+		"english": "This item can't be equipped... :confused:"
+	},
+	"ALREADY_EQUIPPED": {
+		"portugues": "Você já tem um item desse equipado!",
+		"english": "You already have one of this item equipped!"
+	},
+	"EQUIPPED_TITLE": {
+		"portugues": "{ITEM} equipado!",
+		"english": "{ITEM} equipped!"
+	},
+	"EQUIPPED_VALUE": {
+		"portugues": ":muscle: Você equipou **{ITEM}.**\n:hourglass_flowing_sand: Esse item vai expirar depois de ser usado **3 vezes.**",
+		"english": ":muscle: You have equipped the **{ITEM}.**\n:hourglass_flowing_sand: This item will expire after **3 uses.**"
+	},
+	"BUFF": {
+		"portugues": "{ITEM} dando {BUFF}x mais loot",
+		"english": "{ITEM} providing {BUFF}x multiplier"
+	},
+	"CANT_CRAFT": {
+		"portugues": "Esse item não pode ser construído... :x: :tools:",
+		"english": "This item can't be crafted... :x: :tools:"
+	},
+	"NOT_ENOUGH_INGREDIENTS": {
+		"portugues": "Não foi possível construir o item pois está faltando **{ITEM} x {AMOUNT}**!",
+		"english": "You can't craft this item because you are missing **{ITEM} x {AMOUNT}**!"
+	},
+	"CRAFTED_TITLE": {
+		"portugues": "{AMOUNT} {ITEM} construídos!",
+		"english": "{AMOUNT} {ITEM} crafted!"
+	},
+	"CRAFTED_VALUE": {
+		"portugues": "{AMOUNT} {ITEM} foram construídos, você usou... \n {INGREDIENTS}\nVocê pode fazer mais {MAXAMOUNT} desse item",
+		"english": "{AMOUNT} {ITEM} were crafted, you used... \n {INGREDIENTS}\nYou can craft {MAXAMOUNT} more of this item"
+	},
+	"SELLALL_TITLE": {
+		"portugues": ":question: Confirmar - vender tudo",
+		"english": ":question: Confirm - sell everything"
+	},
+	"SELLALL_VALUE": {
+		"portugues": ":money_with_wings: Você está prester a vender **TUDO** do seu inventário\n:sparkles: Items lendários não estão incluidos.",
+		"english": ":money_with_wings: You are about to sell **EVERYTHING** from your inventory\n:sparkles: Legendary items are not included."
+	},
+	"SELLALL_CONFIRMED_TITLE": {
+		"portugues": ":moneybag: Inventário vendido!",
+		"english": ":moneybag: Inventory sold!"
+	},
+	"SELLALL_CONFIRMED_VALUE": {
+		"portugues": "{ITEMS}\n**Você ganhou um total de {FALCOINS} falcoins**",
+		"english": "{ITEMS}\n**You earned a total of {FALCOINS} falcoins**"
+	},
+	"MORE": {
+		"portugues": "...e {AMOUNT} mais",
+		"english": "...and {AMOUNT} more"
 	},
 	"1": {
 		"portugues": ":potato: Plebeu",
@@ -945,5 +1125,17 @@
 	"19": {
 		"portugues": ":telescope: Supervisor",
 		"english": ":telescope: Overseer"
+	},
+	"20": {
+		"portugues": ":spoon: Aristocrata",
+		"english": ":spoon: Aristocrat"
+	},
+	"21": {
+		"portugues": ":pushpin: Chefão",
+		"english": ":pushpin: Kingpin"
+	},
+	"22": {
+		"portugues": ":detective: Agente",
+		"english": ":detective: Agent"
 	}
 }

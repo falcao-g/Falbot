@@ -5,12 +5,12 @@ const {
 } = require("discord.js")
 const Board = require("tictactoe-board")
 const {
-	getMember,
 	specialArg,
 	readFile,
 	format,
 	randint,
 	changeDB,
+	buttons,
 } = require("../utils/functions.js")
 
 module.exports = {
@@ -47,8 +47,7 @@ module.exports = {
 		try {
 			await interaction.deferReply()
 			var board = new Board.default()
-			const member2 = await getMember(
-				guild,
+			const member2 = await guild.members.fetch(
 				interaction.options.getUser("user").id
 			)
 			const falcoins = interaction.options.getString("falcoins")
@@ -67,23 +66,13 @@ module.exports = {
 					(await readFile(member.user.id, "falcoins")) >= bet &&
 					(await readFile(member2.user.id, "falcoins")) >= bet
 				) {
-					const row4 = new ActionRowBuilder().addComponents([
-						new ButtonBuilder()
-							.setCustomId("join")
-							.setEmoji("✅")
-							.setStyle("Success"),
-						new ButtonBuilder()
-							.setCustomId("refuse")
-							.setEmoji("⛔")
-							.setStyle("Danger"),
-					])
 					var answer = await interaction.editReply({
 						content: instance.getMessage(guild, "VELHA_CHAMOU", {
 							USER: member,
 							USER2: member2,
 							FALCOINS: format(bet),
 						}),
-						components: [row4],
+						components: [buttons(["accept", "refuse"])],
 						fetchReply: true,
 					})
 

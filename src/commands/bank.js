@@ -2,9 +2,9 @@ const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 const {
 	specialArg,
 	readFile,
-	takeAndGive,
 	format,
 	getRoleColor,
+	changeDB,
 } = require("../utils/functions.js")
 
 module.exports = {
@@ -96,6 +96,7 @@ module.exports = {
 							FALCOINS: format(limit / 2),
 						})}**`,
 					})
+					.setFooter({ text: "by Falcão ❤️" })
 				await interaction.editReply({ embeds: [embed] })
 			} else if (subcommand === "deposit") {
 				try {
@@ -121,7 +122,8 @@ module.exports = {
 						quantity = limit / 2 - (await readFile(user.id, "banco"))
 					}
 
-					await takeAndGive(user.id, user.id, "falcoins", "banco", quantity)
+					await changeDB(user.id, "falcoins", -quantity)
+					await changeDB(user.id, "banco", quantity)
 
 					const embed = new EmbedBuilder()
 						.setTitle(
@@ -163,7 +165,8 @@ module.exports = {
 				}
 
 				if ((await readFile(user.id, "banco")) >= quantity) {
-					await takeAndGive(user.id, user.id, "banco", "falcoins", quantity)
+					await changeDB(user.id, "banco", -quantity)
+					await changeDB(user.id, "falcoins", quantity)
 
 					const embed = new EmbedBuilder()
 						.setTitle(

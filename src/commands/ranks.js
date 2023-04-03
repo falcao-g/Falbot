@@ -98,7 +98,7 @@ module.exports = {
 				}
 
 				var embed = new EmbedBuilder()
-					.setColor("DARK_PURPLE")
+					.setColor(7419530)
 					.setTitle(instance.getMessage(guild, "UPCOMING_RANKS"))
 					.addFields({
 						name:
@@ -146,7 +146,7 @@ module.exports = {
 				embed.setFooter({ text: "by Falcão ❤️" })
 				await interaction.editReply({ embeds: [embed] })
 			} else {
-				var embed = new EmbedBuilder().setColor("DARK_PURPLE")
+				var embed = new EmbedBuilder().setColor("#71368A")
 
 				ranks = ""
 				for (var i = 0; i < levels.length; i++) {

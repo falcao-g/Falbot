@@ -1,16 +1,11 @@
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 const {
-	EmbedBuilder,
-	ActionRowBuilder,
-	ButtonBuilder,
-	SlashCommandBuilder,
-} = require("discord.js")
-const {
-	getMember,
 	specialArg,
 	readFile,
 	format,
 	randint,
 	changeDB,
+	buttons,
 } = require("../utils/functions.js")
 
 module.exports = {
@@ -49,8 +44,9 @@ module.exports = {
 		await interaction.deferReply()
 		try {
 			const falcoins = interaction.options.getString("falcoins")
-			var member2 = interaction.options.getUser("user")
-			member2 = await getMember(guild, member2.id)
+			var member2 = await guild.members.fetch(
+				interaction.options.getUser("user").id
+			)
 
 			if (member2.user === user) {
 				await interaction.editReply({
@@ -73,23 +69,13 @@ module.exports = {
 				(await readFile(user.id, "falcoins")) >= bet &&
 				(await readFile(member2.user.id, "falcoins")) >= bet
 			) {
-				const row = new ActionRowBuilder().addComponents([
-					new ButtonBuilder()
-						.setCustomId("join")
-						.setEmoji("✅")
-						.setStyle("Success"),
-					new ButtonBuilder()
-						.setCustomId("refuse")
-						.setEmoji("⛔")
-						.setStyle("Danger"),
-				])
 				var answer = await interaction.editReply({
 					content: instance.getMessage(guild, "LUTA_CONVITE", {
 						USER: member,
 						USER2: member2,
 						FALCOINS: format(bet),
 					}),
-					components: [row],
+					components: [buttons(["accept", "refuse"])],
 					fetchReply: true,
 				})
 

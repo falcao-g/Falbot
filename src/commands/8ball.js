@@ -25,7 +25,7 @@ module.exports = {
 			let answers = instance.getMessage(guild, "8BALL")
 			let answer = `${answers[randint(0, answers.length - 1)]}`
 			const embed = new EmbedBuilder()
-				.setColor("BLACK")
+				.setColor(2303786)
 				.setAuthor({
 					name: instance.getMessage(guild, "BOLA8"),
 					iconURL:

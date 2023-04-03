@@ -9,6 +9,7 @@ const { readFile, getRoleColor, msToTime } = require("../utils/functions.js")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("cooldowns")
+		.setNameLocalization("pt-BR", "intervalos")
 		.setDescription("Shows your commands cooldowns")
 		.setDescriptionLocalization(
 			"pt-BR",
@@ -23,6 +24,12 @@ module.exports = {
 				`scratch-${user.id}`
 			)
 			const workCooldown = await instance.coolSchema.findById(`work-${user.id}`)
+			const fishCooldown = await instance.coolSchema.findById(`fish-${user.id}`)
+			const exploreCooldown = await instance.coolSchema.findById(
+				`explore-${user.id}`
+			)
+			const mineCooldown = await instance.coolSchema.findById(`mine-${user.id}`)
+			const huntCooldown = await instance.coolSchema.findById(`hunt-${user.id}`)
 			const lotto = await instance.lottoSchema.findById("semanal")
 			const embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, user.id))
@@ -57,6 +64,43 @@ module.exports = {
 						inline: true,
 					},
 					{
+						name:
+							":fishing_pole_and_fish: " + instance.getMessage(guild, "FISH"),
+						value: `**${
+							fishCooldown
+								? `:red_circle: ${msToTime(fishCooldown["cooldown"] * 1000)}`
+								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
+						}**`,
+						inline: true,
+					},
+					{
+						name: ":compass: " + instance.getMessage(guild, "EXPLORE"),
+						value: `**${
+							exploreCooldown
+								? `:red_circle: ${msToTime(exploreCooldown["cooldown"] * 1000)}`
+								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
+						}**`,
+						inline: true,
+					},
+					{
+						name: ":pick: " + instance.getMessage(guild, "MINE"),
+						value: `**${
+							mineCooldown
+								? `:red_circle: ${msToTime(mineCooldown["cooldown"] * 1000)}`
+								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
+						}**`,
+						inline: true,
+					},
+					{
+						name: ":crossed_swords: " + instance.getMessage(guild, "HUNT"),
+						value: `**${
+							huntCooldown
+								? `:red_circle: ${msToTime(huntCooldown["cooldown"] * 1000)}`
+								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
+						}**`,
+						inline: true,
+					},
+					{
 						name: ":loudspeaker: " + instance.getMessage(guild, "EVENTS"),
 						value: `**${instance.getMessage(
 							guild,
@@ -86,7 +130,33 @@ module.exports = {
 					.setDisabled(workCooldown ? true : false),
 			])
 
-			interaction.editReply({ embeds: [embed], components: [row] })
+			const row2 = new ActionRowBuilder().addComponents([
+				new ButtonBuilder()
+					.setCustomId("fish")
+					.setEmoji("🎣")
+					.setStyle(fishCooldown ? "Danger" : "Success")
+					.setDisabled(fishCooldown ? true : false),
+				new ButtonBuilder()
+					.setCustomId("explore")
+					.setEmoji("🧭")
+					.setStyle(exploreCooldown ? "Danger" : "Success")
+					.setDisabled(exploreCooldown ? true : false),
+				new ButtonBuilder()
+					.setCustomId("mine")
+					.setEmoji("⛏️")
+					.setStyle(mineCooldown ? "Danger" : "Success")
+					.setDisabled(mineCooldown ? true : false),
+			])
+
+			const row3 = new ActionRowBuilder().addComponents([
+				new ButtonBuilder()
+					.setCustomId("hunt")
+					.setEmoji("⚔️")
+					.setStyle(huntCooldown ? "Danger" : "Success")
+					.setDisabled(huntCooldown ? true : false),
+			])
+
+			interaction.editReply({ embeds: [embed], components: [row, row2, row3] })
 		} catch (error) {
 			console.error(`cooldowns: ${error}`)
 			interaction.editReply({

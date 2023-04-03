@@ -53,6 +53,11 @@ module.exports = {
 						value: "utils",
 					},
 					{
+						name: "🎒 items and inventory",
+						name_localizations: { "pt-BR": "🎒 items e inventário" },
+						value: "items",
+					},
+					{
 						name: "⚙️ config",
 						name_localizations: { "pt-BR": "⚙️ configuração" },
 						value: "config",
@@ -69,7 +74,7 @@ module.exports = {
 			}
 
 			const embed = new EmbedBuilder()
-				.setColor("DARK_PURPLE")
+				.setColor(7419530)
 				.setFooter({ text: "by Falcão ❤️" })
 			if (page === "introduction") {
 				embed.addFields({
@@ -102,6 +107,11 @@ module.exports = {
 				embed.addFields({
 					name: instance.getMessage(guild, "HELP_UTILS"),
 					value: instance.getMessage(guild, "HELP_UTILS2"),
+				})
+			} else if (page === "items") {
+				embed.addFields({
+					name: instance.getMessage(guild, "HELP_ITEMS"),
+					value: instance.getMessage(guild, "HELP_ITEMS2"),
 				})
 			} else if (page === "config") {
 				embed.addFields({
@@ -141,6 +151,11 @@ module.exports = {
 					{
 						name: ":pencil: " + instance.getMessage(guild, "UTILS"),
 						value: instance.getMessage(guild, "HELP_UTILS3"),
+						inline: true,
+					},
+					{
+						name: ":school_satchel: " + instance.getMessage(guild, "ITEMS"),
+						value: instance.getMessage(guild, "HELP_ITEMS3"),
 						inline: true,
 					},
 					{
@@ -184,6 +199,11 @@ module.exports = {
 							label: instance.getMessage(guild, "UTILS"),
 							value: "utils",
 							emoji: "📝",
+						},
+						{
+							label: instance.getMessage(guild, "ITEMS"),
+							value: "items",
+							emoji: "🎒",
 						},
 						{
 							label: instance.getMessage(guild, "CONFIG"),

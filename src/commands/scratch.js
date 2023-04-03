@@ -9,11 +9,11 @@ const {
 	randint,
 	changeDB,
 	getRoleColor,
-	msToTime,
 	cooldown,
 } = require("../utils/functions.js")
 
 module.exports = {
+	cooldown: true,
 	data: new SlashCommandBuilder()
 		.setName("scratch")
 		.setNameLocalization("pt-BR", "raspadinha")
@@ -26,16 +26,6 @@ module.exports = {
 	execute: async ({ guild, interaction, instance, user }) => {
 		try {
 			await interaction.deferReply()
-			scratchCooldown = await instance.coolSchema.findById(`scratch-${user.id}`)
-
-			if (scratchCooldown) {
-				await interaction.editReply({
-					content: instance.getMessage(guild, "COOLDOWN", {
-						COOLDOWN: msToTime(scratchCooldown.cooldown * 1000),
-					}),
-				})
-				return
-			}
 
 			cooldown(user.id, "scratch", 60 * 60 * 8)
 

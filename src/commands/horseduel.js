@@ -1,9 +1,4 @@
-const {
-	EmbedBuilder,
-	ActionRowBuilder,
-	ButtonBuilder,
-	SlashCommandBuilder,
-} = require("discord.js")
+const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 const {
 	specialArg,
 	readFile,
@@ -11,6 +6,7 @@ const {
 	randint,
 	format,
 	getRoleColor,
+	buttons,
 } = require("../utils/functions.js")
 
 module.exports = {
@@ -67,16 +63,9 @@ module.exports = {
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
-				const row = new ActionRowBuilder().addComponents(
-					new ButtonBuilder()
-						.setCustomId("join")
-						.setEmoji("✅")
-						.setStyle("Success")
-				)
-
 				var answer = await interaction.editReply({
 					embeds: [embed],
-					components: [row],
+					components: [buttons(["accept"])],
 					fetchReply: true,
 				})
 

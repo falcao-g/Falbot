@@ -23,6 +23,7 @@ class Falbot {
 		intents: [GatewayIntentBits.Guilds],
 	})
 	levels = require("./utils/json/levels.json")
+	items = require("./utils/json/items.json")
 	userSchema = require("./schemas/user-schema")
 	lottoSchema = require("./schemas/lotto-schema")
 	coolSchema = require("./schemas/cool-schema.js")
@@ -38,7 +39,9 @@ class Falbot {
 
 			try {
 				mongoose.set("strictQuery", false)
-				mongoose.connect(process.env.MONGODB_URI)
+				mongoose.connect(process.env.MONGODB_URI, {
+					keepAlive: true,
+				})
 			} catch {
 				console.log("A conexão caiu")
 				mongoose.connect(process.env.MONGODB_URI)
@@ -333,6 +336,13 @@ class Falbot {
 				})
 				perks += "\n"
 			}
+
+			if (old_rank.inventoryLimit < rank.inventoryLimit) {
+				perks += this.getMessage(guild, "RANKUP_INVENTORY", {
+					FALCOINS: format(rank.inventoryLimit - old_rank.inventoryLimit),
+				})
+				perks += "\n"
+			}
 		}
 
 		perks += `${this.getMessage(guild, "VOTO")}: ${format(
@@ -344,6 +354,13 @@ class Falbot {
 		)}-${format(rank.work[1])} Falcoins`
 
 		return perks
+	}
+
+	getInventoryWorth(inventory) {
+		return Array.from(inventory).reduce((acc, [itemName, quantity]) => {
+			acc += this.items[itemName]["value"] * quantity
+			return acc
+		}, 0)
 	}
 }
 

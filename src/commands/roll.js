@@ -1,4 +1,4 @@
-const { rollDice } = require("../utils/functions.js")
+const roll = require("falbot-dice")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
 			text = interaction.options.getString("dice")
 
 			try {
-				var rolled = rollDice(text)
+				var rolled = roll(text)
 
 				if (rolled.length > 2000) {
 					await interaction.editReply({

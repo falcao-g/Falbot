@@ -1,0 +1,578 @@
+{
+	"log": {
+		"english": ":wood: Big Log",
+		"portugues": ":wood: Madeira",
+		"value": 300,
+		"rarity": "Common",
+		"exploring": true
+	},
+	"wool": {
+		"english": ":ram: Woll",
+		"portugues": ":ram: Lã",
+		"value": 700,
+		"rarity": "Rare",
+		"hunting": true
+	},
+	"tools": {
+		"english": ":hammer_pick: Work tools",
+		"portugues": ":hammer_pick: Ferramentas",
+		"value": 1600,
+		"recipe": {
+			"log": 2,
+			"scrap": 4
+		}
+	},
+	"boot": {
+		"english": ":hiking_boot: Old Boot",
+		"portugues": ":hiking_boot: Bota Velha",
+		"value": 10,
+		"rarity": "Common",
+		"fishing": true
+	},
+	"anchovy": {
+		"english": ":fish: Anchovy",
+		"portugues": ":fish: Anchova",
+		"value": 20,
+		"rarity": "Common",
+		"fishing": true
+	},
+	"snail": {
+		"english": ":snail: Sea Snail",
+		"portugues": ":snail: Caracol do Mar",
+		"value": 30,
+		"rarity": "Common",
+		"fishing": true
+	},
+	"sardine": {
+		"english": ":fish: Sardine",
+		"portugues": ":fish: Sardinha",
+		"value": 50,
+		"rarity": "Common",
+		"fishing": true
+	},
+	"shrimp": {
+		"english": ":shrimp: Shrimp",
+		"portugues": ":shrimp: Camarão",
+		"value": 100,
+		"rarity": "Uncommon",
+		"fishing": true
+	},
+	"fish": {
+		"english": ":tropical_fish: Trop Fish",
+		"portugues": ":tropical_fish: Peixe Tropical",
+		"value": 250,
+		"rarity": "Rare",
+		"fishing": true
+	},
+	"feathers": {
+		"english": ":feather: Feather",
+		"portugues": ":feather: Pena",
+		"value": 50,
+		"rarity": "Uncommon",
+		"hunt": true
+	},
+	"chipmunk": {
+		"english": ":chipmunk: Chipmunk Pelt",
+		"portugues": ":chipmunk: Pele de Esquilo",
+		"value": 100,
+		"rarity": "Uncommon",
+		"hunting": true
+	},
+	"chunk": {
+		"english": ":meat_on_bone: Meat Chunk",
+		"portugues": ":meat_on_bone: Carne",
+		"value": 200,
+		"rarity": "Common",
+		"hunting": true
+	},
+	"skunk": {
+		"english": ":skunk: Skunk Pelt",
+		"portugues": ":skunk: Pele de Gambá",
+		"value": 400,
+		"rarity": "Uncommon",
+		"hunting": true
+	},
+	"steak": {
+		"english": ":cut_of_meat: Raw Steak",
+		"portugues": ":cut_of_meat: Bife Cru",
+		"value": 1000,
+		"rarity": "Rare",
+		"hunting": true
+	},
+	"coal": {
+		"english": ":black_small_square: Coal",
+		"portugues": ":black_small_square: Carvão",
+		"value": 50,
+		"rarity": "Common",
+		"mining": true
+	},
+	"copper": {
+		"english": ":coin: Copper",
+		"portugues": ":coin: Cobre",
+		"value": 100,
+		"rarity": "Common",
+		"mining": true
+	},
+	"aluminium": {
+		"english": ":battery: Aluminium",
+		"portugues": ":battery: Alumínio",
+		"value": 200,
+		"rarity": "Uncommon",
+		"mining": true
+	},
+	"iron": {
+		"english": ":chains: Iron",
+		"portugues": ":chains: Ferro",
+		"value": 300,
+		"rarity": "Uncommon",
+		"mining": true
+	},
+	"silver": {
+		"english": ":spoon: Silver",
+		"portugues": ":spoon: Prata",
+		"value": 500,
+		"rarity": "Rare",
+		"mining": true
+	},
+	"scrap": {
+		"english": ":gear: Scrap Metal",
+		"portugues": ":gear: Sucata",
+		"value": 250,
+		"rarity": "Uncommon",
+		"exploring": true
+	},
+	"knife": {
+		"english": ":knife: Rusty Knife",
+		"portugues": ":knife: Faca Velha",
+		"value": 200,
+		"rarity": "Rare",
+		"exploring": true
+	},
+	"ashes": {
+		"english": ":smoking: Ashes",
+		"portugues": ":smoking: Cinzas",
+		"value": 100,
+		"rarity": "Uncommon",
+		"exploring": true
+	},
+	"weeds": {
+		"english": ":herb: Weeds",
+		"portugues": ":herb: Ervas",
+		"value": 50,
+		"rarity": "Common",
+		"exploring": true
+	},
+	"rock": {
+		"english": ":rock: Rock",
+		"portugues": ":rock: Pedra",
+		"value": 50,
+		"rarity": "Common",
+		"exploring": true,
+		"mining": true
+	},
+	"bricks": {
+		"english": ":bricks: Bricks",
+		"portugues": ":bricks: Tijolos",
+		"value": 3600,
+		"recipe": {
+			"tools": 1,
+			"rock": 40
+		}
+	},
+	"beam": {
+		"english": ":construction_site: Steel Beam",
+		"portugues": ":construction_site: Viga de Aço",
+		"value": 13200,
+		"recipe": {
+			"tools": 2,
+			"scrap": 40,
+			"iron": 5
+		}
+	},
+	"hall": {
+		"english": ":classical_building: Grand Hall",
+		"portugues": ":classical_building: Grande Salão",
+		"value": 129200,
+		"recipe": {
+			"tools": 8,
+			"bricks": 25,
+			"beam": 2
+		}
+	},
+	"rope": {
+		"english": ":knot: Knoted Rope",
+		"portugues": ":knot: Corda",
+		"value": 2000,
+		"recipe": {
+			"weeds": 40
+		}
+	},
+	"leather": {
+		"english": ":cow2: Touh Leather",
+		"portugues": ":cow2: Couro Duro",
+		"value": 7500,
+		"rarity": "Epic",
+		"hunting": true
+	},
+	"backpack": {
+		"english": ":school_satchel: Big Backpack",
+		"portugues": ":school_satchel: Mochila",
+		"value": 82000,
+		"recipe": {
+			"leather": 8,
+			"rope": 10,
+			"chipmunk": 20
+		}
+	},
+	"gunpowder": {
+		"english": ":sparkler: Gunpowder",
+		"portugues": ":sparkler: Pólvora",
+		"value": 2000,
+		"recipe": {
+			"ashes": 20
+		}
+	},
+	"bomb": {
+		"english": ":bomb: Bomb",
+		"portugues": ":bomb: Bomba",
+		"value": 7000,
+		"recipe": {
+			"gunpowder": 2,
+			"scrap": 4,
+			"rope": 1
+		}
+	},
+	"ironpick": {
+		"english": ":pick: Iron Pickaxe",
+		"portugues": ":pick: Picareta de Ferro",
+		"value": 23500,
+		"equip": true,
+		"effect": "mine-2",
+		"recipe": {
+			"log": 10,
+			"scrap": 25,
+			"tools": 4,
+			"rope": 4
+		}
+	},
+	"rod": {
+		"english": ":fishing_pole_and_fish: Fishing Rod",
+		"portugues": ":fishing_pole_and_fish: Vara de Pesca",
+		"value": 28200,
+		"equip": true,
+		"effect": "fish-2",
+		"recipe": {
+			"log": 10,
+			"scrap": 8,
+			"tools": 5,
+			"rope": 10
+		}
+	},
+	"plushtoy": {
+		"english": ":teddy_bear: Plush Toy",
+		"portugues": ":teddy_bear: Pelúcia",
+		"value": 28200,
+		"recipe": {
+			"wool": 10,
+			"feathers": 150,
+			"leather": 1
+		}
+	},
+	"balltoy": {
+		"english": ":teddy_bear: Plush Toy",
+		"portugues": ":teddy_bear: Pelúcia",
+		"value": 28200,
+		"recipe": {
+			"wool": 10,
+			"feathers": 150,
+			"leather": 1
+		}
+	},
+	"lightbulb": {
+		"english": ":bulb: Lightbulb",
+		"portugues": ":bulb: Lâmpada",
+		"value": 1500,
+		"rarity": "Rare",
+		"exploring": true
+	},
+	"board": {
+		"english": ":floppy_disk: Circuit Board",
+		"portugues": ":floppy_disk: Circuito",
+		"value": 2000,
+		"rarity": "Epic",
+		"exploring": true
+	},
+	"sprinkler": {
+		"english": ":fountain: Sprinkler",
+		"portugues": ":fountain: Regador",
+		"value": 7700,
+		"recipe": {
+			"cpu": 1,
+			"board": 3,
+			"scrap": 6,
+			"tools": 2,
+			"supply": 1
+		}
+	},
+	"puzzletoy": {
+		"english": ":jigsaw: Puzzle Toy",
+		"portugues": ":jigsaw: Quebra-cabeça",
+		"value": 23500,
+		"recipe": {
+			"board": 10,
+			"scrap": 6,
+			"log": 40
+		}
+	},
+	"gold": {
+		"english": ":first_place: Gold",
+		"portugues": ":first_place: Ouro",
+		"value": 800,
+		"rarity": "Rare",
+		"mining": true
+	},
+	"cpu": {
+		"english": ":computer: CPU",
+		"portugues": ":computer: Processador",
+		"value": 23500,
+		"recipe": {
+			"board": 2,
+			"scrap": 2,
+			"copper": 2,
+			"gold": 1,
+			"silver": 1
+		}
+	},
+	"activewear": {
+		"english": ":martial_arts_uniform: Activewear",
+		"portugues": ":martial_arts_uniform: Roupa",
+		"value": 18400,
+		"equip": true,
+		"effect": "explore-2",
+		"recipe": {
+			"wool": 12,
+			"rope": 5
+		}
+	},
+	"ox": {
+		"english": ":ox: Ox Pelt",
+		"portugues": ":ox: Pele de Boi",
+		"value": 10000,
+		"rarity": "Epic",
+		"hunting": true
+	},
+	"buffalo": {
+		"english": ":water_buffalo: Buffalo Pelt",
+		"portugues": ":water_buffalo: Pele de Búfalo",
+		"value": 20000,
+		"rarity": "Legendary",
+		"hunting": true
+	},
+	"coat": {
+		"english": ":coat: Down Coat",
+		"portugues": ":coat: Casaco",
+		"value": 250000,
+		"equip": true,
+		"effect": "explore-4",
+		"recipe": {
+			"activewear": 1,
+			"feathers": 50,
+			"chipmunk": 30,
+			"skunk": 15,
+			"ox": 17,
+			"buffalo": 1
+		}
+	},
+	"supply": {
+		"english": ":electric_plug: Power Supply",
+		"portugues": ":electric_plug: Fonte",
+		"value": 1500,
+		"recipe": {
+			"aluminium": 5,
+			"copper": 5
+		}
+	},
+	"tractor": {
+		"english": ":tractor: Tractor",
+		"portugues": ":tractor: Trator",
+		"value": 28650,
+		"recipe": {
+			"lightbulb": 8,
+			"board": 4,
+			"tools": 4,
+			"scrap": 25,
+			"supply": 1
+		}
+	},
+	"diamond": {
+		"english": ":gem: Diamond",
+		"portugues": ":gem: Diamante",
+		"value": 50000,
+		"rarity": "Legendary",
+		"mining": true
+	},
+	"dagger": {
+		"english": ":dagger: Dagger",
+		"portugues": ":dagger: Adaga",
+		"value": 7200,
+		"recipe": {
+			"knife": 20,
+			"tools": 2
+		}
+	},
+	"diarod": {
+		"english": ":fishing_pole_and_fish: Diamond Rod",
+		"portugues": ":fishing_pole_and_fish: Vara de Diamante",
+		"value": 250000,
+		"equip": true,
+		"effect": "fish-4",
+		"recipe": {
+			"rod": 1,
+			"diamond": 4,
+			"tools": 1
+		}
+	},
+	"huntknife": {
+		"english": ":crossed_swords: Hunting Knife",
+		"portugues": ":crossed_swords: Faca de Caça",
+		"value": 24400,
+		"equip": true,
+		"effect": "hunt-2",
+		"recipe": {
+			"dagger": 2,
+			"knife": 8,
+			"rope": 1,
+			"tools": 4
+		}
+	},
+	"shield": {
+		"english": ":shield: Diamond Shield",
+		"portugues": ":shield: Escudo de Diamante",
+		"value": 24400,
+		"recipe": {
+			"diamond": 40,
+			"scrap": 20,
+			"log": 10,
+			"tools": 1
+		}
+	},
+	"diapick": {
+		"english": ":pick: Diamond Pickaxe",
+		"portugues": ":pick: Picareta de Diamante",
+		"value": 250000,
+		"equip": true,
+		"effect": "mine-4",
+		"recipe": {
+			"ironpick": 1,
+			"diamond": 8,
+			"tools": 1
+		}
+	},
+	"diaknife": {
+		"english": ":crossed_swords: Diamond Handknife",
+		"portugues": ":crossed_swords: Faca de Diamante",
+		"value": 250000,
+		"equip": true,
+		"effect": "hunt-4",
+		"recipe": {
+			"huntknife": 1,
+			"diamond": 8,
+			"tools": 1
+		}
+	},
+	"milk": {
+		"english": ":milk: Milk",
+		"portugues": ":milk: Leite",
+		"value": 400,
+		"rarity": "Uncommon",
+		"exploring": true
+	},
+	"wheat": {
+		"english": ":ear_of_rice: Wheat",
+		"portugues": ":ear_of_rice: Trigo",
+		"value": 1000,
+		"rarity": "Rare",
+		"exploring": true
+	},
+	"butter": {
+		"english": ":butter: Butter",
+		"portugues": ":butter: Manteiga",
+		"value": 800,
+		"recipe": {
+			"milk": 2
+		}
+	},
+	"waffle": {
+		"english": ":waffle: Waffle",
+		"portugues": ":waffle: Panqueca",
+		"value": 800,
+		"recipe": {
+			"butter": 1,
+			"wheat": 4
+		}
+	},
+	"cheese": {
+		"english": ":cheese: Cheese",
+		"portugues": ":cheese: Queijo",
+		"value": 1600,
+		"recipe": {
+			"milk": 4
+		}
+	},
+	"loaf": {
+		"english": ":bread: Bread",
+		"portugues": ":bread: Pão",
+		"value": 5000,
+		"recipe": {
+			"wheat": 5
+		}
+	},
+	"rice": {
+		"english": ":rice: White Rice",
+		"portugues": ":rice: Arroz",
+		"value": 1000,
+		"rarity": "Epic",
+		"exploring": true
+	},
+	"sushi": {
+		"english": ":sushi: Sushi",
+		"portugues": ":sushi: Sushi",
+		"value": 2000,
+		"recipe": {
+			"fish": 4,
+			"rice": 1
+		}
+	},
+	"hamburger": {
+		"english": ":hamburger: Hamburger",
+		"portugues": ":hamburger: Hamburger",
+		"value": 12600,
+		"recipe": {
+			"steak": 1,
+			"loaf": 2,
+			"cheese": 1
+		}
+	},
+	"fertilizer": {
+		"english": ":poop: Fertilizer",
+		"portugues": ":poop: Fertilizante",
+		"value": 12500,
+		"recipe": {
+			"weeds": 200
+		}
+	},
+	"oil": {
+		"english": ":oil: Petroleum",
+		"portugues": ":oil: Petróleo",
+		"value": 2000,
+		"rarity": "Epic",
+		"mining": true
+	},
+	"crab": {
+		"english": ":crab: Crab",
+		"portugues": ":crab: Siri",
+		"value": 400,
+		"rarity": "Uncommon",
+		"fishing": true
+	}
+}

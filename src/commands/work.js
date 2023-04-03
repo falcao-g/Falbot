@@ -4,12 +4,12 @@ const {
 	getRoleColor,
 	randint,
 	format,
-	msToTime,
 	cooldown,
 } = require("../utils/functions.js")
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
+	cooldown: true,
 	data: new SlashCommandBuilder()
 		.setName("work")
 		.setNameLocalization("pt-BR", "trabalhar")
@@ -19,17 +19,7 @@ module.exports = {
 	execute: async ({ interaction, instance, guild, user }) => {
 		try {
 			await interaction.deferReply()
-			var workCooldown = await instance.coolSchema.findById(`work-${user.id}`)
 			var levels = instance.levels
-
-			if (workCooldown) {
-				await interaction.editReply({
-					content: instance.getMessage(guild, "COOLDOWN", {
-						COOLDOWN: msToTime(workCooldown.cooldown * 1000),
-					}),
-				})
-				return
-			}
 
 			var rank_number = await readFile(user.id, "rank")
 			var min = levels[rank_number - 1].work[0]
@@ -42,7 +32,7 @@ module.exports = {
 			})
 			luck = randint(0, 100)
 
-			if (luck <= 25) {
+			if (luck <= 30) {
 				bonus = salary * 2
 				desc +=
 					"\n" +

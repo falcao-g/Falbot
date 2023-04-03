@@ -24,7 +24,10 @@ async function loadCommands(instance, client) {
 	})
 
 	client.application.commands.set(commandsArray)
-	client.application.commands.set(commandsGuild, instance.config.testGuild)
+
+	for (guild of instance.config.testGuilds) {
+		client.application.commands.set(commandsGuild, guild)
+	}
 }
 
 module.exports = { loadCommands }

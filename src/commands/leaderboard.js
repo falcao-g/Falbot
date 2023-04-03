@@ -3,7 +3,15 @@ const {
 	ButtonBuilder,
 	SlashCommandBuilder,
 } = require("discord.js")
-const { getMember, format, paginate } = require("../utils/functions.js")
+const { format, paginate } = require("../utils/functions.js")
+
+async function getMember(guild, member_id) {
+	try {
+		return await guild.members.fetch(member_id)
+	} catch {
+		return undefined
+	}
+}
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -107,13 +115,13 @@ module.exports = {
 		const type = interaction.options.getSubcommand()
 
 		var embed1 = new EmbedBuilder()
-			.setColor("DarkBlue")
+			.setColor("#206694")
 			.setFooter({ text: "by Falcão ❤️" })
 		var embed2 = new EmbedBuilder()
-			.setColor("DarkBlue")
+			.setColor("#206694")
 			.setFooter({ text: "by Falcão ❤️" })
 		var embed3 = new EmbedBuilder()
-			.setColor("DarkBlue")
+			.setColor("#206694")
 			.setFooter({ text: "by Falcão ❤️" })
 
 		embeds = [embed1, embed2, embed3]
@@ -248,7 +256,6 @@ module.exports = {
 					.setEmoji("➡️")
 					.setCustomId(ids[1])
 					.setStyle("Secondary"),
-				,
 			])
 			const message = await interaction.editReply(paginator.components())
 			message.channel

@@ -16,6 +16,7 @@ const Blackjack = require("simply-blackjack")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("blackjack")
+		.setNameLocalization("pt-BR", "vinteum")
 		.setDescription("Play a game of blackjack")
 		.setDescriptionLocalization("pt-BR", "Jogue um jogo de 21")
 		.setDMPermission(false)
@@ -31,10 +32,11 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, instance, user }) => {
+	execute: async ({ guild, interaction, instance, user, client }) => {
 		await interaction.deferReply()
 		try {
 			const falcoins = interaction.options.getString("falcoins")
+			const guildDev = client.guilds.cache.get("742332099788275732")
 			try {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
@@ -49,9 +51,9 @@ module.exports = {
 				await changeDB(user.id, "falcoins", -bet)
 
 				const Game = new Blackjack({
-					decks: 3,
+					decks: 2,
 					payouts: {
-						blackjack: 2,
+						blackjack: 1,
 						default: 1,
 					},
 				})
@@ -59,20 +61,20 @@ module.exports = {
 				Game.start()
 
 				const enum_cards = {
-					A: await guild.emojis.fetch("1078109893099274280"),
-					2: await guild.emojis.fetch("1078116892776075374"),
-					3: await guild.emojis.fetch("1078116896840364162"),
-					4: await guild.emojis.fetch("1078110565064523796"),
-					5: await guild.emojis.fetch("1078116898711031828"),
-					6: await guild.emojis.fetch("1078116890183991296"),
-					7: await guild.emojis.fetch("1078109882999373854"),
-					8: await guild.emojis.fetch("1078116894546067466"),
-					9: await guild.emojis.fetch("1078110567555928176"),
-					10: await guild.emojis.fetch("1078374320394485790"),
-					J: await guild.emojis.fetch("1078109887390810232"),
-					Q: await guild.emojis.fetch("1078109891513827460"),
-					K: await guild.emojis.fetch("1078109890066776155"),
-					hidden: await guild.emojis.fetch("1078109885734064128"),
+					A: await guildDev.emojis.fetch("1078109893099274280"),
+					2: await guildDev.emojis.fetch("1078116892776075374"),
+					3: await guildDev.emojis.fetch("1078116896840364162"),
+					4: await guildDev.emojis.fetch("1078110565064523796"),
+					5: await guildDev.emojis.fetch("1078116898711031828"),
+					6: await guildDev.emojis.fetch("1078116890183991296"),
+					7: await guildDev.emojis.fetch("1078109882999373854"),
+					8: await guildDev.emojis.fetch("1078116894546067466"),
+					9: await guildDev.emojis.fetch("1078110567555928176"),
+					10: await guildDev.emojis.fetch("1078374320394485790"),
+					J: await guildDev.emojis.fetch("1078109887390810232"),
+					Q: await guildDev.emojis.fetch("1078109891513827460"),
+					K: await guildDev.emojis.fetch("1078109890066776155"),
+					hidden: await guildDev.emojis.fetch("1078109885734064128"),
 				}
 
 				var player_cards = []
@@ -148,6 +150,117 @@ module.exports = {
 					time: 1000 * 60 * 30,
 				})
 
+				Game.on("end", async (results) => {
+					collector.stop()
+					double.setDisabled(true)
+					hit.setDisabled(true)
+					stand.setDisabled(true)
+
+					var player_cards = []
+					var dealer_cards = []
+
+					results.player.cards.forEach((element) => {
+						player_cards.push(enum_cards[element.name.substr(0, 2).trim()])
+					})
+
+					results.dealer.cards.forEach((element) => {
+						dealer_cards.push(enum_cards[element.name.substr(0, 2).trim()])
+					})
+
+					embed.data.fields[1] = {
+						name: instance.getMessage(guild, "PLAYER_HAND", {
+							CARDS: player_cards.join(" "),
+						}),
+						value: instance.getMessage(guild, "VALUE", {
+							VALUE: results.player.total,
+						}),
+						inline: true,
+					}
+					embed.data.fields[2] = {
+						name: instance.getMessage(guild, "DEALER_HAND", {
+							CARDS: dealer_cards.join(" "),
+						}),
+						value: instance.getMessage(guild, "VALUE", {
+							VALUE: results.dealer.total,
+						}),
+						inline: true,
+					}
+
+					if (results.state === "draw") {
+						embed.data.fields[0].value = instance.getMessage(
+							guild,
+							"BLACKJACK_DRAW",
+							{ FALCOINS: format(results.bet) }
+						)
+						embed.setColor(9807270)
+						await changeDB(user.id, "falcoins", results.bet)
+					} else if (results.state === "player_blackjack") {
+						embed.data.fields[0].value = instance.getMessage(
+							guild,
+							"PLAYER_BLACKJACK",
+							{ FALCOINS: format(results.winnings) }
+						)
+						embed.setColor(15844367)
+						await changeDB(user.id, "falcoins", results.bet + results.winnings)
+					} else if (results.state === "player_win") {
+						if (results.dealer.total > 21) {
+							embed.data.fields[0].value = instance.getMessage(
+								guild,
+								"DEALER_BUST",
+								{ FALCOINS: format(results.winnings) }
+							)
+						} else {
+							embed.data.fields[0].value = instance.getMessage(
+								guild,
+								"YOU_WON",
+								{ FALCOINS: format(Math.floor(results.winnings / 2)) }
+							)
+						}
+						embed.setColor(3066993)
+						await changeDB(
+							user.id,
+							"falcoins",
+							results.bet + Math.floor(results.winnings / 2)
+						)
+					} else if (results.state === "dealer_win") {
+						if (results.player.total > 21) {
+							embed.data.fields[0].value = instance.getMessage(
+								guild,
+								"PLAYER_BUST",
+								{ FALCOINS: format(results.losses) }
+							)
+						} else {
+							embed.data.fields[0].value = instance.getMessage(
+								guild,
+								"YOU_LOST",
+								{ FALCOINS: format(results.losses) }
+							)
+						}
+						embed.setColor(15158332)
+					} else {
+						embed.data.fields[0].value = instance.getMessage(
+							guild,
+							"DEALER_BLACKJACK",
+							{ FALCOINS: format(results.losses) }
+						)
+						embed.setColor(10038562)
+					}
+
+					embed.data.fields[0].value += `\n${instance.getMessage(
+						guild,
+						"SALDO_ATUAL"
+					)}: ${await readFile(user.id, "falcoins", true)} falcoins`
+
+					await interaction.editReply({
+						embeds: [embed],
+						components: [row],
+					})
+				})
+
+				if (Game.table.player.total >= 21) {
+					Game.stand()
+				}
+
 				collector.on("collect", async (i) => {
 					if (i.customId === "hit") {
 						Game.hit()
@@ -213,111 +326,8 @@ module.exports = {
 					}
 				})
 
-				Game.on("end", async (results) => {
-					collector.stop()
-					double.setDisabled(true)
-					hit.setDisabled(true)
-					stand.setDisabled(true)
-
-					var player_cards = []
-					var dealer_cards = []
-
-					results.player.cards.forEach((element) => {
-						player_cards.push(enum_cards[element.name.substr(0, 2).trim()])
-					})
-
-					results.dealer.cards.forEach((element) => {
-						dealer_cards.push(enum_cards[element.name.substr(0, 2).trim()])
-					})
-
-					embed.data.fields[1] = {
-						name: instance.getMessage(guild, "PLAYER_HAND", {
-							CARDS: player_cards.join(" "),
-						}),
-						value: instance.getMessage(guild, "VALUE", {
-							VALUE: results.player.total,
-						}),
-						inline: true,
-					}
-					embed.data.fields[2] = {
-						name: instance.getMessage(guild, "DEALER_HAND", {
-							CARDS: dealer_cards.join(" "),
-						}),
-						value: instance.getMessage(guild, "VALUE", {
-							VALUE: results.dealer.total,
-						}),
-						inline: true,
-					}
-
-					if (results.state === "draw") {
-						embed.data.fields[0].value = instance.getMessage(
-							guild,
-							"BLACKJACK_DRAW",
-							{ FALCOINS: format(results.bet) }
-						)
-						embed.setColor("Grey")
-						await changeDB(user.id, "falcoins", results.bet)
-					} else if (results.state === "player_blackjack") {
-						embed.data.fields[0].value = instance.getMessage(
-							guild,
-							"PLAYER_BLACKJACK",
-							{ FALCOINS: format(results.winnings) }
-						)
-						embed.setColor("Gold")
-						await changeDB(user.id, "falcoins", results.bet + results.winnings)
-					} else if (results.state === "player_win") {
-						if (results.dealer.total > 21) {
-							embed.data.fields[0].value = instance.getMessage(
-								guild,
-								"DEALER_BUST",
-								{ FALCOINS: format(results.winnings) }
-							)
-						} else {
-							embed.data.fields[0].value = instance.getMessage(
-								guild,
-								"YOU_WON",
-								{ FALCOINS: format(results.winnings) }
-							)
-						}
-						embed.setColor(3066993)
-						await changeDB(user.id, "falcoins", results.bet + results.winnings)
-					} else if (results.state === "dealer_win") {
-						if (results.player.total > 21) {
-							embed.data.fields[0].value = instance.getMessage(
-								guild,
-								"PLAYER_BUST",
-								{ FALCOINS: format(results.losses) }
-							)
-						} else {
-							embed.data.fields[0].value = instance.getMessage(
-								guild,
-								"YOU_LOST",
-								{ FALCOINS: format(results.losses) }
-							)
-						}
-						embed.setColor(15158332)
-					} else {
-						embed.data.fields[0].value = instance.getMessage(
-							guild,
-							"DEALER_BLACKJACK",
-							{ FALCOINS: format(results.losses) }
-						)
-						embed.setColor("DarkRed")
-					}
-
-					embed.data.fields[0].value += `\n ${instance.getMessage(
-						guild,
-						"SALDO_ATUAL"
-					)}: ${await readFile(user.id, "falcoins", true)} falcoins`
-
-					await interaction.editReply({
-						embeds: [embed],
-						components: [row],
-					})
-				})
-
 				collector.on("end", () => {
-					if (collector.endReason) {
+					if (collector.endReason === "time") {
 						Game.stand()
 					}
 				})

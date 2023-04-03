@@ -1,9 +1,8 @@
 const {
-	getMember,
 	specialArg,
 	readFile,
 	format,
-	takeAndGive,
+	changeDB,
 } = require("../utils/functions.js")
 const { SlashCommandBuilder } = require("discord.js")
 
@@ -39,7 +38,6 @@ module.exports = {
 		try {
 			const falcoins = interaction.options.getString("falcoins")
 			var target = interaction.options.getUser("user")
-			target = await getMember(guild, target.id)
 			try {
 				var quantity = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
@@ -52,13 +50,8 @@ module.exports = {
 			}
 
 			if ((await readFile(user.id, "falcoins")) >= quantity) {
-				await takeAndGive(
-					user.id,
-					target.user.id,
-					"falcoins",
-					"falcoins",
-					quantity
-				)
+				await changeDB(user.id, "falcoins", -quantity)
+				await changeDB(target.id, "falcoins", quantity)
 				await interaction.editReply({
 					content: instance.getMessage(guild, "DOAR", {
 						FALCOINS: format(quantity),

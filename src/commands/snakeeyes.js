@@ -90,7 +90,7 @@ module.exports = {
 
 				if (random1 === 1 && random2 === 1) {
 					await changeDB(user.id, "falcoins", bet * 5)
-					var embed2 = new EmbedBuilder().setColor("GOLD").addFields(
+					var embed2 = new EmbedBuilder().setColor("#F1C40F").addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
 							value: `--- **${instance.getMessage(guild, "VOCE_GANHOU")}** ---`,

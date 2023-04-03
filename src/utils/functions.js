@@ -1,6 +1,7 @@
 const userSchema = require("../schemas/user-schema")
 const coolSchema = require("../schemas/cool-schema")
-const { ActionRowBuilder } = require("discord.js")
+const { ActionRowBuilder, ButtonBuilder } = require("discord.js")
+const items = require("./json/items.json")
 
 async function createUser(id) {
 	try {
@@ -37,17 +38,6 @@ async function changeDB(id, field, quantity = 1, erase = false) {
 	}
 }
 
-async function takeAndGive(id, id2, field, field2, quantity = 1) {
-	try {
-		await createUser(id)
-		await createUser(id2)
-		await userSchema.findByIdAndUpdate(id, { $inc: { [field]: -quantity } })
-		await userSchema.findByIdAndUpdate(id2, { $inc: { [field2]: quantity } })
-	} catch {
-		console.error(`Erro ao alterar a database no takeAndGive: ${error}`)
-	}
-}
-
 function msToTime(ms) {
 	let time = ""
 
@@ -75,6 +65,8 @@ function msToTime(ms) {
 		time += `${n}m `
 		ms -= n * 60000
 	}
+
+	if (time === "") time += "1m"
 
 	return time.trimEnd()
 }
@@ -166,15 +158,7 @@ async function getRoleColor(guild, member_id) {
 		cor = guild.members.cache.get(member_id).displayColor
 		return cor
 	} catch (err) {
-		return "RANDOM"
-	}
-}
-
-async function getMember(guild, member_id) {
-	try {
-		return await guild.members.fetch(member_id)
-	} catch {
-		return undefined
+		return "Random"
 	}
 }
 
@@ -219,9 +203,7 @@ function paginate() {
 		components() {
 			return {
 				embeds: [__embeds.at(cur)],
-				components: [
-					new ActionRowBuilder().addComponents(traverser[0], traverser[1]),
-				],
+				components: [new ActionRowBuilder().addComponents(...traverser)],
 				fetchReply: true,
 			}
 		},
@@ -244,85 +226,6 @@ function pick(data) {
 	return values[weightsSum.filter((element) => element <= rand).length]
 }
 
-function rollDice(expressionRaw) {
-	var expression = ""
-	for (let c = 0; c < expressionRaw.length; c++) {
-		if (["+", "-"].includes(expressionRaw[c]) && expressionRaw[c - 1] !== " ") {
-			expression += ` ${expressionRaw[c]} `
-			continue
-		}
-		expression += expressionRaw[c]
-	}
-
-	const parts = expression.split(" ")
-	let result = ""
-	let total = 0
-	let add = true
-
-	for (let i = 0; i < parts.length; i++) {
-		let part = parts[i]
-		let matches
-
-		if (part.startsWith("d")) {
-			part = "1" + part
-		}
-
-		if (part === "+") {
-			add = true
-			result += ` + `
-			continue
-		} else if (part === "-") {
-			add = false
-			result += ` - `
-			continue
-		}
-
-		if ((matches = part.match(/^(\d+)d(\d+)$/))) {
-			let count = parseInt(matches[1])
-			let sides = parseInt(matches[2])
-			let rolls = []
-
-			for (let j = 0; j < count; j++) {
-				let roll = randint(1, sides)
-				rolls.push(roll)
-				if (add) {
-					total += roll
-				} else {
-					total -= roll
-				}
-			}
-
-			result += part + " ("
-			for (let j = 0; j < rolls.length; j++) {
-				if (rolls[j] === 1) {
-					result += "**" + rolls[j] + "**"
-				} else if (rolls[j] === sides) {
-					result += "**" + rolls[j] + "**"
-				} else {
-					result += rolls[j]
-				}
-				if (j < rolls.length - 1) {
-					result += ", "
-				}
-			}
-			result += ")"
-		} else if ((matches = part.match(/^\d+$/))) {
-			let value = parseInt(part)
-			result += value
-			if (add) {
-				total += value
-			} else {
-				total -= value
-			}
-		} else {
-			throw new Error("Invalid expression: " + part)
-		}
-	}
-
-	result += " = " + "`" + total + "`"
-	return result
-}
-
 async function cooldown(id, command, cooldown) {
 	await coolSchema.findOneAndUpdate(
 		{
@@ -337,6 +240,86 @@ async function cooldown(id, command, cooldown) {
 	)
 }
 
+function getItem(item) {
+	for (const key in items) {
+		if (
+			items[key]["portugues"].split(" ").slice(1).join(" ").toLowerCase() ===
+				item ||
+			items[key]["english"].split(" ").slice(1).join(" ").toLowerCase() === item
+		) {
+			return key
+		}
+	}
+
+	if (items[item] != undefined) {
+		return item
+	}
+}
+
+function buttons(buttons) {
+	const row = new ActionRowBuilder()
+
+	const buttonsEnum = {
+		cooldowns: new ButtonBuilder()
+			.setCustomId("cooldowns")
+			.setEmoji("⏱️")
+			.setStyle("Secondary"),
+		help: new ButtonBuilder()
+			.setCustomId("help")
+			.setEmoji("📚")
+			.setStyle("Secondary"),
+		accept: new ButtonBuilder()
+			.setCustomId("accept")
+			.setEmoji("✅")
+			.setStyle("Success"),
+		refuse: new ButtonBuilder()
+			.setCustomId("refuse")
+			.setEmoji("⛔")
+			.setStyle("Danger"),
+		inventory_view: new ButtonBuilder()
+			.setCustomId("inventory view")
+			.setEmoji("🎒")
+			.setStyle("Secondary"),
+		balance: new ButtonBuilder()
+			.setCustomId("balance")
+			.setEmoji("🪙")
+			.setStyle("Secondary"),
+	}
+
+	for (button of buttons) {
+		row.addComponents([buttonsEnum[button]])
+	}
+
+	return row
+}
+
+async function isEquipped(member, item) {
+	const equippedItems = await readFile(member.id, "equippedItems")
+
+	for (itemEquipped of equippedItems) {
+		if (itemEquipped.name === item) {
+			return true
+		}
+	}
+}
+
+async function useItem(member, item) {
+	var equippedItems = await readFile(member.id, "equippedItems")
+
+	for (itemEquipped of equippedItems) {
+		if (itemEquipped.name === item) {
+			itemEquipped.usageCount -= 1
+			if (itemEquipped.usageCount === 0) {
+				equippedItems = equippedItems.filter((equipped) => {
+					return equipped.name != item
+				})
+			}
+		}
+	}
+
+	await changeDB(member.id, "equippedItems", equippedItems, true)
+}
+
 module.exports = {
 	createUser,
 	changeDB,
@@ -345,12 +328,13 @@ module.exports = {
 	format,
 	readFile,
 	getRoleColor,
-	getMember,
-	takeAndGive,
 	count,
 	randint,
 	paginate,
 	pick,
-	rollDice,
 	cooldown,
+	getItem,
+	buttons,
+	isEquipped,
+	useItem,
 }

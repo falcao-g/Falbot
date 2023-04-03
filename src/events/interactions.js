@@ -1,4 +1,4 @@
-const { changeDB } = require("../utils/functions.js")
+const { changeDB, msToTime } = require("../utils/functions.js")
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js")
 
 module.exports = {
@@ -54,6 +54,21 @@ module.exports = {
 					ephemeral: true,
 				})
 			}
+			var cooldown = undefined
+			if (command.cooldown) {
+				cooldown = await instance.coolSchema.findById(
+					`${interaction.commandName}-${interaction.user.id}`
+				)
+
+				if (cooldown != undefined) {
+					await interaction.reply({
+						content: instance.getMessage(guild, "COOLDOWN", {
+							COOLDOWN: msToTime(cooldown.cooldown * 1000),
+						}),
+					})
+					return
+				}
+			}
 			command.execute({
 				interaction,
 				instance,
@@ -104,43 +119,24 @@ module.exports = {
 				})
 			}
 
-			if (interaction.customId === "vote") {
-				const vote = client.commands.get("vote")
-				await vote.execute({
+			if (
+				interaction.customId === "vote" ||
+				interaction.customId === "scratch" ||
+				interaction.customId === "work" ||
+				interaction.customId === "cooldowns" ||
+				interaction.customId === "fish" ||
+				interaction.customId === "explore" ||
+				interaction.customId === "mine" ||
+				interaction.customId === "hunt" ||
+				interaction.customId === "balance"
+			) {
+				const command = client.commands.get(interaction.customId)
+				await command.execute({
 					guild: interaction.guild,
 					user: interaction.user,
 					interaction,
 					instance,
-				})
-			}
-
-			if (interaction.customId === "scratch") {
-				const scratch = client.commands.get("scratch")
-				await scratch.execute({
-					guild: interaction.guild,
-					interaction,
-					user: interaction.user,
-					instance,
-				})
-			}
-
-			if (interaction.customId === "work") {
-				const work = client.commands.get("work")
-				await work.execute({
-					interaction,
-					guild: interaction.guild,
-					user: interaction.user,
-					instance,
-				})
-			}
-
-			if (interaction.customId === "cooldowns") {
-				const cooldowns = client.commands.get("cooldowns")
-				await cooldowns.execute({
-					guild: interaction.guild,
-					user: interaction.user,
-					interaction,
-					instance,
+					member: interaction.member,
 				})
 			}
 
@@ -151,6 +147,18 @@ module.exports = {
 					guild: interaction.guild,
 					interaction,
 					instance,
+				})
+			}
+
+			if (interaction.customId === "inventory view") {
+				const arguments = interaction.customId.split(" ")
+				const inventory = client.commands.get(arguments[0])
+				await inventory.execute({
+					guild: interaction.guild,
+					interaction,
+					instance,
+					member: interaction.member,
+					subcommand: arguments[1],
 				})
 			}
 		} else if (interaction.isStringSelectMenu()) {

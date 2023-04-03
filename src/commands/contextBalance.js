@@ -1,11 +1,14 @@
 const {
 	EmbedBuilder,
-	ButtonBuilder,
-	ActionRowBuilder,
 	ContextMenuCommandBuilder,
 	ApplicationCommandType,
 } = require("discord.js")
-const { getRoleColor, format, readFile } = require("../utils/functions.js")
+const {
+	getRoleColor,
+	format,
+	readFile,
+	buttons,
+} = require("../utils/functions.js")
 
 module.exports = {
 	data: new ContextMenuCommandBuilder()
@@ -17,8 +20,7 @@ module.exports = {
 		await interaction.deferReply()
 		try {
 			const target = interaction.targetMember
-			const { rank, falcoins, vitorias, banco, caixas, chaves } =
-				await readFile(target.user.id)
+			const { rank, falcoins, vitorias, banco } = await readFile(target.user.id)
 
 			const embed = new EmbedBuilder()
 				.setTitle(instance.getMessage(guild, rank) + " " + target.displayName)
@@ -39,16 +41,6 @@ module.exports = {
 						name: ":bank: " + instance.getMessage(guild, "BANCO"),
 						value: `${format(banco)}`,
 						inline: true,
-					},
-					{
-						name: ":gift: " + instance.getMessage(guild, "CAIXAS"),
-						value: `${format(caixas)}`,
-						inline: true,
-					},
-					{
-						name: ":key: " + instance.getMessage(guild, "CHAVES"),
-						value: `${format(chaves)}`,
-						inline: true,
 					}
 				)
 			if (instance.levels[rank - 1].falcoinsToLevelUp === undefined) {
@@ -67,18 +59,10 @@ module.exports = {
 				)
 			}
 
-			const row = new ActionRowBuilder().addComponents([
-				new ButtonBuilder()
-					.setCustomId("cooldowns")
-					.setEmoji("⏱️")
-					.setStyle("Secondary"),
-				new ButtonBuilder()
-					.setCustomId("help")
-					.setEmoji("📚")
-					.setStyle("Secondary"),
-			])
-
-			await interaction.editReply({ embeds: [embed], components: [row] })
+			await interaction.editReply({
+				embeds: [embed],
+				components: [buttons(["cooldowns", "help"])],
+			})
 		} catch (error) {
 			console.error(`balance: ${error}`)
 			interaction.editReply({

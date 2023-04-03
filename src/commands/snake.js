@@ -4,7 +4,7 @@ const {
 	ActionRowBuilder,
 	SlashCommandBuilder,
 } = require("discord.js")
-const builder = require("../utils/snake-builder.js")
+const builder = require("falbot-snake")
 
 module.exports = {
 	data: new SlashCommandBuilder()

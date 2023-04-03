@@ -20,14 +20,6 @@ const userSchema = mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
-		caixas: {
-			type: Number,
-			default: 0,
-		},
-		chaves: {
-			type: Number,
-			default: 0,
-		},
 		lastVote: {
 			type: Number,
 			default: 0,
@@ -51,6 +43,15 @@ const userSchema = mongoose.Schema(
 		voteStreak: {
 			type: Number,
 			default: 0,
+		},
+		inventory: {
+			type: Map,
+			of: Number,
+			default: new Map(),
+		},
+		equippedItems: {
+			type: Array,
+			default: [],
 		},
 	},
 	{

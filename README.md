@@ -60,7 +60,7 @@ When all of the dependencies finish installing, you will need to create a `confi
 ```json
 {
  "devs": [""],
- "testGuild": "",
+ "testGuilds": [""],
  "language": "portugues",
  "testOnly": true
 }
@@ -88,7 +88,7 @@ Falbot is made to be a really configurable bot:
 config.json file:
 
 - "devs": put here the discord id of all developers of the bot, this will be important to manage slash commands
-- "testGuild": id of the guild used to test commands
+- "testGuild": if testOnly is true, the bot will only register the commands in the guilds put here
 - "language": the default language of the bot (portuguese or english)
 - "testOnly": when you are only testing the slash commands put this as true this way you don't have to wait 1 hour for the command to register, it register instantly in the servers you put earlier
 
