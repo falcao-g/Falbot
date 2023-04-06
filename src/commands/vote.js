@@ -15,11 +15,11 @@ module.exports = {
 		.setDescriptionLocalization(
 			"pt-BR",
 			"Ganhe falcois votando no bot no top.gg"
-		)
-		.setDMPermission(false),
+		),
 	execute: async ({ guild, user, instance, interaction }) => {
 		try {
 			await interaction.deferReply()
+			guildUser = guild ? guild : user
 
 			var request = await fetch(
 				`https://top.gg/api/bots/check?userId=${user.id}`,
@@ -52,8 +52,8 @@ module.exports = {
 				var embed = new EmbedBuilder()
 					.setColor(3066993)
 					.addFields({
-						name: instance.getMessage(guild, "VOTE_THANKS"),
-						value: instance.getMessage(guild, "VOTE_COLLECTED", {
+						name: instance.getMessage(guildUser, "VOTE_THANKS"),
+						value: instance.getMessage(guildUser, "VOTE_COLLECTED", {
 							REWARD: format(reward),
 							PERCENTAGE: (await readFile(user.id, "voteStreak")) * 5,
 						}),
@@ -63,8 +63,8 @@ module.exports = {
 				var embed = new EmbedBuilder()
 					.setColor(15158332)
 					.addFields({
-						name: instance.getMessage(guild, "ALREADY_COLLECTED"),
-						value: instance.getMessage(guild, "ALREADY_COLLECTED2", {
+						name: instance.getMessage(guildUser, "ALREADY_COLLECTED"),
+						value: instance.getMessage(guildUser, "ALREADY_COLLECTED2", {
 							TIME: msToTime(1000 * 60 * 60 * 12 - (Date.now() - lastVote)),
 							REWARD: format(reward),
 						}),
@@ -74,16 +74,16 @@ module.exports = {
 				var embed = new EmbedBuilder()
 					.setColor("#0099ff")
 					.addFields({
-						name: instance.getMessage(guild, "VOTE_FIRST"),
-						value: instance.getMessage(guild, "VOTE_DESCRIPTION", {
+						name: instance.getMessage(guildUser, "VOTE_FIRST"),
+						value: instance.getMessage(guildUser, "VOTE_DESCRIPTION", {
 							FALCOINS: format(reward),
 						}),
 					})
 					.addFields({
-						name: instance.getMessage(guild, "VOTE_HERE"),
+						name: instance.getMessage(guildUser, "VOTE_HERE"),
 						value:
 							"https://top.gg/bot/742331813539872798/vote\n\n" +
-							instance.getMessage(guild, "VOTE_FINAL", {
+							instance.getMessage(guildUser, "VOTE_FINAL", {
 								PERCENTAGE: (await readFile(user.id, "voteStreak")) * 5,
 							}),
 					})
@@ -93,7 +93,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`vote: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(guildUser, "EXCEPTION"),
 				embeds: [],
 			})
 		}
