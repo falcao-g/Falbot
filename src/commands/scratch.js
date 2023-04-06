@@ -27,7 +27,7 @@ module.exports = {
 		try {
 			await interaction.deferReply()
 
-			cooldown(user.id, "scratch", 60 * 60 * 8)
+			cooldown(user.id, "scratch", 60 * 60 * 6)
 
 			const row = new ActionRowBuilder()
 			const row2 = new ActionRowBuilder()
@@ -89,7 +89,7 @@ module.exports = {
 						})}`,
 					})
 					cont = 0
-					cooldown(user.id, "scratch", 60 * 60 * 16)
+					cooldown(user.id, "scratch", 60 * 60 * 12)
 					collector.stop()
 				} else if (luck === 24) {
 					//super close
@@ -102,7 +102,7 @@ module.exports = {
 						})}`,
 					})
 					cont = 0
-					cooldown(user.id, "scratch", 60 * 60 * 12)
+					cooldown(user.id, "scratch", 60 * 60 * 10)
 					collector.stop()
 				} else if (luck === 23 || luck === 22) {
 					//pretty close
@@ -115,7 +115,7 @@ module.exports = {
 						})}`,
 					})
 					cont = 0
-					cooldown(user.id, "scratch", 60 * 60 * 10)
+					cooldown(user.id, "scratch", 60 * 60 * 8)
 					collector.stop()
 				} else if (luck === 21 || luck === 20) {
 					//kinda close
