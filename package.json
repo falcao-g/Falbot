@@ -9,7 +9,7 @@
   "author": "Falcão",
   "license": "GNU 3.0",
   "dependencies": {
-    "discord.js": "^14.8.0",
+    "discord.js": "^14.9.0",
     "dotenv": "^16.0.1",
     "falbot-dice": "^1.1.0",
     "falbot-snake": "^1.0.2",
