@@ -22,7 +22,11 @@ module.exports = {
 			return
 		}
 
-		var disabledChannels = instance._disabledChannels.get(interaction.guild.id)
+		if (interaction.guild != undefined) {
+			var disabledChannels = instance._disabledChannels.get(
+				interaction.guild.id
+			)
+		}
 
 		if (
 			disabledChannels != undefined
