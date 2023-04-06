@@ -128,8 +128,8 @@
 		"mining": true
 	},
 	"silver": {
-		"english": ":spoon: Silver",
-		"portugues": ":spoon: Prata",
+		"english": ":second_place: Silver",
+		"portugues": ":second_place: Prata",
 		"value": 500,
 		"rarity": "Rare",
 		"mining": true
