@@ -10,6 +10,8 @@ Falbot is a fun brazilian bot, with major focus in economy, featuring:
 
 🏛️ Dynamic economy run by player activity
 
+🎒 In-depth inventory and crafting system
+
 👑 Global and local user leaderboards
 
 🎉 Fun commands
