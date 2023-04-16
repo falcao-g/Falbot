@@ -32,14 +32,14 @@
 	"anchovy": {
 		"english": ":fish: Anchovy",
 		"portugues": ":fish: Anchova",
-		"value": 20,
+		"value": 50,
 		"rarity": "Common",
 		"fishing": true
 	},
 	"snail": {
 		"english": ":snail: Sea Snail",
 		"portugues": ":snail: Caracol do Mar",
-		"value": 30,
+		"value": 40,
 		"rarity": "Common",
 		"fishing": true
 	},
@@ -53,15 +53,15 @@
 	"shrimp": {
 		"english": ":shrimp: Shrimp",
 		"portugues": ":shrimp: Camarão",
-		"value": 100,
+		"value": 500,
 		"rarity": "Uncommon",
 		"fishing": true
 	},
 	"fish": {
 		"english": ":tropical_fish: Trop Fish",
 		"portugues": ":tropical_fish: Peixe Tropical",
-		"value": 250,
-		"rarity": "Rare",
+		"value": 400,
+		"rarity": "Uncommon",
 		"fishing": true
 	},
 	"feathers": {
@@ -408,7 +408,7 @@
 		"english": ":gem: Diamond",
 		"portugues": ":gem: Diamante",
 		"value": 50000,
-		"rarity": "Legendary",
+		"rarity": "Epic",
 		"mining": true
 	},
 	"dagger": {
@@ -574,5 +574,89 @@
 		"value": 400,
 		"rarity": "Uncommon",
 		"fishing": true
+	},
+	"artifact": {
+		"english": ":amphora: Artifact",
+		"portugues": ":amphora: Artefato",
+		"value": 10000,
+		"rarity": "Epic",
+		"exploring": true
+	},
+	"fossil": {
+		"english": ":crocodile: Ancient Fossil",
+		"portugues": ":crocodile: Fóssil",
+		"value": 15000,
+		"rarity": "Legendary",
+		"mining": true
+	},
+	"treasure": {
+		"english": ":crown: Ancient Treasure",
+		"portugues": ":crown: Tesouro Antigo",
+		"value": 150000,
+		"rarity": "Legendary",
+		"mining": true
+	},
+	"manuscript": {
+		"english": ":scroll: Sacred Manuscript",
+		"portugues": ":scroll: Manuscrito Sagrado",
+		"value": 300000,
+		"rarity": "Legendary",
+		"exploring": true
+	},
+	"oyster": {
+		"english": ":oyster: Oyster",
+		"portugues": ":oyster: Ostra",
+		"value": 950,
+		"rarity": "Rare",
+		"fishing": true
+	},
+	"squid": {
+		"english": ":squid: Squid",
+		"portugues": ":squid: Lula",
+		"value": 1500,
+		"rarity": "Epic",
+		"fishing": true
+	},
+	"blowfish": {
+		"english": ":blowfish: Blowfish",
+		"portugues": ":blowfish: Baiacu",
+		"value": 5000,
+		"rarity": "Legendary",
+		"fishing": true
+	},
+	"lobster": {
+		"english": ":lobster: Lobster",
+		"portugues": ":lobster: Lagosta",
+		"value": 750,
+		"rarity": "Rare",
+		"fishing": true
+	},
+	"shark": {
+		"english": ":shark: Shark",
+		"portugues": ":shark: Tubarão",
+		"value": 80000,
+		"rarity": "Legendary",
+		"fishing": true
+	},
+	"octopus": {
+		"english": ":octopus: Octopus",
+		"portugues": ":octopus: Polvo",
+		"value": 400000,
+		"rarity": "Legendary",
+		"fishing": true
+	},
+	"thigh": {
+		"english": ":poultry_leg: Thigh",
+		"portugues": ":poultry_leg: Coxa",
+		"value": 500,
+		"rarity": "Uncommon",
+		"hunting": true
+	},
+	"turkey": {
+		"english": ":turkey: Turkey",
+		"portugues": ":turkey: Peru",
+		"value": 300,
+		"rarity": "Uncommon",
+		"hunting": true
 	}
 }
