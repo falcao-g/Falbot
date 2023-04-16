@@ -70,7 +70,7 @@ module.exports = {
 			Uncommon: 20,
 			Rare: 15,
 			Epic: 6,
-			Legendary: 3,
+			Legendary: 1,
 		}
 
 		var filteredItems = Array.from(Object.keys(items)).reduce((acc, item) => {
