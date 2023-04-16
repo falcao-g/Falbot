@@ -207,7 +207,7 @@ module.exports = {
 							embed.data.fields[0].value = instance.getMessage(
 								guild,
 								"DEALER_BUST",
-								{ FALCOINS: format(results.winnings) }
+								{ FALCOINS: format(results.winnings / 2) }
 							)
 						} else {
 							embed.data.fields[0].value = instance.getMessage(
