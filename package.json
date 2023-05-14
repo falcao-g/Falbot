@@ -1,21 +1,21 @@
 {
-  "name": "falbot",
-  "version": "2.9",
-  "description": "https://falbot.netlify.app/",
-  "main": "./src/index.js",
-  "scripts": {
-    "start": "node ./src/index"
-  },
-  "author": "Falcão",
-  "license": "GNU 3.0",
-  "dependencies": {
-    "discord.js": "^14.9.0",
-    "dotenv": "^16.0.1",
-    "falbot-dice": "^1.1.0",
-    "falbot-snake": "^1.0.2",
-    "mathjs": "^10.6.0",
-    "mongoose": "^6.8.0",
-    "simply-blackjack": "^1.0.3",
-    "tictactoe-board": "^1.1.0"
-  }
+	"name": "falbot",
+	"version": "2.9.1",
+	"description": "https://falbot.netlify.app/",
+	"main": "./src/index.js",
+	"scripts": {
+		"start": "node ./src/index"
+	},
+	"author": "Falcão",
+	"license": "GNU 3.0",
+	"dependencies": {
+		"discord.js": "^14.9.0",
+		"dotenv": "^16.0.1",
+		"falbot-dice": "^1.1.0",
+		"falbot-snake": "^1.0.2",
+		"mathjs": "^10.6.0",
+		"mongoose": "^6.8.0",
+		"simply-blackjack": "^1.0.3",
+		"tictactoe-board": "^1.1.0"
+	}
 }
