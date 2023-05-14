@@ -1,4 +1,4 @@
-const { changeDB, msToTime } = require("../utils/functions.js")
+const { changeDB, resolveCooldown, msToTime } = require("../utils/functions.js")
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js")
 
 module.exports = {
@@ -58,21 +58,23 @@ module.exports = {
 					ephemeral: true,
 				})
 			}
-			var cooldown = undefined
-			if (command.cooldown) {
-				cooldown = await instance.coolSchema.findById(
-					`${interaction.commandName}-${interaction.user.id}`
-				)
 
-				if (cooldown != undefined) {
+			if (command.cooldown) {
+				cooldown = await resolveCooldown(
+					interaction.user.id,
+					interaction.commandName
+				)
+				if (cooldown > 0) {
 					await interaction.reply({
 						content: instance.getMessage(guild, "COOLDOWN", {
-							COOLDOWN: msToTime(cooldown.cooldown * 1000),
+							COOLDOWN: msToTime(cooldown),
 						}),
+						ephemeral: true,
 					})
-					return
 				}
+				return
 			}
+
 			command.execute({
 				interaction,
 				instance,

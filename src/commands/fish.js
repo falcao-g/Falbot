@@ -1,7 +1,7 @@
 const {
 	readFile,
 	getRoleColor,
-	cooldown,
+	setCooldown,
 	changeDB,
 	randint,
 	pick,
@@ -114,6 +114,6 @@ module.exports = {
 			components: [buttons(["balance", "inventory_view", "cooldowns"])],
 		})
 
-		cooldown(member.id, "fish", 60 * 60)
+		setCooldown(member.id, "fish", 60 * 60)
 	},
 }

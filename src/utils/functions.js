@@ -1,5 +1,4 @@
 const userSchema = require("../schemas/user-schema")
-const coolSchema = require("../schemas/cool-schema")
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js")
 const items = require("./json/items.json")
 
@@ -226,18 +225,22 @@ function pick(data) {
 	return values[weightsSum.filter((element) => element <= rand).length]
 }
 
-async function cooldown(id, command, cooldown) {
-	await coolSchema.findOneAndUpdate(
-		{
-			_id: `${command}-${id}`,
-		},
-		{
-			cooldown: cooldown,
-		},
-		{
-			upsert: true,
+async function setCooldown(id, command, cooldown) {
+	var cooldowns = (await userSchema.findById(id)).cooldowns
+	cooldowns.set(command, Date.now() + cooldown * 1000)
+	await changeDB(id, "cooldowns", cooldowns, true)
+}
+
+async function resolveCooldown(id, command) {
+	var commandField = (await userSchema.findById(id)).cooldowns.get(command)
+	if (commandField != undefined) {
+		if (commandField > Date.now()) {
+			return commandField - Date.now()
+		} else {
+			await changeDB(id, "cooldowns", { [command]: 0 }, true)
 		}
-	)
+	}
+	return 0
 }
 
 function getItem(item) {
@@ -332,9 +335,10 @@ module.exports = {
 	randint,
 	paginate,
 	pick,
-	cooldown,
+	setCooldown,
 	getItem,
 	buttons,
 	isEquipped,
 	useItem,
+	resolveCooldown,
 }

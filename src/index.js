@@ -26,7 +26,6 @@ class Falbot {
 	items = require("./utils/json/items.json")
 	userSchema = require("./schemas/user-schema")
 	lottoSchema = require("./schemas/lotto-schema")
-	coolSchema = require("./schemas/cool-schema.js")
 	langSchema = require("./schemas/lang-schema.js")
 	interestSchema = require("./schemas/interest-schema.js")
 	bannedSchema = require("./schemas/banned-schema.js")
@@ -99,11 +98,6 @@ class Falbot {
 				this._disabledChannels.set(_id, disabledChannels)
 			}
 		})()
-
-		setInterval(async () => {
-			await this.coolSchema.updateMany({}, { $inc: { cooldown: -5 } })
-			await this.coolSchema.deleteMany({ cooldown: { $lt: 5 } })
-		}, 5000)
 
 		setInterval(() => {
 			this.client.user.setActivity("/help | arte by: @kinsallum"),

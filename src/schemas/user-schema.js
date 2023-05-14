@@ -53,6 +53,11 @@ const userSchema = mongoose.Schema(
 			type: Array,
 			default: [],
 		},
+		cooldowns: {
+			type: Map,
+			of: Number,
+			default: new Map(),
+		},
 	},
 	{
 		versionKey: false,
