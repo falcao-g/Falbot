@@ -19,6 +19,7 @@ class Falbot {
 	_languages = new Map()
 	_banned = new Array()
 	_disabledChannels = new Map()
+	emojiList = {}
 	client = new Client({
 		intents: [GatewayIntentBits.Guilds],
 	})
@@ -96,6 +97,11 @@ class Falbot {
 
 			for (const { _id, disabledChannels } of guilds) {
 				this._disabledChannels.set(_id, disabledChannels)
+			}
+
+			const guild = this.client.guilds.cache.get("742332099788275732")
+			for (const [key, value] of await guild.emojis.fetch()) {
+				this.emojiList[value.name] = value
 			}
 		})()
 

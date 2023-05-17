@@ -36,7 +36,6 @@ module.exports = {
 		await interaction.deferReply()
 		try {
 			const falcoins = interaction.options.getString("falcoins")
-			const guildDev = client.guilds.cache.get("742332099788275732")
 			try {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
@@ -61,20 +60,20 @@ module.exports = {
 				Game.start()
 
 				const enum_cards = {
-					A: await guildDev.emojis.fetch("1078109893099274280"),
-					2: await guildDev.emojis.fetch("1078116892776075374"),
-					3: await guildDev.emojis.fetch("1078116896840364162"),
-					4: await guildDev.emojis.fetch("1078110565064523796"),
-					5: await guildDev.emojis.fetch("1078116898711031828"),
-					6: await guildDev.emojis.fetch("1078116890183991296"),
-					7: await guildDev.emojis.fetch("1078109882999373854"),
-					8: await guildDev.emojis.fetch("1078116894546067466"),
-					9: await guildDev.emojis.fetch("1078110567555928176"),
-					10: await guildDev.emojis.fetch("1078374320394485790"),
-					J: await guildDev.emojis.fetch("1078109887390810232"),
-					Q: await guildDev.emojis.fetch("1078109891513827460"),
-					K: await guildDev.emojis.fetch("1078109890066776155"),
-					hidden: await guildDev.emojis.fetch("1078109885734064128"),
+					A: instance.emojiList["A_"],
+					2: instance.emojiList["2_"],
+					3: instance.emojiList["3_"],
+					4: instance.emojiList["4_"],
+					5: instance.emojiList["5_"],
+					6: instance.emojiList["6_"],
+					7: instance.emojiList["7_"],
+					8: instance.emojiList["8_"],
+					9: instance.emojiList["9_"],
+					10: instance.emojiList["10"],
+					J: instance.emojiList["J_"],
+					Q: instance.emojiList["Q_"],
+					K: instance.emojiList["K_"],
+					hidden: instance.emojiList["escondida"],
 				}
 
 				var player_cards = []

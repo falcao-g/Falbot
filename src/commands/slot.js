@@ -31,8 +31,6 @@ module.exports = {
 	execute: async ({ guild, interaction, client, instance, user }) => {
 		try {
 			await interaction.deferReply()
-			const guild = client.guilds.cache.get("742332099788275732")
-			const emojifoda = await guild.emojis.fetch("926953352774963310")
 			const falcoins = interaction.options.getString("falcoins")
 			try {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
@@ -53,6 +51,7 @@ module.exports = {
 					[":coin:", 25],
 					[":dollar:", 20],
 				]
+				const emote = instance.emojiList["niquel"]
 				const emoji1 = pick(choices)
 				const emoji2 = pick(choices)
 				const emoji3 = pick(choices)
@@ -60,7 +59,7 @@ module.exports = {
 				const embed = new EmbedBuilder()
 					.setColor(await getRoleColor(guild, user.id))
 					.addFields({
-						name: `-------------------\n | ${emojifoda} | ${emojifoda} | ${emojifoda} |\n-------------------`,
+						name: `-------------------\n | ${emote} | ${emote} | ${emote} |\n-------------------`,
 						value: `--- **${instance.getMessage(guild, "GIRANDO")}** ---`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
@@ -70,10 +69,10 @@ module.exports = {
 				})
 
 				await new Promise((resolve) => setTimeout(resolve, 1500))
-				;(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emojifoda} | ${emojifoda} |\n-------------------`),
+				;(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emote} | ${emote} |\n-------------------`),
 					await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
-				;(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emojifoda} |\n-------------------`),
+				;(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emote} |\n-------------------`),
 					await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
 				;(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`),

@@ -33,8 +33,6 @@ module.exports = {
 	execute: async ({ guild, interaction, client, instance, user }) => {
 		try {
 			await interaction.deferReply()
-			const guild = client.guilds.cache.get("742332099788275732")
-			const diegif = await guild.emojis.fetch("999795233808203846")
 			const falcoins = interaction.options.getString("falcoins")
 
 			try {
@@ -50,13 +48,14 @@ module.exports = {
 
 			if ((await readFile(user.id, "falcoins")) >= bet) {
 				await changeDB(user.id, "falcoins", -bet)
+				const diegif = instance.emojiList["dadogif"]
 				const choices = [
-					await guild.emojis.fetch("1000062195545165895"),
-					await guild.emojis.fetch("1000063578797265046"),
-					await guild.emojis.fetch("1000063580433023006"),
-					await guild.emojis.fetch("1000063582278524969"),
-					await guild.emojis.fetch("1000063583893344316"),
-					await guild.emojis.fetch("1000063585147428926"),
+					instance.emojiList["dado1"],
+					instance.emojiList["dado2"],
+					instance.emojiList["dado3"],
+					instance.emojiList["dado4"],
+					instance.emojiList["dado5"],
+					instance.emojiList["dado6"],
 				]
 				random1 = randint(1, 6)
 				random2 = randint(1, 6)
