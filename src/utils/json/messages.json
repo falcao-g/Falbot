@@ -1018,9 +1018,9 @@
 		"portugues": "Esse item não pode ser construído... :x: :tools:",
 		"english": "This item can't be crafted... :x: :tools:"
 	},
-	"NOT_ENOUGH_INGREDIENTS": {
-		"portugues": "Não foi possível construir o item pois está faltando **{ITEM} x {AMOUNT}**!",
-		"english": "You can't craft this item because you are missing **{ITEM} x {AMOUNT}**!"
+	"MISSING_INGREDIENTS": {
+		"portugues": "Não foi possível construir o item pois está faltando **{ITEMS}**!",
+		"english": "You can't craft this item because you are missing **{ITEMS}**!"
 	},
 	"CRAFTED_TITLE": {
 		"portugues": "{AMOUNT} {ITEM} construídos!",

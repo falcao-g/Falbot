@@ -437,24 +437,32 @@ module.exports = {
 				}
 
 				ingredients = []
+				missingIngredients = []
 				for (key in itemJSON.recipe) {
 					const ingredientJSON = items[key]
 					const ingredientAmount = itemJSON.recipe[key] * amount
 
 					if ((inventory.get(key) || 0) < ingredientAmount) {
-						interaction.editReply({
-							content: instance.getMessage(guild, "NOT_ENOUGH_INGREDIENTS", {
-								ITEM: ingredientJSON[language],
-								AMOUNT: format(ingredientAmount - (inventory.get(key) || 0)),
-							}),
-						})
-						return
+						missingIngredients.push(
+							`${ingredientJSON[language]} x ${format(
+								ingredientAmount - (inventory.get(key) || 0)
+							)}`
+						)
 					}
 
 					inventory.set(key, inventory.get(key) - ingredientAmount)
 					ingredients.push(
 						`${ingredientJSON[language]}: ${format(ingredientAmount)}`
 					)
+				}
+
+				if (missingIngredients.length > 0) {
+					interaction.editReply({
+						content: instance.getMessage(guild, "MISSING_INGREDIENTS", {
+							ITEMS: missingIngredients.join(", "),
+						}),
+					})
+					return
 				}
 
 				//get how many more of that item you could make with the ingredients you have
