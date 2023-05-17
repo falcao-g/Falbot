@@ -265,7 +265,7 @@
 			"log": 10,
 			"scrap": 8,
 			"tools": 5,
-			"rope": 10
+			"rope": 5
 		}
 	},
 	"plushtoy": {
@@ -351,6 +351,7 @@
 		"effect": "explore-2",
 		"recipe": {
 			"wool": 12,
+			"tools": 1,
 			"rope": 5
 		}
 	},
@@ -428,7 +429,7 @@
 		"effect": "fish-4",
 		"recipe": {
 			"rod": 1,
-			"diamond": 4,
+			"diamond": 3,
 			"tools": 1
 		}
 	},
@@ -464,7 +465,7 @@
 		"effect": "mine-4",
 		"recipe": {
 			"ironpick": 1,
-			"diamond": 8,
+			"diamond": 3,
 			"tools": 1
 		}
 	},
@@ -476,7 +477,7 @@
 		"effect": "hunt-4",
 		"recipe": {
 			"huntknife": 1,
-			"diamond": 8,
+			"diamond": 3,
 			"tools": 1
 		}
 	},
