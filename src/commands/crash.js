@@ -51,7 +51,7 @@ module.exports = {
 			}
 			if ((await readFile(user.id, "falcoins")) >= bet) {
 				await changeDB(user.id, "falcoins", -bet)
-				multiplier = 0.8
+				multiplier = 8
 				const embed = new EmbedBuilder()
 					.addFields(
 						{
@@ -61,13 +61,13 @@ module.exports = {
 						},
 						{
 							name: instance.getMessage(guild, "MULTIPLIER"),
-							value: `${multiplier.toFixed(1)}x`,
+							value: `${(multiplier / 10).toFixed(1)}x`,
 							inline: true,
 						},
 						{
 							name: instance.getMessage(guild, "GANHOS"),
-							value: `:coin: ${multiplier == 0.8 ? "-" : ""}${format(
-								parseInt(bet * multiplier - bet)
+							value: `:coin: ${multiplier == 8 ? "-" : ""}${format(
+								parseInt((bet * multiplier) / 10 - bet)
 							)}`,
 							inline: true,
 						}
@@ -116,23 +116,23 @@ module.exports = {
 						break
 					}
 
-					multiplier += 0.2
+					multiplier += 2
 
 					random = randint(1, 100)
 
-					if (random <= 20) {
+					if (random <= 1) {
 						crashed = true
 						lost = true
 					}
 
 					embed.data.fields[1] = {
 						name: instance.getMessage(guild, "MULTIPLIER"),
-						value: `${multiplier.toFixed(1)}x`,
+						value: `${(multiplier / 10).toFixed(1)}x`,
 						inline: true,
 					}
 					embed.data.fields[2] = {
 						name: instance.getMessage(guild, "GANHOS"),
-						value: `:coin: ${format(parseInt(bet * multiplier - bet))}`,
+						value: `:coin: ${format(parseInt((bet * multiplier) / 10 - bet))}`,
 						inline: true,
 					}
 
@@ -146,7 +146,7 @@ module.exports = {
 				if (lost) {
 					embed.setColor(15158332)
 				} else {
-					await changeDB(user.id, "falcoins", parseInt(bet * multiplier))
+					await changeDB(user.id, "falcoins", parseInt((bet * multiplier) / 10))
 					embed.setColor(3066993)
 				}
 
