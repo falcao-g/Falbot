@@ -279,13 +279,13 @@
 		}
 	},
 	"balltoy": {
-		"english": ":teddy_bear: Plush Toy",
-		"portugues": ":teddy_bear: Pelúcia",
-		"value": 28200,
+		"english": ":volleyball: Ball",
+		"portugues": ":volleyball: Bola",
+		"value": 23900,
 		"recipe": {
-			"wool": 10,
-			"feathers": 150,
-			"leather": 1
+			"wool": 2,
+			"skunk": 10,
+			"leather": 2
 		}
 	},
 	"lightbulb": {
