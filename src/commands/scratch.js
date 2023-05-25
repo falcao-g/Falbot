@@ -13,7 +13,7 @@ const {
 } = require("../utils/functions.js")
 
 module.exports = {
-	cooldown: true,
+	cooldown: 60 * 60 * 6,
 	data: new SlashCommandBuilder()
 		.setName("scratch")
 		.setNameLocalization("pt-BR", "raspadinha")
@@ -26,8 +26,6 @@ module.exports = {
 	execute: async ({ guild, interaction, instance, user }) => {
 		try {
 			await interaction.deferReply()
-
-			setCooldown(user.id, "scratch", 60 * 60 * 6)
 
 			const row = new ActionRowBuilder()
 			const row2 = new ActionRowBuilder()

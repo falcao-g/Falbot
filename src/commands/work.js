@@ -4,12 +4,11 @@ const {
 	getRoleColor,
 	randint,
 	format,
-	setCooldown,
 } = require("../utils/functions.js")
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
-	cooldown: true,
+	cooldown: 60 * 60,
 	data: new SlashCommandBuilder()
 		.setName("work")
 		.setNameLocalization("pt-BR", "trabalhar")
@@ -56,8 +55,6 @@ module.exports = {
 			await interaction.editReply({
 				embeds: [embed],
 			})
-
-			setCooldown(user.id, "work", 60 * 60)
 		} catch (err) {
 			console.error(`work: ${err}`)
 			interaction.editReply({

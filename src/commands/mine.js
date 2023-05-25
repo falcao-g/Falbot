@@ -1,7 +1,6 @@
 const {
 	readFile,
 	getRoleColor,
-	setCooldown,
 	changeDB,
 	randint,
 	pick,
@@ -12,7 +11,7 @@ const {
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
-	cooldown: true,
+	cooldown: 60 * 60,
 	data: new SlashCommandBuilder()
 		.setName("mine")
 		.setNameLocalization("pt-BR", "minerar")
@@ -113,7 +112,5 @@ module.exports = {
 			embeds: [embed],
 			components: [buttons(["balance", "inventory_view", "cooldowns"])],
 		})
-
-		setCooldown(member.id, "mine", 60 * 60)
 	},
 }

@@ -1,4 +1,9 @@
-const { changeDB, resolveCooldown, msToTime } = require("../utils/functions.js")
+const {
+	changeDB,
+	resolveCooldown,
+	msToTime,
+	setCooldown,
+} = require("../utils/functions.js")
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js")
 
 module.exports = {
@@ -43,6 +48,25 @@ module.exports = {
 			return
 		}
 
+		if (interaction.isChatInputCommand || interaction.isButton) {
+			commandName = interaction.commandName || interaction.customId
+			command = client.commands.get(commandName)
+			if (command.cooldown) {
+				cooldown = await resolveCooldown(interaction.user.id, commandName)
+				if (cooldown > 0) {
+					await interaction.reply({
+						content: instance.getMessage(guild, "COOLDOWN", {
+							COOLDOWN: msToTime(cooldown),
+						}),
+						ephemeral: true,
+					})
+					return
+				} else {
+					await setCooldown(interaction.user.id, commandName, command.cooldown)
+				}
+			}
+		}
+
 		if (
 			interaction.isChatInputCommand() ||
 			interaction.isContextMenuCommand()
@@ -57,22 +81,6 @@ module.exports = {
 					content: instance.getMessage(interaction.guild, "BOT_OWNERS_ONLY"),
 					ephemeral: true,
 				})
-			}
-
-			if (command.cooldown) {
-				cooldown = await resolveCooldown(
-					interaction.user.id,
-					interaction.commandName
-				)
-				if (cooldown > 0) {
-					await interaction.reply({
-						content: instance.getMessage(guild, "COOLDOWN", {
-							COOLDOWN: msToTime(cooldown),
-						}),
-						ephemeral: true,
-					})
-				}
-				return
 			}
 
 			command.execute({
