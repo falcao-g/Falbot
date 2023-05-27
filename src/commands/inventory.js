@@ -12,6 +12,8 @@ const {
 	EmbedBuilder,
 	ButtonBuilder,
 	SlashCommandBuilder,
+	StringSelectMenuBuilder,
+	ActionRowBuilder,
 } = require("discord.js")
 
 module.exports = {
@@ -120,7 +122,7 @@ module.exports = {
 						.setName("item")
 						.setDescription("item to craft")
 						.setDescriptionLocalization("pt-BR", "item para construir")
-						.setRequired(true)
+						.setRequired(false)
 				)
 				.addIntegerOption((option) =>
 					option
@@ -128,7 +130,7 @@ module.exports = {
 						.setNameLocalization("pt-BR", "quantidade")
 						.setDescription("amount of the item")
 						.setDescriptionLocalization("pt-BR", "quantidade do item")
-						.setRequired(true)
+						.setRequired(false)
 						.setMinValue(1)
 				)
 		)
@@ -447,10 +449,57 @@ module.exports = {
 				})
 			} else if (type === "craft") {
 				const inventory = await readFile(member.id, "inventory")
-				const item = interaction.options.getString("item").toLowerCase()
-				const itemKey = getItem(item)
+				if (interaction.options !== undefined) {
+					var item = interaction.options.getString("item")
+					var amount = interaction.options.getInteger("amount") || 1
+				} else {
+					var item = interaction.values[0]
+					var amount = 1
+				}
+
+				//the bot sends a string select menu containing all items that can be crafted
+				if (item === null || amount === null) {
+					const row = new ActionRowBuilder().addComponents([
+						new StringSelectMenuBuilder()
+							.setCustomId("craft")
+							.setPlaceholder(instance.getMessage(guild, "CRAFT_PLACEHOLDER"))
+							.addOptions(
+								Object.keys(items)
+									.map((item) => {
+										if (items[item].recipe === undefined) return
+
+										for (key in items[item].recipe) {
+											if ((inventory.get(key) || 0) < items[item].recipe[key])
+												return
+										}
+
+										return {
+											label: items[item][language].split(":")[2],
+											value: item,
+											emoji: items[item].emoji,
+										}
+									})
+									.filter((item) => item !== undefined)
+							),
+					])
+
+					const embed = new EmbedBuilder()
+						.setColor(await getRoleColor(guild, member.id))
+						.addFields({
+							name: instance.getMessage(guild, "CRAFT_TITLE"),
+							value: instance.getMessage(guild, "CRAFT_VALUE"),
+						})
+						.setFooter({ text: "by Falcão ❤️" })
+
+					interaction.editReply({
+						components: [row],
+						embeds: [embed],
+					})
+					return
+				}
+
+				const itemKey = getItem(item.toLowerCase())
 				const itemJSON = items[itemKey]
-				const amount = interaction.options.getInteger("amount")
 
 				if (itemJSON === undefined) {
 					interaction.editReply({
