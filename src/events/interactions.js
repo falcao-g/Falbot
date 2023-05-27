@@ -48,11 +48,17 @@ module.exports = {
 			return
 		}
 
-		if (interaction.isChatInputCommand || interaction.isButton) {
-			commandName = interaction.commandName || interaction.customId
-			command = client.commands.get(commandName)
+		if (
+			interaction.isChatInputCommand() ||
+			interaction.isContextMenuCommand()
+		) {
+			const command = client.commands.get(interaction.commandName)
+
 			if (command.cooldown) {
-				cooldown = await resolveCooldown(interaction.user.id, commandName)
+				cooldown = await resolveCooldown(
+					interaction.user.id,
+					interaction.commandName
+				)
 				if (cooldown > 0) {
 					await interaction.reply({
 						content: instance.getMessage(guild, "COOLDOWN", {
@@ -62,16 +68,13 @@ module.exports = {
 					})
 					return
 				} else {
-					await setCooldown(interaction.user.id, commandName, command.cooldown)
+					await setCooldown(
+						interaction.user.id,
+						interaction.commandName,
+						command.cooldown
+					)
 				}
 			}
-		}
-
-		if (
-			interaction.isChatInputCommand() ||
-			interaction.isContextMenuCommand()
-		) {
-			const command = client.commands.get(interaction.commandName)
 
 			if (
 				command.developer &&
@@ -133,27 +136,6 @@ module.exports = {
 				})
 			}
 
-			if (
-				interaction.customId === "vote" ||
-				interaction.customId === "scratch" ||
-				interaction.customId === "work" ||
-				interaction.customId === "cooldowns" ||
-				interaction.customId === "fish" ||
-				interaction.customId === "explore" ||
-				interaction.customId === "mine" ||
-				interaction.customId === "hunt" ||
-				interaction.customId === "balance"
-			) {
-				const command = client.commands.get(interaction.customId)
-				await command.execute({
-					guild: interaction.guild,
-					user: interaction.user,
-					interaction,
-					instance,
-					member: interaction.member,
-				})
-			}
-
 			if (interaction.customId === "help") {
 				interaction.values = [null]
 				const help = client.commands.get("help")
@@ -173,6 +155,50 @@ module.exports = {
 					instance,
 					member: interaction.member,
 					subcommand: arguments[1],
+				})
+			}
+
+			if (
+				interaction.customId === "vote" ||
+				interaction.customId === "scratch" ||
+				interaction.customId === "work" ||
+				interaction.customId === "cooldowns" ||
+				interaction.customId === "fish" ||
+				interaction.customId === "explore" ||
+				interaction.customId === "mine" ||
+				interaction.customId === "hunt" ||
+				interaction.customId === "balance"
+			) {
+				const command = client.commands.get(interaction.customId)
+
+				if (command.cooldown) {
+					cooldown = await resolveCooldown(
+						interaction.user.id,
+						interaction.customId
+					)
+					if (cooldown > 0) {
+						await interaction.reply({
+							content: instance.getMessage(guild, "COOLDOWN", {
+								COOLDOWN: msToTime(cooldown),
+							}),
+							ephemeral: true,
+						})
+						return
+					} else {
+						await setCooldown(
+							interaction.user.id,
+							interaction.customId,
+							command.cooldown
+						)
+					}
+				}
+
+				await command.execute({
+					guild: interaction.guild,
+					user: interaction.user,
+					interaction,
+					instance,
+					member: interaction.member,
 				})
 			}
 		} else if (interaction.isStringSelectMenu()) {

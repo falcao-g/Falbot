@@ -232,12 +232,14 @@ async function setCooldown(id, command, cooldown) {
 }
 
 async function resolveCooldown(id, command) {
-	var commandField = (await userSchema.findById(id)).cooldowns.get(command)
+	var cooldowns = (await userSchema.findById(id)).cooldowns
+	var commandField = cooldowns.get(command)
 	if (commandField != undefined) {
 		if (commandField > Date.now()) {
 			return commandField - Date.now()
 		} else {
-			await changeDB(id, "cooldowns", { [command]: 0 }, true)
+			cooldowns.set(command, 0)
+			await changeDB(id, "cooldowns", cooldowns, true)
 		}
 	}
 	return 0
