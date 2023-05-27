@@ -206,6 +206,17 @@ module.exports = {
 				const help = client.commands.get("help")
 				help.execute({ guild: interaction.guild, interaction, instance })
 			}
+
+			if (interaction.customId === "craft") {
+				const inventory = client.commands.get("inventory")
+				await inventory.execute({
+					guild: interaction.guild,
+					interaction,
+					instance,
+					member: interaction.member,
+					subcommand: "craft",
+				})
+			}
 		}
 	},
 }

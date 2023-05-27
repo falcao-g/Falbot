@@ -4,6 +4,7 @@
 		"portugues": ":wood: Madeira",
 		"value": 300,
 		"rarity": "Common",
+		"emoji": "🪵",
 		"exploring": true
 	},
 	"wool": {
@@ -11,12 +12,14 @@
 		"portugues": ":ram: Lã",
 		"value": 700,
 		"rarity": "Rare",
+		"emoji": "🐏",
 		"hunting": true
 	},
 	"tools": {
 		"english": ":hammer_pick: Work tools",
 		"portugues": ":hammer_pick: Ferramentas",
 		"value": 1600,
+		"emoji": "🛠️",
 		"recipe": {
 			"log": 2,
 			"scrap": 4
@@ -27,6 +30,7 @@
 		"portugues": ":hiking_boot: Bota Velha",
 		"value": 10,
 		"rarity": "Common",
+		"emoji": "🥾",
 		"fishing": true
 	},
 	"anchovy": {
@@ -34,6 +38,7 @@
 		"portugues": ":fish: Anchova",
 		"value": 50,
 		"rarity": "Common",
+		"emoji": "🐟",
 		"fishing": true
 	},
 	"snail": {
@@ -41,6 +46,7 @@
 		"portugues": ":snail: Caracol do Mar",
 		"value": 40,
 		"rarity": "Common",
+		"emoji": "🐌",
 		"fishing": true
 	},
 	"sardine": {
@@ -48,6 +54,7 @@
 		"portugues": ":fish: Sardinha",
 		"value": 50,
 		"rarity": "Common",
+		"emoji": "🐟",
 		"fishing": true
 	},
 	"shrimp": {
@@ -55,6 +62,7 @@
 		"portugues": ":shrimp: Camarão",
 		"value": 500,
 		"rarity": "Uncommon",
+		"emoji": "🦐",
 		"fishing": true
 	},
 	"fish": {
@@ -62,6 +70,7 @@
 		"portugues": ":tropical_fish: Peixe Tropical",
 		"value": 400,
 		"rarity": "Uncommon",
+		"emoji": "🐠",
 		"fishing": true
 	},
 	"feathers": {
@@ -69,6 +78,7 @@
 		"portugues": ":feather: Pena",
 		"value": 50,
 		"rarity": "Uncommon",
+		"emoji": "🪶",
 		"hunt": true
 	},
 	"chipmunk": {
@@ -76,6 +86,7 @@
 		"portugues": ":chipmunk: Pele de Esquilo",
 		"value": 100,
 		"rarity": "Uncommon",
+		"emoji": "🐿️",
 		"hunting": true
 	},
 	"chunk": {
@@ -83,6 +94,7 @@
 		"portugues": ":meat_on_bone: Carne",
 		"value": 200,
 		"rarity": "Common",
+		"emoji": "🍖",
 		"hunting": true
 	},
 	"skunk": {
@@ -90,6 +102,7 @@
 		"portugues": ":skunk: Pele de Gambá",
 		"value": 400,
 		"rarity": "Uncommon",
+		"emoji": "🦨",
 		"hunting": true
 	},
 	"steak": {
@@ -97,6 +110,7 @@
 		"portugues": ":cut_of_meat: Bife Cru",
 		"value": 1000,
 		"rarity": "Rare",
+		"emoji": "🥩",
 		"hunting": true
 	},
 	"coal": {
@@ -104,6 +118,7 @@
 		"portugues": ":black_small_square: Carvão",
 		"value": 50,
 		"rarity": "Common",
+		"emoji": "⬛",
 		"mining": true
 	},
 	"copper": {
@@ -111,6 +126,7 @@
 		"portugues": ":coin: Cobre",
 		"value": 100,
 		"rarity": "Common",
+		"emoji": "🪙",
 		"mining": true
 	},
 	"aluminium": {
@@ -118,6 +134,7 @@
 		"portugues": ":battery: Alumínio",
 		"value": 200,
 		"rarity": "Uncommon",
+		"emoji": "🔋",
 		"mining": true
 	},
 	"iron": {
@@ -125,6 +142,7 @@
 		"portugues": ":chains: Ferro",
 		"value": 300,
 		"rarity": "Uncommon",
+		"emoji": "⛓️",
 		"mining": true
 	},
 	"silver": {
@@ -132,6 +150,7 @@
 		"portugues": ":second_place: Prata",
 		"value": 500,
 		"rarity": "Rare",
+		"emoji": "🥈",
 		"mining": true
 	},
 	"scrap": {
@@ -139,6 +158,7 @@
 		"portugues": ":gear: Sucata",
 		"value": 250,
 		"rarity": "Uncommon",
+		"emoji": "⚙️",
 		"exploring": true
 	},
 	"knife": {
@@ -146,6 +166,7 @@
 		"portugues": ":knife: Faca Velha",
 		"value": 200,
 		"rarity": "Rare",
+		"emoji": "🔪",
 		"exploring": true
 	},
 	"ashes": {
@@ -153,6 +174,7 @@
 		"portugues": ":smoking: Cinzas",
 		"value": 100,
 		"rarity": "Uncommon",
+		"emoji": "🚬",
 		"exploring": true
 	},
 	"weeds": {
@@ -160,6 +182,7 @@
 		"portugues": ":herb: Ervas",
 		"value": 50,
 		"rarity": "Common",
+		"emoji": "🌿",
 		"exploring": true
 	},
 	"rock": {
@@ -167,6 +190,7 @@
 		"portugues": ":rock: Pedra",
 		"value": 50,
 		"rarity": "Common",
+		"emoji": "🪨",
 		"exploring": true,
 		"mining": true
 	},
@@ -174,6 +198,7 @@
 		"english": ":bricks: Bricks",
 		"portugues": ":bricks: Tijolos",
 		"value": 3600,
+		"emoji": "🧱",
 		"recipe": {
 			"tools": 1,
 			"rock": 40
@@ -183,6 +208,7 @@
 		"english": ":construction_site: Steel Beam",
 		"portugues": ":construction_site: Viga de Aço",
 		"value": 13200,
+		"emoji": "🏗️",
 		"recipe": {
 			"tools": 2,
 			"scrap": 40,
@@ -193,6 +219,7 @@
 		"english": ":classical_building: Grand Hall",
 		"portugues": ":classical_building: Grande Salão",
 		"value": 129200,
+		"emoji": "🏛️",
 		"recipe": {
 			"tools": 8,
 			"bricks": 25,
@@ -203,6 +230,7 @@
 		"english": ":knot: Knoted Rope",
 		"portugues": ":knot: Corda",
 		"value": 2000,
+		"emoji": "🪢",
 		"recipe": {
 			"weeds": 20
 		}
@@ -212,12 +240,14 @@
 		"portugues": ":cow2: Couro Duro",
 		"value": 7500,
 		"rarity": "Epic",
+		"emoji": "🐄",
 		"hunting": true
 	},
 	"backpack": {
 		"english": ":school_satchel: Big Backpack",
 		"portugues": ":school_satchel: Mochila",
 		"value": 82000,
+		"emoji": "🎒",
 		"recipe": {
 			"leather": 8,
 			"rope": 10,
@@ -228,6 +258,7 @@
 		"english": ":sparkler: Gunpowder",
 		"portugues": ":sparkler: Pólvora",
 		"value": 2000,
+		"emoji": "🎇",
 		"recipe": {
 			"ashes": 20
 		}
@@ -236,6 +267,7 @@
 		"english": ":bomb: Bomb",
 		"portugues": ":bomb: Bomba",
 		"value": 7000,
+		"emoji": "💣",
 		"recipe": {
 			"gunpowder": 2,
 			"scrap": 4,
@@ -247,6 +279,7 @@
 		"portugues": ":pick: Picareta de Ferro",
 		"value": 23500,
 		"equip": true,
+		"emoji": "⛏️",
 		"effect": "mine-2",
 		"recipe": {
 			"log": 10,
@@ -260,6 +293,7 @@
 		"portugues": ":pick: Picareta de Diamante",
 		"value": 250000,
 		"equip": true,
+		"emoji": "⛏️",
 		"effect": "mine-4",
 		"recipe": {
 			"ironpick": 1,
@@ -272,6 +306,7 @@
 		"portugues": ":fishing_pole_and_fish: Vara de Pesca",
 		"value": 28200,
 		"equip": true,
+		"emoji": "🎣",
 		"effect": "fish-2",
 		"recipe": {
 			"log": 10,
@@ -285,6 +320,7 @@
 		"portugues": ":fishing_pole_and_fish: Vara de Diamante",
 		"value": 250000,
 		"equip": true,
+		"emoji": "🎣",
 		"effect": "fish-4",
 		"recipe": {
 			"rod": 1,
@@ -296,6 +332,7 @@
 		"english": ":teddy_bear: Plush Toy",
 		"portugues": ":teddy_bear: Pelúcia",
 		"value": 28200,
+		"emoji": "🧸",
 		"recipe": {
 			"wool": 10,
 			"feathers": 150,
@@ -306,6 +343,7 @@
 		"english": ":volleyball: Ball",
 		"portugues": ":volleyball: Bola",
 		"value": 23900,
+		"emoji": "🏐",
 		"recipe": {
 			"wool": 2,
 			"skunk": 10,
@@ -317,6 +355,7 @@
 		"portugues": ":bulb: Lâmpada",
 		"value": 1500,
 		"rarity": "Rare",
+		"emoji": "💡",
 		"exploring": true
 	},
 	"board": {
@@ -324,12 +363,14 @@
 		"portugues": ":floppy_disk: Circuito",
 		"value": 2000,
 		"rarity": "Epic",
+		"emoji": "💾",
 		"exploring": true
 	},
 	"sprinkler": {
 		"english": ":fountain: Sprinkler",
 		"portugues": ":fountain: Regador",
 		"value": 7700,
+		"emoji": "⛲",
 		"recipe": {
 			"cpu": 1,
 			"board": 3,
@@ -342,6 +383,7 @@
 		"english": ":jigsaw: Puzzle Toy",
 		"portugues": ":jigsaw: Quebra-cabeça",
 		"value": 23500,
+		"emoji": "🧩",
 		"recipe": {
 			"board": 10,
 			"scrap": 6,
@@ -353,12 +395,14 @@
 		"portugues": ":first_place: Ouro",
 		"value": 800,
 		"rarity": "Rare",
+		"emoji": "🥇",
 		"mining": true
 	},
 	"cpu": {
 		"english": ":computer: CPU",
 		"portugues": ":computer: Processador",
 		"value": 23500,
+		"emoji": "🖥️",
 		"recipe": {
 			"board": 2,
 			"scrap": 2,
@@ -372,6 +416,7 @@
 		"portugues": ":martial_arts_uniform: Roupa",
 		"value": 18400,
 		"equip": true,
+		"emoji": "🥋",
 		"effect": "explore-2",
 		"recipe": {
 			"wool": 12,
@@ -384,6 +429,7 @@
 		"portugues": ":ox: Pele de Boi",
 		"value": 10000,
 		"rarity": "Epic",
+		"emoji": "🐂",
 		"hunting": true
 	},
 	"buffalo": {
@@ -391,6 +437,7 @@
 		"portugues": ":water_buffalo: Pele de Búfalo",
 		"value": 20000,
 		"rarity": "Legendary",
+		"emoji": "🐃",
 		"hunting": true
 	},
 	"coat": {
@@ -398,6 +445,7 @@
 		"portugues": ":coat: Casaco",
 		"value": 250000,
 		"equip": true,
+		"emoji": "🧥",
 		"effect": "explore-4",
 		"recipe": {
 			"activewear": 1,
@@ -412,6 +460,7 @@
 		"english": ":electric_plug: Power Supply",
 		"portugues": ":electric_plug: Fonte",
 		"value": 1500,
+		"emoji": "🔌",
 		"recipe": {
 			"aluminium": 5,
 			"copper": 5
@@ -421,6 +470,7 @@
 		"english": ":tractor: Tractor",
 		"portugues": ":tractor: Trator",
 		"value": 28650,
+		"emoji": "🚜",
 		"recipe": {
 			"lightbulb": 8,
 			"board": 4,
@@ -434,12 +484,14 @@
 		"portugues": ":gem: Diamante",
 		"value": 50000,
 		"rarity": "Epic",
+		"emoji": "💎",
 		"mining": true
 	},
 	"dagger": {
 		"english": ":dagger: Dagger",
 		"portugues": ":dagger: Adaga",
 		"value": 7200,
+		"emoji": "🗡️",
 		"recipe": {
 			"knife": 20,
 			"tools": 2
@@ -450,6 +502,7 @@
 		"portugues": ":crossed_swords: Faca de Caça",
 		"value": 24400,
 		"equip": true,
+		"emoji": "⚔️",
 		"effect": "hunt-2",
 		"recipe": {
 			"dagger": 2,
@@ -462,6 +515,7 @@
 		"english": ":shield: Diamond Shield",
 		"portugues": ":shield: Escudo de Diamante",
 		"value": 24400,
+		"emoji": "🛡️",
 		"recipe": {
 			"diamond": 40,
 			"scrap": 20,
@@ -474,6 +528,7 @@
 		"portugues": ":crossed_swords: Faca de Diamante",
 		"value": 250000,
 		"equip": true,
+		"emoji": "⚔️",
 		"effect": "hunt-4",
 		"recipe": {
 			"huntknife": 1,
@@ -486,6 +541,7 @@
 		"portugues": ":milk: Leite",
 		"value": 400,
 		"rarity": "Uncommon",
+		"emoji": "🥛",
 		"exploring": true
 	},
 	"wheat": {
@@ -493,12 +549,14 @@
 		"portugues": ":ear_of_rice: Trigo",
 		"value": 1000,
 		"rarity": "Rare",
+		"emoji": "🌾",
 		"exploring": true
 	},
 	"butter": {
 		"english": ":butter: Butter",
 		"portugues": ":butter: Manteiga",
 		"value": 800,
+		"emoji": "🧈",
 		"recipe": {
 			"milk": 2
 		}
@@ -507,6 +565,7 @@
 		"english": ":waffle: Waffle",
 		"portugues": ":waffle: Panqueca",
 		"value": 800,
+		"emoji": "🧇",
 		"recipe": {
 			"butter": 1,
 			"wheat": 4
@@ -516,6 +575,7 @@
 		"english": ":cheese: Cheese",
 		"portugues": ":cheese: Queijo",
 		"value": 1600,
+		"emoji": "🧀",
 		"recipe": {
 			"milk": 4
 		}
@@ -524,6 +584,7 @@
 		"english": ":bread: Bread",
 		"portugues": ":bread: Pão",
 		"value": 5000,
+		"emoji": "🍞",
 		"recipe": {
 			"wheat": 5
 		}
@@ -533,12 +594,14 @@
 		"portugues": ":rice: Arroz",
 		"value": 1000,
 		"rarity": "Epic",
+		"emoji": "🍚",
 		"exploring": true
 	},
 	"sushi": {
 		"english": ":sushi: Sushi",
 		"portugues": ":sushi: Sushi",
 		"value": 2000,
+		"emoji": "🍣",
 		"recipe": {
 			"fish": 4,
 			"rice": 1
@@ -548,6 +611,7 @@
 		"english": ":hamburger: Hamburger",
 		"portugues": ":hamburger: Hamburger",
 		"value": 12600,
+		"emoji": "🍔",
 		"recipe": {
 			"steak": 1,
 			"loaf": 2,
@@ -558,6 +622,7 @@
 		"english": ":poop: Fertilizer",
 		"portugues": ":poop: Fertilizante",
 		"value": 12500,
+		"emoji": "💩",
 		"recipe": {
 			"weeds": 200
 		}
@@ -567,6 +632,7 @@
 		"portugues": ":oil: Petróleo",
 		"value": 2000,
 		"rarity": "Epic",
+		"emoji": "🛢️",
 		"mining": true
 	},
 	"crab": {
@@ -574,6 +640,7 @@
 		"portugues": ":crab: Siri",
 		"value": 400,
 		"rarity": "Uncommon",
+		"emoji": "🦀",
 		"fishing": true
 	},
 	"artifact": {
@@ -581,6 +648,7 @@
 		"portugues": ":amphora: Artefato",
 		"value": 10000,
 		"rarity": "Epic",
+		"emoji": "🏺",
 		"exploring": true
 	},
 	"fossil": {
@@ -588,6 +656,7 @@
 		"portugues": ":crocodile: Fóssil",
 		"value": 15000,
 		"rarity": "Legendary",
+		"emoji": "🐊",
 		"mining": true
 	},
 	"treasure": {
@@ -595,6 +664,7 @@
 		"portugues": ":crown: Tesouro Antigo",
 		"value": 150000,
 		"rarity": "Legendary",
+		"emoji": "👑",
 		"mining": true
 	},
 	"manuscript": {
@@ -602,6 +672,7 @@
 		"portugues": ":scroll: Manuscrito Sagrado",
 		"value": 300000,
 		"rarity": "Legendary",
+		"emoji": "📜",
 		"exploring": true
 	},
 	"oyster": {
@@ -609,6 +680,7 @@
 		"portugues": ":oyster: Ostra",
 		"value": 950,
 		"rarity": "Rare",
+		"emoji": "🦪",
 		"fishing": true
 	},
 	"squid": {
@@ -616,6 +688,7 @@
 		"portugues": ":squid: Lula",
 		"value": 1500,
 		"rarity": "Epic",
+		"emoji": "🦑",
 		"fishing": true
 	},
 	"blowfish": {
@@ -623,6 +696,7 @@
 		"portugues": ":blowfish: Baiacu",
 		"value": 5000,
 		"rarity": "Legendary",
+		"emoji": "🐡",
 		"fishing": true
 	},
 	"lobster": {
@@ -630,6 +704,7 @@
 		"portugues": ":lobster: Lagosta",
 		"value": 750,
 		"rarity": "Rare",
+		"emoji": "🦞",
 		"fishing": true
 	},
 	"shark": {
@@ -637,6 +712,7 @@
 		"portugues": ":shark: Tubarão",
 		"value": 80000,
 		"rarity": "Legendary",
+		"emoji": "🦈",
 		"fishing": true
 	},
 	"octopus": {
@@ -644,6 +720,7 @@
 		"portugues": ":octopus: Polvo",
 		"value": 400000,
 		"rarity": "Legendary",
+		"emoji": "🐙",
 		"fishing": true
 	},
 	"thigh": {
@@ -651,6 +728,7 @@
 		"portugues": ":poultry_leg: Coxa",
 		"value": 500,
 		"rarity": "Uncommon",
+		"emoji": "🍗",
 		"hunting": true
 	},
 	"turkey": {
@@ -658,6 +736,7 @@
 		"portugues": ":turkey: Peru",
 		"value": 300,
 		"rarity": "Uncommon",
+		"emoji": "🦃",
 		"hunting": true
 	}
 }
