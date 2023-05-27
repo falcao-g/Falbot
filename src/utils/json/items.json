@@ -255,6 +255,18 @@
 			"rope": 4
 		}
 	},
+	"diapick": {
+		"english": ":pick: Diamond Pickaxe",
+		"portugues": ":pick: Picareta de Diamante",
+		"value": 250000,
+		"equip": true,
+		"effect": "mine-4",
+		"recipe": {
+			"ironpick": 1,
+			"diamond": 3,
+			"tools": 1
+		}
+	},
 	"rod": {
 		"english": ":fishing_pole_and_fish: Fishing Rod",
 		"portugues": ":fishing_pole_and_fish: Vara de Pesca",
@@ -266,6 +278,18 @@
 			"scrap": 8,
 			"tools": 5,
 			"rope": 5
+		}
+	},
+	"diarod": {
+		"english": ":fishing_pole_and_fish: Diamond Rod",
+		"portugues": ":fishing_pole_and_fish: Vara de Diamante",
+		"value": 250000,
+		"equip": true,
+		"effect": "fish-4",
+		"recipe": {
+			"rod": 1,
+			"diamond": 3,
+			"tools": 1
 		}
 	},
 	"plushtoy": {
@@ -421,18 +445,6 @@
 			"tools": 2
 		}
 	},
-	"diarod": {
-		"english": ":fishing_pole_and_fish: Diamond Rod",
-		"portugues": ":fishing_pole_and_fish: Vara de Diamante",
-		"value": 250000,
-		"equip": true,
-		"effect": "fish-4",
-		"recipe": {
-			"rod": 1,
-			"diamond": 3,
-			"tools": 1
-		}
-	},
 	"huntknife": {
 		"english": ":crossed_swords: Hunting Knife",
 		"portugues": ":crossed_swords: Faca de Caça",
@@ -454,18 +466,6 @@
 			"diamond": 40,
 			"scrap": 20,
 			"log": 10,
-			"tools": 1
-		}
-	},
-	"diapick": {
-		"english": ":pick: Diamond Pickaxe",
-		"portugues": ":pick: Picareta de Diamante",
-		"value": 250000,
-		"equip": true,
-		"effect": "mine-4",
-		"recipe": {
-			"ironpick": 1,
-			"diamond": 3,
 			"tools": 1
 		}
 	},
