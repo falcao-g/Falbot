@@ -1050,6 +1050,10 @@
 		"portugues": "...e {AMOUNT} mais",
 		"english": "...and {AMOUNT} more"
 	},
+	"EQUIP_TITLE": {
+		"portugues": ":scroll: Lista de itens equipáveis e seus efeitos",
+		"english": ":scroll: List of equipable items and their effects"
+	},
 	"1": {
 		"portugues": ":potato: Plebeu",
 		"english": ":potato: Peasent"

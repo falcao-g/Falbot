@@ -96,14 +96,17 @@ module.exports = {
 			subcommand
 				.setName("equip")
 				.setNameLocalization("pt-BR", "equipar")
-				.setDescription("Equip an item")
-				.setDescriptionLocalization("pt-BR", "Equipe um item")
+				.setDescription("Equip an item or leave blank to see equippable items")
+				.setDescriptionLocalization(
+					"pt-BR",
+					"Equipe um item ou deixe vazio para ver os itens equipáveis"
+				)
 				.addStringOption((option) =>
 					option
 						.setName("item")
 						.setDescription("item to equip")
 						.setDescriptionLocalization("pt-BR", "item para equipar")
-						.setRequired(true)
+						.setRequired(false)
 				)
 		)
 		.addSubcommand((subcommand) =>
@@ -356,8 +359,37 @@ module.exports = {
 			} else if (type === "equip") {
 				const inventory = await readFile(member.id, "inventory")
 				const equippedItems = await readFile(member.id, "equippedItems")
-				const item = interaction.options.getString("item").toLowerCase()
-				const itemKey = getItem(item)
+				const item = interaction.options.getString("item")
+
+				if (item === null) {
+					const embed = new EmbedBuilder()
+						.setColor(await getRoleColor(guild, member.id))
+						.setFooter({ text: "by Falcão ❤️" })
+
+					listItems = []
+					for (key in items) {
+						if (items[key].equip === true) {
+							listItems.push(
+								items[key][language] +
+									" - " +
+									instance
+										.getMessage(guild, items[key]["effect"].toUpperCase())
+										.split(":")[2]
+							)
+						}
+					}
+					embed.addFields({
+						name: instance.getMessage(guild, "EQUIP_TITLE"),
+						value: listItems.join("\n"),
+					})
+
+					interaction.editReply({
+						embeds: [embed],
+					})
+					return
+				}
+
+				const itemKey = getItem(item.toLowerCase())
 				const itemJSON = items[itemKey]
 
 				if (itemJSON === undefined) {
