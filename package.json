@@ -12,7 +12,7 @@
 		"discord.js": "^14.9.0",
 		"dotenv": "^16.0.1",
 		"falbot-dice": "^1.1.0",
-		"falbot-snake": "^1.0.2",
+		"falbot-snake": "^1.0.3",
 		"mathjs": "^10.6.0",
 		"mongoose": "^6.8.0",
 		"simply-blackjack": "^1.0.3",
