@@ -27,17 +27,12 @@ module.exports = {
 				.setName("view")
 				.setNameLocalization("pt-BR", "ver")
 				.setDescription("View your inventory or of another user")
-				.setDescriptionLocalization(
-					"pt-BR",
-					"Veja o seu inventário ou o de outro usuário"
-				)
+				.setDescriptionLocalization("pt-BR", "Veja o seu inventário ou o de outro usuário")
 				.addUserOption((option) =>
 					option
 						.setName("user")
 						.setNameLocalization("pt-BR", "usuário")
-						.setDescription(
-							"the user you want to see the inventory, leave blank to get your inventory"
-						)
+						.setDescription("the user you want to see the inventory, leave blank to get your inventory")
 						.setDescriptionLocalization(
 							"pt-BR",
 							"o usuário que você deseja ver o inventário, deixe vazio para ver o seu"
@@ -50,10 +45,7 @@ module.exports = {
 				.setName("calc")
 				.setNameLocalization("pt-BR", "calcular")
 				.setDescription("Calculate crafting materials or items cost")
-				.setDescriptionLocalization(
-					"pt-BR",
-					"Calcule materias e custo para construção"
-				)
+				.setDescriptionLocalization("pt-BR", "Calcule materias e custo para construção")
 				.addStringOption((option) =>
 					option
 						.setName("item")
@@ -99,10 +91,7 @@ module.exports = {
 				.setName("equip")
 				.setNameLocalization("pt-BR", "equipar")
 				.setDescription("Equip an item or leave blank to see equippable items")
-				.setDescriptionLocalization(
-					"pt-BR",
-					"Equipe um item ou deixe vazio para ver os itens equipáveis"
-				)
+				.setDescriptionLocalization("pt-BR", "Equipe um item ou deixe vazio para ver os itens equipáveis")
 				.addStringOption((option) =>
 					option
 						.setName("item")
@@ -139,10 +128,7 @@ module.exports = {
 				.setName("sellall")
 				.setNameLocalization("pt-BR", "vendertudo")
 				.setDescription("Sell (almost) entire inventory to bot")
-				.setDescriptionLocalization(
-					"pt-BR",
-					"Venda (quase) todo o inventário para o bot"
-				)
+				.setDescriptionLocalization("pt-BR", "Venda (quase) todo o inventário para o bot")
 				.addStringOption((option) =>
 					option
 						.setName("lootonly")
@@ -182,9 +168,7 @@ module.exports = {
 
 				const target = option ? await guild.members.fetch(option.id) : member
 				const inventory = await readFile(target.id, "inventory")
-				const limit =
-					instance.levels[(await readFile(target.id, "rank")) - 1]
-						.inventoryLimit
+				const limit = instance.levels[(await readFile(target.id, "rank")) - 1].inventoryLimit
 				const inventoryWorth = instance.getInventoryWorth(inventory)
 
 				if (inventory === undefined) {
@@ -195,15 +179,12 @@ module.exports = {
 				}
 
 				// Create an array of inventory items with their quantity as a string
-				const inventoryItems = Array.from(inventory).reduce(
-					(acc, [itemName, quantity]) => {
-						if (quantity !== 0) {
-							acc.push(`${items[itemName][language]} x ${quantity}`)
-						}
-						return acc
-					},
-					[]
-				)
+				const inventoryItems = Array.from(inventory).reduce((acc, [itemName, quantity]) => {
+					if (quantity !== 0) {
+						acc.push(`${items[itemName][language]} x ${quantity}`)
+					}
+					return acc
+				}, [])
 
 				// Calculate the number of required embeds based on the number of inventory items
 				const numEmbeds = Math.ceil(inventoryItems.length / 24) || 1
@@ -243,27 +224,24 @@ module.exports = {
 				paginator.add(...embeds)
 				const ids = [`${Date.now()}__left`, `${Date.now()}__right`]
 				paginator.setTraverser([
+					new ButtonBuilder().setEmoji("⬅️").setCustomId(ids[0]).setStyle("Secondary"),
+					new ButtonBuilder().setEmoji("➡️").setCustomId(ids[1]).setStyle("Secondary"),
 					new ButtonBuilder()
-						.setEmoji("⬅️")
-						.setCustomId(ids[0])
-						.setStyle("Secondary"),
-					new ButtonBuilder()
-						.setEmoji("➡️")
-						.setCustomId(ids[1])
-						.setStyle("Secondary"),
+						.setEmoji("⚒")
+						.setCustomId("inventory craft")
+						.setStyle("Secondary")
+						.setLabel(instance.getMessage(guild, "CRAFT")),
 				])
 				const message = await interaction.editReply(paginator.components())
-				message.channel
-					.createMessageComponentCollector()
-					.on("collect", async (i) => {
-						if (i.customId === ids[0]) {
-							await paginator.back()
-							await i.update(paginator.components())
-						} else if (i.customId === ids[1]) {
-							await paginator.next()
-							await i.update(paginator.components())
-						}
-					})
+				message.channel.createMessageComponentCollector().on("collect", async (i) => {
+					if (i.customId === ids[0]) {
+						await paginator.back()
+						await i.update(paginator.components())
+					} else if (i.customId === ids[1]) {
+						await paginator.next()
+						await i.update(paginator.components())
+					}
+				})
 			} else if (type === "calc") {
 				const item = interaction.options.getString("item").toLowerCase()
 				const amount = interaction.options.getInteger("amount")
@@ -282,9 +260,7 @@ module.exports = {
 					var ingredients = `**${instance.getMessage(guild, "INGREDIENTS")}**`
 
 					for (key in itemJSON.recipe) {
-						ingredients += `\n${items[key][language]} x ${
-							itemJSON.recipe[key] * amount
-						}`
+						ingredients += `\n${items[key][language]} x ${itemJSON.recipe[key] * amount}`
 					}
 				}
 
@@ -293,9 +269,7 @@ module.exports = {
 					.setTitle(instance.getMessage(guild, "CALCULATOR"))
 					.addFields({
 						name: `${itemJSON[language]} x ${amount}`,
-						value: `${
-							ingredients != undefined ? ingredients : ""
-						}\n${instance.getMessage(guild, "COST")} **${format(
+						value: `${ingredients != undefined ? ingredients : ""}\n${instance.getMessage(guild, "COST")} **${format(
 							itemJSON.value * amount
 						)} falcoins**`,
 					})
@@ -319,20 +293,14 @@ module.exports = {
 					return
 				}
 
-				if (
-					inventory.get(itemKey) === 0 ||
-					inventory.get(itemKey) === undefined
-				) {
+				if (inventory.get(itemKey) === 0 || inventory.get(itemKey) === undefined) {
 					interaction.editReply({
 						content: instance.getMessage(guild, "NO_ITEM"),
 					})
 					return
 				}
 
-				const amount = Math.min(
-					inventory.get(itemKey),
-					interaction.options.getInteger("amount")
-				)
+				const amount = Math.min(inventory.get(itemKey), interaction.options.getInteger("amount"))
 				const falcoins = itemJSON.value * amount
 
 				inventory.set(itemKey, inventory.get(itemKey) - amount)
@@ -374,9 +342,7 @@ module.exports = {
 							listItems.push(
 								items[key][language] +
 									" - " +
-									instance
-										.getMessage(guild, items[key]["effect"].toUpperCase())
-										.split(":")[2]
+									instance.getMessage(guild, items[key]["effect"].toUpperCase()).split(":")[2]
 							)
 						}
 					}
@@ -410,10 +376,7 @@ module.exports = {
 					return
 				}
 
-				if (
-					inventory.get(itemKey) === 0 ||
-					inventory.get(itemKey) === undefined
-				) {
+				if (inventory.get(itemKey) === 0 || inventory.get(itemKey) === undefined) {
 					interaction.editReply({
 						content: instance.getMessage(guild, "NO_ITEM"),
 					})
@@ -453,8 +416,13 @@ module.exports = {
 					var item = interaction.options.getString("item")
 					var amount = interaction.options.getInteger("amount") || 1
 				} else {
-					var item = interaction.values[0]
-					var amount = 1
+					if (interaction.values !== undefined) {
+						var item = interaction.values[0]
+						var amount = 1
+					} else {
+						var item = null
+						var amount = null
+					}
 				}
 
 				//the bot sends a string select menu containing all items that can be crafted
@@ -469,8 +437,7 @@ module.exports = {
 										if (items[item].recipe === undefined) return
 
 										for (key in items[item].recipe) {
-											if ((inventory.get(key) || 0) < items[item].recipe[key])
-												return
+											if ((inventory.get(key) || 0) < items[item].recipe[key]) return
 										}
 
 										return {
@@ -525,16 +492,12 @@ module.exports = {
 
 					if ((inventory.get(key) || 0) < ingredientAmount) {
 						missingIngredients.push(
-							`${ingredientJSON[language]} x ${format(
-								ingredientAmount - (inventory.get(key) || 0)
-							)}`
+							`${ingredientJSON[language]} x ${format(ingredientAmount - (inventory.get(key) || 0))}`
 						)
 					}
 
 					inventory.set(key, inventory.get(key) - ingredientAmount)
-					ingredients.push(
-						`${ingredientJSON[language]}: ${format(ingredientAmount)}`
-					)
+					ingredients.push(`${ingredientJSON[language]}: ${format(ingredientAmount)}`)
 				}
 
 				if (missingIngredients.length > 0) {
@@ -628,9 +591,7 @@ module.exports = {
 						}
 
 						falcoins += itemJSON.value * inventory.get(key)
-						itemsSold.push(
-							`${itemJSON[language]}: ${format(inventory.get(key))}`
-						)
+						itemsSold.push(`${itemJSON[language]}: ${format(inventory.get(key))}`)
 						inventory.set(key, 0)
 					}
 
