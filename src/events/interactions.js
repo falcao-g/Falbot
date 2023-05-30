@@ -1,9 +1,4 @@
-const {
-	changeDB,
-	resolveCooldown,
-	msToTime,
-	setCooldown,
-} = require("../utils/functions.js")
+const { changeDB, resolveCooldown, msToTime, setCooldown } = require("../utils/functions.js")
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js")
 
 module.exports = {
@@ -28,37 +23,22 @@ module.exports = {
 		}
 
 		if (interaction.guild != undefined) {
-			var disabledChannels = instance._disabledChannels.get(
-				interaction.guild.id
-			)
+			var disabledChannels = instance._disabledChannels.get(interaction.guild.id)
 		}
 
-		if (
-			disabledChannels != undefined
-				? disabledChannels.includes(interaction.channel.id)
-				: false
-		) {
+		if (disabledChannels != undefined ? disabledChannels.includes(interaction.channel.id) : false) {
 			interaction.reply({
-				content: instance.getMessage(
-					interaction.guild,
-					"THIS_CHANNEL_IS_DISABLED"
-				),
+				content: instance.getMessage(interaction.guild, "THIS_CHANNEL_IS_DISABLED"),
 				ephemeral: true,
 			})
 			return
 		}
 
-		if (
-			interaction.isChatInputCommand() ||
-			interaction.isContextMenuCommand()
-		) {
+		if (interaction.isChatInputCommand() || interaction.isContextMenuCommand()) {
 			const command = client.commands.get(interaction.commandName)
 
 			if (command.cooldown) {
-				cooldown = await resolveCooldown(
-					interaction.user.id,
-					interaction.commandName
-				)
+				cooldown = await resolveCooldown(interaction.user.id, interaction.commandName)
 				if (cooldown > 0) {
 					await interaction.reply({
 						content: instance.getMessage(guild, "COOLDOWN", {
@@ -68,18 +48,11 @@ module.exports = {
 					})
 					return
 				} else {
-					await setCooldown(
-						interaction.user.id,
-						interaction.commandName,
-						command.cooldown
-					)
+					await setCooldown(interaction.user.id, interaction.commandName, command.cooldown)
 				}
 			}
 
-			if (
-				command.developer &&
-				!instance.config.devs.includes(interaction.user.id)
-			) {
+			if (command.developer && !instance.config.devs.includes(interaction.user.id)) {
 				return interaction.reply({
 					content: instance.getMessage(interaction.guild, "BOT_OWNERS_ONLY"),
 					ephemeral: true,
@@ -146,7 +119,7 @@ module.exports = {
 				})
 			}
 
-			if (interaction.customId === "inventory view") {
+			if (interaction.customId === "inventory view" || interaction.customId === "inventory craft") {
 				const arguments = interaction.customId.split(" ")
 				const inventory = client.commands.get(arguments[0])
 				await inventory.execute({
@@ -172,10 +145,7 @@ module.exports = {
 				const command = client.commands.get(interaction.customId)
 
 				if (command.cooldown) {
-					cooldown = await resolveCooldown(
-						interaction.user.id,
-						interaction.customId
-					)
+					cooldown = await resolveCooldown(interaction.user.id, interaction.customId)
 					if (cooldown > 0) {
 						await interaction.reply({
 							content: instance.getMessage(guild, "COOLDOWN", {
@@ -185,11 +155,7 @@ module.exports = {
 						})
 						return
 					} else {
-						await setCooldown(
-							interaction.user.id,
-							interaction.customId,
-							command.cooldown
-						)
+						await setCooldown(interaction.user.id, interaction.customId, command.cooldown)
 					}
 				}
 
