@@ -65,10 +65,10 @@ module.exports = {
 
 		//define what amount each rarity can give
 		const amounts = {
-			Common: 30,
-			Uncommon: 20,
-			Rare: 15,
-			Epic: 6,
+			Common: 20,
+			Uncommon: 15,
+			Rare: 10,
+			Epic: 5,
 			Legendary: 1,
 		}
 
