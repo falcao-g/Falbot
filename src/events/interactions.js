@@ -119,8 +119,16 @@ module.exports = {
 				})
 			}
 
-			if (interaction.customId === "inventory view" || interaction.customId === "inventory craft") {
-				const arguments = interaction.customId.split(" ")
+			if (
+				interaction.customId === "inventory view" ||
+				interaction.customId === "inventory craft" ||
+				interaction.customId.startsWith("craft")
+			) {
+				if (!interaction.customId.startsWith("craft")) {
+					var arguments = interaction.customId.split(" ")
+				} else {
+					var arguments = ["inventory", "craft"]
+				}
 				const inventory = client.commands.get(arguments[0])
 				await inventory.execute({
 					guild: interaction.guild,

@@ -420,8 +420,13 @@ module.exports = {
 						var item = interaction.values[0]
 						var amount = 1
 					} else {
-						var item = null
-						var amount = null
+						if (interaction.customId.startsWith("craft")) {
+							var item = interaction.customId.split(" ")[2]
+							var amount = Number(interaction.customId.split(" ")[1])
+						} else {
+							var item = null
+							var amount = null
+						}
 					}
 				}
 
@@ -539,9 +544,28 @@ module.exports = {
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
+				const row = new ActionRowBuilder().addComponents([
+					new ButtonBuilder()
+						.setCustomId(`craft 1 ${itemKey}`)
+						.setLabel(instance.getMessage(guild, "CRAFT") + " 1")
+						.setStyle("Secondary"),
+					new ButtonBuilder()
+						.setCustomId(`craft 10 ${itemKey}`)
+						.setLabel(instance.getMessage(guild, "CRAFT") + " 10")
+						.setStyle("Secondary"),
+					new ButtonBuilder()
+						.setCustomId(`craft 100 ${itemKey}`)
+						.setLabel(instance.getMessage(guild, "CRAFT") + " 100")
+						.setStyle("Secondary"),
+					new ButtonBuilder()
+						.setCustomId(`craft ${maxAmount} ${itemKey} max`)
+						.setLabel(instance.getMessage(guild, "CRAFT_MAX"))
+						.setStyle("Secondary"),
+				])
+
 				interaction.editReply({
 					embeds: [embed],
-					components: buttons["accept"],
+					components: [row],
 				})
 			} else if (type === "sellall") {
 				const embed = new EmbedBuilder()
