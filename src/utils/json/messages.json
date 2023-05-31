@@ -1066,6 +1066,10 @@
 		"portugues": "**:compression: Todos os itens atualmente construíveis estão listados abaixo\nUse `/iteminfo` para ver mais informações sobre um item**",
 		"english": "**:compression: All currently craftable items are listed below\nUse `/iteminfo` to see more information about an item**"
 	},
+	"CRAFT_MAX": {
+		"portugues": "Construir tudo",
+		"english": "Craft max"
+	},
 	"1": {
 		"portugues": ":potato: Plebeu",
 		"english": ":potato: Peasent"
