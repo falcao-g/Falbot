@@ -139,6 +139,16 @@ module.exports = {
 				})
 			}
 
+			if (interaction.customId.startsWith("next") || interaction.customId.startsWith("previous")) {
+				const iteminfo = client.commands.get("iteminfo")
+				await iteminfo.execute({
+					guild: interaction.guild,
+					interaction,
+					instance,
+					member: interaction.member,
+				})
+			}
+
 			if (
 				interaction.customId === "vote" ||
 				interaction.customId === "scratch" ||
