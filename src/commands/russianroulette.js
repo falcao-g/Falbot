@@ -1,32 +1,17 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
-const {
-	specialArg,
-	readFile,
-	changeDB,
-	randint,
-	format,
-	getRoleColor,
-	buttons,
-} = require("../utils/functions.js")
+const { specialArg, readFile, changeDB, randint, format, getRoleColor, buttons } = require("../utils/functions.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("russianroulette")
 		.setNameLocalization("pt-BR", "roletarussa")
-		.setDescription(
-			"Play with other users, last to survive wins all the falcoins"
-		)
-		.setDescriptionLocalization(
-			"pt-BR",
-			"Jogue roleta russa com outros usuários, o sovrevivente leva os falcoins"
-		)
+		.setDescription("Play with other users, last to survive wins all the falcoins")
+		.setDescriptionLocalization("pt-BR", "Jogue roleta russa com outros usuários, o sovrevivente leva os falcoins")
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("falcoins")
-				.setDescription(
-					'amount of falcoins to play with (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
-				)
+				.setDescription('amount of falcoins to play with (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)')
 				.setDescriptionLocalization(
 					"pt-BR",
 					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
@@ -113,13 +98,16 @@ module.exports = {
 					while (users.length > 1) {
 						var luck = randint(0, users.length - 1)
 						var eliminated = users[luck]
-						names[luck] = `~~${names[luck]}~~ :skull:`
+						names.splice(
+							names.findIndex((user) => user === eliminated),
+							1,
+							`~~${eliminated}~~ :skull:`
+						)
 						users.splice(luck, 1)
 						embed.setDescription(
 							instance.getMessage(guild, "ROLETARUSSA_DESCRIPTION2", {
 								BET: format(pot),
-							}) +
-								`\n${eliminated} ${mensagens[randint(0, mensagens.length - 1)]}`
+							}) + `\n${eliminated} ${mensagens[randint(0, mensagens.length - 1)]}`
 						)
 
 						embed.data.fields[0] = {
