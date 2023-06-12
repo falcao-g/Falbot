@@ -142,14 +142,35 @@
 	{
 		"falcoinsToLevelUp": 7800000,
 		"vote": 20000,
-		"work": [4750, 7500],
+		"work": [5000, 8000],
 		"bankLimit": 600000,
 		"inventoryLimit": 5500000
 	},
 	{
+		"falcoinsToLevelUp": 9100000,
 		"vote": 20500,
-		"work": [5000, 8000],
+		"work": [5500, 9000],
 		"bankLimit": 700000,
 		"inventoryLimit": 5500000
+	},
+	{
+		"falcoinsToLevelUp": 10500000,
+		"vote": 21000,
+		"work": [6000, 10000],
+		"bankLimit": 700000,
+		"inventoryLimit": 6000000
+	},
+	{
+		"falcoinsToLevelUp": 12100000,
+		"vote": 21500,
+		"work": [6500, 11000],
+		"bankLimit": 800000,
+		"inventoryLimit": 6000000
+	},
+	{
+		"vote": 22000,
+		"work": [7000, 12000],
+		"bankLimit": 800000,
+		"inventoryLimit": 6500000
 	}
 ]

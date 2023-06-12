@@ -1,5 +1,5 @@
-const { readFile, changeDB, format } = require("../utils/functions.js")
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
+const { readFile, changeDB, format, paginate } = require("../utils/functions.js")
+const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -42,14 +42,10 @@ module.exports = {
 							USER: user,
 						}),
 					})
-				} else if (
-					(await readFile(user.id, "falcoins")) < rank.falcoinsToLevelUp
-				) {
+				} else if ((await readFile(user.id, "falcoins")) < rank.falcoinsToLevelUp) {
 					await interaction.editReply({
 						content: instance.getMessage(guild, "NO_MONEY_RANK", {
-							FALCOINS: format(
-								rank.falcoinsToLevelUp - (await readFile(user.id, "falcoins"))
-							),
+							FALCOINS: format(rank.falcoinsToLevelUp - (await readFile(user.id, "falcoins"))),
 						}),
 					})
 				} else {
@@ -107,11 +103,7 @@ module.exports = {
 							format(levels[rank_number - 1].falcoinsToLevelUp) +
 							" Falcoins" +
 							instance.getMessage(guild, "CURRENT_RANK"),
-						value: await instance.rankPerks(
-							levels[rank_number - 2],
-							levels[rank_number - 1],
-							guild
-						),
+						value: await instance.rankPerks(levels[rank_number - 2], levels[rank_number - 1], guild),
 					})
 
 				for (var i = 0; i < quantity; i++) {
@@ -121,11 +113,7 @@ module.exports = {
 								instance.getMessage(guild, String(rank_number + i + 1)) +
 								" - " +
 								instance.getMessage(guild, "MAX_RANK2"),
-							value: await instance.rankPerks(
-								levels[rank_number - 1 + i],
-								levels[rank_number + i],
-								guild
-							),
+							value: await instance.rankPerks(levels[rank_number - 1 + i], levels[rank_number + i], guild),
 						})
 					} else {
 						embed.addFields({
@@ -134,11 +122,7 @@ module.exports = {
 								" - " +
 								format(levels[rank_number + i].falcoinsToLevelUp) +
 								" Falcoins",
-							value: await instance.rankPerks(
-								levels[rank_number - 1 + i],
-								levels[rank_number + i],
-								guild
-							),
+							value: await instance.rankPerks(levels[rank_number - 1 + i], levels[rank_number + i], guild),
 						})
 					}
 				}
@@ -146,29 +130,54 @@ module.exports = {
 				embed.setFooter({ text: "by Falcão ❤️" })
 				await interaction.editReply({ embeds: [embed] })
 			} else {
-				var embed = new EmbedBuilder().setColor("#71368A")
+				numEmbeds = Math.ceil(levels.length / 20)
+				embeds = []
+				for (var i = 0; i < numEmbeds; i++) {
+					var ranks = ""
+					var index = i * 20
+					const ranksChunk = levels.slice(index, index + 20)
 
-				ranks = ""
-				for (var i = 0; i < levels.length; i++) {
-					if (levels[i].falcoinsToLevelUp === undefined) {
-						ranks +=
-							`**${instance.getMessage(guild, String(i + 1))}** - ` +
-							instance.getMessage(guild, "MAX_RANK2") +
-							"\n"
-					} else {
-						ranks += `**${instance.getMessage(
-							guild,
-							String(i + 1)
-						)}** - ${format(levels[i].falcoinsToLevelUp)} falcoins\n`
+					var embed = new EmbedBuilder().setColor("#71368A")
+
+					for (var j = 0; j < ranksChunk.length; j++) {
+						if (levels[j + i * 20].falcoinsToLevelUp === undefined) {
+							ranks +=
+								`**${instance.getMessage(guild, String(j + i * 20 + 1))}** - ` +
+								instance.getMessage(guild, "MAX_RANK2") +
+								"\n"
+						} else {
+							ranks += `**${instance.getMessage(guild, String(j + i * 20 + 1))}** - ${format(
+								levels[j + i * 20].falcoinsToLevelUp
+							)} falcoins\n`
+						}
 					}
+
+					embed
+						.addFields({
+							name: instance.getMessage(guild, "ALL_RANKS", { NUMBER: i + 1, TOTAL: numEmbeds }),
+							value: ranks,
+						})
+						.setFooter({ text: "by Falcão ❤️" })
+
+					embeds.push(embed)
 				}
-				embed
-					.addFields({
-						name: instance.getMessage(guild, "ALL_RANKS"),
-						value: ranks,
-					})
-					.setFooter({ text: "by Falcão ❤️" })
-				await interaction.editReply({ embeds: [embed] })
+				const paginator = paginate()
+				paginator.add(...embeds)
+				const ids = [`${Date.now()}__left`, `${Date.now()}__right`]
+				paginator.setTraverser([
+					new ButtonBuilder().setEmoji("⬅️").setCustomId(ids[0]).setStyle("Secondary"),
+					new ButtonBuilder().setEmoji("➡️").setCustomId(ids[1]).setStyle("Secondary"),
+				])
+				const message = await interaction.editReply(paginator.components())
+				message.channel.createMessageComponentCollector().on("collect", async (i) => {
+					if (i.customId === ids[0]) {
+						await paginator.back()
+						await i.update(paginator.components())
+					} else if (i.customId === ids[1]) {
+						await paginator.next()
+						await i.update(paginator.components())
+					}
+				})
 			}
 		} catch (err) {
 			console.error(`ranks: ${err}`)
