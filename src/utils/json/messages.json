@@ -379,8 +379,8 @@
 		"english": ":raised_hand: You can't deposit more falcoins in the bank, because you are over your deposit limit"
 	},
 	"ALL_RANKS": {
-		"portugues": ":sparkles: Todos os ranks",
-		"english": ":sparkles: All ranks"
+		"portugues": ":sparkles: Todos os ranks ({NUMBER}/{TOTAL})",
+		"english": ":sparkles: All ranks ({NUMBER}/{TOTAL})"
 	},
 	"UPCOMING_RANKS": {
 		"portugues": ":arrow_up: Próximos ranks",
@@ -1157,5 +1157,17 @@
 	"22": {
 		"portugues": ":detective: Agente",
 		"english": ":detective: Agent"
+	},
+	"23": {
+		"portugues": ":scarf: Barão",
+		"english": ":scarf: Baron"
+	},
+	"24": {
+		"portugues": ":european_castle: Visconde",
+		"english": ":european_castle: Viscount"
+	},
+	"25": {
+		"portugues": ":ledger: Ministro",
+		"english": ":ledger: Minister"
 	}
 }
