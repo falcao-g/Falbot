@@ -919,8 +919,8 @@
 		"english": ":school_satchel: *+{FALCOINS} falcoins of inventory space*"
 	},
 	"OVER_LIMIT": {
-		"portugues": "Você não pode usar esse comando pois está acima do seu limite! :rage:",
-		"english": "You can't use this command because you are over your limit! :rage:"
+		"portugues": "Você tentou guardar os itens mas seu inventário está cheio! :melting_face:",
+		"english": "You tried to store the items but your inventory is full! :melting_face:"
 	},
 	"COMMON": {
 		"portugues": "Loot comum",
