@@ -79,7 +79,7 @@
 		"value": 50,
 		"rarity": "Uncommon",
 		"emoji": "🪶",
-		"hunt": true
+		"hunting": true
 	},
 	"chipmunk": {
 		"english": ":chipmunk: Chipmunk Pelt",
@@ -210,9 +210,9 @@
 		"value": 13200,
 		"emoji": "🏗️",
 		"recipe": {
-			"tools": 2,
+			"tools": 5,
 			"scrap": 40,
-			"iron": 5
+			"iron": 50
 		}
 	},
 	"hall": {
@@ -283,7 +283,7 @@
 		"effect": "mine-2",
 		"recipe": {
 			"log": 10,
-			"scrap": 25,
+			"iron": 15,
 			"tools": 4,
 			"rope": 4
 		}
@@ -609,7 +609,7 @@
 	},
 	"hamburger": {
 		"english": ":hamburger: Hamburger",
-		"portugues": ":hamburger: Hamburger",
+		"portugues": ":hamburger: Hambúrguer",
 		"value": 12600,
 		"emoji": "🍔",
 		"recipe": {
