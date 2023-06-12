@@ -679,24 +679,24 @@
 		"english": "Pretty close!"
 	},
 	"SCRATCH_PRETTY_DESCRIPTION": {
-		"portugues": ":slot_machine: Você estava MUITO perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **10** horas.",
-		"english": ":slot_machine: You didn't hit the jackpot but you were PRETTY close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **10** hour cooldown."
+		"portugues": ":slot_machine: Você estava MUITO perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **8** horas.",
+		"english": ":slot_machine: You didn't hit the jackpot but you were PRETTY close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **8** hour cooldown."
 	},
 	"SCRATCH_SUPER": {
 		"portugues": "EXTREMAMENTE PERTO!",
 		"english": "SO CLOSE!"
 	},
 	"SCRATCH_SUPER_DESCRIPTION": {
-		"portugues": ":slot_machine: Você estava EXTREMAMENTE perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **12** horas.",
-		"english": ":slot_machine: You didn't hit the jackpot but you were SUPER close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **12** hour cooldown."
+		"portugues": ":slot_machine: Você estava EXTREMAMENTE perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **10** horas.",
+		"english": ":slot_machine: You didn't hit the jackpot but you were SUPER close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **10** hour cooldown."
 	},
 	"SCRATCH_PRIZE": {
 		"portugues": "PARABÉNS!",
 		"english": "CONGRATULATIONS!"
 	},
 	"SCRATCH_PRIZE_DESCRIPTION": {
-		"portugues": ":slot_machine: Você encontrou o grande prêmio e ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **16** horas.",
-		"english": ":slot_machine: You hit the jackpot and won **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **16** hour cooldown."
+		"portugues": ":slot_machine: Você encontrou o grande prêmio e ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **12** horas.",
+		"english": ":slot_machine: You hit the jackpot and won **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **12** hour cooldown."
 	},
 	"LOTTERY": {
 		"portugues": ":tickets: Loteria",
