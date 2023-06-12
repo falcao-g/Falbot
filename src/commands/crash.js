@@ -1,27 +1,12 @@
-const {
-	specialArg,
-	readFile,
-	getRoleColor,
-	randint,
-	changeDB,
-	format,
-} = require("../utils/functions.js")
-const {
-	SlashCommandBuilder,
-	EmbedBuilder,
-	ActionRowBuilder,
-	ButtonBuilder,
-} = require("discord.js")
+const { specialArg, readFile, getRoleColor, randint, changeDB, format } = require("../utils/functions.js")
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("crash")
 		.setNameLocalization("pt-BR", "colapso")
 		.setDescription("Sell at the right time before the market crashes")
-		.setDescriptionLocalization(
-			"pt-BR",
-			"Venda no momento certo antes que o mercado colapse"
-		)
+		.setDescriptionLocalization("pt-BR", "Venda no momento certo antes que o mercado colapse")
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
@@ -51,7 +36,7 @@ module.exports = {
 			}
 			if ((await readFile(user.id, "falcoins")) >= bet) {
 				await changeDB(user.id, "falcoins", -bet)
-				multiplier = 8
+				multiplier = 10
 				const embed = new EmbedBuilder()
 					.addFields(
 						{
@@ -66,9 +51,7 @@ module.exports = {
 						},
 						{
 							name: instance.getMessage(guild, "GANHOS"),
-							value: `:coin: ${multiplier == 8 ? "-" : ""}${format(
-								parseInt((bet * multiplier) / 10 - bet)
-							)}`,
+							value: `:coin: ${format(parseInt((bet * multiplier) / 10 - bet))}`,
 							inline: true,
 						}
 					)
@@ -120,7 +103,7 @@ module.exports = {
 
 					random = randint(1, 100)
 
-					if (random <= 1) {
+					if (random <= 20) {
 						crashed = true
 						lost = true
 					}
