@@ -50,7 +50,7 @@ module.exports = {
 
 				var answer = await interaction.editReply({
 					embeds: [embed],
-					components: [buttons(["accept"])],
+					components: [buttons(["accept", "skip"])],
 					fetchReply: true,
 				})
 
@@ -62,9 +62,7 @@ module.exports = {
 
 				const filter = async (btInt) => {
 					return (
-						instance.defaultFilter(btInt) &&
-						(await readFile(btInt.user.id, "falcoins")) >= bet &&
-						!users.includes(btInt.user)
+						instance.defaultFilter(btInt)
 					)
 				}
 
@@ -74,21 +72,29 @@ module.exports = {
 				})
 
 				collector.on("collect", async (i) => {
-					await changeDB(i.user.id, "falcoins", -bet)
-					users.push(i.user)
-					names.push(i.user)
-					pot += bet
-					embed.setDescription(
-						instance.getMessage(guild, "ROLETARUSSA_DESCRIPTION", {
-							USER: user,
-							BET: format(pot),
-						})
-					)
-					embed.data.fields[0] = {
-						name: instance.getMessage(guild, "JOGADORES"),
-						value: `${names.join("\n")}`,
-						inline: false,
+					if (i.customId === "skip" && i.user.id === user.id && users.length > 1) {
+						collector.stop()
+					} else if (
+						(await readFile(i.user.id, "falcoins")) >= bet &&
+						!users.includes(i.user)
+					) {
+						await changeDB(i.user.id, "falcoins", -bet)
+						users.push(i.user)
+						names.push(i.user)
+						pot += bet
+						embed.setDescription(
+							instance.getMessage(guild, "ROLETARUSSA_DESCRIPTION", {
+								USER: user,
+								BET: format(pot),
+							})
+						)
+						embed.data.fields[0] = {
+							name: instance.getMessage(guild, "JOGADORES"),
+							value: `${names.join("\n")}`,
+							inline: false,
+						}
 					}
+
 					await i.update({
 						embeds: [embed],
 					})
