@@ -1,30 +1,17 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
-const {
-	specialArg,
-	readFile,
-	changeDB,
-	randint,
-	format,
-	getRoleColor,
-	buttons,
-} = require("../utils/functions.js")
+const { specialArg, readFile, changeDB, randint, format, getRoleColor, buttons } = require("../utils/functions.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("horseduel")
 		.setNameLocalization("pt-BR", "corrida")
 		.setDescription("Starts a horse race that other users can join")
-		.setDescriptionLocalization(
-			"pt-BR",
-			"Inicie uma corrida de cavalos que outros usuários podem participar"
-		)
+		.setDescriptionLocalization("pt-BR", "Inicie uma corrida de cavalos que outros usuários podem participar")
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("falcoins")
-				.setDescription(
-					'the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
-				)
+				.setDescription('the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)')
 				.setDescriptionLocalization(
 					"pt-BR",
 					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
@@ -75,9 +62,7 @@ module.exports = {
 				var path = ["- - - - -"]
 
 				const filter = async (btInt) => {
-					return (
-						instance.defaultFilter(btInt)
-					)
+					return instance.defaultFilter(btInt)
 				}
 
 				const collector = answer.createMessageComponentCollector({
@@ -150,7 +135,7 @@ module.exports = {
 					}
 
 					await changeDB(winner.id, "falcoins", pot)
-					await changeDB(winner.id, "vitorias")
+					if (users.length > 1) await changeDB(winner.id, "vitorias")
 					embed.setColor(await getRoleColor(guild, winner.id)).setDescription(
 						instance.getMessage(guild, "CAVALGADA_DESCRIPTION3", {
 							BET: format(pot),
@@ -161,6 +146,7 @@ module.exports = {
 
 					await interaction.editReply({
 						embeds: [embed],
+						components: [],
 					})
 				})
 			} else {

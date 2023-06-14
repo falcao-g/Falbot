@@ -61,9 +61,7 @@ module.exports = {
 				mensagens = instance.getMessage(guild, "RUSROL")
 
 				const filter = async (btInt) => {
-					return (
-						instance.defaultFilter(btInt)
-					)
+					return instance.defaultFilter(btInt)
 				}
 
 				const collector = answer.createMessageComponentCollector({
@@ -75,7 +73,7 @@ module.exports = {
 					if (i.customId === "skip" && i.user.id === user.id && users.length > 1) {
 						collector.stop()
 					} else if (
-                        i.customId === "accept" &&
+						i.customId === "accept" &&
 						(await readFile(i.user.id, "falcoins")) >= bet &&
 						!users.includes(i.user)
 					) {
@@ -130,7 +128,7 @@ module.exports = {
 					}
 					var winner = users[0]
 					await changeDB(winner.id, "falcoins", pot)
-					await changeDB(winner.id, "vitorias")
+					if (users.length > 1) await changeDB(winner.id, "vitorias")
 					embed
 						.setDescription(
 							instance.getMessage(guild, "ROLETARUSSA_DESCRIPTION3", {
@@ -143,6 +141,7 @@ module.exports = {
 
 					await interaction.editReply({
 						embeds: [embed],
+						components: [],
 					})
 				})
 			} else if (bet <= 0) {
@@ -161,6 +160,7 @@ module.exports = {
 			interaction.editReply({
 				content: instance.getMessage(guild, "EXCEPTION"),
 				embeds: [],
+				components: [],
 			})
 		}
 	},
