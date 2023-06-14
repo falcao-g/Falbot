@@ -279,7 +279,7 @@ function buttons(buttons) {
 			.setStyle("Success"),
 		skip: new ButtonBuilder()
 			.setCustomId("skip")
-			.setEmoji("⏱️")
+			.setEmoji("▶️")
 			.setStyle("Secondary"),
 		refuse: new ButtonBuilder()
 			.setCustomId("refuse")
