@@ -277,6 +277,10 @@ function buttons(buttons) {
 			.setCustomId("accept")
 			.setEmoji("✅")
 			.setStyle("Success"),
+		skip: new ButtonBuilder()
+			.setCustomId("skip")
+			.setEmoji("▶️")
+			.setStyle("Secondary"),
 		refuse: new ButtonBuilder()
 			.setCustomId("refuse")
 			.setEmoji("⛔")
