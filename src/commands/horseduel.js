@@ -89,6 +89,7 @@ module.exports = {
 					if (i.customId === "skip" && i.user.id === user.id && users.length > 1) {
 						collector.stop()
 					} else if (
+						i.customId === "accept" &&
 						(await readFile(i.user.id, "falcoins")) >= bet &&
 						!users.includes(i.user)
 					) {
