@@ -1,9 +1,4 @@
-const {
-	readFile,
-	changeDB,
-	msToTime,
-	format,
-} = require("../utils/functions.js")
+const { readFile, changeDB, msToTime, format } = require("../utils/functions.js")
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
@@ -31,10 +26,7 @@ module.exports = {
 						.setName("amount")
 						.setNameLocalization("pt-BR", "quantidade")
 						.setDescription("amount of lottery tickets to buy")
-						.setDescriptionLocalization(
-							"pt-BR",
-							"quantidade de bilhetes para comprar"
-						)
+						.setDescriptionLocalization("pt-BR", "quantidade de bilhetes para comprar")
 						.setMinValue(1)
 						.setRequired(true)
 				)
@@ -44,10 +36,7 @@ module.exports = {
 				.setName("history")
 				.setNameLocalization("pt-BR", "histórico")
 				.setDescription("See the last 10 winners of the lottery")
-				.setDescriptionLocalization(
-					"pt-BR",
-					"Veja os 10 últimos gahnadores da loteria"
-				)
+				.setDescriptionLocalization("pt-BR", "Veja os 10 últimos gahnadores da loteria")
 		),
 	execute: async ({ guild, user, interaction, instance }) => {
 		try {
@@ -60,9 +49,7 @@ module.exports = {
 					var embed = new EmbedBuilder()
 						.setColor(15844367)
 						.addFields({
-							name:
-								`:tickets: ${format(amount)} ` +
-								instance.getMessage(guild, "PURCHASED"),
+							name: `:tickets: ${format(amount)} ` + instance.getMessage(guild, "PURCHASED"),
 							value: instance.getMessage(guild, "LOTTERY_COST", {
 								COST: format(amount * 500),
 							}),
@@ -102,13 +89,9 @@ module.exports = {
 					.setFooter({ text: "by Falcão ❤️" })
 
 				if ((await readFile(user.id, "tickets")) > 0) {
-					embed.data.fields[0].value += instance.getMessage(
-						guild,
-						"LOTTERY_TICKETS",
-						{
-							TICKETS: await readFile(user.id, "tickets", true),
-						}
-					)
+					embed.data.fields[0].value += instance.getMessage(guild, "LOTTERY_TICKETS", {
+						TICKETS: await readFile(user.id, "tickets", true),
+					})
 				}
 
 				await interaction.editReply({
@@ -117,12 +100,18 @@ module.exports = {
 			} else {
 				history = ""
 				for (winner of lotto.history) {
-					history += instance.getMessage(guild, "HISTORY", {
-						FALCOINS: format(winner.prize),
-						USER: winner.winner,
-						TICKETS: winner.userTickets,
-						TOTAL: winner.totalTickets,
-					})
+					if (winner.winner != undefined) {
+						history += instance.getMessage(guild, "HISTORY", {
+							FALCOINS: format(winner.prize),
+							USER: winner.winner,
+							TICKETS: winner.userTickets,
+							TOTAL: winner.totalTickets,
+						})
+					} else {
+						history += instance.getMessage(guild, "HISTORY_NO_WINNER", {
+							FALCOINS: format(winner.prize),
+						})
+					}
 				}
 
 				var embed = new EmbedBuilder()

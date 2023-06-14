@@ -738,6 +738,10 @@
 		"portugues": ":confetti_ball: Loteria de {FALCOINS} falcoins ganha por **{USER}**! ({TICKETS}/{TOTAL} bilhetes)\n",
 		"english": ":confetti_ball: {FALCOINS} falcoins lotto won by **{USER}**! ({TICKETS}/{TOTAL} bilhetes)\n"
 	},
+	"HISTORY_NO_WINNER": {
+		"portugues": ":moneybag: Ninguém ganhou e o prêmio de {FALCOINS} falcoins foi acumulado.\n",
+		"english": ":moneybag: No one won and the {FALCOINS} falcoins prize was accumulated.\n"
+	},
 	"EVENTS": {
 		"portugues": "Eventos",
 		"english": "Events"

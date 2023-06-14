@@ -1,12 +1,5 @@
 const { randint, changeDB, format } = require("./utils/functions.js")
-const {
-	Client,
-	GatewayIntentBits,
-	Collection,
-	EmbedBuilder,
-	ActionRowBuilder,
-	ButtonBuilder,
-} = require("discord.js")
+const { Client, GatewayIntentBits, Collection, EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js")
 const path = require("path")
 require("dotenv").config()
 const mongoose = require("mongoose")
@@ -147,10 +140,7 @@ class Falbot {
 			})
 
 			for (let user of users) {
-				if (
-					Date.now() - user.lastVote > 1000 * 60 * 60 * 12 &&
-					Date.now() - user.lastReminder > 1000 * 60 * 60 * 12
-				) {
+				if (Date.now() - user.lastVote > 1000 * 60 * 60 * 12 && Date.now() - user.lastReminder > 1000 * 60 * 60 * 12) {
 					var discordUser = await this.client.users.fetch(user._id)
 					const embed = new EmbedBuilder()
 						.setColor(16776960)
@@ -239,20 +229,22 @@ class Falbot {
 					embeds: [embed],
 				})
 
-				if (lotto.history.length >= 10) {
-					lotto.history.pop()
-				}
-
 				lotto.history.unshift({
 					prize: lotto.prize,
 					winner: winnerUser.username,
 					userTickets: winner.tickets,
 					totalTickets: numTickets,
 				})
+				lotto.prize = randint(3500000, 5000000)
+			} else {
+				lotto.history.unshift({
+					prize: lotto.prize,
+				})
+				lotto.prize = lotto.prize + randint(3500000, 5000000)
 			}
-			lotto.nextDraw = Date.now() + 604800000 //next one is next week
-			lotto.prize = randint(3500000, 5000000)
 
+			if (lotto.history.length >= 10) lotto.history.pop()
+			lotto.nextDraw = Date.now() + 604800000 //next one is next week
 			await lotto.save()
 		}
 	}
@@ -274,9 +266,7 @@ class Falbot {
 	defaultFilter(interaction) {
 		var disabledChannels = this._disabledChannels.get(interaction.guild.id)
 
-		return !interaction.user.bot &&
-			!this._banned.includes(interaction.user.id) &&
-			disabledChannels != undefined
+		return !interaction.user.bot && !this._banned.includes(interaction.user.id) && disabledChannels != undefined
 			? !disabledChannels.includes(interaction.channel.id)
 			: true
 	}
@@ -311,9 +301,7 @@ class Falbot {
 		const language = this.getLanguage(guildUser)
 		const translations = this._messages[messageId]
 		if (!translations) {
-			console.error(
-				`Could not find the correct message to send for "${messageId}"`
-			)
+			console.error(`Could not find the correct message to send for "${messageId}"`)
 			return "Could not find the correct message to send. Please report this to the bot developer."
 		}
 
@@ -345,13 +333,9 @@ class Falbot {
 			}
 		}
 
-		perks += `${this.getMessage(guild, "VOTO")}: ${format(
-			rank.vote
-		)} Falcoins\n`
+		perks += `${this.getMessage(guild, "VOTO")}: ${format(rank.vote)} Falcoins\n`
 
-		perks += `${this.getMessage(guild, "TRABALHO")}: ${format(
-			rank.work[0]
-		)}-${format(rank.work[1])} Falcoins`
+		perks += `${this.getMessage(guild, "TRABALHO")}: ${format(rank.work[0])}-${format(rank.work[1])} Falcoins`
 
 		return perks
 	}
