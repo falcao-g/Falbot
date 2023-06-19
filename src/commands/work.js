@@ -1,10 +1,4 @@
-const {
-	readFile,
-	changeDB,
-	getRoleColor,
-	randint,
-	format,
-} = require("../utils/functions.js")
+const { readFile, changeDB, getRoleColor, randint, format } = require("../utils/functions.js")
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
@@ -26,7 +20,7 @@ module.exports = {
 			var salary = randint(min, max)
 
 			let bonus = 0
-			desc = instance.getMessage(guild, "WORK", {
+			desc = instance.getMessage(interaction, "WORK", {
 				FALCOINS: format(salary),
 			})
 			luck = randint(0, 100)
@@ -35,7 +29,7 @@ module.exports = {
 				bonus = salary * 2
 				desc +=
 					"\n" +
-					instance.getMessage(guild, "BONUS", {
+					instance.getMessage(interaction, "BONUS", {
 						FALCOINS: format(bonus),
 					})
 			}
@@ -45,7 +39,7 @@ module.exports = {
 			var embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, user.id))
 				.setTitle(
-					instance.getMessage(guild, "WORK_TITLE", {
+					instance.getMessage(interaction, "WORK_TITLE", {
 						FALCOINS: format(salary + bonus),
 					})
 				)
@@ -58,7 +52,7 @@ module.exports = {
 		} catch (err) {
 			console.error(`work: ${err}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 			})
 		}

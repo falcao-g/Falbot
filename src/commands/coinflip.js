@@ -17,7 +17,7 @@ module.exports = {
 				.setMinValue(1)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, instance }) => {
+	execute: async ({ interaction, instance }) => {
 		await interaction.deferReply()
 		try {
 			const times = interaction.options.getInteger("quantity")
@@ -25,7 +25,7 @@ module.exports = {
 			const coroas = times - caras
 
 			interaction.editReply({
-				content: instance.getMessage(guild, "COINFLIP", {
+				content: instance.getMessage(interaction, "COINFLIP", {
 					CARAS: caras,
 					COROAS: coroas,
 					TIMES: times,
@@ -34,7 +34,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`Coinflip: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 			})
 		}
 	},

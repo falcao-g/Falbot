@@ -23,7 +23,7 @@ module.exports = {
 				.setColor(await getRoleColor(guild, user.id))
 				.setDescription(interaction.options.getString("theme"))
 				.setAuthor({
-					name: instance.getMessage(guild, "ENQUETE", {
+					name: instance.getMessage(interaction, "ENQUETE", {
 						USER: member.displayName,
 					}),
 					iconURL: user.avatarURL(),
@@ -40,7 +40,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`poll: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 			})
 		}

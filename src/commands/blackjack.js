@@ -1,16 +1,5 @@
-const {
-	specialArg,
-	readFile,
-	getRoleColor,
-	changeDB,
-	format,
-} = require("../utils/functions.js")
-const {
-	SlashCommandBuilder,
-	EmbedBuilder,
-	ActionRowBuilder,
-	ButtonBuilder,
-} = require("discord.js")
+const { specialArg, readFile, getRoleColor, changeDB, format } = require("../utils/functions.js")
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js")
 const Blackjack = require("simply-blackjack")
 
 module.exports = {
@@ -32,7 +21,7 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, instance, user, client }) => {
+	execute: async ({ guild, interaction, instance, user }) => {
 		await interaction.deferReply()
 		try {
 			const falcoins = interaction.options.getString("falcoins")
@@ -40,7 +29,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(interaction, "VALOR_INVALIDO", {
 						VALUE: falcoins,
 					}),
 				})
@@ -92,25 +81,25 @@ module.exports = {
 					.addFields(
 						{
 							name: "BlackJack",
-							value: instance.getMessage(guild, "BLACKJACK_TITLE", {
+							value: instance.getMessage(interaction, "BLACKJACK_TITLE", {
 								BET: format(bet),
 							}),
 							inline: false,
 						},
 						{
-							name: instance.getMessage(guild, "PLAYER_HAND", {
+							name: instance.getMessage(interaction, "PLAYER_HAND", {
 								CARDS: player_cards.join(" "),
 							}),
-							value: instance.getMessage(guild, "VALUE", {
+							value: instance.getMessage(interaction, "VALUE", {
 								VALUE: Game.table.player.total,
 							}),
 							inline: true,
 						},
 						{
-							name: instance.getMessage(guild, "DEALER_HAND", {
+							name: instance.getMessage(interaction, "DEALER_HAND", {
 								CARDS: dealer_cards.join(" "),
 							}),
-							value: instance.getMessage(guild, "VALUE", {
+							value: instance.getMessage(interaction, "VALUE", {
 								VALUE: Game.table.dealer.total,
 							}),
 							inline: true,
@@ -122,15 +111,15 @@ module.exports = {
 				const row = new ActionRowBuilder().addComponents(
 					(hit = new ButtonBuilder()
 						.setCustomId("hit")
-						.setLabel(instance.getMessage(guild, "HIT"))
+						.setLabel(instance.getMessage(interaction, "HIT"))
 						.setStyle("Secondary")),
 					(stand = new ButtonBuilder()
 						.setCustomId("stand")
-						.setLabel(instance.getMessage(guild, "STAND"))
+						.setLabel(instance.getMessage(interaction, "STAND"))
 						.setStyle("Secondary")),
 					(double = new ButtonBuilder()
 						.setCustomId("double")
-						.setLabel(instance.getMessage(guild, "DOUBLE"))
+						.setLabel(instance.getMessage(interaction, "DOUBLE"))
 						.setStyle("Secondary"))
 				)
 
@@ -167,88 +156,71 @@ module.exports = {
 					})
 
 					embed.data.fields[1] = {
-						name: instance.getMessage(guild, "PLAYER_HAND", {
+						name: instance.getMessage(interaction, "PLAYER_HAND", {
 							CARDS: player_cards.join(" "),
 						}),
-						value: instance.getMessage(guild, "VALUE", {
+						value: instance.getMessage(interaction, "VALUE", {
 							VALUE: results.player.total,
 						}),
 						inline: true,
 					}
 					embed.data.fields[2] = {
-						name: instance.getMessage(guild, "DEALER_HAND", {
+						name: instance.getMessage(interaction, "DEALER_HAND", {
 							CARDS: dealer_cards.join(" "),
 						}),
-						value: instance.getMessage(guild, "VALUE", {
+						value: instance.getMessage(interaction, "VALUE", {
 							VALUE: results.dealer.total,
 						}),
 						inline: true,
 					}
 
 					if (results.state === "draw") {
-						embed.data.fields[0].value = instance.getMessage(
-							guild,
-							"BLACKJACK_DRAW",
-							{ FALCOINS: format(results.bet) }
-						)
+						embed.data.fields[0].value = instance.getMessage(interaction, "BLACKJACK_DRAW", {
+							FALCOINS: format(results.bet),
+						})
 						embed.setColor(9807270)
 						await changeDB(user.id, "falcoins", results.bet)
 					} else if (results.state === "player_blackjack") {
-						embed.data.fields[0].value = instance.getMessage(
-							guild,
-							"PLAYER_BLACKJACK",
-							{ FALCOINS: format(results.winnings) }
-						)
+						embed.data.fields[0].value = instance.getMessage(interaction, "PLAYER_BLACKJACK", {
+							FALCOINS: format(results.winnings),
+						})
 						embed.setColor(15844367)
 						await changeDB(user.id, "falcoins", results.bet + results.winnings)
 					} else if (results.state === "player_win") {
 						if (results.dealer.total > 21) {
-							embed.data.fields[0].value = instance.getMessage(
-								guild,
-								"DEALER_BUST",
-								{ FALCOINS: format(results.winnings / 2) }
-							)
+							embed.data.fields[0].value = instance.getMessage(interaction, "DEALER_BUST", {
+								FALCOINS: format(results.winnings / 2),
+							})
 						} else {
-							embed.data.fields[0].value = instance.getMessage(
-								guild,
-								"YOU_WON",
-								{ FALCOINS: format(Math.floor(results.winnings / 2)) }
-							)
+							embed.data.fields[0].value = instance.getMessage(interaction, "YOU_WON", {
+								FALCOINS: format(Math.floor(results.winnings / 2)),
+							})
 						}
 						embed.setColor(3066993)
-						await changeDB(
-							user.id,
-							"falcoins",
-							results.bet + Math.floor(results.winnings / 2)
-						)
+						await changeDB(user.id, "falcoins", results.bet + Math.floor(results.winnings / 2))
 					} else if (results.state === "dealer_win") {
 						if (results.player.total > 21) {
-							embed.data.fields[0].value = instance.getMessage(
-								guild,
-								"PLAYER_BUST",
-								{ FALCOINS: format(results.losses) }
-							)
+							embed.data.fields[0].value = instance.getMessage(interaction, "PLAYER_BUST", {
+								FALCOINS: format(results.losses),
+							})
 						} else {
-							embed.data.fields[0].value = instance.getMessage(
-								guild,
-								"YOU_LOST",
-								{ FALCOINS: format(results.losses) }
-							)
+							embed.data.fields[0].value = instance.getMessage(interaction, "YOU_LOST", {
+								FALCOINS: format(results.losses),
+							})
 						}
 						embed.setColor(15158332)
 					} else {
-						embed.data.fields[0].value = instance.getMessage(
-							guild,
-							"DEALER_BLACKJACK",
-							{ FALCOINS: format(results.losses) }
-						)
+						embed.data.fields[0].value = instance.getMessage(interaction, "DEALER_BLACKJACK", {
+							FALCOINS: format(results.losses),
+						})
 						embed.setColor(10038562)
 					}
 
-					embed.data.fields[0].value += `\n${instance.getMessage(
-						guild,
-						"SALDO_ATUAL"
-					)}: ${await readFile(user.id, "falcoins", true)} falcoins`
+					embed.data.fields[0].value += `\n${instance.getMessage(interaction, "SALDO_ATUAL")}: ${await readFile(
+						user.id,
+						"falcoins",
+						true
+					)} falcoins`
 
 					await interaction.editReply({
 						embeds: [embed],
@@ -283,19 +255,19 @@ module.exports = {
 							dealer_cards.push(enum_cards["hidden"])
 
 							embed.data.fields[1] = {
-								name: instance.getMessage(guild, "PLAYER_HAND", {
+								name: instance.getMessage(interaction, "PLAYER_HAND", {
 									CARDS: player_cards.join(" "),
 								}),
-								value: instance.getMessage(guild, "VALUE", {
+								value: instance.getMessage(interaction, "VALUE", {
 									VALUE: Game.table.player.total,
 								}),
 								inline: true,
 							}
 							embed.data.fields[2] = {
-								name: instance.getMessage(guild, "DEALER_HAND", {
+								name: instance.getMessage(interaction, "DEALER_HAND", {
 									CARDS: dealer_cards.join(" "),
 								}),
-								value: instance.getMessage(guild, "VALUE", {
+								value: instance.getMessage(interaction, "VALUE", {
 									VALUE: Game.table.dealer.total,
 								}),
 								inline: true,
@@ -318,7 +290,7 @@ module.exports = {
 							i.deferUpdate()
 						} else {
 							i.reply({
-								content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+								content: instance.getMessage(interaction, "FALCOINS_INSUFICIENTES"),
 								ephemeral: true,
 							})
 						}
@@ -332,13 +304,13 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(interaction, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {
 			console.error(`blackjack: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 				components: [],
 			})

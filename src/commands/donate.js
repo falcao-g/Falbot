@@ -1,9 +1,4 @@
-const {
-	specialArg,
-	readFile,
-	format,
-	changeDB,
-} = require("../utils/functions.js")
+const { specialArg, readFile, format, changeDB } = require("../utils/functions.js")
 const { SlashCommandBuilder } = require("discord.js")
 
 module.exports = {
@@ -24,9 +19,7 @@ module.exports = {
 		.addStringOption((option) =>
 			option
 				.setName("falcoins")
-				.setDescription(
-					'amount of falcoins to donate (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
-				)
+				.setDescription('amount of falcoins to donate (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)')
 				.setDescriptionLocalization(
 					"pt-BR",
 					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
@@ -42,7 +35,7 @@ module.exports = {
 				var quantity = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(interaction, "VALOR_INVALIDO", {
 						VALUE: falcoins,
 					}),
 				})
@@ -53,21 +46,21 @@ module.exports = {
 				await changeDB(user.id, "falcoins", -quantity)
 				await changeDB(target.id, "falcoins", quantity)
 				await interaction.editReply({
-					content: instance.getMessage(guild, "DOAR", {
+					content: instance.getMessage(interaction, "DOAR", {
 						FALCOINS: format(quantity),
 						USER: target,
 					}),
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(interaction, "FALCOINS_INSUFICIENTES"),
 					ephemeral: true,
 				})
 			}
 		} catch (error) {
 			console.error(`donation: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 			})
 		}
 	},

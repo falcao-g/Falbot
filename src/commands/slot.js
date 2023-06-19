@@ -1,12 +1,4 @@
-const {
-	specialArg,
-	readFile,
-	changeDB,
-	getRoleColor,
-	count,
-	format,
-	pick,
-} = require("../utils/functions.js")
+const { specialArg, readFile, changeDB, getRoleColor, count, format, pick } = require("../utils/functions.js")
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
@@ -19,16 +11,14 @@ module.exports = {
 		.addStringOption((option) =>
 			option
 				.setName("falcoins")
-				.setDescription(
-					'amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
-				)
+				.setDescription('amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)')
 				.setDescriptionLocalization(
 					"pt-BR",
 					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, client, instance, user }) => {
+	execute: async ({ guild, interaction, instance, user }) => {
 		try {
 			await interaction.deferReply()
 			const falcoins = interaction.options.getString("falcoins")
@@ -36,7 +26,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(interaction, "VALOR_INVALIDO", {
 						VALUE: falcoins,
 					}),
 				})
@@ -60,7 +50,7 @@ module.exports = {
 					.setColor(await getRoleColor(guild, user.id))
 					.addFields({
 						name: `-------------------\n | ${emote} | ${emote} | ${emote} |\n-------------------`,
-						value: `--- **${instance.getMessage(guild, "GIRANDO")}** ---`,
+						value: `--- **${instance.getMessage(interaction, "GIRANDO")}** ---`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
@@ -107,11 +97,11 @@ module.exports = {
 					var embed2 = new EmbedBuilder().setColor(3066993).addFields(
 						{
 							name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
-							value: `--- **${instance.getMessage(guild, "VOCE_GANHOU")}** ---`,
+							value: `--- **${instance.getMessage(interaction, "VOCE_GANHOU")}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.getMessage(guild, "GANHOS"),
+							name: instance.getMessage(interaction, "GANHOS"),
 							value: `${format(profit)} falcoins`,
 							inline: true,
 						}
@@ -120,11 +110,11 @@ module.exports = {
 					var embed2 = new EmbedBuilder().setColor(15158332).addFields(
 						{
 							name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
-							value: `--- **${instance.getMessage(guild, "VOCE_PERDEU")}** ---`,
+							value: `--- **${instance.getMessage(interaction, "VOCE_PERDEU")}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.getMessage(guild, "PERDAS"),
+							name: instance.getMessage(interaction, "PERDAS"),
 							value: `${format(bet)} falcoins`,
 							inline: true,
 						}
@@ -132,7 +122,7 @@ module.exports = {
 				}
 				embed2
 					.addFields({
-						name: instance.getMessage(guild, "SALDO_ATUAL"),
+						name: instance.getMessage(interaction, "SALDO_ATUAL"),
 						value: `${await readFile(user.id, "falcoins", true)}`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
@@ -141,13 +131,13 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(interaction, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {
 			console.error(`slot: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 			})
 		}

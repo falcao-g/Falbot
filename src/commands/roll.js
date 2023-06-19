@@ -17,7 +17,7 @@ module.exports = {
 				.setRequired(true)
 				.setMaxLength(500)
 		),
-	execute: async ({ guild, interaction, instance }) => {
+	execute: async ({ interaction, instance }) => {
 		try {
 			await interaction.deferReply()
 			text = interaction.options.getString("dice")
@@ -27,13 +27,13 @@ module.exports = {
 
 				if (rolled.length > 2000) {
 					await interaction.editReply({
-						content: instance.getMessage(guild, "ROLL_LIMIT"),
+						content: instance.getMessage(interaction, "ROLL_LIMIT"),
 					})
 					return
 				}
 			} catch {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(interaction, "VALOR_INVALIDO", {
 						VALUE: text,
 					}),
 				})
@@ -41,12 +41,12 @@ module.exports = {
 			}
 
 			await interaction.editReply({
-				content: `**${instance.getMessage(guild, "RESULTADO")}:** ${rolled}`,
+				content: `**${instance.getMessage(interaction, "RESULTADO")}:** ${rolled}`,
 			})
 		} catch (error) {
 			console.error(`roll: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 			})
 		}
 	},

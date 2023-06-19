@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription("Check some bot stats")
 		.setDescriptionLocalization("pt-BR", "Veja informações úteis sobre o bot")
 		.setDMPermission(false),
-	execute: async ({ guild, client, interaction, instance }) => {
+	execute: async ({ client, interaction, instance }) => {
 		await interaction.deferReply()
 		try {
 			const embed = new EmbedBuilder()
@@ -15,22 +15,18 @@ module.exports = {
 				.addFields({
 					name: "Falbot info",
 					value: `**:earth_americas: Site: https://falbot.netlify.app/\n:robot: Github: https://github.com/falcao-g/Falbot\n:bird: Twitter: https://twitter.com/falb0t\n:house: ${instance.getMessage(
-						guild,
+						interaction,
 						"SERVERS"
-					)}: ${
-						client.guilds.cache.size
-					}\n:busts_in_silhouette: ${instance.getMessage(guild, "PLAYERS")}: ${
+					)}: ${client.guilds.cache.size}\n:busts_in_silhouette: ${instance.getMessage(interaction, "PLAYERS")}: ${
 						(await instance.userSchema.find({})).length
-					}\n:zap: ${instance.getMessage(guild, "UPTIME")}: ${msToTime(
-						client.uptime
-					)}**`,
+					}\n:zap: ${instance.getMessage(interaction, "UPTIME")}: ${msToTime(client.uptime)}**`,
 				})
 				.setFooter({ text: "by Falcão ❤️" })
 			await interaction.editReply({ embeds: [embed] })
 		} catch (error) {
 			console.error(`botinfo: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 			})
 		}

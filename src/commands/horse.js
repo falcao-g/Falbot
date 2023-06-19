@@ -1,34 +1,19 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
-const {
-	specialArg,
-	readFile,
-	getRoleColor,
-	randint,
-	changeDB,
-	format,
-} = require("../utils/functions.js")
+const { specialArg, readFile, getRoleColor, randint, changeDB, format } = require("../utils/functions.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("horse")
 		.setNameLocalization("pt-BR", "cavalo")
 		.setDescription("Bet in what horse is going to win")
-		.setDescriptionLocalization(
-			"pt-BR",
-			"Aposte em qual cavalo é o mais rápido"
-		)
+		.setDescriptionLocalization("pt-BR", "Aposte em qual cavalo é o mais rápido")
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("horse")
 				.setNameLocalization("pt-BR", "cavalo")
-				.setDescription(
-					"number of the horse you want to bet in, order is top to bottom"
-				)
-				.setDescriptionLocalization(
-					"pt-BR",
-					"número do cavalo que você vai apostar"
-				)
+				.setDescription("number of the horse you want to bet in, order is top to bottom")
+				.setDescriptionLocalization("pt-BR", "número do cavalo que você vai apostar")
 				.setRequired(true)
 				.addChoices(
 					{ name: "1", value: "1" },
@@ -55,7 +40,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(interaction, "VALOR_INVALIDO", {
 						VALUE: falcoins,
 					}),
 				})
@@ -63,16 +48,10 @@ module.exports = {
 			}
 			if ((await readFile(user.id, "falcoins")) >= bet) {
 				await changeDB(user.id, "falcoins", -bet)
-				const horses = [
-					"- - - - -",
-					"- - - - -",
-					"- - - - -",
-					"- - - - -",
-					"- - - - -",
-				]
+				const horses = ["- - - - -", "- - - - -", "- - - - -", "- - - - -", "- - - - -"]
 				const embed = new EmbedBuilder()
 					.setDescription(
-						instance.getMessage(guild, "CAVALO_DESCRIPTION", {
+						instance.getMessage(interaction, "CAVALO_DESCRIPTION", {
 							BET: format(bet),
 							HORSE: horse,
 						})
@@ -111,7 +90,7 @@ module.exports = {
 				if (horse == winner) {
 					await changeDB(user.id, "falcoins", bet * 5)
 					embed.setColor(3066993).setDescription(
-						instance.getMessage(guild, "CAVALO_DESCRIPTION_WON", {
+						instance.getMessage(interaction, "CAVALO_DESCRIPTION_WON", {
 							BET: format(bet),
 							HORSE: horse,
 							FALCOINS: format(bet * 5),
@@ -120,7 +99,7 @@ module.exports = {
 					)
 				} else {
 					embed.setColor(15158332).setDescription(
-						instance.getMessage(guild, "CAVALO_DESCRIPTION_LOST", {
+						instance.getMessage(interaction, "CAVALO_DESCRIPTION_LOST", {
 							BET: format(bet),
 							HORSE: horse,
 							SALDO: await readFile(user.id, "falcoins", true),
@@ -133,13 +112,13 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(interaction, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {
 			console.error(`horse: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 			})
 		}

@@ -18,7 +18,6 @@ module.exports = {
 		try {
 			await interaction.deferReply()
 			const items = instance.items
-			const language = instance.getLanguage(guild)
 
 			if (interaction.options !== undefined) {
 				var item = interaction.options.getString("item").toLowerCase()
@@ -44,7 +43,7 @@ module.exports = {
 
 			if (itemJSON === undefined) {
 				interaction.editReply({
-					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(interaction, "VALOR_INVALIDO", {
 						VALUE: item,
 					}),
 				})
@@ -55,38 +54,38 @@ module.exports = {
 				var ingredients = ""
 
 				for (key in itemJSON.recipe) {
-					ingredients += `\n${items[key][language]} x ${itemJSON.recipe[key]}`
+					ingredients += `\n${items[key][interaction.locale]} x ${itemJSON.recipe[key]}`
 				}
 			}
 
-			var information = `:moneybag: ${instance.getMessage(guild, "COST")} **${format(itemJSON.value)} falcoins**`
+			var information = `:moneybag: ${instance.getMessage(interaction, "COST")} **${format(itemJSON.value)} falcoins**`
 
 			if (inventory.get(itemKey))
-				information += `\n${instance.getMessage(guild, "OWNED", {
+				information += `\n${instance.getMessage(interaction, "OWNED", {
 					AMOUNT: inventory.get(itemKey),
 				})}`
 
 			if (itemJSON.equip != undefined) {
-				information += `\n${instance.getMessage(guild, "USEABLE")}`
-				information += `\n${instance.getMessage(guild, itemJSON.effect.toUpperCase())}`
+				information += `\n${instance.getMessage(interaction, "USEABLE")}`
+				information += `\n${instance.getMessage(interaction, itemJSON.effect.toUpperCase())}`
 			}
 
 			const embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, member.id))
-				.setTitle(`${itemJSON[language]} ` + "(`" + `${itemKey}` + "`)")
+				.setTitle(`${itemJSON[interaction.locale]} ` + "(`" + `${itemKey}` + "`)")
 				.addFields({
-					name: instance.getMessage(guild, "INFO"),
+					name: instance.getMessage(interaction, "INFO"),
 					value: information,
 				})
 				.setFooter({ text: "by Falcão ❤️" })
 
 			if (itemJSON.rarity) {
-				embed.setDescription(`**${instance.getMessage(guild, itemJSON.rarity.toUpperCase())}**`)
+				embed.setDescription(`**${instance.getMessage(interaction, itemJSON.rarity.toUpperCase())}**`)
 			}
 
 			if (ingredients) {
 				embed.addFields({
-					name: instance.getMessage(guild, "INGREDIENTS"),
+					name: instance.getMessage(interaction, "INGREDIENTS"),
 					value: ingredients,
 				})
 			}
@@ -97,11 +96,11 @@ module.exports = {
 				if (items[i].recipe != undefined) {
 					for (key in items[i].recipe) {
 						if (key === itemKey) {
-							usedToCraft += `\n${items[i][language]}`
+							usedToCraft += `\n${items[i][interaction.locale]}`
 							cont += 1
 
 							if (cont === 4) {
-								usedToCraft += instance.getMessage(guild, "AND_MORE")
+								usedToCraft += instance.getMessage(interaction, "AND_MORE")
 								break craft
 							}
 						}
@@ -111,7 +110,7 @@ module.exports = {
 
 			if (usedToCraft.length != "") {
 				embed.addFields({
-					name: instance.getMessage(guild, "USED"),
+					name: instance.getMessage(interaction, "USED"),
 					value: usedToCraft,
 				})
 			}
@@ -128,7 +127,7 @@ module.exports = {
 		} catch (err) {
 			console.error(`iteminfo: ${err}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 			})
 		}

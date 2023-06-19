@@ -1,8 +1,4 @@
-const {
-	ButtonBuilder,
-	ActionRowBuilder,
-	SlashCommandBuilder,
-} = require("discord.js")
+const { ButtonBuilder, ActionRowBuilder, SlashCommandBuilder } = require("discord.js")
 const { changeDB, readFile } = require("../utils/functions.js")
 
 module.exports = {
@@ -12,7 +8,7 @@ module.exports = {
 		.setDescription("Toggle your vote reminder")
 		.setDescriptionLocalization("pt-BR", "Liga/desliga seu lembrete para votar")
 		.setDMPermission(false),
-	execute: async ({ guild, user, interaction, instance }) => {
+	execute: async ({ user, interaction, instance }) => {
 		try {
 			await interaction.deferReply({ ephemeral: true })
 			if ((await readFile(user.id, "voteReminder")) === false) {
@@ -21,13 +17,13 @@ module.exports = {
 				const row = new ActionRowBuilder().addComponents(
 					new ButtonBuilder()
 						.setCustomId("disableVoteReminder")
-						.setLabel(instance.getMessage(guild, "DISABLE_REMINDER"))
+						.setLabel(instance.getMessage(interaction, "DISABLE_REMINDER"))
 						.setEmoji("🔕")
 						.setStyle("Primary")
 				)
 
 				interaction.editReply({
-					content: instance.getMessage(guild, "REMINDER_ENABLED"),
+					content: instance.getMessage(interaction, "REMINDER_ENABLED"),
 					components: [row],
 				})
 			} else {
@@ -37,20 +33,20 @@ module.exports = {
 				const row = new ActionRowBuilder().addComponents(
 					new ButtonBuilder()
 						.setCustomId("enableVoteReminder")
-						.setLabel(instance.getMessage(guild, "ENABLE_REMINDER"))
+						.setLabel(instance.getMessage(interaction, "ENABLE_REMINDER"))
 						.setEmoji("🔔")
 						.setStyle("Primary")
 				)
 
 				interaction.editReply({
-					content: instance.getMessage(guild, "REMINDER_DISABLED"),
+					content: instance.getMessage(interaction, "REMINDER_DISABLED"),
 					components: [row],
 				})
 			}
 		} catch (error) {
 			console.error(`reminder: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				components: [],
 			})
 		}

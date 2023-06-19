@@ -22,16 +22,14 @@ module.exports = {
 		await interaction.deferReply()
 		const items = instance.items
 		const inventory = await readFile(member.id, "inventory")
-		const language = instance.getLanguage(guild)
-		const limit =
-			instance.levels[(await readFile(member.id, "rank")) - 1].inventoryLimit
+		const limit = instance.levels[(await readFile(member.id, "rank")) - 1].inventoryLimit
 		const inventoryWorth = instance.getInventoryWorth(inventory)
 		var buff = 1
 		var buffText = ""
 
 		if (inventoryWorth >= limit) {
 			interaction.editReply({
-				content: instance.getMessage(guild, "OVER_LIMIT"),
+				content: instance.getMessage(interaction, "OVER_LIMIT"),
 			})
 			return
 		}
@@ -39,8 +37,8 @@ module.exports = {
 		if (await isEquipped(member, "activewear")) {
 			buff = 2
 			await useItem(member, "activewear")
-			buffText = `**${instance.getMessage(guild, "BUFF", {
-				ITEM: items["activewear"][language],
+			buffText = `**${instance.getMessage(interaction, "BUFF", {
+				ITEM: items["activewear"][interaction.locale],
 				BUFF: 2,
 			})}**`
 		}
@@ -48,8 +46,8 @@ module.exports = {
 		if (await isEquipped(member, "coat")) {
 			buff = 4
 			await useItem(member, "coat")
-			buffText = `**${instance.getMessage(guild, "BUFF", {
-				ITEM: items["coat"][language],
+			buffText = `**${instance.getMessage(interaction, "BUFF", {
+				ITEM: items["coat"][interaction.locale],
 				BUFF: 4,
 			})}**`
 		}
@@ -88,7 +86,7 @@ module.exports = {
 			var selectedItem = pick(filteredItems)
 			var amount = randint(1, amounts[items[selectedItem]["rarity"]]) * buff
 			total += amount
-			text += `**${items[selectedItem][language]}** x ${amount}\n`
+			text += `**${items[selectedItem][interaction.locale]}** x ${amount}\n`
 			filteredItems = filteredItems.filter((item) => item[0] !== selectedItem)
 			inventory.set(selectedItem, (inventory.get(selectedItem) || 0) + amount)
 			selectedItems.push(selectedItem)
@@ -101,7 +99,7 @@ module.exports = {
 			.addFields({
 				name:
 					":compass: " +
-					instance.getMessage(guild, "FOUND", {
+					instance.getMessage(interaction, "FOUND", {
 						AMOUNT: total,
 					}),
 				value: text + buffText,

@@ -38,7 +38,7 @@ module.exports = {
 				.setDescription("See the last 10 winners of the lottery")
 				.setDescriptionLocalization("pt-BR", "Veja os 10 últimos gahnadores da loteria")
 		),
-	execute: async ({ guild, user, interaction, instance }) => {
+	execute: async ({ user, interaction, instance }) => {
 		try {
 			await interaction.deferReply()
 			const lotto = await instance.lottoSchema.findById("semanal")
@@ -49,8 +49,8 @@ module.exports = {
 					var embed = new EmbedBuilder()
 						.setColor(15844367)
 						.addFields({
-							name: `:tickets: ${format(amount)} ` + instance.getMessage(guild, "PURCHASED"),
-							value: instance.getMessage(guild, "LOTTERY_COST", {
+							name: `:tickets: ${format(amount)} ` + instance.getMessage(interaction, "PURCHASED"),
+							value: instance.getMessage(interaction, "LOTTERY_COST", {
 								COST: format(amount * 500),
 							}),
 						})
@@ -64,7 +64,7 @@ module.exports = {
 					})
 				} else {
 					await interaction.editReply({
-						content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+						content: instance.getMessage(interaction, "FALCOINS_INSUFICIENTES"),
 					})
 				}
 			} else if (type === "view") {
@@ -72,15 +72,15 @@ module.exports = {
 					.setColor(15844367)
 					.addFields(
 						{
-							name: instance.getMessage(guild, "LOTTERY"),
-							value: instance.getMessage(guild, "LOTTERY_POOL", {
+							name: instance.getMessage(interaction, "LOTTERY"),
+							value: instance.getMessage(interaction, "LOTTERY_POOL", {
 								PRIZE: format(lotto.prize),
 							}),
 							inline: false,
 						},
 						{
 							name: "Info",
-							value: instance.getMessage(guild, "LOTTERY_INFO", {
+							value: instance.getMessage(interaction, "LOTTERY_INFO", {
 								TIME: msToTime(lotto.nextDraw - Date.now()),
 							}),
 							inline: false,
@@ -89,7 +89,7 @@ module.exports = {
 					.setFooter({ text: "by Falcão ❤️" })
 
 				if ((await readFile(user.id, "tickets")) > 0) {
-					embed.data.fields[0].value += instance.getMessage(guild, "LOTTERY_TICKETS", {
+					embed.data.fields[0].value += instance.getMessage(interaction, "LOTTERY_TICKETS", {
 						TICKETS: await readFile(user.id, "tickets", true),
 					})
 				}
@@ -101,14 +101,14 @@ module.exports = {
 				history = ""
 				for (winner of lotto.history) {
 					if (winner.winner != undefined) {
-						history += instance.getMessage(guild, "HISTORY", {
+						history += instance.getMessage(interaction, "HISTORY", {
 							FALCOINS: format(winner.prize),
 							USER: winner.winner,
 							TICKETS: winner.userTickets,
 							TOTAL: winner.totalTickets,
 						})
 					} else {
-						history += instance.getMessage(guild, "HISTORY_NO_WINNER", {
+						history += instance.getMessage(interaction, "HISTORY_NO_WINNER", {
 							FALCOINS: format(winner.prize),
 						})
 					}
@@ -118,7 +118,7 @@ module.exports = {
 					.setColor(15844367)
 					.setFooter({ text: "by Falcão ❤️" })
 					.addFields({
-						name: instance.getMessage(guild, "LOTTERY_WINNERS"),
+						name: instance.getMessage(interaction, "LOTTERY_WINNERS"),
 						value: history,
 					})
 
@@ -129,7 +129,7 @@ module.exports = {
 		} catch (err) {
 			console.error(`lottery: ${err}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 			})
 		}

@@ -103,9 +103,7 @@ async function specialArg(arg, id, field = "falcoins") {
 	} else {
 		for (c in new_arg) {
 			if (new_arg[c] == "%") {
-				new_arg = parseInt(
-					(parseInt(new_arg.slice(0, -1)) * parseInt(user[field])) / 100
-				)
+				new_arg = parseInt((parseInt(new_arg.slice(0, -1)) * parseInt(user[field])) / 100)
 			}
 		}
 	}
@@ -248,9 +246,8 @@ async function resolveCooldown(id, command) {
 function getItem(item) {
 	for (const key in items) {
 		if (
-			items[key]["portugues"].split(" ").slice(1).join(" ").toLowerCase() ===
-				item ||
-			items[key]["english"].split(" ").slice(1).join(" ").toLowerCase() === item
+			items[key]["pt-BR"].split(" ").slice(1).join(" ").toLowerCase() === item ||
+			items[key]["en-US"].split(" ").slice(1).join(" ").toLowerCase() === item
 		) {
 			return key
 		}
@@ -265,34 +262,13 @@ function buttons(buttons) {
 	const row = new ActionRowBuilder()
 
 	const buttonsEnum = {
-		cooldowns: new ButtonBuilder()
-			.setCustomId("cooldowns")
-			.setEmoji("⏱️")
-			.setStyle("Secondary"),
-		help: new ButtonBuilder()
-			.setCustomId("help")
-			.setEmoji("📚")
-			.setStyle("Secondary"),
-		accept: new ButtonBuilder()
-			.setCustomId("accept")
-			.setEmoji("✅")
-			.setStyle("Success"),
-		skip: new ButtonBuilder()
-			.setCustomId("skip")
-			.setEmoji("▶️")
-			.setStyle("Secondary"),
-		refuse: new ButtonBuilder()
-			.setCustomId("refuse")
-			.setEmoji("⛔")
-			.setStyle("Danger"),
-		inventory_view: new ButtonBuilder()
-			.setCustomId("inventory view")
-			.setEmoji("🎒")
-			.setStyle("Secondary"),
-		balance: new ButtonBuilder()
-			.setCustomId("balance")
-			.setEmoji("🪙")
-			.setStyle("Secondary"),
+		cooldowns: new ButtonBuilder().setCustomId("cooldowns").setEmoji("⏱️").setStyle("Secondary"),
+		help: new ButtonBuilder().setCustomId("help").setEmoji("📚").setStyle("Secondary"),
+		accept: new ButtonBuilder().setCustomId("accept").setEmoji("✅").setStyle("Success"),
+		skip: new ButtonBuilder().setCustomId("skip").setEmoji("▶️").setStyle("Secondary"),
+		refuse: new ButtonBuilder().setCustomId("refuse").setEmoji("⛔").setStyle("Danger"),
+		inventory_view: new ButtonBuilder().setCustomId("inventory view").setEmoji("🎒").setStyle("Secondary"),
+		balance: new ButtonBuilder().setCustomId("balance").setEmoji("🪙").setStyle("Secondary"),
 	}
 
 	for (button of buttons) {

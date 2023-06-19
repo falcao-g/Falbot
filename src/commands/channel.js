@@ -1,16 +1,10 @@
-const {
-	SlashCommandBuilder,
-	PermissionFlagsBits,
-	ChannelType,
-} = require("discord.js")
+const { SlashCommandBuilder, PermissionFlagsBits, ChannelType } = require("discord.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("channel")
 		.setNameLocalization("pt-BR", "canal")
-		.setDescription(
-			"Configure disabled channels in your server, Falbot will not work in these channels"
-		)
+		.setDescription("Configure disabled channels in your server, Falbot will not work in these channels")
 		.setDescriptionLocalization(
 			"pt-BR",
 			"Configure canais desabilitados no seu servidor, o Falbot não irá responder nesses canais"
@@ -22,10 +16,7 @@ module.exports = {
 				.setName("disable")
 				.setNameLocalization("pt-BR", "desativar")
 				.setDescription("Falbot will not send messages in the selected channel")
-				.setDescriptionLocalization(
-					"pt-BR",
-					"Falbot não irá mandar mensagens no canal escolhido"
-				)
+				.setDescriptionLocalization("pt-BR", "Falbot não irá mandar mensagens no canal escolhido")
 				.addChannelOption((option) =>
 					option
 						.setName("channel")
@@ -41,10 +32,7 @@ module.exports = {
 				.setName("enable")
 				.setNameLocalization("pt-BR", "reativar")
 				.setDescription("Falbot will return sending messages in the channel")
-				.setDescriptionLocalization(
-					"pt-BR",
-					"Falbot voltará à mandar mensagens no canal escolhido"
-				)
+				.setDescriptionLocalization("pt-BR", "Falbot voltará à mandar mensagens no canal escolhido")
 				.addChannelOption((option) =>
 					option
 						.setName("channel")
@@ -75,9 +63,7 @@ module.exports = {
 						upsert: true,
 					}
 				)
-				interaction.editReply(
-					instance.getMessage(guild, "DISABLED_CHANNEL", { CHANNEL: channel })
-				)
+				interaction.editReply(instance.getMessage(interaction, "DISABLED_CHANNEL", { CHANNEL: channel }))
 			} else {
 				instance.enableChannel(guild, channel)
 
@@ -93,14 +79,12 @@ module.exports = {
 					}
 				)
 
-				interaction.editReply(
-					instance.getMessage(guild, "ENABLED_CHANNEL", { CHANNEL: channel })
-				)
+				interaction.editReply(instance.getMessage(interaction, "ENABLED_CHANNEL", { CHANNEL: channel }))
 			}
 		} catch (error) {
 			console.error(`channel: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 			})
 		}
 	},

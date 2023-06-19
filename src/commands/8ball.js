@@ -13,31 +13,27 @@ module.exports = {
 				.setName("question")
 				.setNameLocalization("pt-BR", "pergunta")
 				.setDescription("the question you want to ask the 8ball")
-				.setDescriptionLocalization(
-					"pt-BR",
-					"a pergunta que a bola8 deve responder"
-				)
+				.setDescriptionLocalization("pt-BR", "a pergunta que a bola8 deve responder")
 				.setRequired(true)
 		),
-	execute: async ({ interaction, guild, instance }) => {
+	execute: async ({ interaction, instance }) => {
 		await interaction.deferReply()
 		try {
-			let answers = instance.getMessage(guild, "8BALL")
+			let answers = instance.getMessage(interaction, "8BALL")
 			let answer = `${answers[randint(0, answers.length - 1)]}`
 			const embed = new EmbedBuilder()
 				.setColor(2303786)
 				.setAuthor({
-					name: instance.getMessage(guild, "BOLA8"),
-					iconURL:
-						"https://images.emojiterra.com/google/noto-emoji/unicode-13.1/128px/1f3b1.png",
+					name: instance.getMessage(interaction, "BOLA8"),
+					iconURL: "https://images.emojiterra.com/google/noto-emoji/unicode-13.1/128px/1f3b1.png",
 				})
 				.addFields(
 					{
-						name: instance.getMessage(guild, "PERGUNTA"),
+						name: instance.getMessage(interaction, "PERGUNTA"),
 						value: interaction.options.getString("question"),
 					},
 					{
-						name: instance.getMessage(guild, "PREVISAO"),
+						name: instance.getMessage(interaction, "PREVISAO"),
 						value: answer,
 					}
 				)
@@ -46,7 +42,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`8ball: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 			})
 		}
