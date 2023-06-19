@@ -26,7 +26,7 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, user, instance }) => {
+	execute: async ({ interaction, user, instance }) => {
 		await interaction.deferReply()
 		try {
 			const falcoins = interaction.options.getString("falcoins")
