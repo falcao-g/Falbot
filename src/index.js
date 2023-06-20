@@ -138,8 +138,8 @@ class Falbot {
 						.setColor(16776960)
 						.addFields(
 							{
-								name: await this.getMessage(discordUser, "VOTE_REMINDER"),
-								value: await this.getMessage(discordUser, "REWARD_AFTER"),
+								name: await this.getDmMessage(discordUser, "VOTE_REMINDER"),
+								value: await this.getDmMessage(discordUser, "REWARD_AFTER",),
 							},
 							{
 								name: "Link",
@@ -151,7 +151,7 @@ class Falbot {
 					const row = new ActionRowBuilder().addComponents(
 						new ButtonBuilder()
 							.setCustomId("disableVoteReminder")
-							.setLabel(await this.getMessage(discordUser, "DISABLE_REMINDER"))
+							.setLabel(await this.getDmMessage(discordUser, "DISABLE_REMINDER"))
 							.setEmoji("🔕")
 							.setStyle("Danger")
 					)
@@ -199,8 +199,8 @@ class Falbot {
 				const embed = new EmbedBuilder()
 					.setColor(15844367)
 					.addFields({
-						name: await this.getMessage(winnerUser, "CONGRATULATIONS"),
-						value: await this.getMessage(winnerUser, "LOTTERY_WIN", {
+						name: await this.getDmMessage(winnerUser, "CONGRATULATIONS"),
+						value: await this.getDmMessage(winnerUser, "LOTTERY_WIN", {
 							PRIZE: format(lotto.prize),
 							TICKETS: format(winner.tickets),
 							TOTAL: format(numTickets),
@@ -283,6 +283,26 @@ class Falbot {
 		}
 
 		var locale = interaction.locale ?? "pt-BR"
+		var result = message[locale] ?? message["en-US"]
+
+		for (const key of Object.keys(args)) {
+			const expression = new RegExp(`{${key}}`, "g")
+			result = result.replace(expression, args[key])
+		}
+
+		this.userSchema.findByIdAndUpdate(interaction.user.id, { locale: locale }).then(() => {})
+		return result
+	}
+
+	async getDmMessage(user, messageId, args = {}) {
+		const message = this._messages[messageId]
+		if (!message) {
+			console.error(`Could not find the correct message to send for "${messageId}"`)
+			return "Could not find the correct message to send. Please report this to the bot developer."
+		}
+
+		var userFile = await this.userSchema.findById(user.id)
+		var locale = userFile.locale ?? "en-US"
 		var result = message[locale] ?? message["en-US"]
 
 		for (const key of Object.keys(args)) {
