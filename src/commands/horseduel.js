@@ -26,7 +26,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(interaction, "VALOR_INVALIDO", {
 						VALUE: falcoins,
 					}),
 				})
@@ -37,14 +37,14 @@ module.exports = {
 				var pot = bet
 				const embed = new EmbedBuilder()
 					.setDescription(
-						instance.getMessage(guild, "CAVALGADA_DESCRIPTION", {
+						instance.getMessage(interaction, "CAVALGADA_DESCRIPTION", {
 							USER: user,
 							BET: format(pot),
 						})
 					)
 					.setColor("#0099ff")
 					.addFields({
-						name: instance.getMessage(guild, "JOGADORES"),
+						name: instance.getMessage(interaction, "JOGADORES"),
 						value: `${user}`,
 						inline: false,
 					})
@@ -83,13 +83,13 @@ module.exports = {
 						path.push("- - - - -")
 						pot += bet
 						embed.setDescription(
-							instance.getMessage(guild, "CAVALGADA_DESCRIPTION", {
+							instance.getMessage(interaction, "CAVALGADA_DESCRIPTION", {
 								USER: user,
 								BET: format(pot),
 							})
 						)
 						embed.data.fields[0] = {
-							name: instance.getMessage(guild, "JOGADORES"),
+							name: instance.getMessage(interaction, "JOGADORES"),
 							value: `${users.join("\n")}`,
 							inline: false,
 						}
@@ -111,7 +111,7 @@ module.exports = {
 						}
 
 						embed.setDescription(
-							instance.getMessage(guild, "CAVALGADA_DESCRIPTION2", {
+							instance.getMessage(interaction, "CAVALGADA_DESCRIPTION2", {
 								BET: format(pot),
 							})
 						)
@@ -137,7 +137,7 @@ module.exports = {
 					await changeDB(winner.id, "falcoins", pot)
 					if (users.length > 1) await changeDB(winner.id, "vitorias")
 					embed.setColor(await getRoleColor(guild, winner.id)).setDescription(
-						instance.getMessage(guild, "CAVALGADA_DESCRIPTION3", {
+						instance.getMessage(interaction, "CAVALGADA_DESCRIPTION3", {
 							BET: format(pot),
 							USER: winner,
 							SALDO: await readFile(winner.id, "falcoins", true),
@@ -151,13 +151,13 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(interaction, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {
 			console.error(`horseduel: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 				components: [],
 			})

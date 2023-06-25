@@ -4,11 +4,9 @@ const { ActionRowBuilder, ButtonBuilder } = require("discord.js")
 module.exports = {
 	name: "interactionCreate",
 	execute: async (interaction, instance, client) => {
-		guildUser = interaction.guild ? interaction.guild : interaction.user
-
 		if (interaction.user.bot) {
 			interaction.reply({
-				content: instance.getMessage(guildUser, "YOU_ARE_BOT"),
+				content: instance.getMessage(interaction, "YOU_ARE_BOT"),
 				ephemeral: true,
 			})
 			return
@@ -16,7 +14,7 @@ module.exports = {
 
 		if (instance._banned.includes(interaction.user.id)) {
 			interaction.reply({
-				content: instance.getMessage(guildUser, "YOU_ARE_BANNED"),
+				content: instance.getMessage(interaction, "YOU_ARE_BANNED"),
 				ephemeral: true,
 			})
 			return
@@ -80,13 +78,13 @@ module.exports = {
 				const row = new ActionRowBuilder().addComponents(
 					new ButtonBuilder()
 						.setCustomId("enableVoteReminder")
-						.setLabel(instance.getMessage(guildUser, "ENABLE_REMINDER"))
+						.setLabel(instance.getMessage(interaction, "ENABLE_REMINDER"))
 						.setEmoji("🔔")
 						.setStyle("Primary")
 				)
 
 				interaction.editReply({
-					content: instance.getMessage(guildUser, "REMINDER_DISABLED"),
+					content: instance.getMessage(interaction, "REMINDER_DISABLED"),
 					components: [row],
 				})
 			}
@@ -98,13 +96,13 @@ module.exports = {
 				const row = new ActionRowBuilder().addComponents(
 					new ButtonBuilder()
 						.setCustomId("disableVoteReminder")
-						.setLabel(instance.getMessage(guildUser, "DISABLE_REMINDER"))
+						.setLabel(instance.getMessage(interaction, "DISABLE_REMINDER"))
 						.setEmoji("🔕")
 						.setStyle("Primary")
 				)
 
 				interaction.editReply({
-					content: instance.getMessage(guildUser, "REMINDER_ENABLED"),
+					content: instance.getMessage(interaction, "REMINDER_ENABLED"),
 					components: [row],
 				})
 			}

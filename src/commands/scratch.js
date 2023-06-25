@@ -1,16 +1,5 @@
-const {
-	ActionRowBuilder,
-	ButtonBuilder,
-	EmbedBuilder,
-	SlashCommandBuilder,
-} = require("discord.js")
-const {
-	format,
-	randint,
-	changeDB,
-	getRoleColor,
-	setCooldown,
-} = require("../utils/functions.js")
+const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, SlashCommandBuilder } = require("discord.js")
+const { format, randint, changeDB, getRoleColor, setCooldown } = require("../utils/functions.js")
 
 module.exports = {
 	cooldown: 60 * 60 * 6,
@@ -18,10 +7,7 @@ module.exports = {
 		.setName("scratch")
 		.setNameLocalization("pt-BR", "raspadinha")
 		.setDescription("Play scratch-off for a chance to win a huge jackpot")
-		.setDescriptionLocalization(
-			"pt-BR",
-			"Jogue raspadinha para uma chance de ganhar muitos falcoins"
-		)
+		.setDescriptionLocalization("pt-BR", "Jogue raspadinha para uma chance de ganhar muitos falcoins")
 		.setDMPermission(false),
 	execute: async ({ guild, interaction, instance, user }) => {
 		try {
@@ -39,20 +25,15 @@ module.exports = {
 				if (i == 6 || i == 11 || i == 16 || i == 21) {
 					++cr
 				}
-				rows[cr].addComponents(
-					new ButtonBuilder()
-						.setCustomId(String(i))
-						.setStyle("Success")
-						.setEmoji("❓")
-				)
+				rows[cr].addComponents(new ButtonBuilder().setCustomId(String(i)).setStyle("Success").setEmoji("❓"))
 			}
 
 			var embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, user.id))
 				.setFooter({ text: "by Falcão ❤️" })
 				.addFields({
-					name: instance.getMessage(guild, "SCRATCH_TITLE"),
-					value: instance.getMessage(guild, "SCRATCH_DESCRIPTION"),
+					name: instance.getMessage(interaction, "SCRATCH_TITLE"),
+					value: instance.getMessage(interaction, "SCRATCH_DESCRIPTION"),
 				})
 
 			answer = await interaction.editReply({
@@ -81,8 +62,8 @@ module.exports = {
 					amount = randint(200000, 300000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(15844367).addFields({
-						name: instance.getMessage(guild, "SCRATCH_PRIZE"),
-						value: `${instance.getMessage(guild, "SCRATCH_PRIZE_DESCRIPTION", {
+						name: instance.getMessage(interaction, "SCRATCH_PRIZE"),
+						value: `${instance.getMessage(interaction, "SCRATCH_PRIZE_DESCRIPTION", {
 							FALCOINS: format(amount),
 						})}`,
 					})
@@ -94,8 +75,8 @@ module.exports = {
 					amount = randint(100000, 190000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(3066993).addFields({
-						name: instance.getMessage(guild, "SCRATCH_SUPER"),
-						value: `${instance.getMessage(guild, "SCRATCH_SUPER_DESCRIPTION", {
+						name: instance.getMessage(interaction, "SCRATCH_SUPER"),
+						value: `${instance.getMessage(interaction, "SCRATCH_SUPER_DESCRIPTION", {
 							FALCOINS: format(amount),
 						})}`,
 					})
@@ -107,8 +88,8 @@ module.exports = {
 					amount = randint(50000, 90000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(3066993).addFields({
-						name: instance.getMessage(guild, "SCRATCH_PRETTY"),
-						value: `${instance.getMessage(guild, "SCRATCH_PRETTY_DESCRIPTION", {
+						name: instance.getMessage(interaction, "SCRATCH_PRETTY"),
+						value: `${instance.getMessage(interaction, "SCRATCH_PRETTY_DESCRIPTION", {
 							FALCOINS: format(amount),
 						})}`,
 					})
@@ -120,8 +101,8 @@ module.exports = {
 					amount = randint(30000, 45000)
 					await changeDB(user.id, "falcoins", amount)
 					embed.setColor(3066993).addFields({
-						name: instance.getMessage(guild, "SCRATCH_KINDOF"),
-						value: `${instance.getMessage(guild, "SCRATCH_KINDOF_DESCRIPTION", {
+						name: instance.getMessage(interaction, "SCRATCH_KINDOF"),
+						value: `${instance.getMessage(interaction, "SCRATCH_KINDOF_DESCRIPTION", {
 							FALCOINS: format(amount),
 							GUESSES: cont,
 						})}`,
@@ -134,20 +115,16 @@ module.exports = {
 						await changeDB(user.id, "falcoins", amount)
 						embed.addFields({
 							name: "Meh...",
-							value: `${instance.getMessage(
-								guild,
-								"SCRATCH_LOSE_DESCRIPTION2",
-								{
-									FALCOINS: format(amount),
-									GUESSES: cont,
-								}
-							)}`,
+							value: `${instance.getMessage(interaction, "SCRATCH_LOSE_DESCRIPTION2", {
+								FALCOINS: format(amount),
+								GUESSES: cont,
+							})}`,
 						})
 					} else {
-						var lostMessages = instance.getMessage(guild, "SCRATCH_LOSE")
+						var lostMessages = instance.getMessage(interaction, "SCRATCH_LOSE")
 						embed.addFields({
 							name: lostMessages[randint(0, 5)],
-							value: `${instance.getMessage(guild, "SCRATCH_LOSE_DESCRIPTION", {
+							value: `${instance.getMessage(interaction, "SCRATCH_LOSE_DESCRIPTION", {
 								GUESSES: cont,
 							})}`,
 						})
@@ -169,7 +146,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`scratch: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 				components: [],
 			})

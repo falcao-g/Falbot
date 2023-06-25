@@ -1,20 +1,11 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
-const {
-	specialArg,
-	readFile,
-	format,
-	randint,
-	changeDB,
-	buttons,
-} = require("../utils/functions.js")
+const { specialArg, readFile, format, randint, changeDB, buttons } = require("../utils/functions.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("fight")
 		.setNameLocalization("pt-BR", "luta")
-		.setDescription(
-			"Challenge someone to a fight, whoever wins the fight gets all falcoins bet"
-		)
+		.setDescription("Challenge someone to a fight, whoever wins the fight gets all falcoins bet")
 		.setDescriptionLocalization(
 			"pt-BR",
 			"Desafie outro usuário para uma luta, quem ganhar leva todos os falcoins apostados"
@@ -31,9 +22,7 @@ module.exports = {
 		.addStringOption((option) =>
 			option
 				.setName("falcoins")
-				.setDescription(
-					'the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
-				)
+				.setDescription('the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)')
 				.setDescriptionLocalization(
 					"pt-BR",
 					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
@@ -44,13 +33,11 @@ module.exports = {
 		await interaction.deferReply()
 		try {
 			const falcoins = interaction.options.getString("falcoins")
-			var member2 = await guild.members.fetch(
-				interaction.options.getUser("user").id
-			)
+			var member2 = await guild.members.fetch(interaction.options.getUser("user").id)
 
 			if (member2.user === user) {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "NAO_JOGAR_SOZINHO"),
+					content: instance.getMessage(interaction, "NAO_JOGAR_SOZINHO"),
 				})
 				return
 			}
@@ -59,18 +46,15 @@ module.exports = {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(interaction, "VALOR_INVALIDO", {
 						VALUE: falcoins,
 					}),
 				})
 				return
 			}
-			if (
-				(await readFile(user.id, "falcoins")) >= bet &&
-				(await readFile(member2.user.id, "falcoins")) >= bet
-			) {
+			if ((await readFile(user.id, "falcoins")) >= bet && (await readFile(member2.user.id, "falcoins")) >= bet) {
 				var answer = await interaction.editReply({
-					content: instance.getMessage(guild, "LUTA_CONVITE", {
+					content: instance.getMessage(interaction, "LUTA_CONVITE", {
 						USER: member,
 						USER2: member2,
 						FALCOINS: format(bet),
@@ -80,9 +64,7 @@ module.exports = {
 				})
 
 				const filter = (btInt) => {
-					return (
-						instance.defaultFilter(btInt) && btInt.user.id === member2.user.id
-					)
+					return instance.defaultFilter(btInt) && btInt.user.id === member2.user.id
 				}
 
 				const collector = answer.createMessageComponentCollector({
@@ -94,27 +76,20 @@ module.exports = {
 				collector.on("end", async (collected) => {
 					if (collected.size === 0) {
 						interaction.followUp({
-							content: instance.getMessage(guild, "LUTA_CANCELADO_DEMOROU", {
+							content: instance.getMessage(interaction, "LUTA_CANCELADO_DEMOROU", {
 								USER: member2,
 							}),
 						})
 					} else if (collected.first().customId === "refuse") {
 						interaction.followUp({
-							content: instance.getMessage(guild, "LUTA_CANCELADO_RECUSOU", {
+							content: instance.getMessage(interaction, "LUTA_CANCELADO_RECUSOU", {
 								USER: member2,
 							}),
 						})
 					} else {
 						await changeDB(user.id, "falcoins", -bet)
 						await changeDB(member2.id, "falcoins", -bet)
-						const attacks = [
-							"instantâneo",
-							"stun",
-							"roubo de vida",
-							"cura",
-							"self",
-							"escudo",
-						]
+						const attacks = ["instantâneo", "stun", "roubo de vida", "cura", "self", "escudo"]
 						const player_1 = {
 							hp: 100,
 							name: member.displayName,
@@ -132,8 +107,7 @@ module.exports = {
 							escudo: false,
 						}
 						const luck = Math.round(Math.random())
-						const order =
-							luck === 0 ? [player_1, player_2] : [player_2, player_1]
+						const order = luck === 0 ? [player_1, player_2] : [player_2, player_1]
 
 						first = true
 						while (order[0]["hp"] > 0 && order[1]["hp"] > 0) {
@@ -152,7 +126,7 @@ module.exports = {
 								const luck = randint(1, 50)
 
 								field = {
-									name: instance.getMessage(guild, "TURN", {
+									name: instance.getMessage(interaction, "TURN", {
 										USER: player.name,
 									}),
 									value: `${player.mention} `,
@@ -160,42 +134,39 @@ module.exports = {
 
 								if (player.stunned === true) {
 									player.stunned = false
-									field.value += instance.getMessage(guild, "NOCAUTEADO")
-								} else if (
-									enemy.escudo === true &&
-									!["self", "escudo", "cura"].includes(attack)
-								) {
-									field.value += instance.getMessage(guild, "TENTOU_ATACAR")
+									field.value += instance.getMessage(interaction, "NOCAUTEADO")
+								} else if (enemy.escudo === true && !["self", "escudo", "cura"].includes(attack)) {
+									field.value += instance.getMessage(interaction, "TENTOU_ATACAR")
 								} else if (attack === "instantâneo") {
 									enemy.hp -= luck
-									field.value += instance.getMessage(guild, "ATAQUE", {
+									field.value += instance.getMessage(interaction, "ATAQUE", {
 										VALUE: luck,
 									})
 								} else if (attack === "stun") {
 									enemy.hp -= luck
 									enemy.stunned = true
-									field.value += instance.getMessage(guild, "ATAQUE_NOCAUTE", {
+									field.value += instance.getMessage(interaction, "ATAQUE_NOCAUTE", {
 										VALUE: luck,
 									})
 								} else if (attack === "roubo de vida") {
 									enemy.hp -= luck
 									player.hp += luck
-									field.value += instance.getMessage(guild, "ROUBO_VIDA", {
+									field.value += instance.getMessage(interaction, "ROUBO_VIDA", {
 										VALUE: luck,
 									})
 								} else if (attack === "cura") {
 									player.hp += luck
-									field.value += instance.getMessage(guild, "CURA", {
+									field.value += instance.getMessage(interaction, "CURA", {
 										VALUE: luck,
 									})
 								} else if (attack === "self") {
 									player.hp -= luck
-									field.value += instance.getMessage(guild, "SELF", {
+									field.value += instance.getMessage(interaction, "SELF", {
 										VALUE: luck,
 									})
 								} else if (attack === "escudo") {
 									player.escudo = true
-									field.value += instance.getMessage(guild, "SE_PROTEGE")
+									field.value += instance.getMessage(interaction, "SE_PROTEGE")
 								}
 
 								embed.addFields(field)
@@ -231,25 +202,18 @@ module.exports = {
 
 						const fields = [
 							{
-								name: `${winner.name}${instance.getMessage(guild, "GANHO")}`,
-								value: instance.getMessage(guild, "LUTA_DERROTOU", {
+								name: `${winner.name}${instance.getMessage(interaction, "GANHO")}`,
+								value: instance.getMessage(interaction, "LUTA_DERROTOU", {
 									USER: loser.mention,
 								}),
 							},
 							{
-								name: instance.getMessage(guild, "SALDO_ATUAL"),
-								value: `${await readFile(
-									winner.id,
-									"falcoins",
-									true
-								)} falcoins`,
+								name: instance.getMessage(interaction, "SALDO_ATUAL"),
+								value: `${await readFile(winner.id, "falcoins", true)} falcoins`,
 							},
 						]
 
-						const embed2 = new EmbedBuilder()
-							.setColor(3066993)
-							.setFooter({ text: "by Falcão ❤️" })
-							.addFields(fields)
+						const embed2 = new EmbedBuilder().setColor(3066993).setFooter({ text: "by Falcão ❤️" }).addFields(fields)
 
 						await interaction.channel.send({
 							embeds: [embed2],
@@ -258,13 +222,13 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "INSUFICIENTE_CONTAS"),
+					content: instance.getMessage(interaction, "INSUFICIENTE_CONTAS"),
 				})
 			}
 		} catch (error) {
 			console.error(`fight: ${error}`)
 			interaction.channel.send({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 			})
 		}
 	},

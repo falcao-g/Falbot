@@ -58,6 +58,10 @@ const userSchema = mongoose.Schema(
 			of: Number,
 			default: new Map(),
 		},
+		locale: {
+			type: String,
+			default: "en-US",
+		},
 	},
 	{
 		versionKey: false,

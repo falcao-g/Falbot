@@ -1,9 +1,4 @@
-const {
-	EmbedBuilder,
-	ButtonBuilder,
-	ActionRowBuilder,
-	SlashCommandBuilder,
-} = require("discord.js")
+const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, SlashCommandBuilder } = require("discord.js")
 const builder = require("falbot-snake")
 
 module.exports = {
@@ -13,7 +8,7 @@ module.exports = {
 		.setDescription("Play a game of snake")
 		.setDescriptionLocalization("pt-BR", "Jogue o jogo da cobrinha")
 		.setDMPermission(false),
-	execute: async ({ guild, interaction, instance, user }) => {
+	execute: async ({ interaction, instance, user }) => {
 		try {
 			await interaction.deferReply()
 			const author = user
@@ -28,10 +23,7 @@ module.exports = {
 					},
 					{
 						name: `\u200b`,
-						value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(
-							guild,
-							"SCORE"
-						)}: ${game.snake.length}`,
+						value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(instance, "SCORE")}: ${game.snake.length}`,
 					}
 				)
 				.setFooter({ text: "by Falcão ❤️" })
@@ -39,22 +31,10 @@ module.exports = {
 
 			const row = new ActionRowBuilder()
 			row.addComponents([
-				(up = new ButtonBuilder()
-					.setCustomId("up")
-					.setEmoji("⬆️")
-					.setStyle("Secondary")),
-				(left = new ButtonBuilder()
-					.setCustomId("left")
-					.setEmoji("⬅️")
-					.setStyle("Secondary")),
-				(right = new ButtonBuilder()
-					.setCustomId("right")
-					.setEmoji("➡️")
-					.setStyle("Secondary")),
-				(down = new ButtonBuilder()
-					.setCustomId("down")
-					.setEmoji("⬇️")
-					.setStyle("Secondary")),
+				(up = new ButtonBuilder().setCustomId("up").setEmoji("⬆️").setStyle("Secondary")),
+				(left = new ButtonBuilder().setCustomId("left").setEmoji("⬅️").setStyle("Secondary")),
+				(right = new ButtonBuilder().setCustomId("right").setEmoji("➡️").setStyle("Secondary")),
+				(down = new ButtonBuilder().setCustomId("down").setEmoji("⬇️").setStyle("Secondary")),
 			])
 
 			var answer = await interaction.editReply({
@@ -84,10 +64,7 @@ module.exports = {
 				}
 				embed.data.fields[1] = {
 					name: `\u200b`,
-					value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(
-						guild,
-						"SCORE"
-					)}: ${game.snake.length}`,
+					value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(instance, "SCORE")}: ${game.snake.length}`,
 				}
 
 				await interaction.editReply({
@@ -113,10 +90,7 @@ module.exports = {
 				}
 				embed.data.fields[1] = {
 					name: `\u200b`,
-					value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(
-						guild,
-						"SCORE"
-					)}: ${game.snake.length}`,
+					value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(interaction, "SCORE")}: ${game.snake.length}`,
 				}
 
 				await i.update({
@@ -141,7 +115,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`snake: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 				components: [],
 			})

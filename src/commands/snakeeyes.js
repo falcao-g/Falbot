@@ -1,11 +1,4 @@
-const {
-	specialArg,
-	readFile,
-	changeDB,
-	getRoleColor,
-	format,
-	randint,
-} = require("../utils/functions.js")
+const { specialArg, readFile, changeDB, getRoleColor, format, randint } = require("../utils/functions.js")
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
@@ -13,24 +6,19 @@ module.exports = {
 		.setName("snakeeyes")
 		.setNameLocalization("pt-BR", "olhoscobra")
 		.setDescription("Roll two dice, if either of them roll a one, you win")
-		.setDescriptionLocalization(
-			"pt-BR",
-			"Role dois dados, se algum dos dois der 1, você ganha"
-		)
+		.setDescriptionLocalization("pt-BR", "Role dois dados, se algum dos dois der 1, você ganha")
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName("falcoins")
-				.setDescription(
-					'amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
-				)
+				.setDescription('amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)')
 				.setDescriptionLocalization(
 					"pt-BR",
 					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, client, instance, user }) => {
+	execute: async ({ guild, interaction, instance, user }) => {
 		try {
 			await interaction.deferReply()
 			const falcoins = interaction.options.getString("falcoins")
@@ -39,7 +27,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(instance, "VALOR_INVALIDO", {
 						VALUE: falcoins,
 					}),
 				})
@@ -66,7 +54,7 @@ module.exports = {
 					.setColor(await getRoleColor(guild, user.id))
 					.addFields({
 						name: `-------------------\n      | ${diegif} | ${diegif} |\n-------------------`,
-						value: `--- **${instance.getMessage(guild, "ROLANDO")}** ---`,
+						value: `--- **${instance.getMessage(instance, "ROLANDO")}** ---`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
@@ -77,13 +65,13 @@ module.exports = {
 				await new Promise((resolve) => setTimeout(resolve, 1500))
 				embed.data.fields[0] = {
 					name: `-------------------\n      | ${emoji1} | ${diegif} |\n-------------------`,
-					value: `--- **${instance.getMessage(guild, "ROLANDO")}** ---`,
+					value: `--- **${instance.getMessage(instance, "ROLANDO")}** ---`,
 				}
 				await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
 				embed.data.fields[0] = {
 					name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-					value: `--- **${instance.getMessage(guild, "ROLANDO")}** ---`,
+					value: `--- **${instance.getMessage(instance, "ROLANDO")}** ---`,
 				}
 				await interaction.editReply({ embeds: [embed] })
 
@@ -92,11 +80,11 @@ module.exports = {
 					var embed2 = new EmbedBuilder().setColor("#F1C40F").addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-							value: `--- **${instance.getMessage(guild, "VOCE_GANHOU")}** ---`,
+							value: `--- **${instance.getMessage(instance, "VOCE_GANHOU")}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.getMessage(guild, "GANHOS"),
+							name: instance.getMessage(instance, "GANHOS"),
 							value: `${format(bet * 5)} falcoins`,
 							inline: true,
 						}
@@ -106,11 +94,11 @@ module.exports = {
 					var embed2 = new EmbedBuilder().setColor(3066993).addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-							value: `--- **${instance.getMessage(guild, "VOCE_GANHOU")}** ---`,
+							value: `--- **${instance.getMessage(instance, "VOCE_GANHOU")}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.getMessage(guild, "GANHOS"),
+							name: instance.getMessage(instance, "GANHOS"),
 							value: `${format(bet * 2)} falcoins`,
 							inline: true,
 						}
@@ -119,11 +107,11 @@ module.exports = {
 					var embed2 = new EmbedBuilder().setColor(15158332).addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-							value: `--- **${instance.getMessage(guild, "VOCE_PERDEU")}** ---`,
+							value: `--- **${instance.getMessage(instance, "VOCE_PERDEU")}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.getMessage(guild, "PERDAS"),
+							name: instance.getMessage(instance, "PERDAS"),
 							value: `${format(bet)} falcoins`,
 							inline: true,
 						}
@@ -131,7 +119,7 @@ module.exports = {
 				}
 				embed2
 					.addFields({
-						name: instance.getMessage(guild, "SALDO_ATUAL"),
+						name: instance.getMessage(instance, "SALDO_ATUAL"),
 						value: `${await readFile(user.id, "falcoins", true)}`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
@@ -140,13 +128,13 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(instance, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {
 			console.error(`snakeeyes: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(instance, "EXCEPTION"),
 				embeds: [],
 			})
 		}

@@ -28,7 +28,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "VALOR_INVALIDO", {
+					content: instance.getMessage(interaction, "VALOR_INVALIDO", {
 						VALUE: falcoins,
 					}),
 				})
@@ -41,16 +41,16 @@ module.exports = {
 					.addFields(
 						{
 							name: "Crash",
-							value: instance.getMessage(guild, "CRASH_TEXT"),
+							value: instance.getMessage(interaction, "CRASH_TEXT"),
 							inline: false,
 						},
 						{
-							name: instance.getMessage(guild, "MULTIPLIER"),
+							name: instance.getMessage(interaction, "MULTIPLIER"),
 							value: `${(multiplier / 10).toFixed(1)}x`,
 							inline: true,
 						},
 						{
-							name: instance.getMessage(guild, "GANHOS"),
+							name: instance.getMessage(interaction, "GANHOS"),
 							value: `:coin: ${format(parseInt((bet * multiplier) / 10 - bet))}`,
 							inline: true,
 						}
@@ -61,7 +61,7 @@ module.exports = {
 				const row = new ActionRowBuilder().addComponents(
 					(sell = new ButtonBuilder()
 						.setCustomId("sell")
-						.setLabel(instance.getMessage(guild, "SELL"))
+						.setLabel(instance.getMessage(interaction, "SELL"))
 						.setStyle("Danger"))
 				)
 
@@ -109,12 +109,12 @@ module.exports = {
 					}
 
 					embed.data.fields[1] = {
-						name: instance.getMessage(guild, "MULTIPLIER"),
+						name: instance.getMessage(interaction, "MULTIPLIER"),
 						value: `${(multiplier / 10).toFixed(1)}x`,
 						inline: true,
 					}
 					embed.data.fields[2] = {
-						name: instance.getMessage(guild, "GANHOS"),
+						name: instance.getMessage(interaction, "GANHOS"),
 						value: `:coin: ${format(parseInt((bet * multiplier) / 10 - bet))}`,
 						inline: true,
 					}
@@ -139,13 +139,13 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(interaction, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {
 			console.error(`catch: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 				components: [],
 			})

@@ -1,23 +1,12 @@
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js")
-const {
-	specialArg,
-	readFile,
-	format,
-	getRoleColor,
-	changeDB,
-} = require("../utils/functions.js")
+const { specialArg, readFile, format, getRoleColor, changeDB } = require("../utils/functions.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("bank")
 		.setNameLocalization("pt-BR", "banco")
-		.setDescription(
-			"Deposit or withdraw your falcoins from the bank, falcoins in the bank increases daily"
-		)
-		.setDescriptionLocalization(
-			"pt-BR",
-			"Deposite ou saque falcoins do banco, falcoins no banco aumenta diariamente"
-		)
+		.setDescription("Deposit or withdraw your falcoins from the bank, falcoins in the bank increases daily")
+		.setDescriptionLocalization("pt-BR", "Deposite ou saque falcoins do banco, falcoins no banco aumenta diariamente")
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
 			subcommand
@@ -62,10 +51,7 @@ module.exports = {
 				.setName("view")
 				.setNameLocalization("pt-BR", "ver")
 				.setDescription("View bank balance and other useful stats")
-				.setDescriptionLocalization(
-					"pt-BR",
-					"Veja o saldo bancário e outras informações"
-				)
+				.setDescriptionLocalization("pt-BR", "Veja o saldo bancário e outras informações")
 		),
 	execute: async ({ guild, user, interaction, instance }) => {
 		await interaction.deferReply()
@@ -79,20 +65,14 @@ module.exports = {
 				const embed = new EmbedBuilder()
 					.setColor(await getRoleColor(guild, user.id))
 					.addFields({
-						name: ":bank: " + instance.getMessage(guild, "BANCO"),
-						value: `**:coin: ${await readFile(
-							user.id,
-							"banco",
-							true
-						)} falcoins\n:bank: ${instance.getMessage(
-							guild,
+						name: ":bank: " + instance.getMessage(interaction, "BANCO"),
+						value: `**:coin: ${await readFile(user.id, "banco", true)} falcoins\n:bank: ${instance.getMessage(
+							interaction,
 							"BANK_INTEREST"
-						)}\n\n:money_with_wings: ${format(
-							limit - (await readFile(user.id, "banco"))
-						)} ${instance.getMessage(
-							guild,
+						)}\n\n:money_with_wings: ${format(limit - (await readFile(user.id, "banco")))} ${instance.getMessage(
+							interaction,
 							"BANK_LIMIT"
-						)}\n:atm: ${instance.getMessage(guild, "BANK_DEPOSIT_LIMIT", {
+						)}\n:atm: ${instance.getMessage(interaction, "BANK_DEPOSIT_LIMIT", {
 							FALCOINS: format(limit / 2),
 						})}**`,
 					})
@@ -103,7 +83,7 @@ module.exports = {
 					var quantity = await specialArg(falcoins, user.id, "falcoins")
 				} catch {
 					await interaction.editReply({
-						content: instance.getMessage(guild, "VALOR_INVALIDO", {
+						content: instance.getMessage(interaction, "VALOR_INVALIDO", {
 							VALUE: falcoins,
 						}),
 					})
@@ -113,7 +93,7 @@ module.exports = {
 				if ((await readFile(user.id, "falcoins")) >= quantity) {
 					if ((await readFile(user.id, "banco")) >= limit / 2) {
 						await interaction.editReply({
-							content: instance.getMessage(guild, "BANK_OVER_LIMIT"),
+							content: instance.getMessage(interaction, "BANK_OVER_LIMIT"),
 						})
 						return
 					}
@@ -127,19 +107,19 @@ module.exports = {
 
 					const embed = new EmbedBuilder()
 						.setTitle(
-							instance.getMessage(guild, "BANCO_DEPOSITOU", {
+							instance.getMessage(interaction, "BANCO_DEPOSITOU", {
 								VALUE: format(quantity),
 							})
 						)
 						.setColor(await getRoleColor(guild, user.id))
 						.addFields(
 							{
-								name: instance.getMessage(guild, "SALDO_ATUAL"),
+								name: instance.getMessage(interaction, "SALDO_ATUAL"),
 								value: `${await readFile(user.id, "falcoins", true)} falcoins`,
 							},
 							{
-								name: instance.getMessage(guild, "BANCO"),
-								value: instance.getMessage(guild, "BANCO_SALDO", {
+								name: instance.getMessage(interaction, "BANCO"),
+								value: instance.getMessage(interaction, "BANCO_SALDO", {
 									VALUE: await readFile(user.id, "banco", true),
 								}),
 							}
@@ -149,7 +129,7 @@ module.exports = {
 					await interaction.editReply({ embeds: [embed] })
 				} else {
 					await interaction.editReply({
-						content: instance.getMessage(guild, "FALCOINS_INSUFICIENTES"),
+						content: instance.getMessage(interaction, "FALCOINS_INSUFICIENTES"),
 					})
 				}
 			} else if (subcommand === "withdraw") {
@@ -157,7 +137,7 @@ module.exports = {
 					var quantity = await specialArg(falcoins, user.id, "banco")
 				} catch {
 					await interaction.editReply({
-						content: instance.getMessage(guild, "VALOR_INVALIDO", {
+						content: instance.getMessage(interaction, "VALOR_INVALIDO", {
 							VALUE: falcoins,
 						}),
 					})
@@ -170,19 +150,19 @@ module.exports = {
 
 					const embed = new EmbedBuilder()
 						.setTitle(
-							instance.getMessage(guild, "BANCO_SACOU", {
+							instance.getMessage(interaction, "BANCO_SACOU", {
 								VALUE: format(quantity),
 							})
 						)
 						.setColor(await getRoleColor(guild, user.id))
 						.addFields(
 							{
-								name: instance.getMessage(guild, "SALDO_ATUAL"),
+								name: instance.getMessage(interaction, "SALDO_ATUAL"),
 								value: `${await readFile(user.id, "falcoins", true)} falcoins`,
 							},
 							{
-								name: instance.getMessage(guild, "BANCO"),
-								value: instance.getMessage(guild, "BANCO_SALDO", {
+								name: instance.getMessage(interaction, "BANCO"),
+								value: instance.getMessage(interaction, "BANCO_SALDO", {
 									VALUE: await readFile(user.id, "banco", true),
 								}),
 							}
@@ -192,14 +172,14 @@ module.exports = {
 					await interaction.editReply({ embeds: [embed] })
 				} else {
 					await interaction.editReply({
-						content: instance.getMessage(guild, "BANCO_INSUFICIENTE"),
+						content: instance.getMessage(interaction, "BANCO_INSUFICIENTE"),
 					})
 				}
 			}
 		} catch (error) {
 			console.error(`bank: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 			})
 		}

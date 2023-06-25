@@ -1,25 +1,12 @@
-const {
-	EmbedBuilder,
-	ButtonBuilder,
-	ActionRowBuilder,
-	SlashCommandBuilder,
-} = require("discord.js")
-const {
-	readFile,
-	getRoleColor,
-	msToTime,
-	resolveCooldown,
-} = require("../utils/functions.js")
+const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, SlashCommandBuilder } = require("discord.js")
+const { readFile, getRoleColor, msToTime, resolveCooldown } = require("../utils/functions.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("cooldowns")
 		.setNameLocalization("pt-BR", "intervalos")
 		.setDescription("Shows your commands cooldowns")
-		.setDescriptionLocalization(
-			"pt-BR",
-			"Veja o tempo que falta para poder usar certos comandos"
-		)
+		.setDescriptionLocalization("pt-BR", "Veja o tempo que falta para poder usar certos comandos")
 		.setDMPermission(false),
 	execute: async ({ guild, user, interaction, instance }) => {
 		await interaction.deferReply()
@@ -35,80 +22,80 @@ module.exports = {
 			const embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, user.id))
 				.setFooter({ text: "by Falcão ❤️" })
-				.setTitle(instance.getMessage(guild, "COOLDOWNS"))
+				.setTitle(instance.getMessage(interaction, "COOLDOWNS"))
 				.addFields(
 					{
-						name: ":ballot_box: " + instance.getMessage(guild, "VOTO"),
+						name: ":ballot_box: " + instance.getMessage(interaction, "VOTO"),
 						value: `**${
 							voteCooldown < 43200000
 								? `:red_circle: ${msToTime(43200000 - voteCooldown)}`
-								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
+								: `:green_circle: ${instance.getMessage(interaction, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name: ":slot_machine: " + instance.getMessage(guild, "SCRATCH"),
+						name: ":slot_machine: " + instance.getMessage(interaction, "SCRATCH"),
 						value: `**${
 							scratchCooldown > 0
 								? `:red_circle: ${msToTime(scratchCooldown)}`
-								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
+								: `:green_circle: ${instance.getMessage(interaction, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name: ":briefcase: " + instance.getMessage(guild, "TRABALHO"),
+						name: ":briefcase: " + instance.getMessage(interaction, "TRABALHO"),
 						value: `**${
 							workCooldown > 0
 								? `:red_circle: ${msToTime(workCooldown)}`
-								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
+								: `:green_circle: ${instance.getMessage(interaction, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name:
-							":fishing_pole_and_fish: " + instance.getMessage(guild, "FISH"),
+						name: ":fishing_pole_and_fish: " + instance.getMessage(interaction, "FISH"),
 						value: `**${
 							fishCooldown > 0
 								? `:red_circle: ${msToTime(fishCooldown)}`
-								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
+								: `:green_circle: ${instance.getMessage(interaction, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name: ":compass: " + instance.getMessage(guild, "EXPLORE"),
+						name: ":compass: " + instance.getMessage(interaction, "EXPLORE"),
 						value: `**${
 							exploreCooldown > 0
 								? `:red_circle: ${msToTime(exploreCooldown)}`
-								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
+								: `:green_circle: ${instance.getMessage(interaction, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name: ":pick: " + instance.getMessage(guild, "MINE"),
+						name: ":pick: " + instance.getMessage(interaction, "MINE"),
 						value: `**${
 							mineCooldown > 0
 								? `:red_circle: ${msToTime(mineCooldown)}`
-								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
+								: `:green_circle: ${instance.getMessage(interaction, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name: ":crossed_swords: " + instance.getMessage(guild, "HUNT"),
+						name: ":crossed_swords: " + instance.getMessage(interaction, "HUNT"),
 						value: `**${
 							huntCooldown > 0
 								? `:red_circle: ${msToTime(huntCooldown)}`
-								: `:green_circle: ${instance.getMessage(guild, "PRONTO")}`
+								: `:green_circle: ${instance.getMessage(interaction, "PRONTO")}`
 						}**`,
 						inline: true,
 					},
 					{
-						name: ":loudspeaker: " + instance.getMessage(guild, "EVENTS"),
-						value: `**${instance.getMessage(
-							guild,
-							"LOTTERY"
-						)}** - ${instance.getMessage(guild, "LOTTERY_DRAWN", {
-							TIME: msToTime(lotto.nextDraw - Date.now()),
-						})}`,
+						name: ":loudspeaker: " + instance.getMessage(interaction, "EVENTS"),
+						value: `**${instance.getMessage(interaction, "LOTTERY")}** - ${instance.getMessage(
+							interaction,
+							"LOTTERY_DRAWN",
+							{
+								TIME: msToTime(lotto.nextDraw - Date.now()),
+							}
+						)}`,
 						inline: false,
 					}
 				)
@@ -161,7 +148,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`cooldowns: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 			})
 		}

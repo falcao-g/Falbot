@@ -38,13 +38,13 @@ module.exports = {
 
 				if (rank.falcoinsToLevelUp === undefined) {
 					await interaction.editReply({
-						content: instance.getMessage(guild, "MAX_RANK", {
+						content: instance.getMessage(interaction, "MAX_RANK", {
 							USER: user,
 						}),
 					})
 				} else if ((await readFile(user.id, "falcoins")) < rank.falcoinsToLevelUp) {
 					await interaction.editReply({
-						content: instance.getMessage(guild, "NO_MONEY_RANK", {
+						content: instance.getMessage(interaction, "NO_MONEY_RANK", {
 							FALCOINS: format(rank.falcoinsToLevelUp - (await readFile(user.id, "falcoins"))),
 						}),
 					})
@@ -61,13 +61,13 @@ module.exports = {
 						.addFields(
 							{
 								name: "Rank Up!",
-								value: instance.getMessage(guild, "RANKUP_SUCESS", {
-									RANK: instance.getMessage(guild, String(rank_number + 1)),
+								value: instance.getMessage(interaction, "RANKUP_SUCESS", {
+									RANK: instance.getMessage(interaction, String(rank_number + 1)),
 									FALCOINS: format(rank.falcoinsToLevelUp),
 								}),
 							},
 							{
-								name: instance.getMessage(guild, "RANKUP_PERKS"),
+								name: instance.getMessage(interaction, "RANKUP_PERKS"),
 								value: perks,
 							}
 						)
@@ -81,7 +81,7 @@ module.exports = {
 				const rank_number = await readFile(user.id, "rank")
 				if (levels[rank_number - 1].falcoinsToLevelUp === undefined) {
 					await interaction.editReply({
-						content: instance.getMessage(guild, "MAX_RANK", {
+						content: instance.getMessage(interaction, "MAX_RANK", {
 							USER: user,
 						}),
 					})
@@ -95,14 +95,14 @@ module.exports = {
 
 				var embed = new EmbedBuilder()
 					.setColor(7419530)
-					.setTitle(instance.getMessage(guild, "UPCOMING_RANKS"))
+					.setTitle(instance.getMessage(interaction, "UPCOMING_RANKS"))
 					.addFields({
 						name:
-							instance.getMessage(guild, String(rank_number)) +
+							instance.getMessage(interaction, String(rank_number)) +
 							" - " +
 							format(levels[rank_number - 1].falcoinsToLevelUp) +
 							" Falcoins" +
-							instance.getMessage(guild, "CURRENT_RANK"),
+							instance.getMessage(interaction, "CURRENT_RANK"),
 						value: await instance.rankPerks(levels[rank_number - 2], levels[rank_number - 1], guild),
 					})
 
@@ -110,15 +110,15 @@ module.exports = {
 					if (levels[rank_number + i].falcoinsToLevelUp === undefined) {
 						embed.addFields({
 							name:
-								instance.getMessage(guild, String(rank_number + i + 1)) +
+								instance.getMessage(interaction, String(rank_number + i + 1)) +
 								" - " +
-								instance.getMessage(guild, "MAX_RANK2"),
+								instance.getMessage(interaction, "MAX_RANK2"),
 							value: await instance.rankPerks(levels[rank_number - 1 + i], levels[rank_number + i], guild),
 						})
 					} else {
 						embed.addFields({
 							name:
-								instance.getMessage(guild, String(rank_number + i + 1)) +
+								instance.getMessage(interaction, String(rank_number + i + 1)) +
 								" - " +
 								format(levels[rank_number + i].falcoinsToLevelUp) +
 								" Falcoins",
@@ -142,11 +142,11 @@ module.exports = {
 					for (var j = 0; j < ranksChunk.length; j++) {
 						if (levels[j + i * 20].falcoinsToLevelUp === undefined) {
 							ranks +=
-								`**${instance.getMessage(guild, String(j + i * 20 + 1))}** - ` +
-								instance.getMessage(guild, "MAX_RANK2") +
+								`**${instance.getMessage(interaction, String(j + i * 20 + 1))}** - ` +
+								instance.getMessage(interaction, "MAX_RANK2") +
 								"\n"
 						} else {
-							ranks += `**${instance.getMessage(guild, String(j + i * 20 + 1))}** - ${format(
+							ranks += `**${instance.getMessage(interaction, String(j + i * 20 + 1))}** - ${format(
 								levels[j + i * 20].falcoinsToLevelUp
 							)} falcoins\n`
 						}
@@ -154,7 +154,7 @@ module.exports = {
 
 					embed
 						.addFields({
-							name: instance.getMessage(guild, "ALL_RANKS", { NUMBER: i + 1, TOTAL: numEmbeds }),
+							name: instance.getMessage(interaction, "ALL_RANKS", { NUMBER: i + 1, TOTAL: numEmbeds }),
 							value: ranks,
 						})
 						.setFooter({ text: "by Falcão ❤️" })
@@ -182,7 +182,7 @@ module.exports = {
 		} catch (err) {
 			console.error(`ranks: ${err}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 			})
 		}

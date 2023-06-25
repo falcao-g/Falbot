@@ -13,33 +13,17 @@ module.exports = {
 			subcommand
 				.setName("ban")
 				.setDescription("ban an user")
-				.addStringOption((option) =>
-					option
-						.setName("user")
-						.setDescription("user to be banned")
-						.setRequired(true)
-				)
+				.addStringOption((option) => option.setName("user").setDescription("user to be banned").setRequired(true))
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName("unban")
 				.setDescription("unban an user")
-				.addStringOption((option) =>
-					option
-						.setName("user")
-						.setDescription("user to be unbanned")
-						.setRequired(true)
-				)
+				.addStringOption((option) => option.setName("user").setDescription("user to be unbanned").setRequired(true))
 		)
-		.addSubcommand((subcommand) =>
-			subcommand.setName("reload_events").setDescription("reload your events")
-		)
-		.addSubcommand((subcommand) =>
-			subcommand
-				.setName("reload_commands")
-				.setDescription("reload your commands")
-		),
-	execute: async ({ guild, interaction, instance, client }) => {
+		.addSubcommand((subcommand) => subcommand.setName("reload_events").setDescription("reload your events"))
+		.addSubcommand((subcommand) => subcommand.setName("reload_commands").setDescription("reload your commands")),
+	execute: async ({ interaction, instance, client }) => {
 		await interaction.deferReply({ ephemeral: true })
 		try {
 			subcommand = interaction.options.getSubcommand()
@@ -85,7 +69,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`tools: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 			})
 		}
 	},

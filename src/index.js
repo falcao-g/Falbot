@@ -9,7 +9,6 @@ const { loadCommands } = require("./handlers/commandHandler.js")
 class Falbot {
 	config = require("./config.json")
 	_messages = require(path.join(__dirname, "/utils/json/messages.json"))
-	_languages = new Map()
 	_banned = new Array()
 	_disabledChannels = new Map()
 	emojiList = {}
@@ -20,7 +19,6 @@ class Falbot {
 	items = require("./utils/json/items.json")
 	userSchema = require("./schemas/user-schema")
 	lottoSchema = require("./schemas/lotto-schema")
-	langSchema = require("./schemas/lang-schema.js")
 	interestSchema = require("./schemas/interest-schema.js")
 	bannedSchema = require("./schemas/banned-schema.js")
 	guildsSchema = require("./schemas/guilds-schema.js")
@@ -74,12 +72,6 @@ class Falbot {
 
 		this.client.login(process.env.TOKEN)
 		;(async () => {
-			const results = await this.langSchema.find()
-
-			for (const { _id, language } of results) {
-				this._languages.set(_id, language)
-			}
-
 			const banned = await this.bannedSchema.find()
 
 			for (const result of banned) {
@@ -146,8 +138,8 @@ class Falbot {
 						.setColor(16776960)
 						.addFields(
 							{
-								name: await this.getMessage(discordUser, "VOTE_REMINDER"),
-								value: await this.getMessage(discordUser, "REWARD_AFTER"),
+								name: await this.getDmMessage(discordUser, "VOTE_REMINDER"),
+								value: await this.getDmMessage(discordUser, "REWARD_AFTER"),
 							},
 							{
 								name: "Link",
@@ -159,7 +151,7 @@ class Falbot {
 					const row = new ActionRowBuilder().addComponents(
 						new ButtonBuilder()
 							.setCustomId("disableVoteReminder")
-							.setLabel(await this.getMessage(discordUser, "DISABLE_REMINDER"))
+							.setLabel(await this.getDmMessage(discordUser, "DISABLE_REMINDER"))
 							.setEmoji("🔕")
 							.setStyle("Danger")
 					)
@@ -207,8 +199,8 @@ class Falbot {
 				const embed = new EmbedBuilder()
 					.setColor(15844367)
 					.addFields({
-						name: await this.getMessage(winnerUser, "CONGRATULATIONS"),
-						value: await this.getMessage(winnerUser, "LOTTERY_WIN", {
+						name: await this.getDmMessage(winnerUser, "CONGRATULATIONS"),
+						value: await this.getDmMessage(winnerUser, "LOTTERY_WIN", {
 							PRIZE: format(lotto.prize),
 							TICKETS: format(winner.tickets),
 							TOTAL: format(numTickets),
@@ -249,10 +241,6 @@ class Falbot {
 		}
 	}
 
-	setLanguage(guildUser, language) {
-		this._languages.set(guildUser.id, language)
-	}
-
 	ban(userId) {
 		this._banned.push(userId)
 		//ensure banned users don't get vote reminders, because it would be a spam
@@ -287,25 +275,35 @@ class Falbot {
 		this._disabledChannels.set(guild.id, result)
 	}
 
-	getLanguage(guildUser) {
-		if (guildUser) {
-			const result = this._languages.get(guildUser.id)
-			if (result) {
-				return result
-			}
-		}
-		return this.config.language
-	}
-
-	getMessage(guildUser, messageId, args = {}) {
-		const language = this.getLanguage(guildUser)
-		const translations = this._messages[messageId]
-		if (!translations) {
+	getMessage(interaction, messageId, args = {}) {
+		const message = this._messages[messageId]
+		if (!message) {
 			console.error(`Could not find the correct message to send for "${messageId}"`)
 			return "Could not find the correct message to send. Please report this to the bot developer."
 		}
 
-		let result = translations[language]
+		var locale = interaction.locale ?? "pt-BR"
+		var result = message[locale] ?? message["en-US"]
+
+		for (const key of Object.keys(args)) {
+			const expression = new RegExp(`{${key}}`, "g")
+			result = result.replace(expression, args[key])
+		}
+
+		this.userSchema.findByIdAndUpdate(interaction.user.id, { locale: locale }).then(() => {})
+		return result
+	}
+
+	async getDmMessage(user, messageId, args = {}) {
+		const message = this._messages[messageId]
+		if (!message) {
+			console.error(`Could not find the correct message to send for "${messageId}"`)
+			return "Could not find the correct message to send. Please report this to the bot developer."
+		}
+
+		var userFile = await this.userSchema.findById(user.id)
+		var locale = userFile.locale ?? "en-US"
+		var result = message[locale] ?? message["en-US"]
 
 		for (const key of Object.keys(args)) {
 			const expression = new RegExp(`{${key}}`, "g")
@@ -315,27 +313,27 @@ class Falbot {
 		return result
 	}
 
-	async rankPerks(old_rank, rank, guild) {
+	async rankPerks(old_rank, rank, interaction) {
 		var perks = ""
 		if (old_rank != undefined) {
 			if (old_rank.bankLimit < rank.bankLimit) {
-				perks += this.getMessage(guild, "RANKUP_BANK", {
+				perks += this.getMessage(interaction, "RANKUP_BANK", {
 					FALCOINS: format(rank.bankLimit - old_rank.bankLimit),
 				})
 				perks += "\n"
 			}
 
 			if (old_rank.inventoryLimit < rank.inventoryLimit) {
-				perks += this.getMessage(guild, "RANKUP_INVENTORY", {
+				perks += this.getMessage(interaction, "RANKUP_INVENTORY", {
 					FALCOINS: format(rank.inventoryLimit - old_rank.inventoryLimit),
 				})
 				perks += "\n"
 			}
 		}
 
-		perks += `${this.getMessage(guild, "VOTO")}: ${format(rank.vote)} Falcoins\n`
+		perks += `${this.getMessage(interaction, "VOTO")}: ${format(rank.vote)} Falcoins\n`
 
-		perks += `${this.getMessage(guild, "TRABALHO")}: ${format(rank.work[0])}-${format(rank.work[1])} Falcoins`
+		perks += `${this.getMessage(interaction, "TRABALHO")}: ${format(rank.work[0])}-${format(rank.work[1])} Falcoins`
 
 		return perks
 	}

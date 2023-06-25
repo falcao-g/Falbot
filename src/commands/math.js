@@ -14,25 +14,20 @@ module.exports = {
 				.setName("expression")
 				.setNameLocalization("pt-BR", "expressão")
 				.setDescription("the mathematical expression to be solved")
-				.setDescriptionLocalization(
-					"pt-BR",
-					"a expressão matemática a ser resolvida"
-				)
+				.setDescriptionLocalization("pt-BR", "a expressão matemática a ser resolvida")
 				.setRequired(true)
 				.setAutocomplete(true)
 		),
 	execute: async ({ interaction, guild, user, instance }) => {
 		try {
 			await interaction.deferReply()
-			const text = interaction.options
-				.getString("expression")
-				.replaceAll("**", "^")
+			const text = interaction.options.getString("expression").replaceAll("**", "^")
 			const answer = await math.evaluate(text).toString()
 
 			const embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, user.id))
 				.addFields({
-					name: instance.getMessage(guild, "RESULTADO"),
+					name: instance.getMessage(interaction, "RESULTADO"),
 					value: answer,
 				})
 				.setFooter({ text: "by Falcão ❤️" })
@@ -41,7 +36,7 @@ module.exports = {
 		} catch (error) {
 			console.error(`math: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(guild, "MATH_ERROR"),
+				content: instance.getMessage(interaction, "MATH_ERROR"),
 				embeds: [],
 			})
 		}
@@ -58,7 +53,7 @@ module.exports = {
 		} catch {
 			await interaction.respond([
 				{
-					name: instance.getMessage(interaction.guild, "MATH_ERROR"),
+					name: instance.getMessage(interaction, "MATH_ERROR"),
 					value: focusedValue,
 				},
 			])
