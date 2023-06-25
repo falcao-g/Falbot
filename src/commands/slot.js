@@ -1,4 +1,4 @@
-const { specialArg, readFile, changeDB, getRoleColor, count, format, pick } = require("../utils/functions.js")
+const { specialArg, readFile, changeDB, getRoleColor, format, pick } = require("../utils/functions.js")
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
 
 module.exports = {
@@ -69,11 +69,11 @@ module.exports = {
 					await interaction.editReply({ embeds: [embed] })
 
 				const arrayEmojis = [emoji1, emoji2, emoji3]
-				var dollar = count(arrayEmojis, ":dollar:")
-				var coin = count(arrayEmojis, ":coin:")
-				var moneybag = count(arrayEmojis, ":moneybag:")
-				var gem = count(arrayEmojis, ":gem:")
-				var money_mouth = count(arrayEmojis, ":money_mouth:")
+				var dollar = arrayEmojis.filter((emoji) => emoji == ":dollar:").length
+				var coin = arrayEmojis.filter((emoji) => emoji == ":coin:").length
+				var moneybag = arrayEmojis.filter((emoji) => emoji == ":moneybag:").length
+				var gem = arrayEmojis.filter((emoji) => emoji == ":gem:").length
+				var money_mouth = arrayEmojis.filter((emoji) => emoji == ":money_mouth:").length
 
 				if (dollar == 3 || moneybag == 2) {
 					var winnings = 3

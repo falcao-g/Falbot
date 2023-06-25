@@ -159,16 +159,6 @@ async function getRoleColor(guild, member_id) {
 	}
 }
 
-function count(array, string) {
-	var amount = 0
-	for (let i = 0; i <= array.length; i++) {
-		if (array[i - 1] === string) {
-			amount += 1
-		}
-	}
-	return amount
-}
-
 function randint(low, high) {
 	return Math.floor(Math.random() * (high - low + 1) + low)
 }
@@ -313,7 +303,6 @@ module.exports = {
 	format,
 	readFile,
 	getRoleColor,
-	count,
 	randint,
 	paginate,
 	pick,
