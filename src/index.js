@@ -139,7 +139,7 @@ class Falbot {
 						.addFields(
 							{
 								name: await this.getDmMessage(discordUser, "VOTE_REMINDER"),
-								value: await this.getDmMessage(discordUser, "REWARD_AFTER",),
+								value: await this.getDmMessage(discordUser, "REWARD_AFTER"),
 							},
 							{
 								name: "Link",
