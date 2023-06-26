@@ -27,7 +27,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, user.id, "falcoins")
 			} catch {
 				await interaction.editReply({
-					content: instance.getMessage(instance, "VALOR_INVALIDO", {
+					content: instance.getMessage(interaction, "VALOR_INVALIDO", {
 						VALUE: falcoins,
 					}),
 				})
@@ -54,7 +54,7 @@ module.exports = {
 					.setColor(await getRoleColor(guild, user.id))
 					.addFields({
 						name: `-------------------\n      | ${diegif} | ${diegif} |\n-------------------`,
-						value: `--- **${instance.getMessage(instance, "ROLANDO")}** ---`,
+						value: `--- **${instance.getMessage(interaction, "ROLANDO")}** ---`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
 
@@ -65,13 +65,13 @@ module.exports = {
 				await new Promise((resolve) => setTimeout(resolve, 1500))
 				embed.data.fields[0] = {
 					name: `-------------------\n      | ${emoji1} | ${diegif} |\n-------------------`,
-					value: `--- **${instance.getMessage(instance, "ROLANDO")}** ---`,
+					value: `--- **${instance.getMessage(interaction, "ROLANDO")}** ---`,
 				}
 				await interaction.editReply({ embeds: [embed] })
 				await new Promise((resolve) => setTimeout(resolve, 1500))
 				embed.data.fields[0] = {
 					name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-					value: `--- **${instance.getMessage(instance, "ROLANDO")}** ---`,
+					value: `--- **${instance.getMessage(interaction, "ROLANDO")}** ---`,
 				}
 				await interaction.editReply({ embeds: [embed] })
 
@@ -80,11 +80,11 @@ module.exports = {
 					var embed2 = new EmbedBuilder().setColor("#F1C40F").addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-							value: `--- **${instance.getMessage(instance, "VOCE_GANHOU")}** ---`,
+							value: `--- **${instance.getMessage(interaction, "VOCE_GANHOU")}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.getMessage(instance, "GANHOS"),
+							name: instance.getMessage(interaction, "GANHOS"),
 							value: `${format(bet * 5)} falcoins`,
 							inline: true,
 						}
@@ -94,11 +94,11 @@ module.exports = {
 					var embed2 = new EmbedBuilder().setColor(3066993).addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-							value: `--- **${instance.getMessage(instance, "VOCE_GANHOU")}** ---`,
+							value: `--- **${instance.getMessage(interaction, "VOCE_GANHOU")}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.getMessage(instance, "GANHOS"),
+							name: instance.getMessage(interaction, "GANHOS"),
 							value: `${format(bet * 2)} falcoins`,
 							inline: true,
 						}
@@ -107,11 +107,11 @@ module.exports = {
 					var embed2 = new EmbedBuilder().setColor(15158332).addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-							value: `--- **${instance.getMessage(instance, "VOCE_PERDEU")}** ---`,
+							value: `--- **${instance.getMessage(interaction, "VOCE_PERDEU")}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.getMessage(instance, "PERDAS"),
+							name: instance.getMessage(interaction, "PERDAS"),
 							value: `${format(bet)} falcoins`,
 							inline: true,
 						}
@@ -119,7 +119,7 @@ module.exports = {
 				}
 				embed2
 					.addFields({
-						name: instance.getMessage(instance, "SALDO_ATUAL"),
+						name: instance.getMessage(interaction, "SALDO_ATUAL"),
 						value: `${await readFile(user.id, "falcoins", true)}`,
 					})
 					.setFooter({ text: "by Falcão ❤️" })
@@ -128,13 +128,13 @@ module.exports = {
 				})
 			} else {
 				await interaction.editReply({
-					content: instance.getMessage(instance, "FALCOINS_INSUFICIENTES"),
+					content: instance.getMessage(interaction, "FALCOINS_INSUFICIENTES"),
 				})
 			}
 		} catch (error) {
 			console.error(`snakeeyes: ${error}`)
 			interaction.editReply({
-				content: instance.getMessage(instance, "EXCEPTION"),
+				content: instance.getMessage(interaction, "EXCEPTION"),
 				embeds: [],
 			})
 		}

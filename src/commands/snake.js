@@ -23,7 +23,7 @@ module.exports = {
 					},
 					{
 						name: `\u200b`,
-						value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(instance, "SCORE")}: ${game.snake.length}`,
+						value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(interaction, "SCORE")}: ${game.snake.length}`,
 					}
 				)
 				.setFooter({ text: "by Falcão ❤️" })
@@ -64,7 +64,7 @@ module.exports = {
 				}
 				embed.data.fields[1] = {
 					name: `\u200b`,
-					value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(instance, "SCORE")}: ${game.snake.length}`,
+					value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(interaction, "SCORE")}: ${game.snake.length}`,
 				}
 
 				await interaction.editReply({
