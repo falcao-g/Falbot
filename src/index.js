@@ -84,10 +84,12 @@ class Falbot {
 				this._disabledChannels.set(_id, disabledChannels)
 			}
 
-			const guild = this.client.guilds.cache.get("742332099788275732")
-			for (const [key, value] of await guild.emojis.fetch()) {
-				this.emojiList[value.name] = value
-			}
+			this.config.testGuilds.forEach(async (guild) => {
+				guild = this.client.guilds.cache.get(guild)
+				for (const [key, value] of await guild.emojis.fetch()) {
+					this.emojiList[value.name] = value
+				}
+			})
 		})()
 
 		setInterval(() => {
