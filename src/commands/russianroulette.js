@@ -123,6 +123,7 @@ module.exports = {
 
 						await interaction.editReply({
 							embeds: [embed],
+							components: [],
 						})
 						await new Promise((resolve) => setTimeout(resolve, 5000))
 					}

@@ -124,6 +124,7 @@ module.exports = {
 
 						await interaction.editReply({
 							embeds: [embed],
+							components: [],
 						})
 
 						if (path[luck] === "") {
