@@ -198,7 +198,7 @@ module.exports = {
 						.setColor(await getRoleColor(guild, member.id))
 						.setTitle(
 							instance.getMessage(interaction, "INVENTORY_TITLE", {
-								MEMBER: member.displayName,
+								MEMBER: target.displayName,
 								NUMBER: i + 1,
 								TOTAL: numEmbeds,
 								WORTH: format(inventoryWorth),
