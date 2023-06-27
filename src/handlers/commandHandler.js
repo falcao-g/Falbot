@@ -14,7 +14,7 @@ async function loadCommands(instance, client) {
 		const command = require(file)
 		client.commands.set(command.data.name, command)
 
-		if (instance.config.testOnly || command.developer) {
+		if (command.developer) {
 			commandsGuild.push(command.data.toJSON())
 		} else {
 			commandsArray.push(command.data.toJSON())
