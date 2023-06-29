@@ -283,7 +283,12 @@
 			"minhas fontes dizem que não.",
 			"cenário não muito bom.",
 			"muito duvidoso.",
-			"as chances não são boas."
+			"as chances não são boas.",
+			"infelizmente, não.",
+			"não, desculpe.",
+			"você está absolutamente certo!",
+			"eu concordo.",
+			"não faço ideia!"
 		],
 		"en-US": [
 			"certainly.",
@@ -303,7 +308,12 @@
 			"my sources say no.",
 			"outlook not so good.",
 			"very doubtful.",
-			"not in a million years."
+			"not in a million years.",
+			"unfortunately, no.",
+			"no, sorry.",
+			"you are absolutely right!",
+			"I agree.",
+			"no idea!"
 		]
 	},
 	"RUSROL": {
@@ -318,7 +328,13 @@
 			"explodiu",
 			"levou um tiro",
 			"tentou fugir",
-			"abriu o twitter"
+			"abriu o twitter",
+			"foi pro céu",
+			"inventou um novo remédio",
+			"...desapareceu?",
+			"foi comido por um tubarão",
+			"deixou um balão fugir",
+			"não confiou na data de validade"
 		],
 		"en-US": [
 			"died",
@@ -331,7 +347,13 @@
 			"exploded",
 			"was shot",
 			"tried to escape",
-			"opened twitter"
+			"opened twitter",
+			"went to heaven",
+			"invented a new medicine",
+			"...disappeared?",
+			"was eaten by a shark",
+			"let some bloons escape",
+			"didn\"t trust the expiration date"
 		]
 	},
 	"MAX_RANK": {
