@@ -22,11 +22,22 @@ module.exports = {
 
 		if (interaction.guild != undefined) {
 			var disabledChannels = instance._disabledChannels.get(interaction.guild.id)
+			var disabledCommands = instance._disabledCommands.get(interaction.guild.id)
 		}
 
 		if (disabledChannels != undefined ? disabledChannels.includes(interaction.channel.id) : false) {
 			interaction.reply({
-				content: instance.getMessage(interaction.guild, "THIS_CHANNEL_IS_DISABLED"),
+				content: instance.getMessage(interaction, "THIS_CHANNEL_IS_DISABLED"),
+				ephemeral: true,
+			})
+			return
+		}
+
+		if (
+			disabledCommands != undefined ? disabledCommands.includes(interaction.commandName ?? interaction.customId.split(' ')[0]) : false
+		) {
+			interaction.reply({
+				content: instance.getMessage(interaction, "THIS_COMMAND_IS_DISABLED"),
 				ephemeral: true,
 			})
 			return

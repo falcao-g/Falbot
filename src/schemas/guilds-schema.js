@@ -10,6 +10,10 @@ const guildsSchema = mongoose.Schema(
 			type: Array,
 			default: [],
 		},
+		disabledCommands: {
+			type: Array,
+			default: [],
+		},
 	},
 	{
 		versionKey: false,

@@ -63,7 +63,7 @@ module.exports = {
 						upsert: true,
 					}
 				)
-				interaction.editReply(instance.getMessage(interaction, "DISABLED_CHANNEL", { CHANNEL: channel }))
+				interaction.editReply(instance.getMessage(interaction, "DISABLED", { NAME: channel }))
 			} else {
 				instance.enableChannel(guild, channel)
 
@@ -79,7 +79,7 @@ module.exports = {
 					}
 				)
 
-				interaction.editReply(instance.getMessage(interaction, "ENABLED_CHANNEL", { CHANNEL: channel }))
+				interaction.editReply(instance.getMessage(interaction, "ENABLED", { NAME: channel }))
 			}
 		} catch (error) {
 			console.error(`channel: ${error}`)
