@@ -497,8 +497,8 @@
 		"en-US": ":gear: Configuring Falbot to your server"
 	},
 	"HELP_CONFIG2": {
-		"pt-BR": "-Desative/reative canais com `/canal`, canais desativados seram ignorados pelo bot",
-		"en-US": "-Disable/enable channels with `/channel`, disabled channels will be ignored by the bot"
+		"pt-BR": "-Desative/reative canais com `/canal`\n-Desative/reative comandos com `/comando`\ncomandos e canais desativados serão ignorados pelo bot",
+		"en-US": "-Disable/enable channels with `/channel`\n-Disable/enable channels with `/channel`\ndisabled channels and commands will be ignored by the bot"
 	},
 	"INTRODUCTION": {
 		"pt-BR": "Introdução",
