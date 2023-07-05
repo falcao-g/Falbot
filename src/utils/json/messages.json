@@ -7,17 +7,25 @@
 		"en-US": "You are banned from using Falbot, if you think this is a mistake, contact the bot developers",
 		"pt-BR": "Você está banido de usar o Falbot, se você acha que isso é um engano, entre em contato com os desenvolvedores"
 	},
-	"DISABLED_CHANNEL": {
-		"en-US": "{CHANNEL} was disabled!",
-		"pt-BR": "{CHANNEL} foi desativado!"
+	"INVALID_COMMAND": {
+		"pt-BR": "Esse comando não existe!",
+		"en-US": "This command doesn't exist!"
 	},
-	"ENABLED_CHANNEL": {
-		"en-US": "{CHANNEL} was renabled!",
-		"pt-BR": "{CHANNEL} foi reativado!"
+	"DISABLED": {
+		"en-US": "{NAME} was disabled!",
+		"pt-BR": "{NAME} foi desativado!"
+	},
+	"ENABLED": {
+		"en-US": "{NAME} was renabled!",
+		"pt-BR": "{NAME} foi reativado!"
 	},
 	"THIS_CHANNEL_IS_DISABLED": {
 		"en-US": "You can't use Falbot in this channel because it's disabled",
 		"pt-BR": "Você não pode usar o Falbot nesse canal porque ele está desativado"
+	},
+	"THIS_COMMAND_IS_DISABLED": {
+		"en-US": "You can't use this command because it's disabled",
+		"pt-BR": "Você não pode usar esse comando porque ele está desativado"
 	},
 	"BOT_OWNERS_ONLY": {
 		"en-US": "Only the bot developer can run this command.",
@@ -489,8 +497,8 @@
 		"en-US": ":gear: Configuring Falbot to your server"
 	},
 	"HELP_CONFIG2": {
-		"pt-BR": "-Desative/reative canais com `/canal`, canais desativados seram ignorados pelo bot",
-		"en-US": "-Disable/enable channels with `/channel`, disabled channels will be ignored by the bot"
+		"pt-BR": "-Desative/reative canais com `/canal`\n-Desative/reative comandos com `/comando`\ncomandos e canais desativados serão ignorados pelo bot",
+		"en-US": "-Disable/enable channels with `/channel`\n-Disable/enable channels with `/channel`\ndisabled channels and commands will be ignored by the bot"
 	},
 	"INTRODUCTION": {
 		"pt-BR": "Introdução",
@@ -1088,6 +1096,7 @@
 		"pt-BR": "Construir tudo",
 		"en-US": "Craft max"
 	},
+
 	"1": {
 		"pt-BR": ":potato: Plebeu",
 		"en-US": ":potato: Peasent"

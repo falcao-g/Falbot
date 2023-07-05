@@ -11,6 +11,7 @@ class Falbot {
 	_messages = require(path.join(__dirname, "/utils/json/messages.json"))
 	_banned = new Array()
 	_disabledChannels = new Map()
+	_disabledCommands = new Map()
 	emojiList = {}
 	client = new Client({
 		intents: [GatewayIntentBits.Guilds],
@@ -80,8 +81,9 @@ class Falbot {
 
 			const guilds = await this.guildsSchema.find()
 
-			for (const { _id, disabledChannels } of guilds) {
+			for (const { _id, disabledChannels, disabledCommands } of guilds) {
 				this._disabledChannels.set(_id, disabledChannels)
+				this._disabledCommands.set(_id, disabledCommands)
 			}
 
 			this.config.testGuilds.forEach(async (guild) => {
@@ -275,6 +277,22 @@ class Falbot {
 		var result = this._disabledChannels.get(guild.id)
 		result = result.filter((channelId) => channelId != channel.id)
 		this._disabledChannels.set(guild.id, result)
+	}
+
+	disableCommand(guild, command) {
+		const result = this._disabledCommands.get(guild.id)
+		if (result) {
+			result.push(command)
+			this._disabledChannels.set(guild.id, result)
+		} else {
+			this._disabledChannels.set(guild.id, [command])
+		}
+	}
+
+	enableCommand(guild, command) {
+		var result = this._disabledCommands.get(guild.id)
+		result = result.filter((commandName) => commandName != command)
+		this._disabledCommands.set(guild.id, result)
 	}
 
 	getMessage(interaction, messageId, args = {}) {
