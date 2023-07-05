@@ -24,6 +24,7 @@ module.exports = {
 						.setDescription("command to be deactivated")
 						.setDescriptionLocalization("pt-BR", "comando para ser desativado")
 						.setRequired(true)
+						.setAutocomplete(true)
 				)
 		)
 		.addSubcommand((subcommand) =>
@@ -39,6 +40,7 @@ module.exports = {
 						.setDescription("command to be deactivated")
 						.setDescriptionLocalization("pt-BR", "comando para ser reativado")
 						.setRequired(true)
+						.setAutocomplete(true)
 				)
 		),
 	execute: async ({ client, guild, interaction, instance }) => {
@@ -101,6 +103,31 @@ module.exports = {
 			interaction.editReply({
 				content: instance.getMessage(interaction, "EXCEPTION"),
 			})
+		}
+	},
+	autocomplete: async ({ client, interaction, instance }) => {
+		const focusedValue = interaction.options.getFocused().toLowerCase()
+		try {
+			const commands = client.commands
+				.map((command) => {
+					if (!command.data.name_localizations) return command.data.name
+					return command.data.name_localizations[interaction.locale] ?? command.data.name_localizations["en-US"]
+				})
+				.filter((name) => name !== "command" && name !== "comando" && name != "tools")
+			const filtered = commands.filter((choice) => choice.startsWith(focusedValue))
+			await interaction.respond([
+				{
+					name: filtered[0],
+					value: filtered[0],
+				},
+			])
+		} catch {
+			await interaction.respond([
+				{
+					name: instance.getMessage(interaction, "INVALID_COMMAND"),
+					value: focusedValue,
+				},
+			])
 		}
 	},
 }

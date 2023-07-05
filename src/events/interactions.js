@@ -34,7 +34,9 @@ module.exports = {
 		}
 
 		if (
-			disabledCommands != undefined ? disabledCommands.includes(interaction.commandName ?? interaction.customId.split(' ')[0]) : false
+			disabledCommands != undefined
+				? disabledCommands.includes(interaction.commandName ?? interaction.customId.split(" ")[0])
+				: false
 		) {
 			interaction.reply({
 				content: instance.getMessage(interaction, "THIS_COMMAND_IS_DISABLED"),
@@ -79,7 +81,7 @@ module.exports = {
 			})
 		} else if (interaction.isAutocomplete()) {
 			const command = client.commands.get(interaction.commandName)
-			command.autocomplete({ interaction, instance })
+			command.autocomplete({ client, interaction, instance })
 		} else if (interaction.isButton()) {
 			if (interaction.customId === "disableVoteReminder") {
 				await interaction.deferReply({ ephemeral: true })
