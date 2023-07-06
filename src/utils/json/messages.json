@@ -664,6 +664,22 @@
 		"pt-BR": ":desktop: Classificação do servidor",
 		"en-US": ":desktop: Server leaderboard"
 	},
+	"LEADERBOARD_FALCOINS_DESCRIPTION": {
+		"pt-BR": "Classificando por falcoins :coin:",
+		"en-US": "Ranking by falcoins :coin:"
+	},
+	"LEADERBOARD_RANK_DESCRIPTION": {
+		"pt-BR": "Classificando por rank :chart_with_upwards_trend:",
+		"en-US": "Ranking by rank :chart_with_upwards_trend:"
+	},
+	"LEADERBOARD_WINS_DESCRIPTION": {
+		"pt-BR": "Classificando por vitórias :trophy:",
+		"en-US": "Ranking by wins :trophy:"
+	},
+	"LEADERBOARD_ITEM_DESCRIPTION": {
+		"pt-BR": "Classificando por {ITEM}",
+		"en-US": "Ranking by {ITEM}"
+	},
 	"SCRATCH": {
 		"pt-BR": "Raspadinha",
 		"en-US": "Scratch"
