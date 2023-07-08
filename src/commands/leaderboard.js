@@ -1,5 +1,5 @@
 const { EmbedBuilder, ButtonBuilder, SlashCommandBuilder } = require("discord.js")
-const { format, paginate } = require("../utils/functions.js")
+const { format, paginate, getItem } = require("../utils/functions.js")
 
 async function getMember(guild, member_id) {
 	try {
@@ -82,22 +82,69 @@ module.exports = {
 							{ name: "global", value: "global" }
 						)
 				)
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName("item")
+				.setDescription("View users ranked by amount of an item")
+				.setDescriptionLocalization("pt-BR", "Veja a classificação de usuários pela quantidade de um item")
+				.addStringOption((option) =>
+					option
+						.setName("type")
+						.setNameLocalization("pt-BR", "tipo")
+						.setDescription("leaderboard of the server or global")
+						.setDescriptionLocalization("pt-BR", "classificação do servidor ou global")
+						.setRequired(true)
+						.addChoices(
+							{
+								name: "server",
+								name_localizations: { "pt-BR": "servidor" },
+								value: "server",
+							},
+							{ name: "global", value: "global" }
+						)
+				)
+				.addStringOption((option) =>
+					option
+						.setName("item")
+						.setDescription("item to be counted")
+						.setDescriptionLocalization("pt-BR", "item a ser contado")
+						.setRequired(true)
+				)
 		),
-	execute: async ({ client, user, guild, interaction, instance }) => {
-		await interaction.deferReply()
-		var rank = []
-		const scope = interaction.options.getString("type")
-		const type = interaction.options.getSubcommand()
+	execute: async ({ client, guild, interaction, instance }) => {
+		try {
+			await interaction.deferReply()
+			var rank = []
+			const scope = interaction.options.getString("type")
+			const embeds = []
 
-		var embed1 = new EmbedBuilder().setColor("#206694").setFooter({ text: "by Falcão ❤️" })
-		var embed2 = new EmbedBuilder().setColor("#206694").setFooter({ text: "by Falcão ❤️" })
-		var embed3 = new EmbedBuilder().setColor("#206694").setFooter({ text: "by Falcão ❤️" })
+			enums = {
+				falcoins: "falcoins",
+				rank: "rank",
+				wins: "vitorias",
+				item: `inventory.${interaction.options.getString("item")}`,
+			}
 
-		embeds = [embed1, embed2, embed3]
+			const subcommand = interaction.options.getSubcommand()
+			const type = enums[subcommand]
 
-		if (type == "falcoins") {
+			if (subcommand === "item") {
+				var item = getItem(interaction.options.getString("item").toLowerCase())
+				var itemJSON = instance.items[item]
+
+				if (itemJSON === undefined) {
+					interaction.editReply({
+						content: instance.getMessage(interaction, "VALOR_INVALIDO", {
+							VALUE: interaction.options.getString("item"),
+						}),
+					})
+					return
+				}
+			}
+
 			if (scope === "server") {
-				users = await instance.userSchema.find({}).sort({ falcoins: -1 })
+				users = await instance.userSchema.find({}).sort({ [type]: -1 })
 
 				for (useri of users) {
 					if (await getMember(guild, useri["_id"])) {
@@ -105,117 +152,80 @@ module.exports = {
 					}
 				}
 			} else {
-				rank = await instance.userSchema.find({}).sort({ falcoins: -1 }).limit(30)
+				rank = await instance.userSchema
+					.find({})
+					.sort({ [type]: -1 })
+					.limit(30)
 			}
-		} else if (type == "rank") {
-			if (scope === "server") {
-				users = await instance.userSchema.find({}).sort({ rank: -1 })
 
-				for (useri of users) {
-					if (await getMember(guild, useri["_id"])) {
-						rank.push(useri)
-					}
-				}
-			} else {
-				rank = await instance.userSchema.find({}).sort({ rank: -1 }).limit(30)
-			}
-		} else if (type == "wins") {
-			if (scope === "server") {
-				users = await instance.userSchema.find({}).sort({ vitorias: -1 })
+			for (let i = 0; i < rank.length; i++) {
+				a = Math.min(Math.floor(i / 10), 2)
 
-				for (useri of users) {
-					if (await getMember(guild, useri["_id"])) {
-						rank.push(useri)
-					}
-				}
-			} else {
-				rank = await instance.userSchema.find({}).sort({ vitorias: -1 }).limit(30)
-			}
-		}
+				if (a == embeds.length) embeds.push(new EmbedBuilder().setColor("#206694").setFooter({ text: "by Falcão ❤️" }))
 
-		for (let i = 0; i < rank.length; i++) {
-			if (i <= 9) {
-				a = 0
-			} else if (i <= 19) {
-				a = 1
-			} else {
-				a = 2
-			}
-			try {
-				if (scope === "server") {
-					member = await getMember(guild, rank[i]["_id"])
-					username = member.displayName
-				} else {
-					user = await client.users.fetch(rank[i]["_id"])
-					username = user.username
+				try {
+					member = scope == "server" ? await getMember(guild, rank[i]["_id"]) : await client.users.fetch(rank[i]["_id"])
+					username = scope == "server" ? member.displayName : member.username
+				} catch {
+					username = "Unknown user"
 				}
 
 				embeds[a].addFields({
-					name:
-						type == "wins"
-							? `${i + 1}º - ${username} ` + instance.getMessage(interaction, "VITORIAS").toLowerCase() + ":"
-							: `${i + 1}º - ${username} ${type}:`,
+					name: `${i + 1}º - ${username}:`,
 					value:
 						type == "rank"
 							? `${instance.getMessage(interaction, rank[i][type])}`
-							: `${type == "wins" ? rank[i]["vitorias"] : format(rank[i][type])}`,
-				})
-			} catch {
-				embeds[a].addFields({
-					name:
-						type === "wins"
-							? `${i + 1}º - Unknown user ` + instance.getMessage(interaction, "VITORIAS").toLowerCase() + ":"
-							: `${i + 1}º - Unknown user ${type}:`,
-					value:
-						type === "rank"
-							? `${instance.getMessage(interaction, rank[i][type])}`
-							: `${type == "wins" ? rank[i]["vitorias"] : format(rank[i][type])}`,
+							: subcommand == "item"
+							? `${itemJSON["emoji"]} ${format(rank[i]["inventory"].get(item) ?? 0)}`
+							: `${format(rank[i][type])}`,
 				})
 			}
-		}
 
-		if (embed3.data.fields) {
-			embeds = [embed1, embed2, embed3]
-		} else if (embed2.data.fields) {
-			embeds = [embed1, embed2]
-		} else {
-			embeds = [embed1]
-		}
-
-		if (embeds.length > 1) {
-			for (let i = 0; i < embeds.length; i++) {
-				if (scope == "server") {
-					embeds[i].setTitle(`${instance.getMessage(interaction, "LEADERBOARD_SERVER_TITLE")} - ${i + 1}/3`)
-				} else {
-					embeds[i].setTitle(`${instance.getMessage(interaction, "LEADERBOARD_GLOBAL_TITLE")} - ${i + 1}/3`)
+			if (embeds.length > 1) {
+				for (let i = 0; i < embeds.length; i++) {
+					embeds[i].setTitle(
+						`${instance.getMessage(interaction, `LEADERBOARD_${scope.toUpperCase()}_TITLE`)} - ${i + 1}/3`
+					)
+					embeds[i].setDescription(
+						`${instance.getMessage(interaction, `LEADERBOARD_${subcommand.toUpperCase()}_DESCRIPTION`, {
+							ITEM: subcommand == "item" ? itemJSON[interaction.locale] ?? itemJSON["en-US"] : "",
+						})}`
+					)
 				}
-			}
 
-			const paginator = paginate()
-			paginator.add(...embeds)
-			const ids = [`${Date.now()}__left`, `${Date.now()}__right`]
-			paginator.setTraverser([
-				new ButtonBuilder().setEmoji("⬅️").setCustomId(ids[0]).setStyle("Secondary"),
-				new ButtonBuilder().setEmoji("➡️").setCustomId(ids[1]).setStyle("Secondary"),
-			])
-			const message = await interaction.editReply(paginator.components())
-			message.channel.createMessageComponentCollector().on("collect", async (i) => {
-				if (i.customId === ids[0]) {
-					await paginator.back()
-					await i.update(paginator.components())
-				} else if (i.customId === ids[1]) {
-					await paginator.next()
-					await i.update(paginator.components())
-				}
-			})
-		} else {
-			if (scope == "server") {
-				embed1.setTitle(instance.getMessage(interaction, "LEADERBOARD_SERVER_TITLE"))
+				const paginator = paginate()
+				paginator.add(...embeds)
+				const ids = [`${Date.now()}__left`, `${Date.now()}__right`]
+				paginator.setTraverser([
+					new ButtonBuilder().setEmoji("⬅️").setCustomId(ids[0]).setStyle("Secondary"),
+					new ButtonBuilder().setEmoji("➡️").setCustomId(ids[1]).setStyle("Secondary"),
+				])
+				const message = await interaction.editReply(paginator.components())
+				message.channel.createMessageComponentCollector().on("collect", async (i) => {
+					if (i.customId === ids[0]) {
+						await paginator.back()
+						await i.update(paginator.components())
+					} else if (i.customId === ids[1]) {
+						await paginator.next()
+						await i.update(paginator.components())
+					}
+				})
 			} else {
-				embed1.setTitle(instance.getMessage(interaction, "LEADERBOARD_GLOBAL_TITLE"))
+				embeds[0].setTitle(instance.getMessage(interaction, `LEADERBOARD_${scope.toUpperCase()}_TITLE`))
+				embeds[0].setDescription(
+					`${instance.getMessage(interaction, `LEADERBOARD_${subcommand.toUpperCase()}_DESCRIPTION`, {
+						ITEM: subcommand == "item" ? itemJSON[interaction.locale] ?? itemJSON["en-US"] : "",
+					})}`
+				)
+				await interaction.editReply({ embeds: [embeds[0]] })
 			}
-
-			await interaction.editReply({ embeds: [embeds[0]] })
+		} catch (error) {
+			console.error(`leaderboard: ${error}`)
+			interaction.editReply({
+				content: instance.getMessage(interaction, "EXCEPTION"),
+				embeds: [],
+				components: [],
+			})
 		}
 	},
 }
