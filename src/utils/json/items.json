@@ -18,7 +18,7 @@
 	"tools": {
 		"en-US": ":hammer_pick: Work tools",
 		"pt-BR": ":hammer_pick: Ferramentas",
-		"value": 1600,
+		"value": 1800,
 		"emoji": "🛠️",
 		"recipe": {
 			"log": 2,
@@ -197,7 +197,7 @@
 	"bricks": {
 		"en-US": ":bricks: Bricks",
 		"pt-BR": ":bricks: Tijolos",
-		"value": 3600,
+		"value": 4200,
 		"emoji": "🧱",
 		"recipe": {
 			"tools": 1,
@@ -207,7 +207,7 @@
 	"beam": {
 		"en-US": ":construction_site: Steel Beam",
 		"pt-BR": ":construction_site: Viga de Aço",
-		"value": 13200,
+		"value": 37500,
 		"emoji": "🏗️",
 		"recipe": {
 			"tools": 5,
@@ -218,7 +218,7 @@
 	"hall": {
 		"en-US": ":classical_building: Grand Hall",
 		"pt-BR": ":classical_building: Grande Salão",
-		"value": 129200,
+		"value": 250000,
 		"emoji": "🏛️",
 		"recipe": {
 			"tools": 8,
@@ -246,7 +246,7 @@
 	"backpack": {
 		"en-US": ":school_satchel: Big Backpack",
 		"pt-BR": ":school_satchel: Mochila",
-		"value": 82000,
+		"value": 100000,
 		"emoji": "🎒",
 		"recipe": {
 			"leather": 8,
@@ -257,7 +257,7 @@
 	"gunpowder": {
 		"en-US": ":sparkler: Gunpowder",
 		"pt-BR": ":sparkler: Pólvora",
-		"value": 2000,
+		"value": 2200,
 		"emoji": "🎇",
 		"recipe": {
 			"ashes": 20
@@ -266,7 +266,7 @@
 	"bomb": {
 		"en-US": ":bomb: Bomb",
 		"pt-BR": ":bomb: Bomba",
-		"value": 7000,
+		"value": 8200,
 		"emoji": "💣",
 		"recipe": {
 			"gunpowder": 2,
@@ -277,7 +277,7 @@
 	"ironpick": {
 		"en-US": ":pick: Iron Pickaxe",
 		"pt-BR": ":pick: Picareta de Ferro",
-		"value": 23500,
+		"value": 30000,
 		"equip": true,
 		"emoji": "⛏️",
 		"effect": "mine-2",
@@ -304,7 +304,7 @@
 	"rod": {
 		"en-US": ":fishing_pole_and_fish: Fishing Rod",
 		"pt-BR": ":fishing_pole_and_fish: Vara de Pesca",
-		"value": 28200,
+		"value": 30000,
 		"equip": true,
 		"emoji": "🎣",
 		"effect": "fish-2",
@@ -331,7 +331,7 @@
 	"plushtoy": {
 		"en-US": ":teddy_bear: Plush Toy",
 		"pt-BR": ":teddy_bear: Pelúcia",
-		"value": 28200,
+		"value": 24500,
 		"emoji": "🧸",
 		"recipe": {
 			"wool": 10,
@@ -342,7 +342,7 @@
 	"balltoy": {
 		"en-US": ":volleyball: Ball",
 		"pt-BR": ":volleyball: Bola",
-		"value": 23900,
+		"value": 22500,
 		"emoji": "🏐",
 		"recipe": {
 			"wool": 2,
@@ -369,7 +369,7 @@
 	"sprinkler": {
 		"en-US": ":fountain: Sprinkler",
 		"pt-BR": ":fountain: Regador",
-		"value": 7700,
+		"value": 40000,
 		"emoji": "⛲",
 		"recipe": {
 			"cpu": 1,
@@ -382,7 +382,7 @@
 	"puzzletoy": {
 		"en-US": ":jigsaw: Puzzle Toy",
 		"pt-BR": ":jigsaw: Quebra-cabeça",
-		"value": 23500,
+		"value": 37000,
 		"emoji": "🧩",
 		"recipe": {
 			"board": 10,
@@ -414,7 +414,7 @@
 	"activewear": {
 		"en-US": ":martial_arts_uniform: Activewear",
 		"pt-BR": ":martial_arts_uniform: Roupa",
-		"value": 18400,
+		"value": 30000,
 		"equip": true,
 		"emoji": "🥋",
 		"effect": "explore-2",
@@ -459,7 +459,7 @@
 	"supply": {
 		"en-US": ":electric_plug: Power Supply",
 		"pt-BR": ":electric_plug: Fonte",
-		"value": 1500,
+		"value": 1700,
 		"emoji": "🔌",
 		"recipe": {
 			"aluminium": 5,
@@ -469,7 +469,7 @@
 	"tractor": {
 		"en-US": ":tractor: Tractor",
 		"pt-BR": ":tractor: Trator",
-		"value": 28650,
+		"value": 45000,
 		"emoji": "🚜",
 		"recipe": {
 			"lightbulb": 8,
@@ -490,7 +490,7 @@
 	"dagger": {
 		"en-US": ":dagger: Dagger",
 		"pt-BR": ":dagger: Adaga",
-		"value": 7200,
+		"value": 8400,
 		"emoji": "🗡️",
 		"recipe": {
 			"knife": 20,
@@ -500,7 +500,7 @@
 	"huntknife": {
 		"en-US": ":crossed_swords: Hunting Knife",
 		"pt-BR": ":crossed_swords: Faca de Caça",
-		"value": 24400,
+		"value": 30000,
 		"equip": true,
 		"emoji": "⚔️",
 		"effect": "hunt-2",
@@ -514,10 +514,10 @@
 	"shield": {
 		"en-US": ":shield: Diamond Shield",
 		"pt-BR": ":shield: Escudo de Diamante",
-		"value": 24400,
+		"value": 300000,
 		"emoji": "🛡️",
 		"recipe": {
-			"diamond": 40,
+			"diamond": 5,
 			"scrap": 20,
 			"log": 10,
 			"tools": 1
@@ -555,7 +555,7 @@
 	"butter": {
 		"en-US": ":butter: Butter",
 		"pt-BR": ":butter: Manteiga",
-		"value": 800,
+		"value": 1000,
 		"emoji": "🧈",
 		"recipe": {
 			"milk": 2
@@ -564,7 +564,7 @@
 	"waffle": {
 		"en-US": ":waffle: Waffle",
 		"pt-BR": ":waffle: Panqueca",
-		"value": 800,
+		"value": 5500,
 		"emoji": "🧇",
 		"recipe": {
 			"butter": 1,
@@ -574,7 +574,7 @@
 	"cheese": {
 		"en-US": ":cheese: Cheese",
 		"pt-BR": ":cheese: Queijo",
-		"value": 1600,
+		"value": 1800,
 		"emoji": "🧀",
 		"recipe": {
 			"milk": 4
@@ -600,7 +600,7 @@
 	"sushi": {
 		"en-US": ":sushi: Sushi",
 		"pt-BR": ":sushi: Sushi",
-		"value": 2000,
+		"value": 3000,
 		"emoji": "🍣",
 		"recipe": {
 			"fish": 4,
@@ -610,7 +610,7 @@
 	"hamburger": {
 		"en-US": ":hamburger: Hamburger",
 		"pt-BR": ":hamburger: Hambúrguer",
-		"value": 12600,
+		"value": 14000,
 		"emoji": "🍔",
 		"recipe": {
 			"steak": 1,
