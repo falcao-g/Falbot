@@ -17,5 +17,12 @@
 		"mongoose": "^6.8.0",
 		"simply-blackjack": "^1.0.3",
 		"tictactoe-board": "^1.1.0"
+	},
+	"devDependencies": {
+		"eslint": "^8.45.0",
+		"eslint-config-google": "^0.14.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-prettier": "^5.0.0",
+		"prettier": "^3.0.0"
 	}
 }

@@ -1,9 +1,9 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 
 const reqString = {
 	type: String,
 	required: true,
-}
+};
 
 const userSchema = mongoose.Schema(
 	{
@@ -60,13 +60,13 @@ const userSchema = mongoose.Schema(
 		},
 		locale: {
 			type: String,
-			default: "en-US",
+			default: 'en-US',
 		},
 	},
 	{
 		versionKey: false,
 		timestamps: true,
 	}
-)
+);
 
-module.exports = mongoose.model("users", userSchema)
+module.exports = mongoose.model('users', userSchema);

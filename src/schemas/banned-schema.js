@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 
 const bannedSchema = mongoose.Schema(
 	{
@@ -10,6 +10,6 @@ const bannedSchema = mongoose.Schema(
 	{
 		versionKey: false,
 	}
-)
+);
 
-module.exports = mongoose.model("banned-list", bannedSchema, "banned-list")
+module.exports = mongoose.model('banned-list', bannedSchema, 'banned-list');

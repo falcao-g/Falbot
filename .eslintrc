@@ -1,0 +1,25 @@
+{
+    "env": {
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "plugins": ["prettier"],
+    "extends": ["plugin:prettier/recommended"],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "prettier/prettier": ["error", { "printWidth": 120, "useTabs": true }],
+          "array-bracket-spacing": "error",
+          "comma-spacing": "error",
+          "no-alert": "error",
+          "no-const-assign": "error",
+          "no-empty": "error",
+          "no-eval": "error",
+          "no-extra-boolean-cast": "error",
+          "prefer-const": "error",
+          "sort-imports": "error",
+          "sort-vars": "error"
+    }
+}

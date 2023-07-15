@@ -1,135 +1,135 @@
-const { format, getRoleColor, getItem, readFile } = require("../utils/functions.js")
-const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js")
+const { format, getRoleColor, getItem, readFile } = require('../utils/functions.js');
+const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName("iteminfo")
-		.setDescription("View item info")
-		.setDescriptionLocalization("pt-BR", "Veja informações sobre um item")
+		.setName('iteminfo')
+		.setDescription('View item info')
+		.setDescriptionLocalization('pt-BR', 'Veja informações sobre um item')
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
-				.setName("item")
-				.setDescription("item to see information about")
-				.setDescriptionLocalization("pt-BR", "item para ver informações sobre")
+				.setName('item')
+				.setDescription('item to see information about')
+				.setDescriptionLocalization('pt-BR', 'item para ver informações sobre')
 				.setRequired(true)
 		),
 	execute: async ({ guild, interaction, instance, member }) => {
 		try {
-			await interaction.deferReply()
-			const items = instance.items
+			await interaction.deferReply();
+			const items = instance.items;
 
 			if (interaction.options !== undefined) {
-				var item = interaction.options.getString("item").toLowerCase()
+				var item = interaction.options.getString('item').toLowerCase();
 			} else {
-				var item = interaction.customId.split(" ")[1].toLowerCase()
-				var cont = 0
+				var item = interaction.customId.split(' ')[1].toLowerCase();
+				var cont = 0;
 				for (i in items) {
 					if (i == item) {
-						var index = interaction.customId.startsWith("previous") ? cont - 1 : cont + 1
-						break
+						var index = interaction.customId.startsWith('previous') ? cont - 1 : cont + 1;
+						break;
 					}
-					cont++
+					cont++;
 				}
-				console.log(index)
-				if (index < 0) index = Object.keys(items).length - 1
-				if (index > Object.keys(items).length - 1) index = 0
-				item = Object.keys(items)[index]
+				console.log(index);
+				if (index < 0) index = Object.keys(items).length - 1;
+				if (index > Object.keys(items).length - 1) index = 0;
+				item = Object.keys(items)[index];
 			}
 
-			const itemKey = getItem(item)
-			const itemJSON = items[itemKey]
-			const inventory = await readFile(member.id, "inventory")
+			const itemKey = getItem(item);
+			const itemJSON = items[itemKey];
+			const inventory = await readFile(member.id, 'inventory');
 
 			if (itemJSON === undefined) {
 				interaction.editReply({
-					content: instance.getMessage(interaction, "VALOR_INVALIDO", {
+					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 						VALUE: item,
 					}),
-				})
-				return
+				});
+				return;
 			}
 
 			if (itemJSON.recipe != undefined) {
-				var ingredients = ""
+				var ingredients = '';
 
 				for (key in itemJSON.recipe) {
-					ingredients += `\n${items[key][interaction.locale]} x ${itemJSON.recipe[key]}`
+					ingredients += `\n${items[key][interaction.locale]} x ${itemJSON.recipe[key]}`;
 				}
 			}
 
-			var information = `:moneybag: ${instance.getMessage(interaction, "COST")} **${format(itemJSON.value)} falcoins**`
+			var information = `:moneybag: ${instance.getMessage(interaction, 'COST')} **${format(itemJSON.value)} falcoins**`;
 
 			if (inventory.get(itemKey))
-				information += `\n${instance.getMessage(interaction, "OWNED", {
+				information += `\n${instance.getMessage(interaction, 'OWNED', {
 					AMOUNT: inventory.get(itemKey),
-				})}`
+				})}`;
 
 			if (itemJSON.equip != undefined) {
-				information += `\n${instance.getMessage(interaction, "USEABLE")}`
-				information += `\n${instance.getMessage(interaction, itemJSON.effect.toUpperCase())}`
+				information += `\n${instance.getMessage(interaction, 'USEABLE')}`;
+				information += `\n${instance.getMessage(interaction, itemJSON.effect.toUpperCase())}`;
 			}
 
 			const embed = new EmbedBuilder()
 				.setColor(await getRoleColor(guild, member.id))
-				.setTitle(`${itemJSON[interaction.locale]} ` + "(`" + `${itemKey}` + "`)")
+				.setTitle(`${itemJSON[interaction.locale]} ` + '(`' + `${itemKey}` + '`)')
 				.addFields({
-					name: instance.getMessage(interaction, "INFO"),
+					name: instance.getMessage(interaction, 'INFO'),
 					value: information,
 				})
-				.setFooter({ text: "by Falcão ❤️" })
+				.setFooter({ text: 'by Falcão ❤️' });
 
 			if (itemJSON.rarity) {
-				embed.setDescription(`**${instance.getMessage(interaction, itemJSON.rarity.toUpperCase())}**`)
+				embed.setDescription(`**${instance.getMessage(interaction, itemJSON.rarity.toUpperCase())}**`);
 			}
 
 			if (ingredients) {
 				embed.addFields({
-					name: instance.getMessage(interaction, "INGREDIENTS"),
+					name: instance.getMessage(interaction, 'INGREDIENTS'),
 					value: ingredients,
-				})
+				});
 			}
 
-			var usedToCraft = ""
-			var cont = 0
+			var usedToCraft = '';
+			var cont = 0;
 			craft: for (i in items) {
 				if (items[i].recipe != undefined) {
 					for (key in items[i].recipe) {
 						if (key === itemKey) {
-							usedToCraft += `\n${items[i][interaction.locale]}`
-							cont += 1
+							usedToCraft += `\n${items[i][interaction.locale]}`;
+							cont += 1;
 
 							if (cont === 4) {
-								usedToCraft += instance.getMessage(interaction, "AND_MORE")
-								break craft
+								usedToCraft += instance.getMessage(interaction, 'AND_MORE');
+								break craft;
 							}
 						}
 					}
 				}
 			}
 
-			if (usedToCraft.length != "") {
+			if (usedToCraft.length != '') {
 				embed.addFields({
-					name: instance.getMessage(interaction, "USED"),
+					name: instance.getMessage(interaction, 'USED'),
 					value: usedToCraft,
-				})
+				});
 			}
 
 			//create two buttons to go to the next and previous item
 			const row = new ActionRowBuilder().addComponents([
-				new ButtonBuilder().setCustomId(`previous ${itemKey}`).setEmoji("⬅️").setStyle("Secondary"),
-				new ButtonBuilder().setCustomId(`next ${itemKey}`).setEmoji("➡️").setStyle("Secondary"),
-			])
+				new ButtonBuilder().setCustomId(`previous ${itemKey}`).setEmoji('⬅️').setStyle('Secondary'),
+				new ButtonBuilder().setCustomId(`next ${itemKey}`).setEmoji('➡️').setStyle('Secondary'),
+			]);
 			interaction.editReply({
 				embeds: [embed],
 				components: [row],
-			})
+			});
 		} catch (err) {
-			console.error(`iteminfo: ${err}`)
+			console.error(`iteminfo: ${err}`);
 			interaction.editReply({
-				content: instance.getMessage(interaction, "EXCEPTION"),
+				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
-			})
+			});
 		}
 	},
-}
+};

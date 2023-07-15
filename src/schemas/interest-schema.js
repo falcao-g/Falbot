@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 
 const interestSchema = mongoose.Schema(
 	{
@@ -15,6 +15,6 @@ const interestSchema = mongoose.Schema(
 	{
 		versionKey: false,
 	}
-)
+);
 
-module.exports = mongoose.model("interest", interestSchema, "interest")
+module.exports = mongoose.model('interest', interestSchema, 'interest');

@@ -1,6 +1,6 @@
 module.exports = {
-	name: "guildDelete",
+	name: 'guildDelete',
 	execute: async (guild, instance) => {
-		await instance.guildsSchema.deleteOne({ _id: guild.id })
+		await instance.guildsSchema.deleteOne({ _id: guild.id });
 	},
-}
+};

@@ -1,115 +1,115 @@
-const { specialArg, readFile, randint, changeDB, format, getRoleColor } = require("../utils/functions.js")
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
+const { specialArg, readFile, randint, changeDB, format, getRoleColor } = require('../utils/functions.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName("roulette")
-		.setNameLocalization("pt-BR", "roleta")
-		.setDescription("Bet on the roulette")
-		.setDescriptionLocalization("pt-BR", "Aposte na roleta")
+		.setName('roulette')
+		.setNameLocalization('pt-BR', 'roleta')
+		.setDescription('Bet on the roulette')
+		.setDescriptionLocalization('pt-BR', 'Aposte na roleta')
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
-				.setName("type")
-				.setNameLocalization("pt-BR", "tipo")
+				.setName('type')
+				.setNameLocalization('pt-BR', 'tipo')
 				.setDescription(
-					"the columns have a 2-1 payout ratio, the green has a 35-1 (only one number) and the rest have a 1-1"
+					'the columns have a 2-1 payout ratio, the green has a 35-1 (only one number) and the rest have a 1-1'
 				)
 				.setDescriptionLocalization(
-					"pt-BR",
-					"as colunas tem uma taxa de retorno de 2-1, o verde é 35-1 (só um número) e o resto 1-1"
+					'pt-BR',
+					'as colunas tem uma taxa de retorno de 2-1, o verde é 35-1 (só um número) e o resto 1-1'
 				)
 				.setRequired(true)
 				.addChoices(
 					{
-						name: "black",
-						name_localizations: { "pt-BR": "preto" },
-						value: "black",
+						name: 'black',
+						name_localizations: { 'pt-BR': 'preto' },
+						value: 'black',
 					},
 					{
-						name: "red",
-						name_localizations: { "pt-BR": "vermelho" },
-						value: "red",
+						name: 'red',
+						name_localizations: { 'pt-BR': 'vermelho' },
+						value: 'red',
 					},
 					{
-						name: "green",
-						name_localizations: { "pt-BR": "verde" },
-						value: "green",
+						name: 'green',
+						name_localizations: { 'pt-BR': 'verde' },
+						value: 'green',
 					},
 					{
-						name: "high",
-						name_localizations: { "pt-BR": "altos" },
-						value: "high",
+						name: 'high',
+						name_localizations: { 'pt-BR': 'altos' },
+						value: 'high',
 					},
 					{
-						name: "low",
-						name_localizations: { "pt-BR": "baixos" },
-						value: "low",
+						name: 'low',
+						name_localizations: { 'pt-BR': 'baixos' },
+						value: 'low',
 					},
 					{
-						name: "even",
-						name_localizations: { "pt-BR": "par" },
-						value: "even",
+						name: 'even',
+						name_localizations: { 'pt-BR': 'par' },
+						value: 'even',
 					},
 					{
-						name: "odd",
-						name_localizations: { "pt-BR": "ímpar" },
-						value: "odd",
+						name: 'odd',
+						name_localizations: { 'pt-BR': 'ímpar' },
+						value: 'odd',
 					},
 					{
-						name: "1st column",
-						name_localizations: { "pt-BR": "1ª coluna" },
-						value: "first",
+						name: '1st column',
+						name_localizations: { 'pt-BR': '1ª coluna' },
+						value: 'first',
 					},
 					{
-						name: "2nd column",
-						name_localizations: { "pt-BR": "2ª coluna" },
-						value: "second",
+						name: '2nd column',
+						name_localizations: { 'pt-BR': '2ª coluna' },
+						value: 'second',
 					},
 					{
-						name: "3rd column",
-						name_localizations: { "pt-BR": "3ª coluna" },
-						value: "third",
+						name: '3rd column',
+						name_localizations: { 'pt-BR': '3ª coluna' },
+						value: 'third',
 					}
 				)
 		)
 		.addStringOption((option) =>
 			option
-				.setName("falcoins")
+				.setName('falcoins')
 				.setDescription('amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)')
 				.setDescriptionLocalization(
-					"pt-BR",
+					'pt-BR',
 					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
 				.setRequired(true)
 		),
 	execute: async ({ guild, user, interaction, instance }) => {
 		try {
-			await interaction.deferReply()
-			const falcoins = interaction.options.getString("falcoins")
+			await interaction.deferReply();
+			const falcoins = interaction.options.getString('falcoins');
 			try {
-				var bet = await specialArg(falcoins, user.id, "falcoins")
+				var bet = await specialArg(falcoins, user.id, 'falcoins');
 			} catch {
 				await interaction.editReply({
-					content: instance.getMessage(interaction, "VALOR_INVALIDO", {
+					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 						VALUE: falcoins,
 					}),
-				})
+				});
 			}
 
-			if ((await readFile(user.id, "falcoins")) >= bet) {
-				await changeDB(user.id, "falcoins", -bet)
+			if ((await readFile(user.id, 'falcoins')) >= bet) {
+				await changeDB(user.id, 'falcoins', -bet);
 
 				const embed = new EmbedBuilder()
-					.setTitle(instance.getMessage(interaction, "ROLETA"))
-					.setDescription(instance.getMessage(interaction, "GIRANDO_ROLETA"))
+					.setTitle(instance.getMessage(interaction, 'ROLETA'))
+					.setDescription(instance.getMessage(interaction, 'GIRANDO_ROLETA'))
 					.setColor(await getRoleColor(guild, user.id))
-					.setImage("https://media3.giphy.com/media/26uf2YTgF5upXUTm0/giphy.gif")
-					.setFooter({ text: "by Falcão ❤️" })
+					.setImage('https://media3.giphy.com/media/26uf2YTgF5upXUTm0/giphy.gif')
+					.setFooter({ text: 'by Falcão ❤️' });
 
 				await interaction.editReply({
 					embeds: [embed],
-				})
+				});
 
 				const types = {
 					green: [0],
@@ -122,76 +122,76 @@ module.exports = {
 					first: [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34],
 					second: [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35],
 					third: [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36],
-				}
+				};
 
-				var type = types[interaction.options.getString("type")]
-				if (type === types["green"]) {
-					var profit = bet * 36
-				} else if (type === types["first"] || type === types["second"] || type === types["third"]) {
-					var profit = bet * 3
+				var type = types[interaction.options.getString('type')];
+				if (type === types['green']) {
+					var profit = bet * 36;
+				} else if (type === types['first'] || type === types['second'] || type === types['third']) {
+					var profit = bet * 3;
 				} else {
-					var profit = bet * 2
+					var profit = bet * 2;
 				}
 
-				const luck = randint(0, 36)
+				const luck = randint(0, 36);
 
-				await new Promise((resolve) => setTimeout(resolve, 3000))
+				await new Promise((resolve) => setTimeout(resolve, 3000));
 
 				var embed2 = new EmbedBuilder()
-					.setTitle(instance.getMessage(interaction, "ROLETA"))
-					.setFooter({ text: "by Falcão ❤️" })
+					.setTitle(instance.getMessage(interaction, 'ROLETA'))
+					.setFooter({ text: 'by Falcão ❤️' });
 
 				if (type.includes(luck)) {
-					await changeDB(user.id, "falcoins", profit)
+					await changeDB(user.id, 'falcoins', profit);
 					embed2.setColor(3066993).addFields(
 						{
-							name: instance.getMessage(interaction, "VOCE_GANHOU") + " :sunglasses:",
-							value: instance.getMessage(interaction, "BOT_ROLOU") + ` **${luck}**`,
+							name: instance.getMessage(interaction, 'VOCE_GANHOU') + ' :sunglasses:',
+							value: instance.getMessage(interaction, 'BOT_ROLOU') + ` **${luck}**`,
 							inline: true,
 						},
 						{
-							name: instance.getMessage(interaction, "GANHOS"),
+							name: instance.getMessage(interaction, 'GANHOS'),
 							value: `${format(profit)} falcoins`,
 							inline: true,
 						},
 						{
-							name: instance.getMessage(interaction, "SALDO_ATUAL"),
-							value: `${await readFile(user.id, "falcoins", true)} falcoins`,
+							name: instance.getMessage(interaction, 'SALDO_ATUAL'),
+							value: `${await readFile(user.id, 'falcoins', true)} falcoins`,
 						}
-					)
+					);
 				} else {
 					embed2.setColor(15158332).addFields(
 						{
-							name: instance.getMessage(interaction, "VOCE_PERDEU") + " :pensive:",
-							value: instance.getMessage(interaction, "BOT_ROLOU") + ` **${luck}**`,
+							name: instance.getMessage(interaction, 'VOCE_PERDEU') + ' :pensive:',
+							value: instance.getMessage(interaction, 'BOT_ROLOU') + ` **${luck}**`,
 							inline: true,
 						},
 						{
-							name: instance.getMessage(interaction, "PERDAS"),
+							name: instance.getMessage(interaction, 'PERDAS'),
 							value: `${format(bet)} falcoins`,
 							inline: true,
 						},
 						{
-							name: instance.getMessage(interaction, "SALDO_ATUAL"),
-							value: `${await readFile(user.id, "falcoins", true)} falcoins`,
+							name: instance.getMessage(interaction, 'SALDO_ATUAL'),
+							value: `${await readFile(user.id, 'falcoins', true)} falcoins`,
 						}
-					)
+					);
 				}
 
 				await interaction.editReply({
 					embeds: [embed2],
-				})
+				});
 			} else {
 				await interaction.editReply({
-					content: instance.getMessage(interaction, "FALCOINS_INSUFICIENTES"),
-				})
+					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
+				});
 			}
 		} catch (error) {
-			console.error(`roulette: ${error}`)
+			console.error(`roulette: ${error}`);
 			interaction.editReply({
-				content: instance.getMessage(interaction, "EXCEPTION"),
+				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
-			})
+			});
 		}
 	},
-}
+};
