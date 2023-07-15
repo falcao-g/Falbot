@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 
 const lottoSchema = mongoose.Schema(
 	{
@@ -25,6 +25,6 @@ const lottoSchema = mongoose.Schema(
 	{
 		versionKey: false,
 	}
-)
+);
 
-module.exports = mongoose.model("lottery", lottoSchema, "lottery")
+module.exports = mongoose.model('lottery', lottoSchema, 'lottery');

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose');
 
 const guildsSchema = mongoose.Schema(
 	{
@@ -18,6 +18,6 @@ const guildsSchema = mongoose.Schema(
 	{
 		versionKey: false,
 	}
-)
+);
 
-module.exports = mongoose.model("guilds", guildsSchema)
+module.exports = mongoose.model('guilds', guildsSchema);

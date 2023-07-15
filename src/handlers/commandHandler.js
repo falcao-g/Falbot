@@ -1,33 +1,33 @@
-require("dotenv").config()
+require('dotenv').config();
 
 async function loadCommands(instance, client) {
-	const { loadFiles } = require("../utils/fileLoader")
+	const { loadFiles } = require('../utils/fileLoader');
 
-	await client.commands.clear()
+	await client.commands.clear();
 
-	let commandsArray = []
-	let commandsGuild = []
+	const commandsArray = [];
+	const commandsGuild = [];
 
-	const Files = await loadFiles("commands")
+	const Files = await loadFiles('commands');
 
 	Files.forEach((file) => {
-		const command = require(file)
-		client.commands.set(command.data.name, command)
+		const command = require(file);
+		client.commands.set(command.data.name, command);
 
 		if (command.developer) {
-			commandsGuild.push(command.data.toJSON())
+			commandsGuild.push(command.data.toJSON());
 		} else {
-			commandsArray.push(command.data.toJSON())
+			commandsArray.push(command.data.toJSON());
 		}
 
-		console.log(`Command: ${command.data.name} ✅`)
-	})
+		console.log(`Command: ${command.data.name} ✅`);
+	});
 
-	client.application.commands.set(commandsArray)
+	client.application.commands.set(commandsArray);
 
 	for (guild of instance.config.testGuilds) {
-		client.application.commands.set(commandsGuild, guild)
+		client.application.commands.set(commandsGuild, guild);
 	}
 }
 
-module.exports = { loadCommands }
+module.exports = { loadCommands };
