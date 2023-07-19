@@ -24,7 +24,7 @@ Falbot is a fun brazilian bot, with major focus in economy, featuring:
 
 See the introduction page in /help command to get started, don’t miss the opportunity to have a unique and enriching experience on your Discord server with Falbot!
 
-Add him in: <https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=330816&scope=bot%20applications.commands>
+Add him by clicking [here](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=330816&scope=bot%20applications.commands)
 
 Support server: <https://discord.gg/8WrAtVYVKR>
 
