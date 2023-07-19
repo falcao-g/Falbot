@@ -1,5 +1,7 @@
 # Falbot 🪙
 
+![Discord Bots](https://top.gg/api/widget/upvotes/742331813539872798.svg)
+
 Falbot is a fun brazilian bot, with major focus in economy, featuring:
 
 🎲 Gamble commands
@@ -22,17 +24,19 @@ Falbot is a fun brazilian bot, with major focus in economy, featuring:
 
 See the introduction page in /help command to get started, don’t miss the opportunity to have a unique and enriching experience on your Discord server with Falbot!
 
-Add him in: <https://top.gg/bot/742331813539872798>
+Add him in: <https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=330816&scope=bot%20applications.commands>
+
+Support server: <https://discord.gg/8WrAtVYVKR>
 
 Official website: <https://falbot.netlify.app/>
 
-![Discord Bots](https://top.gg/api/widget/upvotes/742331813539872798.svg)
+## ❓ Want to contribute?
 
-## 📩 Inviting Falbot to your server
-
-You can add the bot's public instance by [clicking here](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=330816&scope=bot%20applications.commands), this way you don't have to worry about hosting and other stuff
+If you want to contribute, please read the [contributing guide](CONTRIBUTING.md).
 
 ## 🚀 Self-hosting conditions and warnings
+
+You can also host your own Falbot instance in your own machine! This is only for experienced users and for users that want to help the project by contributing code.
 
 In addition to the project's license, here are some other things that you should keep in mind:
 
@@ -45,50 +49,3 @@ In addition to the project's license, here are some other things that you should
 4. Don't lie saying that you "created Falbot". Please give credits to the creator!
 
 5. Falbot's emojis aren't distributed with the source code, you will need to create and include your own assets.
-
-Seems too hard but you really want to use Falbot? Don't worry, you can use our free public instance by [clicking here](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=330816&scope=bot%20applications.commands)!
-
-## 👷 Requirements
-
-- Node.js
-- A MongoDB database
-
-## 🧹 Preparing the enviroment
-
-Clone this git repository somewhere in your OS, then open the cloned folder with a terminal of your choice and run `npm i`
-
-When all of the dependencies finish installing, you will need to create a `config.json` file inside the `src` folder and paste this on it:
-
-```json
-{
-	"devs": [""],
-	"testGuilds": [""]
-}
-```
-
-In addition, you will also need to create a .env file outside the `src` folder, where the index.js file is, and paste this on it:
-
-```json
-TOKEN="token"
-MONGODB_URI="mongodb_uri"
-Authorization="topgg-core-authorization"
-```
-
-## ⚙ Configuring
-
-Falbot is made to be a really configurable bot:
-
-.env file:
-
-- "TOKEN": your discord bot token
-- "MONGODB_URI": your mongodb connection uri
-- "Authorization": this is only required if your bot is in top.gg and you plan to use the /vote command, in this case you go to <https://top.gg/bot/:yourbotid/webhooks> and put the token here, otherwise just ignore this
-
-config.json file:
-
-- "devs": put here the discord id of all developers of the bot, this will be important to manage slash commands
-- "testGuilds": your guilds for testing, developer commands will only register here and the bot will import custom emojis from this servers
-
-## 🏃‍♂️ Running
-
-If everything was done correctly, you just need to open a terminal on the folder and run `node .` and the bot should be up and running!
