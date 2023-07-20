@@ -4,7 +4,14 @@
 	"description": "https://falbot.netlify.app/",
 	"main": "./src/index.js",
 	"scripts": {
-		"start": "node ./src/index"
+		"start": "node ./src/index",
+		"prepare": "husky install"
+	},
+	"lint-staged": {
+		"src/**/*.js": [
+			"prettier --write",
+			"eslint --fix"
+		]
 	},
 	"author": "Falcão",
 	"license": "GNU 3.0",
@@ -22,6 +29,8 @@
 		"eslint": "^8.45.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-prettier": "^5.0.0",
-		"prettier": "^3.0.0"
+		"lint-staged": "^13.2.3",
+		"prettier": "^3.0.0",
+		"husky": "^8.0.0"
 	}
 }
