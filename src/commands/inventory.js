@@ -149,6 +149,13 @@ module.exports = {
 							}
 						)
 				)
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('sort')
+				.setNameLocalization('pt-BR', 'ordenação')
+				.setDescription('Change inventory sorting method')
+				.setDescriptionLocalization('pt-BR', 'Muda o método de ordenação do inventário')
 		),
 	execute: async ({ guild, interaction, instance, member, subcommand }) => {
 		try {
