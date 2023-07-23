@@ -20,9 +20,9 @@ module.exports = {
 			const items = instance.items;
 
 			if (interaction.options !== undefined) {
-				var item = interaction.options.getString('item').toLowerCase();
+				var item = interaction.options.getString('item');
 			} else {
-				var item = interaction.customId.split(' ')[1].toLowerCase();
+				var item = interaction.customId.split(' ')[1];
 				var cont = 0;
 				for (i in items) {
 					if (i == item) {
@@ -31,7 +31,6 @@ module.exports = {
 					}
 					cont++;
 				}
-				console.log(index);
 				if (index < 0) index = Object.keys(items).length - 1;
 				if (index > Object.keys(items).length - 1) index = 0;
 				item = Object.keys(items)[index];

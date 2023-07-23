@@ -177,14 +177,34 @@ module.exports = {
 					return;
 				}
 
-				// Create an array of inventory items with their quantity as a string
-				const inventoryItems = Array.from(inventory).reduce((acc, [itemName, quantity]) => {
-					if (quantity !== 0) {
-						acc.push(`${items[itemName][interaction.locale]} x ${quantity}`);
-					}
-					return acc;
-				}, []);
+				const inventorySort = await readFile(target.id, 'inventorySort');
 
+				// Create an array of inventory items with their quantity as a string
+				const inventoryItems = Array.from(inventory)
+					.reduce((acc, [itemName, quantity]) => {
+						if (quantity !== 0) {
+							acc.push(`${items[itemName][interaction.locale]} x ${quantity}`);
+						}
+						return acc;
+					}, [])
+					.sort((a, b) => {
+						switch (inventorySort) {
+							case 'itemValue':
+								return (
+									items[getItem(a.split(' x ')[0].split(': ')[1])].value -
+									items[getItem(b.split(' x ')[0].split(': ')[1])].value
+								);
+							case 'quantity':
+								return a.split(' x ')[1] - b.split(' x ')[1];
+							case 'worth':
+								return (
+									items[getItem(a.split(' x ')[0].split(': ')[1])].value * a.split(' x ')[1] -
+									items[getItem(b.split(' x ')[0].split(': ')[1])].value * b.split(' x ')[1]
+								);
+							default:
+								return a.split(' x ')[0].split(': ')[1].localeCompare(b.split(' x ')[0].split(': ')[1]);
+						}
+					});
 				// Calculate the number of required embeds based on the number of inventory items
 				const numEmbeds = Math.ceil(inventoryItems.length / 24) || 1;
 
@@ -230,6 +250,11 @@ module.exports = {
 						.setCustomId('inventory craft')
 						.setStyle('Secondary')
 						.setLabel(instance.getMessage(interaction, 'CRAFT')),
+					new ButtonBuilder()
+						.setEmoji('⚙️')
+						.setCustomId('inventory sort')
+						.setStyle('Secondary')
+						.setLabel(instance.getMessage(interaction, 'INVENTORY_SORTING')),
 				]);
 				const message = await interaction.editReply(paginator.components());
 				message.channel.createMessageComponentCollector().on('collect', async (i) => {
@@ -242,9 +267,8 @@ module.exports = {
 					}
 				});
 			} else if (type === 'calc') {
-				const item = interaction.options.getString('item').toLowerCase();
 				const amount = interaction.options.getInteger('amount');
-				const itemJSON = items[getItem(item)];
+				const itemJSON = items[getItem(interaction.options.getString('item'))];
 
 				if (itemJSON === undefined) {
 					interaction.editReply({
@@ -280,8 +304,7 @@ module.exports = {
 				});
 			} else if (type === 'sell') {
 				const inventory = await readFile(member.id, 'inventory');
-				const item = interaction.options.getString('item').toLowerCase();
-				const itemKey = getItem(item);
+				const itemKey = getItem(interaction.options.getString('item'));
 				const itemJSON = items[itemKey];
 
 				if (itemJSON === undefined) {
@@ -357,7 +380,7 @@ module.exports = {
 					return;
 				}
 
-				const itemKey = getItem(item.toLowerCase());
+				const itemKey = getItem(item);
 				const itemJSON = items[itemKey];
 
 				if (itemJSON === undefined) {
@@ -434,7 +457,7 @@ module.exports = {
 				if (item === null || amount === null) {
 					const row = new ActionRowBuilder().addComponents([
 						new StringSelectMenuBuilder()
-							.setCustomId('craft')
+							.setCustomId('inventory craft')
 							.setPlaceholder(instance.getMessage(interaction, 'CRAFT_PLACEHOLDER'))
 							.addOptions(
 								Object.keys(items)
@@ -470,7 +493,7 @@ module.exports = {
 					return;
 				}
 
-				const itemKey = getItem(item.toLowerCase());
+				const itemKey = getItem(item);
 				const itemJSON = items[itemKey];
 
 				if (itemJSON === undefined) {
@@ -648,6 +671,69 @@ module.exports = {
 						components: [],
 					});
 				});
+			} else if (type === 'sort') {
+				if (interaction.values === undefined) {
+					const embed = new EmbedBuilder()
+						.setColor(await getRoleColor(guild, member.id))
+						.setFooter({ text: 'by Falcão ❤️' })
+						.addFields({
+							name: ':gear: ' + instance.getMessage(interaction, 'INVENTORY_SORTING'),
+							value: ':dvd: ' + instance.getMessage(interaction, 'SORTING_MENU'),
+						});
+
+					const row = new ActionRowBuilder().addComponents([
+						new StringSelectMenuBuilder()
+							.setCustomId('inventory sort')
+							.setPlaceholder(instance.getMessage(interaction, 'SORTING_PLACEHOLDER'))
+							.addOptions([
+								{
+									label: instance.getMessage(interaction, 'ITEMVALUE'),
+									value: 'itemValue',
+									emoji: '💸',
+								},
+								{
+									label: instance.getMessage(interaction, 'QUANTITY'),
+									value: 'quantity',
+									emoji: '📶',
+								},
+								{
+									label: instance.getMessage(interaction, 'WORTH'),
+									value: 'worth',
+									emoji: '💰',
+								},
+								{
+									label: instance.getMessage(interaction, 'ALPHABETICAL'),
+									value: 'alphabetical',
+									emoji: '🅰️',
+								},
+							]),
+					]);
+
+					await interaction.editReply({
+						components: [row],
+						embeds: [embed],
+					});
+				} else {
+					const sort = interaction.values[0];
+					await changeDB(member.id, 'inventorySort', sort, true);
+
+					const embed = new EmbedBuilder()
+						.setColor(await getRoleColor(guild, member.id))
+						.setFooter({ text: 'by Falcão ❤️' })
+						.addFields({
+							name: ':gear: ' + instance.getMessage(interaction, 'INVENTORY_SORTING'),
+							value:
+								':dvd: ' +
+								instance.getMessage(interaction, 'SORTING_NOW', {
+									SORTING: instance.getMessage(interaction, sort.toUpperCase()),
+								}),
+						});
+
+					await interaction.editReply({
+						components: [buttons(['inventory_view'])],
+						embeds: [embed],
+					});
+				}
 			}
 		} catch (err) {
 			console.error(`inventory: ${err}`);

@@ -234,6 +234,7 @@ async function resolveCooldown(id, command) {
 }
 
 function getItem(item) {
+	item = item.toLowerCase();
 	for (const key in items) {
 		if (
 			items[key]['pt-BR'].split(' ').slice(1).join(' ').toLowerCase() === item ||
