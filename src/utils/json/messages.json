@@ -1112,7 +1112,38 @@
 		"pt-BR": "Construir tudo",
 		"en-US": "Craft max"
 	},
-
+	"INVENTORY_SORTING": {
+		"pt-BR": "Ordenação do inventário",
+		"en-US": "Inventory sorting"
+	},
+	"SORTING_MENU": {
+		"pt-BR": "Use o menu abaixo para escolher o método de ordenação do inventário",
+		"en-US": "Use the menu below to choose the inventory sorting method"
+	},
+	"SORTING_PLACEHOLDER": {
+		"pt-BR": "Escolha o tipo de ordenação...",
+		"en-US": "Choose the sorting type..."
+	},
+	"ITEMVALUE": {
+		"pt-BR": "Valor do item",
+		"en-US": "Item value"
+	},
+	"WORTH": {
+		"pt-BR": "Valor total",
+		"en-US": "Worth"
+	},
+	"QUANTITY": {
+		"pt-BR": "Quantidade",
+		"en-US": "Quantity"
+	},
+	"ALPHABETICAL": {
+		"pt-BR": "Alfabético",
+		"en-US": "Alphabetical"
+	},
+	"SORTING_NOW": {
+		"pt-BR": "O inventário agora está ordenado por **{SORTING}**",
+		"en-US": "The inventory is now sorted by **{SORTING}**"
+	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
 		"en-US": ":potato: Peasent"

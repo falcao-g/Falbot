@@ -133,7 +133,8 @@ module.exports = {
 			if (
 				interaction.customId === 'inventory view' ||
 				interaction.customId === 'inventory craft' ||
-				interaction.customId.startsWith('craft')
+				interaction.customId.startsWith('craft') ||
+				interaction.customId === 'inventory sort'
 			) {
 				if (!interaction.customId.startsWith('craft')) {
 					var arguments = interaction.customId.split(' ');
@@ -200,16 +201,17 @@ module.exports = {
 			if (interaction.customId === 'page') {
 				const help = client.commands.get('help');
 				help.execute({ guild: interaction.guild, interaction, instance });
-			}
-
-			if (interaction.customId === 'craft') {
-				const inventory = client.commands.get('inventory');
-				await inventory.execute({
+			} else {
+				const command = client.commands.get(interaction.customId.split(' ')[0]);
+				await command.execute({
 					guild: interaction.guild,
 					interaction,
 					instance,
 					member: interaction.member,
-					subcommand: 'craft',
+					client,
+					user: interaction.user,
+					channel: interaction.channel,
+					subcommand: interaction.customId.split(' ')[1],
 				});
 			}
 		}

@@ -62,6 +62,10 @@ const userSchema = mongoose.Schema(
 			type: String,
 			default: 'en-US',
 		},
+		inventorySort: {
+			type: String,
+			default: 'itemValue',
+		},
 	},
 	{
 		versionKey: false,
