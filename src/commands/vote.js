@@ -29,17 +29,24 @@ module.exports = {
 			}
 
 			if (voted && Date.now() - lastVote > 1000 * 60 * 60 * 12) {
+				const bonus = Math.min(await readFile(user.id, 'voteStreak'), 30) * 5;
 				await changeDB(user.id, 'lastVote', Date.now(), true);
 				await changeDB(user.id, 'voteStreak', 1);
-				await changeDB(user.id, 'falcoins', reward + reward * (((await readFile(user.id, 'voteStreak')) * 5) / 100));
+				await changeDB(user.id, 'falcoins', reward + (reward * bonus) / 100);
 				var embed = new EmbedBuilder()
 					.setColor(3066993)
 					.addFields({
 						name: instance.getMessage(interaction, 'VOTE_THANKS'),
-						value: instance.getMessage(interaction, 'VOTE_COLLECTED', {
-							REWARD: format(reward),
-							PERCENTAGE: (await readFile(user.id, 'voteStreak')) * 5,
-						}),
+						value:
+							bonus != 150
+								? instance.getMessage(interaction, 'VOTE_COLLECTED', {
+										REWARD: format(reward),
+										PERCENTAGE: bonus,
+								  })
+								: instance.getMessage(interaction, 'VOTE_COLLECTED_MAX', {
+										REWARD: format(reward),
+										PERCENTAGE: bonus,
+								  }),
 					})
 					.setFooter({ text: 'by Falcão ❤️' });
 			} else if (voted && Date.now() - lastVote < 1000 * 60 * 60 * 12) {

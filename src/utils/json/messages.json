@@ -457,8 +457,12 @@
 		"en-US": ":ballot_box: Thanks for voting!"
 	},
 	"VOTE_COLLECTED": {
-		"pt-BR": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:fire: +1 voto! Você vai receber outros 5% falcoins adicionais da próxima vez.**\n**:ballot_box: Vote diariamente para aumentar o seu bônus**\n**:bell: Ative os lembretes com `/lembrete` para receber uma mensagem assim que você puder votar!**",
-		"en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:fire: +1 streak! You'll earn another 5% additional falcoins next time!**\n**:ballot_box: Vote daily to increase your streak**\n**:bell: Enable reminders using `/reminder` to get a DM when you can vote!**"
+		"pt-BR": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:fire: +1 voto! Você vai receber outros 5% falcoins adicionais da próxima vez.**\n**:ballot_box: Vote diariamente para aumentar o seu bônus**\n**:calendar_spiral: Você pode aumentar seu bônus até 150%**\n**:bell: Ative os lembretes com `/lembrete` para receber uma mensagem assim que você puder votar!**",
+		"en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:fire: +1 streak! You'll earn another 5% additional falcoins next time!**\n**:ballot_box: Vote daily to increase your streak**\n**:calendar_spiral: You can increase your streak up to 150%**\n**:bell: Enable reminders using `/reminder` to get a DM when you can vote!**"
+	},
+	"VOTE_COLLECTED_MAX": {
+		"pt-BR": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:trophy: Você chegou ao bônus máximo, continue votando para mantê-lo!**\n**:bell: Ative os lembretes com `/lembrete` para receber uma mensagem assim que você puder votar!**",
+		"en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:trophy: You reached the max streak, keep voting to keep it!**\n**:bell: Enable reminders using `/reminder` to get a DM when you can vote!**"
 	},
 	"HELP_RANK": {
 		"pt-BR": ":arrow_double_up: Gaste falcoins para subir de rank",
