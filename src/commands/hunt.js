@@ -1,14 +1,5 @@
-const {
-	readFile,
-	getRoleColor,
-	changeDB,
-	randint,
-	pick,
-	isEquipped,
-	useItem,
-	buttons,
-} = require('../utils/functions.js');
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const { readFile, changeDB, randint, pick, isEquipped, useItem, buttons } = require('../utils/functions.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	cooldown: 60 * 60,
@@ -18,7 +9,7 @@ module.exports = {
 		.setDescription('Go hunting to get items')
 		.setDescriptionLocalization('pt-BR', 'Vá caçar para conseguir items')
 		.setDMPermission(false),
-	execute: async ({ guild, interaction, instance, member }) => {
+	execute: async ({ interaction, instance, member }) => {
 		await interaction.deferReply();
 		const items = instance.items;
 		const inventory = await readFile(member.id, 'inventory');
@@ -94,17 +85,14 @@ module.exports = {
 
 		await changeDB(member.id, 'inventory', inventory, true);
 
-		var embed = new EmbedBuilder()
-			.setColor(await getRoleColor(guild, member.id))
-			.addFields({
-				name:
-					':dagger: ' +
-					instance.getMessage(interaction, 'FOUND', {
-						AMOUNT: total,
-					}),
-				value: text + buffText,
-			})
-			.setFooter({ text: 'by Falcão ❤️' });
+		var embed = instance.createEmbed({ member }).addFields({
+			name:
+				':dagger: ' +
+				instance.getMessage(interaction, 'FOUND', {
+					AMOUNT: total,
+				}),
+			value: text + buffText,
+		});
 
 		await interaction.editReply({
 			embeds: [embed],

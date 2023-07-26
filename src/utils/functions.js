@@ -150,15 +150,6 @@ async function readFile(id, field = '', rich = false) {
 	}
 }
 
-async function getRoleColor(guild, member_id) {
-	try {
-		cor = guild.members.cache.get(member_id).displayColor;
-		return cor;
-	} catch (err) {
-		return 'Random';
-	}
-}
-
 function randint(low, high) {
 	return Math.floor(Math.random() * (high - low + 1) + low);
 }
@@ -303,7 +294,6 @@ module.exports = {
 	specialArg,
 	format,
 	readFile,
-	getRoleColor,
 	randint,
 	paginate,
 	pick,

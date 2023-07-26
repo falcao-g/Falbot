@@ -1,5 +1,5 @@
 const { randint } = require('../utils/functions.js');
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -21,8 +21,8 @@ module.exports = {
 		try {
 			const answers = instance.getMessage(interaction, '8BALL');
 			const answer = `${answers[randint(0, answers.length - 1)]}`;
-			const embed = new EmbedBuilder()
-				.setColor(2303786)
+			const embed = instance
+				.createEmbed({ color: 2303786 })
 				.setAuthor({
 					name: instance.getMessage(interaction, 'BOLA8'),
 					iconURL: 'https://images.emojiterra.com/google/noto-emoji/unicode-13.1/128px/1f3b1.png',
@@ -36,8 +36,7 @@ module.exports = {
 						name: instance.getMessage(interaction, 'PREVISAO'),
 						value: answer,
 					}
-				)
-				.setFooter({ text: 'by Falcão ❤️' });
+				);
 			await interaction.editReply({ embeds: [embed] });
 		} catch (error) {
 			console.error(`8ball: ${error}`);

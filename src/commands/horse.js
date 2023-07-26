@@ -1,5 +1,5 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const { specialArg, readFile, getRoleColor, randint, changeDB, format } = require('../utils/functions.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { specialArg, readFile, randint, changeDB, format } = require('../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -49,7 +49,8 @@ module.exports = {
 			if ((await readFile(user.id, 'falcoins')) >= bet) {
 				await changeDB(user.id, 'falcoins', -bet);
 				const horses = ['- - - - -', '- - - - -', '- - - - -', '- - - - -', '- - - - -'];
-				const embed = new EmbedBuilder()
+				const embed = instance
+					.createEmbed({ member })
 					.setDescription(
 						instance.getMessage(interaction, 'CAVALO_DESCRIPTION', {
 							BET: format(bet),
@@ -59,9 +60,7 @@ module.exports = {
 					.addFields({
 						name: '\u200b',
 						value: `**1.** :checkered_flag:  ${horses[0]} :horse_racing:\n\u200b\n**2.** :checkered_flag:  ${horses[1]} :horse_racing:\n\u200b\n**3.** :checkered_flag:  ${horses[2]} :horse_racing:\n\u200b\n**4.** :checkered_flag:  ${horses[3]} :horse_racing:\n\u200b\n**5.** :checkered_flag:  ${horses[4]}  :horse_racing:`,
-					})
-					.setColor(await getRoleColor(guild, user.id))
-					.setFooter({ text: 'by Falcão ❤️' });
+					});
 
 				await interaction.editReply({
 					embeds: [embed],

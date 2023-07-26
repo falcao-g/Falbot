@@ -1,5 +1,5 @@
-const { specialArg, readFile, getRoleColor, changeDB, format } = require('../utils/functions.js');
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const { specialArg, readFile, changeDB, format } = require('../utils/functions.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const Blackjack = require('simply-blackjack');
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, instance, user }) => {
+	execute: async ({ member, interaction, instance, user }) => {
 		await interaction.deferReply();
 		try {
 			const falcoins = interaction.options.getString('falcoins');
@@ -77,36 +77,33 @@ module.exports = {
 				});
 				dealer_cards.push(enum_cards['hidden']);
 
-				const embed = new EmbedBuilder()
-					.addFields(
-						{
-							name: 'BlackJack',
-							value: instance.getMessage(interaction, 'BLACKJACK_TITLE', {
-								BET: format(bet),
-							}),
-							inline: false,
-						},
-						{
-							name: instance.getMessage(interaction, 'PLAYER_HAND', {
-								CARDS: player_cards.join(' '),
-							}),
-							value: instance.getMessage(interaction, 'VALUE', {
-								VALUE: Game.table.player.total,
-							}),
-							inline: true,
-						},
-						{
-							name: instance.getMessage(interaction, 'DEALER_HAND', {
-								CARDS: dealer_cards.join(' '),
-							}),
-							value: instance.getMessage(interaction, 'VALUE', {
-								VALUE: Game.table.dealer.total,
-							}),
-							inline: true,
-						}
-					)
-					.setColor(await getRoleColor(guild, user.id))
-					.setFooter({ text: 'by Falcão ❤️' });
+				const embed = instance.createEmbed({ member }).addFields(
+					{
+						name: 'BlackJack',
+						value: instance.getMessage(interaction, 'BLACKJACK_TITLE', {
+							BET: format(bet),
+						}),
+						inline: false,
+					},
+					{
+						name: instance.getMessage(interaction, 'PLAYER_HAND', {
+							CARDS: player_cards.join(' '),
+						}),
+						value: instance.getMessage(interaction, 'VALUE', {
+							VALUE: Game.table.player.total,
+						}),
+						inline: true,
+					},
+					{
+						name: instance.getMessage(interaction, 'DEALER_HAND', {
+							CARDS: dealer_cards.join(' '),
+						}),
+						value: instance.getMessage(interaction, 'VALUE', {
+							VALUE: Game.table.dealer.total,
+						}),
+						inline: true,
+					}
+				);
 
 				const row = new ActionRowBuilder().addComponents(
 					(hit = new ButtonBuilder()

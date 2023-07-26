@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, SlashCommandBuilder } = require('discord.js');
+const { ActionRowBuilder, StringSelectMenuBuilder, SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -62,7 +62,7 @@ module.exports = {
 				var page = interaction.values[0];
 			}
 
-			const embed = new EmbedBuilder().setColor(7419530).setFooter({ text: 'by Falcão ❤️' });
+			const embed = instance.createEmbed({ color: 7419530 });
 			if (page === 'introduction') {
 				embed.addFields({
 					name: instance.getMessage(interaction, 'WELCOME'),

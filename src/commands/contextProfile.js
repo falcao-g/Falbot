@@ -1,5 +1,5 @@
-const { EmbedBuilder, ContextMenuCommandBuilder, ApplicationCommandType, time } = require('discord.js');
-const { getRoleColor, format, readFile, buttons } = require('../utils/functions.js');
+const { ContextMenuCommandBuilder, ApplicationCommandType, time } = require('discord.js');
+const { format, readFile, buttons } = require('../utils/functions.js');
 
 module.exports = {
 	data: new ContextMenuCommandBuilder()
@@ -7,11 +7,10 @@ module.exports = {
 		.setNameLocalization('pt-BR', 'Ver o perfil do usuário')
 		.setType(ApplicationCommandType.User)
 		.setDMPermission(false),
-	execute: async ({ guild, instance, interaction }) => {
+	execute: async ({ instance, interaction }) => {
 		await interaction.deferReply();
 		try {
-			const user = interaction.options.getUser('user');
-			const target = user ? await guild.members.fetch(user.id) : member;
+			const target = interaction.targetMember;
 			const { rank, falcoins, vitorias, banco, inventory, voteStreak, tickets, createdAt } = await readFile(
 				target.user.id
 			);
@@ -35,10 +34,9 @@ module.exports = {
 				return acc;
 			}, 0);
 
-			const embed = new EmbedBuilder()
+			const embed = instance
+				.createEmbed({ member: target })
 				.setTitle(instance.getMessage(interaction, 'PROFILE', { USER: target.displayName }))
-				.setColor(await getRoleColor(guild, target.user.id))
-				.setFooter({ text: 'by Falcão ❤️' })
 				.setThumbnail(target.user.avatarURL())
 				.addFields(
 					{

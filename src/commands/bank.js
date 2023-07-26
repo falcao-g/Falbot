@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const { specialArg, readFile, format, getRoleColor, changeDB } = require('../utils/functions.js');
 
 module.exports = {
@@ -53,7 +53,7 @@ module.exports = {
 				.setDescription('View bank balance and other useful stats')
 				.setDescriptionLocalization('pt-BR', 'Veja o saldo bancário e outras informações')
 		),
-	execute: async ({ guild, user, interaction, instance }) => {
+	execute: async ({ user, member, interaction, instance }) => {
 		await interaction.deferReply();
 		try {
 			const subcommand = interaction.options.getSubcommand();
@@ -62,21 +62,18 @@ module.exports = {
 			const limit = instance.levels[rank - 1].bankLimit;
 
 			if (subcommand === 'view') {
-				const embed = new EmbedBuilder()
-					.setColor(await getRoleColor(guild, user.id))
-					.addFields({
-						name: ':bank: ' + instance.getMessage(interaction, 'BANCO'),
-						value: `**:coin: ${await readFile(user.id, 'banco', true)} falcoins\n:bank: ${instance.getMessage(
-							interaction,
-							'BANK_INTEREST'
-						)}\n\n:money_with_wings: ${format(limit - (await readFile(user.id, 'banco')))} ${instance.getMessage(
-							interaction,
-							'BANK_LIMIT'
-						)}\n:atm: ${instance.getMessage(interaction, 'BANK_DEPOSIT_LIMIT', {
-							FALCOINS: format(limit / 2),
-						})}**`,
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+				const embed = instance.createEmbed({ member }).addFields({
+					name: ':bank: ' + instance.getMessage(interaction, 'BANCO'),
+					value: `**:coin: ${await readFile(user.id, 'banco', true)} falcoins\n:bank: ${instance.getMessage(
+						interaction,
+						'BANK_INTEREST'
+					)}\n\n:money_with_wings: ${format(limit - (await readFile(user.id, 'banco')))} ${instance.getMessage(
+						interaction,
+						'BANK_LIMIT'
+					)}\n:atm: ${instance.getMessage(interaction, 'BANK_DEPOSIT_LIMIT', {
+						FALCOINS: format(limit / 2),
+					})}**`,
+				});
 				await interaction.editReply({ embeds: [embed] });
 			} else if (subcommand === 'deposit') {
 				try {
@@ -105,13 +102,13 @@ module.exports = {
 					await changeDB(user.id, 'falcoins', -quantity);
 					await changeDB(user.id, 'banco', quantity);
 
-					const embed = new EmbedBuilder()
+					const embed = instance
+						.createEmbed({ member })
 						.setTitle(
 							instance.getMessage(interaction, 'BANCO_DEPOSITOU', {
 								VALUE: format(quantity),
 							})
 						)
-						.setColor(await getRoleColor(guild, user.id))
 						.addFields(
 							{
 								name: instance.getMessage(interaction, 'SALDO_ATUAL'),
@@ -123,8 +120,7 @@ module.exports = {
 									VALUE: await readFile(user.id, 'banco', true),
 								}),
 							}
-						)
-						.setFooter({ text: 'by Falcão ❤️' });
+						);
 
 					await interaction.editReply({ embeds: [embed] });
 				} else {
@@ -148,13 +144,13 @@ module.exports = {
 					await changeDB(user.id, 'banco', -quantity);
 					await changeDB(user.id, 'falcoins', quantity);
 
-					const embed = new EmbedBuilder()
+					const embed = instance
+						.createEmbed({ member })
 						.setTitle(
 							instance.getMessage(interaction, 'BANCO_SACOU', {
 								VALUE: format(quantity),
 							})
 						)
-						.setColor(await getRoleColor(guild, user.id))
 						.addFields(
 							{
 								name: instance.getMessage(interaction, 'SALDO_ATUAL'),
@@ -166,8 +162,7 @@ module.exports = {
 									VALUE: await readFile(user.id, 'banco', true),
 								}),
 							}
-						)
-						.setFooter({ text: 'by Falcão ❤️' });
+						);
 
 					await interaction.editReply({ embeds: [embed] });
 				} else {

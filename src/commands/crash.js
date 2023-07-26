@@ -1,5 +1,5 @@
-const { specialArg, readFile, getRoleColor, randint, changeDB, format } = require('../utils/functions.js');
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const { specialArg, readFile, randint, changeDB, format } = require('../utils/functions.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -20,12 +20,12 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, instance, user }) => {
+	execute: async ({ member, interaction, instance }) => {
 		await interaction.deferReply();
 		try {
 			const falcoins = interaction.options.getString('falcoins');
 			try {
-				var bet = await specialArg(falcoins, user.id, 'falcoins');
+				var bet = await specialArg(falcoins, member.id, 'falcoins');
 			} catch {
 				await interaction.editReply({
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
@@ -34,29 +34,26 @@ module.exports = {
 				});
 				return;
 			}
-			if ((await readFile(user.id, 'falcoins')) >= bet) {
-				await changeDB(user.id, 'falcoins', -bet);
+			if ((await readFile(member.id, 'falcoins')) >= bet) {
+				await changeDB(member.id, 'falcoins', -bet);
 				multiplier = 10;
-				const embed = new EmbedBuilder()
-					.addFields(
-						{
-							name: 'Crash',
-							value: instance.getMessage(interaction, 'CRASH_TEXT'),
-							inline: false,
-						},
-						{
-							name: instance.getMessage(interaction, 'MULTIPLIER'),
-							value: `${(multiplier / 10).toFixed(1)}x`,
-							inline: true,
-						},
-						{
-							name: instance.getMessage(interaction, 'GANHOS'),
-							value: `:coin: ${format(parseInt((bet * multiplier) / 10 - bet))}`,
-							inline: true,
-						}
-					)
-					.setColor(await getRoleColor(guild, user.id))
-					.setFooter({ text: 'by Falcão ❤️' });
+				const embed = instance.createEmbed({ member }).addFields(
+					{
+						name: 'Crash',
+						value: instance.getMessage(interaction, 'CRASH_TEXT'),
+						inline: false,
+					},
+					{
+						name: instance.getMessage(interaction, 'MULTIPLIER'),
+						value: `${(multiplier / 10).toFixed(1)}x`,
+						inline: true,
+					},
+					{
+						name: instance.getMessage(interaction, 'GANHOS'),
+						value: `:coin: ${format(parseInt((bet * multiplier) / 10 - bet))}`,
+						inline: true,
+					}
+				);
 
 				const row = new ActionRowBuilder().addComponents(
 					(sell = new ButtonBuilder()
@@ -72,7 +69,7 @@ module.exports = {
 				});
 
 				const filter = (btInt) => {
-					return instance.defaultFilter(btInt) && btInt.user.id === user.id;
+					return instance.defaultFilter(btInt) && btInt.user.id === member.id;
 				};
 
 				const collector = answer.createMessageComponentCollector({
@@ -129,7 +126,7 @@ module.exports = {
 				if (lost) {
 					embed.setColor(15158332);
 				} else {
-					await changeDB(user.id, 'falcoins', parseInt((bet * multiplier) / 10));
+					await changeDB(member.id, 'falcoins', parseInt((bet * multiplier) / 10));
 					embed.setColor(3066993);
 				}
 

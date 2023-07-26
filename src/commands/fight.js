@@ -1,4 +1,4 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const { specialArg, readFile, format, randint, changeDB, buttons } = require('../utils/functions.js');
 
 module.exports = {
@@ -113,8 +113,8 @@ module.exports = {
 						while (order[0]['hp'] > 0 && order[1]['hp'] > 0) {
 							for (const [i, player] of order.entries()) {
 								const enemy = i === 0 ? order[1] : order[0];
-								var embed = new EmbedBuilder();
-								i === 0 ? embed.setColor(3447003) : embed.setColor(15105570);
+								var embed = instance.createEmbed({ color: 3447003 });
+								if (i !== 0) embed.setColor(15105570);
 
 								if (player.hp <= 0 || enemy.hp <= 0) {
 									break;
@@ -200,7 +200,7 @@ module.exports = {
 						await changeDB(winner.id, 'falcoins', bet * 2);
 						await changeDB(winner.id, 'vitorias');
 
-						const fields = [
+						const embed2 = instance.createEmbed({ color: 3066993 }).addFields(
 							{
 								name: `${winner.name}${instance.getMessage(interaction, 'GANHO')}`,
 								value: instance.getMessage(interaction, 'LUTA_DERROTOU', {
@@ -210,10 +210,8 @@ module.exports = {
 							{
 								name: instance.getMessage(interaction, 'SALDO_ATUAL'),
 								value: `${await readFile(winner.id, 'falcoins', true)} falcoins`,
-							},
-						];
-
-						const embed2 = new EmbedBuilder().setColor(3066993).setFooter({ text: 'by Falcão ❤️' }).addFields(fields);
+							}
+						);
 
 						await interaction.channel.send({
 							embeds: [embed2],

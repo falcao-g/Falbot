@@ -1,14 +1,5 @@
-const {
-	readFile,
-	getRoleColor,
-	changeDB,
-	randint,
-	pick,
-	isEquipped,
-	useItem,
-	buttons,
-} = require('../utils/functions.js');
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
+const { readFile, changeDB, randint, pick, isEquipped, useItem, buttons } = require('../utils/functions.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	cooldown: 60 * 60,
@@ -18,7 +9,7 @@ module.exports = {
 		.setDescription('Go explore to get items')
 		.setDescriptionLocalization('pt-BR', 'Vá explorar para conseguir items')
 		.setDMPermission(false),
-	execute: async ({ guild, interaction, instance, member }) => {
+	execute: async ({ interaction, instance, member }) => {
 		await interaction.deferReply();
 		const items = instance.items;
 		const inventory = await readFile(member.id, 'inventory');
@@ -77,6 +68,8 @@ module.exports = {
 			return acc;
 		}, []);
 
+		console.log(filteredItems);
+
 		// randomly select a number of items based on their weights
 		const selectedItems = [];
 		const numItems = randint(3, 5);
@@ -94,17 +87,14 @@ module.exports = {
 
 		await changeDB(member.id, 'inventory', inventory, true);
 
-		var embed = new EmbedBuilder()
-			.setColor(await getRoleColor(guild, member.id))
-			.addFields({
-				name:
-					':compass: ' +
-					instance.getMessage(interaction, 'FOUND', {
-						AMOUNT: total,
-					}),
-				value: text + buffText,
-			})
-			.setFooter({ text: 'by Falcão ❤️' });
+		var embed = instance.createEmbed({ member }).addFields({
+			name:
+				':compass: ' +
+				instance.getMessage(interaction, 'FOUND', {
+					AMOUNT: total,
+				}),
+			value: text + buffText,
+		});
 
 		await interaction.editReply({
 			embeds: [embed],
