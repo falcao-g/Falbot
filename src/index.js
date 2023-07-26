@@ -367,6 +367,10 @@ class Falbot {
 			return acc;
 		}, 0);
 	}
+
+	createEmbed({ color = undefined, member = undefined }) {
+		return new EmbedBuilder().setColor(color ?? member.displayColor).setFooter({ text: 'by Falcão ❤️' });
+	}
 }
 
 Falbot = new Falbot();
