@@ -38,7 +38,7 @@ module.exports = {
 			buff = 2;
 			await useItem(member, 'huntknife');
 			buffText = `**${instance.getMessage(interaction, 'BUFF', {
-				ITEM: items['huntknife'][interaction.locale],
+				ITEM: items['huntknife'][interaction.locale] ?? items['huntknife']['en-US'],
 				BUFF: 2,
 			})}**`;
 		}
@@ -47,7 +47,7 @@ module.exports = {
 			buff = 4;
 			await useItem(member, 'diaknife');
 			buffText = `**${instance.getMessage(interaction, 'BUFF', {
-				ITEM: items['diaknife'][interaction.locale],
+				ITEM: items['diaknife'][interaction.locale] ?? items['diaknife']['en-US'],
 				BUFF: 4,
 			})}**`;
 		}
@@ -85,8 +85,9 @@ module.exports = {
 		for (let i = 0; i < numItems; i++) {
 			var selectedItem = pick(filteredItems);
 			var amount = randint(1, amounts[items[selectedItem]['rarity']]) * buff;
+			var name = items[selectedItem][interaction.locale] ?? items[selectedItem]['en-US'];
 			total += amount;
-			text += `**${items[selectedItem][interaction.locale]}** x ${amount}\n`;
+			text += `**${name}** x ${amount}\n`;
 			filteredItems = filteredItems.filter((item) => item[0] !== selectedItem);
 			inventory.set(selectedItem, (inventory.get(selectedItem) || 0) + amount);
 			selectedItems.push(selectedItem);
