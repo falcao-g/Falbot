@@ -320,19 +320,17 @@ module.exports = {
 				await changeDB(member.id, 'inventory', inventory, true);
 				await changeDB(member.id, 'falcoins', falcoins);
 
-
-				const embed = instance.createEmbed(member.displayColor)
-					.addFields({
-						name: instance.getMessage(interaction, 'SOLD_TITLE', {
-							AMOUNT: format(amount),
-							ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
-							FALCOINS: format(falcoins),
-						}),
-						value: instance.getMessage(interaction, 'SOLD_FIELD', {
-							REMAINING: format(inventory.get(itemKey)),
-							FALCOINS2: format(Number(falcoins / amount)),
-						}),
-					})
+				const embed = instance.createEmbed(member.displayColor).addFields({
+					name: instance.getMessage(interaction, 'SOLD_TITLE', {
+						AMOUNT: format(amount),
+						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+						FALCOINS: format(falcoins),
+					}),
+					value: instance.getMessage(interaction, 'SOLD_FIELD', {
+						REMAINING: format(inventory.get(itemKey)),
+						FALCOINS2: format(Number(falcoins / amount)),
+					}),
+				});
 
 				interaction.editReply({
 					embeds: [embed],
@@ -404,15 +402,14 @@ module.exports = {
 				await changeDB(member.id, 'equippedItems', equippedItems, true);
 				await changeDB(member.id, 'inventory', inventory, true);
 
-				const embed = instance.createEmbed(member.displayColor)
-					.addFields({
-						name: instance.getMessage(interaction, 'EQUIPPED_TITLE', {
-							ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
-						}),
-						value: instance.getMessage(interaction, 'EQUIPPED_VALUE', {
-							ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
-						}),
-					})
+				const embed = instance.createEmbed(member.displayColor).addFields({
+					name: instance.getMessage(interaction, 'EQUIPPED_TITLE', {
+						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+					}),
+					value: instance.getMessage(interaction, 'EQUIPPED_VALUE', {
+						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+					}),
+				});
 
 				interaction.editReply({
 					embeds: [embed],
@@ -538,19 +535,18 @@ module.exports = {
 				inventory.set(itemKey, inventory.get(itemKey) + amount);
 				await changeDB(member.id, 'inventory', inventory, true);
 
-				const embed = instance.createEmbed(member.displayColor)
-					.addFields({
-						name: instance.getMessage(interaction, 'CRAFTED_TITLE', {
-							ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
-							AMOUNT: format(amount),
-						}),
-						value: instance.getMessage(interaction, 'CRAFTED_VALUE', {
-							INGREDIENTS: ingredients.join('\n'),
-							ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
-							AMOUNT: format(amount),
-							MAXAMOUNT: format(maxAmount),
-						}),
-					});
+				const embed = instance.createEmbed(member.displayColor).addFields({
+					name: instance.getMessage(interaction, 'CRAFTED_TITLE', {
+						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+						AMOUNT: format(amount),
+					}),
+					value: instance.getMessage(interaction, 'CRAFTED_VALUE', {
+						INGREDIENTS: ingredients.join('\n'),
+						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+						AMOUNT: format(amount),
+						MAXAMOUNT: format(maxAmount),
+					}),
+				});
 
 				const row = new ActionRowBuilder().addComponents([
 					new ButtonBuilder()
