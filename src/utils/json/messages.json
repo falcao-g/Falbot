@@ -625,8 +625,12 @@
 		"en-US": "Claim your reward after voting by using /vote"
 	},
 	"PLAYERS": {
-		"pt-BR": "Jogadores",
-		"en-US": "Players"
+		"pt-BR": "Jogadores totais",
+		"en-US": "Total players"
+	},
+	"ACTIVE_PLAYERS": {
+		"pt-BR": "Jogadores ativos",
+		"en-US": "Active players"
 	},
 	"UPTIME": {
 		"pt-BR": "Tempo de funcionamento",
