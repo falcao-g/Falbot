@@ -14,7 +14,7 @@ module.exports = {
 			const { rank, falcoins, vitorias, banco } = await readFile(target.user.id);
 
 			const embed = instance
-				.createEmbed({ member: target })
+				.createEmbed(target.displayColor)
 				.setTitle(instance.getMessage(interaction, rank) + ' ' + target.displayName)
 				.addFields(
 					{

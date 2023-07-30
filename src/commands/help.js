@@ -62,7 +62,7 @@ module.exports = {
 				var page = interaction.values[0];
 			}
 
-			const embed = instance.createEmbed({ color: 7419530 });
+			const embed = instance.createEmbed(7419530);
 			if (page === 'introduction') {
 				embed.addFields({
 					name: instance.getMessage(interaction, 'WELCOME'),

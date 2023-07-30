@@ -1,5 +1,5 @@
-const { specialArg, readFile, randint, changeDB, format, getRoleColor } = require('../utils/functions.js');
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { specialArg, readFile, randint, changeDB, format } = require('../utils/functions.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -83,7 +83,7 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, user, interaction, instance }) => {
+	execute: async ({ user, interaction, instance, member }) => {
 		try {
 			await interaction.deferReply();
 			const falcoins = interaction.options.getString('falcoins');
@@ -100,13 +100,11 @@ module.exports = {
 			if ((await readFile(user.id, 'falcoins')) >= bet) {
 				await changeDB(user.id, 'falcoins', -bet);
 
-				const embed = new EmbedBuilder()
+				const embed = instance
+					.createEmbed(member.displayColor)
 					.setTitle(instance.getMessage(interaction, 'ROLETA'))
 					.setDescription(instance.getMessage(interaction, 'GIRANDO_ROLETA'))
-					.setColor(await getRoleColor(guild, user.id))
-					.setImage('https://media3.giphy.com/media/26uf2YTgF5upXUTm0/giphy.gif')
-					.setFooter({ text: 'by Falcão ❤️' });
-
+					.setImage('https://media3.giphy.com/media/26uf2YTgF5upXUTm0/giphy.gif');
 				await interaction.editReply({
 					embeds: [embed],
 				});
@@ -137,9 +135,7 @@ module.exports = {
 
 				await new Promise((resolve) => setTimeout(resolve, 3000));
 
-				var embed2 = new EmbedBuilder()
-					.setTitle(instance.getMessage(interaction, 'ROLETA'))
-					.setFooter({ text: 'by Falcão ❤️' });
+				var embed2 = instance.createEmbed(member.displayColor).setTitle(instance.getMessage(interaction, 'ROLETA'));
 
 				if (type.includes(luck)) {
 					await changeDB(user.id, 'falcoins', profit);

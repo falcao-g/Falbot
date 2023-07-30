@@ -1,5 +1,5 @@
-const { specialArg, readFile, changeDB, getRoleColor, format, pick } = require('../utils/functions.js');
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { specialArg, readFile, changeDB, format, pick } = require('../utils/functions.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -46,13 +46,10 @@ module.exports = {
 				const emoji2 = pick(choices);
 				const emoji3 = pick(choices);
 
-				const embed = new EmbedBuilder()
-					.setColor(await getRoleColor(guild, user.id))
-					.addFields({
-						name: `-------------------\n | ${emote} | ${emote} | ${emote} |\n-------------------`,
-						value: `--- **${instance.getMessage(interaction, 'GIRANDO')}** ---`,
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+				const embed = instance.createEmbed(member.displayColor).addFields({
+					name: `-------------------\n | ${emote} | ${emote} | ${emote} |\n-------------------`,
+					value: `--- **${instance.getMessage(interaction, 'GIRANDO')}** ---`,
+				});
 
 				await interaction.editReply({
 					embeds: [embed],
@@ -94,7 +91,7 @@ module.exports = {
 
 				if (profit > 0) {
 					await changeDB(user.id, 'falcoins', profit);
-					var embed2 = new EmbedBuilder().setColor(3066993).addFields(
+					var embed2 = instance.createEmbed(3066993).addFields(
 						{
 							name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
 							value: `--- **${instance.getMessage(interaction, 'VOCE_GANHOU')}** ---`,
@@ -107,7 +104,7 @@ module.exports = {
 						}
 					);
 				} else {
-					var embed2 = new EmbedBuilder().setColor(15158332).addFields(
+					var embed2 = instance.createEmbed(15158332).addFields(
 						{
 							name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
 							value: `--- **${instance.getMessage(interaction, 'VOCE_PERDEU')}** ---`,
@@ -120,12 +117,10 @@ module.exports = {
 						}
 					);
 				}
-				embed2
-					.addFields({
-						name: instance.getMessage(interaction, 'SALDO_ATUAL'),
-						value: `${await readFile(user.id, 'falcoins', true)}`,
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+				embed2.addFields({
+					name: instance.getMessage(interaction, 'SALDO_ATUAL'),
+					value: `${await readFile(user.id, 'falcoins', true)}`,
+				});
 				await interaction.editReply({
 					embeds: [embed2],
 				});

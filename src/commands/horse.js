@@ -50,7 +50,7 @@ module.exports = {
 				await changeDB(user.id, 'falcoins', -bet);
 				const horses = ['- - - - -', '- - - - -', '- - - - -', '- - - - -', '- - - - -'];
 				const embed = instance
-					.createEmbed({ member })
+					.createEmbed(member.displayColor)
 					.setDescription(
 						instance.getMessage(interaction, 'CAVALO_DESCRIPTION', {
 							BET: format(bet),

@@ -77,7 +77,7 @@ module.exports = {
 				});
 				dealer_cards.push(enum_cards['hidden']);
 
-				const embed = instance.createEmbed({ member }).addFields(
+				const embed = instance.createEmbed(member.displayColor).addFields(
 					{
 						name: 'BlackJack',
 						value: instance.getMessage(interaction, 'BLACKJACK_TITLE', {

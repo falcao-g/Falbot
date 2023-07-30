@@ -85,7 +85,7 @@ module.exports = {
 
 		await changeDB(member.id, 'inventory', inventory, true);
 
-		var embed = instance.createEmbed({ member }).addFields({
+		var embed = instance.createEmbed(member.displayColor).addFields({
 			name:
 				':fishing_pole_and_fish: ' +
 				instance.getMessage(interaction, 'FOUND', {

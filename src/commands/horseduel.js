@@ -36,7 +36,7 @@ module.exports = {
 			if ((await readFile(user.id, 'falcoins')) >= bet) {
 				var pot = bet;
 				const embed = instance
-					.createEmbed({ color: '#0099ff' })
+					.createEmbed('#0099ff')
 					.setDescription(
 						instance.getMessage(interaction, 'CAVALGADA_DESCRIPTION', {
 							USER: user,

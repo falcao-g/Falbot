@@ -35,7 +35,7 @@ module.exports = {
 			}, 0);
 
 			const embed = instance
-				.createEmbed({ member: target })
+				.createEmbed(target.displayColor)
 				.setTitle(instance.getMessage(interaction, 'PROFILE', { USER: target.displayName }))
 				.setThumbnail(target.user.avatarURL())
 				.addFields(

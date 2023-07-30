@@ -1,5 +1,5 @@
 const { readFile, changeDB, msToTime, format } = require('../utils/functions.js');
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -46,15 +46,12 @@ module.exports = {
 			if (type === 'buy') {
 				const amount = interaction.options.getInteger('amount');
 				if ((await readFile(user.id, 'falcoins')) > amount * 500) {
-					var embed = new EmbedBuilder()
-						.setColor(15844367)
-						.addFields({
-							name: `:tickets: ${format(amount)} ` + instance.getMessage(interaction, 'PURCHASED'),
-							value: instance.getMessage(interaction, 'LOTTERY_COST', {
-								COST: format(amount * 500),
-							}),
-						})
-						.setFooter({ text: 'by Falcão ❤️' });
+					var embed = instance.createEmbed(15844367).addFields({
+						name: `:tickets: ${format(amount)} ` + instance.getMessage(interaction, 'PURCHASED'),
+						value: instance.getMessage(interaction, 'LOTTERY_COST', {
+							COST: format(amount * 500),
+						}),
+					});
 
 					await changeDB(user.id, 'falcoins', -(amount * 500));
 					await changeDB(user.id, 'tickets', amount);
@@ -68,25 +65,22 @@ module.exports = {
 					});
 				}
 			} else if (type === 'view') {
-				var embed = new EmbedBuilder()
-					.setColor(15844367)
-					.addFields(
-						{
-							name: instance.getMessage(interaction, 'LOTTERY'),
-							value: instance.getMessage(interaction, 'LOTTERY_POOL', {
-								PRIZE: format(lotto.prize),
-							}),
-							inline: false,
-						},
-						{
-							name: 'Info',
-							value: instance.getMessage(interaction, 'LOTTERY_INFO', {
-								TIME: msToTime(lotto.nextDraw - Date.now()),
-							}),
-							inline: false,
-						}
-					)
-					.setFooter({ text: 'by Falcão ❤️' });
+				var embed = instance.createEmbed(15844367).addFields(
+					{
+						name: instance.getMessage(interaction, 'LOTTERY'),
+						value: instance.getMessage(interaction, 'LOTTERY_POOL', {
+							PRIZE: format(lotto.prize),
+						}),
+						inline: false,
+					},
+					{
+						name: 'Info',
+						value: instance.getMessage(interaction, 'LOTTERY_INFO', {
+							TIME: msToTime(lotto.nextDraw - Date.now()),
+						}),
+						inline: false,
+					}
+				);
 
 				if ((await readFile(user.id, 'tickets')) > 0) {
 					embed.data.fields[0].value += instance.getMessage(interaction, 'LOTTERY_TICKETS', {
@@ -114,13 +108,10 @@ module.exports = {
 					}
 				}
 
-				var embed = new EmbedBuilder()
-					.setColor(15844367)
-					.setFooter({ text: 'by Falcão ❤️' })
-					.addFields({
-						name: instance.getMessage(interaction, 'LOTTERY_WINNERS'),
-						value: history,
-					});
+				var embed = instance.createEmbed(15844367).addFields({
+					name: instance.getMessage(interaction, 'LOTTERY_WINNERS'),
+					value: history,
+				});
 
 				await interaction.editReply({
 					embeds: [embed],

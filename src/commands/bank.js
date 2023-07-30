@@ -62,7 +62,7 @@ module.exports = {
 			const limit = instance.levels[rank - 1].bankLimit;
 
 			if (subcommand === 'view') {
-				const embed = instance.createEmbed({ member }).addFields({
+				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: ':bank: ' + instance.getMessage(interaction, 'BANCO'),
 					value: `**:coin: ${await readFile(user.id, 'banco', true)} falcoins\n:bank: ${instance.getMessage(
 						interaction,
@@ -103,7 +103,7 @@ module.exports = {
 					await changeDB(user.id, 'banco', quantity);
 
 					const embed = instance
-						.createEmbed({ member })
+						.createEmbed(member.displayColor)
 						.setTitle(
 							instance.getMessage(interaction, 'BANCO_DEPOSITOU', {
 								VALUE: format(quantity),
@@ -145,7 +145,7 @@ module.exports = {
 					await changeDB(user.id, 'falcoins', quantity);
 
 					const embed = instance
-						.createEmbed({ member })
+						.createEmbed(member.displayColor)
 						.setTitle(
 							instance.getMessage(interaction, 'BANCO_SACOU', {
 								VALUE: format(quantity),

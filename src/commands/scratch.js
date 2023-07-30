@@ -1,5 +1,5 @@
-const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const { format, randint, changeDB, getRoleColor, setCooldown } = require('../utils/functions.js');
+const { ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } = require('discord.js');
+const { format, randint, changeDB, setCooldown } = require('../utils/functions.js');
 
 module.exports = {
 	cooldown: 60 * 60 * 6,
@@ -9,7 +9,7 @@ module.exports = {
 		.setDescription('Play scratch-off for a chance to win a huge jackpot')
 		.setDescriptionLocalization('pt-BR', 'Jogue raspadinha para uma chance de ganhar muitos falcoins')
 		.setDMPermission(false),
-	execute: async ({ guild, interaction, instance, user }) => {
+	execute: async ({ interaction, instance, user, member }) => {
 		try {
 			await interaction.deferReply();
 
@@ -28,13 +28,10 @@ module.exports = {
 				rows[cr].addComponents(new ButtonBuilder().setCustomId(String(i)).setStyle('Success').setEmoji('❓'));
 			}
 
-			var embed = new EmbedBuilder()
-				.setColor(await getRoleColor(guild, user.id))
-				.setFooter({ text: 'by Falcão ❤️' })
-				.addFields({
-					name: instance.getMessage(interaction, 'SCRATCH_TITLE'),
-					value: instance.getMessage(interaction, 'SCRATCH_DESCRIPTION'),
-				});
+			var embed = instance.createEmbed(member.displayColor).addFields({
+				name: instance.getMessage(interaction, 'SCRATCH_TITLE'),
+				value: instance.getMessage(interaction, 'SCRATCH_DESCRIPTION'),
+			});
 
 			answer = await interaction.editReply({
 				embeds: [embed],
@@ -55,7 +52,7 @@ module.exports = {
 			collector.on('collect', async (i) => {
 				const luck = randint(1, 25);
 				cont = 6 - collector.total;
-				var embed = new EmbedBuilder().setFooter({ text: 'by Falcão ❤️' });
+				var embed = instance.createEmbed();
 
 				if (luck === 25) {
 					//jackpot

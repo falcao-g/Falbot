@@ -1,5 +1,5 @@
-const { readFile, changeDB, getRoleColor, randint, format } = require('../utils/functions.js');
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { readFile, changeDB, randint, format } = require('../utils/functions.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	cooldown: 60 * 60,
@@ -9,7 +9,7 @@ module.exports = {
 		.setDescription('Go to work to earn falcoins')
 		.setDescriptionLocalization('pt-BR', 'Vá trabalhar para ganhar falcoins')
 		.setDMPermission(false),
-	execute: async ({ interaction, instance, guild, user }) => {
+	execute: async ({ interaction, instance, member, user }) => {
 		try {
 			await interaction.deferReply();
 			var levels = instance.levels;
@@ -36,15 +36,14 @@ module.exports = {
 
 			changeDB(user.id, 'falcoins', salary + bonus);
 
-			var embed = new EmbedBuilder()
-				.setColor(await getRoleColor(guild, user.id))
+			var embed = instance
+				.createEmbed(member.displayColor)
 				.setTitle(
 					instance.getMessage(interaction, 'WORK_TITLE', {
 						FALCOINS: format(salary + bonus),
 					})
 				)
-				.setDescription(desc)
-				.setFooter({ text: 'by Falcão ❤️' });
+				.setDescription(desc);
 
 			await interaction.editReply({
 				embeds: [embed],

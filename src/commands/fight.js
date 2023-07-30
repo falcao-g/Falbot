@@ -113,7 +113,7 @@ module.exports = {
 						while (order[0]['hp'] > 0 && order[1]['hp'] > 0) {
 							for (const [i, player] of order.entries()) {
 								const enemy = i === 0 ? order[1] : order[0];
-								var embed = instance.createEmbed({ color: 3447003 });
+								var embed = instance.createEmbed(3447003);
 								if (i !== 0) embed.setColor(15105570);
 
 								if (player.hp <= 0 || enemy.hp <= 0) {
@@ -200,7 +200,7 @@ module.exports = {
 						await changeDB(winner.id, 'falcoins', bet * 2);
 						await changeDB(winner.id, 'vitorias');
 
-						const embed2 = instance.createEmbed({ color: 3066993 }).addFields(
+						const embed2 = instance.createEmbed(3066993).addFields(
 							{
 								name: `${winner.name}${instance.getMessage(interaction, 'GANHO')}`,
 								value: instance.getMessage(interaction, 'LUTA_DERROTOU', {

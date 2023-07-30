@@ -37,7 +37,7 @@ module.exports = {
 			if ((await readFile(member.id, 'falcoins')) >= bet) {
 				await changeDB(member.id, 'falcoins', -bet);
 				multiplier = 10;
-				const embed = instance.createEmbed({ member }).addFields(
+				const embed = instance.createEmbed(member.displayColor).addFields(
 					{
 						name: 'Crash',
 						value: instance.getMessage(interaction, 'CRASH_TEXT'),

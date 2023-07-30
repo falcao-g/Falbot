@@ -1,5 +1,5 @@
-const { format, getRoleColor, getItem, readFile } = require('../utils/functions.js');
-const { EmbedBuilder, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const { format, getItem, readFile } = require('../utils/functions.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -14,7 +14,7 @@ module.exports = {
 				.setDescriptionLocalization('pt-BR', 'item para ver informações sobre')
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, instance, member }) => {
+	execute: async ({ interaction, instance, member }) => {
 		try {
 			await interaction.deferReply();
 			const items = instance.items;
@@ -69,14 +69,13 @@ module.exports = {
 				information += `\n${instance.getMessage(interaction, itemJSON.effect.toUpperCase())}`;
 			}
 
-			const embed = new EmbedBuilder()
-				.setColor(await getRoleColor(guild, member.id))
+			const embed = instance
+				.createEmbed(member.displayColor)
 				.setTitle(`${itemJSON[interaction.locale]} ` + '(`' + `${itemKey}` + '`)')
 				.addFields({
 					name: instance.getMessage(interaction, 'INFO'),
 					value: information,
-				})
-				.setFooter({ text: 'by Falcão ❤️' });
+				});
 
 			if (itemJSON.rarity) {
 				embed.setDescription(`**${instance.getMessage(interaction, itemJSON.rarity.toUpperCase())}**`);

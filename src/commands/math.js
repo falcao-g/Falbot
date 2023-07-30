@@ -1,6 +1,5 @@
 const math = require('mathjs');
-const { getRoleColor } = require('../utils/functions.js');
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -18,19 +17,16 @@ module.exports = {
 				.setRequired(true)
 				.setAutocomplete(true)
 		),
-	execute: async ({ interaction, guild, user, instance }) => {
+	execute: async ({ interaction, instance, member }) => {
 		try {
 			await interaction.deferReply();
 			const text = interaction.options.getString('expression').replaceAll('**', '^');
 			const answer = await math.evaluate(text).toString();
 
-			const embed = new EmbedBuilder()
-				.setColor(await getRoleColor(guild, user.id))
-				.addFields({
-					name: instance.getMessage(interaction, 'RESULTADO'),
-					value: answer,
-				})
-				.setFooter({ text: 'by Falcão ❤️' });
+			const embed = instance.createEmbed(member.displayColor).addFields({
+				name: instance.getMessage(interaction, 'RESULTADO'),
+				value: answer,
+			});
 
 			await interaction.editReply({ embeds: [embed] });
 		} catch (error) {

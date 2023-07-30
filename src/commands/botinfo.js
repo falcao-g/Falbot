@@ -10,7 +10,7 @@ module.exports = {
 	execute: async ({ client, interaction, instance }) => {
 		await interaction.deferReply();
 		try {
-			const embed = instance.createEmbed({ color: 3426654 }).addFields({
+			const embed = instance.createEmbed(3426654).addFields({
 				name: 'Falbot info',
 				value: `**:earth_americas: Site: https://falbot.netlify.app/\n:robot: Github: https://github.com/falcao-g/Falbot\n:bird: Twitter: https://twitter.com/falb0t\n:house: ${instance.getMessage(
 					interaction,

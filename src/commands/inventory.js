@@ -206,7 +206,7 @@ module.exports = {
 					const startIndex = i * 24;
 					const itemsChunk = inventoryItems.slice(startIndex, startIndex + 24);
 
-					const embed = instance.createEmbed({ member }).setTitle(
+					const embed = instance.createEmbed(member.displayColor).setTitle(
 						instance.getMessage(interaction, 'INVENTORY_TITLE', {
 							MEMBER: target.displayName,
 							NUMBER: i + 1,
@@ -277,7 +277,7 @@ module.exports = {
 				}
 
 				const embed = instance
-					.createEmbed({ member })
+					.createEmbed(member.displayColor)
 					.setTitle(instance.getMessage(interaction, 'CALCULATOR'))
 					.addFields({
 						name: `${itemJSON[interaction.locale]} x ${amount}`,
@@ -318,7 +318,7 @@ module.exports = {
 				await changeDB(member.id, 'inventory', inventory, true);
 				await changeDB(member.id, 'falcoins', falcoins);
 
-				const embed = instance.createEmbed({ member }).addFields({
+				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'SOLD_TITLE', {
 						AMOUNT: format(amount),
 						ITEM: itemJSON[interaction.locale],
@@ -340,7 +340,7 @@ module.exports = {
 				const item = interaction.options.getString('item');
 
 				if (item === null) {
-					const embed = instance.createEmbed({ member });
+					const embed = instance.createEmbed(member.displayColor);
 
 					listItems = [];
 					for (key in items) {
@@ -401,7 +401,7 @@ module.exports = {
 				await changeDB(member.id, 'equippedItems', equippedItems, true);
 				await changeDB(member.id, 'inventory', inventory, true);
 
-				const embed = instance.createEmbed({ member }).addFields({
+				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'EQUIPPED_TITLE', {
 						ITEM: itemJSON[interaction.locale],
 					}),
@@ -458,7 +458,7 @@ module.exports = {
 							),
 					]);
 
-					const embed = instance.createEmbed({ member }).addFields({
+					const embed = instance.createEmbed(member.displayColor).addFields({
 						name: instance.getMessage(interaction, 'CRAFT_TITLE'),
 						value: instance.getMessage(interaction, 'CRAFT_VALUE'),
 					});
@@ -528,7 +528,7 @@ module.exports = {
 				inventory.set(itemKey, inventory.get(itemKey) + amount);
 				await changeDB(member.id, 'inventory', inventory, true);
 
-				const embed = instance.createEmbed({ member }).addFields({
+				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'CRAFTED_TITLE', {
 						ITEM: itemJSON[interaction.locale],
 						AMOUNT: format(amount),
@@ -565,7 +565,7 @@ module.exports = {
 					components: [row],
 				});
 			} else if (type === 'sellall') {
-				const embed = instance.createEmbed({ member }).addFields({
+				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'SELLALL_TITLE'),
 					value: instance.getMessage(interaction, 'SELLALL_VALUE'),
 				});
@@ -626,7 +626,7 @@ module.exports = {
 						);
 					}
 
-					const embed = instance.createEmbed({ member }).addFields({
+					const embed = instance.createEmbed(member.displayColor).addFields({
 						name: instance.getMessage(interaction, 'SELLALL_CONFIRMED_TITLE'),
 						value: instance.getMessage(interaction, 'SELLALL_CONFIRMED_VALUE', {
 							ITEMS: itemsSold.join('\n'),
@@ -641,7 +641,7 @@ module.exports = {
 				});
 			} else if (type === 'sort') {
 				if (interaction.values === undefined) {
-					const embed = instance.createEmbed({ member }).addFields({
+					const embed = instance.createEmbed(member.displayColor).addFields({
 						name: ':gear: ' + instance.getMessage(interaction, 'INVENTORY_SORTING'),
 						value: ':dvd: ' + instance.getMessage(interaction, 'SORTING_MENU'),
 					});
@@ -682,7 +682,7 @@ module.exports = {
 					const sort = interaction.values[0];
 					await changeDB(member.id, 'inventorySort', sort, true);
 
-					const embed = instance.createEmbed({ member }).addFields({
+					const embed = instance.createEmbed(member.displayColor).addFields({
 						name: ':gear: ' + instance.getMessage(interaction, 'INVENTORY_SORTING'),
 						value:
 							':dvd: ' +

@@ -20,7 +20,7 @@ module.exports = {
 			const huntCooldown = await resolveCooldown(member.id, 'hunt');
 			const lotto = await instance.lottoSchema.findById('semanal');
 			const embed = instance
-				.createEmbed({ member })
+				.createEmbed(member.displayColor)
 				.setTitle(instance.getMessage(interaction, 'COOLDOWNS'))
 				.addFields(
 					{

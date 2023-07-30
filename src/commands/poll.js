@@ -1,4 +1,3 @@
-const { getRoleColor } = require('../utils/functions.js');
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
@@ -16,19 +15,18 @@ module.exports = {
 				.setDescriptionLocalization('pt-BR', 'tema da enquete')
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, user, member, instance }) => {
+	execute: async ({ interaction, user, member, instance }) => {
 		try {
 			await interaction.deferReply();
-			const embed = new EmbedBuilder()
-				.setColor(await getRoleColor(guild, user.id))
+			const embed = instance
+				.createEmbed(member.displayColor)
 				.setDescription(interaction.options.getString('theme'))
 				.setAuthor({
 					name: instance.getMessage(interaction, 'ENQUETE', {
 						USER: member.displayName,
 					}),
 					iconURL: user.avatarURL(),
-				})
-				.setFooter({ text: 'by Falcão ❤️' });
+				});
 
 			answer = await interaction.editReply({
 				embeds: [embed],

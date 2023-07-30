@@ -1,5 +1,5 @@
 const { readFile, changeDB, format, paginate } = require('../utils/functions.js');
-const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder } = require('discord.js');
+const { SlashCommandBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -56,22 +56,19 @@ module.exports = {
 
 					perks = await instance.rankPerks(rank, new_rank, guild);
 
-					var embed = new EmbedBuilder()
-						.setColor(1752220)
-						.addFields(
-							{
-								name: 'Rank Up!',
-								value: instance.getMessage(interaction, 'RANKUP_SUCESS', {
-									RANK: instance.getMessage(interaction, String(rank_number + 1)),
-									FALCOINS: format(rank.falcoinsToLevelUp),
-								}),
-							},
-							{
-								name: instance.getMessage(interaction, 'RANKUP_PERKS'),
-								value: perks,
-							}
-						)
-						.setFooter({ text: 'by Falcão ❤️' });
+					var embed = instance.createEmbed(1752220).addFields(
+						{
+							name: 'Rank Up!',
+							value: instance.getMessage(interaction, 'RANKUP_SUCESS', {
+								RANK: instance.getMessage(interaction, String(rank_number + 1)),
+								FALCOINS: format(rank.falcoinsToLevelUp),
+							}),
+						},
+						{
+							name: instance.getMessage(interaction, 'RANKUP_PERKS'),
+							value: perks,
+						}
+					);
 
 					await interaction.editReply({
 						embeds: [embed],
@@ -93,8 +90,8 @@ module.exports = {
 					quantity = 3;
 				}
 
-				var embed = new EmbedBuilder()
-					.setColor(7419530)
+				var embed = instance
+					.createEmbed(7419530)
 					.setTitle(instance.getMessage(interaction, 'UPCOMING_RANKS'))
 					.addFields({
 						name:
@@ -137,7 +134,7 @@ module.exports = {
 					var index = i * 20;
 					const ranksChunk = levels.slice(index, index + 20);
 
-					var embed = new EmbedBuilder().setColor('#71368A');
+					var embed = instance.createEmbed('#71368A');
 
 					for (var j = 0; j < ranksChunk.length; j++) {
 						if (levels[j + i * 20].falcoinsToLevelUp === undefined) {

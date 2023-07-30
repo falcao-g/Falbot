@@ -87,7 +87,7 @@ module.exports = {
 
 		await changeDB(member.id, 'inventory', inventory, true);
 
-		var embed = instance.createEmbed({ member }).addFields({
+		var embed = instance.createEmbed(member.displayColor).addFields({
 			name:
 				':compass: ' +
 				instance.getMessage(interaction, 'FOUND', {

@@ -368,8 +368,8 @@ class Falbot {
 		}, 0);
 	}
 
-	createEmbed({ color = undefined, member = undefined }) {
-		return new EmbedBuilder().setColor(color ?? member.displayColor).setFooter({ text: 'by Falcão ❤️' });
+	createEmbed(color = 'Random') {
+		return new EmbedBuilder().setColor(color).setFooter({ text: 'by Falcão ❤️' });
 	}
 }
 
