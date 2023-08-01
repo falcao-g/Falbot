@@ -1,4 +1,4 @@
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, SlashCommandBuilder } = require('discord.js');
+const { ButtonBuilder, ActionRowBuilder, SlashCommandBuilder } = require('discord.js');
 const builder = require('falbot-snake');
 
 module.exports = {
@@ -10,11 +10,12 @@ module.exports = {
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, user }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			const author = user;
 			const game = new builder.Game();
 
-			const embed = new EmbedBuilder()
+			const embed = instance
+				.createEmbed(10181046)
 				.setTitle(':snake:')
 				.addFields(
 					{
@@ -25,9 +26,7 @@ module.exports = {
 						name: `\u200b`,
 						value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(interaction, 'SCORE')}: ${game.snake.length}`,
 					}
-				)
-				.setFooter({ text: 'by Falcão ❤️' })
-				.setColor(10181046);
+				);
 
 			const row = new ActionRowBuilder();
 			row.addComponents([

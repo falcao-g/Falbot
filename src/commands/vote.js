@@ -1,6 +1,6 @@
 const { changeDB, readFile, msToTime, format } = require('../utils/functions.js');
 require('dotenv').config();
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -10,7 +10,7 @@ module.exports = {
 		.setDescriptionLocalization('pt-BR', 'Ganhe falcois votando no bot no top.gg'),
 	execute: async ({ user, instance, interaction }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 
 			var request = await fetch(`https://top.gg/api/bots/check?userId=${user.id}`, {
 				method: 'GET',
@@ -33,36 +33,30 @@ module.exports = {
 				await changeDB(user.id, 'lastVote', Date.now(), true);
 				await changeDB(user.id, 'voteStreak', 1);
 				await changeDB(user.id, 'falcoins', reward + (reward * bonus) / 100);
-				var embed = new EmbedBuilder()
-					.setColor(3066993)
-					.addFields({
-						name: instance.getMessage(interaction, 'VOTE_THANKS'),
-						value:
-							bonus != 150
-								? instance.getMessage(interaction, 'VOTE_COLLECTED', {
-										REWARD: format(reward),
-										PERCENTAGE: bonus,
-								  })
-								: instance.getMessage(interaction, 'VOTE_COLLECTED_MAX', {
-										REWARD: format(reward),
-										PERCENTAGE: bonus,
-								  }),
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+				var embed = instance.createEmbed(3066993).addFields({
+					name: instance.getMessage(interaction, 'VOTE_THANKS'),
+					value:
+						bonus != 150
+							? instance.getMessage(interaction, 'VOTE_COLLECTED', {
+									REWARD: format(reward),
+									PERCENTAGE: bonus,
+							  })
+							: instance.getMessage(interaction, 'VOTE_COLLECTED_MAX', {
+									REWARD: format(reward),
+									PERCENTAGE: bonus,
+							  }),
+				});
 			} else if (voted && Date.now() - lastVote < 1000 * 60 * 60 * 12) {
-				var embed = new EmbedBuilder()
-					.setColor(15158332)
-					.addFields({
-						name: instance.getMessage(interaction, 'ALREADY_COLLECTED'),
-						value: instance.getMessage(interaction, 'ALREADY_COLLECTED2', {
-							TIME: msToTime(1000 * 60 * 60 * 12 - (Date.now() - lastVote)),
-							REWARD: format(reward),
-						}),
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+				var embed = instance.createEmbed(15158332).addFields({
+					name: instance.getMessage(interaction, 'ALREADY_COLLECTED'),
+					value: instance.getMessage(interaction, 'ALREADY_COLLECTED2', {
+						TIME: msToTime(1000 * 60 * 60 * 12 - (Date.now() - lastVote)),
+						REWARD: format(reward),
+					}),
+				});
 			} else {
-				var embed = new EmbedBuilder()
-					.setColor('#0099ff')
+				var embed = instance
+					.createEmbed('#0099ff')
 					.addFields({
 						name: instance.getMessage(interaction, 'VOTE_FIRST'),
 						value: instance.getMessage(interaction, 'VOTE_DESCRIPTION', {
@@ -76,8 +70,7 @@ module.exports = {
 							instance.getMessage(interaction, 'VOTE_FINAL', {
 								PERCENTAGE: (await readFile(user.id, 'voteStreak')) * 5,
 							}),
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+					});
 			}
 			await interaction.editReply({ embeds: [embed] });
 		} catch (error) {

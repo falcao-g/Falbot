@@ -1,20 +1,5 @@
-const {
-	readFile,
-	format,
-	getRoleColor,
-	paginate,
-	getItem,
-	changeDB,
-	buttons,
-	isEquipped,
-} = require('../utils/functions.js');
-const {
-	EmbedBuilder,
-	ButtonBuilder,
-	SlashCommandBuilder,
-	StringSelectMenuBuilder,
-	ActionRowBuilder,
-} = require('discord.js');
+const { readFile, format, paginate, getItem, changeDB, buttons, isEquipped } = require('../utils/functions.js');
+const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -159,7 +144,7 @@ module.exports = {
 		),
 	execute: async ({ guild, interaction, instance, member, subcommand }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			try {
 				var type = interaction.options.getSubcommand();
 			} catch {
@@ -221,18 +206,15 @@ module.exports = {
 					const startIndex = i * 24;
 					const itemsChunk = inventoryItems.slice(startIndex, startIndex + 24);
 
-					const embed = new EmbedBuilder()
-						.setColor(await getRoleColor(guild, member.id))
-						.setTitle(
-							instance.getMessage(interaction, 'INVENTORY_TITLE', {
-								MEMBER: target.displayName,
-								NUMBER: i + 1,
-								TOTAL: numEmbeds,
-								WORTH: format(inventoryWorth),
-								LIMIT: format(limit),
-							})
-						)
-						.setFooter({ text: 'by Falcão ❤️' });
+					const embed = instance.createEmbed(member.displayColor).setTitle(
+						instance.getMessage(interaction, 'INVENTORY_TITLE', {
+							MEMBER: target.displayName,
+							NUMBER: i + 1,
+							TOTAL: numEmbeds,
+							WORTH: format(inventoryWorth),
+							LIMIT: format(limit),
+						})
+					);
 
 					for (let j = 0; j < itemsChunk.length; j += 8) {
 						const itemsChunkSubset = itemsChunk.slice(j, j + 8);
@@ -296,8 +278,8 @@ module.exports = {
 					}
 				}
 
-				const embed = new EmbedBuilder()
-					.setColor(await getRoleColor(guild, member.id))
+				const embed = instance
+					.createEmbed(member.displayColor)
 					.setTitle(instance.getMessage(interaction, 'CALCULATOR'))
 					.addFields({
 						name: `${itemJSON[interaction.locale] ?? itemJSON['en-US']} x ${amount}`,
@@ -305,8 +287,7 @@ module.exports = {
 							interaction,
 							'COST'
 						)} **${format(itemJSON.value * amount)} falcoins**`,
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+					});
 
 				interaction.editReply({
 					embeds: [embed],
@@ -339,20 +320,17 @@ module.exports = {
 				await changeDB(member.id, 'inventory', inventory, true);
 				await changeDB(member.id, 'falcoins', falcoins);
 
-				const embed = new EmbedBuilder()
-					.setColor(await getRoleColor(guild, member.id))
-					.addFields({
-						name: instance.getMessage(interaction, 'SOLD_TITLE', {
-							AMOUNT: format(amount),
-							ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
-							FALCOINS: format(falcoins),
-						}),
-						value: instance.getMessage(interaction, 'SOLD_FIELD', {
-							REMAINING: format(inventory.get(itemKey)),
-							FALCOINS2: format(Number(falcoins / amount)),
-						}),
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+				const embed = instance.createEmbed(member.displayColor).addFields({
+					name: instance.getMessage(interaction, 'SOLD_TITLE', {
+						AMOUNT: format(amount),
+						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+						FALCOINS: format(falcoins),
+					}),
+					value: instance.getMessage(interaction, 'SOLD_FIELD', {
+						REMAINING: format(inventory.get(itemKey)),
+						FALCOINS2: format(Number(falcoins / amount)),
+					}),
+				});
 
 				interaction.editReply({
 					embeds: [embed],
@@ -364,9 +342,7 @@ module.exports = {
 				const item = interaction.options.getString('item');
 
 				if (item === null) {
-					const embed = new EmbedBuilder()
-						.setColor(await getRoleColor(guild, member.id))
-						.setFooter({ text: 'by Falcão ❤️' });
+					const embed = instance.createEmbed(member.displayColor);
 
 					listItems = [];
 					for (key in items) {
@@ -426,17 +402,14 @@ module.exports = {
 				await changeDB(member.id, 'equippedItems', equippedItems, true);
 				await changeDB(member.id, 'inventory', inventory, true);
 
-				const embed = new EmbedBuilder()
-					.setColor(await getRoleColor(guild, member.id))
-					.addFields({
-						name: instance.getMessage(interaction, 'EQUIPPED_TITLE', {
-							ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
-						}),
-						value: instance.getMessage(interaction, 'EQUIPPED_VALUE', {
-							ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
-						}),
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+				const embed = instance.createEmbed(member.displayColor).addFields({
+					name: instance.getMessage(interaction, 'EQUIPPED_TITLE', {
+						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+					}),
+					value: instance.getMessage(interaction, 'EQUIPPED_VALUE', {
+						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+					}),
+				});
 
 				interaction.editReply({
 					embeds: [embed],
@@ -488,13 +461,10 @@ module.exports = {
 							),
 					]);
 
-					const embed = new EmbedBuilder()
-						.setColor(await getRoleColor(guild, member.id))
-						.addFields({
-							name: instance.getMessage(interaction, 'CRAFT_TITLE'),
-							value: instance.getMessage(interaction, 'CRAFT_VALUE'),
-						})
-						.setFooter({ text: 'by Falcão ❤️' });
+					const embed = instance.createEmbed(member.displayColor).addFields({
+						name: instance.getMessage(interaction, 'CRAFT_TITLE'),
+						value: instance.getMessage(interaction, 'CRAFT_VALUE'),
+					});
 
 					interaction.editReply({
 						components: [row],
@@ -565,21 +535,18 @@ module.exports = {
 				inventory.set(itemKey, inventory.get(itemKey) + amount);
 				await changeDB(member.id, 'inventory', inventory, true);
 
-				const embed = new EmbedBuilder()
-					.setColor(await getRoleColor(guild, member.id))
-					.addFields({
-						name: instance.getMessage(interaction, 'CRAFTED_TITLE', {
-							ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
-							AMOUNT: format(amount),
-						}),
-						value: instance.getMessage(interaction, 'CRAFTED_VALUE', {
-							INGREDIENTS: ingredients.join('\n'),
-							ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
-							AMOUNT: format(amount),
-							MAXAMOUNT: format(maxAmount),
-						}),
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+				const embed = instance.createEmbed(member.displayColor).addFields({
+					name: instance.getMessage(interaction, 'CRAFTED_TITLE', {
+						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+						AMOUNT: format(amount),
+					}),
+					value: instance.getMessage(interaction, 'CRAFTED_VALUE', {
+						INGREDIENTS: ingredients.join('\n'),
+						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+						AMOUNT: format(amount),
+						MAXAMOUNT: format(maxAmount),
+					}),
+				});
 
 				const row = new ActionRowBuilder().addComponents([
 					new ButtonBuilder()
@@ -605,13 +572,10 @@ module.exports = {
 					components: [row],
 				});
 			} else if (type === 'sellall') {
-				const embed = new EmbedBuilder()
-					.setColor(await getRoleColor(guild, member.id))
-					.addFields({
-						name: instance.getMessage(interaction, 'SELLALL_TITLE'),
-						value: instance.getMessage(interaction, 'SELLALL_VALUE'),
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+				const embed = instance.createEmbed(member.displayColor).addFields({
+					name: instance.getMessage(interaction, 'SELLALL_TITLE'),
+					value: instance.getMessage(interaction, 'SELLALL_VALUE'),
+				});
 
 				interaction.editReply({
 					embeds: [embed],
@@ -669,16 +633,13 @@ module.exports = {
 						);
 					}
 
-					const embed = new EmbedBuilder()
-						.setColor(await getRoleColor(guild, member.id))
-						.addFields({
-							name: instance.getMessage(interaction, 'SELLALL_CONFIRMED_TITLE'),
-							value: instance.getMessage(interaction, 'SELLALL_CONFIRMED_VALUE', {
-								ITEMS: itemsSold.join('\n'),
-								FALCOINS: format(falcoins),
-							}),
-						})
-						.setFooter({ text: 'by Falcão ❤️' });
+					const embed = instance.createEmbed(member.displayColor).addFields({
+						name: instance.getMessage(interaction, 'SELLALL_CONFIRMED_TITLE'),
+						value: instance.getMessage(interaction, 'SELLALL_CONFIRMED_VALUE', {
+							ITEMS: itemsSold.join('\n'),
+							FALCOINS: format(falcoins),
+						}),
+					});
 
 					i.update({
 						embeds: [embed],
@@ -687,13 +648,10 @@ module.exports = {
 				});
 			} else if (type === 'sort') {
 				if (interaction.values === undefined) {
-					const embed = new EmbedBuilder()
-						.setColor(await getRoleColor(guild, member.id))
-						.setFooter({ text: 'by Falcão ❤️' })
-						.addFields({
-							name: ':gear: ' + instance.getMessage(interaction, 'INVENTORY_SORTING'),
-							value: ':dvd: ' + instance.getMessage(interaction, 'SORTING_MENU'),
-						});
+					const embed = instance.createEmbed(member.displayColor).addFields({
+						name: ':gear: ' + instance.getMessage(interaction, 'INVENTORY_SORTING'),
+						value: ':dvd: ' + instance.getMessage(interaction, 'SORTING_MENU'),
+					});
 
 					const row = new ActionRowBuilder().addComponents([
 						new StringSelectMenuBuilder()
@@ -731,17 +689,14 @@ module.exports = {
 					const sort = interaction.values[0];
 					await changeDB(member.id, 'inventorySort', sort, true);
 
-					const embed = new EmbedBuilder()
-						.setColor(await getRoleColor(guild, member.id))
-						.setFooter({ text: 'by Falcão ❤️' })
-						.addFields({
-							name: ':gear: ' + instance.getMessage(interaction, 'INVENTORY_SORTING'),
-							value:
-								':dvd: ' +
-								instance.getMessage(interaction, 'SORTING_NOW', {
-									SORTING: instance.getMessage(interaction, sort.toUpperCase()),
-								}),
-						});
+					const embed = instance.createEmbed(member.displayColor).addFields({
+						name: ':gear: ' + instance.getMessage(interaction, 'INVENTORY_SORTING'),
+						value:
+							':dvd: ' +
+							instance.getMessage(interaction, 'SORTING_NOW', {
+								SORTING: instance.getMessage(interaction, sort.toUpperCase()),
+							}),
+					});
 
 					await interaction.editReply({
 						components: [buttons(['inventory_view'])],

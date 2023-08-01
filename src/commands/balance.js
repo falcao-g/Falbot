@@ -1,5 +1,5 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const { getRoleColor, format, readFile, buttons } = require('../utils/functions.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { format, readFile, buttons } = require('../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -17,7 +17,7 @@ module.exports = {
 				.setRequired(false)
 		),
 	execute: async ({ guild, member, instance, interaction }) => {
-		await interaction.deferReply();
+		await interaction.deferReply().catch(() => {});
 		try {
 			if (interaction.options != undefined) {
 				var user = interaction.options.getUser('user');
@@ -25,10 +25,9 @@ module.exports = {
 			const target = user ? await guild.members.fetch(user.id) : member;
 			const { rank, falcoins, vitorias, banco } = await readFile(target.user.id);
 
-			const embed = new EmbedBuilder()
+			const embed = instance
+				.createEmbed(target.displayColor)
 				.setTitle(instance.getMessage(interaction, rank) + ' ' + target.displayName)
-				.setColor(await getRoleColor(guild, target.user.id))
-				.setFooter({ text: 'by Falcão ❤️' })
 				.addFields(
 					{
 						name: ':coin: Falcoins',

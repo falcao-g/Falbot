@@ -24,7 +24,7 @@ module.exports = {
 		.addSubcommand((subcommand) => subcommand.setName('reload_events').setDescription('reload your events'))
 		.addSubcommand((subcommand) => subcommand.setName('reload_commands').setDescription('reload your commands')),
 	execute: async ({ interaction, instance, client }) => {
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply({ ephemeral: true }).catch(() => {});
 		try {
 			subcommand = interaction.options.getSubcommand();
 			const userId = interaction.options.getString('user');

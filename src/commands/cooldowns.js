@@ -1,5 +1,5 @@
-const { EmbedBuilder, ButtonBuilder, ActionRowBuilder, SlashCommandBuilder } = require('discord.js');
-const { readFile, getRoleColor, msToTime, resolveCooldown } = require('../utils/functions.js');
+const { ButtonBuilder, ActionRowBuilder, SlashCommandBuilder } = require('discord.js');
+const { readFile, msToTime, resolveCooldown } = require('../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -8,20 +8,19 @@ module.exports = {
 		.setDescription('Shows your commands cooldowns')
 		.setDescriptionLocalization('pt-BR', 'Veja o tempo que falta para poder usar certos comandos')
 		.setDMPermission(false),
-	execute: async ({ guild, user, interaction, instance }) => {
-		await interaction.deferReply();
+	execute: async ({ interaction, instance, member }) => {
+		await interaction.deferReply().catch(() => {});
 		try {
-			const voteCooldown = Date.now() - (await readFile(user.id, 'lastVote'));
-			const scratchCooldown = await resolveCooldown(user.id, 'scratch');
-			const workCooldown = await resolveCooldown(user.id, 'work');
-			const fishCooldown = await resolveCooldown(user.id, 'fish');
-			const exploreCooldown = await resolveCooldown(user.id, 'explore');
-			const mineCooldown = await resolveCooldown(user.id, 'mine');
-			const huntCooldown = await resolveCooldown(user.id, 'hunt');
+			const voteCooldown = Date.now() - (await readFile(member.id, 'lastVote'));
+			const scratchCooldown = await resolveCooldown(member.id, 'scratch');
+			const workCooldown = await resolveCooldown(member.id, 'work');
+			const fishCooldown = await resolveCooldown(member.id, 'fish');
+			const exploreCooldown = await resolveCooldown(member.id, 'explore');
+			const mineCooldown = await resolveCooldown(member.id, 'mine');
+			const huntCooldown = await resolveCooldown(member.id, 'hunt');
 			const lotto = await instance.lottoSchema.findById('semanal');
-			const embed = new EmbedBuilder()
-				.setColor(await getRoleColor(guild, user.id))
-				.setFooter({ text: 'by Falcão ❤️' })
+			const embed = instance
+				.createEmbed(member.displayColor)
 				.setTitle(instance.getMessage(interaction, 'COOLDOWNS'))
 				.addFields(
 					{

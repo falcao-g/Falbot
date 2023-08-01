@@ -1,5 +1,5 @@
-const { EmbedBuilder, ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js');
-const { getRoleColor, format, readFile, buttons } = require('../utils/functions.js');
+const { ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js');
+const { format, readFile, buttons } = require('../utils/functions.js');
 
 module.exports = {
 	data: new ContextMenuCommandBuilder()
@@ -7,16 +7,15 @@ module.exports = {
 		.setNameLocalization('pt-BR', 'Ver a conta do usuário')
 		.setType(ApplicationCommandType.User)
 		.setDMPermission(false),
-	execute: async ({ guild, instance, interaction }) => {
-		await interaction.deferReply();
+	execute: async ({ instance, interaction }) => {
+		await interaction.deferReply().catch(() => {});
 		try {
 			const target = interaction.targetMember;
 			const { rank, falcoins, vitorias, banco } = await readFile(target.user.id);
 
-			const embed = new EmbedBuilder()
+			const embed = instance
+				.createEmbed(target.displayColor)
 				.setTitle(instance.getMessage(interaction, rank) + ' ' + target.displayName)
-				.setColor(await getRoleColor(guild, target.user.id))
-				.setFooter({ text: 'by Falcão ❤️' })
 				.addFields(
 					{
 						name: ':coin: Falcoins',

@@ -1,4 +1,4 @@
-const { EmbedBuilder, ButtonBuilder, SlashCommandBuilder } = require('discord.js');
+const { ButtonBuilder, SlashCommandBuilder } = require('discord.js');
 const { format, paginate, getItem } = require('../utils/functions.js');
 
 async function getMember(guild, member_id) {
@@ -114,7 +114,7 @@ module.exports = {
 		),
 	execute: async ({ client, guild, interaction, instance }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			var rank = [];
 			const scope = interaction.options.getString('type');
 			const embeds = [];
@@ -161,7 +161,7 @@ module.exports = {
 			for (let i = 0; i < rank.length; i++) {
 				a = Math.min(Math.floor(i / 10), 2);
 
-				if (a == embeds.length) embeds.push(new EmbedBuilder().setColor('#206694').setFooter({ text: 'by Falcão ❤️' }));
+				if (a == embeds.length) embeds.push(instance.createEmbed('#206694'));
 
 				try {
 					member =

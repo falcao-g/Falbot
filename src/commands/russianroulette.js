@@ -1,5 +1,5 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const { specialArg, readFile, changeDB, randint, format, getRoleColor, buttons } = require('../utils/functions.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { specialArg, readFile, changeDB, randint, format, buttons } = require('../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -18,9 +18,9 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, user, instance }) => {
+	execute: async ({ interaction, user, instance }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			const falcoins = interaction.options.getString('falcoins');
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');
@@ -33,21 +33,19 @@ module.exports = {
 			}
 			if ((await readFile(user.id, 'falcoins')) >= bet) {
 				var pot = bet;
-				const embed = new EmbedBuilder()
+				const embed = instance
+					.createEmbed('#0099ff')
 					.setDescription(
 						instance.getMessage(interaction, 'ROLETARUSSA_DESCRIPTION', {
 							USER: user,
 							BET: format(pot),
 						})
 					)
-					.setColor('#0099ff')
 					.addFields({
 						name: instance.getMessage(interaction, 'JOGADORES'),
 						value: `${user}`,
 						inline: false,
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
-
+					});
 				var answer = await interaction.editReply({
 					embeds: [embed],
 					components: [buttons(['accept', 'skip'])],
@@ -130,15 +128,13 @@ module.exports = {
 					var winner = users[0];
 					await changeDB(winner.id, 'falcoins', pot);
 					if (users.length > 1) await changeDB(winner.id, 'vitorias');
-					embed
-						.setDescription(
-							instance.getMessage(interaction, 'ROLETARUSSA_DESCRIPTION3', {
-								BET: format(pot),
-								USER: winner,
-								SALDO: await readFile(winner.id, 'falcoins', true),
-							})
-						)
-						.setColor(await getRoleColor(guild, winner.id));
+					embed.setDescription(
+						instance.getMessage(interaction, 'ROLETARUSSA_DESCRIPTION3', {
+							BET: format(pot),
+							USER: winner,
+							SALDO: await readFile(winner.id, 'falcoins', true),
+						})
+					);
 
 					await interaction.editReply({
 						embeds: [embed],

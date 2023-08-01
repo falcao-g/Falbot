@@ -52,7 +52,7 @@ module.exports = {
 				cooldown = await resolveCooldown(interaction.user.id, interaction.commandName);
 				if (cooldown > 0) {
 					await interaction.reply({
-						content: instance.getMessage(guild, 'COOLDOWN', {
+						content: instance.getMessage(interaction, 'COOLDOWN', {
 							COOLDOWN: msToTime(cooldown),
 						}),
 						ephemeral: true,
@@ -65,7 +65,7 @@ module.exports = {
 
 			if (command.developer && !instance.config.devs.includes(interaction.user.id)) {
 				return interaction.reply({
-					content: instance.getMessage(interaction.guild, 'BOT_OWNERS_ONLY'),
+					content: instance.getMessage(interaction, 'BOT_OWNERS_ONLY'),
 					ephemeral: true,
 				});
 			}
@@ -178,7 +178,7 @@ module.exports = {
 					cooldown = await resolveCooldown(interaction.user.id, interaction.customId);
 					if (cooldown > 0) {
 						await interaction.reply({
-							content: instance.getMessage(guild, 'COOLDOWN', {
+							content: instance.getMessage(interaction, 'COOLDOWN', {
 								COOLDOWN: msToTime(cooldown),
 							}),
 							ephemeral: true,

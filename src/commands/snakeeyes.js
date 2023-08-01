@@ -1,5 +1,5 @@
-const { specialArg, readFile, changeDB, getRoleColor, format, randint } = require('../utils/functions.js');
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { specialArg, readFile, changeDB, format, randint } = require('../utils/functions.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -18,9 +18,9 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, instance, user }) => {
+	execute: async ({ interaction, instance, user, member }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			const falcoins = interaction.options.getString('falcoins');
 
 			try {
@@ -50,13 +50,10 @@ module.exports = {
 				emoji1 = choices[random1 - 1];
 				emoji2 = choices[random2 - 1];
 
-				const embed = new EmbedBuilder()
-					.setColor(await getRoleColor(guild, user.id))
-					.addFields({
-						name: `-------------------\n      | ${diegif} | ${diegif} |\n-------------------`,
-						value: `--- **${instance.getMessage(interaction, 'ROLANDO')}** ---`,
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+				const embed = instance.createEmbed(member.displayColor).addFields({
+					name: `-------------------\n      | ${diegif} | ${diegif} |\n-------------------`,
+					value: `--- **${instance.getMessage(interaction, 'ROLANDO')}** ---`,
+				});
 
 				await interaction.editReply({
 					embeds: [embed],
@@ -77,7 +74,7 @@ module.exports = {
 
 				if (random1 === 1 && random2 === 1) {
 					await changeDB(user.id, 'falcoins', bet * 5);
-					var embed2 = new EmbedBuilder().setColor('#F1C40F').addFields(
+					var embed2 = instance.createEmbed('#F1C40F').addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
 							value: `--- **${instance.getMessage(interaction, 'VOCE_GANHOU')}** ---`,
@@ -91,7 +88,7 @@ module.exports = {
 					);
 				} else if (random1 === 1 || random2 === 1) {
 					await changeDB(user.id, 'falcoins', bet * 2);
-					var embed2 = new EmbedBuilder().setColor(3066993).addFields(
+					var embed2 = instance.createEmbed(3066993).addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
 							value: `--- **${instance.getMessage(interaction, 'VOCE_GANHOU')}** ---`,
@@ -104,7 +101,7 @@ module.exports = {
 						}
 					);
 				} else {
-					var embed2 = new EmbedBuilder().setColor(15158332).addFields(
+					var embed2 = instance.createEmbed(15158332).addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
 							value: `--- **${instance.getMessage(interaction, 'VOCE_PERDEU')}** ---`,
@@ -117,12 +114,10 @@ module.exports = {
 						}
 					);
 				}
-				embed2
-					.addFields({
-						name: instance.getMessage(interaction, 'SALDO_ATUAL'),
-						value: `${await readFile(user.id, 'falcoins', true)}`,
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+				embed2.addFields({
+					name: instance.getMessage(interaction, 'SALDO_ATUAL'),
+					value: `${await readFile(user.id, 'falcoins', true)}`,
+				});
 				await interaction.editReply({
 					embeds: [embed2],
 				});

@@ -1,5 +1,5 @@
-const { EmbedBuilder, SlashCommandBuilder } = require('discord.js');
-const { specialArg, readFile, changeDB, randint, format, getRoleColor, buttons } = require('../utils/functions.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { specialArg, readFile, changeDB, randint, format, buttons } = require('../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -18,8 +18,8 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, user, instance }) => {
-		await interaction.deferReply();
+	execute: async ({ interaction, user, instance }) => {
+		await interaction.deferReply().catch(() => {});
 		try {
 			const falcoins = interaction.options.getString('falcoins');
 			try {
@@ -35,20 +35,19 @@ module.exports = {
 
 			if ((await readFile(user.id, 'falcoins')) >= bet) {
 				var pot = bet;
-				const embed = new EmbedBuilder()
+				const embed = instance
+					.createEmbed('#0099ff')
 					.setDescription(
 						instance.getMessage(interaction, 'CAVALGADA_DESCRIPTION', {
 							USER: user,
 							BET: format(pot),
 						})
 					)
-					.setColor('#0099ff')
 					.addFields({
 						name: instance.getMessage(interaction, 'JOGADORES'),
 						value: `${user}`,
 						inline: false,
-					})
-					.setFooter({ text: 'by Falcão ❤️' });
+					});
 
 				var answer = await interaction.editReply({
 					embeds: [embed],
@@ -137,7 +136,7 @@ module.exports = {
 
 					await changeDB(winner.id, 'falcoins', pot);
 					if (users.length > 1) await changeDB(winner.id, 'vitorias');
-					embed.setColor(await getRoleColor(guild, winner.id)).setDescription(
+					embed.setDescription(
 						instance.getMessage(interaction, 'CAVALGADA_DESCRIPTION3', {
 							BET: format(pot),
 							USER: winner,
