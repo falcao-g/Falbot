@@ -1157,8 +1157,8 @@
 		"en-US": "This item can't be used... :goggles:"
 	},
 	"USE_BACKPACK_TITLE": {
-		"pt-BR": ":backpack: +200.000 falcoins de limite ao inventário",
-		"en-US": ":backpack: +200.000 falcoins to inventory limit"
+		"pt-BR": ":school_satchel: +200.000 falcoins de limite ao inventário",
+		"en-US": ":school_satchel: +200.000 falcoins to inventory limit"
 	},
 	"USE_BACKPACK_VALUE": {
 		"pt-BR": "Sucesso! Você aumentou o seu limite de inventário em 200.000 falcoins com 1 mochila",

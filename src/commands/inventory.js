@@ -748,9 +748,11 @@ module.exports = {
 					return;
 				}
 
+				inventory.set(itemKey, inventory.get(itemKey) - 1);
+
 				if (itemKey === 'backpack') {
 					await changeDB(member.id, 'inventoryBonus', 200000);
-					await changeDB(member.id, 'inventory', inventory.set(itemKey, inventory.get(itemKey) - 1), true);
+					await changeDB(member.id, 'inventory', inventory, true);
 
 					const embed = instance.createEmbed(member.displayColor).addFields({
 						name: instance.getMessage(interaction, 'USE_BACKPACK_TITLE'),
