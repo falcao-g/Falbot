@@ -156,6 +156,20 @@ module.exports = {
 				.setNameLocalization('pt-BR', 'ordenação')
 				.setDescription('Change inventory sorting method')
 				.setDescriptionLocalization('pt-BR', 'Muda o método de ordenação do inventário')
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('use')
+				.setNameLocalization('pt-BR', 'usar')
+				.setDescription('Use an item')
+				.setDescriptionLocalization('pt-BR', 'Use um item')
+				.addStringOption((option) =>
+					option
+						.setName('item')
+						.setDescription('item to use')
+						.setDescriptionLocalization('pt-BR', 'item para ser usado')
+						.setRequired(true)
+				)
 		),
 	execute: async ({ guild, interaction, instance, member, subcommand }) => {
 		try {
@@ -174,7 +188,9 @@ module.exports = {
 
 				const target = option ? await guild.members.fetch(option.id) : member;
 				const inventory = await readFile(target.id, 'inventory');
-				const limit = instance.levels[(await readFile(target.id, 'rank')) - 1].inventoryLimit;
+				const limit =
+					instance.levels[(await readFile(target.id, 'rank')) - 1].inventoryLimit +
+					(await readFile(target.id, 'inventoryBonus'));
 				const inventoryWorth = instance.getInventoryWorth(inventory);
 
 				if (inventory === undefined) {
@@ -745,6 +761,48 @@ module.exports = {
 
 					await interaction.editReply({
 						components: [buttons(['inventory_view'])],
+						embeds: [embed],
+					});
+				}
+			} else if (type === 'use') {
+				const item = interaction.options.getString('item');
+				const itemKey = getItem(item);
+				const itemJSON = items[itemKey];
+				const inventory = await readFile(member.id, 'inventory');
+
+				if (itemKey === undefined) {
+					interaction.editReply({
+						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+							VALUE: item,
+						}),
+					});
+					return;
+				}
+
+				if (inventory.get(itemKey) === undefined || inventory.get(itemKey) === 0) {
+					interaction.editReply({
+						content: instance.getMessage(interaction, 'NO_ITEM'),
+					});
+					return;
+				}
+
+				if (itemJSON.use != true) {
+					interaction.editReply({
+						content: instance.getMessage(interaction, 'CANT_USE'),
+					});
+					return;
+				}
+
+				if (itemKey === 'backpack') {
+					await changeDB(member.id, 'inventoryBonus', 200000);
+					await changeDB(member.id, 'inventory', inventory.set(itemKey, inventory.get(itemKey) - 1), true);
+
+					const embed = instance.createEmbed(member.displayColor).addFields({
+						name: instance.getMessage(interaction, 'USE_BACKPACK_TITLE'),
+						value: instance.getMessage(interaction, 'USE_BACKPACK_VALUE'),
+					});
+
+					interaction.editReply({
 						embeds: [embed],
 					});
 				}
