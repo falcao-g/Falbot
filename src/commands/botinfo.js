@@ -8,7 +8,7 @@ module.exports = {
 		.setDescriptionLocalization('pt-BR', 'Veja informações úteis sobre o bot')
 		.setDMPermission(false),
 	execute: async ({ client, interaction, instance }) => {
-		await interaction.deferReply();
+		await interaction.deferReply().catch(() => {});
 		try {
 			const embed = instance.createEmbed(3426654).addFields({
 				name: 'Falbot info',

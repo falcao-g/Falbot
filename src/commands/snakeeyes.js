@@ -20,7 +20,7 @@ module.exports = {
 		),
 	execute: async ({ interaction, instance, user, member }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			const falcoins = interaction.options.getString('falcoins');
 
 			try {

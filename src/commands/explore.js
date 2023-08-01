@@ -10,7 +10,7 @@ module.exports = {
 		.setDescriptionLocalization('pt-BR', 'Vá explorar para conseguir items')
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, member }) => {
-		await interaction.deferReply();
+		await interaction.deferReply().catch(() => {});
 		const items = instance.items;
 		const inventory = await readFile(member.id, 'inventory');
 		const limit = instance.levels[(await readFile(member.id, 'rank')) - 1].inventoryLimit;

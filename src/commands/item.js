@@ -16,7 +16,7 @@ module.exports = {
 		),
 	execute: async ({ interaction, instance, member }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			const items = instance.items;
 
 			if (interaction.options !== undefined) {

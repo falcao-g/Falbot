@@ -85,7 +85,7 @@ module.exports = {
 		),
 	execute: async ({ user, interaction, instance, member }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			const falcoins = interaction.options.getString('falcoins');
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');

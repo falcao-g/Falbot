@@ -144,7 +144,7 @@ module.exports = {
 		),
 	execute: async ({ guild, interaction, instance, member, subcommand }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			try {
 				var type = interaction.options.getSubcommand();
 			} catch {

@@ -17,7 +17,7 @@ module.exports = {
 		),
 	execute: async ({ interaction, user, member, instance }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			const embed = instance
 				.createEmbed(member.displayColor)
 				.setDescription(interaction.options.getString('theme'))

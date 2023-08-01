@@ -11,7 +11,7 @@ module.exports = {
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, member, user }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			var levels = instance.levels;
 
 			var rank_number = await readFile(user.id, 'rank');

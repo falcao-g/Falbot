@@ -19,7 +19,7 @@ module.exports = {
 				.setRequired(true)
 		),
 	execute: async ({ interaction, user, instance }) => {
-		await interaction.deferReply();
+		await interaction.deferReply().catch(() => {});
 		try {
 			const falcoins = interaction.options.getString('falcoins');
 			try {

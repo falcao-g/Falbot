@@ -8,7 +8,7 @@ module.exports = {
 		.setType(ApplicationCommandType.User)
 		.setDMPermission(false),
 	execute: async ({ instance, interaction }) => {
-		await interaction.deferReply();
+		await interaction.deferReply().catch(() => {});
 		try {
 			const target = interaction.targetMember;
 			const { rank, falcoins, vitorias, banco } = await readFile(target.user.id);

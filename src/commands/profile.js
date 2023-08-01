@@ -17,7 +17,7 @@ module.exports = {
 				.setRequired(false)
 		),
 	execute: async ({ guild, member, instance, interaction }) => {
-		await interaction.deferReply();
+		await interaction.deferReply().catch(() => {});
 		try {
 			const user = interaction.options.getUser('user');
 			const target = user ? await guild.members.fetch(user.id) : member;

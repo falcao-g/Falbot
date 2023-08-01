@@ -28,7 +28,7 @@ module.exports = {
 		),
 	execute: async ({ guild, user, interaction, instance }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			const type = interaction.options.getSubcommand();
 			const levels = instance.levels;
 

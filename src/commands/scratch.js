@@ -11,7 +11,7 @@ module.exports = {
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, user, member }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 
 			const row = new ActionRowBuilder();
 			const row2 = new ActionRowBuilder();

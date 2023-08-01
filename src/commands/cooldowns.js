@@ -9,7 +9,7 @@ module.exports = {
 		.setDescriptionLocalization('pt-BR', 'Veja o tempo que falta para poder usar certos comandos')
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, member }) => {
-		await interaction.deferReply();
+		await interaction.deferReply().catch(() => {});
 		try {
 			const voteCooldown = Date.now() - (await readFile(member.id, 'lastVote'));
 			const scratchCooldown = await resolveCooldown(member.id, 'scratch');

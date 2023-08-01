@@ -10,7 +10,7 @@ module.exports = {
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, user }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			const author = user;
 			const game = new builder.Game();
 

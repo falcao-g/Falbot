@@ -10,7 +10,7 @@ module.exports = {
 		.setDescriptionLocalization('pt-BR', 'Ganhe falcois votando no bot no top.gg'),
 	execute: async ({ user, instance, interaction }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 
 			var request = await fetch(`https://top.gg/api/bots/check?userId=${user.id}`, {
 				method: 'GET',

@@ -19,7 +19,7 @@ module.exports = {
 		),
 	execute: async ({ interaction, instance, member }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			const text = interaction.options.getString('expression').replaceAll('**', '^');
 			const answer = await math.evaluate(text).toString();
 

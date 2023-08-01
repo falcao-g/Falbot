@@ -54,7 +54,7 @@ module.exports = {
 				.setDescriptionLocalization('pt-BR', 'Veja o saldo bancário e outras informações')
 		),
 	execute: async ({ user, member, interaction, instance }) => {
-		await interaction.deferReply();
+		await interaction.deferReply().catch(() => {});
 		try {
 			const subcommand = interaction.options.getSubcommand();
 			const falcoins = interaction.options.getString('falcoins');

@@ -44,7 +44,7 @@ module.exports = {
 				)
 		),
 	execute: async ({ client, guild, interaction, instance }) => {
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply({ ephemeral: true }).catch(() => {});
 		try {
 			var commands = client.commands
 				.map((command) => {

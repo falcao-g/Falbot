@@ -44,7 +44,7 @@ module.exports = {
 				)
 		),
 	execute: async ({ guild, interaction, instance }) => {
-		await interaction.deferReply({ ephemeral: true });
+		await interaction.deferReply({ ephemeral: true }).catch(() => {});
 		try {
 			const subcommand = interaction.options.getSubcommand();
 			const channel = interaction.options.getChannel('channel');

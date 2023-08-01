@@ -114,7 +114,7 @@ module.exports = {
 		),
 	execute: async ({ client, guild, interaction, instance }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			var rank = [];
 			const scope = interaction.options.getString('type');
 			const embeds = [];

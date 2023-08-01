@@ -30,7 +30,7 @@ module.exports = {
 				.setRequired(true)
 		),
 	execute: async ({ guild, interaction, user, member, instance }) => {
-		await interaction.deferReply();
+		await interaction.deferReply().catch(() => {});
 		try {
 			const falcoins = interaction.options.getString('falcoins');
 			var member2 = await guild.members.fetch(interaction.options.getUser('user').id);

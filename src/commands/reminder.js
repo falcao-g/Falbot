@@ -10,7 +10,7 @@ module.exports = {
 		.setDMPermission(false),
 	execute: async ({ user, interaction, instance }) => {
 		try {
-			await interaction.deferReply({ ephemeral: true });
+			await interaction.deferReply({ ephemeral: true }).catch(() => {});
 			if ((await readFile(user.id, 'voteReminder')) === false) {
 				await changeDB(user.id, 'voteReminder', true, true);
 

@@ -40,7 +40,7 @@ module.exports = {
 		),
 	execute: async ({ user, interaction, instance }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			const lotto = await instance.lottoSchema.findById('semanal');
 			const type = interaction.options.getSubcommand();
 			if (type === 'buy') {

@@ -17,7 +17,7 @@ module.exports = {
 				.setRequired(true)
 		),
 	execute: async ({ interaction, instance }) => {
-		await interaction.deferReply();
+		await interaction.deferReply().catch(() => {});
 		try {
 			const answers = instance.getMessage(interaction, '8BALL');
 			const answer = `${answers[randint(0, answers.length - 1)]}`;

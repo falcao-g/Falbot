@@ -19,7 +19,7 @@ module.exports = {
 		),
 	execute: async ({ interaction, instance }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			text = interaction.options.getString('dice');
 
 			try {

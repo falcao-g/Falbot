@@ -54,7 +54,7 @@ module.exports = {
 				)
 		),
 	execute: async ({ interaction, instance }) => {
-		await interaction.deferReply();
+		await interaction.deferReply().catch(() => {});
 		try {
 			if (interaction.options !== undefined) {
 				var page = interaction.options.getString('page');

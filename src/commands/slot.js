@@ -18,9 +18,9 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, instance, user }) => {
+	execute: async ({ interaction, instance, user }) => {
 		try {
-			await interaction.deferReply();
+			await interaction.deferReply().catch(() => {});
 			const falcoins = interaction.options.getString('falcoins');
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');
