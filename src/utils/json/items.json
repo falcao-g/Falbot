@@ -248,6 +248,8 @@
 		"pt-BR": ":school_satchel: Mochila",
 		"value": 100000,
 		"emoji": "🎒",
+		"use": true,
+		"effect": "inventory-buff",
 		"recipe": {
 			"leather": 8,
 			"rope": 10,

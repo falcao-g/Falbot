@@ -13,7 +13,9 @@ module.exports = {
 		await interaction.deferReply().catch(() => {});
 		const items = instance.items;
 		const inventory = await readFile(member.id, 'inventory');
-		const limit = instance.levels[(await readFile(member.id, 'rank')) - 1].inventoryLimit;
+		const limit =
+			instance.levels[(await readFile(member.id, 'rank')) - 1].inventoryLimit +
+			(await readFile(member.id, 'inventoryBonus'));
 		const inventoryWorth = instance.getInventoryWorth(inventory);
 		var buff = 1;
 		var buffText = '';

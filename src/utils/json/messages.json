@@ -992,7 +992,7 @@
 		"pt-BR": "Loot lendário",
 		"en-US": "Legendary loot"
 	},
-	"USEABLE": {
+	"EQUIPPABLE": {
 		"pt-BR": ":white_check_mark: Equipável",
 		"en-US": ":white_check_mark: Equipable"
 	},
@@ -1151,6 +1151,26 @@
 	"SORTING_NOW": {
 		"pt-BR": "O inventário agora está ordenado por **{SORTING}**",
 		"en-US": "The inventory is now sorted by **{SORTING}**"
+	},
+	"CANT_USE": {
+		"pt-BR": "Esse item não pode ser usado... :goggles:",
+		"en-US": "This item can't be used... :goggles:"
+	},
+	"USE_BACKPACK_TITLE": {
+		"pt-BR": ":backpack: +200.000 falcoins de limite ao inventário",
+		"en-US": ":backpack: +200.000 falcoins to inventory limit"
+	},
+	"USE_BACKPACK_VALUE": {
+		"pt-BR": "Sucesso! Você aumentou o seu limite de inventário em 200.000 falcoins com 1 mochila",
+		"en-US": "Success! You increased your inventory limit by 200.000 falcoins with 1 backpack"
+	},
+	"USABLE": {
+		"pt-BR": ":white_check_mark: Usável",
+		"en-US": ":white_check_mark: Useable"
+	},
+	"INVENTORY-BUFF": {
+		"pt-BR": ":school_satchel: +200.000 falcoins de limite ao inventário",
+		"en-US": ":school_satchel: +200.000 falcoins to inventory limit"
 	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",

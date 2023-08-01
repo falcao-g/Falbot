@@ -65,7 +65,12 @@ module.exports = {
 				})}`;
 
 			if (itemJSON.equip != undefined) {
-				information += `\n${instance.getMessage(interaction, 'USEABLE')}`;
+				information += `\n${instance.getMessage(interaction, 'EQUIPPABLE')}`;
+				information += `\n${instance.getMessage(interaction, itemJSON.effect.toUpperCase())}`;
+			}
+
+			if (itemJSON.use != undefined) {
+				information += `\n${instance.getMessage(interaction, 'USABLE')}`;
 				information += `\n${instance.getMessage(interaction, itemJSON.effect.toUpperCase())}`;
 			}
 
