@@ -688,6 +688,10 @@
 		"pt-BR": "Classificando por {ITEM}",
 		"en-US": "Ranking by {ITEM}"
 	},
+	"LEADERBOARD_VOTE_DESCRIPTION": {
+		"pt-BR": "Classificando por votos diários :ballot_box:",
+		"en-US": "Ranking by daily votes :ballot_box:"
+	},
 	"SCRATCH": {
 		"pt-BR": "Raspadinha",
 		"en-US": "Scratch"
@@ -1171,6 +1175,10 @@
 	"INVENTORY-BUFF": {
 		"pt-BR": ":school_satchel: +200.000 falcoins de limite ao inventário",
 		"en-US": ":school_satchel: +200.000 falcoins to inventory limit"
+	},
+	"DAYS": {
+		"pt-BR": "dias",
+		"en-US": "days"
 	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
