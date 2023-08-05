@@ -452,29 +452,35 @@ module.exports = {
 
 				//the bot sends a string select menu containing all items that can be crafted
 				if (item === null || amount === null) {
+					const canBeCrafted = Object.keys(items)
+						.map((item) => {
+							if (items[item].recipe === undefined) return;
+
+							for (key in items[item].recipe) {
+								if ((inventory.get(key) || 0) < items[item].recipe[key]) return;
+							}
+
+							const name = items[item][interaction.locale] ?? items[item]['en-US'];
+
+							return {
+								label: name.split(':')[2],
+								value: item,
+								emoji: items[item].emoji,
+							};
+						})
+						.filter((item) => item !== undefined);
+
+					if (canBeCrafted.length === 0) {
+						interaction.editReply({
+							content: instance.getMessage(interaction, 'NO_CRAFT_AVAILABLE'),
+						});
+					}
+
 					const row = new ActionRowBuilder().addComponents([
 						new StringSelectMenuBuilder()
 							.setCustomId('inventory craft')
 							.setPlaceholder(instance.getMessage(interaction, 'CRAFT_PLACEHOLDER'))
-							.addOptions(
-								Object.keys(items)
-									.map((item) => {
-										if (items[item].recipe === undefined) return;
-
-										for (key in items[item].recipe) {
-											if ((inventory.get(key) || 0) < items[item].recipe[key]) return;
-										}
-
-										const name = items[item][interaction.locale] ?? items[item]['en-US'];
-
-										return {
-											label: name.split(':')[2],
-											value: item,
-											emoji: items[item].emoji,
-										};
-									})
-									.filter((item) => item !== undefined)
-							),
+							.addOptions(canBeCrafted.length > 25 ? canBeCrafted.slice(0, 25) : canBeCrafted),
 					]);
 
 					const embed = instance.createEmbed(member.displayColor).addFields({
