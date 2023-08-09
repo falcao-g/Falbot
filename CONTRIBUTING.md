@@ -16,7 +16,7 @@
 4. After that, push to the forked repository.
 5. After the push, acess the forked repository on Github and click in "Compare & pull request".
 
-## ⚡ How to run:
+## ⚡ How to run
 
 ### 👷 Requirements
 
