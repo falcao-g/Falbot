@@ -1,9 +1,9 @@
-<!-- Adicione aqui a linking word e o número da issue, se aplicável. -->
+<!-- Insert here the linkink word and issue number, if applicable -->
 
-## O que este PR faz?
+## What does this PR do?
 
-## Sumário das alterações
-<!-- O que mudou no projeto? Exemplo: Modifiquei o funcionamento da função X  -->
+## Summary of changes
+<!-- What changed in the project? Example: Changed function X, added command Y -->
 
-## Mídia
-<!-- Insira aqui imagens de antes e depois, ou somente das alterações feitas -->
+## Media
+<!-- Put here screenshots of the new additions, or changes, if applicable -->
