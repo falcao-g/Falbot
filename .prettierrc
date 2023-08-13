@@ -2,7 +2,6 @@
   "singleQuote": true,
   "arrowParens": "always",
   "trailingComma": "es5",
-  "useTabs": true,
   "endOfLine": "auto",
   "printWidth": 120
 }
