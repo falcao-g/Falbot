@@ -156,7 +156,7 @@ module.exports = {
 						.setRequired(true)
 				)
 		),
-	execute: async ({ guild, interaction, instance, member, subcommand }) => {
+	execute: async ({ guild, interaction, instance, member, subcommand, args }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			try {
@@ -440,18 +440,13 @@ module.exports = {
 						var item = interaction.values[0];
 						var amount = 1;
 					} else {
-						if (interaction.customId.startsWith('craft')) {
-							var item = interaction.customId.split(' ')[2];
-							var amount = Number(interaction.customId.split(' ')[1]);
-						} else {
-							var item = null;
-							var amount = null;
-						}
+						var item = args[1];
+						var amount = Number(args[0]);
 					}
 				}
 
 				//the bot sends a string select menu containing all items that can be crafted
-				if (item === null || amount === null) {
+				if (item === undefined || amount === undefined) {
 					const canBeCrafted = Object.keys(items)
 						.map((item) => {
 							if (items[item].recipe === undefined) return;
@@ -572,19 +567,19 @@ module.exports = {
 
 				const row = new ActionRowBuilder().addComponents([
 					new ButtonBuilder()
-						.setCustomId(`craft 1 ${itemKey}`)
+						.setCustomId(`inventory craft 1 ${itemKey}`)
 						.setLabel(instance.getMessage(interaction, 'CRAFT') + ' 1')
 						.setStyle('Secondary'),
 					new ButtonBuilder()
-						.setCustomId(`craft 10 ${itemKey}`)
+						.setCustomId(`inventory craft 10 ${itemKey}`)
 						.setLabel(instance.getMessage(interaction, 'CRAFT') + ' 10')
 						.setStyle('Secondary'),
 					new ButtonBuilder()
-						.setCustomId(`craft 100 ${itemKey}`)
+						.setCustomId(`inventory craft 100 ${itemKey}`)
 						.setLabel(instance.getMessage(interaction, 'CRAFT') + ' 100')
 						.setStyle('Secondary'),
 					new ButtonBuilder()
-						.setCustomId(`craft ${maxAmount} ${itemKey} max`)
+						.setCustomId(`inventory craft ${maxAmount} ${itemKey} max`)
 						.setLabel(instance.getMessage(interaction, 'CRAFT_MAX'))
 						.setStyle('Secondary'),
 				]);

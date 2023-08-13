@@ -83,137 +83,57 @@ module.exports = {
 			const command = client.commands.get(interaction.commandName);
 			command.autocomplete({ client, interaction, instance });
 		} else if (interaction.isButton()) {
-			if (interaction.customId === 'disableVoteReminder') {
-				await interaction.deferReply({ ephemeral: true });
-				await changeDB(interaction.user.id, 'voteReminder', false, true);
-				await changeDB(interaction.user.id, 'lastReminder', 0, true);
+			//all button interactions are like the following: <command> <subcommand> <args>
+			//but subcommand and args are optional
+			const commandName = interaction.customId.split(' ')[0];
+			const command = client.commands.get(commandName);
 
-				const row = new ActionRowBuilder().addComponents(
-					new ButtonBuilder()
-						.setCustomId('enableVoteReminder')
-						.setLabel(instance.getMessage(interaction, 'ENABLE_REMINDER'))
-						.setEmoji('🔔')
-						.setStyle('Primary')
-				);
-
-				interaction.editReply({
-					content: instance.getMessage(interaction, 'REMINDER_DISABLED'),
-					components: [row],
-				});
+			try {
+				var subcommand = interaction.options.getSubcommand();
+			} catch {
+				var subcommand = interaction.customId.split(' ')[1];
 			}
 
-			if (interaction.customId === 'enableVoteReminder') {
-				await interaction.deferReply({ ephemeral: true });
-				await changeDB(interaction.user.id, 'voteReminder', true, true);
-
-				const row = new ActionRowBuilder().addComponents(
-					new ButtonBuilder()
-						.setCustomId('disableVoteReminder')
-						.setLabel(instance.getMessage(interaction, 'DISABLE_REMINDER'))
-						.setEmoji('🔕')
-						.setStyle('Primary')
-				);
-
-				interaction.editReply({
-					content: instance.getMessage(interaction, 'REMINDER_ENABLED'),
-					components: [row],
-				});
-			}
-
-			if (interaction.customId === 'help') {
-				interaction.values = [null];
-				const help = client.commands.get('help');
-				await help.execute({
-					guild: interaction.guild,
-					interaction,
-					instance,
-				});
-			}
-
-			if (
-				interaction.customId === 'inventory view' ||
-				interaction.customId === 'inventory craft' ||
-				interaction.customId.startsWith('craft') ||
-				interaction.customId === 'inventory sort'
-			) {
-				if (!interaction.customId.startsWith('craft')) {
-					var arguments = interaction.customId.split(' ');
+			if (command.cooldown) {
+				cooldown = await resolveCooldown(interaction.user.id, interaction.customId);
+				if (cooldown > 0) {
+					await interaction.reply({
+						content: instance.getMessage(interaction, 'COOLDOWN', {
+							COOLDOWN: msToTime(cooldown),
+						}),
+						ephemeral: true,
+					});
+					return;
 				} else {
-					var arguments = ['inventory', 'craft'];
+					await setCooldown(interaction.user.id, interaction.customId, command.cooldown);
 				}
-				const inventory = client.commands.get(arguments[0]);
-				await inventory.execute({
-					guild: interaction.guild,
-					interaction,
-					instance,
-					member: interaction.member,
-					subcommand: arguments[1],
-				});
 			}
 
-			if (interaction.customId.startsWith('next') || interaction.customId.startsWith('previous')) {
-				const iteminfo = client.commands.get('iteminfo');
-				await iteminfo.execute({
-					guild: interaction.guild,
-					interaction,
-					instance,
-					member: interaction.member,
-				});
-			}
+			if (commandName == 'help') interaction.values = [null];
 
-			if (
-				interaction.customId === 'vote' ||
-				interaction.customId === 'scratch' ||
-				interaction.customId === 'work' ||
-				interaction.customId === 'cooldowns' ||
-				interaction.customId === 'fish' ||
-				interaction.customId === 'explore' ||
-				interaction.customId === 'mine' ||
-				interaction.customId === 'hunt' ||
-				interaction.customId === 'balance'
-			) {
-				const command = client.commands.get(interaction.customId);
-
-				if (command.cooldown) {
-					cooldown = await resolveCooldown(interaction.user.id, interaction.customId);
-					if (cooldown > 0) {
-						await interaction.reply({
-							content: instance.getMessage(interaction, 'COOLDOWN', {
-								COOLDOWN: msToTime(cooldown),
-							}),
-							ephemeral: true,
-						});
-						return;
-					} else {
-						await setCooldown(interaction.user.id, interaction.customId, command.cooldown);
-					}
-				}
-
-				await command.execute({
-					guild: interaction.guild,
-					user: interaction.user,
-					interaction,
-					instance,
-					member: interaction.member,
-				});
-			}
+			await command.execute({
+				interaction,
+				instance,
+				client,
+				member: interaction.member,
+				guild: interaction.guild,
+				user: interaction.user,
+				channel: interaction.channel,
+				subcommand,
+				args: interaction.customId.split(' ').slice(2),
+			});
 		} else if (interaction.isStringSelectMenu()) {
-			if (interaction.customId === 'page') {
-				const help = client.commands.get('help');
-				help.execute({ guild: interaction.guild, interaction, instance });
-			} else {
-				const command = client.commands.get(interaction.customId.split(' ')[0]);
-				await command.execute({
-					guild: interaction.guild,
-					interaction,
-					instance,
-					member: interaction.member,
-					client,
-					user: interaction.user,
-					channel: interaction.channel,
-					subcommand: interaction.customId.split(' ')[1],
-				});
-			}
+			const command = client.commands.get(interaction.customId.split(' ')[0]);
+			await command.execute({
+				guild: interaction.guild,
+				interaction,
+				instance,
+				member: interaction.member,
+				client,
+				user: interaction.user,
+				channel: interaction.channel,
+				subcommand: interaction.customId.split(' ')[1],
+			});
 		}
 	},
 };

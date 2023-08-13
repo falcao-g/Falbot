@@ -8,15 +8,15 @@ module.exports = {
 		.setDescription('Toggle your vote reminder')
 		.setDescriptionLocalization('pt-BR', 'Liga/desliga seu lembrete para votar')
 		.setDMPermission(false),
-	execute: async ({ user, interaction, instance }) => {
+	execute: async ({ user, interaction, instance, subcommand }) => {
 		try {
 			await interaction.deferReply({ ephemeral: true }).catch(() => {});
-			if ((await readFile(user.id, 'voteReminder')) === false) {
+			if ((await readFile(user.id, 'voteReminder')) === false || subcommand === 'enable') {
 				await changeDB(user.id, 'voteReminder', true, true);
 
 				const row = new ActionRowBuilder().addComponents(
 					new ButtonBuilder()
-						.setCustomId('disableVoteReminder')
+						.setCustomId('reminder disable')
 						.setLabel(instance.getMessage(interaction, 'DISABLE_REMINDER'))
 						.setEmoji('🔕')
 						.setStyle('Primary')
@@ -32,7 +32,7 @@ module.exports = {
 
 				const row = new ActionRowBuilder().addComponents(
 					new ButtonBuilder()
-						.setCustomId('enableVoteReminder')
+						.setCustomId('reminder enable')
 						.setLabel(instance.getMessage(interaction, 'ENABLE_REMINDER'))
 						.setEmoji('🔔')
 						.setStyle('Primary')
