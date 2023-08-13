@@ -1,5 +1,4 @@
-const { changeDB, resolveCooldown, msToTime, setCooldown } = require('../utils/functions.js');
-const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const { resolveCooldown, msToTime, setCooldown } = require('../utils/functions.js');
 
 module.exports = {
 	name: 'interactionCreate',
