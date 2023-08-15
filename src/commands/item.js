@@ -14,7 +14,7 @@ module.exports = {
 				.setDescriptionLocalization('pt-BR', 'item para ver informações sobre')
 				.setRequired(true)
 		),
-	execute: async ({ interaction, instance, member }) => {
+	execute: async ({ interaction, instance, member, subcommand, args }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			const items = instance.items;
@@ -22,11 +22,11 @@ module.exports = {
 			if (interaction.options !== undefined) {
 				var item = interaction.options.getString('item');
 			} else {
-				var item = interaction.customId.split(' ')[1];
+				var item = args[0];
 				var cont = 0;
 				for (i in items) {
 					if (i == item) {
-						var index = interaction.customId.startsWith('previous') ? cont - 1 : cont + 1;
+						var index = subcommand == 'previous' ? cont - 1 : cont + 1;
 						break;
 					}
 					cont++;
@@ -120,13 +120,17 @@ module.exports = {
 
 			//create two buttons to go to the next and previous item
 			const row = new ActionRowBuilder().addComponents([
-				new ButtonBuilder().setCustomId(`previous ${itemKey}`).setEmoji('⬅️').setStyle('Secondary'),
-				new ButtonBuilder().setCustomId(`next ${itemKey}`).setEmoji('➡️').setStyle('Secondary'),
+				new ButtonBuilder().setCustomId(`iteminfo previous ${itemKey}`).setEmoji('⬅️').setStyle('Secondary'),
+				new ButtonBuilder().setCustomId(`iteminfo next ${itemKey}`).setEmoji('➡️').setStyle('Secondary'),
 			]);
-			interaction.editReply({
-				embeds: [embed],
-				components: [row],
-			});
+			interaction
+				.editReply({
+					embeds: [embed],
+					components: [row],
+				})
+				.catch(() => {
+					throw new Error('Failed to send message');
+				});
 		} catch (err) {
 			console.error(`iteminfo: ${err}`);
 			interaction.editReply({

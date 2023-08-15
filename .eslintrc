@@ -10,7 +10,7 @@
         "ecmaVersion": "latest"
     },
     "rules": {
-        "prettier/prettier": ["error", { "printWidth": 120 }],
+        "prettier/prettier": ["error", { "printWidth": 120, "useTabs": true }],
           "array-bracket-spacing": "error",
           "comma-spacing": "error",
           "no-alert": "error",
