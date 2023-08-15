@@ -1179,6 +1179,10 @@
 	"DAYS": {
 		"pt-BR": "dias",
 		"en-US": "days"
+  },
+	"NO_CRAFT_AVAILABLE": {
+		"pt-BR": "Você não pode construir nada no momento, use `/pescar`, `/minerar`, `/explorar` e `/caçar` para conseguir itens",
+		"en-US": "You can't craft anything at the moment, use `/fish`, `/mine`, `/explore` and `/hunt` to get items"
 	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",

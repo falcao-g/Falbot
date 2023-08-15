@@ -1,30 +1,30 @@
-name: 🚀 Sugerir uma nova funcionalidade
-description: Utilize esse formato de issue para sugerir uma nova funcionalidade.
+name: 🚀 Feature request
+description: Use this format to fill a feature request.
 labels: [enhancement]
 body:
   - type: markdown
     attributes:
-      value: '# Sugestão de recurso'
+      value: '# Feature request'
 
   - type: textarea
     id: description
     attributes:
-      label: Descrição da sugestão
+      label: Feature description
     validations:
       required: true
 
   - type: textarea
     id: steps
     attributes:
-      label: Como implementar?
-      description: Tem alguma sugestão de como isso pode ser implementado?
+      label: How to implement?
+      description: Have any idea how to implement this feature? Tell us!
     validations:
       required: false
 
   - type: textarea
     id: screenshot
     attributes:
-      label: Mídia, se aplicável
-      description: Screenshot, vídeo, GIF, dentre outros, que ajudem a demonstrar a sugestão.
+      label: Media, if applicable
+      description: Screenshot, GIF, video, etc.
     validations:
       required: false

@@ -152,7 +152,7 @@ module.exports = {
 			}
 			const row = new ActionRowBuilder().addComponents(
 				new StringSelectMenuBuilder()
-					.setCustomId('page')
+					.setCustomId('help')
 					.setPlaceholder(instance.getMessage(interaction, 'PICK_PAGE'))
 					.addOptions(
 						{
