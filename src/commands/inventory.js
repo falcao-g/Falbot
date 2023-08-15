@@ -469,6 +469,7 @@ module.exports = {
 						interaction.editReply({
 							content: instance.getMessage(interaction, 'NO_CRAFT_AVAILABLE'),
 						});
+						return;
 					}
 
 					const row = new ActionRowBuilder().addComponents([
