@@ -111,6 +111,29 @@ module.exports = {
 						.setDescriptionLocalization('pt-BR', 'item a ser contado')
 						.setRequired(true)
 				)
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('vote')
+				.setNameLocalization('pt-BR', 'votos')
+				.setDescription('View users ranked by vote streak')
+				.setDescriptionLocalization('pt-BR', 'Veja a classificação de usuários por votos diários')
+				.addStringOption((option) =>
+					option
+						.setName('type')
+						.setNameLocalization('pt-BR', 'tipo')
+						.setDescription('leaderboard of the server or global')
+						.setDescriptionLocalization('pt-BR', 'classificação do servidor ou global')
+						.setRequired(true)
+						.addChoices(
+							{
+								name: 'server',
+								name_localizations: { 'pt-BR': 'servidor' },
+								value: 'server',
+							},
+							{ name: 'global', value: 'global' }
+						)
+				)
 		),
 	execute: async ({ client, guild, interaction, instance }) => {
 		try {
@@ -124,6 +147,7 @@ module.exports = {
 				rank: 'rank',
 				wins: 'vitorias',
 				item: `inventory.${interaction.options.getString('item')}`,
+				vote: 'voteStreak',
 			};
 
 			const subcommand = interaction.options.getSubcommand();
@@ -178,6 +202,8 @@ module.exports = {
 							? `${instance.getMessage(interaction, rank[i][type])}`
 							: subcommand == 'item'
 							? `${itemJSON['emoji']} ${format(rank[i]['inventory'].get(item) ?? 0)}`
+							: subcommand == 'vote'
+							? `${Math.floor(format(rank[i][type]) / 2)} ${instance.getMessage(interaction, 'DAYS')}`
 							: `${format(rank[i][type])}`,
 				});
 			}
