@@ -157,7 +157,7 @@ module.exports = {
 						.setName('item')
 						.setDescription('item to use')
 						.setDescriptionLocalization('pt-BR', 'item para ser usado')
-						.setRequired(true)
+						.setRequired(false)
 						.setAutocomplete(true)
 				)
 		),
@@ -327,6 +327,13 @@ module.exports = {
 					return;
 				}
 
+				if (!itemJSON.value) {
+					interaction.editReply({
+						content: instance.getMessage(interaction, 'CANT_SELL'),
+					});
+					return;
+				}
+
 				if (inventory.get(itemKey) === 0 || inventory.get(itemKey) === undefined) {
 					interaction.editReply({
 						content: instance.getMessage(interaction, 'NO_ITEM'),
@@ -451,7 +458,7 @@ module.exports = {
 				}
 
 				//the bot sends a string select menu containing all items that can be crafted
-				if (item === undefined || amount === undefined) {
+				if (!item) {
 					const canBeCrafted = Object.keys(items)
 						.map((item) => {
 							if (items[item].recipe === undefined) return;
@@ -634,7 +641,7 @@ module.exports = {
 							}
 						}
 
-						if (itemJSON.rarity === 'Legendary' || inventory.get(key) === 0) {
+						if (itemJSON.mythical || inventory.get(key) === 0) {
 							continue;
 						}
 
@@ -728,6 +735,30 @@ module.exports = {
 				}
 			} else if (type === 'use') {
 				const item = interaction.options.getString('item');
+
+				if (item === null) {
+					const embed = instance.createEmbed(member.displayColor);
+
+					listItems = [];
+					for (key in items) {
+						if (items[key].use === true) {
+							const name = items[key][interaction.locale] ?? items[key]['en-US'];
+							listItems.push(
+								name + ' - ' + instance.getMessage(interaction, items[key]['effect'].toUpperCase()).split(':')[2]
+							);
+						}
+					}
+					embed.addFields({
+						name: instance.getMessage(interaction, 'USE_TITLE'),
+						value: listItems.join('\n'),
+					});
+
+					interaction.editReply({
+						embeds: [embed],
+					});
+					return;
+				}
+
 				const itemKey = getItem(item);
 				const itemJSON = items[itemKey];
 				const inventory = await readFile(member.id, 'inventory');
@@ -759,17 +790,37 @@ module.exports = {
 
 				if (itemKey === 'backpack') {
 					await changeDB(member.id, 'inventoryBonus', 200000);
-					await changeDB(member.id, 'inventory', inventory, true);
 
-					const embed = instance.createEmbed(member.displayColor).addFields({
+					var embed = instance.createEmbed(member.displayColor).addFields({
 						name: instance.getMessage(interaction, 'USE_BACKPACK_TITLE'),
 						value: instance.getMessage(interaction, 'USE_BACKPACK_VALUE'),
 					});
+				} else if (itemKey === 'snowflake') {
+					//reset all cooldowns
+					await changeDB(
+						member.id,
+						'cooldowns',
+						{
+							work: 0,
+							hunt: 0,
+							explore: 0,
+							mine: 0,
+							fish: 0,
+							scratch: 0,
+						},
+						true
+					);
+					await changeDB(member.id, 'inventory', inventory, true);
 
-					interaction.editReply({
-						embeds: [embed],
+					var embed = instance.createEmbed(member.displayColor).addFields({
+						name: instance.getMessage(interaction, 'USE_MYTHICAL_TITLE'),
+						value: instance.getMessage(interaction, 'USE_SNOWFLAKE_VALUE'),
 					});
 				}
+				await changeDB(member.id, 'inventory', inventory, true);
+				interaction.editReply({
+					embeds: [embed],
+				});
 			}
 		} catch (err) {
 			console.error(`inventory: ${err}`);
@@ -781,7 +832,6 @@ module.exports = {
 		}
 	},
 	autocomplete: async ({ interaction, instance }) => {
-		console.log(interaction.options.getSubcommand());
 		const focusedValue = interaction.options.getFocused().toLowerCase();
 		const items = instance.items;
 		if (interaction.options.getSubcommand() === 'equip') {
