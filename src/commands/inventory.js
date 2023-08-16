@@ -37,6 +37,7 @@ module.exports = {
 						.setDescription('item to calculate')
 						.setDescriptionLocalization('pt-BR', 'item para calcular')
 						.setRequired(true)
+						.setAutocomplete(true)
 				)
 				.addIntegerOption((option) =>
 					option
@@ -60,6 +61,7 @@ module.exports = {
 						.setDescription('item to sell')
 						.setDescriptionLocalization('pt-BR', 'item para vender')
 						.setRequired(true)
+						.setAutocomplete(true)
 				)
 				.addIntegerOption((option) =>
 					option
@@ -83,6 +85,7 @@ module.exports = {
 						.setDescription('item to equip')
 						.setDescriptionLocalization('pt-BR', 'item para equipar')
 						.setRequired(false)
+						.setAutocomplete(true)
 				)
 		)
 		.addSubcommand((subcommand) =>
@@ -97,6 +100,7 @@ module.exports = {
 						.setDescription('item to craft')
 						.setDescriptionLocalization('pt-BR', 'item para construir')
 						.setRequired(false)
+						.setAutocomplete(true)
 				)
 				.addIntegerOption((option) =>
 					option
@@ -154,6 +158,7 @@ module.exports = {
 						.setDescription('item to use')
 						.setDescriptionLocalization('pt-BR', 'item para ser usado')
 						.setRequired(true)
+						.setAutocomplete(true)
 				)
 		),
 	execute: async ({ guild, interaction, instance, member, subcommand, args }) => {
@@ -774,5 +779,48 @@ module.exports = {
 				components: [],
 			});
 		}
+	},
+	autocomplete: async ({ interaction, instance }) => {
+		console.log(interaction.options.getSubcommand());
+		const focusedValue = interaction.options.getFocused().toLowerCase();
+		const items = instance.items;
+		if (interaction.options.getSubcommand() === 'equip') {
+			var localeItems = Object.keys(items)
+				.map((key) => {
+					if (items[key].equip === true) {
+						var item = items[key][interaction.locale] ?? items[key]['en-US'];
+						return item.split(' ').slice(1).join(' ').toLowerCase();
+					}
+					return undefined;
+				})
+				.filter((item) => item !== undefined);
+		} else if (interaction.options.getSubcommand() === 'craft') {
+			var localeItems = Object.keys(items)
+				.map((key) => {
+					if (items[key].recipe != undefined) {
+						var item = items[key][interaction.locale] ?? items[key]['en-US'];
+						return item.split(' ').slice(1).join(' ').toLowerCase();
+					}
+					return undefined;
+				})
+				.filter((item) => item !== undefined);
+		} else if (interaction.options.getSubcommand() === 'use') {
+			var localeItems = Object.keys(items)
+				.map((key) => {
+					if (items[key].use != undefined) {
+						var item = items[key][interaction.locale] ?? items[key]['en-US'];
+						return item.split(' ').slice(1).join(' ').toLowerCase();
+					}
+					return undefined;
+				})
+				.filter((item) => item !== undefined);
+		} else {
+			var localeItems = Object.keys(items).map((key) => {
+				var item = items[key][interaction.locale] ?? items[key]['en-US'];
+				return item.split(' ').slice(1).join(' ').toLowerCase();
+			});
+		}
+		const filtered = localeItems.filter((choice) => choice.startsWith(focusedValue));
+		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
 	},
 };

@@ -110,6 +110,7 @@ module.exports = {
 						.setDescription('item to be counted')
 						.setDescriptionLocalization('pt-BR', 'item a ser contado')
 						.setRequired(true)
+						.setAutocomplete(true)
 				)
 		)
 		.addSubcommand((subcommand) =>
@@ -254,5 +255,15 @@ module.exports = {
 				components: [],
 			});
 		}
+	},
+	autocomplete: async ({ interaction, instance }) => {
+		const focusedValue = interaction.options.getFocused().toLowerCase();
+		const items = instance.items;
+		const localeItems = Object.keys(items).map((key) => {
+			var item = items[key][interaction.locale] ?? items[key]['en-US'];
+			return item.split(' ').slice(1).join(' ').toLowerCase();
+		});
+		const filtered = localeItems.filter((choice) => choice.startsWith(focusedValue));
+		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
 	},
 };
