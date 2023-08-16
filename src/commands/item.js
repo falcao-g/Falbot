@@ -13,6 +13,7 @@ module.exports = {
 				.setDescription('item to see information about')
 				.setDescriptionLocalization('pt-BR', 'item para ver informações sobre')
 				.setRequired(true)
+				.setAutocomplete(true)
 		),
 	execute: async ({ interaction, instance, member, subcommand, args }) => {
 		try {
@@ -138,5 +139,15 @@ module.exports = {
 				embeds: [],
 			});
 		}
+	},
+	autocomplete: async ({ interaction, instance }) => {
+		const focusedValue = interaction.options.getFocused().toLowerCase();
+		const items = instance.items;
+		const localeItems = Object.keys(items).map((key) => {
+			var item = items[key][interaction.locale] ?? items[key]['en-US'];
+			return item.split(' ').slice(1).join(' ').toLowerCase();
+		});
+		const filtered = localeItems.filter((choice) => choice.startsWith(focusedValue));
+		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
 	},
 };
