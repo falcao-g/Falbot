@@ -1093,8 +1093,8 @@
 		"en-US": ":question: Confirm - sell everything"
 	},
 	"SELLALL_VALUE": {
-		"pt-BR": ":money_with_wings: Você está prester a vender **TUDO** do seu inventário\n:sparkles: Items lendários não estão incluidos.",
-		"en-US": ":money_with_wings: You are about to sell **EVERYTHING** from your inventory\n:sparkles: Legendary items are not included."
+		"pt-BR": ":money_with_wings: Você está prester a vender **TUDO** do seu inventário\n:eye: Items míticos não estão incluidos.",
+		"en-US": ":money_with_wings: You are about to sell **EVERYTHING** from your inventory\n:eye: Mythical items are not included."
 	},
 	"SELLALL_CONFIRMED_TITLE": {
 		"pt-BR": ":moneybag: Inventário vendido!",
