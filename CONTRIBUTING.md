@@ -8,7 +8,7 @@
 4. Select the issue type, currently you can open a bug report or a feature request.
 5. Fill in the formulary and click in "Submit new issue".
 
-## 🤝 Como contribuir com um tópico?
+## 🤝 How to open a pull request?
 
 1. Clone the repository.
 2. Create a new branch with the name of the feature you are working on.
