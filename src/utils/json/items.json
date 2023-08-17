@@ -612,7 +612,7 @@
 	"hamburger": {
 		"en-US": ":hamburger: Hamburger",
 		"pt-BR": ":hamburger: Hambúrguer",
-		"value": 14000,
+		"value": 14500,
 		"emoji": "🍔",
 		"recipe": {
 			"steak": 1,
@@ -740,5 +740,37 @@
 		"rarity": "Uncommon",
 		"emoji": "🦃",
 		"hunting": true
+	},
+	"fishwich": {
+		"en-US": ":hamburger: Fishwich",
+		"pt-BR": ":hamburger: Peixeguer",
+		"value": 13500,
+		"emoji": "🍔",
+		"recipe": {
+			"fish": 1,
+			"loaf": 2,
+			"cheese": 1
+		}
+	},
+	"clover": {
+		"en-US": ":shamrock: Clover",
+		"pt-BR": ":shamrock: Trevo",
+		"value": 400,
+		"rarity": "Epic",
+		"emoji": "🍀",
+		"exploring": true
+	},
+	"snowflake": {
+		"en-US": ":snowflake: Eternal Snowflake",
+		"pt-BR": ":snowflake: Floco eterno",
+		"emoji": "❄️",
+		"use": true,
+		"mythical": true,
+		"effect": "reset-cooldowns",
+		"recipe": {
+			"manuscript": 1,
+			"fossil": 5,
+			"artifact": 10
+		}
 	}
 }

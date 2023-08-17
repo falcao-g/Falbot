@@ -58,12 +58,17 @@ module.exports = {
 				}
 			}
 
-			var information = `:moneybag: ${instance.getMessage(interaction, 'COST')} **${format(itemJSON.value)} falcoins**`;
+			var information = ``;
 
-			if (inventory.get(itemKey))
-				information += `\n${instance.getMessage(interaction, 'OWNED', {
-					AMOUNT: inventory.get(itemKey),
-				})}`;
+			if (itemJSON.value) {
+				information += `:moneybag: ${instance.getMessage(interaction, 'COST')} **${format(itemJSON.value)} falcoins**`;
+			} else {
+				information += `${instance.getMessage(interaction, 'CANT_SELL')}`;
+			}
+
+			if (itemJSON.mythical) {
+				information += `\n${instance.getMessage(interaction, 'MYTHICAL')}`;
+			}
 
 			if (itemJSON.equip != undefined) {
 				information += `\n${instance.getMessage(interaction, 'EQUIPPABLE')}`;
@@ -74,6 +79,11 @@ module.exports = {
 				information += `\n${instance.getMessage(interaction, 'USABLE')}`;
 				information += `\n${instance.getMessage(interaction, itemJSON.effect.toUpperCase())}`;
 			}
+
+			if (inventory.get(itemKey))
+				information += `\n${instance.getMessage(interaction, 'OWNED', {
+					AMOUNT: inventory.get(itemKey),
+				})}`;
 
 			const embed = instance
 				.createEmbed(member.displayColor)

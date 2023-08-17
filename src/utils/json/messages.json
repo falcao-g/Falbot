@@ -996,6 +996,10 @@
 		"pt-BR": "Loot lendário",
 		"en-US": "Legendary loot"
 	},
+	"MYTHICAL": {
+		"pt-BR": ":eye: item **mítico**",
+		"en-US": ":eye: **mythical** item"
+	},
 	"EQUIPPABLE": {
 		"pt-BR": ":white_check_mark: Equipável",
 		"en-US": ":white_check_mark: Equipable"
@@ -1089,8 +1093,8 @@
 		"en-US": ":question: Confirm - sell everything"
 	},
 	"SELLALL_VALUE": {
-		"pt-BR": ":money_with_wings: Você está prester a vender **TUDO** do seu inventário\n:sparkles: Items lendários não estão incluidos.",
-		"en-US": ":money_with_wings: You are about to sell **EVERYTHING** from your inventory\n:sparkles: Legendary items are not included."
+		"pt-BR": ":money_with_wings: Você está prester a vender **TUDO** do seu inventário\n:eye: Items míticos não estão incluidos.",
+		"en-US": ":money_with_wings: You are about to sell **EVERYTHING** from your inventory\n:eye: Mythical items are not included."
 	},
 	"SELLALL_CONFIRMED_TITLE": {
 		"pt-BR": ":moneybag: Inventário vendido!",
@@ -1215,6 +1219,26 @@
 	"CANT_EXCHANGE_ALONE": {
 		"pt-BR": "Você não pode trocar itens com você mesmo! :confused:",
 		"en-US": "You can't exchange items with yourself! :confused:"
+  },
+	"RESET-COOLDOWNS": {
+		"pt-BR": ":snowflake: reseta todos os cooldowns",
+		"en-US": ":snowflake: resets all cooldowns"
+	},
+	"CANT_SELL": {
+		"pt-BR": ":no_entry_sign: Esse item não pode ser vendido",
+		"en-US": ":no_entry_sign: This item can't be sold"
+	},
+	"USE_MYTHICAL_TITLE": {
+		"pt-BR": "Você usou um item mítico! :sparkles:",
+		"en-US": "You used a mythical item! :sparkles:"
+	},
+	"USE_SNOWFLAKE_VALUE": {
+		"pt-BR": "O Floco Eterno te deu seu poder e resetou todos os seus cooldowns! :snowflake:",
+		"en-US": "The Eternal Snowflake gave you its power and reset all your cooldowns! :snowflake:"
+	},
+	"USE_TITLE": {
+		"pt-BR": ":scroll: Lista de itens usáveis e seus efeitos",
+		"en-US": ":scroll: List of useable items and their effects"
 	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
