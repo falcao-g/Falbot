@@ -1205,8 +1205,8 @@
 		"en-US": "Exchange cancelled. {USER} took too long to accept! :confounded:"
 	},
 	"EXCHANGE_REFUSED": {
-		"pt-BR": "{USER} recusou a troca! :confounded:",
-		"en-US": "{USER} refused the exchange! :confounded:"
+		"pt-BR": "{USER2} Recusou a troca de {USER}! :no_entry_sign:",
+		"en-US": "{USER2} refused {USER}'s exchange! :no_entry_sign:"
 	},
 	"EXCHANGE_ACCEPTED": {
 		"pt-BR": "{USER2} Aceitou a troca de {USER}! :white_check_mark:",

@@ -54,13 +54,13 @@ module.exports = {
 			}
 
 			//separate the items and falcoins the user wants to give, they are separated by commas
-			var offerItems = offer.split(', ');
+			var offerItems = offer.split(',');
 			var offerFalcoins = 0;
 			var offerItemsNames = [];
 			var offerItemsAmount = [];
 
 			//separate the items and falcoins the user wants to receive, they are separated by commas
-			var receiveItems = receive.split(', ');
+			var receiveItems = receive.split(',');
 			var receiveFalcoins = 0;
 			var receiveItemsNames = [];
 			var receiveItemsAmount = [];
@@ -70,7 +70,8 @@ module.exports = {
 				if (offerItems[i].includes('falcoins')) {
 					offerFalcoins = parseInt(offerItems[i].split(' ')[0]);
 				} else {
-					if (getItem(offerItems[i].split(' ')[1]) === undefined) {
+					offerItems[i] = offerItems[i].trim();
+					if (getItem(offerItems[i].split(' ').slice(1).join(' ')) === undefined) {
 						await interaction.editReply({
 							content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 								VALUE: offerItems[i].split(' ')[1],
@@ -78,7 +79,7 @@ module.exports = {
 						});
 						return;
 					}
-					offerItemsNames.push(getItem(offerItems[i].split(' ')[1]));
+					offerItemsNames.push(getItem(offerItems[i].split(' ').slice(1).join(' ')));
 					offerItemsAmount.push(parseInt(offerItems[i].split(' ')[0]));
 				}
 			}
@@ -88,7 +89,8 @@ module.exports = {
 				if (receiveItems[i].includes('falcoins')) {
 					receiveFalcoins = parseInt(receiveItems[i].split(' ')[0]);
 				} else {
-					if (getItem(receiveItems[i].split(' ')[1]) === undefined) {
+					receiveItems[i] = receiveItems[i].trim();
+					if (getItem(receiveItems[i].split(' ').slice(1).join(' ')) === undefined) {
 						await interaction.editReply({
 							content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 								VALUE: receiveItems[i].split(' ')[1],
@@ -96,7 +98,7 @@ module.exports = {
 						});
 						return;
 					}
-					receiveItemsNames.push(getItem(receiveItems[i].split(' ')[1]));
+					receiveItemsNames.push(getItem(receiveItems[i].split(' ').slice(1).join(' ')));
 					receiveItemsAmount.push(parseInt(receiveItems[i].split(' ')[0]));
 				}
 			}
@@ -193,12 +195,20 @@ module.exports = {
 						content: instance.getMessage(interaction, 'EXCHANGE_CANCELLED', {
 							USER: recipient,
 						}),
+						embeds: [],
+						components: [],
 					});
 				} else if (collected.first().customId === 'refuse') {
+					embed.setTitle(
+						instance.getMessage(interaction, 'EXCHANGE_REFUSED', {
+							USER: member.displayName,
+							USER2: recipient.displayName,
+						})
+					);
+
 					interaction.editReply({
-						content: instance.getMessage(interaction, 'EXCHANGE_REFUSED', {
-							USER: recipient,
-						}),
+						embeds: [embed],
+						components: [],
 					});
 				} else {
 					userFile.falcoins -= offerFalcoins;
