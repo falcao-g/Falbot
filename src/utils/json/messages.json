@@ -1188,6 +1188,38 @@
 		"pt-BR": "Você não pode construir nada no momento, use `/pescar`, `/minerar`, `/explorar` e `/caçar` para conseguir itens",
 		"en-US": "You can't craft anything at the moment, use `/fish`, `/mine`, `/explore` and `/hunt` to get items"
 	},
+	"INSUFICIENT_ITEM_EXCHANGE": {
+		"pt-BR": "{USER} não tem {ITEM} suficiente para essa troca",
+		"en-US": "{USER} doesn't have enough {ITEM} for this exchange"
+	},
+	"EXCHANGE_PROPOSAL": {
+		"pt-BR": "O jogador {USER} propõe uma troca com {USER2}",
+		"en-US": "Player {USER} proposes an exchange with {USER2}"
+	},
+	"OFFER": {
+		"pt-BR": "{USER} oferece:",
+		"en-US": "{USER} offers:"
+	},
+	"RECEIVE": {
+		"pt-BR": "Em troca de:",
+		"en-US": "In exchange for:"
+	},
+	"EXCHANGE_CANCELLED": {
+		"pt-BR": "Troca cancelada. {USER} demorou muito para aceitar! :confounded:",
+		"en-US": "Exchange cancelled. {USER} took too long to accept! :confounded:"
+	},
+	"EXCHANGE_REFUSED": {
+		"pt-BR": "{USER2} Recusou a troca de {USER}! :no_entry_sign:",
+		"en-US": "{USER2} refused {USER}'s exchange! :no_entry_sign:"
+	},
+	"EXCHANGE_ACCEPTED": {
+		"pt-BR": "{USER2} Aceitou a troca de {USER}! :white_check_mark:",
+		"en-US": "{USER2} accepted {USER}'s exchange! :white_check_mark:"
+	},
+	"CANT_EXCHANGE_ALONE": {
+		"pt-BR": "Você não pode trocar itens com você mesmo! :confused:",
+		"en-US": "You can't exchange items with yourself! :confused:"
+  },
 	"RESET-COOLDOWNS": {
 		"pt-BR": ":snowflake: reseta todos os cooldowns",
 		"en-US": ":snowflake: resets all cooldowns"
