@@ -147,7 +147,7 @@ module.exports = {
 				falcoins: 'falcoins',
 				rank: 'rank',
 				wins: 'vitorias',
-				item: `inventory.${interaction.options.getString('item')}`,
+				item: `inventory.${getItem(interaction.options.getString('item').toLowerCase())}`,
 				vote: 'voteStreak',
 			};
 
@@ -155,7 +155,7 @@ module.exports = {
 			const type = enums[subcommand];
 
 			if (subcommand === 'item') {
-				var item = getItem(interaction.options.getString('item').toLowerCase());
+				var item = type.split('.')[1];
 				var itemJSON = instance.items[item];
 
 				if (itemJSON === undefined) {
