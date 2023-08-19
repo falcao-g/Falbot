@@ -87,6 +87,8 @@ module.exports = {
 			const commandName = interaction.customId.split(' ')[0];
 			const command = client.commands.get(commandName);
 
+			if (command == undefined) return;
+
 			try {
 				var subcommand = interaction.options.getSubcommand();
 			} catch {

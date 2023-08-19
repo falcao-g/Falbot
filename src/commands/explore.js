@@ -70,8 +70,6 @@ module.exports = {
 			return acc;
 		}, []);
 
-		console.log(filteredItems);
-
 		// randomly select a number of items based on their weights
 		const selectedItems = [];
 		const numItems = randint(3, 5);
