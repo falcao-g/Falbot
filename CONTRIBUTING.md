@@ -17,6 +17,12 @@
 5. After that, push to the forked repository.
 6. After the push, acess the forked repository on Github and click in "Compare & pull request".
 
+## 🚨 Self-hosting warning
+
+Please keep in mind that Falbot's emojis aren't distributed with the source code, so if you try to run commands that use them, you will get an error.
+
+I don't know exactly how to ammend this, but if you create your own emojis with the same names, it should work.
+
 ## ⚡ How to run
 
 ### 👷 Requirements
