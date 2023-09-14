@@ -1,5 +1,7 @@
 # ✔️ Contributing guidelines
 
+Be sure to follow the [Code of Conduct](CODE_OF_CONDUCT.md) and these guidelines when contributing to the project.
+
 ## 🤔 How to open an issue?
 
 1. Check that you are logged in to your GitHub account.
