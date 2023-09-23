@@ -54,7 +54,7 @@ module.exports = {
 					await changeDB(user.id, 'falcoins', -rank.falcoinsToLevelUp);
 					await changeDB(user.id, 'rank', rank_number + 1, true);
 
-					perks = await instance.rankPerks(rank, new_rank, guild);
+					perks = await instance.rankPerks(rank, new_rank, interaction);
 
 					var embed = instance.createEmbed(1752220).addFields(
 						{
