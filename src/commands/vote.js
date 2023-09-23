@@ -46,6 +46,9 @@ module.exports = {
 									PERCENTAGE: bonus,
 							  }),
 				});
+				var stats = await readFile(interaction.user.id, 'stats');
+				stats.set('timesVoted', stats.get('timesVoted') + 1);
+				await changeDB(interaction.user.id, 'stats', stats, true);
 			} else if (voted && Date.now() - lastVote < 1000 * 60 * 60 * 12) {
 				var embed = instance.createEmbed(15158332).addFields({
 					name: instance.getMessage(interaction, 'ALREADY_COLLECTED'),

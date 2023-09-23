@@ -101,5 +101,10 @@ module.exports = {
 			embeds: [embed],
 			components: [buttons(['balance', 'inventory_view', 'cooldowns'])],
 		});
+
+		var stats = await readFile(interaction.user.id, 'stats');
+		stats.set('timesMined', stats.get('timesMined') + 1);
+		stats.set('itemsFound', stats.get('itemsFound') + total);
+		await changeDB(interaction.user.id, 'stats', stats, true);
 	},
 };

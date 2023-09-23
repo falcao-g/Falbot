@@ -601,6 +601,10 @@ module.exports = {
 					embeds: [embed],
 					components: [row],
 				});
+
+				var stats = await readFile(interaction.user.id, 'stats');
+				stats.set('itemsCrafted', stats.get('itemsCrafted') + amount);
+				await changeDB(interaction.user.id, 'stats', stats, true);
 			} else if (type === 'sellall') {
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'SELLALL_TITLE'),

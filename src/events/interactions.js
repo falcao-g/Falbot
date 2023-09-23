@@ -1,4 +1,4 @@
-const { resolveCooldown, msToTime, setCooldown } = require('../utils/functions.js');
+const { resolveCooldown, msToTime, setCooldown, changeDB, readFile } = require('../utils/functions.js');
 
 module.exports = {
 	name: 'interactionCreate',
@@ -69,6 +69,10 @@ module.exports = {
 				});
 			}
 
+			var stats = await readFile(interaction.user.id, 'stats');
+			stats.set('commands', stats.get('commands') + 1);
+			await changeDB(interaction.user.id, 'stats', stats, true);
+
 			command.execute({
 				interaction,
 				instance,
@@ -112,6 +116,10 @@ module.exports = {
 
 			if (commandName == 'help') interaction.values = [null];
 
+			var stats = await readFile(interaction.user.id, 'stats');
+			stats.set('commands', stats.get('commands') + 1);
+			await changeDB(interaction.user.id, 'stats', stats, true);
+
 			await command.execute({
 				interaction,
 				instance,
@@ -125,6 +133,11 @@ module.exports = {
 			});
 		} else if (interaction.isStringSelectMenu()) {
 			const command = client.commands.get(interaction.customId.split(' ')[0]);
+
+			var stats = await readFile(interaction.user.id, 'stats');
+			stats.set('commands', stats.get('commands') + 1);
+			await changeDB(interaction.user.id, 'stats', stats, true);
+
 			await command.execute({
 				guild: interaction.guild,
 				interaction,
