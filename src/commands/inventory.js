@@ -834,42 +834,25 @@ module.exports = {
 	autocomplete: async ({ interaction, instance }) => {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
 		const items = instance.items;
-		if (interaction.options.getSubcommand() === 'equip') {
-			var localeItems = Object.keys(items)
-				.map((key) => {
-					if (items[key].equip === true) {
-						var item = items[key][interaction.locale] ?? items[key]['en-US'];
-						return item.split(' ').slice(1).join(' ').toLowerCase();
-					}
-					return undefined;
-				})
-				.filter((item) => item !== undefined);
-		} else if (interaction.options.getSubcommand() === 'craft') {
-			var localeItems = Object.keys(items)
-				.map((key) => {
-					if (items[key].recipe != undefined) {
-						var item = items[key][interaction.locale] ?? items[key]['en-US'];
-						return item.split(' ').slice(1).join(' ').toLowerCase();
-					}
-					return undefined;
-				})
-				.filter((item) => item !== undefined);
-		} else if (interaction.options.getSubcommand() === 'use') {
-			var localeItems = Object.keys(items)
-				.map((key) => {
-					if (items[key].use != undefined) {
-						var item = items[key][interaction.locale] ?? items[key]['en-US'];
-						return item.split(' ').slice(1).join(' ').toLowerCase();
-					}
-					return undefined;
-				})
-				.filter((item) => item !== undefined);
-		} else {
-			var localeItems = Object.keys(items).map((key) => {
-				var item = items[key][interaction.locale] ?? items[key]['en-US'];
-				return item.split(' ').slice(1).join(' ').toLowerCase();
-			});
-		}
+		const subcommand = interaction.options.getSubcommand();
+
+		var localeItems = Object.keys(items)
+			.map((key) => {
+				const itemData = items[key];
+				if (
+					(subcommand === 'equip' && itemData.equip === true) || // Equipable items
+					(subcommand === 'craft' && itemData.recipe !== undefined) || // Craftable items
+					(subcommand === 'use' && itemData.use !== undefined) || // Usable items
+					(subcommand === 'sell' && itemData.mythical !== true) || // Sellable items
+					subcommand // Default case
+				) {
+					var item = itemData[interaction.locale] ?? itemData['en-US'];
+					return item.split(' ').slice(1).join(' ').toLowerCase();
+				}
+				return undefined;
+			})
+			.filter((item) => item !== undefined);
+
 		const filtered = localeItems.filter((choice) => choice.startsWith(focusedValue));
 		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
 	},
