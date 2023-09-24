@@ -299,6 +299,8 @@ module.exports = {
 						}`;
 						cost += items[key].value * amount;
 					}
+				} else {
+					cost = itemJSON.value * amount;
 				}
 
 				const embed = instance
