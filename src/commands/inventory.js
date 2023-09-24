@@ -279,6 +279,7 @@ module.exports = {
 			} else if (type === 'calc') {
 				const amount = interaction.options.getInteger('amount');
 				const itemJSON = items[getItem(interaction.options.getString('item'))];
+				var cost = 0;
 
 				if (itemJSON === undefined) {
 					interaction.editReply({
@@ -296,7 +297,10 @@ module.exports = {
 						ingredients += `\n${items[key][interaction.locale] ?? items[key]['en-US']} x ${
 							itemJSON.recipe[key] * amount
 						}`;
+						cost += items[key].value * amount;
 					}
+				} else {
+					cost = itemJSON.value * amount;
 				}
 
 				const embed = instance
@@ -307,7 +311,7 @@ module.exports = {
 						value: `${ingredients != undefined ? ingredients : ''}\n${instance.getMessage(
 							interaction,
 							'COST'
-						)} **${format(itemJSON.value * amount)} falcoins**`,
+						)} **${format(cost)} falcoins**`,
 					});
 
 				interaction.editReply({
@@ -834,42 +838,25 @@ module.exports = {
 	autocomplete: async ({ interaction, instance }) => {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
 		const items = instance.items;
-		if (interaction.options.getSubcommand() === 'equip') {
-			var localeItems = Object.keys(items)
-				.map((key) => {
-					if (items[key].equip === true) {
-						var item = items[key][interaction.locale] ?? items[key]['en-US'];
-						return item.split(' ').slice(1).join(' ').toLowerCase();
-					}
-					return undefined;
-				})
-				.filter((item) => item !== undefined);
-		} else if (interaction.options.getSubcommand() === 'craft') {
-			var localeItems = Object.keys(items)
-				.map((key) => {
-					if (items[key].recipe != undefined) {
-						var item = items[key][interaction.locale] ?? items[key]['en-US'];
-						return item.split(' ').slice(1).join(' ').toLowerCase();
-					}
-					return undefined;
-				})
-				.filter((item) => item !== undefined);
-		} else if (interaction.options.getSubcommand() === 'use') {
-			var localeItems = Object.keys(items)
-				.map((key) => {
-					if (items[key].use != undefined) {
-						var item = items[key][interaction.locale] ?? items[key]['en-US'];
-						return item.split(' ').slice(1).join(' ').toLowerCase();
-					}
-					return undefined;
-				})
-				.filter((item) => item !== undefined);
-		} else {
-			var localeItems = Object.keys(items).map((key) => {
-				var item = items[key][interaction.locale] ?? items[key]['en-US'];
-				return item.split(' ').slice(1).join(' ').toLowerCase();
-			});
-		}
+		const subcommand = interaction.options.getSubcommand();
+
+		var localeItems = Object.keys(items)
+			.map((key) => {
+				const itemData = items[key];
+				if (
+					(subcommand === 'equip' && itemData.equip === true) || // Equipable items
+					(subcommand === 'craft' && itemData.recipe !== undefined) || // Craftable items
+					(subcommand === 'use' && itemData.use !== undefined) || // Usable items
+					(subcommand === 'sell' && itemData.mythical !== true) || // Sellable items
+					subcommand === 'calc' // All items
+				) {
+					var item = itemData[interaction.locale] ?? itemData['en-US'];
+					return item.split(' ').slice(1).join(' ').toLowerCase();
+				}
+				return undefined;
+			})
+			.filter((item) => item !== undefined);
+
 		const filtered = localeItems.filter((choice) => choice.startsWith(focusedValue));
 		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
 	},
