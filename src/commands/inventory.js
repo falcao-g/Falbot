@@ -279,6 +279,7 @@ module.exports = {
 			} else if (type === 'calc') {
 				const amount = interaction.options.getInteger('amount');
 				const itemJSON = items[getItem(interaction.options.getString('item'))];
+				var cost = 0;
 
 				if (itemJSON === undefined) {
 					interaction.editReply({
@@ -296,6 +297,7 @@ module.exports = {
 						ingredients += `\n${items[key][interaction.locale] ?? items[key]['en-US']} x ${
 							itemJSON.recipe[key] * amount
 						}`;
+						cost += items[key].value * amount;
 					}
 				}
 
@@ -307,7 +309,7 @@ module.exports = {
 						value: `${ingredients != undefined ? ingredients : ''}\n${instance.getMessage(
 							interaction,
 							'COST'
-						)} **${format(itemJSON.value * amount)} falcoins**`,
+						)} **${format(cost)} falcoins**`,
 					});
 
 				interaction.editReply({
@@ -844,7 +846,7 @@ module.exports = {
 					(subcommand === 'craft' && itemData.recipe !== undefined) || // Craftable items
 					(subcommand === 'use' && itemData.use !== undefined) || // Usable items
 					(subcommand === 'sell' && itemData.mythical !== true) || // Sellable items
-					subcommand // Default case
+					subcommand === 'calc' // All items
 				) {
 					var item = itemData[interaction.locale] ?? itemData['en-US'];
 					return item.split(' ').slice(1).join(' ').toLowerCase();
