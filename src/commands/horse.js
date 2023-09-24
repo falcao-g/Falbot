@@ -31,7 +31,7 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ interaction, user, instance }) => {
+	execute: async ({ interaction, user, instance, member }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			const horse = interaction.options.getString('horse');

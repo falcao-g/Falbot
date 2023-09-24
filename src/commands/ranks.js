@@ -54,7 +54,7 @@ module.exports = {
 					await changeDB(user.id, 'falcoins', -rank.falcoinsToLevelUp);
 					await changeDB(user.id, 'rank', rank_number + 1, true);
 
-					perks = await instance.rankPerks(rank, new_rank, guild);
+					perks = await instance.rankPerks(rank, new_rank, interaction);
 
 					var embed = instance.createEmbed(1752220).addFields(
 						{
@@ -100,7 +100,7 @@ module.exports = {
 							format(levels[rank_number - 1].falcoinsToLevelUp) +
 							' Falcoins' +
 							instance.getMessage(interaction, 'CURRENT_RANK'),
-						value: await instance.rankPerks(levels[rank_number - 2], levels[rank_number - 1], guild),
+						value: await instance.rankPerks(levels[rank_number - 2], levels[rank_number - 1], interaction),
 					});
 
 				for (var i = 0; i < quantity; i++) {
@@ -110,7 +110,7 @@ module.exports = {
 								instance.getMessage(interaction, String(rank_number + i + 1)) +
 								' - ' +
 								instance.getMessage(interaction, 'MAX_RANK2'),
-							value: await instance.rankPerks(levels[rank_number - 1 + i], levels[rank_number + i], guild),
+							value: await instance.rankPerks(levels[rank_number - 1 + i], levels[rank_number + i], interaction),
 						});
 					} else {
 						embed.addFields({
@@ -119,7 +119,7 @@ module.exports = {
 								' - ' +
 								format(levels[rank_number + i].falcoinsToLevelUp) +
 								' Falcoins',
-							value: await instance.rankPerks(levels[rank_number - 1 + i], levels[rank_number + i], guild),
+							value: await instance.rankPerks(levels[rank_number - 1 + i], levels[rank_number + i], interaction),
 						});
 					}
 				}
