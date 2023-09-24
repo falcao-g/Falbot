@@ -363,7 +363,7 @@ class Falbot {
 
 	getInventoryWorth(inventory) {
 		return Array.from(inventory).reduce((acc, [itemName, quantity]) => {
-			acc += this.items[itemName]['value'] * quantity;
+			if (this.items[itemName]['value'] !== undefined) acc += this.items[itemName]['value'] * quantity;
 			return acc;
 		}, 0);
 	}
