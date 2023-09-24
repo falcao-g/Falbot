@@ -1240,6 +1240,58 @@
 		"pt-BR": ":scroll: Lista de itens usáveis e seus efeitos",
 		"en-US": ":scroll: List of useable items and their effects"
 	},
+	"STATS_TITLE": {
+		"pt-BR": ":bar_chart: Estatísticas de {USER}",
+		"en-US": ":bar_chart: {USER}'s stats"
+	},
+	"STATS_COMMANDS": {
+		"pt-BR": "comandos usados",
+		"en-US": "commands used"
+	},
+	"STATS_ITEMS": {
+		"pt-BR": "itens",
+		"en-US": "items"
+	},
+	"STATS_TIMES": {
+		"pt-BR": "vezes",
+		"en-US": "times"
+	},
+	"STATS_TOTAL_COMMANDS": {
+		"pt-BR": "Comandos Totais",
+		"en-US": "Total Commands"
+	},
+	"STATS_ITEMS_FOUND": {
+		"pt-BR": "Itens Encontrados",
+		"en-US": "Items Found"
+	},
+	"STATS_WORK": {
+		"pt-BR": "Trabalhos",
+		"en-US": "Times Worked"
+	},
+	"STATS_EXPLORE": {
+		"pt-BR": "Explorações",
+		"en-US": "Times Explored"
+	},
+	"STATS_FISH": {
+		"pt-BR": "Pescarias",
+		"en-US": "Times Fished"
+	},
+	"STATS_MINE": {
+		"pt-BR": "Minerações",
+		"en-US": "Times Mined"
+	},
+	"STATS_HUNT": {
+		"pt-BR": "Caçadas",
+		"en-US": "Times Hunted"
+	},
+	"STATS_VOTE": {
+		"pt-BR": "Votos",
+		"en-US": "Times Voted"
+	},
+	"STATS_CRAFTS": {
+		"pt-BR": "Itens feitos",
+		"en-US": "Items crafted"
+	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
 		"en-US": ":potato: Peasent"

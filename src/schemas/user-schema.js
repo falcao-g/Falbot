@@ -70,6 +70,22 @@ const userSchema = mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
+		stats: {
+			type: Map,
+			of: Number,
+			default: new Map([
+				['ranks', 0],
+				['commands', 0],
+				['itemsFound', 0],
+				['timesWorked', 0],
+				['timesExplored', 0],
+				['timesFished', 0],
+				['timesHunted', 0],
+				['timesMined', 0],
+				['timesVoted', 0],
+				['itemsCrafted', 0],
+			]),
+		},
 	},
 	{
 		versionKey: false,

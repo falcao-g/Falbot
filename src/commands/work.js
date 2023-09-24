@@ -48,6 +48,10 @@ module.exports = {
 			await interaction.editReply({
 				embeds: [embed],
 			});
+
+			var stats = await readFile(interaction.user.id, 'stats');
+			stats.set('timesWorked', stats.get('timesWorked') + 1);
+			await changeDB(interaction.user.id, 'stats', stats, true);
 		} catch (err) {
 			console.error(`work: ${err}`);
 			interaction.editReply({
