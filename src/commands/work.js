@@ -34,6 +34,11 @@ module.exports = {
 					});
 			}
 
+			if (instance.activeEvents.has('Overtime')) {
+				salary *= 3;
+				desc += `\n${instance.getMessage(interaction, 'OVERTIME_BONUS')}`;
+			}
+
 			changeDB(user.id, 'falcoins', salary + bonus);
 
 			var embed = instance

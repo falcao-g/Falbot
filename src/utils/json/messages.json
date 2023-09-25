@@ -1292,6 +1292,46 @@
 		"pt-BR": "Itens feitos",
 		"en-US": "Items crafted"
 	},
+	"OVERTIME": {
+		"pt-BR": "**:crescent_moon: Horas extras - 3x** bônus de trabalho ({TIME})",
+		"en-US": "**:crescent_moon: Overtime - 3x** work bonus ({TIME})"
+	},
+	"SEARCH PARTY": {
+		"pt-BR": "**:flashlight: Busca em grupo - 2x** bônus de exploração ({TIME})",
+		"en-US": "**:flashlight: Search party - 2x** explore bonus ({TIME})"
+	},
+	"STAMPEDE": {
+		"pt-BR": "**:mammoth: Manada - 2x** bônus de caça ({TIME})",
+		"en-US": "**:mammoth: Stampede - 2x** hunt bonus ({TIME})"
+	},
+	"FLOOD": {
+		"pt-BR": "**:cloud_rain: Enchente - 2x** bônus de pesca ({TIME})",
+		"en-US": "**:cloud_rain: Flood - 2x** fishing bonus ({TIME})"
+	},
+	"COMET": {
+		"pt-BR": "**:comet: Cometa - 2x** bônus de mineração ({TIME})",
+		"en-US": "**:comet: Comet - 2x** mining bonus ({TIME})"
+	},
+	"OVERTIME_BONUS": {
+		"pt-BR": "**:crescent_moon: bônus de 3x do evento**",
+		"en-US": "**:crescent_moon: 3x event bonus**"
+	},
+	"SEARCH_PARTY_BONUS": {
+		"pt-BR": "**:flashlight: bônus de 2x do evento**",
+		"en-US": "**:flashlight: 2x event bonus**"
+	},
+	"STAMPEDE_BONUS": {
+		"pt-BR": "**:mammoth: bônus de 2x do evento**",
+		"en-US": "**:mammoth: 2x event bonus**"
+	},
+	"FLOOD_BONUS": {
+		"pt-BR": "**:cloud_rain: bônus de 2x do evento**",
+		"en-US": "**:cloud_rain: 2x event bonus**"
+	},
+	"COMET_BONUS": {
+		"pt-BR": "**:comet: bônus de 2x do evento**",
+		"en-US": "**:comet: 2x event bonus**"
+	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
 		"en-US": ":potato: Peasent"

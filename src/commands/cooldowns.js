@@ -19,6 +19,21 @@ module.exports = {
 			const mineCooldown = await resolveCooldown(member.id, 'mine');
 			const huntCooldown = await resolveCooldown(member.id, 'hunt');
 			const lotto = await instance.lottoSchema.findById('semanal');
+
+			var events = `**${instance.getMessage(interaction, 'LOTTERY')}** - ${instance.getMessage(
+				interaction,
+				'LOTTERY_DRAWN',
+				{
+					TIME: msToTime(lotto.nextDraw - Date.now()),
+				}
+			)}`;
+
+			for (const [event, value] of instance.activeEvents.entries()) {
+				events += `\n${instance.getMessage(interaction, event.toUpperCase(), {
+					TIME: msToTime(value - Date.now()),
+				})}`;
+			}
+
 			const embed = instance
 				.createEmbed(member.displayColor)
 				.setTitle(instance.getMessage(interaction, 'COOLDOWNS'))
@@ -88,13 +103,7 @@ module.exports = {
 					},
 					{
 						name: ':loudspeaker: ' + instance.getMessage(interaction, 'EVENTS'),
-						value: `**${instance.getMessage(interaction, 'LOTTERY')}** - ${instance.getMessage(
-							interaction,
-							'LOTTERY_DRAWN',
-							{
-								TIME: msToTime(lotto.nextDraw - Date.now()),
-							}
-						)}`,
+						value: events,
 						inline: false,
 					}
 				);
