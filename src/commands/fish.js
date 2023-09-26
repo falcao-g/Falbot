@@ -47,7 +47,7 @@ module.exports = {
 
 		if (instance.activeEvents.has('Flood')) {
 			if (buffText !== '') buffText += '\n';
-			desc += `${instance.getMessage(interaction, 'FLOOD_BONUS')}`;
+			buffText += `${instance.getMessage(interaction, 'FLOOD_BONUS')}`;
 			buff ? (buff *= 2) : (buff = 2);
 		}
 

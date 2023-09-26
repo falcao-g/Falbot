@@ -47,7 +47,7 @@ module.exports = {
 
 		if (instance.activeEvents.has('Stampede')) {
 			if (buffText !== '') buffText += '\n';
-			desc += `${instance.getMessage(interaction, 'STAMPEDE_BONUS')}`;
+			buffText += `${instance.getMessage(interaction, 'STAMPEDE_BONUS')}`;
 			buff ? (buff *= 2) : (buff = 2);
 		}
 

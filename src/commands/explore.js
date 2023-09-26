@@ -47,7 +47,7 @@ module.exports = {
 
 		if (instance.activeEvents.has('Search Party')) {
 			if (buffText !== '') buffText += '\n';
-			desc += `${instance.getMessage(interaction, 'SEARCH_PARTY_BONUS')}`;
+			buffText += `${instance.getMessage(interaction, 'SEARCH_PARTY_BONUS')}`;
 			buff ? (buff *= 2) : (buff = 2);
 		}
 

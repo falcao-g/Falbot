@@ -47,7 +47,7 @@ module.exports = {
 
 		if (instance.activeEvents.has('Comet')) {
 			if (buffText !== '') buffText += '\n';
-			desc += `${instance.getMessage(interaction, 'OVERTIME_BONUS')}`;
+			buffText += `${instance.getMessage(interaction, 'COMET_BONUS')}`;
 			buff ? (buff *= 2) : (buff = 2);
 		}
 
