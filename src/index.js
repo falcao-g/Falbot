@@ -261,32 +261,32 @@ class Falbot {
 			{
 				probability: 0.05,
 				name: 'Overtime',
-				min_time: 30,
-				max_time: 60,
+				min_time: 60,
+				max_time: 120,
 			},
 			{
 				probability: 0.03,
 				name: 'Search Party',
-				min_time: 30,
-				max_time: 60,
+				min_time: 60,
+				max_time: 120,
 			},
 			{
 				probability: 0.03,
 				name: 'Stampede',
-				min_time: 30,
-				max_time: 60,
+				min_time: 60,
+				max_time: 120,
 			},
 			{
 				probability: 0.03,
 				name: 'Flood',
-				min_time: 30,
-				max_time: 60,
+				min_time: 60,
+				max_time: 120,
 			},
 			{
 				probability: 0.03,
 				name: 'Comet',
-				min_time: 30,
-				max_time: 60,
+				min_time: 60,
+				max_time: 120,
 			},
 		];
 
