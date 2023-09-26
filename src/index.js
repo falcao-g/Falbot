@@ -23,6 +23,7 @@ class Falbot {
 	interestSchema = require('./schemas/interest-schema.js');
 	bannedSchema = require('./schemas/banned-schema.js');
 	guildsSchema = require('./schemas/guilds-schema.js');
+	activeEvents = new Map();
 
 	constructor() {
 		this.client.on('ready', () => {
@@ -102,6 +103,13 @@ class Falbot {
 					this.lotteryDraw();
 			},
 			1000 * 60 * 5
+		);
+
+		setInterval(
+			() => {
+				this.randomEventsHandler();
+			},
+			1000 * 60 * 45
 		);
 	}
 
@@ -245,6 +253,55 @@ class Falbot {
 			if (lotto.history.length >= 10) lotto.history.pop();
 			lotto.nextDraw = Date.now() + 604800000; //next one is next week
 			await lotto.save();
+		}
+	}
+
+	async randomEventsHandler() {
+		const events = [
+			{
+				probability: 0.05,
+				name: 'Overtime',
+				min_time: 60,
+				max_time: 120,
+			},
+			{
+				probability: 0.03,
+				name: 'Search Party',
+				min_time: 60,
+				max_time: 120,
+			},
+			{
+				probability: 0.03,
+				name: 'Stampede',
+				min_time: 60,
+				max_time: 120,
+			},
+			{
+				probability: 0.03,
+				name: 'Flood',
+				min_time: 60,
+				max_time: 120,
+			},
+			{
+				probability: 0.03,
+				name: 'Comet',
+				min_time: 60,
+				max_time: 120,
+			},
+		];
+
+		for (const event of events) {
+			const randomProbability = Math.random();
+			if (randomProbability <= event.probability) {
+				if (!this.activeEvents.has(event.name)) {
+					var duration = 1000 * 60 * randint(event.min_time, event.max_time);
+					this.activeEvents.set(event.name, Date.now() + duration);
+					setTimeout(() => {
+						this.activeEvents.delete(event.name);
+					}, duration);
+					break;
+				}
+			}
 		}
 	}
 

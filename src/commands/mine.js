@@ -45,6 +45,12 @@ module.exports = {
 			})}**`;
 		}
 
+		if (instance.activeEvents.has('Comet')) {
+			if (buffText !== '') buffText += '\n';
+			buffText += `${instance.getMessage(interaction, 'COMET_BONUS')}`;
+			buff ? (buff *= 2) : (buff = 2);
+		}
+
 		// define the weight of each rarity level (the sum of all weights should be 1)
 		const weights = {
 			Common: 0.5,
@@ -77,7 +83,7 @@ module.exports = {
 		var text = '';
 		for (let i = 0; i < numItems; i++) {
 			var selectedItem = pick(filteredItems);
-			var amount = randint(1, amounts[items[selectedItem]['rarity']]) * buff;
+			var amount = randint(1, amounts[items[selectedItem]['rarity']]) * randint(1, buff);
 			var name = items[selectedItem][interaction.locale] ?? items[selectedItem]['en-US'];
 			total += amount;
 			text += `**${name}** x ${amount}\n`;

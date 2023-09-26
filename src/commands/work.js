@@ -18,6 +18,12 @@ module.exports = {
 			var min = levels[rank_number - 1].work[0];
 			var max = levels[rank_number - 1].work[1];
 			var salary = randint(min, max);
+			var eventText = '';
+
+			if (instance.activeEvents.has('Overtime')) {
+				salary *= 3;
+				eventText += `\n${instance.getMessage(interaction, 'OVERTIME_BONUS')}`;
+			}
 
 			let bonus = 0;
 			desc = instance.getMessage(interaction, 'WORK', {
@@ -43,7 +49,7 @@ module.exports = {
 						FALCOINS: format(salary + bonus),
 					})
 				)
-				.setDescription(desc);
+				.setDescription(desc + eventText);
 
 			await interaction.editReply({
 				embeds: [embed],
