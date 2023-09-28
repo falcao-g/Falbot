@@ -142,12 +142,13 @@ module.exports = {
 			var rank = [];
 			const scope = interaction.options.getString('type');
 			const embeds = [];
+			const itemArgument = interaction.options.getString('item') ?? '';
 
 			enums = {
 				falcoins: 'falcoins',
 				rank: 'rank',
 				wins: 'vitorias',
-				item: `inventory.${getItem(interaction.options.getString('item').toLowerCase())}`,
+				item: `inventory.${getItem(itemArgument.toLowerCase())}`,
 				vote: 'voteStreak',
 			};
 
