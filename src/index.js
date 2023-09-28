@@ -2,9 +2,9 @@ const { randint, changeDB, format } = require('./utils/functions.js');
 const { Client, GatewayIntentBits, Collection, EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const path = require('path');
 require('dotenv').config();
-const mongoose = require('mongoose');
 const { loadEvents } = require('./handlers/eventHandler.js');
 const { loadCommands } = require('./handlers/commandHandler.js');
+const databaseHandler = require('./handlers/databaseHandler.js');
 
 class Falbot {
 	config = require('./config.json');
@@ -30,40 +30,7 @@ class Falbot {
 			console.log('Bot online');
 			this.client.on('error', console.error);
 
-			try {
-				mongoose.set('strictQuery', false);
-				mongoose.connect(process.env.MONGODB_URI, {
-					keepAlive: true,
-				});
-			} catch {
-				console.log('A conexão caiu');
-				mongoose.connect(process.env.MONGODB_URI);
-			}
-
-			mongoose.connection.on('error', (err) => {
-				console.log(`Erro na conexão: ${err}`);
-				mongoose.connect(process.env.MONGODB_URI);
-			});
-
-			mongoose.connection.on('disconnected', () => {
-				console.log('A conexão caiu');
-				mongoose.connect(process.env.MONGODB_URI);
-			});
-
-			mongoose.connection.on('disconnecting', () => {
-				console.log('A conexão caiu');
-				mongoose.connect(process.env.MONGODB_URI);
-			});
-
-			mongoose.connection.on('MongoNetworkError', () => {
-				console.log('A conexão caiu');
-				mongoose.connect(process.env.MONGODB_URI);
-			});
-
-			mongoose.connection.on('MongooseServerSelectionError', () => {
-				console.log('A conexão caiu');
-				mongoose.connect(process.env.MONGODB_URI);
-			});
+			databaseHandler.connect();
 
 			this.client.events = new Collection();
 			this.client.commands = new Collection();
