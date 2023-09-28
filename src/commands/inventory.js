@@ -124,7 +124,27 @@ module.exports = {
 						.setNameLocalization('pt-BR', 'somente-loot')
 						.setDescription('sell only loot items')
 						.setDescriptionLocalization('pt-BR', 'venda apenas itens de loot')
-						.setRequired(true)
+						.setRequired(false)
+						.addChoices(
+							{
+								name: 'yes',
+								name_localizations: { 'pt-BR': 'sim' },
+								value: 'yes',
+							},
+							{
+								name: 'no',
+								name_localizations: { 'pt-BR': 'não' },
+								value: 'no',
+							}
+						)
+				)
+				.addStringOption((option) =>
+					option
+						.setName('no-legendary')
+						.setNameLocalization('pt-BR', 'sem-lendários')
+						.setDescription('sell only non-legendary items')
+						.setDescriptionLocalization('pt-BR', 'venda apenas itens não-lendários')
+						.setRequired(false)
 						.addChoices(
 							{
 								name: 'yes',
@@ -631,6 +651,7 @@ module.exports = {
 
 				collector.on('collect', async (i) => {
 					const lootonly = interaction.options.getString('lootonly');
+					const noLegendary = interaction.options.getString('no-legendary');
 					const inventory = await readFile(member.id, 'inventory');
 					var itemsSold = [];
 					let falcoins = 0;
@@ -650,6 +671,10 @@ module.exports = {
 						}
 
 						if (itemJSON.mythical || inventory.get(key) === 0) {
+							continue;
+						}
+
+						if (noLegendary === 'yes' && itemJSON.rarity === 'Legendary') {
 							continue;
 						}
 
