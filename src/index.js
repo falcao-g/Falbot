@@ -64,10 +64,7 @@ class Falbot {
 
 		setInterval(
 			() => {
-				this.client.user.setActivity('/help | arte by: @kinsallum'),
-					this.bankInterest(),
-					this.sendVoteReminders(),
-					this.lotteryDraw();
+				this.client.user.setActivity('/help | arte by: @kinsallum'), this.bankInterest(), this.lotteryDraw();
 			},
 			1000 * 60 * 5
 		);
@@ -104,51 +101,6 @@ class Falbot {
 				user.save();
 			}
 			interest.save();
-		}
-	}
-
-	async sendVoteReminders() {
-		try {
-			var users = await this.userSchema.find({
-				voteReminder: true,
-			});
-
-			for (const user of users) {
-				if (Date.now() - user.lastVote > 1000 * 60 * 60 * 12 && Date.now() - user.lastReminder > 1000 * 60 * 60 * 12) {
-					var discordUser = await this.client.users.fetch(user._id);
-					const embed = new EmbedBuilder()
-						.setColor(16776960)
-						.addFields(
-							{
-								name: await this.getDmMessage(discordUser, 'VOTE_REMINDER'),
-								value: await this.getDmMessage(discordUser, 'REWARD_AFTER'),
-							},
-							{
-								name: 'Link',
-								value: 'https://top.gg/bot/742331813539872798/vote',
-							}
-						)
-						.setFooter({ text: 'by Falcão ❤️' });
-
-					const row = new ActionRowBuilder().addComponents(
-						new ButtonBuilder()
-							.setCustomId('disableVoteReminder')
-							.setLabel(await this.getDmMessage(discordUser, 'DISABLE_REMINDER'))
-							.setEmoji('🔕')
-							.setStyle('Danger')
-					);
-
-					await discordUser.send({
-						embeds: [embed],
-						components: [row],
-					});
-
-					user.lastReminder = Date.now();
-					user.save();
-				}
-			}
-		} catch (err) {
-			console.log(`Sending reminders: ${err}`);
 		}
 	}
 
@@ -274,8 +226,6 @@ class Falbot {
 
 	ban(userId) {
 		this._banned.push(userId);
-		//ensure banned users don't get vote reminders, because it would be a spam
-		changeDB(userId, 'voteReminder', false, true);
 	}
 
 	unban(userId) {
