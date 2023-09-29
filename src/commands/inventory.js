@@ -196,7 +196,11 @@ module.exports = {
 				const inventoryItems = Array.from(inventory)
 					.reduce((acc, [itemName, quantity]) => {
 						if (quantity !== 0) {
-							acc.push(`${items[itemName][interaction.locale] ?? items[itemName]['en-US']} x ${quantity}`);
+							acc.push(
+								`${instance.getItemEmoji(itemName)} ${
+									items[itemName][interaction.locale] ?? items[itemName]['en-US']
+								} x ${quantity}`
+							);
 						}
 						return acc;
 					}, [])
@@ -204,18 +208,18 @@ module.exports = {
 						switch (inventorySort) {
 							case 'itemValue':
 								return (
-									items[getItem(a.split(' x ')[0].split(': ')[1])].value -
-									items[getItem(b.split(' x ')[0].split(': ')[1])].value
+									items[getItem(a.split(' ').slice(1, -2).join(' '))].value -
+									items[getItem(b.split(' ').slice(1, -2).join(' '))].value
 								);
 							case 'quantity':
-								return a.split(' x ')[1] - b.split(' x ')[1];
+								return a.split(' ')[-1] - b.split(' ')[-1];
 							case 'worth':
 								return (
-									items[getItem(a.split(' x ')[0].split(': ')[1])].value * a.split(' x ')[1] -
-									items[getItem(b.split(' x ')[0].split(': ')[1])].value * b.split(' x ')[1]
+									items[getItem(a.split(' ').slice(1, -2).join(' '))].value * a.split(' x ')[1] -
+									items[getItem(b.split(' ').slice(1, -2).join(' '))].value * b.split(' x ')[1]
 								);
 							default:
-								return a.split(' x ')[0].split(': ')[1].localeCompare(b.split(' x ')[0].split(': ')[1]);
+								return a.split(' ').slice(1, -2).join(' ').localeCompare(b.split(' ').slice(1, -2).join(' '));
 						}
 					});
 				// Calculate the number of required embeds based on the number of inventory items
@@ -278,7 +282,8 @@ module.exports = {
 				});
 			} else if (type === 'calc') {
 				const amount = interaction.options.getInteger('amount');
-				const itemJSON = items[getItem(interaction.options.getString('item'))];
+				const itemKey = getItem(interaction.options.getString('item'));
+				const itemJSON = items[itemKey];
 				var cost = 0;
 
 				if (itemJSON === undefined) {
@@ -294,9 +299,9 @@ module.exports = {
 					var ingredients = `**${instance.getMessage(interaction, 'INGREDIENTS')}**`;
 
 					for (key in itemJSON.recipe) {
-						ingredients += `\n${items[key][interaction.locale] ?? items[key]['en-US']} x ${
-							itemJSON.recipe[key] * amount
-						}`;
+						ingredients += `\n${instance.getItemEmoji(key)} ${
+							items[key][interaction.locale] ?? items[key]['en-US']
+						} x ${itemJSON.recipe[key] * amount}`;
 						cost += items[key].value * amount;
 					}
 				} else {
@@ -307,7 +312,7 @@ module.exports = {
 					.createEmbed(member.displayColor)
 					.setTitle(instance.getMessage(interaction, 'CALCULATOR'))
 					.addFields({
-						name: `${itemJSON[interaction.locale] ?? itemJSON['en-US']} x ${amount}`,
+						name: `${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']} x ${amount}`,
 						value: `${ingredients != undefined ? ingredients : ''}\n${instance.getMessage(
 							interaction,
 							'COST'
@@ -355,7 +360,7 @@ module.exports = {
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'SOLD_TITLE', {
 						AMOUNT: format(amount),
-						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+						ITEM: `${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']}`,
 						FALCOINS: format(falcoins),
 					}),
 					value: instance.getMessage(interaction, 'SOLD_FIELD', {
@@ -379,7 +384,7 @@ module.exports = {
 					listItems = [];
 					for (key in items) {
 						if (items[key].equip === true) {
-							const name = items[key][interaction.locale] ?? items[key]['en-US'];
+							const name = `${instance.getItemEmoji(key)} ${items[key][interaction.locale] ?? items[key]['en-US']}`;
 							listItems.push(
 								name + ' - ' + instance.getMessage(interaction, items[key]['effect'].toUpperCase()).split(':')[2]
 							);
@@ -436,10 +441,10 @@ module.exports = {
 
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'EQUIPPED_TITLE', {
-						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+						ITEM: `${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']}`,
 					}),
 					value: instance.getMessage(interaction, 'EQUIPPED_VALUE', {
-						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+						ITEM: `${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']}`,
 					}),
 				});
 
@@ -471,12 +476,10 @@ module.exports = {
 								if ((inventory.get(key) || 0) < items[item].recipe[key]) return;
 							}
 
-							const name = items[item][interaction.locale] ?? items[item]['en-US'];
-
 							return {
-								label: name.split(':')[2],
+								label: items[item][interaction.locale] ?? items[item]['en-US'],
 								value: item,
-								emoji: items[item].emoji,
+								emoji: instance.getItemEmoji(item),
 							};
 						})
 						.filter((item) => item !== undefined);
@@ -534,15 +537,17 @@ module.exports = {
 
 					if ((inventory.get(key) || 0) < ingredientAmount) {
 						missingIngredients.push(
-							`${ingredientJSON[interaction.locale] ?? ingredientJSON['en-US']} x ${format(
-								ingredientAmount - (inventory.get(key) || 0)
-							)}`
+							`${instance.getItemEmoji(key)} ${
+								ingredientJSON[interaction.locale] ?? ingredientJSON['en-US']
+							} x ${format(ingredientAmount - (inventory.get(key) || 0))}`
 						);
 					}
 
 					inventory.set(key, inventory.get(key) - ingredientAmount);
 					ingredients.push(
-						`${ingredientJSON[interaction.locale] ?? ingredientJSON['en-US']}: ${format(ingredientAmount)}`
+						`${instance.getItemEmoji(key)} ${ingredientJSON[interaction.locale] ?? ingredientJSON['en-US']}: ${format(
+							ingredientAmount
+						)}`
 					);
 				}
 
@@ -571,12 +576,12 @@ module.exports = {
 
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'CRAFTED_TITLE', {
-						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+						ITEM: `${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']}`,
 						AMOUNT: format(amount),
 					}),
 					value: instance.getMessage(interaction, 'CRAFTED_VALUE', {
 						INGREDIENTS: ingredients.join('\n'),
-						ITEM: itemJSON[interaction.locale] ?? itemJSON['en-US'],
+						ITEM: `${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']}`,
 						AMOUNT: format(amount),
 						MAXAMOUNT: format(maxAmount),
 					}),
@@ -654,7 +659,11 @@ module.exports = {
 						}
 
 						falcoins += itemJSON.value * inventory.get(key);
-						itemsSold.push(`${itemJSON[interaction.locale] ?? itemJSON['en-US']}: ${format(inventory.get(key))}`);
+						itemsSold.push(
+							`${instance.getItemEmoji(key)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']}: ${format(
+								inventory.get(key)
+							)}`
+						);
 						inventory.set(key, 0);
 					}
 
@@ -750,7 +759,7 @@ module.exports = {
 					listItems = [];
 					for (key in items) {
 						if (items[key].use === true) {
-							const name = items[key][interaction.locale] ?? items[key]['en-US'];
+							const name = `${instance.getItemEmoji(key)} ${items[key][interaction.locale] ?? items[key]['en-US']}`;
 							listItems.push(
 								name + ' - ' + instance.getMessage(interaction, items[key]['effect'].toUpperCase()).split(':')[2]
 							);
@@ -855,7 +864,7 @@ module.exports = {
 					subcommand === 'calc' // All items
 				) {
 					var item = itemData[interaction.locale] ?? itemData['en-US'];
-					return item.split(' ').slice(1).join(' ').toLowerCase();
+					return item.toLowerCase();
 				}
 				return undefined;
 			})

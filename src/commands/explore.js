@@ -31,7 +31,9 @@ module.exports = {
 			buff = 2;
 			await useItem(member, 'activewear');
 			buffText = `**${instance.getMessage(interaction, 'BUFF', {
-				ITEM: items['activewear'][interaction.locale] ?? items['activewear']['en-US'],
+				ITEM: `${instance.getItemEmoji('activewear')} ${
+					items['activewear'][interaction.locale] ?? items['activewear']['en-US']
+				}`,
 				BUFF: 2,
 			})}**`;
 		}
@@ -40,7 +42,7 @@ module.exports = {
 			buff = 4;
 			await useItem(member, 'coat');
 			buffText = `**${instance.getMessage(interaction, 'BUFF', {
-				ITEM: items['coat'][interaction.locale] ?? items['coat']['en-US'],
+				ITEM: `${instance.getItemEmoji('coat')} ${items['coat'][interaction.locale] ?? items['coat']['en-US']}`,
 				BUFF: 4,
 			})}**`;
 		}
@@ -84,7 +86,9 @@ module.exports = {
 		for (let i = 0; i < numItems; i++) {
 			var selectedItem = pick(filteredItems);
 			var amount = randint(1, amounts[items[selectedItem]['rarity']]) * randint(1, buff);
-			var name = items[selectedItem][interaction.locale] ?? items[selectedItem]['en-US'];
+			var name = `${instance.getItemEmoji(selectedItem)} ${
+				items[selectedItem][interaction.locale] ?? items[selectedItem]['en-US']
+			}`;
 			total += amount;
 			text += `**${name}** x ${amount}\n`;
 			filteredItems = filteredItems.filter((item) => item[0] !== selectedItem);

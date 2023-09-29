@@ -54,7 +54,7 @@ module.exports = {
 				var ingredients = '';
 
 				for (key in itemJSON.recipe) {
-					ingredients += `\n${items[key][interaction.locale]} x ${itemJSON.recipe[key]}`;
+					ingredients += `\n${instance.getItemEmoji(key)} ${items[key][interaction.locale]} x ${itemJSON.recipe[key]}`;
 				}
 			}
 
@@ -87,7 +87,7 @@ module.exports = {
 
 			const embed = instance
 				.createEmbed(member.displayColor)
-				.setTitle(`${itemJSON[interaction.locale]} ` + '(`' + `${itemKey}` + '`)')
+				.setTitle(`${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale]} ` + '(`' + `${itemKey}` + '`)')
 				.addFields({
 					name: instance.getMessage(interaction, 'INFO'),
 					value: information,
@@ -110,7 +110,7 @@ module.exports = {
 				if (items[i].recipe != undefined) {
 					for (key in items[i].recipe) {
 						if (key === itemKey) {
-							usedToCraft += `\n${items[i][interaction.locale]}`;
+							usedToCraft += `\n${instance.getItemEmoji(i)} ${items[i][interaction.locale]}`;
 							cont += 1;
 
 							if (cont === 4) {
@@ -155,7 +155,7 @@ module.exports = {
 		const items = instance.items;
 		const localeItems = Object.keys(items).map((key) => {
 			var item = items[key][interaction.locale] ?? items[key]['en-US'];
-			return item.split(' ').slice(1).join(' ').toLowerCase();
+			return item.toLowerCase();
 		});
 		const filtered = localeItems.filter((choice) => choice.startsWith(focusedValue));
 		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));

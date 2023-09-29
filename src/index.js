@@ -345,6 +345,11 @@ class Falbot {
 	createEmbed(color = 'Random') {
 		return new EmbedBuilder().setColor(color).setFooter({ text: 'by Falcão ❤️' });
 	}
+
+	getItemEmoji(item) {
+		if (this.items[item].emoji) return this.items[item].emoji;
+		return this.emojiList[item];
+	}
 }
 
 Falbot = new Falbot();
