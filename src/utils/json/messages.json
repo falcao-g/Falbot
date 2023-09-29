@@ -1084,10 +1084,6 @@
 		"pt-BR": "...e {AMOUNT} mais",
 		"en-US": "...and {AMOUNT} more"
 	},
-	"EQUIP_TITLE": {
-		"pt-BR": ":scroll: Lista de itens equipáveis e seus efeitos",
-		"en-US": ":scroll: List of equipable items and their effects"
-	},
 	"CRAFT_PLACEHOLDER": {
 		"pt-BR": "Construa um item...",
 		"en-US": "Craft an item..."
@@ -1211,10 +1207,6 @@
 	"USE_SNOWFLAKE_VALUE": {
 		"pt-BR": "O Floco Eterno te deu seu poder e resetou todos os seus cooldowns! :snowflake:",
 		"en-US": "The Eternal Snowflake gave you its power and reset all your cooldowns! :snowflake:"
-	},
-	"USE_TITLE": {
-		"pt-BR": ":scroll: Lista de itens usáveis e seus efeitos",
-		"en-US": ":scroll: List of useable items and their effects"
 	},
 	"STATS_TITLE": {
 		"pt-BR": ":bar_chart: Estatísticas de {USER}",

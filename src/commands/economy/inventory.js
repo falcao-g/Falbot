@@ -84,7 +84,7 @@ module.exports = {
 						.setName('item')
 						.setDescription('item to equip')
 						.setDescriptionLocalization('pt-BR', 'item para equipar')
-						.setRequired(false)
+						.setRequired(true)
 						.setAutocomplete(true)
 				)
 		)
@@ -157,7 +157,7 @@ module.exports = {
 						.setName('item')
 						.setDescription('item to use')
 						.setDescriptionLocalization('pt-BR', 'item para ser usado')
-						.setRequired(false)
+						.setRequired(true)
 						.setAutocomplete(true)
 				)
 		),
@@ -196,11 +196,7 @@ module.exports = {
 				const inventoryItems = Array.from(inventory)
 					.reduce((acc, [itemName, quantity]) => {
 						if (quantity !== 0) {
-							acc.push(
-								`${instance.getItemEmoji(itemName)} ${
-									items[itemName][interaction.locale] ?? items[itemName]['en-US']
-								} x ${quantity}`
-							);
+							acc.push(`${instance.getItemName(itemName, interaction)} x ${quantity}`);
 						}
 						return acc;
 					}, [])
@@ -299,9 +295,7 @@ module.exports = {
 					var ingredients = `**${instance.getMessage(interaction, 'INGREDIENTS')}**`;
 
 					for (key in itemJSON.recipe) {
-						ingredients += `\n${instance.getItemEmoji(key)} ${
-							items[key][interaction.locale] ?? items[key]['en-US']
-						} x ${itemJSON.recipe[key] * amount}`;
+						ingredients += `\n${instance.getItemName(key, interaction)} x ${itemJSON.recipe[key] * amount}`;
 						cost += items[key].value * amount;
 					}
 				} else {
@@ -312,7 +306,7 @@ module.exports = {
 					.createEmbed(member.displayColor)
 					.setTitle(instance.getMessage(interaction, 'CALCULATOR'))
 					.addFields({
-						name: `${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']} x ${amount}`,
+						name: `${instance.getItemName(itemKey)} x ${amount}`,
 						value: `${ingredients != undefined ? ingredients : ''}\n${instance.getMessage(
 							interaction,
 							'COST'
@@ -360,7 +354,7 @@ module.exports = {
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'SOLD_TITLE', {
 						AMOUNT: format(amount),
-						ITEM: `${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']}`,
+						ITEM: `${instance.getItemName(itemKey, interaction)}`,
 						FALCOINS: format(falcoins),
 					}),
 					value: instance.getMessage(interaction, 'SOLD_FIELD', {
@@ -377,30 +371,6 @@ module.exports = {
 				const inventory = await readFile(member.id, 'inventory');
 				const equippedItems = await readFile(member.id, 'equippedItems');
 				const item = interaction.options.getString('item');
-
-				if (item === null) {
-					const embed = instance.createEmbed(member.displayColor);
-
-					listItems = [];
-					for (key in items) {
-						if (items[key].equip === true) {
-							const name = `${instance.getItemEmoji(key)} ${items[key][interaction.locale] ?? items[key]['en-US']}`;
-							listItems.push(
-								name + ' - ' + instance.getMessage(interaction, items[key]['effect'].toUpperCase()).split(':')[2]
-							);
-						}
-					}
-					embed.addFields({
-						name: instance.getMessage(interaction, 'EQUIP_TITLE'),
-						value: listItems.join('\n'),
-					});
-
-					interaction.editReply({
-						embeds: [embed],
-					});
-					return;
-				}
-
 				const itemKey = getItem(item);
 				const itemJSON = items[itemKey];
 
@@ -441,10 +411,10 @@ module.exports = {
 
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'EQUIPPED_TITLE', {
-						ITEM: `${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']}`,
+						ITEM: `${instance.getItemName(itemKey, interaction)}`,
 					}),
 					value: instance.getMessage(interaction, 'EQUIPPED_VALUE', {
-						ITEM: `${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']}`,
+						ITEM: `${instance.getItemName(itemKey, interaction)}`,
 					}),
 				});
 
@@ -532,23 +502,16 @@ module.exports = {
 				ingredients = [];
 				missingIngredients = [];
 				for (key in itemJSON.recipe) {
-					const ingredientJSON = items[key];
 					const ingredientAmount = itemJSON.recipe[key] * amount;
 
 					if ((inventory.get(key) || 0) < ingredientAmount) {
 						missingIngredients.push(
-							`${instance.getItemEmoji(key)} ${
-								ingredientJSON[interaction.locale] ?? ingredientJSON['en-US']
-							} x ${format(ingredientAmount - (inventory.get(key) || 0))}`
+							`${instance.getItemName(key, interaction)} x ${format(ingredientAmount - (inventory.get(key) || 0))}`
 						);
 					}
 
 					inventory.set(key, inventory.get(key) - ingredientAmount);
-					ingredients.push(
-						`${instance.getItemEmoji(key)} ${ingredientJSON[interaction.locale] ?? ingredientJSON['en-US']}: ${format(
-							ingredientAmount
-						)}`
-					);
+					ingredients.push(`${instance.getItemName(key, interaction)}: ${format(ingredientAmount)}`);
 				}
 
 				if (missingIngredients.length > 0) {
@@ -576,12 +539,12 @@ module.exports = {
 
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'CRAFTED_TITLE', {
-						ITEM: `${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']}`,
+						ITEM: `${instance.getItemName(itemKey, interaction)}`,
 						AMOUNT: format(amount),
 					}),
 					value: instance.getMessage(interaction, 'CRAFTED_VALUE', {
 						INGREDIENTS: ingredients.join('\n'),
-						ITEM: `${instance.getItemEmoji(itemKey)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']}`,
+						ITEM: `${instance.getItemName(itemKey, interaction)}`,
 						AMOUNT: format(amount),
 						MAXAMOUNT: format(maxAmount),
 					}),
@@ -659,11 +622,7 @@ module.exports = {
 						}
 
 						falcoins += itemJSON.value * inventory.get(key);
-						itemsSold.push(
-							`${instance.getItemEmoji(key)} ${itemJSON[interaction.locale] ?? itemJSON['en-US']}: ${format(
-								inventory.get(key)
-							)}`
-						);
+						itemsSold.push(`${instance.getItemName(key, interaction)}: ${format(inventory.get(key))}`);
 						inventory.set(key, 0);
 					}
 
@@ -752,30 +711,6 @@ module.exports = {
 				}
 			} else if (type === 'use') {
 				const item = interaction.options.getString('item');
-
-				if (item === null) {
-					const embed = instance.createEmbed(member.displayColor);
-
-					listItems = [];
-					for (key in items) {
-						if (items[key].use === true) {
-							const name = `${instance.getItemEmoji(key)} ${items[key][interaction.locale] ?? items[key]['en-US']}`;
-							listItems.push(
-								name + ' - ' + instance.getMessage(interaction, items[key]['effect'].toUpperCase()).split(':')[2]
-							);
-						}
-					}
-					embed.addFields({
-						name: instance.getMessage(interaction, 'USE_TITLE'),
-						value: listItems.join('\n'),
-					});
-
-					interaction.editReply({
-						embeds: [embed],
-					});
-					return;
-				}
-
 				const itemKey = getItem(item);
 				const itemJSON = items[itemKey];
 				const inventory = await readFile(member.id, 'inventory');
@@ -863,8 +798,7 @@ module.exports = {
 					(subcommand === 'sell' && itemData.mythical !== true) || // Sellable items
 					subcommand === 'calc' // All items
 				) {
-					var item = itemData[interaction.locale] ?? itemData['en-US'];
-					return item.toLowerCase();
+					return instance.getItemName(key, interaction);
 				}
 				return undefined;
 			})

@@ -350,6 +350,10 @@ class Falbot {
 		if (this.items[item].emoji) return this.items[item].emoji;
 		return this.emojiList[item];
 	}
+
+	getItemName(item, interaction) {
+		return `${this.getItemEmoji(item)} ${this.items[item][interaction.locale] ?? this.items[item]['en-US']}`;
+	}
 }
 
 Falbot = new Falbot();

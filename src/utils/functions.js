@@ -225,7 +225,12 @@ async function resolveCooldown(id, command) {
 }
 
 function getItem(item) {
+	if (!'abcdefghijklmnopqrstuvwxyz'.includes(item[0].toLowerCase())) {
+		item = item.split(' ').slice(1).join(' ');
+	}
+
 	item = item.toLowerCase();
+
 	for (const key in items) {
 		if (items[key]['pt-BR'].toLowerCase() === item || items[key]['en-US'].toLowerCase() === item) {
 			return key;
