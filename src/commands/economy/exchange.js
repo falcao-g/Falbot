@@ -120,16 +120,12 @@ module.exports = {
 					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'INSUFICIENT_ITEM_EXCHANGE', {
 							USER: member,
-							ITEM: offerItemsNames[i],
+							ITEM: instance.getItemName(offerItemsNames[i], interaction),
 						}),
 					});
 					return;
 				}
-				offerFormated.push(
-					`${offerItemsAmount[i]} x ${
-						instance.items[offerItemsNames[i]][interaction.locale] ?? instance.items[offerItemsNames[i]]['en-US']
-					}`
-				);
+				offerFormated.push(`${offerItemsAmount[i]} x ${instance.getItemName(offerItemsNames[i], interaction)}`);
 			}
 
 			const receiveFormated = [receiveFalcoins ? `**${format(receiveFalcoins)}** :coin: falcoins` : ''];
@@ -138,16 +134,12 @@ module.exports = {
 					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'INSUFICIENT_ITEM_EXCHANGE', {
 							USER: recipient,
-							ITEM: receiveItemsNames[i],
+							ITEM: instance.getItemName(receiveItemsNames[i], interaction),
 						}),
 					});
 					return;
 				}
-				receiveFormated.push(
-					`${receiveItemsAmount[i]} x ${
-						instance.items[receiveItemsNames[i]][interaction.locale] ?? instance.items[receiveItemsNames[i]]['en-US']
-					}`
-				);
+				receiveFormated.push(`${receiveItemsAmount[i]} x ${instance.getItemName(receiveItemsNames[i], interaction)}`);
 			}
 
 			//create the message to send to the user
