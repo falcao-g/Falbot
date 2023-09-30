@@ -53,7 +53,7 @@ module.exports = {
 				return;
 			}
 			if ((await readFile(user.id, 'falcoins')) >= bet && (await readFile(member2.user.id, 'falcoins')) >= bet) {
-				var answer = instance.editReply(interaction, {
+				var answer = await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'LUTA_CONVITE', {
 						USER: member,
 						USER2: member2,
