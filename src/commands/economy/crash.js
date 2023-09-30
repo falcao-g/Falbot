@@ -27,7 +27,7 @@ module.exports = {
 			try {
 				var bet = await specialArg(falcoins, member.id, 'falcoins');
 			} catch {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 						VALUE: falcoins,
 					}),
@@ -62,7 +62,7 @@ module.exports = {
 						.setStyle('Danger'))
 				);
 
-				var answer = await interaction.editReply({
+				var answer = await instance.editReply(interaction, {
 					embeds: [embed],
 					components: [row],
 					fetchReply: true,
@@ -116,7 +116,7 @@ module.exports = {
 						inline: true,
 					};
 
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						embeds: [embed],
 						components: [row],
 					});
@@ -130,18 +130,18 @@ module.exports = {
 					embed.setColor(3066993);
 				}
 
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					embeds: [embed],
 					components: [row],
 				});
 			} else {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 				});
 			}
 		} catch (error) {
 			console.error(`catch: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 				components: [],

@@ -39,7 +39,7 @@ module.exports = {
 				try {
 					var bet = await specialArg(falcoins, user.id, 'falcoins');
 				} catch {
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 							VALUE: falcoins,
 						}),
@@ -50,7 +50,7 @@ module.exports = {
 					(await readFile(member.user.id, 'falcoins')) >= bet &&
 					(await readFile(member2.user.id, 'falcoins')) >= bet
 				) {
-					var answer = await interaction.editReply({
+					var answer = await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VELHA_CHAMOU', {
 							USER: member,
 							USER2: member2,
@@ -253,18 +253,18 @@ module.exports = {
 						}
 					});
 				} else {
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'INSUFICIENTE_CONTAS'),
 					});
 				}
 			} else {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'NAO_JOGAR_SOZINHO'),
 				});
 			}
 		} catch (error) {
 			console.error(`velha: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				components: [],
 			});

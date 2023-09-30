@@ -34,7 +34,7 @@ module.exports = {
 			try {
 				var quantity = await specialArg(falcoins, user.id, 'falcoins');
 			} catch {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 						VALUE: falcoins,
 					}),
@@ -45,21 +45,21 @@ module.exports = {
 			if ((await readFile(user.id, 'falcoins')) >= quantity) {
 				await changeDB(user.id, 'falcoins', -quantity);
 				await changeDB(target.id, 'falcoins', quantity);
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'DOAR', {
 						FALCOINS: format(quantity),
 						USER: target,
 					}),
 				});
 			} else {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 					ephemeral: true,
 				});
 			}
 		} catch (error) {
 			console.error(`donation: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 			});
 		}

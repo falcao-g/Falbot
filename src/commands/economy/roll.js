@@ -26,13 +26,13 @@ module.exports = {
 				var rolled = roll(text);
 
 				if (rolled.length > 2000) {
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'ROLL_LIMIT'),
 					});
 					return;
 				}
 			} catch {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 						VALUE: text,
 					}),
@@ -40,12 +40,12 @@ module.exports = {
 				return;
 			}
 
-			await interaction.editReply({
+			await instance.editReply(interaction, {
 				content: `**${instance.getMessage(interaction, 'RESULTADO')}:** ${rolled}`,
 			});
 		} catch (error) {
 			console.error(`roll: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 			});
 		}

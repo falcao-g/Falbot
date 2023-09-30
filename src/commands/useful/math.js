@@ -28,10 +28,10 @@ module.exports = {
 				value: answer,
 			});
 
-			await interaction.editReply({ embeds: [embed] });
+			await instance.editReply(interaction, { embeds: [embed] });
 		} catch (error) {
 			console.error(`math: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'MATH_ERROR'),
 				embeds: [],
 			});

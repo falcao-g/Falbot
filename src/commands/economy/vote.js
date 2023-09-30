@@ -75,10 +75,10 @@ module.exports = {
 							}),
 					});
 			}
-			await interaction.editReply({ embeds: [embed] });
+			await instance.editReply(interaction, { embeds: [embed] });
 		} catch (error) {
 			console.error(`vote: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});

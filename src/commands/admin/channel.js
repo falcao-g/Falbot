@@ -63,7 +63,9 @@ module.exports = {
 						upsert: true,
 					}
 				);
-				interaction.editReply(instance.getMessage(interaction, 'DISABLED', { NAME: channel }));
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'DISABLED', { NAME: channel }),
+				});
 			} else {
 				instance.enableChannel(guild, channel);
 
@@ -78,12 +80,13 @@ module.exports = {
 						upsert: true,
 					}
 				);
-
-				interaction.editReply(instance.getMessage(interaction, 'ENABLED', { NAME: channel }));
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'ENABLED', { NAME: channel }),
+				});
 			}
 		} catch (error) {
 			console.error(`channel: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 			});
 		}

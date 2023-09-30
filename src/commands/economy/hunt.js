@@ -21,7 +21,7 @@ module.exports = {
 		var buffText = '';
 
 		if (inventoryWorth >= limit) {
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'OVER_LIMIT'),
 			});
 			return;
@@ -103,7 +103,7 @@ module.exports = {
 			value: text + buffText,
 		});
 
-		await interaction.editReply({
+		await instance.editReply(interaction, {
 			embeds: [embed],
 			components: [buttons(['balance', 'inventory_view', 'cooldowns'])],
 		});

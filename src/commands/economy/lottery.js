@@ -56,11 +56,11 @@ module.exports = {
 					await changeDB(user.id, 'falcoins', -(amount * 500));
 					await changeDB(user.id, 'tickets', amount);
 
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						embeds: [embed],
 					});
 				} else {
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 					});
 				}
@@ -88,7 +88,7 @@ module.exports = {
 					});
 				}
 
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					embeds: [embed],
 				});
 			} else {
@@ -113,13 +113,13 @@ module.exports = {
 					value: history,
 				});
 
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					embeds: [embed],
 				});
 			}
 		} catch (err) {
 			console.error(`lottery: ${err}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});

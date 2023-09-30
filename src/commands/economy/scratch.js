@@ -33,7 +33,7 @@ module.exports = {
 				value: instance.getMessage(interaction, 'SCRATCH_DESCRIPTION'),
 			});
 
-			answer = await interaction.editReply({
+			answer = await instance.editReply(interaction, {
 				embeds: [embed],
 				components: rows,
 				fetchReply: true,
@@ -142,7 +142,7 @@ module.exports = {
 			});
 		} catch (error) {
 			console.error(`scratch: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 				components: [],

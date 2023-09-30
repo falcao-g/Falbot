@@ -24,7 +24,7 @@ module.exports = {
 			const caras = randint(0, times);
 			const coroas = times - caras;
 
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'COINFLIP', {
 					CARAS: caras,
 					COROAS: coroas,
@@ -33,7 +33,7 @@ module.exports = {
 			});
 		} catch (error) {
 			console.error(`Coinflip: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 			});
 		}

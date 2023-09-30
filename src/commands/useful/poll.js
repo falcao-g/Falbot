@@ -28,7 +28,7 @@ module.exports = {
 					iconURL: user.avatarURL(),
 				});
 
-			answer = await interaction.editReply({
+			answer = await instance.editReply(interaction, {
 				embeds: [embed],
 				fetchReply: true,
 			});
@@ -37,7 +37,7 @@ module.exports = {
 			answer.react('👎');
 		} catch (error) {
 			console.error(`poll: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});

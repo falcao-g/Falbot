@@ -197,10 +197,10 @@ module.exports = {
 						}
 					)
 			);
-			await interaction.editReply({ embeds: [embed], components: [row] });
+			await instance.editReply(interaction, { embeds: [embed], components: [row] });
 		} catch (error) {
 			console.error(`Help: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 				components: [],

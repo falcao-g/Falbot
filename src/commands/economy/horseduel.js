@@ -25,7 +25,7 @@ module.exports = {
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');
 			} catch {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 						VALUE: falcoins,
 					}),
@@ -49,7 +49,7 @@ module.exports = {
 						inline: false,
 					});
 
-				var answer = await interaction.editReply({
+				var answer = await instance.editReply(interaction, {
 					embeds: [embed],
 					components: [buttons(['accept', 'skip'])],
 					fetchReply: true,
@@ -121,7 +121,7 @@ module.exports = {
 							inline: false,
 						};
 
-						await interaction.editReply({
+						await instance.editReply(interaction, {
 							embeds: [embed],
 							components: [],
 						});
@@ -144,19 +144,19 @@ module.exports = {
 						})
 					);
 
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						embeds: [embed],
 						components: [],
 					});
 				});
 			} else {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 				});
 			}
 		} catch (error) {
 			console.error(`horseduel: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 				components: [],

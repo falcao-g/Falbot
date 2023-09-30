@@ -28,7 +28,7 @@ module.exports = {
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');
 			} catch {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 						VALUE: falcoins,
 					}),
@@ -120,7 +120,7 @@ module.exports = {
 						.setStyle('Secondary'))
 				);
 
-				var answer = await interaction.editReply({
+				var answer = await instance.editReply(interaction, {
 					embeds: [embed],
 					components: [row],
 					fetchReply: true,
@@ -219,7 +219,7 @@ module.exports = {
 						true
 					)} falcoins`;
 
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						embeds: [embed],
 						components: [row],
 					});
@@ -300,13 +300,13 @@ module.exports = {
 					}
 				});
 			} else {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 				});
 			}
 		} catch (error) {
 			console.error(`blackjack: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 				components: [],

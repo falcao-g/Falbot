@@ -354,6 +354,12 @@ class Falbot {
 	getItemName(item, interaction) {
 		return `${this.getItemEmoji(item)} ${this.items[item][interaction.locale] ?? this.items[item]['en-US']}`;
 	}
+
+	async editReply(interaction, { content, embeds, components, fetchReply = false }) {
+		return await interaction.editReply({ content, embeds, components, fetchReply }).catch((err) => {
+			console.error(err);
+		});
+	}
 }
 
 Falbot = new Falbot();

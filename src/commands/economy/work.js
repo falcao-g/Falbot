@@ -51,7 +51,7 @@ module.exports = {
 				)
 				.setDescription(desc + eventText);
 
-			await interaction.editReply({
+			await instance.editReply(interaction, {
 				embeds: [embed],
 			});
 
@@ -60,7 +60,7 @@ module.exports = {
 			await changeDB(interaction.user.id, 'stats', stats, true);
 		} catch (err) {
 			console.error(`work: ${err}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});

@@ -80,7 +80,9 @@ module.exports = {
 						upsert: true,
 					}
 				);
-				interaction.editReply(instance.getMessage(interaction, 'DISABLED', { NAME: command[0] }));
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'DISABLED', { NAME: command[0] }),
+				});
 			} else {
 				instance.enableCommand(guild, command[0]);
 
@@ -96,11 +98,13 @@ module.exports = {
 					}
 				);
 
-				interaction.editReply(instance.getMessage(interaction, 'ENABLED', { NAME: command[0] }));
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'DISABLED', { NAME: command[0] }),
+				});
 			}
 		} catch (error) {
 			console.error(`command: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 			});
 		}

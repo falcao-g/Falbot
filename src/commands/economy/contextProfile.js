@@ -59,13 +59,13 @@ module.exports = {
 					}
 				);
 
-			await interaction.editReply({
+			await instance.editReply(interaction, {
 				embeds: [embed],
 				components: [buttons(['cooldowns', 'help'])],
 			});
 		} catch (error) {
 			console.error(`contextProfile: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 				components: [],

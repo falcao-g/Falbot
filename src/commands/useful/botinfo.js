@@ -21,10 +21,10 @@ module.exports = {
 					(await instance.userSchema.find({ updatedAt: { $gte: new Date(Date.now() - 2592000000) } })).length
 				}\n:zap: ${instance.getMessage(interaction, 'UPTIME')}: ${msToTime(client.uptime)}**`,
 			});
-			await interaction.editReply({ embeds: [embed] });
+			await instance.editReply(interaction, { embeds: [embed] });
 		} catch (error) {
 			console.error(`botinfo: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});

@@ -26,7 +26,7 @@ module.exports = {
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');
 			} catch {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 						VALUE: falcoins,
 					}),
@@ -55,7 +55,7 @@ module.exports = {
 					value: `--- **${instance.getMessage(interaction, 'ROLANDO')}** ---`,
 				});
 
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					embeds: [embed],
 				});
 
@@ -64,13 +64,13 @@ module.exports = {
 					name: `-------------------\n      | ${emoji1} | ${diegif} |\n-------------------`,
 					value: `--- **${instance.getMessage(interaction, 'ROLANDO')}** ---`,
 				};
-				await interaction.editReply({ embeds: [embed] });
+				await instance.editReply(interaction, { embeds: [embed] });
 				await new Promise((resolve) => setTimeout(resolve, 1500));
 				embed.data.fields[0] = {
 					name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
 					value: `--- **${instance.getMessage(interaction, 'ROLANDO')}** ---`,
 				};
-				await interaction.editReply({ embeds: [embed] });
+				await instance.editReply(interaction, { embeds: [embed] });
 
 				if (random1 === 1 && random2 === 1) {
 					await changeDB(user.id, 'falcoins', bet * 5);
@@ -118,17 +118,17 @@ module.exports = {
 					name: instance.getMessage(interaction, 'SALDO_ATUAL'),
 					value: `${await readFile(user.id, 'falcoins', true)}`,
 				});
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					embeds: [embed2],
 				});
 			} else {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 				});
 			}
 		} catch (error) {
 			console.error(`snakeeyes: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});

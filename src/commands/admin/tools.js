@@ -43,7 +43,7 @@ module.exports = {
 					}
 				);
 
-				interaction.editReply({
+				instance.editReply(interaction, {
 					content: `User ${userId} was banned sucessfully`,
 				});
 			} else if (subcommand === 'unban') {
@@ -53,7 +53,7 @@ module.exports = {
 					_id: userId,
 				});
 
-				interaction.editReply({
+				instance.editReply(interaction, {
 					content: `User ${userId} was unbanned sucessfully`,
 				});
 			} else if (subcommand === 'reload_events') {
@@ -61,14 +61,18 @@ module.exports = {
 					client.removeListener(`${key}`, value, true);
 				}
 				loadEvents(instance, client);
-				interaction.editReply({ content: 'Events reloaded' });
+				instance.editReply(interaction, {
+					content: 'Events reloaded',
+				});
 			} else {
 				loadCommands(instance, client);
-				interaction.editReply({ content: 'Commands reloaded' });
+				instance.editReply(interaction, {
+					content: 'Commands reloaded',
+				});
 			}
 		} catch (error) {
 			console.error(`tools: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 			});
 		}

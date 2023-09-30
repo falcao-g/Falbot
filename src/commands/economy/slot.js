@@ -25,7 +25,7 @@ module.exports = {
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');
 			} catch {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 						VALUE: falcoins,
 					}),
@@ -51,19 +51,19 @@ module.exports = {
 					value: `--- **${instance.getMessage(interaction, 'GIRANDO')}** ---`,
 				});
 
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					embeds: [embed],
 				});
 
 				await new Promise((resolve) => setTimeout(resolve, 1500));
 				(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emote} | ${emote} |\n-------------------`),
-					await interaction.editReply({ embeds: [embed] });
+					await instance.editReply(interaction, { embeds: [embed] });
 				await new Promise((resolve) => setTimeout(resolve, 1500));
 				(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emote} |\n-------------------`),
-					await interaction.editReply({ embeds: [embed] });
+					await instance.editReply(interaction, { embeds: [embed] });
 				await new Promise((resolve) => setTimeout(resolve, 1500));
 				(embed.data.fields[0].name = `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`),
-					await interaction.editReply({ embeds: [embed] });
+					await instance.editReply(interaction, { embeds: [embed] });
 
 				const arrayEmojis = [emoji1, emoji2, emoji3];
 				var dollar = arrayEmojis.filter((emoji) => emoji == ':dollar:').length;
@@ -121,17 +121,17 @@ module.exports = {
 					name: instance.getMessage(interaction, 'SALDO_ATUAL'),
 					value: `${await readFile(user.id, 'falcoins', true)}`,
 				});
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					embeds: [embed2],
 				});
 			} else {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 				});
 			}
 		} catch (error) {
 			console.error(`slot: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});

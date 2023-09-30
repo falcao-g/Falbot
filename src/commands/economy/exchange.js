@@ -47,7 +47,7 @@ module.exports = {
 			var recipient = await guild.members.fetch(interaction.options.getUser('user').id);
 
 			if (recipient.user === user) {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'CANT_EXCHANGE_ALONE'),
 				});
 				return;
@@ -72,7 +72,7 @@ module.exports = {
 				} else {
 					offerItems[i] = offerItems[i].trim();
 					if (getItem(offerItems[i].split(' ').slice(1).join(' ')) === undefined) {
-						await interaction.editReply({
+						await instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 								VALUE: offerItems[i].split(' ')[1],
 							}),
@@ -91,7 +91,7 @@ module.exports = {
 				} else {
 					receiveItems[i] = receiveItems[i].trim();
 					if (getItem(receiveItems[i].split(' ').slice(1).join(' ')) === undefined) {
-						await interaction.editReply({
+						await instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 								VALUE: receiveItems[i].split(' ')[1],
 							}),
@@ -108,7 +108,7 @@ module.exports = {
 			const userFile = await readFile(user.id);
 
 			if (offerFalcoins > userFile.falcoins || receiveFalcoins > recipientFile.falcoins) {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'INSUFICIENTE_CONTAS'),
 				});
 				return;
@@ -117,7 +117,7 @@ module.exports = {
 			const offerFormated = [offerFalcoins ? `**${format(offerFalcoins)}** :coin: falcoins` : ''];
 			for (var i = 0; i < offerItemsNames.length; i++) {
 				if (userFile.inventory.get(offerItemsNames[i]) < offerItemsAmount[i]) {
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'INSUFICIENT_ITEM_EXCHANGE', {
 							USER: member,
 							ITEM: offerItemsNames[i],
@@ -135,7 +135,7 @@ module.exports = {
 			const receiveFormated = [receiveFalcoins ? `**${format(receiveFalcoins)}** :coin: falcoins` : ''];
 			for (var i = 0; i < receiveItemsNames.length; i++) {
 				if (recipientFile.inventory.get(receiveItemsNames[i]) < receiveItemsAmount[i]) {
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'INSUFICIENT_ITEM_EXCHANGE', {
 							USER: recipient,
 							ITEM: receiveItemsNames[i],
@@ -173,7 +173,7 @@ module.exports = {
 				}
 			);
 
-			var answer = await interaction.editReply({
+			var answer = await instance.editReply(interaction, {
 				embeds: [embed],
 				components: [buttons(['accept', 'refuse'])],
 				fetchReply: true,
@@ -191,7 +191,7 @@ module.exports = {
 
 			collector.on('end', async (collected) => {
 				if (collected.size === 0) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'EXCHANGE_CANCELLED', {
 							USER: recipient,
 						}),
@@ -206,7 +206,7 @@ module.exports = {
 						})
 					);
 
-					interaction.editReply({
+					instance.editReply(interaction, {
 						embeds: [embed],
 						components: [],
 					});
@@ -266,7 +266,7 @@ module.exports = {
 						}
 					);
 
-					interaction.editReply({
+					instance.editReply(interaction, {
 						embeds: [embed],
 						components: [],
 					});
@@ -274,7 +274,7 @@ module.exports = {
 			});
 		} catch (error) {
 			console.error(`exchange: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 			});
 		}

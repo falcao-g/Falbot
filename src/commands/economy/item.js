@@ -42,7 +42,7 @@ module.exports = {
 			const inventory = await readFile(member.id, 'inventory');
 
 			if (itemJSON === undefined) {
-				interaction.editReply({
+				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 						VALUE: item,
 					}),
@@ -144,7 +144,7 @@ module.exports = {
 				});
 		} catch (err) {
 			console.error(`iteminfo: ${err}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});

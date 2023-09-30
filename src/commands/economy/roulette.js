@@ -90,7 +90,7 @@ module.exports = {
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');
 			} catch {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 						VALUE: falcoins,
 					}),
@@ -105,7 +105,7 @@ module.exports = {
 					.setTitle(instance.getMessage(interaction, 'ROLETA'))
 					.setDescription(instance.getMessage(interaction, 'GIRANDO_ROLETA'))
 					.setImage('https://media3.giphy.com/media/26uf2YTgF5upXUTm0/giphy.gif');
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					embeds: [embed],
 				});
 
@@ -174,17 +174,17 @@ module.exports = {
 					);
 				}
 
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					embeds: [embed2],
 				});
 			} else {
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 				});
 			}
 		} catch (error) {
 			console.error(`roulette: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});

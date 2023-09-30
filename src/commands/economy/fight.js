@@ -36,7 +36,7 @@ module.exports = {
 			var member2 = await guild.members.fetch(interaction.options.getUser('user').id);
 
 			if (member2.user === user) {
-				await interaction.editReply({
+				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'NAO_JOGAR_SOZINHO'),
 				});
 				return;
@@ -45,7 +45,7 @@ module.exports = {
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');
 			} catch {
-				await interaction.editReply({
+				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 						VALUE: falcoins,
 					}),
@@ -53,7 +53,7 @@ module.exports = {
 				return;
 			}
 			if ((await readFile(user.id, 'falcoins')) >= bet && (await readFile(member2.user.id, 'falcoins')) >= bet) {
-				var answer = await interaction.editReply({
+				var answer = instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'LUTA_CONVITE', {
 						USER: member,
 						USER2: member2,
@@ -213,21 +213,25 @@ module.exports = {
 							}
 						);
 
-						await interaction.channel.send({
-							embeds: [embed2],
-						});
+						await interaction.channel
+							.send({
+								embeds: [embed2],
+							})
+							.catch((err) => console.error(err));
 					}
 				});
 			} else {
-				await interaction.editReply({
+				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'INSUFICIENTE_CONTAS'),
 				});
 			}
 		} catch (error) {
 			console.error(`fight: ${error}`);
-			interaction.channel.send({
-				content: instance.getMessage(interaction, 'EXCEPTION'),
-			});
+			interaction.channel
+				.send({
+					content: instance.getMessage(interaction, 'EXCEPTION'),
+				})
+				.catch((err) => console.error(err));
 		}
 	},
 };

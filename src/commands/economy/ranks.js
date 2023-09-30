@@ -37,13 +37,13 @@ module.exports = {
 				rank = levels[rank_number - 1];
 
 				if (rank.falcoinsToLevelUp === undefined) {
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'MAX_RANK', {
 							USER: user,
 						}),
 					});
 				} else if ((await readFile(user.id, 'falcoins')) < rank.falcoinsToLevelUp) {
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_MONEY_RANK', {
 							FALCOINS: format(rank.falcoinsToLevelUp - (await readFile(user.id, 'falcoins'))),
 						}),
@@ -70,14 +70,14 @@ module.exports = {
 						}
 					);
 
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						embeds: [embed],
 					});
 				}
 			} else if (type === 'view') {
 				const rank_number = await readFile(user.id, 'rank');
 				if (levels[rank_number - 1].falcoinsToLevelUp === undefined) {
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'MAX_RANK', {
 							USER: user,
 						}),
@@ -125,7 +125,7 @@ module.exports = {
 				}
 
 				embed.setFooter({ text: 'by Falcão ❤️' });
-				await interaction.editReply({ embeds: [embed] });
+				await instance.editReply(interaction, { embeds: [embed] });
 			} else {
 				numEmbeds = Math.ceil(levels.length / 20);
 				embeds = [];
@@ -165,7 +165,7 @@ module.exports = {
 					new ButtonBuilder().setEmoji('⬅️').setCustomId(ids[0]).setStyle('Secondary'),
 					new ButtonBuilder().setEmoji('➡️').setCustomId(ids[1]).setStyle('Secondary'),
 				]);
-				const message = await interaction.editReply(paginator.components());
+				const message = await instance.editReply(interaction, paginator.components());
 				message.channel.createMessageComponentCollector().on('collect', async (i) => {
 					if (i.customId === ids[0]) {
 						await paginator.back();
@@ -178,7 +178,7 @@ module.exports = {
 			}
 		} catch (err) {
 			console.error(`ranks: ${err}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});

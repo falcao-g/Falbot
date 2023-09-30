@@ -160,7 +160,7 @@ module.exports = {
 				var itemJSON = instance.items[item];
 
 				if (itemJSON === undefined) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 							VALUE: interaction.options.getString('item'),
 						}),
@@ -229,7 +229,7 @@ module.exports = {
 					new ButtonBuilder().setEmoji('⬅️').setCustomId(ids[0]).setStyle('Secondary'),
 					new ButtonBuilder().setEmoji('➡️').setCustomId(ids[1]).setStyle('Secondary'),
 				]);
-				const message = await interaction.editReply(paginator.components());
+				const message = await instance.editReply(interaction, paginator.components());
 				message.channel.createMessageComponentCollector().on('collect', async (i) => {
 					if (i.customId === ids[0]) {
 						await paginator.back();
@@ -246,11 +246,11 @@ module.exports = {
 						ITEM: subcommand == 'item' ? itemJSON[interaction.locale] ?? itemJSON['en-US'] : '',
 					})}`
 				);
-				await interaction.editReply({ embeds: [embeds[0]] });
+				await instance.editReply(interaction, { embeds: [embeds[0]] });
 			}
 		} catch (error) {
 			console.error(`leaderboard: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 				components: [],
@@ -261,8 +261,7 @@ module.exports = {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
 		const items = instance.items;
 		const localeItems = Object.keys(items).map((key) => {
-			var item = items[key][interaction.locale] ?? items[key]['en-US'];
-			return item.split(' ').slice(1).join(' ').toLowerCase();
+			return instance.getItemName(key, interaction);
 		});
 		const filtered = localeItems.filter((choice) => choice.startsWith(focusedValue));
 		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));

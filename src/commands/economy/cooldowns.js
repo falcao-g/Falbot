@@ -152,10 +152,10 @@ module.exports = {
 					.setDisabled(huntCooldown ? true : false),
 			]);
 
-			interaction.editReply({ embeds: [embed], components: [row, row2, row3] });
+			instance.editReply(interaction, { embeds: [embed], components: [row, row2, row3] });
 		} catch (error) {
 			console.error(`cooldowns: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});

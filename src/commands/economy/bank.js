@@ -74,12 +74,12 @@ module.exports = {
 						FALCOINS: format(limit / 2),
 					})}**`,
 				});
-				await interaction.editReply({ embeds: [embed] });
+				await instance.editReply(interaction, { embeds: [embed] });
 			} else if (subcommand === 'deposit') {
 				try {
 					var quantity = await specialArg(falcoins, user.id, 'falcoins');
 				} catch {
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 							VALUE: falcoins,
 						}),
@@ -89,7 +89,7 @@ module.exports = {
 
 				if ((await readFile(user.id, 'falcoins')) >= quantity) {
 					if ((await readFile(user.id, 'banco')) >= limit / 2) {
-						await interaction.editReply({
+						await instance.editReply({
 							content: instance.getMessage(interaction, 'BANK_OVER_LIMIT'),
 						});
 						return;
@@ -122,9 +122,9 @@ module.exports = {
 							}
 						);
 
-					await interaction.editReply({ embeds: [embed] });
+					await instance.editReply(interaction, { embeds: [embed] });
 				} else {
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 					});
 				}
@@ -132,7 +132,7 @@ module.exports = {
 				try {
 					var quantity = await specialArg(falcoins, user.id, 'banco');
 				} catch {
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 							VALUE: falcoins,
 						}),
@@ -164,16 +164,16 @@ module.exports = {
 							}
 						);
 
-					await interaction.editReply({ embeds: [embed] });
+					await instance.editReply(interaction, { embeds: [embed] });
 				} else {
-					await interaction.editReply({
+					await instance.editReply({
 						content: instance.getMessage(interaction, 'BANCO_INSUFICIENTE'),
 					});
 				}
 			}
 		} catch (error) {
 			console.error(`bank: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});

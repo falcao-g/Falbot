@@ -184,7 +184,7 @@ module.exports = {
 				const inventoryWorth = instance.getInventoryWorth(inventory);
 
 				if (inventory === undefined) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_ITEMS'),
 					});
 					return;
@@ -266,7 +266,7 @@ module.exports = {
 						.setStyle('Secondary')
 						.setLabel(instance.getMessage(interaction, 'INVENTORY_SORTING')),
 				]);
-				const message = await interaction.editReply(paginator.components());
+				const message = await instance.editReply(interaction, paginator.components());
 				message.channel.createMessageComponentCollector().on('collect', async (i) => {
 					if (i.customId === ids[0]) {
 						await paginator.back();
@@ -283,7 +283,7 @@ module.exports = {
 				var cost = 0;
 
 				if (itemJSON === undefined) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 							VALUE: item,
 						}),
@@ -306,14 +306,14 @@ module.exports = {
 					.createEmbed(member.displayColor)
 					.setTitle(instance.getMessage(interaction, 'CALCULATOR'))
 					.addFields({
-						name: `${instance.getItemName(itemKey)} x ${amount}`,
+						name: `${instance.getItemName(itemKey, interaction)} x ${amount}`,
 						value: `${ingredients != undefined ? ingredients : ''}\n${instance.getMessage(
 							interaction,
 							'COST'
 						)} **${format(cost)} falcoins**`,
 					});
 
-				interaction.editReply({
+				instance.editReply(interaction, {
 					embeds: [embed],
 				});
 			} else if (type === 'sell') {
@@ -322,7 +322,7 @@ module.exports = {
 				const itemJSON = items[itemKey];
 
 				if (itemJSON === undefined) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 							VALUE: item,
 						}),
@@ -331,14 +331,14 @@ module.exports = {
 				}
 
 				if (!itemJSON.value) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'CANT_SELL'),
 					});
 					return;
 				}
 
 				if (inventory.get(itemKey) === 0 || inventory.get(itemKey) === undefined) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_ITEM'),
 					});
 					return;
@@ -363,7 +363,7 @@ module.exports = {
 					}),
 				});
 
-				interaction.editReply({
+				instance.editReply(interaction, {
 					embeds: [embed],
 					components: [buttons(['inventory_view', 'balance'])],
 				});
@@ -375,7 +375,7 @@ module.exports = {
 				const itemJSON = items[itemKey];
 
 				if (itemJSON === undefined) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 							VALUE: item,
 						}),
@@ -384,21 +384,21 @@ module.exports = {
 				}
 
 				if (itemJSON.equip != true) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'CANT_EQUIP'),
 					});
 					return;
 				}
 
 				if (inventory.get(itemKey) === 0 || inventory.get(itemKey) === undefined) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_ITEM'),
 					});
 					return;
 				}
 
 				if (await isEquipped(member, itemKey)) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'ALREADY_EQUIPPED'),
 					});
 					return;
@@ -418,7 +418,7 @@ module.exports = {
 					}),
 				});
 
-				interaction.editReply({
+				instance.editReply(interaction, {
 					embeds: [embed],
 				});
 			} else if (type === 'craft') {
@@ -455,7 +455,7 @@ module.exports = {
 						.filter((item) => item !== undefined);
 
 					if (canBeCrafted.length === 0) {
-						interaction.editReply({
+						instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'NO_CRAFT_AVAILABLE'),
 						});
 						return;
@@ -473,7 +473,7 @@ module.exports = {
 						value: instance.getMessage(interaction, 'CRAFT_VALUE'),
 					});
 
-					interaction.editReply({
+					instance.editReply(interaction, {
 						components: [row],
 						embeds: [embed],
 					});
@@ -484,7 +484,7 @@ module.exports = {
 				const itemJSON = items[itemKey];
 
 				if (itemJSON === undefined) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 							VALUE: item,
 						}),
@@ -493,7 +493,7 @@ module.exports = {
 				}
 
 				if (itemJSON.recipe === undefined) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'CANT_CRAFT'),
 					});
 					return;
@@ -515,7 +515,7 @@ module.exports = {
 				}
 
 				if (missingIngredients.length > 0) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'MISSING_INGREDIENTS', {
 							ITEMS: missingIngredients.join(', '),
 						}),
@@ -569,7 +569,7 @@ module.exports = {
 						.setStyle('Secondary'),
 				]);
 
-				interaction.editReply({
+				instance.editReply(interaction, {
 					embeds: [embed],
 					components: [row],
 				});
@@ -583,7 +583,7 @@ module.exports = {
 					value: instance.getMessage(interaction, 'SELLALL_VALUE'),
 				});
 
-				interaction.editReply({
+				instance.editReply(interaction, {
 					embeds: [embed],
 					components: [buttons(['accept'])],
 				});
@@ -687,7 +687,7 @@ module.exports = {
 							]),
 					]);
 
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						components: [row],
 						embeds: [embed],
 					});
@@ -704,7 +704,7 @@ module.exports = {
 							}),
 					});
 
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						components: [buttons(['inventory_view'])],
 						embeds: [embed],
 					});
@@ -716,7 +716,7 @@ module.exports = {
 				const inventory = await readFile(member.id, 'inventory');
 
 				if (itemKey === undefined) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 							VALUE: item,
 						}),
@@ -725,14 +725,14 @@ module.exports = {
 				}
 
 				if (inventory.get(itemKey) === undefined || inventory.get(itemKey) === 0) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_ITEM'),
 					});
 					return;
 				}
 
 				if (itemJSON.use != true) {
-					interaction.editReply({
+					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'CANT_USE'),
 					});
 					return;
@@ -770,13 +770,13 @@ module.exports = {
 					});
 				}
 				await changeDB(member.id, 'inventory', inventory, true);
-				interaction.editReply({
+				instance.editReply(interaction, {
 					embeds: [embed],
 				});
 			}
 		} catch (err) {
 			console.error(`inventory: ${err}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 				components: [],

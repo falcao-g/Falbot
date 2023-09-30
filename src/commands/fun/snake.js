@@ -36,7 +36,7 @@ module.exports = {
 				(down = new ButtonBuilder().setCustomId('down').setEmoji('⬇️').setStyle('Secondary')),
 			]);
 
-			var answer = await interaction.editReply({
+			var answer = await instance.editReply(interaction, {
 				embeds: [embed],
 				components: [row],
 				fetchReply: true,
@@ -66,7 +66,7 @@ module.exports = {
 					value: `:alarm_clock: ${game.time}s\n\n${instance.getMessage(interaction, 'SCORE')}: ${game.snake.length}`,
 				};
 
-				await interaction.editReply({
+				await instance.editReply(interaction, {
 					embeds: [embed],
 				});
 				game.time -= 5;
@@ -105,7 +105,7 @@ module.exports = {
 					clearInterval(myTimer);
 					collector.stop();
 
-					await interaction.editReply({
+					await instance.editReply(interaction, {
 						embeds: [embed],
 						components: [row],
 					});
@@ -113,7 +113,7 @@ module.exports = {
 			});
 		} catch (error) {
 			console.error(`snake: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 				components: [],

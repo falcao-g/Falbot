@@ -37,10 +37,10 @@ module.exports = {
 						value: answer,
 					}
 				);
-			await interaction.editReply({ embeds: [embed] });
+			await instance.editReply(interaction, { embeds: [embed] });
 		} catch (error) {
 			console.error(`8ball: ${error}`);
-			interaction.editReply({
+			instance.editReply(interaction, {
 				content: instance.getMessage(interaction, 'EXCEPTION'),
 				embeds: [],
 			});
