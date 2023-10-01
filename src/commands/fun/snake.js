@@ -98,10 +98,6 @@ module.exports = {
 				});
 
 				if (game.gameEnded) {
-					up.setDisabled(true);
-					left.setDisabled(true);
-					right.setDisabled(true);
-					down.setDisabled(true);
 					clearInterval(myTimer);
 					collector.stop();
 

@@ -137,9 +137,6 @@ module.exports = {
 
 				Game.on('end', async (results) => {
 					collector.stop();
-					double.setDisabled(true);
-					hit.setDisabled(true);
-					stand.setDisabled(true);
 
 					var player_cards = [];
 					var dealer_cards = [];

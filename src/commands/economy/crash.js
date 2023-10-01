@@ -121,7 +121,6 @@ module.exports = {
 						components: [row],
 					});
 				}
-				sell.setDisabled(true);
 
 				if (lost) {
 					embed.setColor(15158332);
