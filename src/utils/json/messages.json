@@ -457,12 +457,12 @@
 		"en-US": ":ballot_box: Thanks for voting!"
 	},
 	"VOTE_COLLECTED": {
-		"pt-BR": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:fire: +1 voto! Você vai receber outros 5% falcoins adicionais da próxima vez.**\n**:ballot_box: Vote diariamente para aumentar o seu bônus**\n**:calendar_spiral: Você pode aumentar seu bônus até 150%**\n**:bell: Ative os lembretes com `/lembrete` para receber uma mensagem assim que você puder votar!**",
-		"en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:fire: +1 streak! You'll earn another 5% additional falcoins next time!**\n**:ballot_box: Vote daily to increase your streak**\n**:calendar_spiral: You can increase your streak up to 150%**\n**:bell: Enable reminders using `/reminder` to get a DM when you can vote!**"
+		"pt-BR": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:fire: +1 voto! Você vai receber outros 5% falcoins adicionais da próxima vez.**\n**:ballot_box: Vote diariamente para aumentar o seu bônus**\n**:calendar_spiral: Você pode aumentar seu bônus até 150%**",
+		"en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:fire: +1 streak! You'll earn another 5% additional falcoins next time!**\n**:ballot_box: Vote daily to increase your streak**\n**:calendar_spiral: You can increase your streak up to 150%**"
 	},
 	"VOTE_COLLECTED_MAX": {
-		"pt-BR": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:trophy: Você chegou ao bônus máximo, continue votando para mantê-lo!**\n**:bell: Ative os lembretes com `/lembrete` para receber uma mensagem assim que você puder votar!**",
-		"en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:trophy: You reached the max streak, keep voting to keep it!**\n**:bell: Enable reminders using `/reminder` to get a DM when you can vote!**"
+		"pt-BR": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:trophy: Você chegou ao bônus máximo, continue votando para mantê-lo!**",
+		"en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:trophy: You reached the max streak, keep voting to keep it!**"
 	},
 	"HELP_RANK": {
 		"pt-BR": ":arrow_double_up: Gaste falcoins para subir de rank",
@@ -577,8 +577,8 @@
 		"en-US": ":money_with_wings: Earning more falcoins"
 	},
 	"HELP_ECONOMY3": {
-		"pt-BR": "**:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/conta`**\n**:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/banco depositar`, `/banco ver` para ver suas informações e `/banco sacar` para sacar\n:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/voto`, use `/lembrete` para ser lembrado quando isso for possível**\n**:stopwatch: `/intervalos` mostra os eventos ativos e certos comandos especiais**\n**:school_satchel: Veja a página de inventário e items para mais informações**\n\n**:busts_in_silhouette: Interaja com outros usuários**\n-Desafie seus amigos com `/corrida`, `/velha`, `/roletarussa` e `/luta`, ou doe dinheiro pra eles com `/doar`\n-Veja os melhores jogadores em diferentes categorias com `/classificação rank`, `/classificação falcoins` e `/classificação wins`\n\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/níquel`, `/roleta`, `/cavalo`, `/olhoscobra`, `blackjack` e `/colapso`**",
-		"en-US": "**:coin: See your falcoins and other information at any time using `/balance`**\n**:bank: Deposit your money in the bank and watch as it increases with `/bank deposit`, `/bank view` to see yout info and `/bank withdraw` to withdraw\n:ballot_box: Vote every 12 hours to earn falcoins with `/vote`, use `/reminder` to be reminded everytime this is possible**\n**:stopwatch: `/cooldowns` shows active events and some special commands**\n**:school_satchel: Check the items and inventory page for more info**\n\n**:busts_in_silhouette: Interact with another users**\n-Challenge your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`, or give them money with `/donate`\n-See the top players in different categories using `/leaderboard rank`, `/leaderboard falcoins` and `/leaderboard wins`\n\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes`, `/blackjack` and `/crash`**"
+		"pt-BR": "**:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/conta`**\n**:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/banco depositar`, `/banco ver` para ver suas informações e `/banco sacar` para sacar\n:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/voto`**\n**:stopwatch: `/intervalos` mostra os eventos ativos e certos comandos especiais**\n**:school_satchel: Veja a página de inventário e items para mais informações**\n\n**:busts_in_silhouette: Interaja com outros usuários**\n-Desafie seus amigos com `/corrida`, `/velha`, `/roletarussa` e `/luta`, ou doe dinheiro pra eles com `/doar`\n-Veja os melhores jogadores em diferentes categorias com `/classificação rank`, `/classificação falcoins` e `/classificação wins`\n\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/níquel`, `/roleta`, `/cavalo`, `/olhoscobra`, `blackjack` e `/colapso`**",
+		"en-US": "**:coin: See your falcoins and other information at any time using `/balance`**\n**:bank: Deposit your money in the bank and watch as it increases with `/bank deposit`, `/bank view` to see yout info and `/bank withdraw` to withdraw\n**:stopwatch: `/cooldowns` shows active events and some special commands**\n**:school_satchel: Check the items and inventory page for more info**\n\n**:busts_in_silhouette: Interact with another users**\n-Challenge your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`, or give them money with `/donate`\n-See the top players in different categories using `/leaderboard rank`, `/leaderboard falcoins` and `/leaderboard wins`\n\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes`, `/blackjack` and `/crash`**"
 	},
 	"PICK_PAGE": {
 		"pt-BR": "Escolha uma página de ajuda...",
@@ -599,30 +599,6 @@
 	"MAX_RANK2": {
 		"pt-BR": "Rank máximo",
 		"en-US": "Max rank"
-	},
-	"ENABLE_REMINDER": {
-		"pt-BR": "Ativar Lembrete",
-		"en-US": "Turn On"
-	},
-	"DISABLE_REMINDER": {
-		"pt-BR": "Desativar Lembrete",
-		"en-US": "Turn Off"
-	},
-	"REMINDER_ENABLED": {
-		"pt-BR": "O lembrete para votar foi ativado.",
-		"en-US": "DM vote reminder is now on."
-	},
-	"REMINDER_DISABLED": {
-		"pt-BR": "O lembrete para votar foi desativado.",
-		"en-US": "DM vote reminder is now off."
-	},
-	"VOTE_REMINDER": {
-		"pt-BR": "Lembrete para votar :bell:",
-		"en-US": "Vote reminder :bell:"
-	},
-	"REWARD_AFTER": {
-		"pt-BR": "Resgate sua recompensa depois de votar usando o comando /voto",
-		"en-US": "Claim your reward after voting by using /vote"
 	},
 	"PLAYERS": {
 		"pt-BR": "Jogadores totais",
@@ -1108,10 +1084,6 @@
 		"pt-BR": "...e {AMOUNT} mais",
 		"en-US": "...and {AMOUNT} more"
 	},
-	"EQUIP_TITLE": {
-		"pt-BR": ":scroll: Lista de itens equipáveis e seus efeitos",
-		"en-US": ":scroll: List of equipable items and their effects"
-	},
 	"CRAFT_PLACEHOLDER": {
 		"pt-BR": "Construa um item...",
 		"en-US": "Craft an item..."
@@ -1235,10 +1207,6 @@
 	"USE_SNOWFLAKE_VALUE": {
 		"pt-BR": "O Floco Eterno te deu seu poder e resetou todos os seus cooldowns! :snowflake:",
 		"en-US": "The Eternal Snowflake gave you its power and reset all your cooldowns! :snowflake:"
-	},
-	"USE_TITLE": {
-		"pt-BR": ":scroll: Lista de itens usáveis e seus efeitos",
-		"en-US": ":scroll: List of useable items and their effects"
 	},
 	"STATS_TITLE": {
 		"pt-BR": ":bar_chart: Estatísticas de {USER}",
