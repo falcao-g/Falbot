@@ -41,6 +41,10 @@ Support server: <https://discord.gg/8WrAtVYVKR>
 
 Official website: <https://falbot.netlify.app/>
 
+## 📷 Preview
+
+<img src='./src/assets/preview.png'>
+
 ## ❓ Want to contribute?
 
 If you want to contribute, please read the [contributing guide](CONTRIBUTING.md).
