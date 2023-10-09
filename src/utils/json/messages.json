@@ -1,275 +1,343 @@
 {
 	"YOU_ARE_BOT": {
 		"en-US": "You can't use Falbot's commands because you are a bot",
-		"pt-BR": "Outros bots não podem usar os comandos do Falbot"
+		"pt-BR": "Outros bots não podem usar os comandos do Falbot",
+		"es-ES": "No puedes usar los comandos de Falbot porque eres un bot"
 	},
 	"YOU_ARE_BANNED": {
 		"en-US": "You are banned from using Falbot, if you think this is a mistake, contact the bot developers",
-		"pt-BR": "Você está banido de usar o Falbot, se você acha que isso é um engano, entre em contato com os desenvolvedores"
+		"pt-BR": "Você está banido de usar o Falbot, se você acha que isso é um engano, entre em contato com os desenvolvedores",
+		"es-ES": "Estás baneado de usar Falbot, si crees que esto es un error, contacta a los desarrolladores del bot"
 	},
 	"INVALID_COMMAND": {
 		"pt-BR": "Esse comando não existe!",
-		"en-US": "This command doesn't exist!"
+		"en-US": "This command doesn't exist!",
+		"es-ES": "¡Este comando no existe!"
 	},
 	"DISABLED": {
 		"en-US": "{NAME} was disabled!",
-		"pt-BR": "{NAME} foi desativado!"
+		"pt-BR": "{NAME} foi desativado!",
+		"es-ES": "{NAME} fue desactivado!"
 	},
 	"ENABLED": {
 		"en-US": "{NAME} was renabled!",
-		"pt-BR": "{NAME} foi reativado!"
+		"pt-BR": "{NAME} foi reativado!",
+		"es-ES": "{NAME} fue reactivado!"
 	},
 	"THIS_CHANNEL_IS_DISABLED": {
 		"en-US": "You can't use Falbot in this channel because it's disabled",
-		"pt-BR": "Você não pode usar o Falbot nesse canal porque ele está desativado"
+		"pt-BR": "Você não pode usar o Falbot nesse canal porque ele está desativado",
+		"es-ES": "No puedes usar Falbot en este canal porque está desactivado"
 	},
 	"THIS_COMMAND_IS_DISABLED": {
 		"en-US": "You can't use this command because it's disabled",
-		"pt-BR": "Você não pode usar esse comando porque ele está desativado"
+		"pt-BR": "Você não pode usar esse comando porque ele está desativado",
+		"es-ES": "No puedes usar este comando porque está desactivado"
 	},
 	"BOT_OWNERS_ONLY": {
 		"en-US": "Only the bot developer can run this command.",
-		"pt-BR": "Apenas o desenvolvedor do bot pode executar este comando."
+		"pt-BR": "Apenas o desenvolvedor do bot pode executar este comando.",
+		"es-ES": "Solo el desarrollador del bot puede ejecutar este comando."
 	},
 	"COOLDOWN": {
 		"en-US": "You must wait {COOLDOWN} before using that command again.",
-		"pt-BR": "Você precisa esperar {COOLDOWN} antes de usar este comando novamente."
+		"pt-BR": "Você precisa esperar {COOLDOWN} antes de usar este comando novamente.",
+		"es-ES": "Debes esperar {COOLDOWN} antes de usar ese comando de nuevo."
 	},
 	"EXCEPTION": {
 		"en-US": "An error occurred when running this command! This error has been reported to the developer.",
-		"pt-BR": "Ocorreu um erro ao executar este comando! Este erro foi relatado ao desenvolvedor."
+		"pt-BR": "Ocorreu um erro ao executar este comando! Este erro foi relatado ao desenvolvedor.",
+		"es-ES": "¡Se produjo un error al ejecutar este comando! Este error ha sido reportado al desarrollador."
 	},
 	"NUMEROS": {
 		"pt-BR": "Números",
-		"en-US": "Numbers"
+		"en-US": "Numbers",
+		"es-ES": "Números"
 	},
 	"VALOR_INVALIDO": {
 		"pt-BR": "{VALUE} não é um valor válido... :rage:",
-		"en-US": "{VALUE} is not a valid value... :rage:"
+		"en-US": "{VALUE} is not a valid value... :rage:",
+		"es-ES": "{VALUE} no es un valor válido... :rage:"
 	},
 	"FALCOINS_INSUFICIENTES": {
 		"pt-BR": "você não tem falcoins suficientes! :rage:",
-		"en-US": "you don't have enough falcoins! :rage:"
+		"en-US": "you don't have enough falcoins! :rage:",
+		"es-ES": "¡no tienes suficientes falcoins! :rage:"
 	},
 	"BANCO_INSUFICIENTE": {
 		"pt-BR": "você não tem falcoins suficientes no banco! :rage:",
-		"en-US": "you don't have enough falcoins in the bank! :rage:"
+		"en-US": "you don't have enough falcoins in the bank! :rage:",
+		"es-ES": "¡no tienes suficientes falcoins en el banco! :rage:"
 	},
 	"BANCO_DEPOSITOU": {
 		"pt-BR": "Você depositou {VALUE} falcoins no banco! :smiley:",
-		"en-US": "You deposited {VALUE} falcoins in the bank! :smiley:"
+		"en-US": "You deposited {VALUE} falcoins in the bank! :smiley:",
+		"es-ES": "¡Depositaste {VALUE} falcoins en el banco! :smiley:"
 	},
 	"SALDO_ATUAL": {
 		"pt-BR": "Saldo atual",
-		"en-US": "Current balance"
+		"en-US": "Current balance",
+		"es-ES": "Saldo actual"
 	},
 	"BANCO": {
 		"pt-BR": "Banco",
-		"en-US": "Bank"
+		"en-US": "Bank",
+		"es-ES": "Banco"
 	},
 	"BANCO_SALDO": {
 		"pt-BR": "Você tem {VALUE} falcoins no banco",
-		"en-US": "You have {VALUE} falcoins in the bank"
+		"en-US": "You have {VALUE} falcoins in the bank",
+		"es-ES": "Tienes {VALUE} falcoins en el banco"
 	},
 	"BANCO_SACOU": {
 		"pt-BR": "Você sacou {VALUE} falcoins do banco! :smiley:",
-		"en-US": "You withdrew {VALUE} falcoins from the bank! :smiley:"
+		"en-US": "You withdrew {VALUE} falcoins from the bank! :smiley:",
+		"es-ES": "¡Retiraste {VALUE} falcoins del banco! :smiley:"
 	},
 	"JOGADORES": {
 		"pt-BR": "Jogadores",
-		"en-US": "Players"
+		"en-US": "Players",
+		"es-ES": "Jugadores"
 	},
 	"GANHOU": {
 		"pt-BR": "{WINNER} ganhou {FALCOINS} falcoins!",
-		"en-US": "{WINNER} won {FALCOINS} falcoins!"
+		"en-US": "{WINNER} won {FALCOINS} falcoins!",
+		"es-ES": "{WINNER} ganó {FALCOINS} falcoins!"
 	},
 	"CAVALO_DESCRIPTION": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Correndo...",
-		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: Racing..."
+		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: Racing...",
+		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:1234: **Tu caballo:** `{HORSE}`\n:hourglass: **Estado**: Corriendo..."
 	},
 	"CAVALO_DESCRIPTION_WON": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Você ganhou {FALCOINS} falcoins!\n:bank: **Saldo atual**: {SALDO} falcoins",
-		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: You won {FALCOINS} falcoins!\n:bank: **Current balance**: {SALDO} falcoins"
+		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: You won {FALCOINS} falcoins!\n:bank: **Current balance**: {SALDO} falcoins",
+		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:1234: **Tu caballo:** `{HORSE}`\n:hourglass: **Estado**: ¡Ganaste {FALCOINS} falcoins!\n:bank: **Saldo actual**: {SALDO} falcoins"
 	},
 	"CAVALO_DESCRIPTION_LOST": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Você perdeu!\n:bank: **Saldo atual**: {SALDO} falcoins",
-		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: You lost!\n:bank: **Current balance**: {SALDO} falcoins"
+		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: You lost!\n:bank: **Current balance**: {SALDO} falcoins",
+		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:1234: **Tu caballo:** `{HORSE}`\n:hourglass: **Estado**: ¡Perdiste!\n:bank: **Saldo actual**: {SALDO} falcoins"
 	},
 	"CAVALGADA_DESCRIPTION": {
 		"pt-BR": ":horse: {USER} começou uma **corrida de \ncavalos**, entre apertando o botão abaixo, o \nvencedor leva todos os **falcoins acumulados!**\n:moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Começando em `1m`",
-		"en-US": ":horse: {USER} started a **horse race**, \njoin by pressing the button below, the \nwinner gets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting in `1m`"
+		"en-US": ":horse: {USER} started a **horse race**, \njoin by pressing the button below, the \nwinner gets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting in `1m`",
+		"es-ES": ":horse: {USER} comenzó una **carrera de \ncaballos**, únete presionando el botón de abajo, \nel ganador se lleva todos los **falcoins acumulados!**\n:moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: Comenzando en `1m`"
 	},
 	"CAVALGADA_DESCRIPTION2": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Correndo...",
-		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Racing..."
+		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Racing...",
+		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: Corriendo..."
 	},
 	"CAVALGADA_DESCRIPTION3": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: {USER} ganhou!\n:bank: **Saldo atual**: {SALDO} falcoins",
-		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: {USER} won!\n:bank: **Current balance**: {SALDO} falcoins"
+		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: {USER} won!\n:bank: **Current balance**: {SALDO} falcoins",
+		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: ¡{USER} ganó!\n:bank: **Saldo actual**: {SALDO} falcoins"
 	},
 	"COINFLIP": {
 		"pt-BR": ":coin: você tirou **{CARAS}** caras e **{COROAS}** coroas jogando **{TIMES}** vezes",
-		"en-US": ":coin: you flipped **{CARAS}** heads and **{COROAS}** tails from playing **{TIMES}** times"
+		"en-US": ":coin: you flipped **{CARAS}** heads and **{COROAS}** tails from playing **{TIMES}** times",
+		"es-ES": ":coin: sacaste **{CARAS}** caras y **{COROAS}** cruces jugando **{TIMES}** veces"
 	},
 	"DOAR": {
 		"pt-BR": ":handshake: {FALCOINS} falcoins transferidos com sucesso para {USER}",
-		"en-US": ":handshake: {FALCOINS} falcoins transferred successfully to {USER}"
+		"en-US": ":handshake: {FALCOINS} falcoins transferred successfully to {USER}",
+		"es-ES": ":handshake: {FALCOINS} falcoins transferidos con éxito a {USER}"
 	},
 	"ENQUETE": {
 		"pt-BR": "Nova enquete de: {USER}",
-		"en-US": "New poll by: {USER}"
+		"en-US": "New poll by: {USER}",
+		"es-ES": "Nueva encuesta de: {USER}"
 	},
 	"VITORIAS": {
 		"pt-BR": "Vitórias",
-		"en-US": "Wins"
+		"en-US": "Wins",
+		"es-ES": "Victorias"
 	},
 	"RESULTADO": {
 		"pt-BR": "Resultado",
-		"en-US": "Result"
+		"en-US": "Result",
+		"es-ES": "Resultado"
 	},
 	"GIRANDO": {
 		"pt-BR": "GIRANDO",
-		"en-US": "SPINNING"
+		"en-US": "SPINNING",
+		"es-ES": "GIRANDO"
 	},
 	"VOCE_GANHOU": {
 		"pt-BR": "Você ganhou!",
-		"en-US": "You won!"
+		"en-US": "You won!",
+		"es-ES": "¡Ganaste!"
 	},
 	"VOCE_PERDEU": {
 		"pt-BR": "Você perdeu!",
-		"en-US": "You lost!"
+		"en-US": "You lost!",
+		"es-ES": "¡Perdiste!"
 	},
 	"PERDAS": {
 		"pt-BR": "Perdas",
-		"en-US": "Losses"
+		"en-US": "Losses",
+		"es-ES": "Pérdidas"
 	},
 	"BOT_ROLOU": {
 		"pt-BR": "O bot rolou",
-		"en-US": "The bot rolled"
+		"en-US": "The bot rolled",
+		"es-ES": "El bot sacó"
 	},
 	"VELHA_CHAMOU": {
 		"pt-BR": "{USER2}, você foi desafiado para um jogo da velha por {USER}\n*Se você entrar, você apostará {FALCOINS} falcoins :older_woman:*",
-		"en-US": "{USER2}, you've been challenged to a tic-tac-toe game by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins* :older_woman:"
+		"en-US": "{USER2}, you've been challenged to a tic-tac-toe game by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins* :older_woman:",
+		"es-ES": "{USUARIO2}, has sido desafiado a un juego de tres en raya por {USUARIO}\n*Si aceptas, estarás apostando {FALCOINS} falcoins* :older_woman:"
 	},
 	"VELHA_CANCELADO_DEMOROU": {
 		"pt-BR": "Jogo da velha cancelado. {USER} demorou muito para aceitar! :confounded:",
-		"en-US": "Tic-tac-toe cancelled. {USER} took to long to accept! :confounded:"
+		"en-US": "Tic-tac-toe cancelled. {USER} took to long to accept! :confounded:",
+		"es-ES": "Tic-tac-toe cancelado. {USER} tardó demasiado en aceptar! :confounded:"
 	},
 	"VELHA_CANCELADO_RECUSOU": {
 		"pt-BR": "Jogo da velha cancelado. {USER} recusou o jogo! :confounded:",
-		"en-US": "Tic-tac-toe cancelled. {USER} declined the game! :confounded:"
+		"en-US": "Tic-tac-toe cancelled. {USER} declined the game! :confounded:",
+		"es-ES": "Tic-tac-toe cancelado. {USER} rechazó el juego! :confounded:"
 	},
 	"VELHA_EMPATOU": {
 		"pt-BR": "**O jogo empatou**",
-		"en-US": "**The game ended in a draw**"
+		"en-US": "**The game ended in a draw**",
+		"es-ES": "**El juego terminó en empate**"
 	},
 	"INSUFICIENTE_CONTAS": {
 		"pt-BR": "Saldo insuficiente em uma das contas! :grimacing:",
-		"en-US": "Insufficient balance in one of the accounts! :grimacing:"
+		"en-US": "Insufficient balance in one of the accounts! :grimacing:",
+		"es-ES": "¡Saldo insuficiente en una de las cuentas! :grimacing:"
 	},
 	"NAO_JOGAR_SOZINHO": {
 		"pt-BR": "Você não pode jogar com você mesmo, espertinho :rage:",
-		"en-US": "You can't play with yourself, smartass :rage:"
+		"en-US": "You can't play with yourself, smartass :rage:",
+		"es-ES": "No puedes jugar contigo mismo, listillo :rage:"
 	},
 	"ROLETARUSSA_DESCRIPTION": {
 		"pt-BR": ":drop_of_blood: {USER} começou uma **roleta russa**, \nentre apertando o botão abaixo, a cada 5 \nsegundos, **alguém morre**, o último vivo leva \ntodos os **falcoins acumulados!**\n:moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Começando em `1m`",
-		"en-US": ":drop_of_blood: {USER} started a **russian roulette**, \njoin by pressing the button below, each 5 \nseconds, **someone dies**, the last alive \ngets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting in `1m`"
+		"en-US": ":drop_of_blood: {USER} started a **russian roulette**, \njoin by pressing the button below, each 5 \nseconds, **someone dies**, the last alive \ngets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting in `1m`",
+		"es-ES": ":drop_of_blood: {USER} comenzó una **ruleta rusa**, \núnete presionando el botón de abajo, cada 5 \nsegundos, **alguien muere**, el último vivo \nse lleva todos los **falcoins acumulados!**\n:moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: Comenzando en `1m`"
 	},
 	"ROLETARUSSA_DESCRIPTION2": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Eliminando jogadores...",
-		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Killing players..."
+		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Killing players...",
+		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: Eliminando jugadores..."
 	},
 	"ROLETARUSSA_DESCRIPTION3": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: {USER} sobreviveu!\n:bank: **Saldo atual**: {SALDO} falcoins",
-		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: {USER} survived!\n:bank: **Current balance**: {SALDO} falcoins"
+		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: {USER} survived!\n:bank: **Current balance**: {SALDO} falcoins",
+		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: ¡{USER} sobrevivió!\n:bank: **Saldo actual**: {SALDO} falcoins"
 	},
 	"ROLETA_RUSSA_COMECOU": {
 		"pt-BR": " começou uma roleta russa",
-		"en-US": " started a russian roulette"
+		"en-US": " started a russian roulette",
+		"es-ES": " comenzó una ruleta rusa"
 	},
 	"TEMPO_RESTANTE": {
 		"pt-BR": "Tempo restante",
-		"en-US": "Time remaining"
+		"en-US": "Time remaining",
+		"es-ES": "Tiempo restante"
 	},
 	"ATIRANDO": {
 		"pt-BR": "atirando em alguém em 5 segundos",
-		"en-US": "shooting someone in 5 seconds"
+		"en-US": "shooting someone in 5 seconds",
+		"es-ES": "disparando a alguien en 5 segundos"
 	},
 	"BOLA8": {
 		"pt-BR": "Bola 8 mágica",
-		"en-US": "Magic 8-ball"
+		"en-US": "Magic 8-ball",
+		"es-ES": "Bola 8 mágica"
 	},
 	"PERGUNTA": {
 		"pt-BR": "Pergunta",
-		"en-US": "Question"
+		"en-US": "Question",
+		"es-ES": "Pregunta"
 	},
 	"PREVISAO": {
 		"pt-BR": "Previsão",
-		"en-US": "Prediction"
+		"en-US": "Prediction",
+		"es-ES": "Predicción"
 	},
 	"GANHO": {
 		"pt-BR": " ganhou",
-		"en-US": " won"
+		"en-US": " won",
+		"es-ES": " ganó"
 	},
 	"LUTA_DERROTOU": {
 		"pt-BR": "Você derrotou {USER} em uma luta",
-		"en-US": "You defeated {USER} in a fight"
+		"en-US": "You defeated {USER} in a fight",
+		"es-ES": "Derrotaste a {USER} en una pelea"
 	},
 	"SE_PROTEGE": {
 		"pt-BR": "se protege",
-		"en-US": "protects themselves"
+		"en-US": "protects themselves",
+		"es-ES": "se protege"
 	},
 	"SELF": {
 		"pt-BR": "acidentalmente dá **{VALUE}** de dano a si mesmo",
-		"en-US": "accidentally deals **{VALUE}** damage to themselves"
+		"en-US": "accidentally deals **{VALUE}** damage to themselves",
+		"es-ES": "accidentalmente da **{VALUE}** de daño a sí mismo"
 	},
 	"CURA": {
 		"pt-BR": "se cura em **{VALUE}** de vida",
-		"en-US": "heals themselves for **{VALUE}** health"
+		"en-US": "heals themselves for **{VALUE}** health",
+		"es-ES": "se cura en **{VALUE}** de vida"
 	},
 	"ROUBO_VIDA": {
 		"pt-BR": "rouba **{VALUE}** de vida do inimigo",
-		"en-US": "steals **{VALUE}** health from the enemy"
+		"en-US": "steals **{VALUE}** health from the enemy",
+		"es-ES": "roba **{VALUE}** de vida del enemigo"
 	},
 	"ATAQUE_NOCAUTE": {
 		"pt-BR": "dá **{VALUE}** de dano ao inimigo e o deixa nocauteado",
-		"en-US": "deals **{VALUE}** damage to the enemy and stuns them"
+		"en-US": "deals **{VALUE}** damage to the enemy and stuns them",
+		"es-ES": "da **{VALUE}** de daño al enemigo y lo deja aturdido"
 	},
 	"ATAQUE": {
 		"pt-BR": "dá **{VALUE}** de dano ao inimigo",
-		"en-US": "deals **{VALUE}** damage to the enemy"
+		"en-US": "deals **{VALUE}** damage to the enemy",
+		"es-ES": "da **{VALUE}** de daño al enemigo"
 	},
 	"LUTA_CANCELADO_DEMOROU": {
 		"pt-BR": "Luta cancelada. {USER} demorou muito para aceitar! :confounded:",
-		"en-US": "Fight cancelled. {USER} took to long to accept! :confounded:"
+		"en-US": "Fight cancelled. {USER} took to long to accept! :confounded:",
+		"es-ES": "Pelea cancelada. {USER} tardó demasiado en aceptar! :confounded:"
 	},
 	"LUTA_CANCELADO_RECUSOU": {
 		"pt-BR": "Luta cancelada. {USER} recusou o duelo! :face_with_monocle:",
-		"en-US": "Fight cancelled. {USER} declined the duel! :face_with_monocle:"
+		"en-US": "Fight cancelled. {USER} declined the duel! :face_with_monocle:",
+		"es-ES": "Pelea cancelada. {USER} rechazó el duelo! :face_with_monocle:"
 	},
 	"LUTA_CONVITE": {
 		"pt-BR": "{USER2}, você foi desafiado para uma luta por {USER}\n*Se você entrar, você apostará {FALCOINS} falcoins :smiling_imp:*",
-		"en-US": "{USER2}, you've been challenged to a fight by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins :smiling_imp:*"
+		"en-US": "{USER2}, you've been challenged to a fight by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins :smiling_imp:*",
+		"es-ES": "{USER2}, fuiste desafiado a una pelea por {USER}\n*Si aceptas, apostarás {FALCOINS} falcoins :smiling_imp:*"
 	},
 	"COOLDOWNS": {
 		"pt-BR": ":stopwatch: Tempo de espera",
-		"en-US": ":stopwatch: Cooldowns"
+		"en-US": ":stopwatch: Cooldowns",
+		"es-ES": ":stopwatch: Tiempo de espera"
 	},
 	"VOTO": {
 		"pt-BR": "Voto",
-		"en-US": "Vote"
+		"en-US": "Vote",
+		"es-ES": "Voto"
 	},
 	"PRONTO": {
 		"pt-BR": "Pronto!",
-		"en-US": "Ready!"
+		"en-US": "Ready!",
+		"es-ES": "¡Listo!"
 	},
 	"SCORE": {
 		"pt-BR": "Pontuação",
-		"en-US": "Score"
+		"en-US": "Score",
+		"es-ES": "Puntuación"
 	},
 	"VELHA_MOVIMENTO": {
 		"pt-BR": "{USER}, escolha seu movimento:",
-		"en-US": "{USER}, choose your move:"
+		"en-US": "{USER}, choose your move:",
+		"es-ES": "{USER}, elige tu movimiento:"
 	},
 	"8BALL": {
 		"pt-BR": [
@@ -322,6 +390,31 @@
 			"you are absolutely right!",
 			"I agree.",
 			"no idea!"
+		],
+		"es-ES": [
+			"ciertamente.",
+			"sin duda.",
+			"sí, definitivamente.",
+			"puedes contar con eso.",
+			"como yo lo veo, sí.",
+			"muy probablemente.",
+			"sí.",
+			"absolutamente.",
+			"destino nublado, inténtalo de nuevo.",
+			"pregúntame de nuevo más tarde.",
+			"mejor no te digo ahora.",
+			"no puedo predecir ahora.",
+			"concéntrate e intenta de nuevo.",
+			"no cuentes con eso.",
+			"no.",
+			"mis fuentes dicen que no.",
+			"perspectivas no muy buenas.",
+			"muy dudoso.",
+			"desafortunadamente, no.",
+			"no, lo siento.",
+			"¡tienes absolutamente razón!",
+			"estoy de acuerdo.",
+			"¡no tengo idea!"
 		]
 	},
 	"RUSROL": {
@@ -362,243 +455,321 @@
 			"was eaten by a shark",
 			"let some bloons escape",
 			"didn\"t trust the expiration date"
+		],
+		"es-ES": [
+			"murió",
+			"puso la cabeza en el lado equivocado",
+			"fue a los Estados Unidos",
+			"no tenía la ventaja",
+			"descubrió que el piso era lava",
+			"descubrió que la tierra es plana",
+			"no usó una máscara",
+			"explotó",
+			"recibió un disparo",
+			"intentó escapar",
+			"abrió twitter",
+			"fue al cielo",
+			"inventó un nuevo medicamento",
+			"...¿desapareció?",
+			"fue comido por un tiburón",
+			"dejó escapar algunos globos",
+			"no confió en la fecha de vencimiento"
 		]
 	},
 	"MAX_RANK": {
 		"pt-BR": "{USER}, você já está no rank máximo",
-		"en-US": "{USER}, you are already at the maximum rank"
+		"en-US": "{USER}, you are already at the maximum rank",
+		"es-ES": "{USER}, ya estás en el rango máximo"
 	},
 	"NO_MONEY_RANK": {
 		"pt-BR": "Você precisa de mais **{FALCOINS} falcoins** para aumentar seu rank!",
-		"en-US": "You need more **{FALCOINS} falcoins** to increase your rank!"
+		"en-US": "You need more **{FALCOINS} falcoins** to increase your rank!",
+		"es-ES": "¡Necesitas más **{FALCOINS} falcoins** para aumentar tu rango!"
 	},
 	"RANKUP_BANK": {
 		"pt-BR": ":bank: *+{FALCOINS} falcoins de limite no banco*",
-		"en-US": ":bank: *+{FALCOINS} falcoins of limit in the bank*"
+		"en-US": ":bank: *+{FALCOINS} falcoins of limit in the bank*",
+		"es-ES": ":bank: *+{FALCOINS} falcoins de límite en el banco*"
 	},
 	"RANKUP_SUCESS": {
 		"pt-BR": "Você subiu de rank e agora é **{RANK}**!\nIsso te custou **{FALCOINS} falcoins**",
-		"en-US": "You have successfully increased your rank and now you are **{RANK}**!\nIt cost you **{FALCOINS} falcoins**"
+		"en-US": "You have successfully increased your rank and now you are **{RANK}**!\nIt cost you **{FALCOINS} falcoins**",
+		"es-ES": "¡Has aumentado con éxito tu rango y ahora eres **{RANK}**!\nTe costó **{FALCOINS} falcoins**"
 	},
 	"RANKUP_PERKS": {
 		"en-US": "Unlocked Perks",
-		"pt-BR": "Benefícios desbloqueados"
+		"pt-BR": "Benefícios desbloqueados",
+		"es-ES": "Beneficios desbloqueados"
 	},
 	"BANK_INTEREST": {
 		"pt-BR": "10% de juros diários",
-		"en-US": "Daily interest of 10%"
+		"en-US": "Daily interest of 10%",
+		"es-ES": "10% de interés diario"
 	},
 	"BANK_LIMIT": {
 		"pt-BR": "mais falcoins até maximizar",
-		"en-US": "more falcoins until you reach the maximum"
+		"en-US": "more falcoins until you reach the maximum",
+		"es-ES": "más falcoins hasta que alcances el máximo"
 	},
 	"BANK_DEPOSIT_LIMIT": {
 		"pt-BR": "Seu depósito máximo é de {FALCOINS} falcoins - suba de rank para aumentar!",
-		"en-US": "Your max deposit is {FALCOINS} falcoins - rank up to increase!"
+		"en-US": "Your max deposit is {FALCOINS} falcoins - rank up to increase!",
+		"es-ES": "Su depósito máximo es de {FALCOINS} falcoins - ¡aumente de rango para aumentar!"
 	},
 	"BANK_OVER_LIMIT": {
 		"pt-BR": ":raised_hand: Você não pode depositar mais falcoins no banco, pois está acima do seu limite de depósito",
-		"en-US": ":raised_hand: You can't deposit more falcoins in the bank, because you are over your deposit limit"
+		"en-US": ":raised_hand: You can't deposit more falcoins in the bank, because you are over your deposit limit",
+		"es-ES": ":raised_hand: No puedes depositar más falcoins en el banco, porque estás por encima de tu límite de depósito"
 	},
 	"ALL_RANKS": {
 		"pt-BR": ":sparkles: Todos os ranks ({NUMBER}/{TOTAL})",
-		"en-US": ":sparkles: All ranks ({NUMBER}/{TOTAL})"
+		"en-US": ":sparkles: All ranks ({NUMBER}/{TOTAL})",
+		"es-ES": ":sparkles: Todos los rangos ({NUMBER}/{TOTAL})"
 	},
 	"UPCOMING_RANKS": {
 		"pt-BR": ":arrow_up: Próximos ranks",
-		"en-US": ":arrow_up: Upcoming ranks"
+		"en-US": ":arrow_up: Upcoming ranks",
+		"es-ES": ":arrow_up: Próximos rangos"
 	},
 	"CURRENT_RANK": {
 		"pt-BR": " <- rank atual",
-		"en-US": " <- current rank"
+		"en-US": " <- current rank",
+		"es-ES": " <- rango actual"
 	},
 	"ALL_COMMANDS": {
 		"pt-BR": ":books: Todos os comandos",
-		"en-US": ":books: All commands"
+		"en-US": ":books: All commands",
+		"es-ES": ":books: Todos los comandos"
 	},
 	"TOO_MANY": {
 		"pt-BR": ":confused: Existem muitos comandos para mostrar aqui...",
-		"en-US": ":confused: There are too many commands to show here..."
+		"en-US": ":confused: There are too many commands to show here...",
+		"es-ES": ":confused: Hay demasiados comandos para mostrar aquí..."
 	},
 	"LINK_COMMANDS": {
 		"pt-BR": "[Clique aqui para uma lista completa com todos os comandos](https://falbot.netlify.app/comandos)",
-		"en-US": "[Click here to see a complete list of all commands](https://falbot.netlify.app/commands)"
+		"en-US": "[Click here to see a complete list of all commands](https://falbot.netlify.app/commands)",
+		"es-ES": "[Haz clic aquí para ver una lista completa de todos los comandos](https://falbot.netlify.app/comandos)"
 	},
 	"WELCOME": {
 		"pt-BR": ":wave: Bem-vindo ao Falbot! ",
-		"en-US": ":wave: Welcome to Falbot!"
+		"en-US": ":wave: Welcome to Falbot!",
+		"es-ES": ":wave: ¡Bienvenido a Falbot!"
 	},
 	"ALREADY_COLLECTED": {
 		"pt-BR": "Você já coletou sua recompensa hoje",
-		"en-US": "You already collected your reward today"
+		"en-US": "You already collected your reward today",
+		"es-ES": "Ya has recogido tu recompensa hoy"
 	},
 	"ALREADY_COLLECTED2": {
 		"pt-BR": "Recompensa: **{REWARD}** falcoins\nVocê pode coletar de novo em **{TIME}**",
-		"en-US": "Reward: **{REWARD}** falcoins\nYou can collect again in **{TIME}**"
+		"en-US": "Reward: **{REWARD}** falcoins\nYou can collect again in **{TIME}**",
+		"es-ES": "Recompensa: **{REWARD}** falcoins\nPuedes recoger de nuevo en **{TIME}**"
 	},
 	"VOTE_FIRST": {
 		"pt-BR": ":ballot_box: Vote no Falbot!",
-		"en-US": ":ballot_box: Vote for Falbot!"
+		"en-US": ":ballot_box: Vote for Falbot!",
+		"es-ES": ":ballot_box: ¡Vota por Falbot!"
 	},
 	"VOTE_DESCRIPTION": {
 		"pt-BR": "Votar vai te recompensar com **{FALCOINS} falcoins**!\nIsso também ajuda o bot a crescer e apoia o desenvolvedor :)",
-		"en-US": "Voting will grant you **{FALCOINS} falcoins**!\nThis also helps the bot grow and supports the developer :)"
+		"en-US": "Voting will grant you **{FALCOINS} falcoins**!\nThis also helps the bot grow and supports the developer :)",
+		"es-ES": "¡Votar te otorgará **{FALCOINS} falcoins**!\nEsto también ayuda al bot a crecer y apoya al desarrollador :)"
 	},
 	"VOTE_HERE": {
 		"pt-BR": "Você pode votar aqui:",
-		"en-US": "You can vote here:"
+		"en-US": "You can vote here:",
+		"es-ES": "Puedes votar aquí:"
 	},
 	"VOTE_FINAL": {
 		"pt-BR": "**Use esse comando de novo após ter votado no bot\n:fire: Você também receberá como bônus {PERCENTAGE}% falcoins a mais! Vote diariamente para aumentar a porcentagem.**",
-		"en-US": "**Use this command again after you voted in the bot\n:fire: You'll also earn {PERCENTAGE}% more falcoins as a bonus! Vote daily to increase the percentage**"
+		"en-US": "**Use this command again after you voted in the bot\n:fire: You'll also earn {PERCENTAGE}% more falcoins as a bonus! Vote daily to increase the percentage**",
+		"es-ES": "**Use este comando nuevamente después de votar en el bot\n:fire: ¡También ganarás {PERCENTAGE}% más de falcoins como bonificación! Vota diariamente para aumentar el porcentaje**"
 	},
 	"VOTE_THANKS": {
 		"pt-BR": ":ballot_box: Obrigado por votar!",
-		"en-US": ":ballot_box: Thanks for voting!"
+		"en-US": ":ballot_box: Thanks for voting!",
+		"es-ES": ":ballot_box: ¡Gracias por votar!"
 	},
 	"VOTE_COLLECTED": {
 		"pt-BR": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:fire: +1 voto! Você vai receber outros 5% falcoins adicionais da próxima vez.**\n**:ballot_box: Vote diariamente para aumentar o seu bônus**\n**:calendar_spiral: Você pode aumentar seu bônus até 150%**\n**:bell: Ative os lembretes com `/lembrete` para receber uma mensagem assim que você puder votar!**",
-		"en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:fire: +1 streak! You'll earn another 5% additional falcoins next time!**\n**:ballot_box: Vote daily to increase your streak**\n**:calendar_spiral: You can increase your streak up to 150%**\n**:bell: Enable reminders using `/reminder` to get a DM when you can vote!**"
+		"en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:fire: +1 streak! You'll earn another 5% additional falcoins next time!**\n**:ballot_box: Vote daily to increase your streak**\n**:calendar_spiral: You can increase your streak up to 150%**\n**:bell: Enable reminders using `/reminder` to get a DM when you can vote!**",
+		"es-ES": "**{REWARD} falcoins** se han acreditado en su cuenta.\n¡También ganaste un **{PERCENTAGE}%** adicional de falcoins de tu bonificación de racha!\n**:fire: +1 racha! ¡Ganarás otro 5% de falcoins adicionales la próxima vez!**\n**:ballot_box: Vota diariamente para aumentar tu racha**\n**:calendar_spiral: Puedes aumentar tu racha hasta un 150%**\n**:bell: Habilita los recordatorios usando `/reminder` para recibir un DM cuando puedas votar!**"
 	},
 	"VOTE_COLLECTED_MAX": {
 		"pt-BR": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:trophy: Você chegou ao bônus máximo, continue votando para mantê-lo!**\n**:bell: Ative os lembretes com `/lembrete` para receber uma mensagem assim que você puder votar!**",
-		"en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:trophy: You reached the max streak, keep voting to keep it!**\n**:bell: Enable reminders using `/reminder` to get a DM when you can vote!**"
+		"en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:trophy: You reached the max streak, keep voting to keep it!**\n**:bell: Enable reminders using `/reminder` to get a DM when you can vote!**",
+		"es-ES": "**{REWARD} falcoins** se han acreditado en su cuenta.\n¡También ganaste un **{PERCENTAGE}%** adicional de falcoins de tu bonificación de racha!\n**:trophy: ¡Alcanzaste la racha máxima, sigue votando para mantenerla!**\n**:bell: Habilita los recordatorios usando `/reminder` para recibir un DM cuando puedas votar!**"
 	},
 	"HELP_RANK": {
 		"pt-BR": ":arrow_double_up: Gaste falcoins para subir de rank",
-		"en-US": ":arrow_double_up: Spend falcoins to rank up"
+		"en-US": ":arrow_double_up: Spend falcoins to rank up",
+		"es-ES": ":arrow_double_up: Gasta falcoins para subir de rango"
 	},
 	"HELP_RANK2": {
 		"pt-BR": "-Suba de rank com `/ranks rankup` para ganhar **várias recompensas** que te ajudam a ganhar mais falcoins\n-Você pode ver os próximos ranks com `/ranks ver` e ver todos os ranks com `/ranks todos`\n-`/conta` também mostra quão longe você está do próximo rank\n-Suba de rank para alcançar **posições mais altas** na `/classificação rank`",
-		"en-US": "-Rank up with `/ranks rankup` to receive **multiple rewards** that help you earn more falcoins\n-You can see upcoming ranks with `/ranks view` and all ranks with `/ranks all`\n-`/balance` also shows how far you are from the next rank\n-Rank up to achieve a **higher position** in the `/leaderboard rank`"
+		"en-US": "-Rank up with `/ranks rankup` to receive **multiple rewards** that help you earn more falcoins\n-You can see upcoming ranks with `/ranks view` and all ranks with `/ranks all`\n-`/balance` also shows how far you are from the next rank\n-Rank up to achieve a **higher position** in the `/leaderboard rank`",
+		"es-ES": "-Sube de rango con `/ranks rankup` para recibir **múltiples recompensas** que te ayudan a ganar más falcoins\n-Puedes ver los próximos rangos con `/ranks view` y todos los rangos con `/ranks all`\n-`/balance` también muestra qué tan lejos estás del siguiente rango\n-Sube de rango para lograr una **posición más alta** en el `/leaderboard rank`"
 	},
 	"HELP_FUN": {
 		"pt-BR": ":tada: Quer se divertir sem se preocupar com falcoins?",
-		"en-US": ":tada: Want to have fun without worrying abou falcoins?"
+		"en-US": ":tada: Want to have fun without worrying about falcoins?",
+		"es-ES": ":tada: ¿Quieres divertirte sin preocuparte por falcoins?"
 	},
 	"HELP_FUN2": {
 		"pt-BR": "-Preveja seu futuro com `/bola8`\n-Jogue cara ou coroa com `/girarmoeda`\n-Jogue o famoso jogo da cobrinha com `/cobrinha`",
-		"en-US": "-Forecast your future with `/8ball`\n-Flip a coin with `/coinflip`\n-Play the famous snake game with `/snake`"
+		"en-US": "-Forecast your future with `/8ball`\n-Flip a coin with `/coinflip`\n-Play the famous snake game with `/snake`",
+		"es-ES": "-Pronostica tu futuro con `/bola8`\n-Tira una moneda con `/coinflip`\n-Juega al famoso juego de la serpiente con `/snake`"
 	},
 	"HELP_UTILS": {
 		"pt-BR": ":pencil: Falbot também pode ser útil no seu dia-a-dia",
-		"en-US": ":pencil: Falbot can also be useful in your daily life"
+		"en-US": ":pencil: Falbot can also be useful in your daily life",
+		"es-ES": ":pencil: Falbot también puede ser útil en tu vida diaria"
 	},
 	"HELP_UTILS2": {
 		"pt-BR": "-Faça uma pequena enquete com `/enquete`\n-Deixe o falbot resolver expressões matemáticas para você com `/mat`\n-Role dados usando `/rolar`\n-Veja informações e links úteis sobre o bot com `/botinfo`",
-		"en-US": "-Do a pretty little poll with `/poll`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`\n-See stats and useful links regarding the bot with `/botinfo`"
+		"en-US": "-Do a pretty little poll with `/poll`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`\n-See stats and useful links regarding the bot with `/botinfo`",
+		"es-ES": "-Haz una pequeña encuesta con `/poll`\n-Deja que falbot resuelva tus expresiones matemáticas con `/math`\n-Tira dados con `/roll`\n-Ver estadísticas y enlaces útiles sobre el bot con `/botinfo`"
 	},
 	"HELP_ITEMS": {
 		"pt-BR": ":school_satchel: Sistema de items",
-		"en-US": ":school_satchel: Items system"
+		"en-US": ":school_satchel: Items system",
+		"es-ES": ":school_satchel: Sistema de items"
 	},
 	"HELP_ITEMS2": {
 		"pt-BR": "**:compass: Consiga items usando `/pescar`, `/caçar`, `/explorar`, `/minerar`\n:luggage: Veja todos os items que você ou outra pessoa tem com `/inventário ver`\n:moneybag: Items podem ser vendidos com `/inventário vender`\n:book: Veja todas as informações sobre um item como valores, raridade e usos com `/iteminfo`\n:hammer_pick: Items podem ser construídos com `/inventário construir`**\n-Muitos items que são construídos podem ser equipados para garantir benefícios com `/inventário equipar`\n**:abacus: Calcule a quantidade de materiais necessários para construir uma quantidade de items com `/inventário calcular`**",
-		"en-US": "**:compass: Get items using `/fish`, `/hunt`, `/explore`, `/mine`\n:luggage: See all the items you or another person has with `/inventory view`\n:moneybag: Items can be sold with `/inventory sell`\n:book: See all the information about an item like values, rarity and uses with `/iteminfo`\n:hammer_pick: Items can be crafted with `/inventory craft`**\n-Many items that are crafted can be equipped to guarantee benefits with `/inventory equip`\n**:abacus: Calculate the amount of materials needed to craft a certain amount of items with `/inventory calc`**"
+		"en-US": "**:compass: Get items using `/fish`, `/hunt`, `/explore`, `/mine`\n:luggage: See all the items you or another person has with `/inventory view`\n:moneybag: Items can be sold with `/inventory sell`\n:book: See all the information about an item like values, rarity and uses with `/iteminfo`\n:hammer_pick: Items can be crafted with `/inventory craft`**\n-Many items that are crafted can be equipped to guarantee benefits with `/inventory equip`\n**:abacus: Calculate the amount of materials needed to craft a certain amount of items with `/inventory calc`**",
+		"es-ES": "**:compass: Obtén items usando `/fish`, `/hunt`, `/explore`, `/mine`\n:luggage: Ver todos los items que tú u otra persona tiene con `/inventory view`\n:moneybag: Los items se pueden vender con `/inventory sell`\n:book: Ver toda la información sobre un item como valores, rareza y usos con `/iteminfo`\n:hammer_pick: Los items se pueden crear con `/inventory craft`**\n-Muchos items que se crean se pueden equipar para garantizar beneficios con `/inventory equip`\n**:abacus: Calcula la cantidad de materiales necesarios para crear una cierta cantidad de items con `/inventory calc`**"
 	},
 	"HELP_CONFIG": {
 		"pt-BR": ":gear: Configurando o Falbot para o seu servidor",
-		"en-US": ":gear: Configuring Falbot to your server"
+		"en-US": ":gear: Configuring Falbot to your server",
+		"es-ES": ":gear: Configurando Falbot para tu servidor"
 	},
 	"HELP_CONFIG2": {
 		"pt-BR": "-Desative/reative canais com `/canal`\n-Desative/reative comandos com `/comando`\ncomandos e canais desativados serão ignorados pelo bot",
-		"en-US": "-Disable/enable channels with `/channel`\n-Disable/enable channels with `/channel`\ndisabled channels and commands will be ignored by the bot"
+		"en-US": "-Disable/enable channels with `/channel`\n-Disable/enable channels with `/channel`\ndisabled channels and commands will be ignored by the bot",
+		"es-ES": "-Desactiva/activa canales con `/channel`\n-Desactiva/activa comandos con `/channel`\nlos canales y comandos desactivados serán ignorados por el bot"
 	},
 	"INTRODUCTION": {
 		"pt-BR": "Introdução",
-		"en-US": "Introduction"
+		"en-US": "Introduction",
+		"es-ES": "Introducción"
 	},
 	"COMMANDS_ALL": {
 		"pt-BR": "Todos os comandos",
-		"en-US": "All commands"
+		"en-US": "All commands",
+		"es-ES": "Todos los comandos"
 	},
 	"ECONOMY": {
 		"pt-BR": "Economia",
-		"en-US": "Economy"
+		"en-US": "Economy",
+		"es-ES": "Economía"
 	},
 	"FUN": {
 		"pt-BR": "Diversão",
-		"en-US": "Fun"
+		"en-US": "Fun",
+		"es-ES": "Diversión"
 	},
 	"UTILS": {
 		"pt-BR": "Úteis",
-		"en-US": "Utils"
+		"en-US": "Utils",
+		"es-ES": "Útiles"
 	},
 	"ITEMS": {
 		"pt-BR": "Items e Inventário",
-		"en-US": "Items and Inventory"
+		"en-US": "Items and Inventory",
+		"es-ES": "Items e Inventario"
 	},
 	"CONFIG": {
 		"pt-BR": "Configuração",
-		"en-US": "Configuration"
+		"en-US": "Configuration",
+		"es-ES": "Configuración"
 	},
 	"HELP_INTRODUCTION": {
 		"pt-BR": "*Introdução ao jogo*",
-		"en-US": "*Bot's gameplay introduction*"
+		"en-US": "*Bot's gameplay introduction*",
+		"es-ES": "*Introducción al juego*"
 	},
 	"HELP_INTRODUCTION2": {
 		"pt-BR": "**:sparkles: Seu objetivo é subir nos ranks do jogo até se tornar o número um\n:partying_face: Ou só se divertir com seus amigos\n:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/conta`\n:stopwatch: O comando `/intervalos` mostra eventos e certos comandos que tem um tempo de espera\n:school_satchel: Você tem um inventário nesse jogo, ganhe items com `/pescar`, `caçar`, `minerar` e `/explorar`! Veja a página de items para saber mais\n:bank: Deposite regularmente no seu banco para coletar interesse no seu dinheiro\n:arrow_double_up: Suba de rank sempre que possível para ótimos benefícios! Veja a página de ranks para saber mais\n:question: Veja as outras páginas desse comando para aprender a usar uma feature específica do Falbot\n:100: Nós cobrimos o básico, mas o Falbot oferece muito mais\n:fire: Continue jogando e experimentando, mas mais importante, se divirta!**",
-		"en-US": "**:sparkles: Your goal is to climb the ranks of the game to become number one\n:partying_face: Or just have fun with your friends\n:coin: See your falcoins and other information at any time using `/balance`\n:stopwatch: The `/cooldowns` displays events and commands that have a cooldown\n:school_satchel: You have an inventory in this game, earn items using `/fish`, `/hunt`, `mine` and `/explore`! See the items page for more info\n:bank: Deposit regularly in your bank to collect interest in your money\n:arrow_double_up: Rank up whenever possible to earn awesome perks! See the ranks page for more details\n:question: See the other pages of this command to learn how to use a specific feature of Falbot\n:100: We've covered the basics, but Falbot offers much more\n:fire: Keep playing and experimenting, but more importantly, have fun!**"
+		"en-US": "**:sparkles: Your goal is to climb the ranks of the game to become number one\n:partying_face: Or just have fun with your friends\n:coin: See your falcoins and other information at any time using `/balance`\n:stopwatch: The `/cooldowns` displays events and commands that have a cooldown\n:school_satchel: You have an inventory in this game, earn items using `/fish`, `/hunt`, `mine` and `/explore`! See the items page for more info\n:bank: Deposit regularly in your bank to collect interest in your money\n:arrow_double_up: Rank up whenever possible to earn awesome perks! See the ranks page for more details\n:question: See the other pages of this command to learn how to use a specific feature of Falbot\n:100: We've covered the basics, but Falbot offers much more\n:fire: Keep playing and experimenting, but more importantly, have fun!**",
+		"es-ES": "**:sparkles: Tu objetivo es escalar los rangos del juego para convertirte en el número uno\n:partying_face: O simplemente diviértete con tus amigos\n:coin: Ver tus falcoins y otra información en cualquier momento usando `/balance`\n:stopwatch: El comando `/cooldowns` muestra eventos y comandos que tienen un tiempo de espera\n:school_satchel: ¡Tienes un inventario en este juego, gana items usando `/fish`, `/hunt`, `mine` y `/explore`! Consulta la página de items para obtener más información\n:bank: Deposita regularmente en tu banco para cobrar intereses en tu dinero\n:arrow_double_up: ¡Sube de rango siempre que sea posible para obtener increíbles beneficios! Consulta la página de rangos para obtener más detalles\n:question: Consulta las otras páginas de este comando para aprender a usar una función específica de Falbot\n:100: Hemos cubierto lo básico, pero Falbot ofrece mucho más\n:fire: ¡Sigue jugando y experimentando, pero lo más importante, diviértete!**"
 	},
 	"COMMANDS_ALL2": {
 		"pt-BR": "*Lista de comandos*",
-		"en-US": "*Detailed command list*"
+		"en-US": "*Detailed command list*",
+		"es-ES": "*Lista de comandos*"
 	},
 	"HELP_RANK3": {
 		"pt-BR": "*Subindo de rank*",
-		"en-US": "*Ranking up*"
+		"en-US": "*Ranking up*",
+		"es-ES": "*Subiendo de rango*"
 	},
 	"HELP_ECONOMY": {
 		"pt-BR": "*Mecânicas de gameplay*",
-		"en-US": "*Gameplay mechanics*"
+		"en-US": "*Gameplay mechanics*",
+		"es-ES": "*Mecánicas de juego*"
 	},
 	"HELP_FUN3": {
 		"pt-BR": "*Diversão sem falcoins*",
-		"en-US": "*Fun without falcoins*"
+		"en-US": "*Fun without falcoins*",
+		"es-ES": "*Diversión sin falcoins*"
 	},
 	"HELP_UTILS3": {
 		"pt-BR": "*Usando falbot no dia-a-dia*",
-		"en-US": "*Using falbot in your daily life*"
+		"en-US": "*Using falbot in your daily life*",
+		"es-ES": "*Usando falbot en tu vida diaria*"
 	},
 	"HELP_ITEMS3": {
 		"pt-BR": "*Inventário e items*",
-		"en-US": "*Inventory and item help*"
+		"en-US": "*Inventory and item help*",
+		"es-ES": "*Inventario y items*"
 	},
 	"HELP_CONFIG3": {
 		"pt-BR": "*Configurando falbot para o seu servidor*",
-		"en-US": "*Configuring falbot for your server*"
+		"en-US": "*Configuring falbot for your server*",
+		"es-ES": "*Configurando falbot para tu servidor*"
 	},
 	"FALBOT_WELCOME": {
 		"pt-BR": ":wave: Bem-vindo ao falbot! Use o menu para escolher uma página de ajuda",
-		"en-US": ":wave: Welcome to falbot! Use the menu to pick a help page"
+		"en-US": ":wave: Welcome to falbot! Use the menu to pick a help page",
+		"es-ES": ":wave: ¡Bienvenido a falbot! Usa el menú para elegir una página de ayuda"
 	},
 	"HELP_ECONOMY2": {
 		"pt-BR": ":money_with_wings: Ganhando mais falcoins",
-		"en-US": ":money_with_wings: Earning more falcoins"
+		"en-US": ":money_with_wings: Earning more falcoins",
+		"es-ES": ":money_with_wings: Ganando más falcoins"
 	},
 	"HELP_ECONOMY3": {
 		"pt-BR": "**:coin: Veja seus falcoins e outras informações a qualquer hora usando o `/conta`**\n**:bank: Coloque seu dinheiro no banco e veja ele aumentar com `/banco depositar`, `/banco ver` para ver suas informações e `/banco sacar` para sacar\n:ballot_box: Vote a cada 12 horas para ganhar um bônus de falcoins com `/voto`, use `/lembrete` para ser lembrado quando isso for possível**\n**:stopwatch: `/intervalos` mostra os eventos ativos e certos comandos especiais**\n**:school_satchel: Veja a página de inventário e items para mais informações**\n\n**:busts_in_silhouette: Interaja com outros usuários**\n-Desafie seus amigos com `/corrida`, `/velha`, `/roletarussa` e `/luta`, ou doe dinheiro pra eles com `/doar`\n-Veja os melhores jogadores em diferentes categorias com `/classificação rank`, `/classificação falcoins` e `/classificação wins`\n\n**:game_die: Se sentindo sortudo? Aposte seus falcoins com `/níquel`, `/roleta`, `/cavalo`, `/olhoscobra`, `blackjack` e `/colapso`**",
-		"en-US": "**:coin: See your falcoins and other information at any time using `/balance`**\n**:bank: Deposit your money in the bank and watch as it increases with `/bank deposit`, `/bank view` to see yout info and `/bank withdraw` to withdraw\n:ballot_box: Vote every 12 hours to earn falcoins with `/vote`, use `/reminder` to be reminded everytime this is possible**\n**:stopwatch: `/cooldowns` shows active events and some special commands**\n**:school_satchel: Check the items and inventory page for more info**\n\n**:busts_in_silhouette: Interact with another users**\n-Challenge your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`, or give them money with `/donate`\n-See the top players in different categories using `/leaderboard rank`, `/leaderboard falcoins` and `/leaderboard wins`\n\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes`, `/blackjack` and `/crash`**"
+		"en-US": "**:coin: See your falcoins and other information at any time using `/balance`**\n**:bank: Deposit your money in the bank and watch as it increases with `/bank deposit`, `/bank view` to see yout info and `/bank withdraw` to withdraw\n:ballot_box: Vote every 12 hours to earn falcoins with `/vote`, use `/reminder` to be reminded everytime this is possible**\n**:stopwatch: `/cooldowns` shows active events and some special commands**\n**:school_satchel: Check the items and inventory page for more info**\n\n**:busts_in_silhouette: Interact with another users**\n-Challenge your friends with `/horseduel`, `/tictactoe`, `/russianroulette` and `/fight`, or give them money with `/donate`\n-See the top players in different categories using `/leaderboard rank`, `/leaderboard falcoins` and `/leaderboard wins`\n\n**:game_die: Feeling lucky? Bet your falcoins with `/slot`, `/roulette`, `/horse`, `/snakeeyes`, `/blackjack` and `/crash`**",
+		"es-ES": "**:coin: Ver tus falcoins y otra información en cualquier momento usando `/balance`**\n**:bank: Deposita tu dinero en el banco y mira cómo aumenta con `/bank deposit`, `/bank view` para ver tu información y `/bank withdraw` para retirar\n:ballot_box: Vota cada 12 horas para ganar falcoins con `/vote`, usa `/reminder` para que te recuerden cada vez que sea posible**\n**:stopwatch: `/cooldowns` muestra eventos activos y algunos comandos especiales**\n**:school_satchel: Consulta la página de items e inventario para obtener más información**\n\n**:busts_in_silhouette: Interactúa con otros usuarios**\n-Desafía a tus amigos con `/horseduel`, `/tictactoe`, `/russianroulette` y `/fight`, o dales dinero con `/donate`\n-Ver los mejores jugadores en diferentes categorías usando `/leaderboard rank`, `/leaderboard falcoins` y `/leaderboard wins`\n\n**:game_die: ¿Te sientes con suerte? Apuesta tus falcoins con `/slot`, `/roulette`, `/horse`, `/snakeeyes`, `/blackjack` y `/crash`**"
 	},
 	"PICK_PAGE": {
 		"pt-BR": "Escolha uma página de ajuda...",
-		"en-US": "Pick a help page..."
+		"en-US": "Pick a help page...",
+		"es-ES": "Elige una página de ayuda..."
 	},
 	"BALANCE_RANKUP": {
 		"pt-BR": "🎉 Você tem o suficiente para subir de rank!",
-		"en-US": "🎉 You have enough to rank up!"
+		"en-US": "🎉 You have enough to rank up!",
+		"es-ES": "🎉 ¡Tienes suficiente para subir de rango!"
 	},
 	"BALANCE_RANKUP2": {
 		"pt-BR": ":arrow_up: {FALCOINS} falcoins para o próximo rank",
-		"en-US": ":arrow_up: {FALCOINS} to the next rank"
+		"en-US": ":arrow_up: {FALCOINS} to the next rank",
+		"es-ES": ":arrow_up: {FALCOINS} para el siguiente rango"
 	},
 	"GANHOS": {
 		"pt-BR": "Ganhos",
-		"en-US": "Winnings"
+		"en-US": "Winnings",
+		"es-ES": "Ganancias"
 	},
 	"MAX_RANK2": {
 		"pt-BR": "Rank máximo",
-		"en-US": "Max rank"
+		"en-US": "Max rank",
+		"es-ES": "Rango máximo"
 	},
 	"ENABLE_REMINDER": {
 		"pt-BR": "Ativar Lembrete",
@@ -622,814 +793,1017 @@
 	},
 	"REWARD_AFTER": {
 		"pt-BR": "Resgate sua recompensa depois de votar usando o comando /voto",
-		"en-US": "Claim your reward after voting by using /vote"
+		"en-US": "Claim your reward after voting by using /vote",
+		"es-ES": "Reclama tu recompensa después de votar usando /vote"
 	},
 	"PLAYERS": {
 		"pt-BR": "Jogadores totais",
-		"en-US": "Total players"
+		"en-US": "Total players",
+		"es-ES": "Jugadores totales"
 	},
 	"ACTIVE_PLAYERS": {
 		"pt-BR": "Jogadores ativos",
-		"en-US": "Active players"
+		"en-US": "Active players",
+		"es-ES": "Jugadores activos"
 	},
 	"UPTIME": {
 		"pt-BR": "Tempo de funcionamento",
-		"en-US": "Uptime"
+		"en-US": "Uptime",
+		"es-ES": "Tiempo de funcionamiento"
 	},
 	"SERVERS": {
 		"pt-BR": "Servidores",
-		"en-US": "Servers"
+		"en-US": "Servers",
+		"es-ES": "Servidores"
 	},
 	"ROLANDO": {
 		"pt-BR": "ROLANDO",
-		"en-US": "ROLLING"
+		"en-US": "ROLLING",
+		"es-ES": "TIRANDO"
 	},
 	"ROLETA": {
 		"pt-BR": "Roleta",
-		"en-US": "Roulette"
+		"en-US": "Roulette",
+		"es-ES": "Ruleta"
 	},
 	"GIRANDO_ROLETA": {
 		"pt-BR": "Girando a roleta...",
-		"en-US": "Spinning the wheel..."
+		"en-US": "Spinning the wheel...",
+		"es-ES": "Girando la ruleta..."
 	},
 	"CRASH_TEXT": {
 		"pt-BR": "A cada 2 segundos o multiplicador aumenta em 0.2x.\nToda vez que isso acontece você tem 20% de chance de perder seu dinheiro.\nPara coletar seu dinheiro, aperte o botão de vender.",
-		"en-US": "Every 2 seconds the multiplier goes up by 0.2x.\nEvery time this happens you have 20% chance to lose all money.\nTo claim the profits, press the sell button."
+		"en-US": "Every 2 seconds the multiplier goes up by 0.2x.\nEvery time this happens you have 20% chance to lose all money.\nTo claim the profits, press the sell button.",
+		"es-ES": "Cada 2 segundos el multiplicador aumenta en 0.2x.\nCada vez que esto sucede tienes un 20% de probabilidad de perder todo el dinero.\nPara reclamar las ganancias, presiona el botón de vender."
 	},
 	"MULTIPLIER": {
 		"pt-BR": "Multiplicador",
-		"en-US": "Multiplier"
+		"en-US": "Multiplier",
+		"es-ES": "Multiplicador"
 	},
 	"SELL": {
 		"pt-BR": "Vender",
-		"en-US": "Sell"
+		"en-US": "Sell",
+		"es-ES": "Vender"
 	},
 	"LEADERBOARD_GLOBAL_TITLE": {
 		"pt-BR": ":earth_americas: Classificação global",
-		"en-US": ":earth_americas: Global leaderboard"
+		"en-US": ":earth_americas: Global leaderboard",
+		"es-ES": ":earth_americas: Clasificación global"
 	},
 	"LEADERBOARD_SERVER_TITLE": {
 		"pt-BR": ":desktop: Classificação do servidor",
-		"en-US": ":desktop: Server leaderboard"
+		"en-US": ":desktop: Server leaderboard",
+		"es-ES": ":desktop: Clasificación del servidor"
 	},
 	"LEADERBOARD_FALCOINS_DESCRIPTION": {
 		"pt-BR": "Classificando por falcoins :coin:",
-		"en-US": "Ranking by falcoins :coin:"
+		"en-US": "Ranking by falcoins :coin:",
+		"es-ES": "Clasificación por falcoins :coin:"
 	},
 	"LEADERBOARD_RANK_DESCRIPTION": {
 		"pt-BR": "Classificando por rank :chart_with_upwards_trend:",
-		"en-US": "Ranking by rank :chart_with_upwards_trend:"
+		"en-US": "Ranking by rank :chart_with_upwards_trend:",
+		"es-ES": "Clasificación por rango :chart_with_upwards_trend:"
 	},
 	"LEADERBOARD_WINS_DESCRIPTION": {
 		"pt-BR": "Classificando por vitórias :trophy:",
-		"en-US": "Ranking by wins :trophy:"
+		"en-US": "Ranking by wins :trophy:",
+		"es-ES": "Clasificación por victorias :trophy:"
 	},
 	"LEADERBOARD_ITEM_DESCRIPTION": {
 		"pt-BR": "Classificando por {ITEM}",
-		"en-US": "Ranking by {ITEM}"
+		"en-US": "Ranking by {ITEM}",
+		"es-ES": "Clasificación por {ITEM}"
 	},
 	"LEADERBOARD_VOTE_DESCRIPTION": {
 		"pt-BR": "Classificando por votos diários :ballot_box:",
-		"en-US": "Ranking by daily votes :ballot_box:"
+		"en-US": "Ranking by daily votes :ballot_box:",
+		"es-ES": "Clasificación por votos diarios :ballot_box:"
 	},
 	"SCRATCH": {
 		"pt-BR": "Raspadinha",
-		"en-US": "Scratch"
+		"en-US": "Scratch",
+		"es-ES": "Rasca y gana"
 	},
 	"SCRATCH_TITLE": {
 		"pt-BR": ":black_joker: Raspadinha",
-		"en-US": ":black_joker: Scratch-off ticket"
+		"en-US": ":black_joker: Scratch-off ticket",
+		"es-ES": ":black_joker: Rasca y gana"
 	},
 	"SCRATCH_DESCRIPTION": {
 		"pt-BR": ":question: Aperte o botão correto e ganhe uma **ENORME** recompensa!\n:confetti_ball: Adivinhe corretamente e ganhe até **300.000** falcoins!\n:bulb: Clique abaixo para jogar! As posições são resetadas a cada turno.",
-		"en-US": ":question: Hit the right button and win a **HUGE** jackpot!\n:confetti_ball: If you guess correctly you could win up to **300.000** falcoins!\n:bulb: Click below to play! Positions are reset each turn."
+		"en-US": ":question: Hit the right button and win a **HUGE** jackpot!\n:confetti_ball: If you guess correctly you could win up to **300.000** falcoins!\n:bulb: Click below to play! Positions are reset each turn.",
+		"es-ES": ":question: ¡Presiona el botón correcto y gana un **ENORME** premio!\n:confetti_ball: Si adivinas correctamente podrías ganar hasta **300.000** falcoins!\n:bulb: ¡Haz clic abajo para jugar! Las posiciones se reinician cada turno."
 	},
 	"SCRATCH_LOSE": {
 		"pt-BR": ["Droga!", "Aff!", "Ah não!", "Oof!", "Ops!", "Bah!"],
-		"en-US": ["Ugh!", "Oh no!", "Aw jeez!", "Aw crap!", "Argh!", "Frick!"]
+		"en-US": ["Ugh!", "Oh no!", "Aw jeez!", "Aw crap!", "Argh!", "Frick!"],
+		"es-ES": ["¡Maldición!", "¡Oh no!", "¡Ay no!", "¡Ay caramba!", "¡Argh!", "¡Maldita sea!"]
 	},
 	"SCRATCH_LOSE_DESCRIPTION": {
 		"pt-BR": ":slot_machine: Você não achou o grande prêmio!\n:game_die: Você tem mais **{GUESSES}** tentativas.",
-		"en-US": ":slot_machine: You didn't hit the jackpot!\n:game_die: You have **{GUESSES}** more guesses."
+		"en-US": ":slot_machine: You didn't hit the jackpot!\n:game_die: You have **{GUESSES}** more guesses.",
+		"es-ES": ":slot_machine: ¡No encontraste el gran premio!\n:game_die: Tienes **{GUESSES}** intentos más."
 	},
 	"SCRATCH_LOSE_DESCRIPTION2": {
 		"pt-BR": ":slot_machine: Você não achou o grande prêmio e só ganhou **{FALCOINS}** falcoins!\n:game_die: Você tem mais **{GUESSES}** tentativas.",
-		"en-US": ":slot_machine: You didn't hit the jackpot and only won **{FALCOINS}** falcoins!\n:game_die: You have **{GUESSES}** more guesses."
+		"en-US": ":slot_machine: You didn't hit the jackpot and only won **{FALCOINS}** falcoins!\n:game_die: You have **{GUESSES}** more guesses.",
+		"es-ES": ":slot_machine: ¡No encontraste el gran premio y solo ganaste **{FALCOINS}** falcoins!\n:game_die: Tienes **{GUESSES}** intentos más."
 	},
 	"SCRATCH_KINDOF": {
 		"pt-BR": "Quase lá...",
-		"en-US": "Kind of..."
+		"en-US": "Kind of...",
+		"es-ES": "Casi..."
 	},
 	"SCRATCH_KINDOF_DESCRIPTION": {
 		"pt-BR": ":slot_machine: Você estava meio perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:game_die: Você tem mais **{GUESSES}** tentativas.",
-		"en-US": ":slot_machine: You didn't hit the jackpot but you were kinda close, so **{FALCOINS}** falcoins was earned!\n:game_die: You have **{GUESSES}** more guesses."
+		"en-US": ":slot_machine: You didn't hit the jackpot but you were kinda close, so **{FALCOINS}** falcoins was earned!\n:game_die: You have **{GUESSES}** more guesses.",
+		"es-ES": ":slot_machine: ¡No encontraste el gran premio pero estabas cerca, así que ganaste **{FALCOINS}** falcoins!\n:game_die: Tienes **{GUESSES}** intentos más."
 	},
 	"SCRATCH_PRETTY": {
 		"pt-BR": "Muito perto!",
-		"en-US": "Pretty close!"
+		"en-US": "Pretty close!",
+		"es-ES": "¡Muy cerca!"
 	},
 	"SCRATCH_PRETTY_DESCRIPTION": {
 		"pt-BR": ":slot_machine: Você estava MUITO perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **8** horas.",
-		"en-US": ":slot_machine: You didn't hit the jackpot but you were PRETTY close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **8** hour cooldown."
+		"en-US": ":slot_machine: You didn't hit the jackpot but you were PRETTY close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **8** hour cooldown.",
+		"es-ES": ":slot_machine: ¡No encontraste el gran premio pero estabas MUY cerca, así que ganaste **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Ahora tienes un intervalo de **8** horas."
 	},
 	"SCRATCH_SUPER": {
 		"pt-BR": "EXTREMAMENTE PERTO!",
-		"en-US": "SO CLOSE!"
+		"en-US": "SO CLOSE!",
+		"es-ES": "¡MUY CERCA!"
 	},
 	"SCRATCH_SUPER_DESCRIPTION": {
 		"pt-BR": ":slot_machine: Você estava EXTREMAMENTE perto do grande prêmio, então ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **10** horas.",
-		"en-US": ":slot_machine: You didn't hit the jackpot but you were SUPER close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **10** hour cooldown."
+		"en-US": ":slot_machine: You didn't hit the jackpot but you were SUPER close, so **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **10** hour cooldown.",
+		"es-ES": ":slot_machine: ¡No encontraste el gran premio pero estabas EXTREMADAMENTE cerca, así que ganaste **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Ahora tienes un intervalo de **10** horas."
 	},
 	"SCRATCH_PRIZE": {
 		"pt-BR": "PARABÉNS!",
-		"en-US": "CONGRATULATIONS!"
+		"en-US": "CONGRATULATIONS!",
+		"es-ES": "¡FELICIDADES!"
 	},
 	"SCRATCH_PRIZE_DESCRIPTION": {
 		"pt-BR": ":slot_machine: Você encontrou o grande prêmio e ganhou **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Você agora tem um intervalo de **12** horas.",
-		"en-US": ":slot_machine: You hit the jackpot and won **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **12** hour cooldown."
+		"en-US": ":slot_machine: You hit the jackpot and won **{FALCOINS}** falcoins was earned!\n:hourglass_flowing_sand: You now have an **12** hour cooldown.",
+		"es-ES": ":slot_machine: ¡Encontraste el gran premio y ganaste **{FALCOINS}** falcoins!\n:hourglass_flowing_sand: Ahora tienes un intervalo de **12** horas."
 	},
 	"LOTTERY": {
 		"pt-BR": ":tickets: Loteria",
-		"en-US": ":tickets: Lottery"
+		"en-US": ":tickets: Lottery",
+		"es-ES": ":tickets: Lotería"
 	},
 	"PURCHASED": {
 		"pt-BR": "bilhetes comprados!",
-		"en-US": "tickets purchased!"
+		"en-US": "tickets purchased!",
+		"es-ES": "billetes comprados!"
 	},
 	"LOTTERY_COST": {
 		"pt-BR": ":coin: Isso te custou **{COST} falcoins**",
-		"en-US": ":coin: This cost you **{COST} falcoins**"
+		"en-US": ":coin: This cost you **{COST} falcoins**",
+		"es-ES": ":coin: Esto te costó **{COST} falcoins**"
 	},
 	"LOTTERY_POOL": {
 		"pt-BR": ":moneybag: O prêmio é de **{PRIZE}** falcoins",
-		"en-US": ":moneybag: There is **{PRIZE}** falcoins in the prize pool."
+		"en-US": ":moneybag: There is **{PRIZE}** falcoins in the prize pool.",
+		"es-ES": ":moneybag: Hay **{PRIZE}** falcoins en el bote de premios."
 	},
 	"LOTTERY_TICKETS": {
 		"pt-BR": "\n:gem: Você tem **{TICKETS}** bilhetes",
-		"en-US": "\n:gem: You own **{TICKETS}** tickets"
+		"en-US": "\n:gem: You own **{TICKETS}** tickets",
+		"es-ES": "\n:gem: Tienes **{TICKETS}** billetes"
 	},
 	"LOTTERY_INFO": {
 		"pt-BR": ":timer: A loteria será sorteada em {TIME}.\n:money_with_wings: Cada bilhete custa 500 falcoins.",
-		"en-US": ":timer: Lottery will be drawn in {TIME}.\n:money_with_wings: Tickets cost 500 BC each."
+		"en-US": ":timer: Lottery will be drawn in {TIME}.\n:money_with_wings: Tickets cost 500 falcoins each.",
+		"es-ES": ":timer: La lotería se sorteará en {TIME}.\n:money_with_wings: Los billetes cuestan 500 falcoins cada uno."
 	},
 	"CONGRATULATIONS": {
 		"pt-BR": "Parabéns! :star_struck:",
-		"en-US": "Congratulations! :star_struck:"
+		"en-US": "Congratulations! :star_struck:",
+		"es-ES": "¡Felicidades! :star_struck:"
 	},
 	"LOTTERY_WIN": {
 		"pt-BR": "Você ganhou {PRIZE} falcoins na loteria!\nVocê tinha {TICKETS}/{TOTAL} dos bilhetes totais.",
-		"en-US": "You won {PRIZE} falcoins in the lottery!\nYou had {TICKETS}/{TOTAL} of all tickets."
+		"en-US": "You won {PRIZE} falcoins in the lottery!\nYou had {TICKETS}/{TOTAL} of all tickets.",
+		"es-ES": "¡Ganaste {PRIZE} falcoins en la lotería!\nTenías {TICKETS}/{TOTAL} de todos los billetes."
 	},
 	"LOTTERY_WINNERS": {
 		"pt-BR": "Ganhadores da loteria",
-		"en-US": "Lottery winners"
+		"en-US": "Lottery winners",
+		"es-ES": "Ganadores de la lotería"
 	},
 	"HISTORY": {
 		"pt-BR": ":confetti_ball: Loteria de {FALCOINS} falcoins ganha por **{USER}**! ({TICKETS}/{TOTAL} bilhetes)\n",
-		"en-US": ":confetti_ball: {FALCOINS} falcoins lotto won by **{USER}**! ({TICKETS}/{TOTAL} bilhetes)\n"
+		"en-US": ":confetti_ball: {FALCOINS} falcoins lotto won by **{USER}**! ({TICKETS}/{TOTAL} bilhetes)\n",
+		"es-ES": ":confetti_ball: {FALCOINS} falcoins lotto won by **{USER}**! ({TICKETS}/{TOTAL} bilhetes)\n"
 	},
 	"HISTORY_NO_WINNER": {
 		"pt-BR": ":moneybag: Ninguém ganhou e o prêmio de {FALCOINS} falcoins foi acumulado.\n",
-		"en-US": ":moneybag: No one won and the {FALCOINS} falcoins prize was accumulated.\n"
+		"en-US": ":moneybag: No one won and the {FALCOINS} falcoins prize was accumulated.\n",
+		"es-ES": ":moneybag: Nadie ganó y el premio de {FALCOINS} falcoins se acumuló.\n"
 	},
 	"EVENTS": {
 		"pt-BR": "Eventos",
-		"en-US": "Events"
+		"en-US": "Events",
+		"es-ES": "Eventos"
 	},
 	"LOTTERY_DRAWN": {
 		"pt-BR": "Sorteada em {TIME}.",
-		"en-US": "Drawn in {TIME}."
+		"en-US": "Drawn in {TIME}.",
+		"es-ES": "Sorteada en {TIME}."
 	},
 	"TURN": {
 		"pt-BR": "Turno de {USER}",
-		"en-US": "{USER}'s turn"
+		"en-US": "{USER}'s turn",
+		"es-ES": "Turno de {USER}"
 	},
 	"TENTOU_ATACAR": {
 		"pt-BR": "tenta atacar mas o inimigo estava protegido",
-		"en-US": "tried to attack but the enemy was protected"
+		"en-US": "tried to attack but the enemy was protected",
+		"es-ES": "intentó atacar pero el enemigo estaba protegido"
 	},
 	"NOCAUTEADO": {
 		"pt-BR": "está inconsciente e não pode fazer nada",
-		"en-US": "is unconscious and can't do anything"
+		"en-US": "is unconscious and can't do anything",
+		"es-ES": "está inconsciente y no puede hacer nada"
 	},
 	"WORK": {
 		"pt-BR": ":coin: Você foi trabalhar e ganhou **{FALCOINS} falcoins!**",
-		"en-US": ":coin: You went to work and earned **{FALCOINS} falcoins!**"
+		"en-US": ":coin: You went to work and earned **{FALCOINS} falcoins!**",
+		"es-ES": ":coin: ¡Fuiste a trabajar y ganaste **{FALCOINS} falcoins!**"
 	},
 	"BONUS": {
 		"pt-BR": ":gift: Seu patrão te deu um bônus de **{FALCOINS} falcoins!**",
-		"en-US": ":gift: Your boss gave you a bonus of **{FALCOINS} falcoins!**"
+		"en-US": ":gift: Your boss gave you a bonus of **{FALCOINS} falcoins!**",
+		"es-ES": ":gift: ¡Tu jefe te dio un bono de **{FALCOINS} falcoins!**"
 	},
 	"WORK_TITLE": {
 		"pt-BR": ":briefcase: {FALCOINS} falcoins ganhos!",
-		"en-US": ":briefcase: {FALCOINS} falcoins earned!"
+		"en-US": ":briefcase: {FALCOINS} falcoins earned!",
+		"es-ES": ":briefcase: {FALCOINS} falcoins ganados!"
 	},
 	"TRABALHO": {
 		"pt-BR": "Trabalhar",
-		"en-US": "Work"
+		"en-US": "Work",
+		"es-ES": "Trabajar"
 	},
 	"MATH_ERROR": {
 		"pt-BR": "Desculpa, mas eu não sei como calcular isso no momento",
-		"en-US": "Sorry, I can't calculate this at the moment"
+		"en-US": "Sorry, I can't calculate this at the moment",
+		"es-ES": "Lo siento, no puedo calcular esto en este momento"
 	},
 	"ROLL_LIMIT": {
 		"pt-BR": "Você está tentando rolar dados demais! :confounded:",
-		"en-US": "You are trying to roll too many dice! :confounded:"
+		"en-US": "You are trying to roll too many dice! :confounded:",
+		"es-ES": "¡Estás intentando tirar demasiados dados! :confounded:"
 	},
 	"BLACKJACK_TITLE": {
 		"pt-BR": ":moneybag: `Aposta` **- {BET} falcoins**\n:boom: `Comprar` **- compra uma nova carta**\n:no_entry: `Parar` **- termina o jogo**\n:money_with_wings: `Dobrar` **- dobra sua aposta, compra uma carta e depois para**",
-		"en-US": ":moneybag: `Bet` **- {BET} falcoins**\n:boom: `Hit` **- take another card**\n:no_entry: `Stand` **- end the game**\n:money_with_wings: `Double Down` **- double your bet, hit once, then stand**"
+		"en-US": ":moneybag: `Bet` **- {BET} falcoins**\n:boom: `Hit` **- take another card**\n:no_entry: `Stand` **- end the game**\n:money_with_wings: `Double Down` **- double your bet, hit once, then stand**",
+		"es-ES": ":moneybag: `Apostar` **- {BET} falcoins**\n:boom: `Comprar` **- compra una nueva carta**\n:no_entry: `Parar` **- termina el juego**\n:money_with_wings: `Doblar` **- dobla tu apuesta, compra una carta y luego para**"
 	},
 	"PLAYER_HAND": {
 		"pt-BR": "Sua mão\n{CARDS}",
-		"en-US": "Your hand\n{CARDS}"
+		"en-US": "Your hand\n{CARDS}",
+		"es-ES": "Tu mano\n{CARDS}"
 	},
 	"DEALER_HAND": {
 		"pt-BR": "Mão do banco\n{CARDS}",
-		"en-US": "Dealer's hand\n{CARDS}"
+		"en-US": "Dealer's hand\n{CARDS}",
+		"es-ES": "Mano del banco\n{CARDS}"
 	},
 	"VALUE": {
 		"pt-BR": "**Total: {VALUE}**",
-		"en-US": "**Value: {VALUE}**"
+		"en-US": "**Value: {VALUE}**",
+		"es-ES": "**Valor: {VALUE}**"
 	},
 	"HIT": {
 		"pt-BR": "Comprar",
-		"en-US": "Hit"
+		"en-US": "Hit",
+		"es-ES": "Comprar"
 	},
 	"STAND": {
 		"pt-BR": "Parar",
-		"en-US": "Stand"
+		"en-US": "Stand",
+		"es-ES": "Parar"
 	},
 	"DOUBLE": {
 		"pt-BR": "Dobrar",
-		"en-US": "Double down"
+		"en-US": "Double down",
+		"es-ES": "Doblar"
 	},
 	"BLACKJACK_DRAW": {
 		"pt-BR": "Empate, você recebeu de volta {FALCOINS} falcoins",
-		"en-US": "Draw, you received back {FALCOINS} falcoins"
+		"en-US": "Draw, you received back {FALCOINS} falcoins",
+		"es-ES": "Empate, recibiste de vuelta {FALCOINS} falcoins"
 	},
 	"PLAYER_BLACKJACK": {
 		"pt-BR": "21! Você ganhou {FALCOINS} falcoins",
-		"en-US": "Blackjack! you won {FALCOINS} falcoins"
+		"en-US": "Blackjack! you won {FALCOINS} falcoins",
+		"es-ES": "¡21! Ganaste {FALCOINS} falcoins"
 	},
 	"DEALER_BUST": {
 		"pt-BR": "O banco estorou! Você ganhou {FALCOINS} falcoins",
-		"en-US": "Dealer bust! you won {FALCOINS} falcoins"
+		"en-US": "Dealer bust! you won {FALCOINS} falcoins",
+		"es-ES": "¡El banco estalló! Ganaste {FALCOINS} falcoins"
 	},
 	"YOU_WON": {
 		"pt-BR": "Você ganhou {FALCOINS} falcoins",
-		"en-US": "You won {FALCOINS} falcoins"
+		"en-US": "You won {FALCOINS} falcoins",
+		"es-ES": "Ganaste {FALCOINS} falcoins"
 	},
 	"PLAYER_BUST": {
 		"pt-BR": "Você estorou! Você perdeu {FALCOINS} falcoins",
-		"en-US": "You busted! You lost {FALCOINS} falcoins"
+		"en-US": "You busted! You lost {FALCOINS} falcoins",
+		"es-ES": "¡Estallaste! Perdiste {FALCOINS} falcoins"
 	},
 	"YOU_LOST": {
 		"pt-BR": "Você perdeu {FALCOINS} falcoins",
-		"en-US": "You lost {FALCOINS} falcoins"
+		"en-US": "You lost {FALCOINS} falcoins",
+		"es-ES": "Perdiste {FALCOINS} falcoins"
 	},
 	"DEALER_BLACKJACK": {
 		"pt-BR": "21 do banco! Você perdeu {FALCOINS} falcoins",
-		"en-US": "Dealer blackjack! you lost {FALCOINS} falcoins"
+		"en-US": "Dealer blackjack! you lost {FALCOINS} falcoins",
+		"es-ES": "¡21 del banco! Perdiste {FALCOINS} falcoins"
 	},
 	"NO_ITEMS": {
 		"pt-BR": "O inventário está vazio! :confounded:",
-		"en-US": "The inventory is empty! :confounded:"
+		"en-US": "The inventory is empty! :confounded:",
+		"es-ES": "¡El inventario está vacío! :confounded:"
 	},
 	"INVENTORY_TITLE": {
 		"pt-BR": "Inventário de {MEMBER} (Parte {NUMBER} de {TOTAL})\n:money_with_wings: Valor Total: {WORTH}/{LIMIT} falcoins",
-		"en-US": "{MEMBER}'s Inventory (Part {NUMBER} of {TOTAL})\n:money_with_wings: Total Worth: {WORTH}/{LIMIT} falcoins"
+		"en-US": "{MEMBER}'s Inventory (Part {NUMBER} of {TOTAL})\n:money_with_wings: Total Worth: {WORTH}/{LIMIT} falcoins",
+		"es-ES": "Inventario de {MEMBER} (Parte {NUMBER} de {TOTAL})\n:money_with_wings: Valor Total: {WORTH}/{LIMIT} falcoins"
 	},
 	"MARKET": {
 		"pt-BR": "Mercado",
-		"en-US": "Market"
+		"en-US": "Market",
+		"es-ES": "Mercado"
 	},
 	"SELLITEMS": {
 		"pt-BR": "Vender Items",
-		"en-US": "Sell Items"
+		"en-US": "Sell Items",
+		"es-ES": "Vender Items"
 	},
 	"CRAFT": {
 		"pt-BR": "Construir",
-		"en-US": "Craft"
+		"en-US": "Craft",
+		"es-ES": "Construir"
 	},
 	"CALCULATOR": {
 		"pt-BR": ":abacus: Calculadora de Items",
-		"en-US": ":abacus: Item Calculator"
+		"en-US": ":abacus: Item Calculator",
+		"es-ES": ":abacus: Calculadora de Items"
 	},
 	"INVALID": {
 		"pt-BR": "Seleção Inválida!",
-		"en-US": "Invalid Selection!"
+		"en-US": "Invalid Selection!",
+		"es-ES": "¡Selección inválida!"
 	},
 	"INGREDIENTS": {
 		"pt-BR": "Ingredientes:",
-		"en-US": "Ingredients:"
+		"en-US": "Ingredients:",
+		"es-ES": "Ingredientes:"
 	},
 	"COST": {
 		"pt-BR": "Custo base:",
-		"en-US": "Raw cost:"
+		"en-US": "Raw cost:",
+		"es-ES": "Costo base:"
 	},
 	"SOLD_TITLE": {
 		"pt-BR": "Você vendeu {AMOUNT} {ITEM} por {FALCOINS} falcoins!",
-		"en-US": "You sold {AMOUNT} {ITEM} for {FALCOINS} falcoins!"
+		"en-US": "You sold {AMOUNT} {ITEM} for {FALCOINS} falcoins!",
+		"es-ES": "¡Vendiste {AMOUNT} {ITEM} por {FALCOINS} falcoins!"
 	},
 	"SOLD_FIELD": {
 		"pt-BR": ":school_satchel: Você tem **{REMAINING} sobrando** no seu inventário\n:clipboard: Cada item foi vendido por um valor médio de **{FALCOINS2} falcoins**",
-		"en-US": ":school_satchel: There's **{REMAINING} left** in your inventory\n:clipboard: Eacch item was sold at an average of **{FALCOINS2} falcoins**"
+		"en-US": ":school_satchel: There's **{REMAINING} left** in your inventory\n:clipboard: Each item was sold at an average of **{FALCOINS2} falcoins**",
+		"es-ES": ":school_satchel: Quedan **{REMAINING} sobrantes** en tu inventario\n:clipboard: Cada artículo se vendió a un promedio de **{FALCOINS2} falcoins**"
 	},
 	"FOUND": {
 		"pt-BR": "{AMOUNT} items encontrados!",
-		"en-US": "{AMOUNT} items found!"
+		"en-US": "{AMOUNT} items found!",
+		"es-ES": "¡{AMOUNT} artículos encontrados!"
 	},
 	"PROFILE": {
 		"pt-BR": "Perfil de {USER}",
-		"en-US": "{USER}'s profile"
+		"en-US": "{USER}'s profile",
+		"es-ES": "Perfil de {USER}"
 	},
 	"PROFILE_INFOS": {
 		"pt-BR": "**:coin: Falcoins:** {FALCOINS}\n**:trophy: Vitórias:** {WINS}\n**:bank: Banco:** {BANK}/{LIMIT} falcoins\n**:tickets: Bilhetes de loteria:** {TICKETS}\n**:gem: Inventário:** `{QUANTITY} items` com um valor total de {WORTH} falcoins\n**:sparkles: Votos diários:** {STREAK} dias\n:person_in_tuxedo: **Jogador desde: {CREATED}**",
-		"en-US": "**:coin: Falcoins:** {FALCOINS}\n**:trophy: Wins:** {WINS}\n**:bank: Bank:** {BANK}/{LIMIT} falcoins\n**:tickets: Lottery tickets:** {TICKETS}\n**:gem: Inventory worth:** `{QUANTITY} items` valued at {WORTH} falcoins\n**:sparkles: Vote streak:** {STREAK} days\n:person_in_tuxedo: **Player since: {CREATED}**"
+		"en-US": "**:coin: Falcoins:** {FALCOINS}\n**:trophy: Wins:** {WINS}\n**:bank: Bank:** {BANK}/{LIMIT} falcoins\n**:tickets: Lottery tickets:** {TICKETS}\n**:gem: Inventory worth:** `{QUANTITY} items` valued at {WORTH} falcoins\n**:sparkles: Vote streak:** {STREAK} days\n:person_in_tuxedo: **Player since: {CREATED}**",
+		"es-ES": "**:coin: Falcoins:** {FALCOINS}\n**:trophy: Victorias:** {WINS}\n**:bank: Banco:** {BANK}/{LIMIT} falcoins\n**:tickets: Billetes de lotería:** {TICKETS}\n**:gem: Valor del inventario:** `{QUANTITY} items` valorado en {WORTH} falcoins\n**:sparkles: Racha de votos:** {STREAK} días\n:person_in_tuxedo: **Jugador desde: {CREATED}**"
 	},
 	"FISH": {
 		"pt-BR": "Pescar",
-		"en-US": "Fish"
+		"en-US": "Fish",
+		"es-ES": "Pescar"
 	},
 	"EXPLORE": {
 		"pt-BR": "Explorar",
-		"en-US": "Explore"
+		"en-US": "Explore",
+		"es-ES": "Explorar"
 	},
 	"MINE": {
 		"pt-BR": "Minerar",
-		"en-US": "Mine"
+		"en-US": "Mine",
+		"es-ES": "Minar"
 	},
 	"HUNT": {
 		"pt-BR": "Caçar",
-		"en-US": "Hunt"
+		"en-US": "Hunt",
+		"es-ES": "Cazar"
 	},
 	"NO_ITEM": {
 		"pt-BR": "Você não tem esse item no seu inventário! :empty_nest:",
-		"en-US": "You don't have this item in your inventory! :empty_nest:"
+		"en-US": "You don't have this item in your inventory! :empty_nest:",
+		"es-ES": "¡No tienes este artículo en tu inventario! :empty_nest:"
 	},
 	"RANKUP_INVENTORY": {
 		"pt-BR": ":school_satchel: *+{FALCOINS} falcoins de espaço no seu inventário*",
-		"en-US": ":school_satchel: *+{FALCOINS} falcoins of inventory space*"
+		"en-US": ":school_satchel: *+{FALCOINS} falcoins of inventory space*",
+		"es-ES": ":school_satchel: *+{FALCOINS} falcoins de espacio en tu inventario*"
 	},
 	"OVER_LIMIT": {
 		"pt-BR": "Você tentou guardar os itens mas seu inventário está cheio! :melting_face:",
-		"en-US": "You tried to store the items but your inventory is full! :melting_face:"
+		"en-US": "You tried to store the items but your inventory is full! :melting_face:",
+		"es-ES": "¡Intentaste guardar los artículos pero tu inventario está lleno! :melting_face:"
 	},
 	"COMMON": {
 		"pt-BR": "Loot comum",
-		"en-US": "Common loot"
+		"en-US": "Common loot",
+		"es-ES": "Loot común"
 	},
 	"UNCOMMON": {
 		"pt-BR": "Loot incomun",
-		"en-US": "Uncommon loot"
+		"en-US": "Uncommon loot",
+		"es-ES": "Loot inusual"
 	},
 	"RARE": {
 		"pt-BR": "Loot raro",
-		"en-US": "Rare loot"
+		"en-US": "Rare loot",
+		"es-ES": "Loot raro"
 	},
 	"EPIC": {
 		"pt-BR": "Loot épico",
-		"en-US": "Epic loot"
+		"en-US": "Epic loot",
+		"es-ES": "Loot épico"
 	},
 	"LEGENDARY": {
 		"pt-BR": "Loot lendário",
-		"en-US": "Legendary loot"
+		"en-US": "Legendary loot",
+		"es-ES": "Loot legendario"
 	},
 	"MYTHICAL": {
 		"pt-BR": ":eye: item **mítico**",
-		"en-US": ":eye: **mythical** item"
+		"en-US": ":eye: **mythical** item",
+		"es-ES": ":eye: artículo **mítico**"
 	},
 	"EQUIPPABLE": {
 		"pt-BR": ":white_check_mark: Equipável",
-		"en-US": ":white_check_mark: Equipable"
+		"en-US": ":white_check_mark: Equipable",
+		"es-ES": ":white_check_mark: Equipable"
 	},
 	"INFO": {
 		"pt-BR": "Informações:",
-		"en-US": "Information:"
+		"en-US": "Information:",
+		"es-ES": "Información:"
 	},
 	"OWNED": {
 		"pt-BR": ":school_satchel: {AMOUNT} no inventário",
-		"en-US": ":school_satchel: {AMOUNT} owned"
+		"en-US": ":school_satchel: {AMOUNT} owned",
+		"es-ES": ":school_satchel: {AMOUNT} en el inventario"
 	},
 	"MINE-2": {
 		"pt-BR": ":pick: 2x loot ao minerar",
-		"en-US": ":pick: 2x mining boost"
+		"en-US": ":pick: 2x mining boost",
+		"es-ES": ":pick: 2x impulso minero"
 	},
 	"MINE-4": {
 		"pt-BR": ":pick: 4x loot ao minerar",
-		"en-US": ":pick: 4x mining boost"
+		"en-US": ":pick: 4x mining boost",
+		"es-ES": ":pick: 4x impulso minero"
 	},
 	"FISH-2": {
 		"pt-BR": ":fishing_pole_and_fish: 2x loot ao pescar",
-		"en-US": ":fishing_pole_and_fish: 2x fishing boost"
+		"en-US": ":fishing_pole_and_fish: 2x fishing boost",
+		"es-ES": ":fishing_pole_and_fish: 2x impulso de pesca"
 	},
 	"FISH-4": {
 		"pt-BR": ":fishing_pole_and_fish: 4x loot ao pescar",
-		"en-US": ":fishing_pole_and_fish: 4x fishing boost"
+		"en-US": ":fishing_pole_and_fish: 4x fishing boost",
+		"es-ES": ":fishing_pole_and_fish: 4x impulso de pesca"
 	},
 	"EXPLORE-2": {
 		"pt-BR": ":compass: 2x loot ao explorar",
-		"en-US": ":compass: 2x exploring boost"
+		"en-US": ":compass: 2x exploring boost",
+		"es-ES": ":compass: 2x impulso de exploración"
 	},
 	"EXPLORE-4": {
 		"pt-BR": ":compass: 4x loot ao explorar",
-		"en-US": ":compass: 4x exploring boost"
+		"en-US": ":compass: 4x exploring boost",
+		"es-ES": ":compass: 4x impulso de exploración"
 	},
 	"HUNT-2": {
 		"pt-BR": ":dagger: 2x loot ao caçar",
-		"en-US": ":dagger: 2x hunting boost"
+		"en-US": ":dagger: 2x hunting boost",
+		"es-ES": ":dagger: 2x impulso de caza"
 	},
 	"HUNT-4": {
 		"pt-BR": ":dagger: 4x loot ao caçar",
-		"en-US": ":dagger: 4x hunting boost"
+		"en-US": ":dagger: 4x hunting boost",
+		"es-ES": ":dagger: 4x impulso de caza"
 	},
 	"USED": {
 		"pt-BR": "Usado para craftar:",
-		"en-US": "Used to craft:"
+		"en-US": "Used to craft:",
+		"es-ES": "Usado para construir:"
 	},
 	"AND_MORE": {
 		"pt-BR": "\n*...e mais*",
-		"en-US": "\n*...and more*"
+		"en-US": "\n*...and more*",
+		"es-ES": "\n*...y más*"
 	},
 	"CANT_EQUIP": {
 		"pt-BR": "Esse item não pode ser equipado... :confused:",
-		"en-US": "This item can't be equipped... :confused:"
+		"en-US": "This item can't be equipped... :confused:",
+		"es-ES": "Este artículo no se puede equipar... :confused:"
 	},
 	"ALREADY_EQUIPPED": {
 		"pt-BR": "Você já tem um item desse equipado!",
-		"en-US": "You already have one of this item equipped!"
+		"en-US": "You already have one of this item equipped!",
+		"es-ES": "¡Ya tienes uno de estos artículos equipados!"
 	},
 	"EQUIPPED_TITLE": {
 		"pt-BR": "{ITEM} equipado!",
-		"en-US": "{ITEM} equipped!"
+		"en-US": "{ITEM} equipped!",
+		"es-ES": "¡{ITEM} equipado!"
 	},
 	"EQUIPPED_VALUE": {
 		"pt-BR": ":muscle: Você equipou **{ITEM}.**\n:hourglass_flowing_sand: Esse item vai expirar depois de ser usado **3 vezes.**",
-		"en-US": ":muscle: You have equipped the **{ITEM}.**\n:hourglass_flowing_sand: This item will expire after **3 uses.**"
+		"en-US": ":muscle: You have equipped the **{ITEM}.**\n:hourglass_flowing_sand: This item will expire after **3 uses.**",
+		"es-ES": ":muscle: Has equipado el **{ITEM}.**\n:hourglass_flowing_sand: Este artículo caducará después de **3 usos.**"
 	},
 	"BUFF": {
 		"pt-BR": "{ITEM} dando {BUFF}x mais loot",
-		"en-US": "{ITEM} providing {BUFF}x multiplier"
+		"en-US": "{ITEM} providing {BUFF}x multiplier",
+		"es-ES": "{ITEM} proporcionando multiplicador de {BUFF}x"
 	},
 	"CANT_CRAFT": {
 		"pt-BR": "Esse item não pode ser construído... :x: :tools:",
-		"en-US": "This item can't be crafted... :x: :tools:"
+		"en-US": "This item can't be crafted... :x: :tools:",
+		"es-ES": "Este artículo no se puede construir... :x: :tools:"
 	},
 	"MISSING_INGREDIENTS": {
 		"pt-BR": "Não foi possível construir o item pois está faltando **{ITEMS}**!",
-		"en-US": "You can't craft this item because you are missing **{ITEMS}**!"
+		"en-US": "You can't craft this item because you are missing **{ITEMS}**!",
+		"es-ES": "¡No puedes construir este artículo porque te faltan **{ITEMS}**!"
 	},
 	"CRAFTED_TITLE": {
 		"pt-BR": "{AMOUNT} {ITEM} construídos!",
-		"en-US": "{AMOUNT} {ITEM} crafted!"
+		"en-US": "{AMOUNT} {ITEM} crafted!",
+		"es-ES": "¡{AMOUNT} {ITEM} construidos!"
 	},
 	"CRAFTED_VALUE": {
 		"pt-BR": "{AMOUNT} {ITEM} foram construídos, você usou... \n {INGREDIENTS}\nVocê pode fazer mais {MAXAMOUNT} desse item",
-		"en-US": "{AMOUNT} {ITEM} were crafted, you used... \n {INGREDIENTS}\nYou can craft {MAXAMOUNT} more of this item"
+		"en-US": "{AMOUNT} {ITEM} were crafted, you used... \n {INGREDIENTS}\nYou can craft {MAXAMOUNT} more of this item",
+		"es-ES": "Se construyeron {AMOUNT} {ITEM}, usaste... \n {INGREDIENTS}\nPuedes construir {MAXAMOUNT} más de este artículo"
 	},
 	"SELLALL_TITLE": {
 		"pt-BR": ":question: Confirmar - vender tudo",
-		"en-US": ":question: Confirm - sell everything"
+		"en-US": ":question: Confirm - sell everything",
+		"es-ES": ":question: Confirmar - vender todo"
 	},
 	"SELLALL_VALUE": {
 		"pt-BR": ":money_with_wings: Você está prester a vender **TUDO** do seu inventário\n:eye: Items míticos não estão incluidos.",
-		"en-US": ":money_with_wings: You are about to sell **EVERYTHING** from your inventory\n:eye: Mythical items are not included."
+		"en-US": ":money_with_wings: You are about to sell **EVERYTHING** from your inventory\n:eye: Mythical items are not included.",
+		"es-ES": ":money_with_wings: Estás a punto de vender **TODO** de tu inventario\n:eye: Los artículos míticos no están incluidos."
 	},
 	"SELLALL_CONFIRMED_TITLE": {
 		"pt-BR": ":moneybag: Inventário vendido!",
-		"en-US": ":moneybag: Inventory sold!"
+		"en-US": ":moneybag: Inventory sold!",
+		"es-ES": ":moneybag: ¡Inventario vendido!"
 	},
 	"SELLALL_CONFIRMED_VALUE": {
 		"pt-BR": "{ITEMS}\n**Você ganhou um total de {FALCOINS} falcoins**",
-		"en-US": "{ITEMS}\n**You earned a total of {FALCOINS} falcoins**"
+		"en-US": "{ITEMS}\n**You earned a total of {FALCOINS} falcoins**",
+		"es-ES": "{ITEMS}\n**Ganaste un total de {FALCOINS} falcoins**"
 	},
 	"MORE": {
 		"pt-BR": "...e {AMOUNT} mais",
-		"en-US": "...and {AMOUNT} more"
+		"en-US": "...and {AMOUNT} more",
+		"es-ES": "...y {AMOUNT} más"
 	},
 	"EQUIP_TITLE": {
 		"pt-BR": ":scroll: Lista de itens equipáveis e seus efeitos",
-		"en-US": ":scroll: List of equipable items and their effects"
+		"en-US": ":scroll: List of equipable items and their effects",
+		"es-ES": ":scroll: Lista de artículos equipables y sus efectos"
 	},
 	"CRAFT_PLACEHOLDER": {
 		"pt-BR": "Construa um item...",
-		"en-US": "Craft an item..."
+		"en-US": "Craft an item...",
+		"es-ES": "Construir un artículo..."
 	},
 	"CRAFT_TITLE": {
 		"pt-BR": ":hammer_pick: Construindo itens",
-		"en-US": ":hammer_pick: Crafting"
+		"en-US": ":hammer_pick: Crafting",
+		"es-ES": ":hammer_pick: Construyendo artículos"
 	},
 	"CRAFT_VALUE": {
 		"pt-BR": "**:compression: Todos os itens atualmente construíveis estão listados abaixo\nUse `/iteminfo` para ver mais informações sobre um item**",
-		"en-US": "**:compression: All currently craftable items are listed below\nUse `/iteminfo` to see more information about an item**"
+		"en-US": "**:compression: All currently craftable items are listed below\nUse `/iteminfo` to see more information about an item**",
+		"es-ES": "**:compression: Todos los artículos actualmente construibles se enumeran a continuación\nUse `/iteminfo` para ver más información sobre un artículo**"
 	},
 	"CRAFT_MAX": {
 		"pt-BR": "Construir tudo",
-		"en-US": "Craft max"
+		"en-US": "Craft max",
+		"es-ES": "Construir todo"
 	},
 	"INVENTORY_SORTING": {
 		"pt-BR": "Ordenação do inventário",
-		"en-US": "Inventory sorting"
+		"en-US": "Inventory sorting",
+		"es-ES": "Ordenación del inventario"
 	},
 	"SORTING_MENU": {
 		"pt-BR": "Use o menu abaixo para escolher o método de ordenação do inventário",
-		"en-US": "Use the menu below to choose the inventory sorting method"
+		"en-US": "Use the menu below to choose the inventory sorting method",
+		"es-ES": "Utilice el menú a continuación para elegir el método de ordenación del inventario"
 	},
 	"SORTING_PLACEHOLDER": {
 		"pt-BR": "Escolha o tipo de ordenação...",
-		"en-US": "Choose the sorting type..."
+		"en-US": "Choose the sorting type...",
+		"es-ES": "Elige el tipo de ordenación..."
 	},
 	"ITEMVALUE": {
 		"pt-BR": "Valor do item",
-		"en-US": "Item value"
+		"en-US": "Item value",
+		"es-ES": "Valor del artículo"
 	},
 	"WORTH": {
 		"pt-BR": "Valor total",
-		"en-US": "Worth"
+		"en-US": "Worth",
+		"es-ES": "Valor"
 	},
 	"QUANTITY": {
 		"pt-BR": "Quantidade",
-		"en-US": "Quantity"
+		"en-US": "Quantity",
+		"es-ES": "Cantidad"
 	},
 	"ALPHABETICAL": {
 		"pt-BR": "Alfabético",
-		"en-US": "Alphabetical"
+		"en-US": "Alphabetical",
+		"es-ES": "Alfabético"
 	},
 	"SORTING_NOW": {
 		"pt-BR": "O inventário agora está ordenado por **{SORTING}**",
-		"en-US": "The inventory is now sorted by **{SORTING}**"
+		"en-US": "The inventory is now sorted by **{SORTING}**",
+		"es-ES": "El inventario ahora está ordenado por **{SORTING}**"
 	},
 	"CANT_USE": {
 		"pt-BR": "Esse item não pode ser usado... :goggles:",
-		"en-US": "This item can't be used... :goggles:"
+		"en-US": "This item can't be used... :goggles:",
+		"es-ES": "Este artículo no se puede usar... :goggles:"
 	},
 	"USE_BACKPACK_TITLE": {
 		"pt-BR": ":school_satchel: +200.000 falcoins de limite ao inventário",
-		"en-US": ":school_satchel: +200.000 falcoins to inventory limit"
+		"en-US": ":school_satchel: +200.000 falcoins to inventory limit",
+		"es-ES": ":school_satchel: +200.000 falcoins al límite del inventario"
 	},
 	"USE_BACKPACK_VALUE": {
 		"pt-BR": "Sucesso! Você aumentou o seu limite de inventário em 200.000 falcoins com 1 mochila",
-		"en-US": "Success! You increased your inventory limit by 200.000 falcoins with 1 backpack"
+		"en-US": "Success! You increased your inventory limit by 200.000 falcoins with 1 backpack",
+		"es-ES": "¡Éxito! Aumentaste tu límite de inventario en 200.000 falcoins con 1 mochila"
 	},
 	"USABLE": {
 		"pt-BR": ":white_check_mark: Usável",
-		"en-US": ":white_check_mark: Useable"
+		"en-US": ":white_check_mark: Useable",
+		"es-ES": ":white_check_mark: Utilizable"
 	},
 	"INVENTORY-BUFF": {
 		"pt-BR": ":school_satchel: +200.000 falcoins de limite ao inventário",
-		"en-US": ":school_satchel: +200.000 falcoins to inventory limit"
+		"en-US": ":school_satchel: +200.000 falcoins to inventory limit",
+		"es-ES": ":school_satchel: +200.000 falcoins al límite del inventario"
 	},
 	"DAYS": {
 		"pt-BR": "dias",
-		"en-US": "days"
+		"en-US": "days",
+		"es-ES": "días"
   	},
 	"NO_CRAFT_AVAILABLE": {
 		"pt-BR": "Você não pode construir nada no momento, use `/pescar`, `/minerar`, `/explorar` e `/caçar` para conseguir itens",
-		"en-US": "You can't craft anything at the moment, use `/fish`, `/mine`, `/explore` and `/hunt` to get items"
+		"en-US": "You can't craft anything at the moment, use `/fish`, `/mine`, `/explore` and `/hunt` to get items",
+		"es-ES": "No puedes construir nada en este momento, usa `/fish`, `/mine`, `/explore` y `/hunt` para obtener artículos"
 	},
 	"INSUFICIENT_ITEM_EXCHANGE": {
 		"pt-BR": "{USER} não tem {ITEM} suficiente para essa troca",
-		"en-US": "{USER} doesn't have enough {ITEM} for this exchange"
+		"en-US": "{USER} doesn't have enough {ITEM} for this exchange",
+		"es-ES": "{USER} no tiene suficiente {ITEM} para este intercambio"
 	},
 	"EXCHANGE_PROPOSAL": {
 		"pt-BR": "O jogador {USER} propõe uma troca com {USER2}",
-		"en-US": "Player {USER} proposes an exchange with {USER2}"
+		"en-US": "Player {USER} proposes an exchange with {USER2}",
+		"es-ES": "El jugador {USER} propone un intercambio con {USER2}"
 	},
 	"OFFER": {
 		"pt-BR": "{USER} oferece:",
-		"en-US": "{USER} offers:"
+		"en-US": "{USER} offers:",
+		"es-ES": "{USER} ofrece:"
 	},
 	"RECEIVE": {
 		"pt-BR": "Em troca de:",
-		"en-US": "In exchange for:"
+		"en-US": "In exchange for:",
+		"es-ES": "A cambio de:"
 	},
 	"EXCHANGE_CANCELLED": {
 		"pt-BR": "Troca cancelada. {USER} demorou muito para aceitar! :confounded:",
-		"en-US": "Exchange cancelled. {USER} took too long to accept! :confounded:"
+		"en-US": "Exchange cancelled. {USER} took too long to accept! :confounded:",
+		"es-ES": "Intercambio cancelado. ¡{USER} tardó demasiado en aceptar! :confounded:"
 	},
 	"EXCHANGE_REFUSED": {
 		"pt-BR": "{USER2} Recusou a troca de {USER}! :no_entry_sign:",
-		"en-US": "{USER2} refused {USER}'s exchange! :no_entry_sign:"
+		"en-US": "{USER2} refused {USER}'s exchange! :no_entry_sign:",
+		"es-ES": "¡{USER2} rechazó el intercambio de {USER}! :no_entry_sign:"
 	},
 	"EXCHANGE_ACCEPTED": {
 		"pt-BR": "{USER2} Aceitou a troca de {USER}! :white_check_mark:",
-		"en-US": "{USER2} accepted {USER}'s exchange! :white_check_mark:"
+		"en-US": "{USER2} accepted {USER}'s exchange! :white_check_mark:",
+		"es-ES": "¡{USER2} aceptó el intercambio de {USER}! :white_check_mark:"
 	},
 	"CANT_EXCHANGE_ALONE": {
 		"pt-BR": "Você não pode trocar itens com você mesmo! :confused:",
-		"en-US": "You can't exchange items with yourself! :confused:"
+		"en-US": "You can't exchange items with yourself! :confused:",
+		"es-ES": "¡No puedes intercambiar artículos contigo mismo! :confused:"
   },
 	"RESET-COOLDOWNS": {
 		"pt-BR": ":snowflake: reseta todos os cooldowns",
-		"en-US": ":snowflake: resets all cooldowns"
+		"en-US": ":snowflake: resets all cooldowns",
+		"es-ES": ":snowflake: reinicia todos los tiempos de espera"
 	},
 	"CANT_SELL": {
 		"pt-BR": ":no_entry_sign: Esse item não pode ser vendido",
-		"en-US": ":no_entry_sign: This item can't be sold"
+		"en-US": ":no_entry_sign: This item can't be sold",
+		"es-ES": ":no_entry_sign: Este artículo no se puede vender"
 	},
 	"USE_MYTHICAL_TITLE": {
 		"pt-BR": "Você usou um item mítico! :sparkles:",
-		"en-US": "You used a mythical item! :sparkles:"
+		"en-US": "You used a mythical item! :sparkles:",
+		"es-ES": "¡Usaste un artículo mítico! :sparkles:"
 	},
 	"USE_SNOWFLAKE_VALUE": {
 		"pt-BR": "O Floco Eterno te deu seu poder e resetou todos os seus cooldowns! :snowflake:",
-		"en-US": "The Eternal Snowflake gave you its power and reset all your cooldowns! :snowflake:"
+		"en-US": "The Eternal Snowflake gave you its power and reset all your cooldowns! :snowflake:",
+		"es-ES": "¡La Eternal Snowflake te dio su poder y reinició todos tus tiempos de espera! :snowflake:"
 	},
 	"USE_TITLE": {
 		"pt-BR": ":scroll: Lista de itens usáveis e seus efeitos",
-		"en-US": ":scroll: List of useable items and their effects"
+		"en-US": ":scroll: List of useable items and their effects",
+		"es-ES": ":scroll: Lista de artículos utilizables y sus efectos"
 	},
 	"STATS_TITLE": {
 		"pt-BR": ":bar_chart: Estatísticas de {USER}",
-		"en-US": ":bar_chart: {USER}'s stats"
+		"en-US": ":bar_chart: {USER}'s stats",
+		"es-ES": ":bar_chart: Estadísticas de {USER}"
 	},
 	"STATS_COMMANDS": {
 		"pt-BR": "comandos usados",
-		"en-US": "commands used"
+		"en-US": "commands used",
+		"es-ES": "comandos usados"
 	},
 	"STATS_ITEMS": {
 		"pt-BR": "itens",
-		"en-US": "items"
+		"en-US": "items",
+		"es-ES": "artículos"
 	},
 	"STATS_TIMES": {
 		"pt-BR": "vezes",
-		"en-US": "times"
+		"en-US": "times",
+		"es-ES": "veces"
 	},
 	"STATS_TOTAL_COMMANDS": {
 		"pt-BR": "Comandos Totais",
-		"en-US": "Total Commands"
+		"en-US": "Total Commands",
+		"es-ES": "Comandos Totales"
 	},
 	"STATS_ITEMS_FOUND": {
 		"pt-BR": "Itens Encontrados",
-		"en-US": "Items Found"
+		"en-US": "Items Found",
+		"es-ES": "Artículos Encontrados"
 	},
 	"STATS_WORK": {
 		"pt-BR": "Trabalhos",
-		"en-US": "Times Worked"
+		"en-US": "Times Worked",
+		"es-ES": "Veces Trabajadas"
 	},
 	"STATS_EXPLORE": {
 		"pt-BR": "Explorações",
-		"en-US": "Times Explored"
+		"en-US": "Times Explored",
+		"es-ES": "Veces Explorado"
 	},
 	"STATS_FISH": {
 		"pt-BR": "Pescarias",
-		"en-US": "Times Fished"
+		"en-US": "Times Fished",
+		"es-ES": "Veces Pescado"
 	},
 	"STATS_MINE": {
 		"pt-BR": "Minerações",
-		"en-US": "Times Mined"
+		"en-US": "Times Mined",
+		"es-ES": "Veces Minado"
 	},
 	"STATS_HUNT": {
 		"pt-BR": "Caçadas",
-		"en-US": "Times Hunted"
+		"en-US": "Times Hunted",
+		"es-ES": "Veces Cazado"
 	},
 	"STATS_VOTE": {
 		"pt-BR": "Votos",
-		"en-US": "Times Voted"
+		"en-US": "Times Voted",
+		"es-ES": "Veces Votado"
 	},
 	"STATS_CRAFTS": {
 		"pt-BR": "Itens feitos",
-		"en-US": "Items crafted"
+		"en-US": "Items crafted",
+		"es-ES": "Artículos construidos"
 	},
 	"OVERTIME": {
 		"pt-BR": "**:crescent_moon: Horas extras - 3x** bônus de trabalho ({TIME})",
-		"en-US": "**:crescent_moon: Overtime - 3x** work bonus ({TIME})"
+		"en-US": "**:crescent_moon: Overtime - 3x** work bonus ({TIME})",
+		"es-ES": "**:crescent_moon: Horas extras - 3x** bonificación de trabajo ({TIME})"
 	},
 	"SEARCH PARTY": {
 		"pt-BR": "**:flashlight: Busca em grupo - 2x** bônus de exploração ({TIME})",
-		"en-US": "**:flashlight: Search party - 2x** explore bonus ({TIME})"
+		"en-US": "**:flashlight: Search party - 2x** explore bonus ({TIME})",
+		"es-ES": "**:flashlight: Búsqueda en grupo - 2x** bonificación de exploración ({TIME})"
 	},
 	"STAMPEDE": {
 		"pt-BR": "**:mammoth: Manada - 2x** bônus de caça ({TIME})",
-		"en-US": "**:mammoth: Stampede - 2x** hunt bonus ({TIME})"
+		"en-US": "**:mammoth: Stampede - 2x** hunt bonus ({TIME})",
+		"es-ES": "**:mammoth: Estampida - 2x** bonificación de caza ({TIME})"
 	},
 	"FLOOD": {
 		"pt-BR": "**:cloud_rain: Enchente - 2x** bônus de pesca ({TIME})",
-		"en-US": "**:cloud_rain: Flood - 2x** fishing bonus ({TIME})"
+		"en-US": "**:cloud_rain: Flood - 2x** fishing bonus ({TIME})",
+		"es-ES": "**:cloud_rain: Inundación - 2x** bonificación de pesca ({TIME})"
 	},
 	"COMET": {
 		"pt-BR": "**:comet: Cometa - 2x** bônus de mineração ({TIME})",
-		"en-US": "**:comet: Comet - 2x** mining bonus ({TIME})"
+		"en-US": "**:comet: Comet - 2x** mining bonus ({TIME})",
+		"es-ES": "**:comet: Cometa - 2x** bonificación de minería ({TIME})"
 	},
 	"OVERTIME_BONUS": {
 		"pt-BR": "**:crescent_moon: bônus de 3x do evento**",
-		"en-US": "**:crescent_moon: 3x event bonus**"
+		"en-US": "**:crescent_moon: 3x event bonus**",
+		"es-ES": "**:crescent_moon: bonificación de 3x del evento**"
 	},
 	"SEARCH_PARTY_BONUS": {
 		"pt-BR": "**:flashlight: bônus de 2x do evento**",
-		"en-US": "**:flashlight: 2x event bonus**"
+		"en-US": "**:flashlight: 2x event bonus**",
+		"es-ES": "**:flashlight: bonificación de 2x del evento**"
 	},
 	"STAMPEDE_BONUS": {
 		"pt-BR": "**:mammoth: bônus de 2x do evento**",
-		"en-US": "**:mammoth: 2x event bonus**"
+		"en-US": "**:mammoth: 2x event bonus**",
+		"es-ES": "**:mammoth: bonificación de 2x del evento**"
 	},
 	"FLOOD_BONUS": {
 		"pt-BR": "**:cloud_rain: bônus de 2x do evento**",
-		"en-US": "**:cloud_rain: 2x event bonus**"
+		"en-US": "**:cloud_rain: 2x event bonus**",
+		"es-ES": "**:cloud_rain: bonificación de 2x del evento**"
 	},
 	"COMET_BONUS": {
 		"pt-BR": "**:comet: bônus de 2x do evento**",
-		"en-US": "**:comet: 2x event bonus**"
+		"en-US": "**:comet: 2x event bonus**",
+		"es-ES": "**:comet: bonificación de 2x del evento**"
 	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
-		"en-US": ":potato: Peasent"
+		"en-US": ":potato: Peasent",
+		"es-ES": ":potato: Plebeyo"
 	},
 	"2": {
 		"pt-BR": ":bricks: Novato",
-		"en-US": ":bricks: Novice"
+		"en-US": ":bricks: Novice",
+		"es-ES": ":bricks: Novato"
 	},
 	"3": {
 		"pt-BR": ":medal: Recruta",
-		"en-US": ":medal: Recruit"
+		"en-US": ":medal: Recruit",
+		"es-ES": ":medal: Recluta"
 	},
 	"4": {
 		"pt-BR": ":hammer: Trabalhador",
-		"en-US": ":hammer: Worker"
+		"en-US": ":hammer: Worker",
+		"es-ES": ":hammer: Trabajador"
 	},
 	"5": {
 		"pt-BR": ":money_with_wings: Comerciante",
-		"en-US": ":money_with_wings: Merchant"
+		"en-US": ":money_with_wings: Merchant",
+		"es-ES": ":money_with_wings: Comerciante"
 	},
 	"6": {
 		"pt-BR": ":map: Patrulheiro",
-		"en-US": ":map: Journeyman"
+		"en-US": ":map: Journeyman",
+		"es-ES": ":map: Patrullero"
 	},
 	"7": {
 		"pt-BR": ":balloon: Patrão",
-		"en-US": ":balloon: Boss"
+		"en-US": ":balloon: Boss",
+		"es-ES": ":balloon: Jefe"
 	},
 	"8": {
 		"pt-BR": ":anchor: Capitão",
-		"en-US": ":anchor: Captain"
+		"en-US": ":anchor: Captain",
+		"es-ES": ":anchor: Capitán"
 	},
 	"9": {
 		"pt-BR": ":helmet_with_cross: Prefeito",
-		"en-US": ":helmet_with_cross: Warden"
+		"en-US": ":helmet_with_cross: Warden",
+		"es-ES": ":helmet_with_cross: Alcalde"
 	},
 	"10": {
 		"pt-BR": ":moneybag: Governador",
-		"en-US": ":moneybag: Governor"
+		"en-US": ":moneybag: Governor",
+		"es-ES": ":moneybag: Gobernador"
 	},
 	"11": {
 		"pt-BR": ":shield: Vice-rei",
-		"en-US": ":shield: Viceroy"
+		"en-US": ":shield: Viceroy",
+		"es-ES": ":shield: Virrey"
 	},
 	"12": {
 		"pt-BR": ":1234: Conde",
-		"en-US": ":1234: Count"
+		"en-US": ":1234: Count",
+		"es-ES": ":1234: Conde"
 	},
 	"13": {
 		"pt-BR": ":crystal_ball: Magistrado",
-		"en-US": ":crystal_ball: Magistrate"
+		"en-US": ":crystal_ball: Magistrate",
+		"es-ES": ":crystal_ball: Magistrado"
 	},
 	"14": {
 		"pt-BR": ":robot: Expert",
-		"en-US": ":robot: Expert"
+		"en-US": ":robot: Expert",
+		"es-ES": ":robot: Experto"
 	},
 	"15": {
 		"pt-BR": ":vulcan: Coronel",
-		"en-US": ":vulcan: Colonel"
+		"en-US": ":vulcan: Colonel",
+		"es-ES": ":vulcan: Coronel"
 	},
 	"16": {
 		"pt-BR": ":paperclip: Comandante",
-		"en-US": ":paperclip: Commander"
+		"en-US": ":paperclip: Commander",
+		"es-ES": ":paperclip: Comandante"
 	},
 	"17": {
 		"pt-BR": ":cherry_blossom: Flor",
-		"en-US": ":cherry_blossom: Flower"
+		"en-US": ":cherry_blossom: Flower",
+		"es-ES": ":cherry_blossom: Flor"
 	},
 	"18": {
 		"pt-BR": ":crossed_swords: Cavaleiro",
-		"en-US": ":crossed_swords: Knight"
+		"en-US": ":crossed_swords: Knight",
+		"es-ES": ":crossed_swords: Caballero"
 	},
 	"19": {
 		"pt-BR": ":telescope: Supervisor",
-		"en-US": ":telescope: Overseer"
+		"en-US": ":telescope: Overseer",
+		"es-ES": ":telescope: Supervisor"
 	},
 	"20": {
 		"pt-BR": ":spoon: Aristocrata",
-		"en-US": ":spoon: Aristocrat"
+		"en-US": ":spoon: Aristocrat",
+		"es-ES": ":spoon: Aristócrata"
 	},
 	"21": {
 		"pt-BR": ":pushpin: Chefão",
-		"en-US": ":pushpin: Kingpin"
+		"en-US": ":pushpin: Kingpin",
+		"es-ES": ":pushpin: Jefe"
 	},
 	"22": {
 		"pt-BR": ":detective: Agente",
-		"en-US": ":detective: Agent"
+		"en-US": ":detective: Agent",
+		"es-ES": ":detective: Agente"
 	},
 	"23": {
 		"pt-BR": ":scarf: Barão",
-		"en-US": ":scarf: Baron"
+		"en-US": ":scarf: Baron",
+		"es-ES": ":scarf: Barón"
 	},
 	"24": {
 		"pt-BR": ":european_castle: Visconde",
-		"en-US": ":european_castle: Viscount"
+		"en-US": ":european_castle: Viscount",
+		"es-ES": ":european_castle: Vizconde"
 	},
 	"25": {
 		"pt-BR": ":ledger: Ministro",
-		"en-US": ":ledger: Minister"
+		"en-US": ":ledger: Minister",
+		"es-ES": ":ledger: Ministro"
 	}
 }
