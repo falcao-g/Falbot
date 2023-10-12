@@ -1,7 +1,14 @@
 const userSchema = require('../schemas/user-schema');
-const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, GuildMember } = require('discord.js');
 const items = require('./json/items.json');
 
+/**
+ *
+ * @param {DiscordID} id
+ * @description Creates a new user in the database if it doesn't exist
+ * @async
+ * @returns {Promise<void>}
+ */
 async function createUser(id) {
 	try {
 		await userSchema.findByIdAndUpdate(
@@ -18,6 +25,17 @@ async function createUser(id) {
 	}
 }
 
+/**
+ *
+ * @param {DiscordID} id
+ * @param {string} field
+ * @param {integer} quantity
+ * @param {boolean} erase
+ * @description Changes the value of a user's document field in the database
+ * @example changeDB(id, 'falcoins', 1000, false) // Adds 1000 falcoins to the user
+ * @async
+ * @returns {Promise<void>}
+ */
 async function changeDB(id, field, quantity = 1, erase = false) {
 	try {
 		await createUser(id);
@@ -37,6 +55,12 @@ async function changeDB(id, field, quantity = 1, erase = false) {
 	}
 }
 
+/**
+ * @param {integer} ms
+ * @description Converts milliseconds to a string with the format "1m 1d 1h 1m 1s"
+ * @example msToTime(1000) // 1s
+ * @returns {string}
+ */
 function msToTime(ms) {
 	let time = '';
 
@@ -70,6 +94,16 @@ function msToTime(ms) {
 	return time.trimEnd();
 }
 
+/**
+ *
+ * @param {integer} arg
+ * @param {DiscordID} id
+ * @param {string} field
+ * @description Converts a string to an integer
+ * @example specialArg('100.000.000', id, 'falcoins') // 100000000
+ * @async
+ * @returns {Promise<integer>}
+ */
 async function specialArg(arg, id, field = 'falcoins') {
 	await createUser(id);
 	var user = await userSchema.findById(id);
@@ -114,6 +148,13 @@ async function specialArg(arg, id, field = 'falcoins') {
 	}
 }
 
+/**
+ *
+ * @param {integer} falcoins
+ * @description Format a number to a string with the format "1.000.000"
+ * @example format(1000000) // 1.000.000
+ * @returns {string}
+ */
 function format(falcoins) {
 	if (parseInt(falcoins) < 0) {
 		falcoins = falcoins.toString();
@@ -134,6 +175,16 @@ function format(falcoins) {
 	return pop_2.split('').reverse().join('');
 }
 
+/**
+ *
+ * @param {DiscordID} id
+ * @param {string} field
+ * @param {boolean} rich
+ * @description Reads a user's document field in the database
+ * @async
+ * @example readFile(id, 'falcoins', true) // 1.000.000
+ * @returns <Promise<any>
+ */
 async function readFile(id, field = '', rich = false) {
 	try {
 		await createUser(id);
@@ -150,10 +201,21 @@ async function readFile(id, field = '', rich = false) {
 	}
 }
 
+/**
+ *
+ * @param {integer} low
+ * @param {integer} high
+ * @description Generates a random integer between low and high
+ * @example randint(1, 10) // 5
+ * @returns {integer}
+ */
 function randint(low, high) {
 	return Math.floor(Math.random() * (high - low + 1) + low);
 }
 
+/**
+ * @description Creates a pagination system
+ */
 function paginate() {
 	const __embeds = [];
 	let cur = 0;
@@ -188,6 +250,13 @@ function paginate() {
 	};
 }
 
+/**
+ *
+ * @param {Array<string, number>} data
+ * @description Picks a random element from an array based on its weight
+ * @example pick([['a', 0.5], ['b', 0.3], ['c', 0.2]]) // 'a'
+ * @returns {string}
+ */
 function pick(data) {
 	// Split input into two separate arrays of values and weights.
 	const values = data.map((d) => d[0]);
@@ -204,12 +273,31 @@ function pick(data) {
 	return values[weightsSum.filter((element) => element <= rand).length];
 }
 
+/**
+ *
+ * @param {DiscordID} id
+ * @param {string} command
+ * @param {integer} cooldown
+ * @description Sets a cooldown for a command
+ * @async
+ * @example setCooldown(id, 'explore', 60) // Sets a 60s cooldown for the explore command
+ * @returns {Promise<void>}
+ */
 async function setCooldown(id, command, cooldown) {
 	var cooldowns = (await userSchema.findById(id)).cooldowns;
 	cooldowns.set(command, Date.now() + cooldown * 1000);
 	await changeDB(id, 'cooldowns', cooldowns, true);
 }
 
+/**
+ *
+ * @param {DiscordID} id
+ * @param {string} command
+ * @description Resolves a cooldown for a command
+ * @async
+ * @example resolveCooldown(id, 'explore') // Returns 0 if the cooldown is over, or the remaining time if it isn't
+ * @returns {integer}
+ */
 async function resolveCooldown(id, command) {
 	var cooldowns = (await userSchema.findById(id)).cooldowns;
 	var commandField = cooldowns.get(command);
@@ -224,13 +312,22 @@ async function resolveCooldown(id, command) {
 	return 0;
 }
 
+/**
+ *
+ * @param {string} item
+ * @description Returns the item's json key
+ * @example getItem('skunk pelt') // 'skunk'
+ * @returns {string}
+ */
 function getItem(item) {
+	if (!'abcdefghijklmnopqrstuvwxyz'.includes(item[0].toLowerCase())) {
+		item = item.split(' ').slice(1).join(' ');
+	}
+
 	item = item.toLowerCase();
+
 	for (const key in items) {
-		if (
-			items[key]['pt-BR'].split(' ').slice(1).join(' ').toLowerCase() === item ||
-			items[key]['en-US'].split(' ').slice(1).join(' ').toLowerCase() === item
-		) {
+		if (items[key]['pt-BR'].toLowerCase() === item || items[key]['en-US'].toLowerCase() === item) {
 			return key;
 		}
 	}
@@ -240,6 +337,13 @@ function getItem(item) {
 	}
 }
 
+/**
+ *
+ * @param {Array<string>} buttons
+ * @description Returns a row of buttons
+ * @example buttons(['cooldowns', 'help', 'balance'])
+ * @returns {ActionRowBuilder}
+ */
 function buttons(buttons) {
 	const row = new ActionRowBuilder();
 
@@ -260,6 +364,15 @@ function buttons(buttons) {
 	return row;
 }
 
+/**
+ *
+ * @param {GuildMember} member
+ * @param {string} item
+ * @description Checks if an item is equipped
+ * @async
+ * @example isEquipped(member, 'rod') // true
+ * @returns {boolean}
+ */
 async function isEquipped(member, item) {
 	const equippedItems = await readFile(member.id, 'equippedItems');
 
@@ -270,6 +383,15 @@ async function isEquipped(member, item) {
 	}
 }
 
+/**
+ *
+ * @param {GuildMember} member
+ * @param {string} item
+ * @description Uses an item
+ * @async
+ * @example useItem(member, 'rod') // Decreases the rod's usage count by 1
+ * @returns {Promise<void>}
+ */
 async function useItem(member, item) {
 	var equippedItems = await readFile(member.id, 'equippedItems');
 

@@ -1,0 +1,366 @@
+const { randint, changeDB, format } = require('./utils/functions.js');
+const { Client, GatewayIntentBits, Collection, EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const path = require('path');
+require('dotenv').config();
+const { loadEvents } = require('./handlers/eventHandler.js');
+const { loadCommands } = require('./handlers/commandHandler.js');
+const databaseHandler = require('./handlers/databaseHandler.js');
+
+class Falbot {
+	config = require('./config.json');
+	_messages = require(path.join(__dirname, '/utils/json/messages.json'));
+	_banned = new Array();
+	_disabledChannels = new Map();
+	_disabledCommands = new Map();
+	emojiList = {};
+	client = new Client({
+		shards: 'auto',
+		intents: [GatewayIntentBits.Guilds],
+	});
+	levels = require('./utils/json/levels.json');
+	items = require('./utils/json/items.json');
+	userSchema = require('./schemas/user-schema.js');
+	lottoSchema = require('./schemas/lotto-schema.js');
+	interestSchema = require('./schemas/interest-schema.js');
+	bannedSchema = require('./schemas/banned-schema.js');
+	guildsSchema = require('./schemas/guilds-schema.js');
+	activeEvents = new Map();
+
+	constructor() {
+		this.client.on('ready', () => {
+			console.log('Bot online');
+			this.client.on('error', console.error);
+
+			databaseHandler.connect();
+
+			this.client.events = new Collection();
+			this.client.commands = new Collection();
+
+			loadEvents(this, this.client);
+			loadCommands(this, this.client);
+		});
+
+		this.client.login(process.env.TOKEN);
+		(async () => {
+			const banned = await this.bannedSchema.find();
+
+			for (const result of banned) {
+				this._banned.push(result.id);
+			}
+
+			const guilds = await this.guildsSchema.find();
+
+			for (const { _id, disabledChannels, disabledCommands } of guilds) {
+				this._disabledChannels.set(_id, disabledChannels);
+				this._disabledCommands.set(_id, disabledCommands);
+			}
+
+			this.config.testGuilds.forEach(async (guild) => {
+				guild = this.client.guilds.cache.get(guild);
+				for (const [key, value] of await guild.emojis.fetch()) {
+					this.emojiList[value.name] = value;
+				}
+			});
+		})();
+
+		setInterval(
+			() => {
+				this.client.user.setActivity('/help | arte by: @kinsallum'), this.bankInterest(), this.lotteryDraw();
+			},
+			1000 * 60 * 5
+		);
+
+		setInterval(
+			() => {
+				this.randomEventsHandler();
+			},
+			1000 * 60 * 45
+		);
+	}
+
+	async bankInterest() {
+		const interest = await this.interestSchema.findById('interest');
+		if (Date.now() - interest.lastInterest > 1000 * 60 * 60 * 24) {
+			console.log('poupança!');
+			interest.lastInterest = Date.now().toString();
+
+			var users = await this.userSchema.find({
+				banco: { $gt: 0 },
+			});
+
+			for (const user of users) {
+				var limit = this.levels[user.rank - 1].bankLimit;
+
+				if (limit > user.banco) {
+					user.banco += Math.floor(parseInt(user.banco * 0.1));
+				}
+
+				if (user.banco > limit) {
+					user.banco = limit;
+				}
+
+				user.save();
+			}
+			interest.save();
+		}
+	}
+
+	async lotteryDraw() {
+		const lotto = await this.lottoSchema.findById('semanal');
+
+		if (Date.now() > lotto.nextDraw) {
+			console.log('loteria!');
+
+			const users = await this.userSchema.find({
+				tickets: { $gt: 0 },
+			});
+
+			if (users.length > 0) {
+				const numTickets = users.reduce((acc, user) => acc + user.tickets, 0);
+
+				var winner;
+				while (winner === undefined) {
+					for (const user of users) {
+						if (randint(1, numTickets) <= user.tickets) {
+							winner = user;
+						}
+					}
+				}
+
+				await changeDB(winner.id, 'falcoins', lotto.prize);
+
+				var winnerUser = await this.client.users.fetch(winner.id);
+
+				const embed = new EmbedBuilder()
+					.setColor(15844367)
+					.addFields({
+						name: await this.getDmMessage(winnerUser, 'CONGRATULATIONS'),
+						value: await this.getDmMessage(winnerUser, 'LOTTERY_WIN', {
+							PRIZE: format(lotto.prize),
+							TICKETS: format(winner.tickets),
+							TOTAL: format(numTickets),
+						}),
+					})
+					.setFooter({ text: 'by Falcão ❤️' });
+
+				await this.userSchema.updateMany(
+					{
+						tickets: { $gt: 0 },
+					},
+					{
+						tickets: 0,
+					}
+				);
+
+				await winnerUser.send({
+					embeds: [embed],
+				});
+
+				lotto.history.unshift({
+					prize: lotto.prize,
+					winner: winnerUser.username,
+					userTickets: winner.tickets,
+					totalTickets: numTickets,
+				});
+				lotto.prize = randint(3500000, 5000000);
+			} else {
+				lotto.history.unshift({
+					prize: lotto.prize,
+				});
+				lotto.prize = lotto.prize + randint(3500000, 5000000);
+			}
+
+			if (lotto.history.length >= 10) lotto.history.pop();
+			lotto.nextDraw = Date.now() + 604800000; //next one is next week
+			await lotto.save();
+		}
+	}
+
+	async randomEventsHandler() {
+		const events = [
+			{
+				probability: 0.05,
+				name: 'Overtime',
+				min_time: 60,
+				max_time: 120,
+			},
+			{
+				probability: 0.03,
+				name: 'Search Party',
+				min_time: 60,
+				max_time: 120,
+			},
+			{
+				probability: 0.03,
+				name: 'Stampede',
+				min_time: 60,
+				max_time: 120,
+			},
+			{
+				probability: 0.03,
+				name: 'Flood',
+				min_time: 60,
+				max_time: 120,
+			},
+			{
+				probability: 0.03,
+				name: 'Comet',
+				min_time: 60,
+				max_time: 120,
+			},
+		];
+
+		for (const event of events) {
+			const randomProbability = Math.random();
+			if (randomProbability <= event.probability) {
+				if (!this.activeEvents.has(event.name)) {
+					var duration = 1000 * 60 * randint(event.min_time, event.max_time);
+					this.activeEvents.set(event.name, Date.now() + duration);
+					setTimeout(() => {
+						this.activeEvents.delete(event.name);
+					}, duration);
+					break;
+				}
+			}
+		}
+	}
+
+	ban(userId) {
+		this._banned.push(userId);
+	}
+
+	unban(userId) {
+		this._banned = this._banned.filter((id) => id != userId);
+	}
+
+	defaultFilter(interaction) {
+		var disabledChannels = this._disabledChannels.get(interaction.guild.id);
+
+		return !interaction.user.bot && !this._banned.includes(interaction.user.id) && disabledChannels != undefined
+			? !disabledChannels.includes(interaction.channel.id)
+			: true;
+	}
+
+	disableChannel(guild, channel) {
+		const result = this._disabledChannels.get(guild.id);
+		if (result) {
+			result.push(channel.id);
+			this._disabledChannels.set(guild.id, result);
+		} else {
+			this._disabledChannels.set(guild.id, [channel.id]);
+		}
+	}
+
+	enableChannel(guild, channel) {
+		var result = this._disabledChannels.get(guild.id);
+		result = result.filter((channelId) => channelId != channel.id);
+		this._disabledChannels.set(guild.id, result);
+	}
+
+	disableCommand(guild, command) {
+		const result = this._disabledCommands.get(guild.id);
+		if (result) {
+			result.push(command);
+			this._disabledChannels.set(guild.id, result);
+		} else {
+			this._disabledChannels.set(guild.id, [command]);
+		}
+	}
+
+	enableCommand(guild, command) {
+		var result = this._disabledCommands.get(guild.id);
+		result = result.filter((commandName) => commandName != command);
+		this._disabledCommands.set(guild.id, result);
+	}
+
+	getMessage(interaction, messageId, args = {}) {
+		const message = this._messages[messageId];
+		if (!message) {
+			console.error(`Could not find the correct message to send for "${messageId}"`);
+			return 'Could not find the correct message to send. Please report this to the bot developer.';
+		}
+
+		var locale = interaction.locale ?? 'pt-BR';
+		var result = message[locale] ?? message['en-US'];
+
+		for (const key of Object.keys(args)) {
+			const expression = new RegExp(`{${key}}`, 'g');
+			result = result.replace(expression, args[key]);
+		}
+
+		this.userSchema.findByIdAndUpdate(interaction.user.id, { locale: locale }).then(() => {});
+		return result;
+	}
+
+	async getDmMessage(user, messageId, args = {}) {
+		const message = this._messages[messageId];
+		if (!message) {
+			console.error(`Could not find the correct message to send for "${messageId}"`);
+			return 'Could not find the correct message to send. Please report this to the bot developer.';
+		}
+
+		var userFile = await this.userSchema.findById(user.id);
+		var locale = userFile.locale ?? 'en-US';
+		var result = message[locale] ?? message['en-US'];
+
+		for (const key of Object.keys(args)) {
+			const expression = new RegExp(`{${key}}`, 'g');
+			result = result.replace(expression, args[key]);
+		}
+
+		return result;
+	}
+
+	async rankPerks(old_rank, rank, interaction) {
+		var perks = '';
+		if (old_rank != undefined) {
+			if (old_rank.bankLimit < rank.bankLimit) {
+				perks += this.getMessage(interaction, 'RANKUP_BANK', {
+					FALCOINS: format(rank.bankLimit - old_rank.bankLimit),
+				});
+				perks += '\n';
+			}
+
+			if (old_rank.inventoryLimit < rank.inventoryLimit) {
+				perks += this.getMessage(interaction, 'RANKUP_INVENTORY', {
+					FALCOINS: format(rank.inventoryLimit - old_rank.inventoryLimit),
+				});
+				perks += '\n';
+			}
+		}
+
+		perks += `${this.getMessage(interaction, 'VOTO')}: ${format(rank.vote)} Falcoins\n`;
+
+		perks += `${this.getMessage(interaction, 'TRABALHO')}: ${format(rank.work[0])}-${format(rank.work[1])} Falcoins`;
+
+		return perks;
+	}
+
+	getInventoryWorth(inventory) {
+		return Array.from(inventory).reduce((acc, [itemName, quantity]) => {
+			if (this.items[itemName]['value'] !== undefined) acc += this.items[itemName]['value'] * quantity;
+			return acc;
+		}, 0);
+	}
+
+	createEmbed(color = 'Random') {
+		return new EmbedBuilder().setColor(color).setFooter({ text: 'by Falcão ❤️' });
+	}
+
+	getItemEmoji(item) {
+		if (this.items[item].emoji) return this.items[item].emoji;
+		return this.emojiList[item];
+	}
+
+	getItemName(item, interaction) {
+		return `${this.getItemEmoji(item)} ${this.items[item][interaction.locale] ?? this.items[item]['en-US']}`;
+	}
+
+	async editReply(interaction, { content, embeds, components, fetchReply = false }) {
+		return await interaction.editReply({ content, embeds, components, fetchReply }).catch((err) => {
+			console.error(err);
+		});
+	}
+}
+
+Falbot = new Falbot();

@@ -28,14 +28,6 @@ const userSchema = mongoose.Schema(
 			type: Number,
 			default: 1,
 		},
-		voteReminder: {
-			type: Boolean,
-			default: false,
-		},
-		lastReminder: {
-			type: Number,
-			default: 0,
-		},
 		tickets: {
 			type: Number,
 			default: 0,
