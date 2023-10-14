@@ -5,9 +5,15 @@ module.exports = {
 	cooldown: 60 * 60,
 	data: new SlashCommandBuilder()
 		.setName('work')
-		.setNameLocalization('pt-BR', 'trabalhar')
+		.setNameLocalizations({
+			'pt-BR': 'trabalhar',
+			'es-ES': 'trabajar',
+		})
 		.setDescription('Go to work to earn falcoins')
-		.setDescriptionLocalization('pt-BR', 'Vá trabalhar para ganhar falcoins')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Vá trabalhar para ganhar falcoins',
+			'es-ES': 'Ve a trabajar para ganar falcoins',
+		})
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, member, user }) => {
 		try {

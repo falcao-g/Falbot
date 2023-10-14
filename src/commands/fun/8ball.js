@@ -4,16 +4,28 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('8ball')
-		.setNameLocalization('pt-BR', 'bola8')
+		.setNameLocalizations({
+			'pt-BR': 'bola8',
+			'es-ES': 'bola8',
+		})
 		.setDescription('Forecast your future')
-		.setDescriptionLocalization('pt-BR', 'Preveja seu futuro')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Preveja seu futuro',
+			'es-ES': 'Prevea su futuro',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName('question')
-				.setNameLocalization('pt-BR', 'pergunta')
+				.setNameLocalizations({
+					'pt-BR': 'pergunta',
+					'es-ES': 'pregunta',
+				})
 				.setDescription('the question you want to ask the 8ball')
-				.setDescriptionLocalization('pt-BR', 'a pergunta que a bola8 deve responder')
+				.setDescriptionLocalizations({
+					'pt-BR': 'a pergunta que a bola8 deve responder',
+					'es-ES': 'la pregunta que la bola8 debe responder',
+				})
 				.setRequired(true)
 		),
 	execute: async ({ interaction, instance }) => {

@@ -4,7 +4,10 @@ const { format, readFile, buttons } = require('../../utils/functions.js');
 module.exports = {
 	data: new ContextMenuCommandBuilder()
 		.setName("See user's profile")
-		.setNameLocalization('pt-BR', 'Ver o perfil do usuário')
+		.setNameLocalizations({
+			'pt-BR': 'Ver o perfil do usuário',
+			'es-ES': 'Ver el perfil del usuario',
+		})
 		.setType(ApplicationCommandType.User)
 		.setDMPermission(false),
 	execute: async ({ instance, interaction }) => {

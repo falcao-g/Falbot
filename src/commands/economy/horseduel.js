@@ -4,9 +4,15 @@ const { specialArg, readFile, changeDB, randint, format, buttons } = require('..
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('horseduel')
-		.setNameLocalization('pt-BR', 'corrida')
+		.setNameLocalizations({
+			'pt-BR': 'corrida',
+			'es-ES': 'carrera',
+		})
 		.setDescription('Starts a horse race that other users can join')
-		.setDescriptionLocalization('pt-BR', 'Inicie uma corrida de cavalos que outros usuários podem participar')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Inicia uma corrida de cavalos que outros usuários podem participar',
+			'es-ES': 'Inicia una carrera de caballos que otros usuarios pueden participar',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
@@ -16,6 +22,10 @@ module.exports = {
 					'pt-BR',
 					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
 				)
+				.setDescriptionLocalizations({
+					'pt-BR': 'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+					'es-ES': 'la cantidad de falcoins para apostar (soporta "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+				})
 				.setRequired(true)
 		),
 	execute: async ({ interaction, user, instance }) => {

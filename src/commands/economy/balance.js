@@ -4,16 +4,28 @@ const { format, readFile, buttons } = require('../../utils/functions.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('balance')
-		.setNameLocalization('pt-BR', 'conta')
+		.setNameLocalizations({
+			'pt-BR': 'conta',
+			'es-ES': 'cuenta',
+		})
 		.setDescription("Shows your or another user's balance")
-		.setDescriptionLocalization('pt-BR', 'Mostra a sua conta ou a de outro usuário')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Mostra a sua conta ou a de outro usuário',
+			'es-ES': 'Muestra tu cuenta o la de otro usuario',
+		})
 		.setDMPermission(false)
 		.addUserOption((option) =>
 			option
 				.setName('user')
-				.setNameLocalization('pt-BR', 'usuário')
+				.setNameLocalizations({
+					'pt-BR': 'usuário',
+					'es-ES': 'usuario',
+				})
 				.setDescription('the user you want to get info about, leave blank to get your balance')
-				.setDescriptionLocalization('pt-BR', 'o usuário que você deseja ver a conta, deixe vazio para ver a sua')
+				.setDescriptionLocalizations({
+					'pt-BR': 'o usuário que você deseja ver a conta, deixe vazio para ver a sua',
+					'es-ES': 'el usuario que desea obtener información, deje en blanco para obtener su saldo',
+				})
 				.setRequired(false)
 		),
 	execute: async ({ guild, member, instance, interaction }) => {

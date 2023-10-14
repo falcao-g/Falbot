@@ -4,9 +4,15 @@ const builder = require('falbot-snake');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('snake')
-		.setNameLocalization('pt-BR', 'cobrinha')
+		.setNameLocalizations({
+			'pt-BR': 'cobrinha',
+			'es-ES': 'serpiente',
+		})
 		.setDescription('Play a game of snake')
-		.setDescriptionLocalization('pt-BR', 'Jogue o jogo da cobrinha')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Jogue o jogo da cobrinha',
+			'es-ES': 'Juega el juego de la serpiente',
+		})
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, user }) => {
 		try {

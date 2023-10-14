@@ -4,16 +4,28 @@ const { format, readFile, buttons } = require('../../utils/functions.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('profile')
-		.setNameLocalization('pt-BR', 'perfil')
+		.setNameLocalizations({
+			'pt-BR': 'perfil',
+			'es-ES': 'perfil',
+		})
 		.setDescription("Shows your or another user's profile")
-		.setDescriptionLocalization('pt-BR', 'Mostra o seu perfil ou o de outro usuário')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Mostra o seu perfil ou o de outro usuário',
+			'es-ES': 'Muestra tu perfil o el de otro usuario',
+		})
 		.setDMPermission(false)
 		.addUserOption((option) =>
 			option
 				.setName('user')
-				.setNameLocalization('pt-BR', 'usuário')
+				.setNameLocalizations({
+					'pt-BR': 'usuário',
+					'es-ES': 'usuario',
+				})
 				.setDescription('the user you want to get info about, leave blank to get your profile')
-				.setDescriptionLocalization('pt-BR', 'o usuário que você deseja ver o perfil, deixe vazio para ver o seu')
+				.setDescriptionLocalizations({
+					'pt-BR': 'o usuário que você deseja ver o perfil, deixe vazio para ver o seu',
+					'es-ES': 'el usuario que quieres ver el perfil, deja en blanco para ver el tuyo',
+				})
 				.setRequired(false)
 		),
 	execute: async ({ guild, member, instance, interaction }) => {

@@ -4,19 +4,28 @@ const { format, readFile } = require('../../utils/functions.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('stats')
-		.setNameLocalization('pt-BR', 'estatísticas')
+		.setNameLocalizations({
+			'pt-BR': 'estatisticas',
+			'es-ES': 'estadisticas',
+		})
 		.setDescription("Shows your or another user's statistics")
-		.setDescriptionLocalization('pt-BR', 'Mostra as suas estatísticas ou a de outro usuário')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Mostra as suas ou as estatísticas de outro usuário',
+			'es-ES': 'Muestra tus o las estadísticas de otro usuario',
+		})
 		.setDMPermission(false)
 		.addUserOption((option) =>
 			option
 				.setName('user')
-				.setNameLocalization('pt-BR', 'usuário')
+				.setNameLocalizations({
+					'pt-BR': 'usuário',
+					'es-ES': 'usuario',
+				})
 				.setDescription('the user you want to get info about, leave blank to get your stats')
-				.setDescriptionLocalization(
-					'pt-BR',
-					'o usuário que você deseja ver as estatísticas, deixe vazio para ver a sua'
-				)
+				.setDescriptionLocalizations({
+					'pt-BR': 'o usuário que você deseja ver as estatísticas, deixe vazio para ver a sua',
+					'es-ES': 'el usuario que quieres ver las estadísticas, deja en blanco para ver las tuyas',
+				})
 				.setRequired(false)
 		),
 	execute: async ({ guild, member, instance, interaction }) => {

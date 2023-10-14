@@ -4,9 +4,15 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discor
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('crash')
-		.setNameLocalization('pt-BR', 'colapso')
+		.setNameLocalizations({
+			'pt-BR': 'colapso',
+			'es-ES': 'colapso',
+		})
 		.setDescription('Sell at the right time before the market crashes')
-		.setDescriptionLocalization('pt-BR', 'Venda no momento certo antes que o mercado colapse')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Venda no momento certo antes que o mercado colapse',
+			'es-ES': 'Vende en el momento adecuado antes de que el mercado colapse',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
@@ -14,10 +20,10 @@ module.exports = {
 				.setDescription(
 					'the amount of falcoins you want to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
 				)
-				.setDescriptionLocalization(
-					'pt-BR',
-					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
-				)
+				.setDescriptionLocalizations({
+					'pt-BR': 'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+					'es-ES': 'la cantidad de falcoins para apostar (admite "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+				})
 				.setRequired(true)
 		),
 	execute: async ({ member, interaction, instance }) => {

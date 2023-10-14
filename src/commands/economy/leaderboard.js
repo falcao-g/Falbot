@@ -12,26 +12,41 @@ async function getMember(guild, member_id) {
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('leaderboard')
-		.setNameLocalization('pt-BR', 'classificação')
+		.setNameLocalizations({
+			'pt-BR': 'classificação',
+			'es-ES': 'clasificación',
+		})
 		.setDescription('Show the global or local ranking of users')
-		.setDescriptionLocalization('pt-BR', 'Mostra a classicação global ou local de usuários')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Mostra a classicação global ou local de usuários',
+			'es-ES': 'Muestra la clasificación global o local de usuarios',
+		})
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('falcoins')
 				.setDescription('View users ranked by falcoins')
-				.setDescriptionLocalization('pt-BR', 'Veja a classificação de usuários por falcoins')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Veja a classificação de usuários por falcoins',
+					'es-ES': 'Ver usuarios clasificados por falcoins',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('type')
-						.setNameLocalization('pt-BR', 'tipo')
+						.setNameLocalizations({
+							'pt-BR': 'tipo',
+							'es-ES': 'tipo',
+						})
 						.setDescription('leaderboard of the server or global')
-						.setDescriptionLocalization('pt-BR', 'classificação do servidor ou global')
+						.setDescriptionLocalizations({
+							'pt-BR': 'classificação do servidor ou global',
+							'es-ES': 'clasificación del servidor o global',
+						})
 						.setRequired(true)
 						.addChoices(
 							{
 								name: 'server',
-								name_localizations: { 'pt-BR': 'servidor' },
+								name_localizations: { 'pt-BR': 'servidor', 'es-ES': 'servidor' },
 								value: 'server',
 							},
 							{ name: 'global', value: 'global' }
@@ -42,18 +57,27 @@ module.exports = {
 			subcommand
 				.setName('rank')
 				.setDescription('View users ranked by ranks')
-				.setDescriptionLocalization('pt-BR', 'Veja a classificação de usuários por rank')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Veja a classificação de usuários por rank',
+					'es-ES': 'Ver usuarios clasificados por rango',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('type')
-						.setNameLocalization('pt-BR', 'tipo')
+						.setNameLocalizations({
+							'pt-BR': 'tipo',
+							'es-ES': 'tipo',
+						})
 						.setDescription('leaderboard of the server or global')
-						.setDescriptionLocalization('pt-BR', 'classificação do servidor ou global')
+						.setDescriptionLocalizations({
+							'pt-BR': 'classificação do servidor ou global',
+							'es-ES': 'clasificación del servidor o global',
+						})
 						.setRequired(true)
 						.addChoices(
 							{
 								name: 'server',
-								name_localizations: { 'pt-BR': 'servidor' },
+								name_localizations: { 'pt-BR': 'servidor', 'es-ES': 'servidor' },
 								value: 'server',
 							},
 							{ name: 'global', value: 'global' }
@@ -63,20 +87,32 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('wins')
-				.setNameLocalization('pt-BR', 'vitórias')
+				.setNameLocalizations({
+					'pt-BR': 'vitórias',
+					'es-ES': 'victorias',
+				})
 				.setDescription('View users ranked by wins')
-				.setDescriptionLocalization('pt-BR', 'Veja a classificação de usuários por vitórias')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Veja a classificação de usuários por vitórias',
+					'es-ES': 'Ver usuarios clasificados por victorias',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('type')
-						.setNameLocalization('pt-BR', 'tipo')
+						.setNameLocalizations({
+							'pt-BR': 'tipo',
+							'es-ES': 'tipo',
+						})
 						.setDescription('leaderboard of the server or global')
-						.setDescriptionLocalization('pt-BR', 'classificação do servidor ou global')
+						.setDescriptionLocalizations({
+							'pt-BR': 'classificação do servidor ou global',
+							'es-ES': 'clasificación del servidor o global',
+						})
 						.setRequired(true)
 						.addChoices(
 							{
 								name: 'server',
-								name_localizations: { 'pt-BR': 'servidor' },
+								name_localizations: { 'pt-BR': 'servidor', 'es-ES': 'servidor' },
 								value: 'server',
 							},
 							{ name: 'global', value: 'global' }
@@ -87,18 +123,27 @@ module.exports = {
 			subcommand
 				.setName('item')
 				.setDescription('View users ranked by amount of an item')
-				.setDescriptionLocalization('pt-BR', 'Veja a classificação de usuários pela quantidade de um item')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Veja a classificação de usuários pela quantidade de um item',
+					'es-ES': 'Ver usuarios clasificados por la cantidad de un item',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('type')
-						.setNameLocalization('pt-BR', 'tipo')
+						.setNameLocalizations({
+							'pt-BR': 'tipo',
+							'es-ES': 'tipo',
+						})
 						.setDescription('leaderboard of the server or global')
-						.setDescriptionLocalization('pt-BR', 'classificação do servidor ou global')
+						.setDescriptionLocalizations({
+							'pt-BR': 'classificação do servidor ou global',
+							'es-ES': 'clasificación del servidor o global',
+						})
 						.setRequired(true)
 						.addChoices(
 							{
 								name: 'server',
-								name_localizations: { 'pt-BR': 'servidor' },
+								name_localizations: { 'pt-BR': 'servidor', 'es-ES': 'servidor' },
 								value: 'server',
 							},
 							{ name: 'global', value: 'global' }
@@ -108,7 +153,10 @@ module.exports = {
 					option
 						.setName('item')
 						.setDescription('item to be counted')
-						.setDescriptionLocalization('pt-BR', 'item a ser contado')
+						.setDescriptionLocalizations({
+							'pt-BR': 'item a ser contado',
+							'es-ES': 'item a contar',
+						})
 						.setRequired(true)
 						.setAutocomplete(true)
 				)
@@ -116,20 +164,32 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('vote')
-				.setNameLocalization('pt-BR', 'votos')
+				.setNameLocalizations({
+					'pt-BR': 'votos',
+					'es-ES': 'votos',
+				})
 				.setDescription('View users ranked by vote streak')
-				.setDescriptionLocalization('pt-BR', 'Veja a classificação de usuários por votos diários')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Veja a classificação de usuários por votos diários',
+					'es-ES': 'Ver el ranking de usuarios por votos diarios',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('type')
-						.setNameLocalization('pt-BR', 'tipo')
+						.setNameLocalizations({
+							'pt-BR': 'tipo',
+							'es-ES': 'tipo',
+						})
 						.setDescription('leaderboard of the server or global')
-						.setDescriptionLocalization('pt-BR', 'classificação do servidor ou global')
+						.setDescriptionLocalizations({
+							'pt-BR': 'classificação do servidor ou global',
+							'es-ES': 'clasificación del servidor o global',
+						})
 						.setRequired(true)
 						.addChoices(
 							{
 								name: 'server',
-								name_localizations: { 'pt-BR': 'servidor' },
+								name_localizations: { 'pt-BR': 'servidor', 'es-ES': 'servidor' },
 								value: 'server',
 							},
 							{ name: 'global', value: 'global' }

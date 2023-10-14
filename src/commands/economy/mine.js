@@ -5,9 +5,15 @@ module.exports = {
 	cooldown: 60 * 60,
 	data: new SlashCommandBuilder()
 		.setName('mine')
-		.setNameLocalization('pt-BR', 'minerar')
+		.setNameLocalizations({
+			'pt-BR': 'minerar',
+			'es-ES': 'minar',
+		})
 		.setDescription('Go mine to get items')
-		.setDescriptionLocalization('pt-BR', 'Vá minerar para conseguir items')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Vá minerar para conseguir itens',
+			'es-ES': 'Ve a minar para conseguir objetos',
+		})
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, member }) => {
 		await interaction.deferReply().catch(() => {});

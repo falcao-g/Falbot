@@ -5,7 +5,10 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('botinfo')
 		.setDescription('Check some bot stats')
-		.setDescriptionLocalization('pt-BR', 'Veja informações úteis sobre o bot')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Veja algumas estatísticas do bot',
+			'es-ES': 'Mira algunas estadísticas del bot',
+		})
 		.setDMPermission(false),
 	execute: async ({ client, interaction, instance }) => {
 		await interaction.deferReply().catch(() => {});

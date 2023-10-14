@@ -4,18 +4,24 @@ const { specialArg, readFile, changeDB, randint, format, buttons } = require('..
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('russianroulette')
-		.setNameLocalization('pt-BR', 'roletarussa')
+		.setNameLocalizations({
+			'pt-BR': 'roletarussa',
+			'es-ES': 'ruletarusa',
+		})
 		.setDescription('Play with other users, last to survive wins all the falcoins')
-		.setDescriptionLocalization('pt-BR', 'Jogue roleta russa com outros usuários, o sovrevivente leva os falcoins')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Jogue roleta russa com outros usuários, o sovrevivente leva os falcoins',
+			'es-ES': 'Juega con otros usuarios, el último en sobrevivir se lleva todos los falcoins',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName('falcoins')
 				.setDescription('amount of falcoins to play with (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)')
-				.setDescriptionLocalization(
-					'pt-BR',
-					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
-				)
+				.setDescriptionLocalizations({
+					'pt-BR': 'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+					'es-ES': 'la cantidad de falcoins para apostar (soporta "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+				})
 				.setRequired(true)
 		),
 	execute: async ({ interaction, user, instance }) => {

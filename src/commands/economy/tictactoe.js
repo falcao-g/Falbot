@@ -5,16 +5,28 @@ const { specialArg, readFile, format, randint, changeDB, buttons } = require('..
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('tictactoe')
-		.setNameLocalization('pt-BR', 'velha')
+		.setNameLocalizations({
+			'pt-BR': 'velha',
+			'es-ES': 'tresenraya',
+		})
 		.setDescription('Challenge someone to a game of tic tac toe')
-		.setDescriptionLocalization('pt-BR', 'Desafie outro usuário para um jogo da velha')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Desafie alguém para um jogo da velha',
+			'es-ES': 'Desafía a alguien a un juego de tres en raya',
+		})
 		.setDMPermission(false)
 		.addUserOption((option) =>
 			option
 				.setName('user')
-				.setNameLocalization('pt-BR', 'usuário')
+				.setNameLocalizations({
+					'pt-BR': 'usuário',
+					'es-ES': 'usuario',
+				})
 				.setDescription('user to challenge')
-				.setDescriptionLocalization('pt-BR', 'usuário para desafiar')
+				.setDescriptionLocalizations({
+					'pt-BR': 'usuário para desafiar',
+					'es-ES': 'usuario para desafiar',
+				})
 				.setRequired(true)
 		)
 		.addStringOption((option) =>
@@ -23,10 +35,12 @@ module.exports = {
 				.setDescription(
 					'amount of falcoins to bet in the game (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
 				)
-				.setDescriptionLocalization(
-					'pt-BR',
-					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
-				)
+				.setDescriptionLocalizations({
+					'pt-BR':
+						'quantidade de falcoins para apostar no jogo (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+					'es-ES':
+						'cantidad de falcoins para apostar en el juego (soporta "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+				})
 				.setRequired(true)
 		),
 	execute: async ({ guild, interaction, instance, user, member }) => {

@@ -3,39 +3,57 @@ const { readFile, format, changeDB, buttons, getItem } = require('../../utils/fu
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('exchange')
-		.setNameLocalization('pt-BR', 'troca')
+		.setNameLocalizations({
+			'pt-BR': 'troca',
+			'es-ES': 'intercambio',
+		})
 		.setDescription('Exchange falcoins and items with other users')
-		.setDescriptionLocalization('pt-BR', 'Troque falcoins e itens com outros usuários')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Troque falcoins e itens com outros usuários',
+			'es-ES': 'Intercambia falcoins e items con otros usuarios',
+		})
 		.setDMPermission(false)
 		.addUserOption((option) =>
 			option
 				.setName('user')
-				.setNameLocalization('pt-BR', 'usuário')
+				.setNameLocalizations({
+					'pt-BR': 'usuário',
+					'es-ES': 'usuario',
+				})
 				.setDescription('the user to trade with')
-				.setDescriptionLocalization('pt-BR', 'com quem você quer trocar')
+				.setDescriptionLocalizations({
+					'pt-BR': 'com quem você quer trocar',
+					'es-ES': 'con quien quieres intercambiar',
+				})
 				.setRequired(true)
 		)
 		.addStringOption((option) =>
 			option
 				.setName('give')
-				.setNameLocalization('pt-BR', 'oferecer')
+				.setNameLocalizations({
+					'pt-BR': 'oferecer',
+					'es-ES': 'ofrecer',
+				})
 				.setDescription('the items or falcoins to give separated by commas (ex: 1000 falcoins, 1 rock, 10 fish)')
-				.setDescriptionLocalization(
-					'pt-BR',
-					'os itens ou falcoins para oferecer separados por vírgulas (ex: 1000 falcoins, 1 pedra)'
-				)
+				.setDescriptionLocalizations({
+					'pt-BR': 'os itens ou falcoins para oferecer separados por vírgulas (ex: 1000 falcoins, 1 pedra)',
+					'es-ES': 'los items o falcoins para ofrecer separados por comas (ex: 1000 falcoins, 1 piedra)',
+				})
 				.setRequired(true)
 				.setMaxLength(100)
 		)
 		.addStringOption((option) =>
 			option
 				.setName('receive')
-				.setNameLocalization('pt-BR', 'receber')
+				.setNameLocalizations({
+					'pt-BR': 'receber',
+					'es-ES': 'recibir',
+				})
 				.setDescription('the items or falcoins to receive separated by commas (ex: 1000 falcoins, 1 rock, 10 fish)')
-				.setDescriptionLocalization(
-					'pt-BR',
-					'os itens ou falcoins para receber separados por vírgulas (ex: 1000 falcoins, 1 pedra)'
-				)
+				.setDescriptionLocalizations({
+					'pt-BR': 'os itens ou falcoins para receber separados por vírgulas (ex: 1000 falcoins, 1 pedra)',
+					'es-ES': 'los items o falcoins para recibir separados por comas (ex: 1000 falcoins, 1 piedra)',
+				})
 				.setRequired(true)
 				.setMaxLength(100)
 		),

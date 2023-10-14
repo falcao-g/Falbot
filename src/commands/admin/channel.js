@@ -3,26 +3,41 @@ const { SlashCommandBuilder, PermissionFlagsBits, ChannelType } = require('disco
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('channel')
-		.setNameLocalization('pt-BR', 'canal')
+		.setNameLocalizations({
+			'pt-BR': 'canal',
+			'es-ES': 'canal',
+		})
 		.setDescription('Configure disabled channels in your server, Falbot will not work in these channels')
-		.setDescriptionLocalization(
-			'pt-BR',
-			'Configure canais desabilitados no seu servidor, o Falbot não irá responder nesses canais'
-		)
+		.setDescriptionLocalizations({
+			'pt-BR': 'Configure canais desabilitados no seu servidor, o Falbot não irá responder nesses canais',
+			'es-ES': 'Configura los canales deshabilitados en su servidor, Falbot no funcionará en estos canales',
+		})
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('disable')
-				.setNameLocalization('pt-BR', 'desativar')
+				.setNameLocalizations({
+					'pt-BR': 'desativar',
+					'es-ES': 'desactivar',
+				})
 				.setDescription('Falbot will not send messages in the selected channel')
-				.setDescriptionLocalization('pt-BR', 'Falbot não irá mandar mensagens no canal escolhido')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Falbot não irá mandar mensagens no canal escolhido',
+					'es-ES': 'Falbot no enviará mensajes en el canal seleccionado',
+				})
 				.addChannelOption((option) =>
 					option
 						.setName('channel')
-						.setNameLocalization('pt-BR', 'canal')
+						.setNameLocalizations({
+							'pt-BR': 'canal',
+							'es-ES': 'canal',
+						})
 						.setDescription('channel to be deactivated')
-						.setDescriptionLocalization('pt-BR', 'canal para ser desativado')
+						.setDescriptionLocalizations({
+							'pt-BR': 'canal para ser desativado',
+							'es-ES': 'canal para ser desactivado',
+						})
 						.setRequired(true)
 						.addChannelTypes(ChannelType.GuildText)
 				)
@@ -30,15 +45,27 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('enable')
-				.setNameLocalization('pt-BR', 'reativar')
+				.setNameLocalizations({
+					'pt-BR': 'reativar',
+					'es-ES': 'reactivar',
+				})
 				.setDescription('Falbot will return sending messages in the channel')
-				.setDescriptionLocalization('pt-BR', 'Falbot voltará à mandar mensagens no canal escolhido')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Falbot voltará à mandar mensagens no canal escolhido',
+					'es-ES': 'Falbot volverá a enviar mensajes en el canal seleccionado',
+				})
 				.addChannelOption((option) =>
 					option
 						.setName('channel')
-						.setNameLocalization('pt-BR', 'canal')
+						.setNameLocalizations({
+							'pt-BR': 'canal',
+							'es-ES': 'canal',
+						})
 						.setDescription('channel to be deactivated')
-						.setDescriptionLocalization('pt-BR', 'canal para ser reativado')
+						.setDescriptionLocalizations({
+							'pt-BR': 'canal para ser reativado',
+							'es-ES': 'canal para ser reactivado',
+						})
 						.setRequired(true)
 						.addChannelTypes(ChannelType.GuildText)
 				)

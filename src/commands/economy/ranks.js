@@ -7,24 +7,36 @@ module.exports = {
 		.setDescription('Increase you rank')
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
-			subcommand
-				.setName('rankup')
-				.setDescription('Increase you rank')
-				.setDescriptionLocalization('pt-BR', 'Suba de rank')
+			subcommand.setName('rankup').setDescription('Increase you rank').setDescriptionLocalizations({
+				'pt-BR': 'Suba de rank',
+				'es-ES': 'Sube de rank',
+			})
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('view')
-				.setNameLocalization('pt-BR', 'ver')
+				.setNameLocalizations({
+					'pt-BR': 'ver',
+					'es-ES': 'ver',
+				})
 				.setDescription('View upcoming ranks')
-				.setDescriptionLocalization('pt-BR', 'Veja os próximos ranks')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Veja os próximos ranks',
+					'es-ES': 'Veja os próximos ranks',
+				})
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('all')
-				.setNameLocalization('pt-BR', 'todos')
+				.setNameLocalizations({
+					'pt-BR': 'todos',
+					'es-ES': 'todos',
+				})
 				.setDescription('View all ranks')
-				.setDescriptionLocalization('pt-BR', 'Veja todos os ranks')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Veja todos os ranks',
+					'es-ES': 'Veja todos os ranks',
+				})
 		),
 	execute: async ({ guild, user, interaction, instance }) => {
 		try {

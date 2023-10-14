@@ -5,9 +5,15 @@ module.exports = {
 	cooldown: 60 * 60,
 	data: new SlashCommandBuilder()
 		.setName('fish')
-		.setNameLocalization('pt-BR', 'pescar')
+		.setNameLocalizations({
+			'pt-BR': 'pescar',
+			'es-ES': 'pescado',
+		})
 		.setDescription('Go fishing to get items')
-		.setDescriptionLocalization('pt-BR', 'Vá pescar para conseguir items')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Vá pescar para conseguir items',
+			'es-ES': 'Ve a pescar para conseguir items',
+		})
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, member }) => {
 		await interaction.deferReply().catch(() => {});

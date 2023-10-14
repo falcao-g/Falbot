@@ -4,54 +4,82 @@ const { specialArg, readFile, format, changeDB } = require('../../utils/function
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('bank')
-		.setNameLocalization('pt-BR', 'banco')
+		.setNameLocalizations({
+			'pt-BR': 'banco',
+			'es-ES': 'banco',
+		})
 		.setDescription('Deposit or withdraw your falcoins from the bank, falcoins in the bank increases daily')
-		.setDescriptionLocalization('pt-BR', 'Deposite ou saque falcoins do banco, falcoins no banco aumenta diariamente')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Deposite ou saque falcoins do banco, falcoins no banco aumenta diariamente',
+			'es-ES': 'Deposite o retire falcoins del banco, falcoins en el banco aumenta diariamente',
+		})
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('deposit')
-				.setNameLocalization('pt-BR', 'depositar')
+				.setNameLocalizations({
+					'pt-BR': 'depositar',
+					'es-ES': 'depósito',
+				})
 				.setDescription('Deposit falcoins to the bank')
-				.setDescriptionLocalization('pt-BR', 'Deposite falcoins no banco')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Deposite falcoins no banco',
+					'es-ES': 'Deposite falcoins no banco',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('falcoins')
 						.setDescription(
 							'the amount of falcoins to deposit (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
 						)
-						.setDescriptionLocalization(
-							'pt-BR',
-							'a quantidade de falcoins para depositar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
-						)
+						.setDescriptionLocalizations({
+							'pt-BR':
+								'a quantidade de falcoins para depositar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+							'es-ES':
+								'la cantidad de falcoins para depositar (admite "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+						})
 						.setRequired(true)
 				)
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('withdraw')
-				.setNameLocalization('pt-BR', 'sacar')
+				.setNameLocalizations({
+					'pt-BR': 'sacar',
+					'es-ES': 'retirar',
+				})
 				.setDescription('Withdraw falcoins to the bank')
-				.setDescriptionLocalization('pt-BR', 'Saque falcoins do banco')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Saque falcoins do banco',
+					'es-ES': 'Retire falcoins del banco',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('falcoins')
 						.setDescription(
 							'the amount of falcoins to withdraw (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
 						)
-						.setDescriptionLocalization(
-							'pt-BR',
-							'a quantidade de falcoins para sacar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
-						)
+						.setDescriptionLocalizations({
+							'pt-BR':
+								'a quantidade de falcoins para sacar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+							'es-ES':
+								'la cantidad de falcoins para retirar (admite "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+						})
 						.setRequired(true)
 				)
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('view')
-				.setNameLocalization('pt-BR', 'ver')
+				.setNameLocalizations({
+					'pt-BR': 'ver',
+					'es-ES': 'ver',
+				})
 				.setDescription('View bank balance and other useful stats')
-				.setDescriptionLocalization('pt-BR', 'Veja o saldo bancário e outras informações')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Veja o saldo bancário e outras informações',
+					'es-ES': 'Ver el saldo bancario y otras informaciones',
+				})
 		),
 	execute: async ({ user, member, interaction, instance }) => {
 		await interaction.deferReply().catch(() => {});
