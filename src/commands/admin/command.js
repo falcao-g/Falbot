@@ -3,26 +3,41 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('command')
-		.setNameLocalization('pt-BR', 'comando')
+		.setNameLocalizations({
+			'pt-BR': 'comando',
+			'es-ES': 'comando',
+		})
 		.setDescription('Configure disabled commands in your server, Falbot respond to this commands')
-		.setDescriptionLocalization(
-			'pt-BR',
-			'Desative/reative comandos no seu servidor, o Falbot não irá responder a esses comandos'
-		)
+		.setDescriptionLocalizations({
+			'pt-BR': 'Desative/reative comandos no seu servidor, o Falbot não irá responder a esses comandos',
+			'es-ES': 'Desactive/reactive comandos en su servidor, Falbot no responderá a estos comandos',
+		})
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('disable')
-				.setNameLocalization('pt-BR', 'desativar')
+				.setNameLocalizations({
+					'pt-BR': 'desativar',
+					'es-ES': 'desactivar',
+				})
 				.setDescription('Falbot will not respond to the selected command')
-				.setDescriptionLocalization('pt-BR', 'Falbot não irá responder ao comando escolhido')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Falbot não irá responder ao comando escolhido',
+					'es-ES': 'Falbot no responderá al comando seleccionado',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('command')
-						.setNameLocalization('pt-BR', 'comando')
+						.setNameLocalizations({
+							'pt-BR': 'comando',
+							'es-ES': 'comando',
+						})
 						.setDescription('command to be deactivated')
-						.setDescriptionLocalization('pt-BR', 'comando para ser desativado')
+						.setDescriptionLocalizations({
+							'pt-BR': 'comando para ser desativado',
+							'es-ES': 'comando para ser desactivado',
+						})
 						.setRequired(true)
 						.setAutocomplete(true)
 				)
@@ -30,15 +45,27 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('enable')
-				.setNameLocalization('pt-BR', 'reativar')
+				.setNameLocalizations({
+					'pt-BR': 'reativar',
+					'es-ES': 'reactivar',
+				})
 				.setDescription('Falbot will return responding to the command')
-				.setDescriptionLocalization('pt-BR', 'Falbot voltará à responder ao comando escolhido')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Falbot voltará à responder ao comando escolhido',
+					'es-ES': 'Falbot volverá a responder al comando seleccionado',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('command')
-						.setNameLocalization('pt-BR', 'comando')
+						.setNameLocalizations({
+							'pt-BR': 'comando',
+							'es-ES': 'comando',
+						})
 						.setDescription('command to be deactivated')
-						.setDescriptionLocalization('pt-BR', 'comando para ser reativado')
+						.setDescriptionLocalizations({
+							'pt-BR': 'comando para ser reativado',
+							'es-ES': 'comando para ser reactivado',
+						})
 						.setRequired(true)
 						.setAutocomplete(true)
 				)

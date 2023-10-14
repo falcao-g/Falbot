@@ -11,22 +11,40 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('view')
-				.setNameLocalization('pt-BR', 'ver')
+				.setNameLocalizations({
+					'pt-BR': 'ver',
+					'es-ES': 'ver',
+				})
 				.setDescription('View lottery info')
-				.setDescriptionLocalization('pt-BR', 'Veja as informações da loteria')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Veja as informações da loteria',
+					'es-ES': 'Veja las informaciones de la lotería',
+				})
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('buy')
-				.setNameLocalization('pt-BR', 'comprar')
+				.setNameLocalizations({
+					'pt-BR': 'comprar',
+					'es-ES': 'comprar',
+				})
 				.setDescription('Buy lottery tickets')
-				.setDescriptionLocalization('pt-BR', 'Compre bilhetes de loteria')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Compre bilhetes de loteria',
+					'es-ES': 'Compre billetes de lotería',
+				})
 				.addIntegerOption((option) =>
 					option
 						.setName('amount')
-						.setNameLocalization('pt-BR', 'quantidade')
+						.setNameLocalizations({
+							'pt-BR': 'quantidade',
+							'es-ES': 'cantidad',
+						})
 						.setDescription('amount of lottery tickets to buy')
-						.setDescriptionLocalization('pt-BR', 'quantidade de bilhetes para comprar')
+						.setDescriptionLocalizations({
+							'pt-BR': 'quantidade de bilhetes para comprar',
+							'es-ES': 'cantidad de billetes para comprar',
+						})
 						.setMinValue(1)
 						.setRequired(true)
 				)
@@ -34,9 +52,15 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('history')
-				.setNameLocalization('pt-BR', 'histórico')
+				.setNameLocalizations({
+					'pt-BR': 'histórico',
+					'es-ES': 'histórico',
+				})
 				.setDescription('See the last 10 winners of the lottery')
-				.setDescriptionLocalization('pt-BR', 'Veja os 10 últimos gahnadores da loteria')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Veja os 10 últimos gahnadores da loteria',
+					'es-ES': 'Veja los 10 últimos ganadores de la lotería',
+				})
 		),
 	execute: async ({ user, interaction, instance }) => {
 		try {

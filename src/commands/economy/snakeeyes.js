@@ -4,18 +4,24 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('snakeeyes')
-		.setNameLocalization('pt-BR', 'olhoscobra')
+		.setNameLocalizations({
+			'pt-BR': 'olhoscobra',
+			'es-ES': 'olhoscobra',
+		})
 		.setDescription('Roll two dice, if either of them roll a one, you win')
-		.setDescriptionLocalization('pt-BR', 'Role dois dados, se algum dos dois der 1, você ganha')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Role dois dados, se algum dos dois der 1, você ganha',
+			'es-ES': 'Tira dos dados, si alguno de ellos da 1, ganas',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName('falcoins')
 				.setDescription('amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)')
-				.setDescriptionLocalization(
-					'pt-BR',
-					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
-				)
+				.setDescriptionLocalizations({
+					'pt-BR': 'quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+					'es-ES': 'cantidad de falcoins para apostar (soporta "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+				})
 				.setRequired(true)
 		),
 	execute: async ({ interaction, instance, user, member }) => {

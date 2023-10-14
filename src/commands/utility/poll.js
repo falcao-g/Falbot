@@ -3,16 +3,28 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('poll')
-		.setNameLocalization('pt-BR', 'enquete')
+		.setNameLocalizations({
+			'pt-BR': 'enquete',
+			'es-ES': 'encuesta',
+		})
 		.setDescription('Create a little pretty poll')
-		.setDescriptionLocalization('pt-BR', 'Crie uma bonita pequena enquete')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Crie uma bonita pequena enquete',
+			'es-ES': 'Crea una bonita pequeña encuesta',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName('theme')
-				.setNameLocalization('pt-BR', 'tema')
+				.setNameLocalizations({
+					'pt-BR': 'tema',
+					'es-ES': 'tema',
+				})
 				.setDescription('theme of the poll')
-				.setDescriptionLocalization('pt-BR', 'tema da enquete')
+				.setDescriptionLocalizations({
+					'pt-BR': 'tema da enquete',
+					'es-ES': 'tema de la encuesta',
+				})
 				.setRequired(true)
 		),
 	execute: async ({ interaction, user, member, instance }) => {

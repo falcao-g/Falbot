@@ -4,16 +4,28 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('math')
-		.setNameLocalization('pt-BR', 'mat')
+		.setNameLocalizations({
+			'pt-BR': 'mat',
+			'es-ES': 'mat',
+		})
 		.setDescription('Resolve a mathematical expression')
-		.setDescriptionLocalization('pt-BR', 'Calcule uma expressão matemática')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Resolva uma expressão matemática',
+			'es-ES': 'Resuelve una expresión matemática',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName('expression')
-				.setNameLocalization('pt-BR', 'expressão')
+				.setNameLocalizations({
+					'pt-BR': 'expressão',
+					'es-ES': 'expresión',
+				})
 				.setDescription('the mathematical expression to be solved')
-				.setDescriptionLocalization('pt-BR', 'a expressão matemática a ser resolvida')
+				.setDescriptionLocalizations({
+					'pt-BR': 'a expressão matemática a ser resolvida',
+					'es-ES': 'la expresión matemática a resolver',
+				})
 				.setRequired(true)
 				.setAutocomplete(true)
 		),

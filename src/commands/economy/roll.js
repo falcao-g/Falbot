@@ -4,16 +4,28 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('roll')
-		.setNameLocalization('pt-BR', 'rolar')
+		.setNameLocalizations({
+			'pt-BR': 'rolar',
+			'es-ES': 'tirar',
+		})
 		.setDescription('Roll dice for you')
-		.setDescriptionLocalization('pt-BR', 'Rola dados para você')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Rola dados para você',
+			'es-ES': 'Tira dados para ti',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName('dice')
-				.setNameLocalization('pt-BR', 'dados')
+				.setNameLocalizations({
+					'pt-BR': 'dados',
+					'es-ES': 'dados',
+				})
 				.setDescription('dice to be rolled')
-				.setDescriptionLocalization('pt-BR', 'dados a serem rolados')
+				.setDescriptionLocalizations({
+					'pt-BR': 'dados a serem rolados',
+					'es-ES': 'dados a serem tirados',
+				})
 				.setRequired(true)
 				.setMaxLength(500)
 		),

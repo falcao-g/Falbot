@@ -5,9 +5,15 @@ const Blackjack = require('simply-blackjack');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('blackjack')
-		.setNameLocalization('pt-BR', 'vinteum')
+		.setNameLocalizations({
+			'pt-BR': 'vinteum',
+			'es-ES': 'veintiuno',
+		})
 		.setDescription('Play a game of blackjack')
-		.setDescriptionLocalization('pt-BR', 'Jogue um jogo de 21')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Jogue um jogo de 21',
+			'es-ES': 'Juega un juego de 21',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
@@ -15,10 +21,10 @@ module.exports = {
 				.setDescription(
 					'the amount of falcoins you want to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
 				)
-				.setDescriptionLocalization(
-					'pt-BR',
-					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
-				)
+				.setDescriptionLocalizations({
+					'pt-BR': 'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+					'es-ES': 'la cantidad de falcoins para apostar (admite "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+				})
 				.setRequired(true)
 		),
 	execute: async ({ member, interaction, instance, user }) => {

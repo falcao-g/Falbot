@@ -4,47 +4,74 @@ const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBu
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('inventory')
-		.setNameLocalization('pt-BR', 'inventário')
+		.setNameLocalizations({
+			'pt-BR': 'inventário',
+			'es-ES': 'inventario',
+		})
 		.setDescription('Inventory actions')
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('view')
-				.setNameLocalization('pt-BR', 'ver')
+				.setNameLocalizations({
+					'pt-BR': 'ver',
+					'es-ES': 'ver',
+				})
 				.setDescription('View your inventory or of another user')
-				.setDescriptionLocalization('pt-BR', 'Veja o seu inventário ou o de outro usuário')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Veja o seu inventário ou o de outro usuário',
+					'es-ES': 'Ver tu inventario o el de otro usuario',
+				})
 				.addUserOption((option) =>
 					option
 						.setName('user')
-						.setNameLocalization('pt-BR', 'usuário')
+						.setNameLocalizations({
+							'pt-BR': 'usuário',
+							'es-ES': 'usuario',
+						})
 						.setDescription('the user you want to see the inventory, leave blank to get your inventory')
-						.setDescriptionLocalization(
-							'pt-BR',
-							'o usuário que você deseja ver o inventário, deixe vazio para ver o seu'
-						)
+						.setDescriptionLocalizations({
+							'pt-BR': 'o usuário que você deseja ver o inventário, deixe vazio para ver o seu',
+							'es-ES': 'el usuario que quieres ver el inventario, deja en blanco para ver el tuyo',
+						})
 						.setRequired(false)
 				)
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('calc')
-				.setNameLocalization('pt-BR', 'calcular')
+				.setNameLocalizations({
+					'pt-BR': 'calcular',
+					'es-ES': 'calcular',
+				})
 				.setDescription('Calculate crafting materials or items cost')
-				.setDescriptionLocalization('pt-BR', 'Calcule materias e custo para construção')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Calcule materiais e custo para construção',
+					'es-ES': 'Calcular los materiales y el coste de la construcción',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('item')
 						.setDescription('item to calculate')
-						.setDescriptionLocalization('pt-BR', 'item para calcular')
+						.setDescriptionLocalizations({
+							'pt-BR': 'item para calcular',
+							'es-ES': 'item para calcular',
+						})
 						.setRequired(true)
 						.setAutocomplete(true)
 				)
 				.addIntegerOption((option) =>
 					option
 						.setName('amount')
-						.setNameLocalization('pt-BR', 'quantidade')
+						.setNameLocalizations({
+							'pt-BR': 'quantidade',
+							'es-ES': 'cantidad',
+						})
 						.setDescription('amount of the item')
-						.setDescriptionLocalization('pt-BR', 'quantidade do item')
+						.setDescriptionLocalizations({
+							'pt-BR': 'quantidade do item',
+							'es-ES': 'cantidad del item',
+						})
 						.setRequired(true)
 						.setMinValue(1)
 				)
@@ -52,23 +79,38 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('sell')
-				.setNameLocalization('pt-BR', 'vender')
+				.setNameLocalizations({
+					'pt-BR': 'vender',
+					'es-ES': 'vender',
+				})
 				.setDescription('Sell items to the market')
-				.setDescriptionLocalization('pt-BR', 'Vende items para o mercado')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Venda itens para o mercado',
+					'es-ES': 'Vender items para el mercado',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('item')
 						.setDescription('item to sell')
-						.setDescriptionLocalization('pt-BR', 'item para vender')
+						.setDescriptionLocalizations({
+							'pt-BR': 'item para vender',
+							'es-ES': 'item para vender',
+						})
 						.setRequired(true)
 						.setAutocomplete(true)
 				)
 				.addIntegerOption((option) =>
 					option
 						.setName('amount')
-						.setNameLocalization('pt-BR', 'quantidade')
+						.setNameLocalizations({
+							'pt-BR': 'quantidade',
+							'es-ES': 'cantidad',
+						})
 						.setDescription('amount of the item')
-						.setDescriptionLocalization('pt-BR', 'quantidade do item')
+						.setDescriptionLocalizations({
+							'pt-BR': 'quantidade do item',
+							'es-ES': 'cantidad del item',
+						})
 						.setRequired(true)
 						.setMinValue(1)
 				)
@@ -76,14 +118,23 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('equip')
-				.setNameLocalization('pt-BR', 'equipar')
+				.setNameLocalizations({
+					'pt-BR': 'equipar',
+					'es-ES': 'equipar',
+				})
 				.setDescription('Equip an item or leave blank to see equippable items')
-				.setDescriptionLocalization('pt-BR', 'Equipe um item ou deixe vazio para ver os itens equipáveis')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Equipe um item ou deixe vazio para ver os itens equipáveis',
+					'es-ES': 'Equipe un item o deja en blanco para ver los items equipables',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('item')
 						.setDescription('item to equip')
-						.setDescriptionLocalization('pt-BR', 'item para equipar')
+						.setDescriptionLocalizations({
+							'pt-BR': 'item para equipar',
+							'es-ES': 'item para equipar',
+						})
 						.setRequired(true)
 						.setAutocomplete(true)
 				)
@@ -91,23 +142,38 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('craft')
-				.setNameLocalization('pt-BR', 'construir')
+				.setNameLocalizations({
+					'pt-BR': 'construir',
+					'es-ES': 'construir',
+				})
 				.setDescription('Craft an item')
-				.setDescriptionLocalization('pt-BR', 'Construa um item')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Construa um item',
+					'es-ES': 'Construir un item',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('item')
 						.setDescription('item to craft')
-						.setDescriptionLocalization('pt-BR', 'item para construir')
+						.setDescriptionLocalizations({
+							'pt-BR': 'item para construir',
+							'es-ES': 'item para construir',
+						})
 						.setRequired(false)
 						.setAutocomplete(true)
 				)
 				.addIntegerOption((option) =>
 					option
 						.setName('amount')
-						.setNameLocalization('pt-BR', 'quantidade')
+						.setNameLocalizations({
+							'pt-BR': 'quantidade',
+							'es-ES': 'cantidad',
+						})
 						.setDescription('amount of the item')
-						.setDescriptionLocalization('pt-BR', 'quantidade do item')
+						.setDescriptionLocalizations({
+							'pt-BR': 'quantidade do item',
+							'es-ES': 'cantidad del item',
+						})
 						.setRequired(false)
 						.setMinValue(1)
 				)
@@ -115,25 +181,37 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('sellall')
-				.setNameLocalization('pt-BR', 'vendertudo')
+				.setNameLocalizations({
+					'pt-BR': 'vendertudo',
+					'es-ES': 'vendertudo',
+				})
 				.setDescription('Sell (almost) entire inventory to bot')
-				.setDescriptionLocalization('pt-BR', 'Venda (quase) todo o inventário para o bot')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Venda (quase) todo o inventário para o bot',
+					'es-ES': 'Vender (casi) todo el inventario para el bot',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('lootonly')
-						.setNameLocalization('pt-BR', 'somente-loot')
+						.setNameLocalizations({
+							'pt-BR': 'somente-loot',
+							'es-ES': 'solo-loot',
+						})
 						.setDescription('sell only loot items')
-						.setDescriptionLocalization('pt-BR', 'venda apenas itens de loot')
+						.setDescriptionLocalizations({
+							'pt-BR': 'venda apenas itens de loot',
+							'es-ES': 'vender solo items de loot',
+						})
 						.setRequired(false)
 						.addChoices(
 							{
 								name: 'yes',
-								name_localizations: { 'pt-BR': 'sim' },
+								name_localizations: { 'pt-BR': 'sim', 'es-ES': 'sí' },
 								value: 'yes',
 							},
 							{
 								name: 'no',
-								name_localizations: { 'pt-BR': 'não' },
+								name_localizations: { 'pt-BR': 'não', 'es-ES': 'no' },
 								value: 'no',
 							}
 						)
@@ -141,19 +219,25 @@ module.exports = {
 				.addStringOption((option) =>
 					option
 						.setName('no-legendary')
-						.setNameLocalization('pt-BR', 'sem-lendários')
+						.setNameLocalizations({
+							'pt-BR': 'sem-lendários',
+							'es-ES': 'sin-legendarios',
+						})
 						.setDescription('sell only non-legendary items')
-						.setDescriptionLocalization('pt-BR', 'venda apenas itens não-lendários')
+						.setDescriptionLocalizations({
+							'pt-BR': 'venda apenas itens não-lendários',
+							'es-ES': 'vender solo items no-legendarios',
+						})
 						.setRequired(false)
 						.addChoices(
 							{
 								name: 'yes',
-								name_localizations: { 'pt-BR': 'sim' },
+								name_localizations: { 'pt-BR': 'sim', 'es-ES': 'sí' },
 								value: 'yes',
 							},
 							{
 								name: 'no',
-								name_localizations: { 'pt-BR': 'não' },
+								name_localizations: { 'pt-BR': 'não', 'es-ES': 'no' },
 								value: 'no',
 							}
 						)
@@ -162,21 +246,36 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('sort')
-				.setNameLocalization('pt-BR', 'ordenação')
+				.setNameLocalizations({
+					'pt-BR': 'ordenação',
+					'es-ES': 'ordenación',
+				})
 				.setDescription('Change inventory sorting method')
-				.setDescriptionLocalization('pt-BR', 'Muda o método de ordenação do inventário')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Mude o método de ordenação do inventário',
+					'es-ES': 'Cambiar el método de ordenación del inventario',
+				})
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('use')
-				.setNameLocalization('pt-BR', 'usar')
+				.setNameLocalizations({
+					'pt-BR': 'usar',
+					'es-ES': 'usar',
+				})
 				.setDescription('Use an item')
-				.setDescriptionLocalization('pt-BR', 'Use um item')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Use um item',
+					'es-ES': 'Usar un item',
+				})
 				.addStringOption((option) =>
 					option
 						.setName('item')
 						.setDescription('item to use')
-						.setDescriptionLocalization('pt-BR', 'item para ser usado')
+						.setDescriptionLocalizations({
+							'pt-BR': 'item para usar',
+							'es-ES': 'item para usar',
+						})
 						.setRequired(true)
 						.setAutocomplete(true)
 				)

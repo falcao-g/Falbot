@@ -5,9 +5,15 @@ module.exports = {
 	cooldown: 60 * 60 * 6,
 	data: new SlashCommandBuilder()
 		.setName('scratch')
-		.setNameLocalization('pt-BR', 'raspadinha')
+		.setNameLocalizations({
+			'pt-BR': 'raspadinha',
+			'es-ES': 'raspadinha',
+		})
 		.setDescription('Play scratch-off for a chance to win a huge jackpot')
-		.setDescriptionLocalization('pt-BR', 'Jogue raspadinha para uma chance de ganhar muitos falcoins')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Jogue raspadinha para uma chance de ganhar muitos falcoins',
+			'es-ES': 'Juega raspadinha para una oportunidad de ganar muchos falcoins',
+		})
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, user, member }) => {
 		try {

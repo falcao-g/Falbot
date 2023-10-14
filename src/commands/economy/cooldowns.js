@@ -4,9 +4,15 @@ const { readFile, msToTime, resolveCooldown } = require('../../utils/functions.j
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('cooldowns')
-		.setNameLocalization('pt-BR', 'intervalos')
+		.setNameLocalizations({
+			'pt-BR': 'intervalos',
+			'es-ES': 'intervalos',
+		})
 		.setDescription('Shows your commands cooldowns')
-		.setDescriptionLocalization('pt-BR', 'Veja o tempo que falta para poder usar certos comandos')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Veja o tempo que falta para poder usar certos comandos',
+			'es-ES': 'Muestra el tiempo que falta para poder usar ciertos comandos',
+		})
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, member }) => {
 		await interaction.deferReply().catch(() => {});

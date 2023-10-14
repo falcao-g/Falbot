@@ -4,71 +4,80 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('roulette')
-		.setNameLocalization('pt-BR', 'roleta')
+		.setNameLocalizations({
+			'pt-BR': 'roleta',
+			'es-ES': 'ruleta',
+		})
 		.setDescription('Bet on the roulette')
-		.setDescriptionLocalization('pt-BR', 'Aposte na roleta')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Aposte na roleta',
+			'es-ES': 'Aposte en la ruleta',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName('type')
-				.setNameLocalization('pt-BR', 'tipo')
+				.setNameLocalizations({
+					'pt-BR': 'tipo',
+					'es-ES': 'tipo',
+				})
 				.setDescription(
 					'the columns have a 2-1 payout ratio, the green has a 35-1 (only one number) and the rest have a 1-1'
 				)
-				.setDescriptionLocalization(
-					'pt-BR',
-					'as colunas tem uma taxa de retorno de 2-1, o verde é 35-1 (só um número) e o resto 1-1'
-				)
+				.setDescriptionLocalizations({
+					'pt-BR': 'as colunas tem uma taxa de retorno de 2-1, o verde é 35-1 (só um número) e o resto 1-1',
+					'es-ES': 'las columnas tienen una tasa de retorno de 2-1, el verde es 35-1 (solo un número) y el resto 1-1',
+				})
 				.setRequired(true)
 				.addChoices(
 					{
 						name: 'black',
-						name_localizations: { 'pt-BR': 'preto' },
+						name_localizations: { 'pt-BR': 'preto', 'es-ES': 'negro' },
 						value: 'black',
 					},
 					{
 						name: 'red',
-						name_localizations: { 'pt-BR': 'vermelho' },
+						name_localizations: { 'pt-BR': 'vermelho', 'es-ES': 'rojo' },
 						value: 'red',
 					},
 					{
 						name: 'green',
-						name_localizations: { 'pt-BR': 'verde' },
+						name_localizations: { 'pt-BR': 'verde', 'es-ES': 'verde' },
 						value: 'green',
 					},
 					{
 						name: 'high',
-						name_localizations: { 'pt-BR': 'altos' },
+						name_localizations: { 'pt-BR': 'altos', 'es-ES': 'alto' },
 						value: 'high',
 					},
 					{
 						name: 'low',
-						name_localizations: { 'pt-BR': 'baixos' },
+						name_localizations: { 'pt-BR': 'baixos', 'es-ES': 'bajo' },
 						value: 'low',
 					},
 					{
 						name: 'even',
-						name_localizations: { 'pt-BR': 'par' },
+						name_localizations: { 'pt-BR': 'par', 'es-ES': 'par' },
 						value: 'even',
 					},
 					{
 						name: 'odd',
-						name_localizations: { 'pt-BR': 'ímpar' },
+						name_localizations: { 'pt-BR': 'ímpar', 'es-ES': 'extraño' },
 						value: 'odd',
 					},
 					{
 						name: '1st column',
-						name_localizations: { 'pt-BR': '1ª coluna' },
+						name_localizations: { 'pt-BR': '1ª coluna', 'es-ES': '1ª columna' },
 						value: 'first',
 					},
 					{
 						name: '2nd column',
-						name_localizations: { 'pt-BR': '2ª coluna' },
+						name_localizations: { 'pt-BR': '2ª coluna', 'es-ES': '2ª columna' },
 						value: 'second',
 					},
 					{
 						name: '3rd column',
-						name_localizations: { 'pt-BR': '3ª coluna' },
+						name_localizations: { 'pt-BR': '3ª coluna', 'es-ES': '3ª columna' },
 						value: 'third',
 					}
 				)

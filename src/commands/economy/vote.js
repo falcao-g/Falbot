@@ -5,9 +5,15 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('vote')
-		.setNameLocalization('pt-BR', 'voto')
+		.setNameLocalizations({
+			'pt-BR': 'voto',
+			'es-ES': 'voto',
+		})
 		.setDescription('Earn falcoins by voting for us on top.gg')
-		.setDescriptionLocalization('pt-BR', 'Ganhe falcois votando no bot no top.gg'),
+		.setDescriptionLocalizations({
+			'pt-BR': 'Ganhe falcois votando no bot no top.gg',
+			'es-ES': 'Gana falcoins votando por nosotros en top.gg',
+		}),
 	execute: async ({ user, instance, interaction }) => {
 		try {
 			await interaction.deferReply().catch(() => {});

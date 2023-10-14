@@ -3,52 +3,64 @@ const { ActionRowBuilder, StringSelectMenuBuilder, SlashCommandBuilder } = requi
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
-		.setNameLocalization('pt-BR', 'ajuda')
+		.setNameLocalizations({
+			'pt-BR': 'ajuda',
+			'es-ES': 'ayuda',
+		})
 		.setDescription('Show commands help and information')
-		.setDescriptionLocalization('pt-BR', 'Mostra informações sobre os comandos e sistemas do bot')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Mostra informações sobre os comandos e sistemas do bot',
+			'es-ES': 'Mira información sobre los comandos y sistemas del bot',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName('page')
-				.setNameLocalization('pt-BR', 'página')
+				.setNameLocalizations({
+					'pt-BR': 'página',
+					'es-ES': 'página',
+				})
 				.setDescription('which help page you want to see')
-				.setDescriptionLocalization('pt-BR', 'qual página de ajuda você quer ver')
+				.setDescriptionLocalizations({
+					'pt-BR': 'qual página de ajuda você quer ver',
+					'es-ES': 'qué página de ayuda quieres ver',
+				})
 				.setRequired(false)
 				.addChoices(
 					{
 						name: '💠 introduction',
-						name_localizations: { 'pt-BR': '💠 introdução' },
+						name_localizations: { 'pt-BR': '💠 introdução', 'es-ES': '💠 introducción' },
 						value: 'introduction',
 					},
 					{
 						name: '📚 all commands',
-						name_localizations: { 'pt-BR': '📚 todos os comandos' },
+						name_localizations: { 'pt-BR': '📚 todos os comandos', 'es-ES': '📚 todos los comandos' },
 						value: 'allcommands',
 					},
 					{ name: '📈 ranks', value: 'ranks' },
 					{
 						name: '💸 economy',
-						name_localizations: { 'pt-BR': '💸 economia' },
+						name_localizations: { 'pt-BR': '💸 economia', 'es-ES': '💸 economía' },
 						value: 'economy',
 					},
 					{
 						name: '🎉 fun',
-						name_localizations: { 'pt-BR': '🎉 diversão' },
+						name_localizations: { 'pt-BR': '🎉 diversão', 'es-ES': '🎉 diversión' },
 						value: 'fun',
 					},
 					{
 						name: '📝 utils',
-						name_localizations: { 'pt-BR': '📝 úteis' },
+						name_localizations: { 'pt-BR': '📝 úteis', 'es-ES': '📝 útil' },
 						value: 'utils',
 					},
 					{
 						name: '🎒 items and inventory',
-						name_localizations: { 'pt-BR': '🎒 items e inventário' },
+						name_localizations: { 'pt-BR': '🎒 items e inventário', 'es-ES': '🎒 artículos e inventario' },
 						value: 'items',
 					},
 					{
 						name: '⚙️ config',
-						name_localizations: { 'pt-BR': '⚙️ configuração' },
+						name_localizations: { 'pt-BR': '⚙️ configuração', 'es-ES': '⚙️ configuración' },
 						value: 'config',
 					}
 				)

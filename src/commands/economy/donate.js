@@ -4,26 +4,38 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('donate')
-		.setNameLocalization('pt-BR', 'doar')
+		.setNameLocalizations({
+			'pt-BR': 'doar',
+			'es-ES': 'donar',
+		})
 		.setDescription('Donate x falcoins to a user')
-		.setDescriptionLocalization('pt-BR', 'Doe x falcoins para outro usuário')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Doe x falcoins para outro usuário',
+			'es-ES': 'Dona x falcoins a otro usuario',
+		})
 		.setDMPermission(false)
 		.addUserOption((option) =>
 			option
 				.setName('user')
-				.setNameLocalization('pt-BR', 'usuário')
+				.setNameLocalizations({
+					'pt-BR': 'usuário',
+					'es-ES': 'usuario',
+				})
 				.setDescription('user to donate to')
-				.setDescriptionLocalization('pt-BR', 'quem vai receber a doação')
+				.setDescriptionLocalizations({
+					'pt-BR': 'quem vai receber a doação',
+					'es-ES': 'quien va a recibir la donación',
+				})
 				.setRequired(true)
 		)
 		.addStringOption((option) =>
 			option
 				.setName('falcoins')
 				.setDescription('amount of falcoins to donate (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)')
-				.setDescriptionLocalization(
-					'pt-BR',
-					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
-				)
+				.setDescriptionLocalizations({
+					'pt-BR': 'a quantidade de falcoins para doar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+					'es-ES': 'la cantidad de falcoins para donar (admite "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+				})
 				.setRequired(true)
 		),
 	execute: async ({ interaction, user, instance }) => {

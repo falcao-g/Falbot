@@ -4,16 +4,28 @@ const { specialArg, readFile, randint, changeDB, format } = require('../../utils
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('horse')
-		.setNameLocalization('pt-BR', 'cavalo')
+		.setNameLocalizations({
+			'pt-BR': 'cavalo',
+			'es-ES': 'caballo',
+		})
 		.setDescription('Bet in what horse is going to win')
-		.setDescriptionLocalization('pt-BR', 'Aposte em qual cavalo é o mais rápido')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Aposte em qual cavalo é o mais rápido',
+			'es-ES': 'Apostar en qué caballo va a ganar',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName('horse')
-				.setNameLocalization('pt-BR', 'cavalo')
+				.setNameLocalizations({
+					'pt-BR': 'cavalo',
+					'es-ES': 'caballo',
+				})
 				.setDescription('number of the horse you want to bet in, order is top to bottom')
-				.setDescriptionLocalization('pt-BR', 'número do cavalo que você vai apostar')
+				.setDescriptionLocalizations({
+					'pt-BR': 'número do cavalo que você vai apostar',
+					'es-ES': 'número del caballo en el que quieres apostar',
+				})
 				.setRequired(true)
 				.addChoices(
 					{ name: '1', value: '1' },
@@ -29,6 +41,12 @@ module.exports = {
 				.setDescription(
 					'the amount of falcoins you want to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
 				)
+				.setDescriptionLocalizations({
+					'pt-BR':
+						'a quantidade de falcoins que você quer apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+					'es-ES':
+						'la cantidad de falcoins que quieres apostar (soporta "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+				})
 				.setRequired(true)
 		),
 	execute: async ({ interaction, user, instance, member }) => {

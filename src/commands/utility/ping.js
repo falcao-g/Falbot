@@ -4,7 +4,10 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('ping')
 		.setDescription("Checks the bot's ping.")
-		.setDescriptionLocalization('pt-BR', 'Verifica o ping do bot.')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Verifica o ping do bot',
+			'es-ES': 'Verifica el ping del bot',
+		})
 		.setDMPermission(false),
 	execute: async ({ interaction, instance }) => {
 		try {

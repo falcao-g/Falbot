@@ -5,13 +5,19 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('iteminfo')
 		.setDescription('View item info')
-		.setDescriptionLocalization('pt-BR', 'Veja informações sobre um item')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Veja informações sobre um item',
+			'es-ES': 'Ver información del item',
+		})
 		.setDMPermission(false)
 		.addStringOption((option) =>
 			option
 				.setName('item')
 				.setDescription('item to see information about')
-				.setDescriptionLocalization('pt-BR', 'item para ver informações sobre')
+				.setDescriptionLocalizations({
+					'pt-BR': 'item para ver informações sobre',
+					'es-ES': 'item para ver información sobre',
+				})
 				.setRequired(true)
 				.setAutocomplete(true)
 		),

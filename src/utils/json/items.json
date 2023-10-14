@@ -2,14 +2,16 @@
 	"log": {
 		"en-US": "Big Log",
 		"pt-BR": "Madeira",
+		"es-ES": "Madera",
 		"value": 300,
 		"rarity": "Common",
 		"emoji": "🪵",
 		"exploring": true
 	},
 	"wool": {
-		"en-US": "Wool",
+		"en-US": "Woll",
 		"pt-BR": "Lã",
+		"es-ES": "Lana",
 		"value": 700,
 		"rarity": "Rare",
 		"emoji": "🐏",
@@ -18,6 +20,7 @@
 	"tools": {
 		"en-US": "Work tools",
 		"pt-BR": "Ferramentas",
+		"es-ES": "Herramientas",
 		"value": 1800,
 		"emoji": "🛠️",
 		"recipe": {
@@ -28,6 +31,7 @@
 	"boot": {
 		"en-US": "Old Boot",
 		"pt-BR": "Bota Velha",
+		"es-ES": "Bota Vieja",
 		"value": 10,
 		"rarity": "Common",
 		"emoji": "🥾",
@@ -36,6 +40,7 @@
 	"anchovy": {
 		"en-US": "Anchovy",
 		"pt-BR": "Anchova",
+		"es-ES": "Anchoa",
 		"value": 50,
 		"rarity": "Common",
 		"emoji": "🐟",
@@ -44,6 +49,7 @@
 	"snail": {
 		"en-US": "Sea Snail",
 		"pt-BR": "Caracol do Mar",
+		"es-ES": "Caracol de Mar",
 		"value": 40,
 		"rarity": "Common",
 		"emoji": "🐌",
@@ -52,6 +58,7 @@
 	"sardine": {
 		"en-US": "Sardine",
 		"pt-BR": "Sardinha",
+		"es-ES": "Sardina",
 		"value": 50,
 		"rarity": "Common",
 		"emoji": "🐟",
@@ -60,6 +67,7 @@
 	"shrimp": {
 		"en-US": "Shrimp",
 		"pt-BR": "Camarão",
+		"es-ES": "Camarón",
 		"value": 500,
 		"rarity": "Uncommon",
 		"emoji": "🦐",
@@ -68,6 +76,7 @@
 	"fish": {
 		"en-US": "Trop Fish",
 		"pt-BR": "Peixe Tropical",
+		"es-ES": "Pez Tropical",
 		"value": 400,
 		"rarity": "Uncommon",
 		"emoji": "🐠",
@@ -76,6 +85,7 @@
 	"feathers": {
 		"en-US": "Feather",
 		"pt-BR": "Pena",
+		"es-ES": "Pluma",
 		"value": 50,
 		"rarity": "Uncommon",
 		"emoji": "🪶",
@@ -84,6 +94,7 @@
 	"chipmunk": {
 		"en-US": "Chipmunk Pelt",
 		"pt-BR": "Pele de Esquilo",
+		"es-ES": "Piel de Ardilla",
 		"value": 100,
 		"rarity": "Uncommon",
 		"emoji": "🐿️",
@@ -92,6 +103,7 @@
 	"chunk": {
 		"en-US": "Meat Chunk",
 		"pt-BR": "Carne",
+		"es-ES": "Carne",
 		"value": 200,
 		"rarity": "Common",
 		"emoji": "🍖",
@@ -100,6 +112,7 @@
 	"skunk": {
 		"en-US": "Skunk Pelt",
 		"pt-BR": "Pele de Gambá",
+		"es-ES": "Piel de Zorrillo",
 		"value": 400,
 		"rarity": "Uncommon",
 		"emoji": "🦨",
@@ -108,6 +121,7 @@
 	"steak": {
 		"en-US": "Raw Steak",
 		"pt-BR": "Bife Cru",
+		"es-ES": "Filete Crudo",
 		"value": 1000,
 		"rarity": "Rare",
 		"emoji": "🥩",
@@ -116,6 +130,7 @@
 	"coal": {
 		"en-US": "Coal",
 		"pt-BR": "Carvão",
+		"es-ES": "Carbón",
 		"value": 50,
 		"rarity": "Common",
 		"emoji": "⬛",
@@ -124,6 +139,7 @@
 	"copper": {
 		"en-US": "Copper",
 		"pt-BR": "Cobre",
+		"es-ES": "Cobre",
 		"value": 100,
 		"rarity": "Common",
 		"emoji": "🪙",
@@ -132,6 +148,7 @@
 	"aluminium": {
 		"en-US": "Aluminium",
 		"pt-BR": "Alumínio",
+		"es-ES": "Aluminio",
 		"value": 200,
 		"rarity": "Uncommon",
 		"emoji": "🔋",
@@ -140,6 +157,7 @@
 	"iron": {
 		"en-US": "Iron",
 		"pt-BR": "Ferro",
+		"es-ES": "Hierro",
 		"value": 300,
 		"rarity": "Uncommon",
 		"emoji": "⛓️",
@@ -148,6 +166,7 @@
 	"silver": {
 		"en-US": "Silver",
 		"pt-BR": "Prata",
+		"es-ES": "Plata",
 		"value": 500,
 		"rarity": "Rare",
 		"emoji": "🥈",
@@ -156,6 +175,7 @@
 	"scrap": {
 		"en-US": "Scrap Metal",
 		"pt-BR": "Sucata",
+		"es-ES": "Chatarra",
 		"value": 250,
 		"rarity": "Uncommon",
 		"emoji": "⚙️",
@@ -164,6 +184,7 @@
 	"knife": {
 		"en-US": "Rusty Knife",
 		"pt-BR": "Faca Velha",
+		"es-ES": "Cuchillo Viejo",
 		"value": 200,
 		"rarity": "Rare",
 		"emoji": "🔪",
@@ -172,6 +193,7 @@
 	"ashes": {
 		"en-US": "Ashes",
 		"pt-BR": "Cinzas",
+		"es-ES": "Cenizas",
 		"value": 100,
 		"rarity": "Uncommon",
 		"emoji": "🚬",
@@ -180,6 +202,7 @@
 	"weeds": {
 		"en-US": "Weeds",
 		"pt-BR": "Ervas",
+		"es-ES": "Hierbas",
 		"value": 50,
 		"rarity": "Common",
 		"emoji": "🌿",
@@ -188,6 +211,7 @@
 	"rock": {
 		"en-US": "Rock",
 		"pt-BR": "Pedra",
+		"es-ES": "Piedra",
 		"value": 50,
 		"rarity": "Common",
 		"emoji": "🪨",
@@ -197,6 +221,7 @@
 	"bricks": {
 		"en-US": "Bricks",
 		"pt-BR": "Tijolos",
+		"es-ES": "Ladrillos",
 		"value": 4200,
 		"emoji": "🧱",
 		"recipe": {
@@ -207,6 +232,7 @@
 	"beam": {
 		"en-US": "Steel Beam",
 		"pt-BR": "Viga de Aço",
+		"es-ES": "Viga de Acero",
 		"value": 37500,
 		"emoji": "🏗️",
 		"recipe": {
@@ -218,6 +244,7 @@
 	"hall": {
 		"en-US": "Grand Hall",
 		"pt-BR": "Grande Salão",
+		"es-ES": "Gran Salón",
 		"value": 250000,
 		"emoji": "🏛️",
 		"recipe": {
@@ -229,6 +256,7 @@
 	"rope": {
 		"en-US": "Knoted Rope",
 		"pt-BR": "Corda",
+		"es-ES": "Cuerda",
 		"value": 2000,
 		"emoji": "🪢",
 		"recipe": {
@@ -238,6 +266,7 @@
 	"leather": {
 		"en-US": "Tough Leather",
 		"pt-BR": "Couro Duro",
+		"es-ES": "Cuero Duro",
 		"value": 7500,
 		"rarity": "Epic",
 		"emoji": "🐄",
@@ -246,6 +275,7 @@
 	"backpack": {
 		"en-US": "Big Backpack",
 		"pt-BR": "Mochila",
+		"es-ES": "Mochila",
 		"value": 100000,
 		"emoji": "🎒",
 		"use": true,
@@ -259,6 +289,7 @@
 	"gunpowder": {
 		"en-US": "Gunpowder",
 		"pt-BR": "Pólvora",
+		"es-ES": "Pólvora",
 		"value": 2200,
 		"emoji": "🎇",
 		"recipe": {
@@ -268,6 +299,7 @@
 	"bomb": {
 		"en-US": "Bomb",
 		"pt-BR": "Bomba",
+		"es-ES": "Bomba",
 		"value": 8200,
 		"emoji": "💣",
 		"recipe": {
@@ -279,6 +311,7 @@
 	"ironpick": {
 		"en-US": "Iron Pickaxe",
 		"pt-BR": "Picareta de Ferro",
+		"es-ES": "Pico de Hierro",
 		"value": 30000,
 		"equip": true,
 		"emoji": "⛏️",
@@ -293,6 +326,7 @@
 	"diapick": {
 		"en-US": "Diamond Pickaxe",
 		"pt-BR": "Picareta de Diamante",
+		"es-ES": "Pico de Diamante",
 		"value": 250000,
 		"equip": true,
 		"emoji": "⛏️",
@@ -306,6 +340,7 @@
 	"rod": {
 		"en-US": "Fishing Rod",
 		"pt-BR": "Vara de Pesca",
+		"es-ES": "Caña de Pescar",
 		"value": 30000,
 		"equip": true,
 		"emoji": "🎣",
@@ -320,6 +355,7 @@
 	"diarod": {
 		"en-US": "Diamond Rod",
 		"pt-BR": "Vara de Diamante",
+		"es-ES": "Caña de Diamante",
 		"value": 250000,
 		"equip": true,
 		"emoji": "🎣",
@@ -333,6 +369,7 @@
 	"plushtoy": {
 		"en-US": "Plush Toy",
 		"pt-BR": "Pelúcia",
+		"es-ES": "Peluche",
 		"value": 24500,
 		"emoji": "🧸",
 		"recipe": {
@@ -344,6 +381,7 @@
 	"balltoy": {
 		"en-US": "Ball",
 		"pt-BR": "Bola",
+		"es-ES": "Pelota",
 		"value": 22500,
 		"emoji": "🏐",
 		"recipe": {
@@ -355,6 +393,7 @@
 	"lightbulb": {
 		"en-US": "Lightbulb",
 		"pt-BR": "Lâmpada",
+		"es-ES": "Bombilla",
 		"value": 1500,
 		"rarity": "Rare",
 		"emoji": "💡",
@@ -363,6 +402,7 @@
 	"board": {
 		"en-US": "Circuit Board",
 		"pt-BR": "Circuito",
+		"es-ES": "Circuito",
 		"value": 2000,
 		"rarity": "Epic",
 		"emoji": "💾",
@@ -371,6 +411,7 @@
 	"sprinkler": {
 		"en-US": "Sprinkler",
 		"pt-BR": "Regador",
+		"es-ES": "Regador",
 		"value": 40000,
 		"emoji": "⛲",
 		"recipe": {
@@ -384,6 +425,7 @@
 	"puzzletoy": {
 		"en-US": "Puzzle Toy",
 		"pt-BR": "Quebra-cabeça",
+		"es-ES": "Rompecabezas",
 		"value": 37000,
 		"emoji": "🧩",
 		"recipe": {
@@ -395,6 +437,7 @@
 	"gold": {
 		"en-US": "Gold",
 		"pt-BR": "Ouro",
+		"es-ES": "Oro",
 		"value": 800,
 		"rarity": "Rare",
 		"emoji": "🥇",
@@ -403,6 +446,7 @@
 	"cpu": {
 		"en-US": "CPU",
 		"pt-BR": "Processador",
+		"es-ES": "Procesador",
 		"value": 23500,
 		"emoji": "🖥️",
 		"recipe": {
@@ -416,6 +460,7 @@
 	"activewear": {
 		"en-US": "Activewear",
 		"pt-BR": "Roupa",
+		"es-ES": "Ropa",
 		"value": 30000,
 		"equip": true,
 		"emoji": "🥋",
@@ -429,6 +474,7 @@
 	"ox": {
 		"en-US": "Ox Pelt",
 		"pt-BR": "Pele de Boi",
+		"es-ES": "Piel de Buey",
 		"value": 10000,
 		"rarity": "Epic",
 		"emoji": "🐂",
@@ -437,6 +483,7 @@
 	"buffalo": {
 		"en-US": "Buffalo Pelt",
 		"pt-BR": "Pele de Búfalo",
+		"es-ES": "Piel de Búfalo",
 		"value": 20000,
 		"rarity": "Legendary",
 		"emoji": "🐃",
@@ -445,6 +492,7 @@
 	"coat": {
 		"en-US": "Down Coat",
 		"pt-BR": "Casaco",
+		"es-ES": "Abrigo",
 		"value": 250000,
 		"equip": true,
 		"emoji": "🧥",
@@ -461,6 +509,7 @@
 	"supply": {
 		"en-US": "Power Supply",
 		"pt-BR": "Fonte",
+		"es-ES": "Fuente",
 		"value": 1700,
 		"emoji": "🔌",
 		"recipe": {
@@ -471,6 +520,7 @@
 	"tractor": {
 		"en-US": "Tractor",
 		"pt-BR": "Trator",
+		"es-ES": "Tractor",
 		"value": 45000,
 		"emoji": "🚜",
 		"recipe": {
@@ -484,6 +534,7 @@
 	"diamond": {
 		"en-US": "Diamond",
 		"pt-BR": "Diamante",
+		"es-ES": "Diamante",
 		"value": 50000,
 		"rarity": "Epic",
 		"emoji": "💎",
@@ -492,6 +543,7 @@
 	"dagger": {
 		"en-US": "Dagger",
 		"pt-BR": "Adaga",
+		"es-ES": "Daga",
 		"value": 8400,
 		"emoji": "🗡️",
 		"recipe": {
@@ -502,6 +554,7 @@
 	"huntknife": {
 		"en-US": "Hunting Knife",
 		"pt-BR": "Faca de Caça",
+		"es-ES": "Cuchillo de Caza",
 		"value": 30000,
 		"equip": true,
 		"emoji": "⚔️",
@@ -516,6 +569,7 @@
 	"shield": {
 		"en-US": "Diamond Shield",
 		"pt-BR": "Escudo de Diamante",
+		"es-ES": "Escudo de Diamante",
 		"value": 300000,
 		"emoji": "🛡️",
 		"recipe": {
@@ -528,6 +582,7 @@
 	"diaknife": {
 		"en-US": "Diamond Handknife",
 		"pt-BR": "Faca de Diamante",
+		"es-ES": "Cuchillo de Diamante",
 		"value": 250000,
 		"equip": true,
 		"emoji": "⚔️",
@@ -541,6 +596,7 @@
 	"milk": {
 		"en-US": "Milk",
 		"pt-BR": "Leite",
+		"es-ES": "Leche",
 		"value": 400,
 		"rarity": "Uncommon",
 		"emoji": "🥛",
@@ -549,6 +605,7 @@
 	"wheat": {
 		"en-US": "Wheat",
 		"pt-BR": "Trigo",
+		"es-ES": "Trigo",
 		"value": 1000,
 		"rarity": "Rare",
 		"emoji": "🌾",
@@ -557,6 +614,7 @@
 	"butter": {
 		"en-US": "Butter",
 		"pt-BR": "Manteiga",
+		"es-ES": "Mantequilla",
 		"value": 1000,
 		"emoji": "🧈",
 		"recipe": {
@@ -566,6 +624,7 @@
 	"waffle": {
 		"en-US": "Waffle",
 		"pt-BR": "Panqueca",
+		"es-ES": "Gofre",
 		"value": 5500,
 		"emoji": "🧇",
 		"recipe": {
@@ -576,6 +635,7 @@
 	"cheese": {
 		"en-US": "Cheese",
 		"pt-BR": "Queijo",
+		"es-ES": "Queso",
 		"value": 1800,
 		"emoji": "🧀",
 		"recipe": {
@@ -585,6 +645,7 @@
 	"loaf": {
 		"en-US": "Bread",
 		"pt-BR": "Pão",
+		"es-ES": "Pan",
 		"value": 5000,
 		"emoji": "🍞",
 		"recipe": {
@@ -594,6 +655,7 @@
 	"rice": {
 		"en-US": "White Rice",
 		"pt-BR": "Arroz",
+		"es-ES": "Arroz",
 		"value": 1000,
 		"rarity": "Epic",
 		"emoji": "🍚",
@@ -602,6 +664,7 @@
 	"sushi": {
 		"en-US": "Sushi",
 		"pt-BR": "Sushi",
+		"es-ES": "Sushi",
 		"value": 3000,
 		"emoji": "🍣",
 		"recipe": {
@@ -612,6 +675,7 @@
 	"hamburger": {
 		"en-US": "Hamburger",
 		"pt-BR": "Hambúrguer",
+		"es-ES": "Hamburguesa",
 		"value": 14500,
 		"emoji": "🍔",
 		"recipe": {
@@ -623,6 +687,7 @@
 	"fertilizer": {
 		"en-US": "Fertilizer",
 		"pt-BR": "Fertilizante",
+		"es-ES": "Fertilizante",
 		"value": 12500,
 		"emoji": "💩",
 		"recipe": {
@@ -632,6 +697,7 @@
 	"oil": {
 		"en-US": "Petroleum",
 		"pt-BR": "Petróleo",
+		"es-ES": "Petróleo",
 		"value": 2000,
 		"rarity": "Epic",
 		"emoji": "🛢️",
@@ -640,6 +706,7 @@
 	"crab": {
 		"en-US": "Crab",
 		"pt-BR": "Siri",
+		"es-ES": "Cangrejo",
 		"value": 400,
 		"rarity": "Uncommon",
 		"emoji": "🦀",
@@ -648,6 +715,7 @@
 	"artifact": {
 		"en-US": "Artifact",
 		"pt-BR": "Artefato",
+		"es-ES": "Artefacto",
 		"value": 10000,
 		"rarity": "Epic",
 		"emoji": "🏺",
@@ -656,6 +724,7 @@
 	"fossil": {
 		"en-US": "Ancient Fossil",
 		"pt-BR": "Fóssil",
+		"es-ES": "Fósil",
 		"value": 15000,
 		"rarity": "Legendary",
 		"emoji": "🐊",
@@ -664,6 +733,7 @@
 	"treasure": {
 		"en-US": "Ancient Treasure",
 		"pt-BR": "Tesouro Antigo",
+		"es-ES": "Tesoro Antiguo",
 		"value": 150000,
 		"rarity": "Legendary",
 		"emoji": "👑",
@@ -672,6 +742,7 @@
 	"manuscript": {
 		"en-US": "Sacred Manuscript",
 		"pt-BR": "Manuscrito Sagrado",
+		"es-ES": "Manuscrito Sagrado",
 		"value": 300000,
 		"rarity": "Legendary",
 		"emoji": "📜",
@@ -680,6 +751,7 @@
 	"oyster": {
 		"en-US": "Oyster",
 		"pt-BR": "Ostra",
+		"es-ES": "Ostra",
 		"value": 950,
 		"rarity": "Rare",
 		"emoji": "🦪",
@@ -688,6 +760,7 @@
 	"squid": {
 		"en-US": "Squid",
 		"pt-BR": "Lula",
+		"es-ES": "Calamar",
 		"value": 1500,
 		"rarity": "Epic",
 		"emoji": "🦑",
@@ -696,6 +769,7 @@
 	"blowfish": {
 		"en-US": "Blowfish",
 		"pt-BR": "Baiacu",
+		"es-ES": "Pez Globo",
 		"value": 5000,
 		"rarity": "Legendary",
 		"emoji": "🐡",
@@ -704,6 +778,7 @@
 	"lobster": {
 		"en-US": "Lobster",
 		"pt-BR": "Lagosta",
+		"es-ES": "Langosta",
 		"value": 750,
 		"rarity": "Rare",
 		"emoji": "🦞",
@@ -712,6 +787,7 @@
 	"shark": {
 		"en-US": "Shark",
 		"pt-BR": "Tubarão",
+		"es-ES": "Tiburón",
 		"value": 80000,
 		"rarity": "Legendary",
 		"emoji": "🦈",
@@ -720,6 +796,7 @@
 	"octopus": {
 		"en-US": "Octopus",
 		"pt-BR": "Polvo",
+		"es-ES": "Pulpo",
 		"value": 400000,
 		"rarity": "Legendary",
 		"emoji": "🐙",
@@ -728,6 +805,7 @@
 	"thigh": {
 		"en-US": "Thigh",
 		"pt-BR": "Coxa",
+		"es-ES": "Muslo",
 		"value": 500,
 		"rarity": "Uncommon",
 		"emoji": "🍗",
@@ -736,6 +814,7 @@
 	"turkey": {
 		"en-US": "Turkey",
 		"pt-BR": "Peru",
+		"es-ES": "Pavo",
 		"value": 300,
 		"rarity": "Uncommon",
 		"emoji": "🦃",
@@ -744,6 +823,7 @@
 	"fishwich": {
 		"en-US": "Fishwich",
 		"pt-BR": "Peixeguer",
+		"es-ES": "Pescado",
 		"value": 13500,
 		"emoji": "🍔",
 		"recipe": {
@@ -755,6 +835,7 @@
 	"clover": {
 		"en-US": "Clover",
 		"pt-BR": "Trevo",
+		"es-ES": "Trébol",
 		"value": 400,
 		"rarity": "Epic",
 		"emoji": "🍀",
@@ -763,6 +844,7 @@
 	"snowflake": {
 		"en-US": "Eternal Snowflake",
 		"pt-BR": "Floco eterno",
+        "es-ES": "Copo eterno",
 		"emoji": "❄️",
 		"use": true,
 		"mythical": true,

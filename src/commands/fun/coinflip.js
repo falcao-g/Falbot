@@ -4,16 +4,28 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('coinflip')
-		.setNameLocalization('pt-BR', 'girarmoeda')
+		.setNameLocalizations({
+			'pt-BR': 'girarmoeda',
+			'es-ES': 'tirarmoneda',
+		})
 		.setDescription('Flip a coin')
-		.setDescriptionLocalization('pt-BR', 'Jogue cara ou coroa')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Jogue cara ou coroa',
+			'es-ES': 'Tira una moneda',
+		})
 		.setDMPermission(false)
 		.addIntegerOption((option) =>
 			option
 				.setName('quantity')
-				.setNameLocalization('pt-BR', 'quantidade')
+				.setNameLocalizations({
+					'pt-BR': 'quantidade',
+					'es-ES': 'cantidad',
+				})
 				.setDescription('quantity of coins to flip')
-				.setDescriptionLocalization('pt-BR', 'quantidade de moedas para girar')
+				.setDescriptionLocalizations({
+					'pt-BR': 'quantidade de moedas para girar',
+					'es-ES': 'cantidad de monedas para tirar',
+				})
 				.setMinValue(1)
 				.setRequired(true)
 		),

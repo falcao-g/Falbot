@@ -4,29 +4,38 @@ const { specialArg, readFile, format, randint, changeDB, buttons } = require('..
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('fight')
-		.setNameLocalization('pt-BR', 'luta')
+		.setNameLocalizations({
+			'pt-BR': 'luta',
+			'es-ES': 'lucha',
+		})
 		.setDescription('Challenge someone to a fight, whoever wins the fight gets all falcoins bet')
-		.setDescriptionLocalization(
-			'pt-BR',
-			'Desafie outro usuário para uma luta, quem ganhar leva todos os falcoins apostados'
-		)
+		.setDescriptionLocalizations({
+			'pt-BR': 'Desafie outro usuário para uma luta, quem ganhar leva todos os falcoins apostados',
+			'es-ES': 'Desafía a alguien a una pelea, quien gane la pelea se lleva todos los falcoins apostados',
+		})
 		.setDMPermission(false)
 		.addUserOption((option) =>
 			option
 				.setName('user')
-				.setNameLocalization('pt-BR', 'usuário')
+				.setNameLocalizations({
+					'pt-BR': 'usuário',
+					'es-ES': 'usuario',
+				})
 				.setDescription('the user to challenge')
-				.setDescriptionLocalization('pt-BR', 'quem você quer desafiar')
+				.setDescriptionLocalizations({
+					'pt-BR': 'o usuário para desafiar',
+					'es-ES': 'el usuario para desafiar',
+				})
 				.setRequired(true)
 		)
 		.addStringOption((option) =>
 			option
 				.setName('falcoins')
 				.setDescription('the amount of falcoins to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)')
-				.setDescriptionLocalization(
-					'pt-BR',
-					'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)'
-				)
+				.setDescriptionLocalizations({
+					'pt-BR': 'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+					'es-ES': 'la cantidad de falcoins para apostar (soporta "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+				})
 				.setRequired(true)
 		),
 	execute: async ({ guild, interaction, user, member, instance }) => {

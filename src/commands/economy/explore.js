@@ -5,9 +5,15 @@ module.exports = {
 	cooldown: 60 * 60,
 	data: new SlashCommandBuilder()
 		.setName('explore')
-		.setNameLocalization('pt-BR', 'explorar')
+		.setNameLocalizations({
+			'pt-BR': 'explorar',
+			'es-ES': 'explorar',
+		})
 		.setDescription('Go explore to get items')
-		.setDescriptionLocalization('pt-BR', 'Vá explorar para conseguir items')
+		.setDescriptionLocalizations({
+			'pt-BR': 'Vá explorar para conseguir items',
+			'es-ES': 'Ve a explorar para conseguir items',
+		})
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, member }) => {
 		await interaction.deferReply().catch(() => {});
