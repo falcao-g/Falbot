@@ -1296,6 +1296,11 @@
 		"en-US": ":dagger: 4x hunting boost",
 		"es-ES": ":dagger: 4x impulso de caza"
 	},
+	"WORK-2": {
+		"pt-BR": ":briefcase: 2x dinheiro ao trabalhar",
+		"en-US": ":briefcase: 2x money boost when working",
+		"es-ES": ":briefcase: 2x impulso de dinero al trabajar"
+	},
 	"USED": {
 		"pt-BR": "Usado para craftar:",
 		"en-US": "Used to craft:",
@@ -1645,6 +1650,11 @@
 		"pt-BR": "**:comet: bônus de 2x do evento**",
 		"en-US": "**:comet: 2x event bonus**",
 		"es-ES": "**:comet: bonificación de 2x del evento**"
+	},
+	"WORK_BUFF": {
+		"pt-BR": "**☕ seu café te permite fazer hora extra!**",
+		"en-US": "**☕ your coffee allows you to work overtime!**",
+		"es-ES": "**☕ tu café te permite trabajar horas extras!**"
 	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",

@@ -1,4 +1,4 @@
-const { readFile, changeDB, randint, format } = require('../../utils/functions.js');
+const { readFile, changeDB, randint, format, isEquipped, useItem } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -25,6 +25,12 @@ module.exports = {
 			var max = levels[rank_number - 1].work[1];
 			var salary = randint(min, max);
 			var eventText = '';
+
+			if (await isEquipped(member, 'coffee')) {
+				salary *= 2;
+				await useItem(member, 'coffee');
+				eventText += `\n${instance.getMessage(interaction, 'WORK_BUFF')}`;
+			}
 
 			if (instance.activeEvents.has('Overtime')) {
 				salary *= 3;
