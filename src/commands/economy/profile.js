@@ -50,11 +50,7 @@ module.exports = {
 			}
 
 			var inventoryQuantity = 0;
-			const inventoryWorth = Array.from(inventory).reduce((acc, [itemName, quantity]) => {
-				acc += items[itemName]['value'] * quantity;
-				inventoryQuantity += quantity;
-				return acc;
-			}, 0);
+			const inventoryWorth = instance.getInventoryWorth(inventory);
 
 			const embed = instance
 				.createEmbed(target.displayColor)
