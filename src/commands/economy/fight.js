@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { specialArg, readFile, format, randint, changeDB, buttons } = require('../../utils/functions.js');
+const { specialArg, format, randint, buttons } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -38,13 +38,15 @@ module.exports = {
 				})
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, user, member, instance }) => {
+	execute: async ({ guild, interaction, user, member, instance, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			const falcoins = interaction.options.getString('falcoins');
-			var member2 = await guild.members.fetch(interaction.options.getUser('user').id);
+			var challenged = await guild.members.fetch(interaction.options.getUser('user').id);
+			const author = await database.player.findOne(user.id);
+			const challengedFile = await database.player.findOne(challenged.id);
 
-			if (member2.user === user) {
+			if (challenged.user === user) {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'NAO_JOGAR_SOZINHO'),
 				});
@@ -61,11 +63,11 @@ module.exports = {
 				});
 				return;
 			}
-			if ((await readFile(user.id, 'falcoins')) >= bet && (await readFile(member2.user.id, 'falcoins')) >= bet) {
+			if (author.falcoins >= bet && challengedFile.falcoins >= bet) {
 				var answer = await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'LUTA_CONVITE', {
 						USER: member,
-						USER2: member2,
+						USER2: challenged,
 						FALCOINS: format(bet),
 					}),
 					components: [buttons(['accept', 'refuse'])],
@@ -73,7 +75,7 @@ module.exports = {
 				});
 
 				const filter = (btInt) => {
-					return instance.defaultFilter(btInt) && btInt.user.id === member2.user.id;
+					return instance.defaultFilter(btInt) && btInt.user.id === challenged.user.id;
 				};
 
 				const collector = answer.createMessageComponentCollector({
@@ -86,18 +88,18 @@ module.exports = {
 					if (collected.size === 0) {
 						interaction.followUp({
 							content: instance.getMessage(interaction, 'LUTA_CANCELADO_DEMOROU', {
-								USER: member2,
+								USER: challenged,
 							}),
 						});
 					} else if (collected.first().customId === 'refuse') {
 						interaction.followUp({
 							content: instance.getMessage(interaction, 'LUTA_CANCELADO_RECUSOU', {
-								USER: member2,
+								USER: challenged,
 							}),
 						});
 					} else {
-						await changeDB(user.id, 'falcoins', -bet);
-						await changeDB(member2.id, 'falcoins', -bet);
+						author.falcoins -= bet;
+						challengedFile.falcoins -= bet;
 						const attacks = ['instantâneo', 'stun', 'roubo de vida', 'cura', 'self', 'escudo'];
 						const player_1 = {
 							hp: 100,
@@ -109,10 +111,10 @@ module.exports = {
 						};
 						const player_2 = {
 							hp: 100,
-							name: member2.displayName,
+							name: challenged.displayName,
 							stunned: false,
-							mention: member2,
-							id: member2.id,
+							mention: challenged,
+							id: challenged.id,
 							escudo: false,
 						};
 						const luck = Math.round(Math.random());
@@ -206,8 +208,9 @@ module.exports = {
 						const winner = order[0].hp <= 0 ? order[1] : order[0];
 						const loser = order[0].hp <= 0 ? order[0] : order[1];
 
-						await changeDB(winner.id, 'falcoins', bet * 2);
-						await changeDB(winner.id, 'vitorias');
+						const winnerFile = await database.player.findOne(winner.id);
+						winnerFile.falcoins += bet * 2;
+						winnerFile.vitorias++;
 
 						const embed2 = instance.createEmbed(3066993).addFields(
 							{
@@ -218,7 +221,7 @@ module.exports = {
 							},
 							{
 								name: instance.getMessage(interaction, 'SALDO_ATUAL'),
-								value: `${await readFile(winner.id, 'falcoins', true)} falcoins`,
+								value: `${format(winnerFile.falcoins)} falcoins`,
 							}
 						);
 
@@ -234,6 +237,8 @@ module.exports = {
 					content: instance.getMessage(interaction, 'INSUFICIENTE_CONTAS'),
 				});
 			}
+			author.save();
+			challengedFile.save();
 		} catch (error) {
 			console.error(`fight: ${error}`);
 			interaction.channel

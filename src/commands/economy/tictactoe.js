@@ -1,6 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } = require('discord.js');
 const Board = require('tictactoe-board');
-const { specialArg, readFile, format, randint, changeDB, buttons } = require('../../utils/functions.js');
+const { specialArg, format, randint, buttons } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -41,13 +41,15 @@ module.exports = {
 				})
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, instance, user, member }) => {
+	execute: async ({ guild, interaction, instance, user, member, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			var board = new Board.default();
-			const member2 = await guild.members.fetch(interaction.options.getUser('user').id);
+			const challenged = await guild.members.fetch(interaction.options.getUser('user').id);
 			const falcoins = interaction.options.getString('falcoins');
-			if (member2 != member) {
+			const author = await database.player.findOne(user.id);
+			const challengedFile = await database.player.findOne(challenged.user.id);
+			if (challenged != member) {
 				try {
 					var bet = await specialArg(falcoins, user.id, 'falcoins');
 				} catch {
@@ -58,14 +60,11 @@ module.exports = {
 					});
 					return;
 				}
-				if (
-					(await readFile(member.user.id, 'falcoins')) >= bet &&
-					(await readFile(member2.user.id, 'falcoins')) >= bet
-				) {
+				if (author.falcoins >= bet && challengedFile.falcoins >= bet) {
 					var answer = await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VELHA_CHAMOU', {
 							USER: member,
-							USER2: member2,
+							USER2: challenged,
 							FALCOINS: format(bet),
 						}),
 						components: [buttons(['accept', 'refuse'])],
@@ -73,7 +72,7 @@ module.exports = {
 					});
 
 					const filter = (btInt) => {
-						return instance.defaultFilter(btInt) && btInt.user.id === member2.user.id;
+						return instance.defaultFilter(btInt) && btInt.user.id === challenged.user.id;
 					};
 
 					const collector = answer.createMessageComponentCollector({
@@ -86,18 +85,20 @@ module.exports = {
 						if (collected.size === 0) {
 							await interaction.followUp({
 								content: instance.getMessage(interaction, 'VELHA_CANCELADO_DEMOROU', {
-									USER: member2,
+									USER: challenged,
 								}),
 							});
 						} else if (collected.first().customId === 'refuse') {
 							await interaction.followUp({
 								content: instance.getMessage(interaction, 'VELHA_CANCELADO_RECUSOU', {
-									USER: member2,
+									USER: challenged,
 								}),
 							});
 						} else {
-							await changeDB(member.user.id, 'falcoins', -bet);
-							await changeDB(member2.user.id, 'falcoins', -bet);
+							author.falcoins -= bet;
+							challengedFile.falcoins -= bet;
+							author.save();
+							challengedFile.save();
 							const row = new ActionRowBuilder();
 							const row2 = new ActionRowBuilder();
 							const row3 = new ActionRowBuilder();
@@ -117,15 +118,15 @@ module.exports = {
 							const random = randint(0, 1);
 							if (random == 0) {
 								var first_player = member;
-								var second_player = member2;
+								var second_player = challenged;
 							} else {
-								var first_player = member2;
+								var first_player = challenged;
 								var second_player = member;
 							}
 
 							answer2 = await collected.first().reply({
 								content: `:older_woman: \`${member.displayName}\` **VS**  \`${
-									member2.displayName
+									challenged.displayName
 								}\` \n\n${instance.getMessage(interaction, 'VELHA_MOVIMENTO', {
 									USER: first_player.displayName,
 								})}`,
@@ -223,7 +224,7 @@ module.exports = {
 
 								await i.update({
 									content: `:older_woman: \`${member.displayName}\` **VS**  \`${
-										member2.displayName
+										challenged.displayName
 									}\` \n\n${instance.getMessage(interaction, 'VELHA_MOVIMENTO', {
 										USER: board.currentMark() === 'X' ? first_player.displayName : second_player.displayName,
 									})}`,
@@ -236,31 +237,35 @@ module.exports = {
 							});
 
 							collector2.on('end', async () => {
+								const firstPlayer = await database.player.findOne(first_player.user.id);
+								const secondPlayer = await database.player.findOne(second_player.user.id);
 								if (board.hasWinner()) {
 									if (board.winningPlayer() === 'X') {
-										await changeDB(first_player.user.id, 'falcoins', bet * 2);
-										await changeDB(first_player.user.id, 'vitorias', 1);
+										firstPlayer.falcoins += bet * 2;
+										firstPlayer.vitorias++;
 									} else {
-										await changeDB(second_player.user.id, 'falcoins', bet * 2);
-										await changeDB(second_player.user.id, 'vitorias', 1);
+										secondPlayer.falcoins += bet * 2;
+										secondPlayer.vitorias++;
 									}
 									await answer2.edit({
 										content: `:older_woman: \`${member.displayName}\` **VS**  \`${
-											member2.displayName
+											challenged.displayName
 										}\` \n\n**${instance.getMessage(interaction, 'GANHOU', {
 											WINNER: board.winningPlayer() === 'X' ? first_player.displayName : second_player.displayName,
 											FALCOINS: await format(bet * 2),
 										})}**`,
 									});
 								} else {
-									await changeDB(first_player.user.id, 'falcoins', bet);
-									await changeDB(second_player.user.id, 'falcoins', bet);
+									firstPlayer.falcoins += bet;
+									secondPlayer.falcoins += bet;
 									await answer2.edit({
 										content: `:older_woman: \`${member.displayName}\` **VS**  \`${
-											member2.displayName
+											challenged.displayName
 										}\` \n\n${instance.getMessage(interaction, 'VELHA_EMPATOU')}`,
 									});
 								}
+								firstPlayer.save();
+								secondPlayer.save();
 							});
 						}
 					});

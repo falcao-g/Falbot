@@ -1,4 +1,4 @@
-const { specialArg, readFile, randint, changeDB, format } = require('../../utils/functions.js');
+const { specialArg, randint, format } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -92,10 +92,11 @@ module.exports = {
 				)
 				.setRequired(true)
 		),
-	execute: async ({ user, interaction, instance, member }) => {
+	execute: async ({ user, interaction, instance, member, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			const falcoins = interaction.options.getString('falcoins');
+			const player = await database.player.findOne(user.id);
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');
 			} catch {
@@ -106,8 +107,8 @@ module.exports = {
 				});
 			}
 
-			if ((await readFile(user.id, 'falcoins')) >= bet) {
-				await changeDB(user.id, 'falcoins', -bet);
+			if (player.falcoins >= bet) {
+				player.falcoins -= bet;
 
 				const embed = instance
 					.createEmbed(member.displayColor)
@@ -147,7 +148,7 @@ module.exports = {
 				var embed2 = instance.createEmbed(member.displayColor).setTitle(instance.getMessage(interaction, 'ROLETA'));
 
 				if (type.includes(luck)) {
-					await changeDB(user.id, 'falcoins', profit);
+					player.falcoins += profit;
 					embed2.setColor(3066993).addFields(
 						{
 							name: instance.getMessage(interaction, 'VOCE_GANHOU') + ' :sunglasses:',
@@ -161,7 +162,7 @@ module.exports = {
 						},
 						{
 							name: instance.getMessage(interaction, 'SALDO_ATUAL'),
-							value: `${await readFile(user.id, 'falcoins', true)} falcoins`,
+							value: `${format(player.falcoins)} falcoins`,
 						}
 					);
 				} else {
@@ -178,7 +179,7 @@ module.exports = {
 						},
 						{
 							name: instance.getMessage(interaction, 'SALDO_ATUAL'),
-							value: `${await readFile(user.id, 'falcoins', true)} falcoins`,
+							value: `${format(player.falcoins)} falcoins`,
 						}
 					);
 				}
@@ -191,6 +192,7 @@ module.exports = {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 				});
 			}
+			player.save();
 		} catch (error) {
 			console.error(`roulette: ${error}`);
 			instance.editReply(interaction, {

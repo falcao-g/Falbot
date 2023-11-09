@@ -1,10 +1,9 @@
-const { randint, changeDB, format } = require('./utils/functions.js');
-const { Client, GatewayIntentBits, Collection, EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const { randint, format } = require('./utils/functions.js');
+const { Client, GatewayIntentBits, Collection, EmbedBuilder } = require('discord.js');
 const path = require('path');
 require('dotenv').config();
 const { loadEvents } = require('./handlers/eventHandler.js');
 const { loadCommands } = require('./handlers/commandHandler.js');
-const databaseHandler = require('./handlers/databaseHandler.js');
 
 class Falbot {
 	config = require('./config.json');
@@ -12,6 +11,7 @@ class Falbot {
 	_banned = new Array();
 	_disabledChannels = new Map();
 	_disabledCommands = new Map();
+	database = require('./handlers/databaseHandler.js');
 	emojiList = {};
 	client = new Client({
 		shards: 'auto',
@@ -31,7 +31,7 @@ class Falbot {
 			console.log('Bot online');
 			this.client.on('error', console.error);
 
-			databaseHandler.connect();
+			this.database.connect();
 
 			this.client.events = new Collection();
 			this.client.commands = new Collection();
@@ -127,7 +127,9 @@ class Falbot {
 					}
 				}
 
-				await changeDB(winner.id, 'falcoins', lotto.prize);
+				const winnerFile = this.database.player.findOne(winner.id);
+				winnerFile.falcoins += lotto.prize;
+				winnerFile.save();
 
 				var winnerUser = await this.client.users.fetch(winner.id);
 

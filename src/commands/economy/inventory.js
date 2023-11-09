@@ -1,4 +1,4 @@
-const { readFile, format, paginate, getItem, changeDB, buttons, isEquipped } = require('../../utils/functions.js');
+const { format, paginate, getItem, buttons, isEquipped } = require('../../utils/functions.js');
 const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
 
 module.exports = {
@@ -280,7 +280,7 @@ module.exports = {
 						.setAutocomplete(true)
 				)
 		),
-	execute: async ({ guild, interaction, instance, member, subcommand, args }) => {
+	execute: async ({ guild, interaction, instance, member, subcommand, args, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			try {
@@ -296,23 +296,19 @@ module.exports = {
 				}
 
 				const target = option ? await guild.members.fetch(option.id) : member;
-				const inventory = await readFile(target.id, 'inventory');
-				const limit =
-					instance.levels[(await readFile(target.id, 'rank')) - 1].inventoryLimit +
-					(await readFile(target.id, 'inventoryBonus'));
-				const inventoryWorth = instance.getInventoryWorth(inventory);
+				const player = await database.player.findOne(target.id);
+				const limit = instance.levels[player.rank - 1].inventoryLimit + player.inventoryBonus;
+				const inventoryWorth = instance.getInventoryWorth(player.inventory);
 
-				if (inventory === undefined) {
+				if (player.inventory === undefined) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_ITEMS'),
 					});
 					return;
 				}
 
-				const inventorySort = await readFile(target.id, 'inventorySort');
-
 				// Create an array of inventory items with their quantity as a string
-				const inventoryItems = Array.from(inventory)
+				const inventoryItems = Array.from(player.inventory)
 					.reduce((acc, [itemName, quantity]) => {
 						if (quantity !== 0) {
 							acc.push(`${instance.getItemName(itemName, interaction)} x ${quantity}`);
@@ -320,7 +316,7 @@ module.exports = {
 						return acc;
 					}, [])
 					.sort((a, b) => {
-						switch (inventorySort) {
+						switch (player.inventorySort) {
 							case 'itemValue':
 								return (
 									items[getItem(a.split(' ').slice(1, -2).join(' '))].value -
@@ -395,6 +391,7 @@ module.exports = {
 						await i.update(paginator.components());
 					}
 				});
+				player.save();
 			} else if (type === 'calc') {
 				const amount = interaction.options.getInteger('amount');
 				const itemKey = getItem(interaction.options.getString('item'));
@@ -436,7 +433,7 @@ module.exports = {
 					embeds: [embed],
 				});
 			} else if (type === 'sell') {
-				const inventory = await readFile(member.id, 'inventory');
+				const player = await database.player.findOne(member.id);
 				const itemKey = getItem(interaction.options.getString('item'));
 				const itemJSON = items[itemKey];
 
@@ -456,19 +453,18 @@ module.exports = {
 					return;
 				}
 
-				if (inventory.get(itemKey) === 0 || inventory.get(itemKey) === undefined) {
+				if (player.inventory.get(itemKey) === 0 || player.inventory.get(itemKey) === undefined) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_ITEM'),
 					});
 					return;
 				}
 
-				const amount = Math.min(inventory.get(itemKey), interaction.options.getInteger('amount'));
+				const amount = Math.min(player.inventory.get(itemKey), interaction.options.getInteger('amount'));
 				const falcoins = itemJSON.value * amount;
 
-				inventory.set(itemKey, inventory.get(itemKey) - amount);
-				await changeDB(member.id, 'inventory', inventory, true);
-				await changeDB(member.id, 'falcoins', falcoins);
+				player.inventory.set(itemKey, player.inventory.get(itemKey) - amount);
+				player.falcoins += falcoins;
 
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'SOLD_TITLE', {
@@ -477,7 +473,7 @@ module.exports = {
 						FALCOINS: format(falcoins),
 					}),
 					value: instance.getMessage(interaction, 'SOLD_FIELD', {
-						REMAINING: format(inventory.get(itemKey)),
+						REMAINING: format(player.inventory.get(itemKey)),
 						FALCOINS2: format(Number(falcoins / amount)),
 					}),
 				});
@@ -486,9 +482,9 @@ module.exports = {
 					embeds: [embed],
 					components: [buttons(['inventory_view', 'balance'])],
 				});
+				player.save();
 			} else if (type === 'equip') {
-				const inventory = await readFile(member.id, 'inventory');
-				const equippedItems = await readFile(member.id, 'equippedItems');
+				const player = await database.player.findOne(member.id);
 				const item = interaction.options.getString('item');
 				const itemKey = getItem(item);
 				const itemJSON = items[itemKey];
@@ -509,7 +505,7 @@ module.exports = {
 					return;
 				}
 
-				if (inventory.get(itemKey) === 0 || inventory.get(itemKey) === undefined) {
+				if (player.inventory.get(itemKey) === 0 || player.inventory.get(itemKey) === undefined) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_ITEM'),
 					});
@@ -523,10 +519,8 @@ module.exports = {
 					return;
 				}
 
-				equippedItems.push({ name: itemKey, usageCount: 3 });
-				inventory.set(itemKey, inventory.get(itemKey) - 1);
-				await changeDB(member.id, 'equippedItems', equippedItems, true);
-				await changeDB(member.id, 'inventory', inventory, true);
+				player.equippedItems.push({ name: itemKey, usageCount: 3 });
+				player.inventory.set(itemKey, player.inventory.get(itemKey) - 1);
 
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'EQUIPPED_TITLE', {
@@ -540,8 +534,9 @@ module.exports = {
 				instance.editReply(interaction, {
 					embeds: [embed],
 				});
+				player.save();
 			} else if (type === 'craft') {
-				const inventory = await readFile(member.id, 'inventory');
+				const player = await database.player.findOne(member.id);
 				if (interaction.options !== undefined) {
 					var item = interaction.options.getString('item');
 					var amount = interaction.options.getInteger('amount') || 1;
@@ -562,7 +557,7 @@ module.exports = {
 							if (items[item].recipe === undefined) return;
 
 							for (key in items[item].recipe) {
-								if ((inventory.get(key) || 0) < items[item].recipe[key]) return;
+								if ((player.inventory.get(key) || 0) < items[item].recipe[key]) return;
 							}
 
 							return {
@@ -623,13 +618,15 @@ module.exports = {
 				for (key in itemJSON.recipe) {
 					const ingredientAmount = itemJSON.recipe[key] * amount;
 
-					if ((inventory.get(key) || 0) < ingredientAmount) {
+					if ((player.inventory.get(key) || 0) < ingredientAmount) {
 						missingIngredients.push(
-							`${instance.getItemName(key, interaction)} x ${format(ingredientAmount - (inventory.get(key) || 0))}`
+							`${instance.getItemName(key, interaction)} x ${format(
+								ingredientAmount - (player.inventory.get(key) || 0)
+							)}`
 						);
 					}
 
-					inventory.set(key, inventory.get(key) - ingredientAmount);
+					player.inventory.set(key, player.inventory.get(key) - ingredientAmount);
 					ingredients.push(`${instance.getItemName(key, interaction)}: ${format(ingredientAmount)}`);
 				}
 
@@ -645,16 +642,15 @@ module.exports = {
 				//get how many more of that item you could make with the ingredients you have
 				const maxAmount = Math.min(
 					...Object.keys(itemJSON.recipe).map((key) => {
-						return Math.floor(inventory.get(key) / itemJSON.recipe[key]);
+						return Math.floor(player.inventory.get(key) / itemJSON.recipe[key]);
 					})
 				);
 
-				if (inventory.get(itemKey) === undefined) {
-					inventory.set(itemKey, 0);
+				if (player.inventory.get(itemKey) === undefined) {
+					player.inventory.set(itemKey, 0);
 				}
 
-				inventory.set(itemKey, inventory.get(itemKey) + amount);
-				await changeDB(member.id, 'inventory', inventory, true);
+				player.inventory.set(itemKey, player.inventory.get(itemKey) + amount);
 
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'CRAFTED_TITLE', {
@@ -693,10 +689,10 @@ module.exports = {
 					components: [row],
 				});
 
-				var stats = await readFile(interaction.user.id, 'stats');
-				stats.set('itemsCrafted', stats.get('itemsCrafted') + amount);
-				await changeDB(interaction.user.id, 'stats', stats, true);
+				player.stats.set('itemsCrafted', player.stats.get('itemsCrafted') + amount);
+				player.save();
 			} else if (type === 'sellall') {
+				const player = await database.player.findOne(member.id);
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'SELLALL_TITLE'),
 					value: instance.getMessage(interaction, 'SELLALL_VALUE'),
@@ -720,11 +716,10 @@ module.exports = {
 				collector.on('collect', async (i) => {
 					const lootonly = interaction.options.getString('lootonly');
 					const noLegendary = interaction.options.getString('no-legendary');
-					const inventory = await readFile(member.id, 'inventory');
 					var itemsSold = [];
 					let falcoins = 0;
 
-					for (key of inventory.keys()) {
+					for (key of player.inventory.keys()) {
 						const itemJSON = items[key];
 
 						if (lootonly === 'yes') {
@@ -738,7 +733,7 @@ module.exports = {
 							}
 						}
 
-						if (itemJSON.mythical || inventory.get(key) === 0) {
+						if (itemJSON.mythical || player.inventory.get(key) === 0) {
 							continue;
 						}
 
@@ -746,13 +741,11 @@ module.exports = {
 							continue;
 						}
 
-						falcoins += itemJSON.value * inventory.get(key);
-						itemsSold.push(`${instance.getItemName(key, interaction)}: ${format(inventory.get(key))}`);
-						inventory.set(key, 0);
+						falcoins += itemJSON.value * player.inventory.get(key);
+						itemsSold.push(`${instance.getItemName(key, interaction)}: ${format(player.inventory.get(key))}`);
+						player.inventory.set(key, 0);
 					}
-
-					await changeDB(member.id, 'falcoins', falcoins);
-					await changeDB(member.id, 'inventory', inventory, true);
+					player.falcoins += falcoins;
 
 					if (itemsSold.length > 10) {
 						var length = itemsSold.length;
@@ -777,6 +770,7 @@ module.exports = {
 						components: [],
 					});
 				});
+				collector.on('end', () => player.save());
 			} else if (type === 'sort') {
 				if (interaction.values === undefined) {
 					const embed = instance.createEmbed(member.displayColor).addFields({
@@ -818,7 +812,7 @@ module.exports = {
 					});
 				} else {
 					const sort = interaction.values[0];
-					await changeDB(member.id, 'inventorySort', sort, true);
+					player.inventorySort = sort;
 
 					const embed = instance.createEmbed(member.displayColor).addFields({
 						name: ':gear: ' + instance.getMessage(interaction, 'INVENTORY_SORTING'),
@@ -835,10 +829,10 @@ module.exports = {
 					});
 				}
 			} else if (type === 'use') {
+				const player = await database.player.findOne(member.id);
 				const item = interaction.options.getString('item');
 				const itemKey = getItem(item);
 				const itemJSON = items[itemKey];
-				const inventory = await readFile(member.id, 'inventory');
 
 				if (itemKey === undefined) {
 					instance.editReply(interaction, {
@@ -849,7 +843,7 @@ module.exports = {
 					return;
 				}
 
-				if (inventory.get(itemKey) === undefined || inventory.get(itemKey) === 0) {
+				if (player.inventory.get(itemKey) === undefined || player.inventory.get(itemKey) === 0) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_ITEM'),
 					});
@@ -863,10 +857,10 @@ module.exports = {
 					return;
 				}
 
-				inventory.set(itemKey, inventory.get(itemKey) - 1);
+				player.inventory.set(itemKey, player.inventory.get(itemKey) - 1);
 
 				if (itemKey === 'backpack') {
-					await changeDB(member.id, 'inventoryBonus', 200000);
+					player.inventoryBonus += 200000;
 
 					var embed = instance.createEmbed(member.displayColor).addFields({
 						name: instance.getMessage(interaction, 'USE_BACKPACK_TITLE'),
@@ -874,30 +868,24 @@ module.exports = {
 					});
 				} else if (itemKey === 'snowflake') {
 					//reset all cooldowns
-					await changeDB(
-						member.id,
-						'cooldowns',
-						{
-							work: 0,
-							hunt: 0,
-							explore: 0,
-							mine: 0,
-							fish: 0,
-							scratch: 0,
-						},
-						true
-					);
-					await changeDB(member.id, 'inventory', inventory, true);
+					player.cooldowns = {
+						work: 0,
+						hunt: 0,
+						explore: 0,
+						mine: 0,
+						fish: 0,
+						scratch: 0,
+					};
 
 					var embed = instance.createEmbed(member.displayColor).addFields({
 						name: instance.getMessage(interaction, 'USE_MYTHICAL_TITLE'),
 						value: instance.getMessage(interaction, 'USE_SNOWFLAKE_VALUE'),
 					});
 				}
-				await changeDB(member.id, 'inventory', inventory, true);
 				instance.editReply(interaction, {
 					embeds: [embed],
 				});
+				player.save();
 			}
 		} catch (err) {
 			console.error(`inventory: ${err}`);

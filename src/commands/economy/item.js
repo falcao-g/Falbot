@@ -1,4 +1,4 @@
-const { format, getItem, readFile } = require('../../utils/functions.js');
+const { format, getItem } = require('../../utils/functions.js');
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
@@ -21,10 +21,11 @@ module.exports = {
 				.setRequired(true)
 				.setAutocomplete(true)
 		),
-	execute: async ({ interaction, instance, member, subcommand, args }) => {
+	execute: async ({ interaction, instance, member, subcommand, args, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			const items = instance.items;
+			const player = await database.player.findOne(member.id);
 
 			if (interaction.options !== undefined) {
 				var item = interaction.options.getString('item');
@@ -45,7 +46,6 @@ module.exports = {
 
 			const itemKey = getItem(item);
 			const itemJSON = items[itemKey];
-			const inventory = await readFile(member.id, 'inventory');
 
 			if (itemJSON === undefined) {
 				instance.editReply(interaction, {
@@ -86,9 +86,9 @@ module.exports = {
 				information += `\n${instance.getMessage(interaction, itemJSON.effect.toUpperCase())}`;
 			}
 
-			if (inventory.get(itemKey))
+			if (player.inventory.get(itemKey))
 				information += `\n${instance.getMessage(interaction, 'OWNED', {
-					AMOUNT: inventory.get(itemKey),
+					AMOUNT: player.inventory.get(itemKey),
 				})}`;
 
 			const embed = instance

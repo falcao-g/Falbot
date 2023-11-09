@@ -1,4 +1,4 @@
-const { changeDB, readFile, msToTime, format } = require('../../utils/functions.js');
+const { msToTime, format } = require('../../utils/functions.js');
 require('dotenv').config();
 const { SlashCommandBuilder } = require('discord.js');
 
@@ -14,7 +14,7 @@ module.exports = {
 			'pt-BR': 'Ganhe falcois votando no bot no top.gg',
 			'es-ES': 'Gana falcoins votando por nosotros en top.gg',
 		}),
-	execute: async ({ user, instance, interaction }) => {
+	execute: async ({ user, instance, interaction, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 
@@ -26,19 +26,18 @@ module.exports = {
 			});
 
 			var voted = (await request.json()).voted;
-			var rank_number = await readFile(user.id, 'rank');
-			var reward = instance.levels[rank_number - 1].vote;
-			lastVote = await readFile(user.id, 'lastVote');
+			const player = await database.player.findOne(user.id);
+			var reward = instance.levels[player.rank - 1].vote;
 
-			if (Date.now() - lastVote > 1000 * 60 * 60 * 48) {
-				await changeDB(user.id, 'voteStreak', 0, true);
+			if (Date.now() - player.lastVote > 1000 * 60 * 60 * 48) {
+				player.voteStreak = 0;
 			}
 
-			if (voted && Date.now() - lastVote > 1000 * 60 * 60 * 12) {
-				const bonus = Math.min(await readFile(user.id, 'voteStreak'), 30) * 5;
-				await changeDB(user.id, 'lastVote', Date.now(), true);
-				await changeDB(user.id, 'voteStreak', 1);
-				await changeDB(user.id, 'falcoins', reward + (reward * bonus) / 100);
+			if (voted && Date.now() - player.lastVote > 1000 * 60 * 60 * 12) {
+				const bonus = Math.min(player.voteStreak, 30) * 5;
+				player.lastVote = Date.now();
+				player.voteStreak++;
+				player.falcoins += reward + (reward * bonus) / 100;
 				var embed = instance.createEmbed(3066993).addFields({
 					name: instance.getMessage(interaction, 'VOTE_THANKS'),
 					value:
@@ -52,14 +51,12 @@ module.exports = {
 									PERCENTAGE: bonus,
 							  }),
 				});
-				var stats = await readFile(interaction.user.id, 'stats');
-				stats.set('timesVoted', stats.get('timesVoted') + 1);
-				await changeDB(interaction.user.id, 'stats', stats, true);
-			} else if (voted && Date.now() - lastVote < 1000 * 60 * 60 * 12) {
+				player.stats.set('timesVoted', player.stats.get('timesVoted') + 1);
+			} else if (voted && Date.now() - player.lastVote < 1000 * 60 * 60 * 12) {
 				var embed = instance.createEmbed(15158332).addFields({
 					name: instance.getMessage(interaction, 'ALREADY_COLLECTED'),
 					value: instance.getMessage(interaction, 'ALREADY_COLLECTED2', {
-						TIME: msToTime(1000 * 60 * 60 * 12 - (Date.now() - lastVote)),
+						TIME: msToTime(1000 * 60 * 60 * 12 - (Date.now() - player.lastVote)),
 						REWARD: format(reward),
 					}),
 				});
@@ -77,11 +74,12 @@ module.exports = {
 						value:
 							'https://top.gg/bot/742331813539872798/vote\n\n' +
 							instance.getMessage(interaction, 'VOTE_FINAL', {
-								PERCENTAGE: (await readFile(user.id, 'voteStreak')) * 5,
+								PERCENTAGE: player.voteStreak * 5,
 							}),
 					});
 			}
 			await instance.editReply(interaction, { embeds: [embed] });
+			player.save();
 		} catch (error) {
 			console.error(`vote: ${error}`);
 			instance.editReply(interaction, {

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { readFile, format, changeDB, buttons, getItem } = require('../../utils/functions.js');
+const { format, changeDB, buttons, getItem } = require('../../utils/functions.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('exchange')
@@ -57,7 +57,7 @@ module.exports = {
 				.setRequired(true)
 				.setMaxLength(100)
 		),
-	execute: async ({ guild, interaction, user, member, instance }) => {
+	execute: async ({ guild, interaction, user, member, instance, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			const offer = interaction.options.getString('give');
@@ -122,8 +122,8 @@ module.exports = {
 			}
 
 			//check if the user has the items and falcoins to give
-			const recipientFile = await readFile(recipient.user.id);
-			const userFile = await readFile(user.id);
+			const recipientFile = await database.player.findOne(recipient.user.id);
+			const userFile = await database.player.findOne(user.id);
 
 			if (offerFalcoins > userFile.falcoins || receiveFalcoins > recipientFile.falcoins) {
 				await instance.editReply(interaction, {
@@ -248,11 +248,6 @@ module.exports = {
 						);
 					}
 
-					await changeDB(user.id, 'falcoins', userFile.falcoins, true);
-					await changeDB(recipient.user.id, 'falcoins', recipientFile.falcoins, true);
-					await changeDB(user.id, 'inventory', userFile.inventory, true);
-					await changeDB(recipient.user.id, 'inventory', recipientFile.inventory, true);
-
 					const embed = instance.createEmbed(member.displayColor);
 					embed.setTitle(
 						instance.getMessage(interaction, 'EXCHANGE_ACCEPTED', {
@@ -282,6 +277,8 @@ module.exports = {
 					});
 				}
 			});
+			userFile.save();
+			recipientFile.save();
 		} catch (error) {
 			console.error(`exchange: ${error}`);
 			instance.editReply(interaction, {

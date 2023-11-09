@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { specialArg, readFile, randint, changeDB, format } = require('../../utils/functions.js');
+const { specialArg, randint, format } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -47,11 +47,12 @@ module.exports = {
 				})
 				.setRequired(true)
 		),
-	execute: async ({ interaction, user, instance, member }) => {
+	execute: async ({ interaction, user, instance, member, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			const horse = interaction.options.getString('horse');
 			const falcoins = interaction.options.getString('falcoins');
+			const player = await database.player.findOne(user.id);
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');
 			} catch {
@@ -62,8 +63,8 @@ module.exports = {
 				});
 				return;
 			}
-			if ((await readFile(user.id, 'falcoins')) >= bet) {
-				await changeDB(user.id, 'falcoins', -bet);
+			if (player.falcoins >= bet) {
+				player.falcoins -= bet;
 				const horses = ['- - - - -', '- - - - -', '- - - - -', '- - - - -', '- - - - -'];
 				const embed = instance
 					.createEmbed(member.displayColor)
@@ -103,13 +104,13 @@ module.exports = {
 				}
 
 				if (horse == winner) {
-					await changeDB(user.id, 'falcoins', bet * 5);
+					player.falcoins += bet * 5;
 					embed.setColor(3066993).setDescription(
 						instance.getMessage(interaction, 'CAVALO_DESCRIPTION_WON', {
 							BET: format(bet),
 							HORSE: horse,
 							FALCOINS: format(bet * 5),
-							SALDO: await readFile(user.id, 'falcoins', true),
+							SALDO: format(player.falcoins),
 						})
 					);
 				} else {
@@ -117,7 +118,7 @@ module.exports = {
 						instance.getMessage(interaction, 'CAVALO_DESCRIPTION_LOST', {
 							BET: format(bet),
 							HORSE: horse,
-							SALDO: await readFile(user.id, 'falcoins', true),
+							SALDO: format(player.falcoins),
 						})
 					);
 				}
@@ -130,6 +131,7 @@ module.exports = {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 				});
 			}
+			player.save();
 		} catch (error) {
 			console.error(`horse: ${error}`);
 			instance.editReply(interaction, {

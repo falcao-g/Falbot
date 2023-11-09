@@ -1,4 +1,4 @@
-const { specialArg, readFile, randint, changeDB, format } = require('../../utils/functions.js');
+const { specialArg, randint, format } = require('../../utils/functions.js');
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
@@ -26,10 +26,11 @@ module.exports = {
 				})
 				.setRequired(true)
 		),
-	execute: async ({ member, interaction, instance }) => {
+	execute: async ({ member, interaction, instance, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			const falcoins = interaction.options.getString('falcoins');
+			const player = await database.player.findOne(member.id);
 			try {
 				var bet = await specialArg(falcoins, member.id, 'falcoins');
 			} catch {
@@ -40,8 +41,8 @@ module.exports = {
 				});
 				return;
 			}
-			if ((await readFile(member.id, 'falcoins')) >= bet) {
-				await changeDB(member.id, 'falcoins', -bet);
+			if (player.falcoins >= bet) {
+				player.falcoins -= bet;
 				multiplier = 10;
 				const embed = instance.createEmbed(member.displayColor).addFields(
 					{
@@ -131,7 +132,7 @@ module.exports = {
 				if (lost) {
 					embed.setColor(15158332);
 				} else {
-					await changeDB(member.id, 'falcoins', parseInt((bet * multiplier) / 10));
+					player.falcoins += parseInt((bet * multiplier) / 10);
 					embed.setColor(3066993);
 				}
 
@@ -144,6 +145,7 @@ module.exports = {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 				});
 			}
+			player.save();
 		} catch (error) {
 			console.error(`catch: ${error}`);
 			instance.editReply(interaction, {

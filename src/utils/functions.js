@@ -1,60 +1,6 @@
 const userSchema = require('../schemas/user-schema');
 const { ActionRowBuilder, ButtonBuilder, GuildMember } = require('discord.js');
 const items = require('./json/items.json');
-
-/**
- *
- * @param {DiscordID} id
- * @description Creates a new user in the database if it doesn't exist
- * @async
- * @returns {Promise<void>}
- */
-async function createUser(id) {
-	try {
-		await userSchema.findByIdAndUpdate(
-			id,
-			{
-				_id: id,
-			},
-			{
-				upsert: true,
-			}
-		);
-	} catch (error) {
-		console.error(`Erro ao criar usuário: ${error}`);
-	}
-}
-
-/**
- *
- * @param {DiscordID} id
- * @param {string} field
- * @param {integer} quantity
- * @param {boolean} erase
- * @description Changes the value of a user's document field in the database
- * @example changeDB(id, 'falcoins', 1000, false) // Adds 1000 falcoins to the user
- * @async
- * @returns {Promise<void>}
- */
-async function changeDB(id, field, quantity = 1, erase = false) {
-	try {
-		await createUser(id);
-		if (erase == true) {
-			await userSchema.findByIdAndUpdate(id, {
-				[field]: quantity,
-			});
-		} else {
-			await userSchema.findByIdAndUpdate(id, {
-				$inc: {
-					[field]: quantity,
-				},
-			});
-		}
-	} catch (error) {
-		console.error(`Erro ao mudar a database: ${error}`);
-	}
-}
-
 /**
  * @param {integer} ms
  * @description Converts milliseconds to a string with the format "1m 1d 1h 1m 1s"
@@ -105,7 +51,6 @@ function msToTime(ms) {
  * @returns {Promise<integer>}
  */
 async function specialArg(arg, id, field = 'falcoins') {
-	await createUser(id);
 	var user = await userSchema.findById(id);
 
 	arg = arg.toString();
@@ -173,32 +118,6 @@ function format(falcoins) {
 		}
 	}
 	return pop_2.split('').reverse().join('');
-}
-
-/**
- *
- * @param {DiscordID} id
- * @param {string} field
- * @param {boolean} rich
- * @description Reads a user's document field in the database
- * @async
- * @example readFile(id, 'falcoins', true) // 1.000.000
- * @returns <Promise<any>
- */
-async function readFile(id, field = '', rich = false) {
-	try {
-		await createUser(id);
-
-		if (field == '') {
-			return await userSchema.findById(id);
-		} else if (rich == false) {
-			return (await userSchema.findById(id))[field];
-		} else {
-			return await format((await userSchema.findById(id))[field]);
-		}
-	} catch (error) {
-		console.error(`Erro ao ler arquivo: ${error}`);
-	}
 }
 
 /**
@@ -286,7 +205,7 @@ function pick(data) {
 async function setCooldown(id, command, cooldown) {
 	var cooldowns = (await userSchema.findById(id)).cooldowns;
 	cooldowns.set(command, Date.now() + cooldown * 1000);
-	await changeDB(id, 'cooldowns', cooldowns, true);
+	await userSchema.findByIdAndUpdate(id, { cooldowns: cooldowns });
 }
 
 /**
@@ -306,7 +225,7 @@ async function resolveCooldown(id, command) {
 			return commandField - Date.now();
 		} else {
 			cooldowns.set(command, 0);
-			await changeDB(id, 'cooldowns', cooldowns, true);
+			await userSchema.findByIdAndUpdate(id, { cooldowns: cooldowns });
 		}
 	}
 	return 0;
@@ -374,7 +293,7 @@ function buttons(buttons) {
  * @returns {boolean}
  */
 async function isEquipped(member, item) {
-	const equippedItems = await readFile(member.id, 'equippedItems');
+	const equippedItems = (await userSchema.findById(member.id)).equippedItems;
 
 	for (itemEquipped of equippedItems) {
 		if (itemEquipped.name === item) {
@@ -393,7 +312,7 @@ async function isEquipped(member, item) {
  * @returns {Promise<void>}
  */
 async function useItem(member, item) {
-	var equippedItems = await readFile(member.id, 'equippedItems');
+	var equippedItems = (await userSchema.findById(member.id)).equippedItems;
 
 	for (itemEquipped of equippedItems) {
 		if (itemEquipped.name === item) {
@@ -406,16 +325,13 @@ async function useItem(member, item) {
 		}
 	}
 
-	await changeDB(member.id, 'equippedItems', equippedItems, true);
+	await userSchema.findByIdAndUpdate(member.id, { equippedItems: equippedItems });
 }
 
 module.exports = {
-	createUser,
-	changeDB,
 	msToTime,
 	specialArg,
 	format,
-	readFile,
 	randint,
 	paginate,
 	pick,

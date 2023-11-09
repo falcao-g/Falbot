@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, time } = require('discord.js');
-const { format, readFile, buttons } = require('../../utils/functions.js');
+const { format, buttons } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -28,16 +28,14 @@ module.exports = {
 				})
 				.setRequired(false)
 		),
-	execute: async ({ guild, member, instance, interaction }) => {
+	execute: async ({ guild, member, instance, interaction, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			const user = interaction.options.getUser('user');
 			const target = user ? await guild.members.fetch(user.id) : member;
-			const { rank, falcoins, vitorias, banco, inventory, voteStreak, tickets, createdAt } = await readFile(
-				target.user.id
-			);
+			const { rank, falcoins, vitorias, banco, inventory, voteStreak, tickets, createdAt } =
+				await database.player.findOne(target.user.id);
 			const limit = instance.levels[rank - 1].bankLimit;
-			const items = instance.items;
 
 			if (instance.levels[rank - 1].falcoinsToLevelUp === undefined) {
 				var rankText = ':sparkles: ' + instance.getMessage(interaction, 'MAX_RANK2');

@@ -1,5 +1,5 @@
 const { ButtonBuilder, ActionRowBuilder, SlashCommandBuilder } = require('discord.js');
-const { readFile, msToTime, resolveCooldown } = require('../../utils/functions.js');
+const { msToTime, resolveCooldown } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -14,10 +14,11 @@ module.exports = {
 			'es-ES': 'Muestra el tiempo que falta para poder usar ciertos comandos',
 		})
 		.setDMPermission(false),
-	execute: async ({ interaction, instance, member }) => {
+	execute: async ({ interaction, instance, member, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
-			const voteCooldown = Date.now() - (await readFile(member.id, 'lastVote'));
+			const { lastVote } = await database.player.findOne(member.id);
+			const voteCooldown = Date.now() - lastVote;
 			const scratchCooldown = await resolveCooldown(member.id, 'scratch');
 			const workCooldown = await resolveCooldown(member.id, 'work');
 			const fishCooldown = await resolveCooldown(member.id, 'fish');
