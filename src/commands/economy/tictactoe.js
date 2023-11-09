@@ -51,7 +51,7 @@ module.exports = {
 			const challengedFile = await database.player.findOne(challenged.user.id);
 			if (challenged != member) {
 				try {
-					var bet = await specialArg(falcoins, user.id, 'falcoins');
+					var bet = await specialArg(falcoins, author.falcoins);
 				} catch {
 					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { specialArg, readFile, changeDB, randint, format, buttons } = require('../../utils/functions.js');
+const { specialArg, randint, format, buttons } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -34,7 +34,7 @@ module.exports = {
 			const falcoins = interaction.options.getString('falcoins');
 			const player = await database.player.findOne(user.id);
 			try {
-				var bet = await specialArg(falcoins, user.id, 'falcoins');
+				var bet = await specialArg(falcoins, player.falcoins);
 			} catch {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
@@ -158,9 +158,9 @@ module.exports = {
 						embeds: [embed],
 						components: [],
 					});
+					player.save();
+					winnerFile.save();
 				});
-				user.save();
-				winnerFile.save();
 			} else {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),

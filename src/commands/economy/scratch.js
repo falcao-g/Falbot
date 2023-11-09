@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } = require('discord.js');
-const { format, randint, changeDB, setCooldown } = require('../../utils/functions.js');
+const { format, randint, setCooldown } = require('../../utils/functions.js');
 
 module.exports = {
 	cooldown: 60 * 60 * 6,

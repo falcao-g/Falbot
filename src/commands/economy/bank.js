@@ -105,7 +105,7 @@ module.exports = {
 				await instance.editReply(interaction, { embeds: [embed] });
 			} else if (subcommand === 'deposit') {
 				try {
-					var quantity = await specialArg(falcoins, user.id, 'falcoins');
+					var quantity = specialArg(falcoins, player.falcoins);
 				} catch {
 					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
@@ -158,7 +158,7 @@ module.exports = {
 				}
 			} else if (subcommand === 'withdraw') {
 				try {
-					var quantity = await specialArg(falcoins, user.id, 'banco');
+					var quantity = specialArg(falcoins, player.banco);
 				} catch {
 					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
@@ -194,7 +194,7 @@ module.exports = {
 
 					await instance.editReply(interaction, { embeds: [embed] });
 				} else {
-					await instance.editReply({
+					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'BANCO_INSUFICIENTE'),
 					});
 				}

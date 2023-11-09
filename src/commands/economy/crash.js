@@ -32,7 +32,7 @@ module.exports = {
 			const falcoins = interaction.options.getString('falcoins');
 			const player = await database.player.findOne(member.id);
 			try {
-				var bet = await specialArg(falcoins, member.id, 'falcoins');
+				var bet = specialArg(falcoins, player.falcoins);
 			} catch {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {

@@ -1,4 +1,4 @@
-const { format, paginate, getItem, buttons, isEquipped } = require('../../utils/functions.js');
+const { format, paginate, getItem, buttons, isEquipped, specialArg } = require('../../utils/functions.js');
 const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
 
 module.exports = {
@@ -99,7 +99,7 @@ module.exports = {
 						.setRequired(true)
 						.setAutocomplete(true)
 				)
-				.addIntegerOption((option) =>
+				.addStringOption((option) =>
 					option
 						.setName('amount')
 						.setNameLocalizations({
@@ -108,11 +108,10 @@ module.exports = {
 						})
 						.setDescription('amount of the item')
 						.setDescriptionLocalizations({
-							'pt-BR': 'quantidade do item',
-							'es-ES': 'cantidad del item',
+							'pt-BR': 'quantidade do item (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+							'es-ES': 'cantidad del item (admite "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
 						})
 						.setRequired(true)
-						.setMinValue(1)
 				)
 		)
 		.addSubcommand((subcommand) =>
@@ -459,8 +458,19 @@ module.exports = {
 					});
 					return;
 				}
-
-				const amount = Math.min(player.inventory.get(itemKey), interaction.options.getInteger('amount'));
+				try {
+					var amount = Math.min(
+						player.inventory.get(itemKey),
+						specialArg(interaction.options.getString('amount'), player.inventory.get(itemKey))
+					);
+				} catch {
+					await instance.editReply(interaction, {
+						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+							VALUE: interaction.options.getString('amount'),
+						}),
+					});
+					return;
+				}
 				const falcoins = itemJSON.value * amount;
 
 				player.inventory.set(itemKey, player.inventory.get(itemKey) - amount);
