@@ -45,11 +45,11 @@ module.exports = {
 		try {
 			await interaction.deferReply().catch(() => {});
 			var board = new Board.default();
-			const member2 = await guild.members.fetch(interaction.options.getUser('user').id);
+			const challenged = await guild.members.fetch(interaction.options.getUser('user').id);
 			const falcoins = interaction.options.getString('falcoins');
 			const author = await database.player.findOne(user.id);
-			const challenged = await database.player.findOne(member2.user.id);
-			if (member2 != member) {
+			const challengedFile = await database.player.findOne(challenged.user.id);
+			if (challenged != member) {
 				try {
 					var bet = await specialArg(falcoins, user.id, 'falcoins');
 				} catch {
@@ -60,11 +60,11 @@ module.exports = {
 					});
 					return;
 				}
-				if (author.falcoins >= bet && challenged.falcoins >= bet) {
+				if (author.falcoins >= bet && challengedFile.falcoins >= bet) {
 					var answer = await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VELHA_CHAMOU', {
 							USER: member,
-							USER2: member2,
+							USER2: challenged,
 							FALCOINS: format(bet),
 						}),
 						components: [buttons(['accept', 'refuse'])],
@@ -72,7 +72,7 @@ module.exports = {
 					});
 
 					const filter = (btInt) => {
-						return instance.defaultFilter(btInt) && btInt.user.id === member2.user.id;
+						return instance.defaultFilter(btInt) && btInt.user.id === challenged.user.id;
 					};
 
 					const collector = answer.createMessageComponentCollector({
@@ -85,18 +85,20 @@ module.exports = {
 						if (collected.size === 0) {
 							await interaction.followUp({
 								content: instance.getMessage(interaction, 'VELHA_CANCELADO_DEMOROU', {
-									USER: member2,
+									USER: challenged,
 								}),
 							});
 						} else if (collected.first().customId === 'refuse') {
 							await interaction.followUp({
 								content: instance.getMessage(interaction, 'VELHA_CANCELADO_RECUSOU', {
-									USER: member2,
+									USER: challenged,
 								}),
 							});
 						} else {
-							player.falcoins -= bet;
-							challenged.falcoins -= bet;
+							author.falcoins -= bet;
+							challengedFile.falcoins -= bet;
+							author.save();
+							challengedFile.save();
 							const row = new ActionRowBuilder();
 							const row2 = new ActionRowBuilder();
 							const row3 = new ActionRowBuilder();
@@ -116,15 +118,15 @@ module.exports = {
 							const random = randint(0, 1);
 							if (random == 0) {
 								var first_player = member;
-								var second_player = member2;
+								var second_player = challenged;
 							} else {
-								var first_player = member2;
+								var first_player = challenged;
 								var second_player = member;
 							}
 
 							answer2 = await collected.first().reply({
 								content: `:older_woman: \`${member.displayName}\` **VS**  \`${
-									member2.displayName
+									challenged.displayName
 								}\` \n\n${instance.getMessage(interaction, 'VELHA_MOVIMENTO', {
 									USER: first_player.displayName,
 								})}`,
@@ -222,7 +224,7 @@ module.exports = {
 
 								await i.update({
 									content: `:older_woman: \`${member.displayName}\` **VS**  \`${
-										member2.displayName
+										challenged.displayName
 									}\` \n\n${instance.getMessage(interaction, 'VELHA_MOVIMENTO', {
 										USER: board.currentMark() === 'X' ? first_player.displayName : second_player.displayName,
 									})}`,
@@ -247,7 +249,7 @@ module.exports = {
 									}
 									await answer2.edit({
 										content: `:older_woman: \`${member.displayName}\` **VS**  \`${
-											member2.displayName
+											challenged.displayName
 										}\` \n\n**${instance.getMessage(interaction, 'GANHOU', {
 											WINNER: board.winningPlayer() === 'X' ? first_player.displayName : second_player.displayName,
 											FALCOINS: await format(bet * 2),
@@ -258,7 +260,7 @@ module.exports = {
 									secondPlayer.falcoins += bet;
 									await answer2.edit({
 										content: `:older_woman: \`${member.displayName}\` **VS**  \`${
-											member2.displayName
+											challenged.displayName
 										}\` \n\n${instance.getMessage(interaction, 'VELHA_EMPATOU')}`,
 									});
 								}
