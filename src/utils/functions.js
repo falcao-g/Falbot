@@ -51,7 +51,6 @@ function msToTime(ms) {
  * @returns {Promise<integer>}
  */
 async function specialArg(arg, id, field = 'falcoins') {
-	await createUser(id);
 	var user = await userSchema.findById(id);
 
 	arg = arg.toString();
