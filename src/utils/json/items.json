@@ -854,5 +854,25 @@
 			"fossil": 5,
 			"artifact": 10
 		}
+	},
+	"coffeebean": {
+		"pt-BR": "Grão de Café",
+		"en-US": "Coffee Bean",
+		"es-ES": "Grano de Café",
+		"value": 150,
+		"rarity": "Uncommon",
+		"exploring": true
+	},
+	"coffee": {
+		"pt-BR": "Café",
+		"en-US": "Coffee",
+		"es-ES": "Café",
+		"value": 6500,
+		"emoji": "☕",
+		"equip": true,
+		"effect": "work-2",
+		"recipe": {
+			"coffeebean": 40
+		}
 	}
 }
