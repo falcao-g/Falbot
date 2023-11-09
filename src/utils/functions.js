@@ -53,8 +53,6 @@ function specialArg(string, total) {
 	string.replace(/,/g, '');
 	string.replace(/\./g, '');
 	var new_value = parseInt(string);
-	console.log(total);
-	console.log(string);
 
 	if (string == 'tudo' || string == 'all' || string == 'max' || string == 'todo') {
 		new_value = total;
@@ -76,8 +74,6 @@ function specialArg(string, total) {
 			}
 		}
 	}
-
-	console.log(new_value);
 
 	if (parseInt(new_value) <= 0 || isNaN(parseInt(new_value))) {
 		throw Error('Invalid value!');
