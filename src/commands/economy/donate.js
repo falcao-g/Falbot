@@ -46,7 +46,7 @@ module.exports = {
 			const author = await database.player.findOne(user.id);
 			const receiver = await database.player.findOne(target.id);
 			try {
-				var quantity = await specialArg(falcoins, user.id, 'falcoins');
+				var quantity = specialArg(falcoins, author.falcoins);
 			} catch {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
@@ -56,7 +56,7 @@ module.exports = {
 				return;
 			}
 
-			if (player.falcoins >= quantity) {
+			if (author.falcoins >= quantity) {
 				author.falcoins -= quantity;
 				receiver.falcoins += quantity;
 				await instance.editReply(interaction, {

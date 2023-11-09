@@ -1,4 +1,4 @@
-const { msToTime, format } = require('../../utils/functions.js');
+const { msToTime, format, specialArg } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -33,7 +33,7 @@ module.exports = {
 					'pt-BR': 'Compre bilhetes de loteria',
 					'es-ES': 'Compre billetes de lotería',
 				})
-				.addIntegerOption((option) =>
+				.addStringOption((option) =>
 					option
 						.setName('amount')
 						.setNameLocalizations({
@@ -42,10 +42,9 @@ module.exports = {
 						})
 						.setDescription('amount of lottery tickets to buy')
 						.setDescriptionLocalizations({
-							'pt-BR': 'quantidade de bilhetes para comprar',
-							'es-ES': 'cantidad de billetes para comprar',
+							'pt-BR': 'quantidade de bilhetes para comprar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M)',
+							'es-ES': 'cantidad de billetes para comprar (admite "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
 						})
-						.setMinValue(1)
 						.setRequired(true)
 				)
 		)
@@ -69,7 +68,17 @@ module.exports = {
 			const type = interaction.options.getSubcommand();
 			const player = await database.player.findOne(user.id);
 			if (type === 'buy') {
-				const amount = interaction.options.getInteger('amount');
+				try {
+					var amount = specialArg(interaction.options.getString('amount'), parseInt(player.falcoins / 500));
+				} catch {
+					await instance.editReply(interaction, {
+						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+							VALUE: amount,
+						}),
+					});
+					return;
+				}
+
 				if (player.falcoins > amount * 500) {
 					var embed = instance.createEmbed(15844367).addFields({
 						name: `:tickets: ${format(amount)} ` + instance.getMessage(interaction, 'PURCHASED'),

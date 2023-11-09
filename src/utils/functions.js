@@ -42,54 +42,47 @@ function msToTime(ms) {
 
 /**
  *
- * @param {integer} arg
- * @param {DiscordID} id
- * @param {string} field
- * @description Converts a string to an integer
- * @example specialArg('100.000.000', id, 'falcoins') // 100000000
- * @async
- * @returns {Promise<integer>}
+ * @param {string} string
+ * @param {integer} total
+ * @description Parses a string to an integer
+ * @example specialArg('10%', 1000) // 100
+ * @returns {integer}
  */
-async function specialArg(arg, id, field = 'falcoins') {
-	var user = await userSchema.findById(id);
+function specialArg(string, total) {
+	string = string.toLowerCase();
+	string.replace(/,/g, '');
+	string.replace(/\./g, '');
+	var new_value = parseInt(string);
+	console.log(total);
+	console.log(string);
 
-	arg = arg.toString();
-	arg = arg.toLowerCase();
-
-	new_arg = '';
-	for (c in arg) {
-		if (arg[c] != '.' && arg[c] != ',') {
-			new_arg += arg[c];
-		}
-	}
-
-	if (new_arg == 'tudo' || new_arg == 'all') {
-		new_arg = user[field];
-	} else if (new_arg == 'metade' || new_arg == 'half') {
-		new_arg = parseInt(user[field] / 2);
-	} else if (new_arg.slice(-1) === 'k') {
-		new_arg = new_arg.slice(0, -1);
-		new_arg += '000';
-	} else if (new_arg.slice(-1) === 'm') {
-		new_arg = new_arg.slice(0, -1);
-		new_arg += '000000';
-	} else if (new_arg.slice(-1) === 'b') {
-		new_arg = new_arg.slice(0, -1);
-		new_arg += '000000000';
-	} else if (new_arg.slice(-1) === 't') {
-		new_arg = new_arg.slice(0, -1);
-		new_arg += '000000000000';
+	if (string == 'tudo' || string == 'all' || string == 'max' || string == 'todo') {
+		new_value = total;
+	} else if (string == 'metade' || string == 'half' || string == 'mitad') {
+		new_value = parseInt(total / 2);
+	} else if (string.slice(-1) === 'k') {
+		string = string.slice(0, -1);
+		new_value += '000';
+	} else if (string.slice(-1) === 'm') {
+		string = string.slice(0, -1);
+		new_value += '000000';
+	} else if (string.slice(-1) === 'b') {
+		string = string.slice(0, -1);
+		new_value += '000000000';
 	} else {
-		for (c in new_arg) {
-			if (new_arg[c] == '%') {
-				new_arg = parseInt((parseInt(new_arg.slice(0, -1)) * parseInt(user[field])) / 100);
+		for (c in string) {
+			if (string[c] == '%') {
+				new_value = parseInt((parseInt(string.slice(0, -1)) * parseInt(total)) / 100);
 			}
 		}
 	}
-	if (parseInt(new_arg) <= 0 || isNaN(parseInt(new_arg))) {
+
+	console.log(new_value);
+
+	if (parseInt(new_value) <= 0 || isNaN(parseInt(new_value))) {
 		throw Error('Invalid value!');
 	} else {
-		return parseInt(new_arg);
+		return parseInt(new_value);
 	}
 }
 

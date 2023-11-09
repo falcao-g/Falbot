@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { format, changeDB, buttons, getItem } = require('../../utils/functions.js');
+const { format, buttons, getItem, specialArg } = require('../../utils/functions.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('exchange')
@@ -63,6 +63,8 @@ module.exports = {
 			const offer = interaction.options.getString('give');
 			const receive = interaction.options.getString('receive');
 			var recipient = await guild.members.fetch(interaction.options.getUser('user').id);
+			const recipientFile = await database.player.findOne(recipient.user.id);
+			const userFile = await database.player.findOne(user.id);
 
 			if (recipient.user === user) {
 				await instance.editReply(interaction, {
@@ -86,10 +88,11 @@ module.exports = {
 			//separate the falcoins from the items
 			for (var i = 0; i < offerItems.length; i++) {
 				if (offerItems[i].includes('falcoins')) {
-					offerFalcoins = parseInt(offerItems[i].split(' ')[0]);
+					offerFalcoins = specialArg(offerItems[i].split(' ')[0], userFile.falcoins);
 				} else {
 					offerItems[i] = offerItems[i].trim();
-					if (getItem(offerItems[i].split(' ').slice(1).join(' ')) === undefined) {
+					var itemName = getItem(offerItems[i].split(' ').slice(1).join(' '));
+					if (getItem(itemName) === undefined) {
 						await instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 								VALUE: offerItems[i].split(' ')[1],
@@ -97,18 +100,28 @@ module.exports = {
 						});
 						return;
 					}
-					offerItemsNames.push(getItem(offerItems[i].split(' ').slice(1).join(' ')));
-					offerItemsAmount.push(parseInt(offerItems[i].split(' ')[0]));
+					try {
+						offerItemsNames.push(itemName);
+						offerItemsAmount.push(specialArg(offerItems[i].split(' ')[0], userFile.inventory.get(itemName)));
+					} catch {
+						await instance.editReply(interaction, {
+							content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+								VALUE: offerItems[i],
+							}),
+						});
+						return;
+					}
 				}
 			}
 
 			//separate the falcoins from the items
 			for (var i = 0; i < receiveItems.length; i++) {
 				if (receiveItems[i].includes('falcoins')) {
-					receiveFalcoins = parseInt(receiveItems[i].split(' ')[0]);
+					receiveFalcoins = specialArg(receiveItems[i].split(' ')[0], recipientFile.falcoins);
 				} else {
 					receiveItems[i] = receiveItems[i].trim();
-					if (getItem(receiveItems[i].split(' ').slice(1).join(' ')) === undefined) {
+					var itemName = getItem(receiveItems[i].split(' ').slice(1).join(' '));
+					if (itemName === undefined) {
 						await instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
 								VALUE: receiveItems[i].split(' ')[1],
@@ -116,15 +129,21 @@ module.exports = {
 						});
 						return;
 					}
-					receiveItemsNames.push(getItem(receiveItems[i].split(' ').slice(1).join(' ')));
-					receiveItemsAmount.push(parseInt(receiveItems[i].split(' ')[0]));
+					try {
+						receiveItemsNames.push(itemName);
+						receiveItemsAmount.push(specialArg(receiveItems[i].split(' ')[0], recipientFile.inventory.get(itemName)));
+					} catch {
+						await instance.editReply(interaction, {
+							content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+								VALUE: receiveItems[i],
+							}),
+						});
+						return;
+					}
 				}
 			}
 
 			//check if the user has the items and falcoins to give
-			const recipientFile = await database.player.findOne(recipient.user.id);
-			const userFile = await database.player.findOne(user.id);
-
 			if (offerFalcoins > userFile.falcoins || receiveFalcoins > recipientFile.falcoins) {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'INSUFICIENTE_CONTAS'),

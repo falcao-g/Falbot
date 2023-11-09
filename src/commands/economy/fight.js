@@ -54,7 +54,7 @@ module.exports = {
 			}
 
 			try {
-				var bet = await specialArg(falcoins, user.id, 'falcoins');
+				var bet = await specialArg(falcoins, author.falcoins);
 			} catch {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
