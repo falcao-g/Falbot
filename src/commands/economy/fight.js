@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { specialArg, readFile, format, randint, changeDB, buttons } = require('../../utils/functions.js');
+const { specialArg, format, randint, buttons } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -38,11 +38,13 @@ module.exports = {
 				})
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, user, member, instance }) => {
+	execute: async ({ guild, interaction, user, member, instance, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			const falcoins = interaction.options.getString('falcoins');
 			var member2 = await guild.members.fetch(interaction.options.getUser('user').id);
+			const author = await database.player.findOne(user.id);
+			const challenged = await database.player.findOne(member2.id);
 
 			if (member2.user === user) {
 				instance.editReply(interaction, {
@@ -61,7 +63,7 @@ module.exports = {
 				});
 				return;
 			}
-			if ((await readFile(user.id, 'falcoins')) >= bet && (await readFile(member2.user.id, 'falcoins')) >= bet) {
+			if (author.falcoins >= bet && challenged.falcoins >= bet) {
 				var answer = await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'LUTA_CONVITE', {
 						USER: member,
@@ -96,8 +98,8 @@ module.exports = {
 							}),
 						});
 					} else {
-						await changeDB(user.id, 'falcoins', -bet);
-						await changeDB(member2.id, 'falcoins', -bet);
+						author.falcoins -= bet;
+						challenged.falcoins -= bet;
 						const attacks = ['instantâneo', 'stun', 'roubo de vida', 'cura', 'self', 'escudo'];
 						const player_1 = {
 							hp: 100,
@@ -206,8 +208,9 @@ module.exports = {
 						const winner = order[0].hp <= 0 ? order[1] : order[0];
 						const loser = order[0].hp <= 0 ? order[0] : order[1];
 
-						await changeDB(winner.id, 'falcoins', bet * 2);
-						await changeDB(winner.id, 'vitorias');
+						const winnerFile = await database.player.findOne(winner.id);
+						winnerFile.falcoins += bet * 2;
+						winnerFile.vitorias++;
 
 						const embed2 = instance.createEmbed(3066993).addFields(
 							{
@@ -218,7 +221,7 @@ module.exports = {
 							},
 							{
 								name: instance.getMessage(interaction, 'SALDO_ATUAL'),
-								value: `${await readFile(winner.id, 'falcoins', true)} falcoins`,
+								value: `${format(winnerFile.falcoins)} falcoins`,
 							}
 						);
 
@@ -234,6 +237,8 @@ module.exports = {
 					content: instance.getMessage(interaction, 'INSUFICIENTE_CONTAS'),
 				});
 			}
+			author.save();
+			challenged.save();
 		} catch (error) {
 			console.error(`fight: ${error}`);
 			interaction.channel

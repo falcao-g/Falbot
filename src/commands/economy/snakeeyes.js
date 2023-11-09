@@ -1,4 +1,4 @@
-const { specialArg, readFile, changeDB, format, randint } = require('../../utils/functions.js');
+const { specialArg, format, randint } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -24,10 +24,11 @@ module.exports = {
 				})
 				.setRequired(true)
 		),
-	execute: async ({ interaction, instance, user, member }) => {
+	execute: async ({ interaction, instance, user, member, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			const falcoins = interaction.options.getString('falcoins');
+			const player = await database.player.findOne(user.id);
 
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');
@@ -40,8 +41,8 @@ module.exports = {
 				return;
 			}
 
-			if ((await readFile(user.id, 'falcoins')) >= bet) {
-				await changeDB(user.id, 'falcoins', -bet);
+			if (player.falcoins >= bet) {
+				player.falcoins -= bet;
 				const diegif = instance.emojiList['dadogif'];
 				const choices = [
 					instance.emojiList['dado1'],
@@ -79,7 +80,7 @@ module.exports = {
 				await instance.editReply(interaction, { embeds: [embed] });
 
 				if (random1 === 1 && random2 === 1) {
-					await changeDB(user.id, 'falcoins', bet * 5);
+					player.falcoins += bet * 5;
 					var embed2 = instance.createEmbed('#F1C40F').addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
@@ -93,7 +94,7 @@ module.exports = {
 						}
 					);
 				} else if (random1 === 1 || random2 === 1) {
-					await changeDB(user.id, 'falcoins', bet * 2);
+					player.falcoins += bet * 2;
 					var embed2 = instance.createEmbed(3066993).addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
@@ -122,7 +123,7 @@ module.exports = {
 				}
 				embed2.addFields({
 					name: instance.getMessage(interaction, 'SALDO_ATUAL'),
-					value: `${await readFile(user.id, 'falcoins', true)}`,
+					value: `${format(player.falcoins)}`,
 				});
 				await instance.editReply(interaction, {
 					embeds: [embed2],
@@ -132,6 +133,7 @@ module.exports = {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 				});
 			}
+			player.save();
 		} catch (error) {
 			console.error(`snakeeyes: ${error}`);
 			instance.editReply(interaction, {

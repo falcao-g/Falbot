@@ -1,5 +1,5 @@
 const { ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js');
-const { format, readFile, buttons } = require('../../utils/functions.js');
+const { format, buttons } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new ContextMenuCommandBuilder()
@@ -10,11 +10,11 @@ module.exports = {
 		})
 		.setType(ApplicationCommandType.User)
 		.setDMPermission(false),
-	execute: async ({ instance, interaction }) => {
+	execute: async ({ instance, interaction, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			const target = interaction.targetMember;
-			const { rank, falcoins, vitorias, banco } = await readFile(target.user.id);
+			const { rank, falcoins, vitorias, banco } = await database.player.findOne(target.user.id);
 
 			const embed = instance
 				.createEmbed(target.displayColor)

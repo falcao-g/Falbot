@@ -1,4 +1,4 @@
-const { readFile, changeDB, randint, format } = require('../../utils/functions.js');
+const { randint, format } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -15,14 +15,14 @@ module.exports = {
 			'es-ES': 'Ve a trabajar para ganar falcoins',
 		})
 		.setDMPermission(false),
-	execute: async ({ interaction, instance, member, user }) => {
+	execute: async ({ interaction, instance, member, user, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			var levels = instance.levels;
+			const player = await database.player.findOne(user.id);
 
-			var rank_number = await readFile(user.id, 'rank');
-			var min = levels[rank_number - 1].work[0];
-			var max = levels[rank_number - 1].work[1];
+			var min = levels[player.rank - 1].work[0];
+			var max = levels[player.rank - 1].work[1];
 			var salary = randint(min, max);
 			var eventText = '';
 
@@ -46,7 +46,7 @@ module.exports = {
 					});
 			}
 
-			changeDB(user.id, 'falcoins', salary + bonus);
+			player.falcoins += salary + bonus;
 
 			var embed = instance
 				.createEmbed(member.displayColor)
@@ -61,9 +61,8 @@ module.exports = {
 				embeds: [embed],
 			});
 
-			var stats = await readFile(interaction.user.id, 'stats');
-			stats.set('timesWorked', stats.get('timesWorked') + 1);
-			await changeDB(interaction.user.id, 'stats', stats, true);
+			player.stats.set('timesWorked', player.stats.get('timesWorked') + 1);
+			player.save();
 		} catch (err) {
 			console.error(`work: ${err}`);
 			instance.editReply(interaction, {

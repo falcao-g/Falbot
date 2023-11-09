@@ -1,4 +1,4 @@
-const { readFile, changeDB, format, paginate } = require('../../utils/functions.js');
+const { format, paginate } = require('../../utils/functions.js');
 const { SlashCommandBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
@@ -38,15 +38,15 @@ module.exports = {
 					'es-ES': 'Veja todos os ranks',
 				})
 		),
-	execute: async ({ guild, user, interaction, instance }) => {
+	execute: async ({ guild, user, interaction, instance, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			const type = interaction.options.getSubcommand();
 			const levels = instance.levels;
+			const player = await database.player.findOne(user.id);
 
 			if (type === 'rankup') {
-				const rank_number = await readFile(user.id, 'rank');
-				rank = levels[rank_number - 1];
+				rank = levels[player.rank - 1];
 
 				if (rank.falcoinsToLevelUp === undefined) {
 					await instance.editReply(interaction, {
@@ -54,17 +54,17 @@ module.exports = {
 							USER: user,
 						}),
 					});
-				} else if ((await readFile(user.id, 'falcoins')) < rank.falcoinsToLevelUp) {
+				} else if (player.falcoins < rank.falcoinsToLevelUp) {
 					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_MONEY_RANK', {
-							FALCOINS: format(rank.falcoinsToLevelUp - (await readFile(user.id, 'falcoins'))),
+							FALCOINS: format(rank.falcoinsToLevelUp - player.falcoins),
 						}),
 					});
 				} else {
 					const new_rank = levels[rank_number];
 
-					await changeDB(user.id, 'falcoins', -rank.falcoinsToLevelUp);
-					await changeDB(user.id, 'rank', rank_number + 1, true);
+					player.falcoins -= rank.falcoinsToLevelUp;
+					player.rank += 1;
 
 					perks = await instance.rankPerks(rank, new_rank, interaction);
 
@@ -87,8 +87,7 @@ module.exports = {
 					});
 				}
 			} else if (type === 'view') {
-				const rank_number = await readFile(user.id, 'rank');
-				if (levels[rank_number - 1].falcoinsToLevelUp === undefined) {
+				if (levels[player.rank - 1].falcoinsToLevelUp === undefined) {
 					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'MAX_RANK', {
 							USER: user,
@@ -188,6 +187,7 @@ module.exports = {
 					}
 				});
 			}
+			player.save();
 		} catch (err) {
 			console.error(`ranks: ${err}`);
 			instance.editReply(interaction, {

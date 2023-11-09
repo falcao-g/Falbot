@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { format, readFile, buttons } = require('../../utils/functions.js');
+const { format, buttons } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -28,14 +28,14 @@ module.exports = {
 				})
 				.setRequired(false)
 		),
-	execute: async ({ guild, member, instance, interaction }) => {
+	execute: async ({ guild, member, instance, interaction, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			if (interaction.options != undefined) {
 				var user = interaction.options.getUser('user');
 			}
 			const target = user ? await guild.members.fetch(user.id) : member;
-			const { rank, falcoins, vitorias, banco } = await readFile(target.user.id);
+			const { rank, falcoins, vitorias, banco } = await database.player.findOne(target.user.id);
 
 			const embed = instance
 				.createEmbed(target.displayColor)

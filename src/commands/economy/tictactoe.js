@@ -1,6 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder, SlashCommandBuilder } = require('discord.js');
 const Board = require('tictactoe-board');
-const { specialArg, readFile, format, randint, changeDB, buttons } = require('../../utils/functions.js');
+const { specialArg, format, randint, buttons } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -36,19 +36,19 @@ module.exports = {
 					'amount of falcoins to bet in the game (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
 				)
 				.setDescriptionLocalizations({
-					'pt-BR':
-						'quantidade de falcoins para apostar no jogo (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
-					'es-ES':
-						'cantidad de falcoins para apostar en el juego (soporta "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+					'pt-BR': 'quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+					'es-ES': 'cantidad de falcoins para apostar (soporta "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
 				})
 				.setRequired(true)
 		),
-	execute: async ({ guild, interaction, instance, user, member }) => {
+	execute: async ({ guild, interaction, instance, user, member, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			var board = new Board.default();
 			const member2 = await guild.members.fetch(interaction.options.getUser('user').id);
 			const falcoins = interaction.options.getString('falcoins');
+			const author = await database.player.findOne(user.id);
+			const challenged = await database.player.findOne(member2.user.id);
 			if (member2 != member) {
 				try {
 					var bet = await specialArg(falcoins, user.id, 'falcoins');
@@ -60,10 +60,7 @@ module.exports = {
 					});
 					return;
 				}
-				if (
-					(await readFile(member.user.id, 'falcoins')) >= bet &&
-					(await readFile(member2.user.id, 'falcoins')) >= bet
-				) {
+				if (author.falcoins >= bet && challenged.falcoins >= bet) {
 					var answer = await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'VELHA_CHAMOU', {
 							USER: member,
@@ -98,8 +95,8 @@ module.exports = {
 								}),
 							});
 						} else {
-							await changeDB(member.user.id, 'falcoins', -bet);
-							await changeDB(member2.user.id, 'falcoins', -bet);
+							player.falcoins -= bet;
+							challenged.falcoins -= bet;
 							const row = new ActionRowBuilder();
 							const row2 = new ActionRowBuilder();
 							const row3 = new ActionRowBuilder();
@@ -238,13 +235,15 @@ module.exports = {
 							});
 
 							collector2.on('end', async () => {
+								const firstPlayer = await database.player.findOne(first_player.user.id);
+								const secondPlayer = await database.player.findOne(second_player.user.id);
 								if (board.hasWinner()) {
 									if (board.winningPlayer() === 'X') {
-										await changeDB(first_player.user.id, 'falcoins', bet * 2);
-										await changeDB(first_player.user.id, 'vitorias', 1);
+										firstPlayer.falcoins += bet * 2;
+										firstPlayer.vitorias++;
 									} else {
-										await changeDB(second_player.user.id, 'falcoins', bet * 2);
-										await changeDB(second_player.user.id, 'vitorias', 1);
+										secondPlayer.falcoins += bet * 2;
+										secondPlayer.vitorias++;
 									}
 									await answer2.edit({
 										content: `:older_woman: \`${member.displayName}\` **VS**  \`${
@@ -255,14 +254,16 @@ module.exports = {
 										})}**`,
 									});
 								} else {
-									await changeDB(first_player.user.id, 'falcoins', bet);
-									await changeDB(second_player.user.id, 'falcoins', bet);
+									firstPlayer.falcoins += bet;
+									secondPlayer.falcoins += bet;
 									await answer2.edit({
 										content: `:older_woman: \`${member.displayName}\` **VS**  \`${
 											member2.displayName
 										}\` \n\n${instance.getMessage(interaction, 'VELHA_EMPATOU')}`,
 									});
 								}
+								firstPlayer.save();
+								secondPlayer.save();
 							});
 						}
 					});

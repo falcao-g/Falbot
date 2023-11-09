@@ -1,4 +1,4 @@
-const { specialArg, readFile, format, changeDB } = require('../../utils/functions.js');
+const { specialArg, format } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -38,11 +38,13 @@ module.exports = {
 				})
 				.setRequired(true)
 		),
-	execute: async ({ interaction, user, instance }) => {
+	execute: async ({ interaction, user, instance, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			const falcoins = interaction.options.getString('falcoins');
 			var target = interaction.options.getUser('user');
+			const author = await database.player.findOne(user.id);
+			const receiver = await database.player.findOne(target.id);
 			try {
 				var quantity = await specialArg(falcoins, user.id, 'falcoins');
 			} catch {
@@ -54,9 +56,9 @@ module.exports = {
 				return;
 			}
 
-			if ((await readFile(user.id, 'falcoins')) >= quantity) {
-				await changeDB(user.id, 'falcoins', -quantity);
-				await changeDB(target.id, 'falcoins', quantity);
+			if (player.falcoins >= quantity) {
+				author.falcoins -= quantity;
+				receiver.falcoins += quantity;
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'DOAR', {
 						FALCOINS: format(quantity),
@@ -69,6 +71,8 @@ module.exports = {
 					ephemeral: true,
 				});
 			}
+			author.save();
+			receiver.save();
 		} catch (error) {
 			console.error(`donation: ${error}`);
 			instance.editReply(interaction, {

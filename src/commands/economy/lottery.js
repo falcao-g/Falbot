@@ -1,4 +1,4 @@
-const { readFile, changeDB, msToTime, format } = require('../../utils/functions.js');
+const { msToTime, format } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -62,14 +62,15 @@ module.exports = {
 					'es-ES': 'Veja los 10 últimos ganadores de la lotería',
 				})
 		),
-	execute: async ({ user, interaction, instance }) => {
+	execute: async ({ user, interaction, instance, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			const lotto = await instance.lottoSchema.findById('semanal');
 			const type = interaction.options.getSubcommand();
+			const player = await database.player.findOne(user.id);
 			if (type === 'buy') {
 				const amount = interaction.options.getInteger('amount');
-				if ((await readFile(user.id, 'falcoins')) > amount * 500) {
+				if (player.falcoins > amount * 500) {
 					var embed = instance.createEmbed(15844367).addFields({
 						name: `:tickets: ${format(amount)} ` + instance.getMessage(interaction, 'PURCHASED'),
 						value: instance.getMessage(interaction, 'LOTTERY_COST', {
@@ -77,8 +78,8 @@ module.exports = {
 						}),
 					});
 
-					await changeDB(user.id, 'falcoins', -(amount * 500));
-					await changeDB(user.id, 'tickets', amount);
+					player.falcoins -= amount * 500;
+					player.tickets += amount;
 
 					await instance.editReply(interaction, {
 						embeds: [embed],
@@ -106,9 +107,9 @@ module.exports = {
 					}
 				);
 
-				if ((await readFile(user.id, 'tickets')) > 0) {
+				if (player.tickets > 0) {
 					embed.data.fields[0].value += instance.getMessage(interaction, 'LOTTERY_TICKETS', {
-						TICKETS: await readFile(user.id, 'tickets', true),
+						TICKETS: format(player.tickets),
 					});
 				}
 
@@ -141,6 +142,7 @@ module.exports = {
 					embeds: [embed],
 				});
 			}
+			player.save();
 		} catch (err) {
 			console.error(`lottery: ${err}`);
 			instance.editReply(interaction, {

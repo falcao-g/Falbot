@@ -1,4 +1,4 @@
-const { resolveCooldown, msToTime, setCooldown, changeDB, readFile } = require('../utils/functions.js');
+const { resolveCooldown, msToTime, setCooldown } = require('../utils/functions.js');
 
 module.exports = {
 	name: 'interactionCreate',
@@ -69,9 +69,9 @@ module.exports = {
 				});
 			}
 
-			var stats = await readFile(interaction.user.id, 'stats');
-			stats.set('commands', stats.get('commands') + 1);
-			await changeDB(interaction.user.id, 'stats', stats, true);
+			const player = await instance.database.player.findOne(interaction.user.id);
+			player.stats.set('commands', player.stats.get('commands') + 1);
+			player.save();
 
 			command.execute({
 				interaction,
@@ -81,6 +81,7 @@ module.exports = {
 				guild: interaction.guild,
 				user: interaction.user,
 				channel: interaction.channel,
+				database: instance.database,
 			});
 		} else if (interaction.isAutocomplete()) {
 			const command = client.commands.get(interaction.commandName);
@@ -116,9 +117,9 @@ module.exports = {
 
 			if (commandName == 'help') interaction.values = [null];
 
-			var stats = await readFile(interaction.user.id, 'stats');
-			stats.set('commands', stats.get('commands') + 1);
-			await changeDB(interaction.user.id, 'stats', stats, true);
+			const player = await instance.database.player.findOne(interaction.user.id);
+			player.stats.set('commands', player.stats.get('commands') + 1);
+			player.save();
 
 			await command.execute({
 				interaction,
@@ -128,15 +129,16 @@ module.exports = {
 				guild: interaction.guild,
 				user: interaction.user,
 				channel: interaction.channel,
+				database: instance.database,
 				subcommand,
 				args: interaction.customId.split(' ').slice(2),
 			});
 		} else if (interaction.isStringSelectMenu()) {
 			const command = client.commands.get(interaction.customId.split(' ')[0]);
 
-			var stats = await readFile(interaction.user.id, 'stats');
-			stats.set('commands', stats.get('commands') + 1);
-			await changeDB(interaction.user.id, 'stats', stats, true);
+			const player = await instance.database.player.findOne(interaction.user.id);
+			player.stats.set('commands', player.stats.get('commands') + 1);
+			player.save();
 
 			await command.execute({
 				guild: interaction.guild,
@@ -146,6 +148,7 @@ module.exports = {
 				client,
 				user: interaction.user,
 				channel: interaction.channel,
+				database: instance.database,
 				subcommand: interaction.customId.split(' ')[1],
 			});
 		}

@@ -15,10 +15,11 @@ module.exports = {
 			'es-ES': 'Juega raspadinha para una oportunidad de ganar muchos falcoins',
 		})
 		.setDMPermission(false),
-	execute: async ({ interaction, instance, user, member }) => {
+	execute: async ({ interaction, instance, user, member, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 
+			const player = await database.player.findOne(user.id);
 			const row = new ActionRowBuilder();
 			const row2 = new ActionRowBuilder();
 			const row3 = new ActionRowBuilder();
@@ -63,7 +64,7 @@ module.exports = {
 				if (luck === 25) {
 					//jackpot
 					amount = randint(200000, 300000);
-					await changeDB(user.id, 'falcoins', amount);
+					player.falcoins += amount;
 					embed.setColor(15844367).addFields({
 						name: instance.getMessage(interaction, 'SCRATCH_PRIZE'),
 						value: `${instance.getMessage(interaction, 'SCRATCH_PRIZE_DESCRIPTION', {
@@ -76,7 +77,7 @@ module.exports = {
 				} else if (luck === 24) {
 					//super close
 					amount = randint(100000, 190000);
-					await changeDB(user.id, 'falcoins', amount);
+					player.falcoins += amount;
 					embed.setColor(3066993).addFields({
 						name: instance.getMessage(interaction, 'SCRATCH_SUPER'),
 						value: `${instance.getMessage(interaction, 'SCRATCH_SUPER_DESCRIPTION', {
@@ -89,7 +90,7 @@ module.exports = {
 				} else if (luck === 23 || luck === 22) {
 					//pretty close
 					amount = randint(50000, 90000);
-					await changeDB(user.id, 'falcoins', amount);
+					player.falcoins += amount;
 					embed.setColor(3066993).addFields({
 						name: instance.getMessage(interaction, 'SCRATCH_PRETTY'),
 						value: `${instance.getMessage(interaction, 'SCRATCH_PRETTY_DESCRIPTION', {
@@ -102,7 +103,7 @@ module.exports = {
 				} else if (luck === 21 || luck === 20) {
 					//kinda close
 					amount = randint(30000, 45000);
-					await changeDB(user.id, 'falcoins', amount);
+					player.falcoins += amount;
 					embed.setColor(3066993).addFields({
 						name: instance.getMessage(interaction, 'SCRATCH_KINDOF'),
 						value: `${instance.getMessage(interaction, 'SCRATCH_KINDOF_DESCRIPTION', {
@@ -115,7 +116,7 @@ module.exports = {
 					embed.setColor(15158332);
 					if (randint(1, 100) >= 80) {
 						amount = randint(10000, 20000);
-						await changeDB(user.id, 'falcoins', amount);
+						player.falcoins += amount;
 						embed.addFields({
 							name: 'Meh...',
 							value: `${instance.getMessage(interaction, 'SCRATCH_LOSE_DESCRIPTION2', {
@@ -146,6 +147,7 @@ module.exports = {
 					});
 				}
 			});
+			collector.on('end', () => player.save());
 		} catch (error) {
 			console.error(`scratch: ${error}`);
 			instance.editReply(interaction, {

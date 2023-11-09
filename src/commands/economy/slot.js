@@ -1,4 +1,4 @@
-const { specialArg, readFile, changeDB, format, pick } = require('../../utils/functions.js');
+const { specialArg, format, pick } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -24,10 +24,11 @@ module.exports = {
 				})
 				.setRequired(true)
 		),
-	execute: async ({ interaction, instance, user, member }) => {
+	execute: async ({ interaction, instance, user, member, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			const falcoins = interaction.options.getString('falcoins');
+			const player = await database.player.findOne(user.id);
 			try {
 				var bet = await specialArg(falcoins, user.id, 'falcoins');
 			} catch {
@@ -38,8 +39,8 @@ module.exports = {
 				});
 				return;
 			}
-			if ((await readFile(user.id, 'falcoins')) >= bet) {
-				await changeDB(user.id, 'falcoins', -bet);
+			if (player.falcoins >= bet) {
+				player.falcoins -= bet;
 				const choices = [
 					[':money_mouth:', 30],
 					[':gem:', 10],
@@ -96,7 +97,7 @@ module.exports = {
 				var profit = parseInt(bet * winnings);
 
 				if (profit > 0) {
-					await changeDB(user.id, 'falcoins', profit);
+					player.falcoins += profit;
 					var embed2 = instance.createEmbed(3066993).addFields(
 						{
 							name: `-------------------\n | ${emoji1} | ${emoji2} | ${emoji3} |\n-------------------`,
@@ -125,7 +126,7 @@ module.exports = {
 				}
 				embed2.addFields({
 					name: instance.getMessage(interaction, 'SALDO_ATUAL'),
-					value: `${await readFile(user.id, 'falcoins', true)}`,
+					value: `${format(player.falcoins)}`,
 				});
 				await instance.editReply(interaction, {
 					embeds: [embed2],
@@ -135,6 +136,7 @@ module.exports = {
 					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
 				});
 			}
+			player.save();
 		} catch (error) {
 			console.error(`slot: ${error}`);
 			instance.editReply(interaction, {

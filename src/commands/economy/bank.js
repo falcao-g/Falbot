@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { specialArg, readFile, format, changeDB } = require('../../utils/functions.js');
+const { specialArg, format } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -81,21 +81,21 @@ module.exports = {
 					'es-ES': 'Ver el saldo bancario y otras informaciones',
 				})
 		),
-	execute: async ({ user, member, interaction, instance }) => {
+	execute: async ({ user, member, interaction, instance, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			const subcommand = interaction.options.getSubcommand();
 			const falcoins = interaction.options.getString('falcoins');
-			const rank = await readFile(user.id, 'rank');
-			const limit = instance.levels[rank - 1].bankLimit;
+			const player = await database.player.findOne(user.id);
+			const limit = instance.levels[player.rank - 1].bankLimit;
 
 			if (subcommand === 'view') {
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: ':bank: ' + instance.getMessage(interaction, 'BANCO'),
-					value: `**:coin: ${await readFile(user.id, 'banco', true)} falcoins\n:bank: ${instance.getMessage(
+					value: `**:coin: ${format(player.banco)} falcoins\n:bank: ${instance.getMessage(
 						interaction,
 						'BANK_INTEREST'
-					)}\n\n:money_with_wings: ${format(limit - (await readFile(user.id, 'banco')))} ${instance.getMessage(
+					)}\n\n:money_with_wings: ${format(limit - player.banco)} ${instance.getMessage(
 						interaction,
 						'BANK_LIMIT'
 					)}\n:atm: ${instance.getMessage(interaction, 'BANK_DEPOSIT_LIMIT', {
@@ -115,20 +115,20 @@ module.exports = {
 					return;
 				}
 
-				if ((await readFile(user.id, 'falcoins')) >= quantity) {
-					if ((await readFile(user.id, 'banco')) >= limit / 2) {
+				if (player.falcoins >= quantity) {
+					if (player.banco >= limit / 2) {
 						await instance.editReply({
 							content: instance.getMessage(interaction, 'BANK_OVER_LIMIT'),
 						});
 						return;
 					}
 
-					if (quantity + (await readFile(user.id, 'banco')) > limit / 2) {
-						quantity = limit / 2 - (await readFile(user.id, 'banco'));
+					if (quantity + player.banco > limit / 2) {
+						quantity = limit / 2 - player.banco;
 					}
 
-					await changeDB(user.id, 'falcoins', -quantity);
-					await changeDB(user.id, 'banco', quantity);
+					player.falcoins -= quantity;
+					player.banco += quantity;
 
 					const embed = instance
 						.createEmbed(member.displayColor)
@@ -140,12 +140,12 @@ module.exports = {
 						.addFields(
 							{
 								name: instance.getMessage(interaction, 'SALDO_ATUAL'),
-								value: `${await readFile(user.id, 'falcoins', true)} falcoins`,
+								value: `${format(player.falcoins)} falcoins`,
 							},
 							{
 								name: instance.getMessage(interaction, 'BANCO'),
 								value: instance.getMessage(interaction, 'BANCO_SALDO', {
-									VALUE: await readFile(user.id, 'banco', true),
+									VALUE: format(player.banco),
 								}),
 							}
 						);
@@ -168,9 +168,9 @@ module.exports = {
 					return;
 				}
 
-				if ((await readFile(user.id, 'banco')) >= quantity) {
-					await changeDB(user.id, 'banco', -quantity);
-					await changeDB(user.id, 'falcoins', quantity);
+				if (player.banco >= quantity) {
+					player.banco -= quantity;
+					player.falcoins += quantity;
 
 					const embed = instance
 						.createEmbed(member.displayColor)
@@ -182,12 +182,12 @@ module.exports = {
 						.addFields(
 							{
 								name: instance.getMessage(interaction, 'SALDO_ATUAL'),
-								value: `${await readFile(user.id, 'falcoins', true)} falcoins`,
+								value: `${format(player.falcoins)} falcoins`,
 							},
 							{
 								name: instance.getMessage(interaction, 'BANCO'),
 								value: instance.getMessage(interaction, 'BANCO_SALDO', {
-									VALUE: await readFile(user.id, 'banco', true),
+									VALUE: format(player.banco),
 								}),
 							}
 						);
@@ -199,6 +199,7 @@ module.exports = {
 					});
 				}
 			}
+			player.save();
 		} catch (error) {
 			console.error(`bank: ${error}`);
 			instance.editReply(interaction, {

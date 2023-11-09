@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 class databaseHandler {
+	player = require('../database/player.js');
+
 	async connect() {
 		try {
 			mongoose.set('strictQuery', false);

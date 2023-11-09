@@ -1,4 +1,4 @@
-const { readFile, changeDB, randint, pick, isEquipped, useItem, buttons } = require('../../utils/functions.js');
+const { randint, pick, isEquipped, useItem, buttons } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -15,14 +15,12 @@ module.exports = {
 			'es-ES': 'Ve a pescar para conseguir items',
 		})
 		.setDMPermission(false),
-	execute: async ({ interaction, instance, member }) => {
+	execute: async ({ interaction, instance, member, database }) => {
 		await interaction.deferReply().catch(() => {});
 		const items = instance.items;
-		const inventory = await readFile(member.id, 'inventory');
-		const limit =
-			instance.levels[(await readFile(member.id, 'rank')) - 1].inventoryLimit +
-			(await readFile(member.id, 'inventoryBonus'));
-		const inventoryWorth = instance.getInventoryWorth(inventory);
+		const player = await database.player.findOne(member.id);
+		const limit = instance.levels[player.rank - 1].inventoryLimit + player.inventoryBonus;
+		const inventoryWorth = instance.getInventoryWorth(player.inventory);
 		var buff = 1;
 		var buffText = '';
 
@@ -94,11 +92,9 @@ module.exports = {
 			total += amount;
 			text += `**${name}** x ${amount}\n`;
 			filteredItems = filteredItems.filter((item) => item[0] !== selectedItem);
-			inventory.set(selectedItem, (inventory.get(selectedItem) || 0) + amount);
+			player.inventory.set(selectedItem, (player.inventory.get(selectedItem) || 0) + amount);
 			selectedItems.push(selectedItem);
 		}
-
-		await changeDB(member.id, 'inventory', inventory, true);
 
 		var embed = instance.createEmbed(member.displayColor).addFields({
 			name:
@@ -114,9 +110,8 @@ module.exports = {
 			components: [buttons(['balance', 'inventory_view', 'cooldowns'])],
 		});
 
-		var stats = await readFile(interaction.user.id, 'stats');
-		stats.set('timesFished', stats.get('timesFished') + 1);
-		stats.set('itemsFound', stats.get('itemsFound') + total);
-		await changeDB(interaction.user.id, 'stats', stats, true);
+		player.stats.set('timesFished', player.stats.get('timesFished') + 1);
+		player.stats.set('itemsFound', player.stats.get('itemsFound') + total);
+		player.save();
 	},
 };
