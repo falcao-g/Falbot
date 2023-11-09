@@ -42,10 +42,8 @@ module.exports = {
 					'the amount of falcoins you want to bet (supports "all"/"half" and things like 50.000, 20%, 10M, 25B)'
 				)
 				.setDescriptionLocalizations({
-					'pt-BR':
-						'a quantidade de falcoins que você quer apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
-					'es-ES':
-						'la cantidad de falcoins que quieres apostar (soporta "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
+					'pt-BR': 'a quantidade de falcoins para apostar (suporta "tudo"/"metade" e notas como 50.000, 20%, 10M, 25B)',
+					'es-ES': 'la cantidad de falcoins para apostar (soporta "todo"/"mitad" y notas como 50.000, 20%, 10M, 25B)',
 				})
 				.setRequired(true)
 		),
