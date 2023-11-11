@@ -91,7 +91,7 @@ module.exports = {
 
 			if (subcommand === 'view') {
 				const embed = instance.createEmbed(member.displayColor).addFields({
-					name: ':bank: ' + instance.getMessage(interaction, 'BANCO'),
+					name: ':bank: ' + instance.getMessage(interaction, 'BANK'),
 					value: `**:coin: ${format(player.banco)} falcoins\n:bank: ${instance.getMessage(
 						interaction,
 						'BANK_INTEREST'
@@ -108,7 +108,7 @@ module.exports = {
 					var quantity = specialArg(falcoins, player.falcoins);
 				} catch {
 					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+						content: instance.getMessage(interaction, 'BAD_VALUE', {
 							VALUE: falcoins,
 						}),
 					});
@@ -117,7 +117,7 @@ module.exports = {
 
 				if (player.falcoins >= quantity) {
 					if (player.banco >= limit / 2) {
-						await instance.editReply({
+						await instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'BANK_OVER_LIMIT'),
 						});
 						return;
@@ -133,18 +133,18 @@ module.exports = {
 					const embed = instance
 						.createEmbed(member.displayColor)
 						.setTitle(
-							instance.getMessage(interaction, 'BANCO_DEPOSITOU', {
+							instance.getMessage(interaction, 'BANK_DEPOSIT', {
 								VALUE: format(quantity),
 							})
 						)
 						.addFields(
 							{
-								name: instance.getMessage(interaction, 'SALDO_ATUAL'),
+								name: instance.getMessage(interaction, 'BALANCE'),
 								value: `${format(player.falcoins)} falcoins`,
 							},
 							{
-								name: instance.getMessage(interaction, 'BANCO'),
-								value: instance.getMessage(interaction, 'BANCO_SALDO', {
+								name: instance.getMessage(interaction, 'BANK'),
+								value: instance.getMessage(interaction, 'BANK_BALANCE', {
 									VALUE: format(player.banco),
 								}),
 							}
@@ -153,7 +153,7 @@ module.exports = {
 					await instance.editReply(interaction, { embeds: [embed] });
 				} else {
 					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
+						content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
 					});
 				}
 			} else if (subcommand === 'withdraw') {
@@ -161,7 +161,7 @@ module.exports = {
 					var quantity = specialArg(falcoins, player.banco);
 				} catch {
 					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+						content: instance.getMessage(interaction, 'BAD_VALUE', {
 							VALUE: falcoins,
 						}),
 					});
@@ -175,18 +175,18 @@ module.exports = {
 					const embed = instance
 						.createEmbed(member.displayColor)
 						.setTitle(
-							instance.getMessage(interaction, 'BANCO_SACOU', {
+							instance.getMessage(interaction, 'BANK_WITHDRAW', {
 								VALUE: format(quantity),
 							})
 						)
 						.addFields(
 							{
-								name: instance.getMessage(interaction, 'SALDO_ATUAL'),
+								name: instance.getMessage(interaction, 'BALANCE'),
 								value: `${format(player.falcoins)} falcoins`,
 							},
 							{
-								name: instance.getMessage(interaction, 'BANCO'),
-								value: instance.getMessage(interaction, 'BANCO_SALDO', {
+								name: instance.getMessage(interaction, 'BANK'),
+								value: instance.getMessage(interaction, 'BANK_BALANCE', {
 									VALUE: format(player.banco),
 								}),
 							}
@@ -195,7 +195,7 @@ module.exports = {
 					await instance.editReply(interaction, { embeds: [embed] });
 				} else {
 					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'BANCO_INSUFICIENTE'),
+						content: instance.getMessage(interaction, 'BANK_INSUFFICIENT'),
 					});
 				}
 			}

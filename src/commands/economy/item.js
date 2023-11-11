@@ -49,7 +49,7 @@ module.exports = {
 
 			if (itemJSON === undefined) {
 				instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
 						VALUE: item,
 					}),
 				});

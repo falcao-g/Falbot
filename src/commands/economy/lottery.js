@@ -72,7 +72,7 @@ module.exports = {
 					var amount = specialArg(interaction.options.getString('amount'), parseInt(player.falcoins / 500));
 				} catch {
 					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+						content: instance.getMessage(interaction, 'BAD_VALUE', {
 							VALUE: amount,
 						}),
 					});
@@ -95,7 +95,7 @@ module.exports = {
 					});
 				} else {
 					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
+						content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
 					});
 				}
 			} else if (type === 'view') {

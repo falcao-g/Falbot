@@ -48,7 +48,7 @@ module.exports = {
 
 			if (challenged.user === user) {
 				instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'NAO_JOGAR_SOZINHO'),
+					content: instance.getMessage(interaction, 'DONT_PLAY_ALONE'),
 				});
 				return;
 			}
@@ -57,7 +57,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, author.falcoins);
 			} catch {
 				instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
 						VALUE: falcoins,
 					}),
 				});
@@ -65,7 +65,7 @@ module.exports = {
 			}
 			if (author.falcoins >= bet && challengedFile.falcoins >= bet) {
 				var answer = await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'LUTA_CONVITE', {
+					content: instance.getMessage(interaction, 'FIGHT_CHALLENGE', {
 						USER: member,
 						USER2: challenged,
 						FALCOINS: format(bet),
@@ -87,13 +87,13 @@ module.exports = {
 				collector.on('end', async (collected) => {
 					if (collected.size === 0) {
 						interaction.followUp({
-							content: instance.getMessage(interaction, 'LUTA_CANCELADO_DEMOROU', {
+							content: instance.getMessage(interaction, 'FIGHT_TOO_LONG', {
 								USER: challenged,
 							}),
 						});
 					} else if (collected.first().customId === 'refuse') {
 						interaction.followUp({
-							content: instance.getMessage(interaction, 'LUTA_CANCELADO_RECUSOU', {
+							content: instance.getMessage(interaction, 'FIGHT_DECLINED', {
 								USER: challenged,
 							}),
 						});
@@ -145,29 +145,29 @@ module.exports = {
 
 								if (player.stunned === true) {
 									player.stunned = false;
-									field.value += instance.getMessage(interaction, 'NOCAUTEADO');
+									field.value += instance.getMessage(interaction, 'UNCONSCIOUS');
 								} else if (enemy.escudo === true && !['self', 'escudo', 'cura'].includes(attack)) {
-									field.value += instance.getMessage(interaction, 'TENTOU_ATACAR');
+									field.value += instance.getMessage(interaction, 'FAILED');
 								} else if (attack === 'instantâneo') {
 									enemy.hp -= luck;
-									field.value += instance.getMessage(interaction, 'ATAQUE', {
+									field.value += instance.getMessage(interaction, 'ATTACK', {
 										VALUE: luck,
 									});
 								} else if (attack === 'stun') {
 									enemy.hp -= luck;
 									enemy.stunned = true;
-									field.value += instance.getMessage(interaction, 'ATAQUE_NOCAUTE', {
+									field.value += instance.getMessage(interaction, 'STUN', {
 										VALUE: luck,
 									});
 								} else if (attack === 'roubo de vida') {
 									enemy.hp -= luck;
 									player.hp += luck;
-									field.value += instance.getMessage(interaction, 'ROUBO_VIDA', {
+									field.value += instance.getMessage(interaction, 'LIFE_STEAL', {
 										VALUE: luck,
 									});
 								} else if (attack === 'cura') {
 									player.hp += luck;
-									field.value += instance.getMessage(interaction, 'CURA', {
+									field.value += instance.getMessage(interaction, 'HEAL', {
 										VALUE: luck,
 									});
 								} else if (attack === 'self') {
@@ -177,7 +177,7 @@ module.exports = {
 									});
 								} else if (attack === 'escudo') {
 									player.escudo = true;
-									field.value += instance.getMessage(interaction, 'SE_PROTEGE');
+									field.value += instance.getMessage(interaction, 'PROTECTED');
 								}
 
 								embed.addFields(field);
@@ -214,13 +214,13 @@ module.exports = {
 
 						const embed2 = instance.createEmbed(3066993).addFields(
 							{
-								name: `${winner.name}${instance.getMessage(interaction, 'GANHO')}`,
-								value: instance.getMessage(interaction, 'LUTA_DERROTOU', {
+								name: `${winner.name}${instance.getMessage(interaction, 'GAINED')}`,
+								value: instance.getMessage(interaction, 'FIGHT_DEFEATED', {
 									USER: loser.mention,
 								}),
 							},
 							{
-								name: instance.getMessage(interaction, 'SALDO_ATUAL'),
+								name: instance.getMessage(interaction, 'BALANCE'),
 								value: `${format(winnerFile.falcoins)} falcoins`,
 							}
 						);
@@ -234,7 +234,7 @@ module.exports = {
 				});
 			} else {
 				instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'INSUFICIENTE_CONTAS'),
+					content: instance.getMessage(interaction, 'INSUFFICIENT_ACCOUNTS'),
 				});
 			}
 			author.save();

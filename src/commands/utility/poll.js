@@ -34,7 +34,7 @@ module.exports = {
 				.createEmbed(member.displayColor)
 				.setDescription(interaction.options.getString('theme'))
 				.setAuthor({
-					name: instance.getMessage(interaction, 'ENQUETE', {
+					name: instance.getMessage(interaction, 'POLL', {
 						USER: member.displayName,
 					}),
 					iconURL: user.avatarURL(),

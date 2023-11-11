@@ -33,7 +33,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, player.falcoins);
 			} catch {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
 						VALUE: falcoins,
 					}),
 				});
@@ -43,13 +43,13 @@ module.exports = {
 				const embed = instance
 					.createEmbed('#0099ff')
 					.setDescription(
-						instance.getMessage(interaction, 'ROLETARUSSA_DESCRIPTION', {
+						instance.getMessage(interaction, 'RUSSIANROULETTE_DESCRIPTION', {
 							USER: user,
 							BET: format(pot),
 						})
 					)
 					.addFields({
-						name: instance.getMessage(interaction, 'JOGADORES'),
+						name: instance.getMessage(interaction, 'PLAYERS'),
 						value: `${user}`,
 						inline: false,
 					});
@@ -83,13 +83,13 @@ module.exports = {
 						names.push(i.user);
 						pot += bet;
 						embed.setDescription(
-							instance.getMessage(interaction, 'ROLETARUSSA_DESCRIPTION', {
+							instance.getMessage(interaction, 'RUSSIANROULETTE_DESCRIPTION', {
 								USER: user,
 								BET: format(pot),
 							})
 						);
 						embed.data.fields[0] = {
-							name: instance.getMessage(interaction, 'JOGADORES'),
+							name: instance.getMessage(interaction, 'PLAYERS'),
 							value: `${names.join('\n')}`,
 							inline: false,
 						};
@@ -112,13 +112,13 @@ module.exports = {
 						);
 						users.splice(luck, 1);
 						embed.setDescription(
-							instance.getMessage(interaction, 'ROLETARUSSA_DESCRIPTION2', {
+							instance.getMessage(interaction, 'RUSSIANROULETTE_DESCRIPTION2', {
 								BET: format(pot),
 							}) + `\n${eliminated} ${mensagens[randint(0, mensagens.length - 1)]}`
 						);
 
 						embed.data.fields[0] = {
-							name: instance.getMessage(interaction, 'JOGADORES'),
+							name: instance.getMessage(interaction, 'PLAYERS'),
 							value: `${names.join('\n')}`,
 							inline: false,
 						};
@@ -134,7 +134,7 @@ module.exports = {
 					winnerFile.falcoins += pot;
 					if (users.length > 1) winnerFile.vitorias++;
 					embed.setDescription(
-						instance.getMessage(interaction, 'ROLETARUSSA_DESCRIPTION3', {
+						instance.getMessage(interaction, 'RUSSIANROULETTE_DESCRIPTION3', {
 							BET: format(pot),
 							USER: winner,
 							SALDO: format(winnerFile.falcoins),
@@ -150,13 +150,13 @@ module.exports = {
 				});
 			} else if (bet <= 0) {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
 						VALUE: bet,
 					}),
 				});
 			} else {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
+					content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
 				});
 			}
 		} catch (error) {

@@ -101,7 +101,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, player.falcoins);
 			} catch {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
 						VALUE: falcoins,
 					}),
 				});
@@ -112,8 +112,8 @@ module.exports = {
 
 				const embed = instance
 					.createEmbed(member.displayColor)
-					.setTitle(instance.getMessage(interaction, 'ROLETA'))
-					.setDescription(instance.getMessage(interaction, 'GIRANDO_ROLETA'))
+					.setTitle(instance.getMessage(interaction, 'ROULETTE'))
+					.setDescription(instance.getMessage(interaction, 'SPINNING_ROULETTE'))
 					.setImage('https://media3.giphy.com/media/26uf2YTgF5upXUTm0/giphy.gif');
 				await instance.editReply(interaction, {
 					embeds: [embed],
@@ -151,34 +151,34 @@ module.exports = {
 					player.falcoins += profit;
 					embed2.setColor(3066993).addFields(
 						{
-							name: instance.getMessage(interaction, 'VOCE_GANHOU') + ' :sunglasses:',
-							value: instance.getMessage(interaction, 'BOT_ROLOU') + ` **${luck}**`,
+							name: instance.getMessage(interaction, 'YOU_WON') + ' :sunglasses:',
+							value: instance.getMessage(interaction, 'ROLLED') + ` **${luck}**`,
 							inline: true,
 						},
 						{
-							name: instance.getMessage(interaction, 'GANHOS'),
+							name: instance.getMessage(interaction, 'WINNINGS'),
 							value: `${format(profit)} falcoins`,
 							inline: true,
 						},
 						{
-							name: instance.getMessage(interaction, 'SALDO_ATUAL'),
+							name: instance.getMessage(interaction, 'BALANCE'),
 							value: `${format(player.falcoins)} falcoins`,
 						}
 					);
 				} else {
 					embed2.setColor(15158332).addFields(
 						{
-							name: instance.getMessage(interaction, 'VOCE_PERDEU') + ' :pensive:',
-							value: instance.getMessage(interaction, 'BOT_ROLOU') + ` **${luck}**`,
+							name: instance.getMessage(interaction, 'YOU_LOST') + ' :pensive:',
+							value: instance.getMessage(interaction, 'ROLLED') + ` **${luck}**`,
 							inline: true,
 						},
 						{
-							name: instance.getMessage(interaction, 'PERDAS'),
+							name: instance.getMessage(interaction, 'LOSSES'),
 							value: `${format(bet)} falcoins`,
 							inline: true,
 						},
 						{
-							name: instance.getMessage(interaction, 'SALDO_ATUAL'),
+							name: instance.getMessage(interaction, 'BALANCE'),
 							value: `${format(player.falcoins)} falcoins`,
 						}
 					);
@@ -189,7 +189,7 @@ module.exports = {
 				});
 			} else {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
+					content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
 				});
 			}
 			player.save();

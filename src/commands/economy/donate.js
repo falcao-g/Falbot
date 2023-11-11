@@ -49,7 +49,7 @@ module.exports = {
 				var quantity = specialArg(falcoins, author.falcoins);
 			} catch {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
 						VALUE: falcoins,
 					}),
 				});
@@ -60,14 +60,14 @@ module.exports = {
 				author.falcoins -= quantity;
 				receiver.falcoins += quantity;
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'DOAR', {
+					content: instance.getMessage(interaction, 'DONATE', {
 						FALCOINS: format(quantity),
 						USER: target,
 					}),
 				});
 			} else {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
+					content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
 					ephemeral: true,
 				});
 			}

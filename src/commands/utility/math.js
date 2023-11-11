@@ -36,7 +36,7 @@ module.exports = {
 			const answer = await math.evaluate(text).toString();
 
 			const embed = instance.createEmbed(member.displayColor).addFields({
-				name: instance.getMessage(interaction, 'RESULTADO'),
+				name: instance.getMessage(interaction, 'RESULT'),
 				value: answer,
 			});
 

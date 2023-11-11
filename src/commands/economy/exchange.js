@@ -94,7 +94,7 @@ module.exports = {
 					var itemName = getItem(offerItems[i].split(' ').slice(1).join(' '));
 					if (getItem(itemName) === undefined) {
 						await instance.editReply(interaction, {
-							content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+							content: instance.getMessage(interaction, 'BAD_VALUE', {
 								VALUE: offerItems[i].split(' ')[1],
 							}),
 						});
@@ -105,7 +105,7 @@ module.exports = {
 						offerItemsAmount.push(specialArg(offerItems[i].split(' ')[0], userFile.inventory.get(itemName)));
 					} catch {
 						await instance.editReply(interaction, {
-							content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+							content: instance.getMessage(interaction, 'BAD_VALUE', {
 								VALUE: offerItems[i],
 							}),
 						});
@@ -123,7 +123,7 @@ module.exports = {
 					var itemName = getItem(receiveItems[i].split(' ').slice(1).join(' '));
 					if (itemName === undefined) {
 						await instance.editReply(interaction, {
-							content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+							content: instance.getMessage(interaction, 'BAD_VALUE', {
 								VALUE: receiveItems[i].split(' ')[1],
 							}),
 						});
@@ -134,7 +134,7 @@ module.exports = {
 						receiveItemsAmount.push(specialArg(receiveItems[i].split(' ')[0], recipientFile.inventory.get(itemName)));
 					} catch {
 						await instance.editReply(interaction, {
-							content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+							content: instance.getMessage(interaction, 'BAD_VALUE', {
 								VALUE: receiveItems[i],
 							}),
 						});
@@ -146,7 +146,7 @@ module.exports = {
 			//check if the user has the items and falcoins to give
 			if (offerFalcoins > userFile.falcoins || receiveFalcoins > recipientFile.falcoins) {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'INSUFICIENTE_CONTAS'),
+					content: instance.getMessage(interaction, 'INSUFFICIENT_ACCOUNTS'),
 				});
 				return;
 			}

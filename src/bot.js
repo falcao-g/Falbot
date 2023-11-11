@@ -331,9 +331,9 @@ class Falbot {
 			}
 		}
 
-		perks += `${this.getMessage(interaction, 'VOTO')}: ${format(rank.vote)} Falcoins\n`;
+		perks += `${this.getMessage(interaction, 'VOTE')}: ${format(rank.vote)} Falcoins\n`;
 
-		perks += `${this.getMessage(interaction, 'TRABALHO')}: ${format(rank.work[0])}-${format(rank.work[1])} Falcoins`;
+		perks += `${this.getMessage(interaction, 'WORK')}: ${format(rank.work[0])}-${format(rank.work[1])} Falcoins`;
 
 		return perks;
 	}

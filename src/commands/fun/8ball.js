@@ -31,21 +31,21 @@ module.exports = {
 	execute: async ({ interaction, instance }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
-			const answers = instance.getMessage(interaction, '8BALL');
+			const answers = instance.getMessage(interaction, '8BALL_ANSWERS');
 			const answer = `${answers[randint(0, answers.length - 1)]}`;
 			const embed = instance
 				.createEmbed(2303786)
 				.setAuthor({
-					name: instance.getMessage(interaction, 'BOLA8'),
+					name: instance.getMessage(interaction, '8BALL'),
 					iconURL: 'https://images.emojiterra.com/google/noto-emoji/unicode-13.1/128px/1f3b1.png',
 				})
 				.addFields(
 					{
-						name: instance.getMessage(interaction, 'PERGUNTA'),
+						name: instance.getMessage(interaction, 'QUESTION'),
 						value: interaction.options.getString('question'),
 					},
 					{
-						name: instance.getMessage(interaction, 'PREVISAO'),
+						name: instance.getMessage(interaction, 'FORECAST'),
 						value: answer,
 					}
 				);

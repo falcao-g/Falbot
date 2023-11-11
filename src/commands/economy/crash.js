@@ -35,7 +35,7 @@ module.exports = {
 				var bet = specialArg(falcoins, player.falcoins);
 			} catch {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
 						VALUE: falcoins,
 					}),
 				});
@@ -56,7 +56,7 @@ module.exports = {
 						inline: true,
 					},
 					{
-						name: instance.getMessage(interaction, 'GANHOS'),
+						name: instance.getMessage(interaction, 'WINNINGS'),
 						value: `:coin: ${format(parseInt((bet * multiplier) / 10 - bet))}`,
 						inline: true,
 					}
@@ -118,7 +118,7 @@ module.exports = {
 						inline: true,
 					};
 					embed.data.fields[2] = {
-						name: instance.getMessage(interaction, 'GANHOS'),
+						name: instance.getMessage(interaction, 'WINNINGS'),
 						value: `:coin: ${format(parseInt((bet * multiplier) / 10 - bet))}`,
 						inline: true,
 					};
@@ -142,7 +142,7 @@ module.exports = {
 				});
 			} else {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
+					content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
 				});
 			}
 			player.save();

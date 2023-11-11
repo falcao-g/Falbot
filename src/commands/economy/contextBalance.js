@@ -26,12 +26,12 @@ module.exports = {
 						inline: true,
 					},
 					{
-						name: ':trophy: ' + instance.getMessage(interaction, 'VITORIAS'),
+						name: ':trophy: ' + instance.getMessage(interaction, 'WINS'),
 						value: `${format(vitorias)}`,
 						inline: true,
 					},
 					{
-						name: ':bank: ' + instance.getMessage(interaction, 'BANCO'),
+						name: ':bank: ' + instance.getMessage(interaction, 'BANK'),
 						value: `${format(banco)}`,
 						inline: true,
 					}
