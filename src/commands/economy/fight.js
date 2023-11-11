@@ -210,7 +210,7 @@ module.exports = {
 
 						const winnerFile = await database.player.findOne(winner.id);
 						winnerFile.falcoins += bet * 2;
-						winnerFile.vitorias++;
+						winnerFile.wins++;
 
 						const embed2 = instance.createEmbed(3066993).addFields(
 							{

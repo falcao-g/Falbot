@@ -242,10 +242,10 @@ module.exports = {
 								if (board.hasWinner()) {
 									if (board.winningPlayer() === 'X') {
 										firstPlayer.falcoins += bet * 2;
-										firstPlayer.vitorias++;
+										firstPlayer.wins++;
 									} else {
 										secondPlayer.falcoins += bet * 2;
-										secondPlayer.vitorias++;
+										secondPlayer.wins++;
 									}
 									await answer2.edit({
 										content: `:older_woman: \`${member.displayName}\` **VS**  \`${

@@ -207,7 +207,7 @@ module.exports = {
 			enums = {
 				falcoins: 'falcoins',
 				rank: 'rank',
-				wins: 'vitorias',
+				wins: 'wins',
 				item: `inventory.${getItem(itemArgument.toLowerCase())}`,
 				vote: 'voteStreak',
 			};

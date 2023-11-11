@@ -132,7 +132,7 @@ module.exports = {
 					var winner = users[0];
 					const winnerFile = await database.player.findOne(winner.id);
 					winnerFile.falcoins += pot;
-					if (users.length > 1) winnerFile.vitorias++;
+					if (users.length > 1) winnerFile.wins++;
 					embed.setDescription(
 						instance.getMessage(interaction, 'RUSSIANROULETTE_DESCRIPTION3', {
 							BET: format(pot),

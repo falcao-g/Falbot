@@ -92,10 +92,10 @@ module.exports = {
 			if (subcommand === 'view') {
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: ':bank: ' + instance.getMessage(interaction, 'BANK'),
-					value: `**:coin: ${format(player.banco)} falcoins\n:bank: ${instance.getMessage(
+					value: `**:coin: ${format(player.bank)} falcoins\n:bank: ${instance.getMessage(
 						interaction,
 						'BANK_INTEREST'
-					)}\n\n:money_with_wings: ${format(limit - player.banco)} ${instance.getMessage(
+					)}\n\n:money_with_wings: ${format(limit - player.bank)} ${instance.getMessage(
 						interaction,
 						'BANK_LIMIT'
 					)}\n:atm: ${instance.getMessage(interaction, 'BANK_DEPOSIT_LIMIT', {
@@ -116,19 +116,19 @@ module.exports = {
 				}
 
 				if (player.falcoins >= quantity) {
-					if (player.banco >= limit / 2) {
+					if (player.bank >= limit / 2) {
 						await instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'BANK_OVER_LIMIT'),
 						});
 						return;
 					}
 
-					if (quantity + player.banco > limit / 2) {
-						quantity = limit / 2 - player.banco;
+					if (quantity + player.bank > limit / 2) {
+						quantity = limit / 2 - player.bank;
 					}
 
 					player.falcoins -= quantity;
-					player.banco += quantity;
+					player.bank += quantity;
 
 					const embed = instance
 						.createEmbed(member.displayColor)
@@ -145,7 +145,7 @@ module.exports = {
 							{
 								name: instance.getMessage(interaction, 'BANK'),
 								value: instance.getMessage(interaction, 'BANK_BALANCE', {
-									VALUE: format(player.banco),
+									VALUE: format(player.bank),
 								}),
 							}
 						);
@@ -158,7 +158,7 @@ module.exports = {
 				}
 			} else if (subcommand === 'withdraw') {
 				try {
-					var quantity = specialArg(falcoins, player.banco);
+					var quantity = specialArg(falcoins, player.bank);
 				} catch {
 					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'BAD_VALUE', {
@@ -168,8 +168,8 @@ module.exports = {
 					return;
 				}
 
-				if (player.banco >= quantity) {
-					player.banco -= quantity;
+				if (player.bank >= quantity) {
+					player.bank -= quantity;
 					player.falcoins += quantity;
 
 					const embed = instance
@@ -187,7 +187,7 @@ module.exports = {
 							{
 								name: instance.getMessage(interaction, 'BANK'),
 								value: instance.getMessage(interaction, 'BANK_BALANCE', {
-									VALUE: format(player.banco),
+									VALUE: format(player.bank),
 								}),
 							}
 						);

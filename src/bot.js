@@ -85,18 +85,18 @@ class Falbot {
 			interest.lastInterest = Date.now().toString();
 
 			var users = await this.userSchema.find({
-				banco: { $gt: 0 },
+				bank: { $gt: 0 },
 			});
 
 			for (const user of users) {
 				var limit = this.levels[user.rank - 1].bankLimit;
 
-				if (limit > user.banco) {
-					user.banco += Math.floor(parseInt(user.banco * 0.1));
+				if (limit > user.bank) {
+					user.bank += Math.floor(parseInt(user.bank * 0.1));
 				}
 
-				if (user.banco > limit) {
-					user.banco = limit;
+				if (user.bank > limit) {
+					user.bank = limit;
 				}
 
 				user.save();

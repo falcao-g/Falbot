@@ -14,8 +14,9 @@ module.exports = {
 		await interaction.deferReply().catch(() => {});
 		try {
 			const target = interaction.targetMember;
-			const { rank, falcoins, vitorias, banco, inventory, voteStreak, tickets, createdAt } =
-				await database.player.findOne(target.user.id);
+			const { rank, falcoins, wins, bank, inventory, voteStreak, tickets, createdAt } = await database.player.findOne(
+				target.user.id
+			);
 			const limit = instance.levels[rank - 1].bankLimit;
 			const items = instance.items;
 
@@ -49,8 +50,8 @@ module.exports = {
 						name: 'Info',
 						value: instance.getMessage(interaction, 'PROFILE_INFOS', {
 							FALCOINS: format(falcoins),
-							WINS: format(vitorias),
-							BANK: format(banco),
+							WINS: format(wins),
+							BANK: format(bank),
 							LIMIT: format(limit),
 							TICKETS: format(tickets),
 							QUANTITY: format(inventoryQuantity),

@@ -33,8 +33,9 @@ module.exports = {
 		try {
 			const user = interaction.options.getUser('user');
 			const target = user ? await guild.members.fetch(user.id) : member;
-			const { rank, falcoins, vitorias, banco, inventory, voteStreak, tickets, createdAt } =
-				await database.player.findOne(target.user.id);
+			const { rank, falcoins, wins, bank, inventory, voteStreak, tickets, createdAt } = await database.player.findOne(
+				target.user.id
+			);
 			const limit = instance.levels[rank - 1].bankLimit;
 
 			if (instance.levels[rank - 1].falcoinsToLevelUp === undefined) {
@@ -63,8 +64,8 @@ module.exports = {
 						name: 'Info',
 						value: instance.getMessage(interaction, 'PROFILE_INFOS', {
 							FALCOINS: format(falcoins),
-							WINS: format(vitorias),
-							BANK: format(banco),
+							WINS: format(wins),
+							BANK: format(bank),
 							LIMIT: format(limit),
 							TICKETS: format(tickets),
 							QUANTITY: format(inventoryQuantity),
