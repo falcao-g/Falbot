@@ -45,7 +45,7 @@ module.exports = {
 				}
 			} catch {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
 						VALUE: text,
 					}),
 				});
@@ -53,7 +53,7 @@ module.exports = {
 			}
 
 			await instance.editReply(interaction, {
-				content: `**${instance.getMessage(interaction, 'RESULTADO')}:** ${rolled}`,
+				content: `**${instance.getMessage(interaction, 'RESULT')}:** ${rolled}`,
 			});
 		} catch (error) {
 			console.error(`roll: ${error}`);

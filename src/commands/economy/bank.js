@@ -91,11 +91,11 @@ module.exports = {
 
 			if (subcommand === 'view') {
 				const embed = instance.createEmbed(member.displayColor).addFields({
-					name: ':bank: ' + instance.getMessage(interaction, 'BANCO'),
-					value: `**:coin: ${format(player.banco)} falcoins\n:bank: ${instance.getMessage(
+					name: ':bank: ' + instance.getMessage(interaction, 'BANK'),
+					value: `**:coin: ${format(player.bank)} falcoins\n:bank: ${instance.getMessage(
 						interaction,
 						'BANK_INTEREST'
-					)}\n\n:money_with_wings: ${format(limit - player.banco)} ${instance.getMessage(
+					)}\n\n:money_with_wings: ${format(limit - player.bank)} ${instance.getMessage(
 						interaction,
 						'BANK_LIMIT'
 					)}\n:atm: ${instance.getMessage(interaction, 'BANK_DEPOSIT_LIMIT', {
@@ -108,7 +108,7 @@ module.exports = {
 					var quantity = specialArg(falcoins, player.falcoins);
 				} catch {
 					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+						content: instance.getMessage(interaction, 'BAD_VALUE', {
 							VALUE: falcoins,
 						}),
 					});
@@ -116,36 +116,36 @@ module.exports = {
 				}
 
 				if (player.falcoins >= quantity) {
-					if (player.banco >= limit / 2) {
-						await instance.editReply({
+					if (player.bank >= limit / 2) {
+						await instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'BANK_OVER_LIMIT'),
 						});
 						return;
 					}
 
-					if (quantity + player.banco > limit / 2) {
-						quantity = limit / 2 - player.banco;
+					if (quantity + player.bank > limit / 2) {
+						quantity = limit / 2 - player.bank;
 					}
 
 					player.falcoins -= quantity;
-					player.banco += quantity;
+					player.bank += quantity;
 
 					const embed = instance
 						.createEmbed(member.displayColor)
 						.setTitle(
-							instance.getMessage(interaction, 'BANCO_DEPOSITOU', {
+							instance.getMessage(interaction, 'BANK_DEPOSIT', {
 								VALUE: format(quantity),
 							})
 						)
 						.addFields(
 							{
-								name: instance.getMessage(interaction, 'SALDO_ATUAL'),
+								name: instance.getMessage(interaction, 'BALANCE'),
 								value: `${format(player.falcoins)} falcoins`,
 							},
 							{
-								name: instance.getMessage(interaction, 'BANCO'),
-								value: instance.getMessage(interaction, 'BANCO_SALDO', {
-									VALUE: format(player.banco),
+								name: instance.getMessage(interaction, 'BANK'),
+								value: instance.getMessage(interaction, 'BANK_BALANCE', {
+									VALUE: format(player.bank),
 								}),
 							}
 						);
@@ -153,41 +153,41 @@ module.exports = {
 					await instance.editReply(interaction, { embeds: [embed] });
 				} else {
 					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
+						content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
 					});
 				}
 			} else if (subcommand === 'withdraw') {
 				try {
-					var quantity = specialArg(falcoins, player.banco);
+					var quantity = specialArg(falcoins, player.bank);
 				} catch {
 					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+						content: instance.getMessage(interaction, 'BAD_VALUE', {
 							VALUE: falcoins,
 						}),
 					});
 					return;
 				}
 
-				if (player.banco >= quantity) {
-					player.banco -= quantity;
+				if (player.bank >= quantity) {
+					player.bank -= quantity;
 					player.falcoins += quantity;
 
 					const embed = instance
 						.createEmbed(member.displayColor)
 						.setTitle(
-							instance.getMessage(interaction, 'BANCO_SACOU', {
+							instance.getMessage(interaction, 'BANK_WITHDRAW', {
 								VALUE: format(quantity),
 							})
 						)
 						.addFields(
 							{
-								name: instance.getMessage(interaction, 'SALDO_ATUAL'),
+								name: instance.getMessage(interaction, 'BALANCE'),
 								value: `${format(player.falcoins)} falcoins`,
 							},
 							{
-								name: instance.getMessage(interaction, 'BANCO'),
-								value: instance.getMessage(interaction, 'BANCO_SALDO', {
-									VALUE: format(player.banco),
+								name: instance.getMessage(interaction, 'BANK'),
+								value: instance.getMessage(interaction, 'BANK_BALANCE', {
+									VALUE: format(player.bank),
 								}),
 							}
 						);
@@ -195,7 +195,7 @@ module.exports = {
 					await instance.editReply(interaction, { embeds: [embed] });
 				} else {
 					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'BANCO_INSUFICIENTE'),
+						content: instance.getMessage(interaction, 'BANK_INSUFFICIENT'),
 					});
 				}
 			}

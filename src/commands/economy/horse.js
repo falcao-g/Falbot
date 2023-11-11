@@ -57,7 +57,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, player.falcoins);
 			} catch {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
 						VALUE: falcoins,
 					}),
 				});
@@ -69,7 +69,7 @@ module.exports = {
 				const embed = instance
 					.createEmbed(member.displayColor)
 					.setDescription(
-						instance.getMessage(interaction, 'CAVALO_DESCRIPTION', {
+						instance.getMessage(interaction, 'HORSE_DESCRIPTION', {
 							BET: format(bet),
 							HORSE: horse,
 						})
@@ -106,7 +106,7 @@ module.exports = {
 				if (horse == winner) {
 					player.falcoins += bet * 5;
 					embed.setColor(3066993).setDescription(
-						instance.getMessage(interaction, 'CAVALO_DESCRIPTION_WON', {
+						instance.getMessage(interaction, 'HORSE_DESCRIPTION_WON', {
 							BET: format(bet),
 							HORSE: horse,
 							FALCOINS: format(bet * 5),
@@ -115,7 +115,7 @@ module.exports = {
 					);
 				} else {
 					embed.setColor(15158332).setDescription(
-						instance.getMessage(interaction, 'CAVALO_DESCRIPTION_LOST', {
+						instance.getMessage(interaction, 'HORSE_DESCRIPTION_LOST', {
 							BET: format(bet),
 							HORSE: horse,
 							SALDO: format(player.falcoins),
@@ -128,7 +128,7 @@ module.exports = {
 				});
 			} else {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
+					content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
 				});
 			}
 			player.save();

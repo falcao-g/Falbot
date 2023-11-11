@@ -1,4 +1,4 @@
-const { randint, format } = require('../../utils/functions.js');
+const { randint, format, isEquipped } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -38,7 +38,7 @@ module.exports = {
 			}
 
 			let bonus = 0;
-			desc = instance.getMessage(interaction, 'WORK', {
+			desc = instance.getMessage(interaction, 'WORK_GAINS', {
 				FALCOINS: format(salary),
 			});
 			luck = randint(0, 100);

@@ -46,11 +46,11 @@ module.exports = {
 				.setTitle(instance.getMessage(interaction, 'COOLDOWNS'))
 				.addFields(
 					{
-						name: ':ballot_box: ' + instance.getMessage(interaction, 'VOTO'),
+						name: ':ballot_box: ' + instance.getMessage(interaction, 'VOTE'),
 						value: `**${
 							voteCooldown < 43200000
 								? `:red_circle: ${msToTime(43200000 - voteCooldown)}`
-								: `:green_circle: ${instance.getMessage(interaction, 'PRONTO')}`
+								: `:green_circle: ${instance.getMessage(interaction, 'READY')}`
 						}**`,
 						inline: true,
 					},
@@ -59,16 +59,16 @@ module.exports = {
 						value: `**${
 							scratchCooldown > 0
 								? `:red_circle: ${msToTime(scratchCooldown)}`
-								: `:green_circle: ${instance.getMessage(interaction, 'PRONTO')}`
+								: `:green_circle: ${instance.getMessage(interaction, 'READY')}`
 						}**`,
 						inline: true,
 					},
 					{
-						name: ':briefcase: ' + instance.getMessage(interaction, 'TRABALHO'),
+						name: ':briefcase: ' + instance.getMessage(interaction, 'WORK'),
 						value: `**${
 							workCooldown > 0
 								? `:red_circle: ${msToTime(workCooldown)}`
-								: `:green_circle: ${instance.getMessage(interaction, 'PRONTO')}`
+								: `:green_circle: ${instance.getMessage(interaction, 'READY')}`
 						}**`,
 						inline: true,
 					},
@@ -77,7 +77,7 @@ module.exports = {
 						value: `**${
 							fishCooldown > 0
 								? `:red_circle: ${msToTime(fishCooldown)}`
-								: `:green_circle: ${instance.getMessage(interaction, 'PRONTO')}`
+								: `:green_circle: ${instance.getMessage(interaction, 'READY')}`
 						}**`,
 						inline: true,
 					},
@@ -86,7 +86,7 @@ module.exports = {
 						value: `**${
 							exploreCooldown > 0
 								? `:red_circle: ${msToTime(exploreCooldown)}`
-								: `:green_circle: ${instance.getMessage(interaction, 'PRONTO')}`
+								: `:green_circle: ${instance.getMessage(interaction, 'READY')}`
 						}**`,
 						inline: true,
 					},
@@ -95,7 +95,7 @@ module.exports = {
 						value: `**${
 							mineCooldown > 0
 								? `:red_circle: ${msToTime(mineCooldown)}`
-								: `:green_circle: ${instance.getMessage(interaction, 'PRONTO')}`
+								: `:green_circle: ${instance.getMessage(interaction, 'READY')}`
 						}**`,
 						inline: true,
 					},
@@ -104,7 +104,7 @@ module.exports = {
 						value: `**${
 							huntCooldown > 0
 								? `:red_circle: ${msToTime(huntCooldown)}`
-								: `:green_circle: ${instance.getMessage(interaction, 'PRONTO')}`
+								: `:green_circle: ${instance.getMessage(interaction, 'READY')}`
 						}**`,
 						inline: true,
 					},

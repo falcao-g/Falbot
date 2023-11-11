@@ -14,7 +14,7 @@ module.exports = {
 		await interaction.deferReply().catch(() => {});
 		try {
 			const target = interaction.targetMember;
-			const { rank, falcoins, vitorias, banco } = await database.player.findOne(target.user.id);
+			const { rank, falcoins, wins, bank } = await database.player.findOne(target.user.id);
 
 			const embed = instance
 				.createEmbed(target.displayColor)
@@ -26,13 +26,13 @@ module.exports = {
 						inline: true,
 					},
 					{
-						name: ':trophy: ' + instance.getMessage(interaction, 'VITORIAS'),
-						value: `${format(vitorias)}`,
+						name: ':trophy: ' + instance.getMessage(interaction, 'WINS'),
+						value: `${format(wins)}`,
 						inline: true,
 					},
 					{
-						name: ':bank: ' + instance.getMessage(interaction, 'BANCO'),
-						value: `${format(banco)}`,
+						name: ':bank: ' + instance.getMessage(interaction, 'BANK'),
+						value: `${format(bank)}`,
 						inline: true,
 					}
 				);

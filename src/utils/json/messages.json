@@ -49,87 +49,82 @@
 		"pt-BR": "Ocorreu um erro ao executar este comando! Este erro foi relatado ao desenvolvedor.",
 		"es-ES": "¡Se produjo un error al ejecutar este comando! Este error ha sido reportado al desarrollador."
 	},
-	"NUMEROS": {
-		"pt-BR": "Números",
-		"en-US": "Numbers",
-		"es-ES": "Números"
-	},
-	"VALOR_INVALIDO": {
+	"BAD_VALUE": {
 		"pt-BR": "{VALUE} não é um valor válido... :rage:",
 		"en-US": "{VALUE} is not a valid value... :rage:",
 		"es-ES": "{VALUE} no es un valor válido... :rage:"
 	},
-	"FALCOINS_INSUFICIENTES": {
+	"NOT_ENOUGH_FALCOINS": {
 		"pt-BR": "você não tem falcoins suficientes! :rage:",
 		"en-US": "you don't have enough falcoins! :rage:",
 		"es-ES": "¡no tienes suficientes falcoins! :rage:"
 	},
-	"BANCO_INSUFICIENTE": {
+	"BANK_INSUFFICIENT": {
 		"pt-BR": "você não tem falcoins suficientes no banco! :rage:",
 		"en-US": "you don't have enough falcoins in the bank! :rage:",
 		"es-ES": "¡no tienes suficientes falcoins en el banco! :rage:"
 	},
-	"BANCO_DEPOSITOU": {
+	"BANK_DEPOSIT": {
 		"pt-BR": "Você depositou {VALUE} falcoins no banco! :smiley:",
 		"en-US": "You deposited {VALUE} falcoins in the bank! :smiley:",
 		"es-ES": "¡Depositaste {VALUE} falcoins en el banco! :smiley:"
 	},
-	"SALDO_ATUAL": {
+	"BALANCE": {
 		"pt-BR": "Saldo atual",
 		"en-US": "Current balance",
 		"es-ES": "Saldo actual"
 	},
-	"BANCO": {
+	"BANK": {
 		"pt-BR": "Banco",
 		"en-US": "Bank",
 		"es-ES": "Banco"
 	},
-	"BANCO_SALDO": {
+	"BANK_BALANCE": {
 		"pt-BR": "Você tem {VALUE} falcoins no banco",
 		"en-US": "You have {VALUE} falcoins in the bank",
 		"es-ES": "Tienes {VALUE} falcoins en el banco"
 	},
-	"BANCO_SACOU": {
+	"BANK_WITHDRAW": {
 		"pt-BR": "Você sacou {VALUE} falcoins do banco! :smiley:",
 		"en-US": "You withdrew {VALUE} falcoins from the bank! :smiley:",
 		"es-ES": "¡Retiraste {VALUE} falcoins del banco! :smiley:"
 	},
-	"JOGADORES": {
+	"PLAYERS": {
 		"pt-BR": "Jogadores",
 		"en-US": "Players",
 		"es-ES": "Jugadores"
 	},
-	"GANHOU": {
+	"WON": {
 		"pt-BR": "{WINNER} ganhou {FALCOINS} falcoins!",
 		"en-US": "{WINNER} won {FALCOINS} falcoins!",
 		"es-ES": "{WINNER} ganó {FALCOINS} falcoins!"
 	},
-	"CAVALO_DESCRIPTION": {
+	"HORSE_DESCRIPTION": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Correndo...",
 		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: Racing...",
 		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:1234: **Tu caballo:** `{HORSE}`\n:hourglass: **Estado**: Corriendo..."
 	},
-	"CAVALO_DESCRIPTION_WON": {
+	"HORSE_DESCRIPTION_WON": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Você ganhou {FALCOINS} falcoins!\n:bank: **Saldo atual**: {SALDO} falcoins",
 		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: You won {FALCOINS} falcoins!\n:bank: **Current balance**: {SALDO} falcoins",
 		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:1234: **Tu caballo:** `{HORSE}`\n:hourglass: **Estado**: ¡Ganaste {FALCOINS} falcoins!\n:bank: **Saldo actual**: {SALDO} falcoins"
 	},
-	"CAVALO_DESCRIPTION_LOST": {
+	"HORSE_DESCRIPTION_LOST": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Você perdeu!\n:bank: **Saldo atual**: {SALDO} falcoins",
 		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: You lost!\n:bank: **Current balance**: {SALDO} falcoins",
 		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:1234: **Tu caballo:** `{HORSE}`\n:hourglass: **Estado**: ¡Perdiste!\n:bank: **Saldo actual**: {SALDO} falcoins"
 	},
-	"CAVALGADA_DESCRIPTION": {
+	"HORSERACE_DESCRIPTION": {
 		"pt-BR": ":horse: {USER} começou uma **corrida de \ncavalos**, entre apertando o botão abaixo, o \nvencedor leva todos os **falcoins acumulados!**\n:moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Começando em `1m`",
 		"en-US": ":horse: {USER} started a **horse race**, \njoin by pressing the button below, the \nwinner gets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting in `1m`",
 		"es-ES": ":horse: {USER} comenzó una **carrera de \ncaballos**, únete presionando el botón de abajo, \nel ganador se lleva todos los **falcoins acumulados!**\n:moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: Comenzando en `1m`"
 	},
-	"CAVALGADA_DESCRIPTION2": {
+	"HORSERACE_DESCRIPTION2": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Correndo...",
 		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Racing...",
 		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: Corriendo..."
 	},
-	"CAVALGADA_DESCRIPTION3": {
+	"HORSERACE_DESCRIPTION3": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: {USER} ganhou!\n:bank: **Saldo atual**: {SALDO} falcoins",
 		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: {USER} won!\n:bank: **Current balance**: {SALDO} falcoins",
 		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: ¡{USER} ganó!\n:bank: **Saldo actual**: {SALDO} falcoins"
@@ -139,137 +134,122 @@
 		"en-US": ":coin: you flipped **{CARAS}** heads and **{COROAS}** tails from playing **{TIMES}** times",
 		"es-ES": ":coin: sacaste **{CARAS}** caras y **{COROAS}** cruces jugando **{TIMES}** veces"
 	},
-	"DOAR": {
+	"DONATE": {
 		"pt-BR": ":handshake: {FALCOINS} falcoins transferidos com sucesso para {USER}",
 		"en-US": ":handshake: {FALCOINS} falcoins transferred successfully to {USER}",
 		"es-ES": ":handshake: {FALCOINS} falcoins transferidos con éxito a {USER}"
 	},
-	"ENQUETE": {
+	"POLL": {
 		"pt-BR": "Nova enquete de: {USER}",
 		"en-US": "New poll by: {USER}",
 		"es-ES": "Nueva encuesta de: {USER}"
 	},
-	"VITORIAS": {
+	"WINS": {
 		"pt-BR": "Vitórias",
 		"en-US": "Wins",
 		"es-ES": "Victorias"
 	},
-	"RESULTADO": {
+	"RESULT": {
 		"pt-BR": "Resultado",
 		"en-US": "Result",
 		"es-ES": "Resultado"
 	},
-	"GIRANDO": {
+	"SPINNING": {
 		"pt-BR": "GIRANDO",
 		"en-US": "SPINNING",
 		"es-ES": "GIRANDO"
 	},
-	"VOCE_GANHOU": {
+	"YOU_WON": {
 		"pt-BR": "Você ganhou!",
 		"en-US": "You won!",
 		"es-ES": "¡Ganaste!"
 	},
-	"VOCE_PERDEU": {
+	"YOU_LOST": {
 		"pt-BR": "Você perdeu!",
 		"en-US": "You lost!",
 		"es-ES": "¡Perdiste!"
 	},
-	"PERDAS": {
+	"LOSSES": {
 		"pt-BR": "Perdas",
 		"en-US": "Losses",
 		"es-ES": "Pérdidas"
 	},
-	"BOT_ROLOU": {
+	"ROLLED": {
 		"pt-BR": "O bot rolou",
 		"en-US": "The bot rolled",
 		"es-ES": "El bot sacó"
 	},
-	"VELHA_CHAMOU": {
+	"TICTACTOE_CHALLENGE": {
 		"pt-BR": "{USER2}, você foi desafiado para um jogo da velha por {USER}\n*Se você entrar, você apostará {FALCOINS} falcoins :older_woman:*",
 		"en-US": "{USER2}, you've been challenged to a tic-tac-toe game by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins* :older_woman:",
 		"es-ES": "{USUARIO2}, has sido desafiado a un juego de tres en raya por {USUARIO}\n*Si aceptas, estarás apostando {FALCOINS} falcoins* :older_woman:"
 	},
-	"VELHA_CANCELADO_DEMOROU": {
+	"TICTACTOE_TOO_LONG": {
 		"pt-BR": "Jogo da velha cancelado. {USER} demorou muito para aceitar! :confounded:",
 		"en-US": "Tic-tac-toe cancelled. {USER} took to long to accept! :confounded:",
 		"es-ES": "Tic-tac-toe cancelado. {USER} tardó demasiado en aceptar! :confounded:"
 	},
-	"VELHA_CANCELADO_RECUSOU": {
+	"TICTACTOE_DECLINED": {
 		"pt-BR": "Jogo da velha cancelado. {USER} recusou o jogo! :confounded:",
 		"en-US": "Tic-tac-toe cancelled. {USER} declined the game! :confounded:",
 		"es-ES": "Tic-tac-toe cancelado. {USER} rechazó el juego! :confounded:"
 	},
-	"VELHA_EMPATOU": {
+	"TICTACTOE_DRAW": {
 		"pt-BR": "**O jogo empatou**",
 		"en-US": "**The game ended in a draw**",
 		"es-ES": "**El juego terminó en empate**"
 	},
-	"INSUFICIENTE_CONTAS": {
+	"INSUFFICIENT_ACCOUNTS": {
 		"pt-BR": "Saldo insuficiente em uma das contas! :grimacing:",
 		"en-US": "Insufficient balance in one of the accounts! :grimacing:",
 		"es-ES": "¡Saldo insuficiente en una de las cuentas! :grimacing:"
 	},
-	"NAO_JOGAR_SOZINHO": {
+	"DONT_PLAY_ALONE": {
 		"pt-BR": "Você não pode jogar com você mesmo, espertinho :rage:",
 		"en-US": "You can't play with yourself, smartass :rage:",
 		"es-ES": "No puedes jugar contigo mismo, listillo :rage:"
 	},
-	"ROLETARUSSA_DESCRIPTION": {
+	"RUSSIANROULETTE_DESCRIPTION": {
 		"pt-BR": ":drop_of_blood: {USER} começou uma **roleta russa**, \nentre apertando o botão abaixo, a cada 5 \nsegundos, **alguém morre**, o último vivo leva \ntodos os **falcoins acumulados!**\n:moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Começando em `1m`",
 		"en-US": ":drop_of_blood: {USER} started a **russian roulette**, \njoin by pressing the button below, each 5 \nseconds, **someone dies**, the last alive \ngets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting in `1m`",
 		"es-ES": ":drop_of_blood: {USER} comenzó una **ruleta rusa**, \núnete presionando el botón de abajo, cada 5 \nsegundos, **alguien muere**, el último vivo \nse lleva todos los **falcoins acumulados!**\n:moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: Comenzando en `1m`"
 	},
-	"ROLETARUSSA_DESCRIPTION2": {
+	"RUSSIANROULETTE_DESCRIPTION2": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Eliminando jogadores...",
 		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Killing players...",
 		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: Eliminando jugadores..."
 	},
-	"ROLETARUSSA_DESCRIPTION3": {
+	"RUSSIANROULETTE_DESCRIPTION3": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: {USER} sobreviveu!\n:bank: **Saldo atual**: {SALDO} falcoins",
 		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: {USER} survived!\n:bank: **Current balance**: {SALDO} falcoins",
 		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: ¡{USER} sobrevivió!\n:bank: **Saldo actual**: {SALDO} falcoins"
 	},
-	"ROLETA_RUSSA_COMECOU": {
-		"pt-BR": " começou uma roleta russa",
-		"en-US": " started a russian roulette",
-		"es-ES": " comenzó una ruleta rusa"
-	},
-	"TEMPO_RESTANTE": {
-		"pt-BR": "Tempo restante",
-		"en-US": "Time remaining",
-		"es-ES": "Tiempo restante"
-	},
-	"ATIRANDO": {
-		"pt-BR": "atirando em alguém em 5 segundos",
-		"en-US": "shooting someone in 5 seconds",
-		"es-ES": "disparando a alguien en 5 segundos"
-	},
-	"BOLA8": {
+	"8BALL": {
 		"pt-BR": "Bola 8 mágica",
 		"en-US": "Magic 8-ball",
 		"es-ES": "Bola 8 mágica"
 	},
-	"PERGUNTA": {
+	"QUESTION": {
 		"pt-BR": "Pergunta",
 		"en-US": "Question",
 		"es-ES": "Pregunta"
 	},
-	"PREVISAO": {
+	"FORECAST": {
 		"pt-BR": "Previsão",
 		"en-US": "Prediction",
 		"es-ES": "Predicción"
 	},
-	"GANHO": {
+	"GAINED": {
 		"pt-BR": " ganhou",
 		"en-US": " won",
 		"es-ES": " ganó"
 	},
-	"LUTA_DERROTOU": {
+	"FIGHT_DEFEATED": {
 		"pt-BR": "Você derrotou {USER} em uma luta",
 		"en-US": "You defeated {USER} in a fight",
 		"es-ES": "Derrotaste a {USER} en una pelea"
 	},
-	"SE_PROTEGE": {
+	"PROTECTED": {
 		"pt-BR": "se protege",
 		"en-US": "protects themselves",
 		"es-ES": "se protege"
@@ -279,37 +259,37 @@
 		"en-US": "accidentally deals **{VALUE}** damage to themselves",
 		"es-ES": "accidentalmente da **{VALUE}** de daño a sí mismo"
 	},
-	"CURA": {
+	"HEAL": {
 		"pt-BR": "se cura em **{VALUE}** de vida",
 		"en-US": "heals themselves for **{VALUE}** health",
 		"es-ES": "se cura en **{VALUE}** de vida"
 	},
-	"ROUBO_VIDA": {
+	"LIFE_STEAL": {
 		"pt-BR": "rouba **{VALUE}** de vida do inimigo",
 		"en-US": "steals **{VALUE}** health from the enemy",
 		"es-ES": "roba **{VALUE}** de vida del enemigo"
 	},
-	"ATAQUE_NOCAUTE": {
+	"STUN": {
 		"pt-BR": "dá **{VALUE}** de dano ao inimigo e o deixa nocauteado",
 		"en-US": "deals **{VALUE}** damage to the enemy and stuns them",
 		"es-ES": "da **{VALUE}** de daño al enemigo y lo deja aturdido"
 	},
-	"ATAQUE": {
+	"ATTACK": {
 		"pt-BR": "dá **{VALUE}** de dano ao inimigo",
 		"en-US": "deals **{VALUE}** damage to the enemy",
 		"es-ES": "da **{VALUE}** de daño al enemigo"
 	},
-	"LUTA_CANCELADO_DEMOROU": {
+	"FIGHT_TOO_LONG": {
 		"pt-BR": "Luta cancelada. {USER} demorou muito para aceitar! :confounded:",
 		"en-US": "Fight cancelled. {USER} took to long to accept! :confounded:",
 		"es-ES": "Pelea cancelada. {USER} tardó demasiado en aceptar! :confounded:"
 	},
-	"LUTA_CANCELADO_RECUSOU": {
+	"FIGHT_DECLINED": {
 		"pt-BR": "Luta cancelada. {USER} recusou o duelo! :face_with_monocle:",
 		"en-US": "Fight cancelled. {USER} declined the duel! :face_with_monocle:",
 		"es-ES": "Pelea cancelada. {USER} rechazó el duelo! :face_with_monocle:"
 	},
-	"LUTA_CONVITE": {
+	"FIGHT_CHALLENGE": {
 		"pt-BR": "{USER2}, você foi desafiado para uma luta por {USER}\n*Se você entrar, você apostará {FALCOINS} falcoins :smiling_imp:*",
 		"en-US": "{USER2}, you've been challenged to a fight by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins :smiling_imp:*",
 		"es-ES": "{USER2}, fuiste desafiado a una pelea por {USER}\n*Si aceptas, apostarás {FALCOINS} falcoins :smiling_imp:*"
@@ -319,12 +299,12 @@
 		"en-US": ":stopwatch: Cooldowns",
 		"es-ES": ":stopwatch: Tiempo de espera"
 	},
-	"VOTO": {
+	"VOTE": {
 		"pt-BR": "Voto",
 		"en-US": "Vote",
 		"es-ES": "Voto"
 	},
-	"PRONTO": {
+	"READY": {
 		"pt-BR": "Pronto!",
 		"en-US": "Ready!",
 		"es-ES": "¡Listo!"
@@ -334,12 +314,12 @@
 		"en-US": "Score",
 		"es-ES": "Puntuación"
 	},
-	"VELHA_MOVIMENTO": {
+	"TICTACTOE_MOVE": {
 		"pt-BR": "{USER}, escolha seu movimento:",
 		"en-US": "{USER}, choose your move:",
 		"es-ES": "{USER}, elige tu movimiento:"
 	},
-	"8BALL": {
+	"8BALL_ANSWERS": {
 		"pt-BR": [
 			"certamente.",
 			"sem dúvida.",
@@ -761,7 +741,7 @@
 		"en-US": ":arrow_up: {FALCOINS} to the next rank",
 		"es-ES": ":arrow_up: {FALCOINS} para el siguiente rango"
 	},
-	"GANHOS": {
+	"WINNINGS": {
 		"pt-BR": "Ganhos",
 		"en-US": "Winnings",
 		"es-ES": "Ganancias"
@@ -771,7 +751,7 @@
 		"en-US": "Max rank",
 		"es-ES": "Rango máximo"
 	},
-	"PLAYERS": {
+	"TOTAL_PLAYERS": {
 		"pt-BR": "Jogadores totais",
 		"en-US": "Total players",
 		"es-ES": "Jugadores totales"
@@ -791,17 +771,17 @@
 		"en-US": "Servers",
 		"es-ES": "Servidores"
 	},
-	"ROLANDO": {
+	"ROLLING": {
 		"pt-BR": "ROLANDO",
 		"en-US": "ROLLING",
 		"es-ES": "TIRANDO"
 	},
-	"ROLETA": {
+	"ROULETTE": {
 		"pt-BR": "Roleta",
 		"en-US": "Roulette",
 		"es-ES": "Ruleta"
 	},
-	"GIRANDO_ROLETA": {
+	"SPINNING_ROULETTE": {
 		"pt-BR": "Girando a roleta...",
 		"en-US": "Spinning the wheel...",
 		"es-ES": "Girando la ruleta..."
@@ -996,17 +976,17 @@
 		"en-US": "{USER}'s turn",
 		"es-ES": "Turno de {USER}"
 	},
-	"TENTOU_ATACAR": {
+	"FAILED": {
 		"pt-BR": "tenta atacar mas o inimigo estava protegido",
 		"en-US": "tried to attack but the enemy was protected",
 		"es-ES": "intentó atacar pero el enemigo estaba protegido"
 	},
-	"NOCAUTEADO": {
+	"UNCONSCIOUS": {
 		"pt-BR": "está inconsciente e não pode fazer nada",
 		"en-US": "is unconscious and can't do anything",
 		"es-ES": "está inconsciente y no puede hacer nada"
 	},
-	"WORK": {
+	"WORK_GAINS": {
 		"pt-BR": ":coin: Você foi trabalhar e ganhou **{FALCOINS} falcoins!**",
 		"en-US": ":coin: You went to work and earned **{FALCOINS} falcoins!**",
 		"es-ES": ":coin: ¡Fuiste a trabajar y ganaste **{FALCOINS} falcoins!**"
@@ -1021,7 +1001,7 @@
 		"en-US": ":briefcase: {FALCOINS} falcoins earned!",
 		"es-ES": ":briefcase: {FALCOINS} falcoins ganados!"
 	},
-	"TRABALHO": {
+	"WORK": {
 		"pt-BR": "Trabalhar",
 		"en-US": "Work",
 		"es-ES": "Trabajar"
@@ -1086,20 +1066,10 @@
 		"en-US": "Dealer bust! you won {FALCOINS} falcoins",
 		"es-ES": "¡El banco estalló! Ganaste {FALCOINS} falcoins"
 	},
-	"YOU_WON": {
-		"pt-BR": "Você ganhou {FALCOINS} falcoins",
-		"en-US": "You won {FALCOINS} falcoins",
-		"es-ES": "Ganaste {FALCOINS} falcoins"
-	},
 	"PLAYER_BUST": {
 		"pt-BR": "Você estorou! Você perdeu {FALCOINS} falcoins",
 		"en-US": "You busted! You lost {FALCOINS} falcoins",
 		"es-ES": "¡Estallaste! Perdiste {FALCOINS} falcoins"
-	},
-	"YOU_LOST": {
-		"pt-BR": "Você perdeu {FALCOINS} falcoins",
-		"en-US": "You lost {FALCOINS} falcoins",
-		"es-ES": "Perdiste {FALCOINS} falcoins"
 	},
 	"DEALER_BLACKJACK": {
 		"pt-BR": "21 do banco! Você perdeu {FALCOINS} falcoins",
@@ -1116,16 +1086,6 @@
 		"en-US": "{MEMBER}'s Inventory (Part {NUMBER} of {TOTAL})\n:money_with_wings: Total Worth: {WORTH}/{LIMIT} falcoins",
 		"es-ES": "Inventario de {MEMBER} (Parte {NUMBER} de {TOTAL})\n:money_with_wings: Valor Total: {WORTH}/{LIMIT} falcoins"
 	},
-	"MARKET": {
-		"pt-BR": "Mercado",
-		"en-US": "Market",
-		"es-ES": "Mercado"
-	},
-	"SELLITEMS": {
-		"pt-BR": "Vender Items",
-		"en-US": "Sell Items",
-		"es-ES": "Vender Items"
-	},
 	"CRAFT": {
 		"pt-BR": "Construir",
 		"en-US": "Craft",
@@ -1135,11 +1095,6 @@
 		"pt-BR": ":abacus: Calculadora de Items",
 		"en-US": ":abacus: Item Calculator",
 		"es-ES": ":abacus: Calculadora de Items"
-	},
-	"INVALID": {
-		"pt-BR": "Seleção Inválida!",
-		"en-US": "Invalid Selection!",
-		"es-ES": "¡Selección inválida!"
 	},
 	"INGREDIENTS": {
 		"pt-BR": "Ingredientes:",

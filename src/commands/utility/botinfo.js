@@ -18,7 +18,7 @@ module.exports = {
 				value: `**:earth_americas: Site: https://falbot.netlify.app/\n:robot: Github: https://github.com/falcao-g/Falbot\n:bird: Twitter: https://twitter.com/falb0t\n:house: ${instance.getMessage(
 					interaction,
 					'SERVERS'
-				)}: ${client.guilds.cache.size}\n:busts_in_silhouette: ${instance.getMessage(interaction, 'PLAYERS')}: ${
+				)}: ${client.guilds.cache.size}\n:busts_in_silhouette: ${instance.getMessage(interaction, 'TOTAL_PLAYERS')}: ${
 					(await instance.userSchema.find({})).length
 				}\n:speaking_head: ${instance.getMessage(interaction, 'ACTIVE_PLAYERS')}: ${
 					(await instance.userSchema.find({ updatedAt: { $gte: new Date(Date.now() - 2592000000) } })).length

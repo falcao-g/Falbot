@@ -61,7 +61,7 @@ module.exports = {
 						}),
 					});
 				} else {
-					const new_rank = levels[rank_number];
+					const new_rank = levels[player.rank];
 
 					player.falcoins -= rank.falcoinsToLevelUp;
 					player.rank += 1;
@@ -72,7 +72,7 @@ module.exports = {
 						{
 							name: 'Rank Up!',
 							value: instance.getMessage(interaction, 'RANKUP_SUCESS', {
-								RANK: instance.getMessage(interaction, String(rank_number + 1)),
+								RANK: instance.getMessage(interaction, String(player.rank + 1)),
 								FALCOINS: format(rank.falcoinsToLevelUp),
 							}),
 						},
@@ -96,7 +96,7 @@ module.exports = {
 					return;
 				}
 
-				var quantity = levels.length - rank_number;
+				var quantity = levels.length - player.rank;
 				if (quantity > 3) {
 					quantity = 3;
 				}
@@ -106,31 +106,31 @@ module.exports = {
 					.setTitle(instance.getMessage(interaction, 'UPCOMING_RANKS'))
 					.addFields({
 						name:
-							instance.getMessage(interaction, String(rank_number)) +
+							instance.getMessage(interaction, String(player.rank)) +
 							' - ' +
-							format(levels[rank_number - 1].falcoinsToLevelUp) +
+							format(levels[player.rank - 1].falcoinsToLevelUp) +
 							' Falcoins' +
 							instance.getMessage(interaction, 'CURRENT_RANK'),
-						value: await instance.rankPerks(levels[rank_number - 2], levels[rank_number - 1], interaction),
+						value: await instance.rankPerks(levels[player.rank - 2], levels[player.rank - 1], interaction),
 					});
 
 				for (var i = 0; i < quantity; i++) {
-					if (levels[rank_number + i].falcoinsToLevelUp === undefined) {
+					if (levels[player.rank + i].falcoinsToLevelUp === undefined) {
 						embed.addFields({
 							name:
-								instance.getMessage(interaction, String(rank_number + i + 1)) +
+								instance.getMessage(interaction, String(player.rank + i + 1)) +
 								' - ' +
 								instance.getMessage(interaction, 'MAX_RANK2'),
-							value: await instance.rankPerks(levels[rank_number - 1 + i], levels[rank_number + i], interaction),
+							value: await instance.rankPerks(levels[player.rank - 1 + i], levels[player.rank + i], interaction),
 						});
 					} else {
 						embed.addFields({
 							name:
-								instance.getMessage(interaction, String(rank_number + i + 1)) +
+								instance.getMessage(interaction, String(player.rank + i + 1)) +
 								' - ' +
-								format(levels[rank_number + i].falcoinsToLevelUp) +
+								format(levels[player.rank + i].falcoinsToLevelUp) +
 								' Falcoins',
-							value: await instance.rankPerks(levels[rank_number - 1 + i], levels[rank_number + i], interaction),
+							value: await instance.rankPerks(levels[player.rank - 1 + i], levels[player.rank + i], interaction),
 						});
 					}
 				}

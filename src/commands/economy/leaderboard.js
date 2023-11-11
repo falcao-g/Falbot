@@ -202,12 +202,12 @@ module.exports = {
 			var rank = [];
 			const scope = interaction.options.getString('type');
 			const embeds = [];
-			const itemArgument = interaction.options.getString('item') ?? '';
+			const itemArgument = interaction.options.getString('item') ?? 'wood';
 
 			enums = {
 				falcoins: 'falcoins',
 				rank: 'rank',
-				wins: 'vitorias',
+				wins: 'wins',
 				item: `inventory.${getItem(itemArgument.toLowerCase())}`,
 				vote: 'voteStreak',
 			};
@@ -221,7 +221,7 @@ module.exports = {
 
 				if (itemJSON === undefined) {
 					instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+						content: instance.getMessage(interaction, 'BAD_VALUE', {
 							VALUE: interaction.options.getString('item'),
 						}),
 					});

@@ -36,7 +36,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, player.falcoins);
 			} catch {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
 						VALUE: falcoins,
 					}),
 				});
@@ -193,9 +193,9 @@ module.exports = {
 								FALCOINS: format(results.winnings / 2),
 							});
 						} else {
-							embed.data.fields[0].value = instance.getMessage(interaction, 'YOU_WON', {
-								FALCOINS: format(Math.floor(results.winnings / 2)),
-							});
+							embed.data.fields[0].value = `${instance.getMessage(interaction, 'GANHOS')}: ${format(
+								Math.floor(results.winnings / 2)
+							)} falcoins`;
 						}
 						embed.setColor(3066993);
 						player.falcoins += results.bet + Math.floor(results.winnings / 2);
@@ -205,9 +205,9 @@ module.exports = {
 								FALCOINS: format(results.losses),
 							});
 						} else {
-							embed.data.fields[0].value = instance.getMessage(interaction, 'YOU_LOST', {
-								FALCOINS: format(results.losses),
-							});
+							embed.data.fields[0].value = `${instance.getMessage(interaction, 'LOSSES')}: ${format(
+								results.losses
+							)} falcoins`;
 						}
 						embed.setColor(15158332);
 					} else {
@@ -217,7 +217,7 @@ module.exports = {
 						embed.setColor(10038562);
 					}
 
-					embed.data.fields[0].value += `\n${instance.getMessage(interaction, 'SALDO_ATUAL')}: ${format(
+					embed.data.fields[0].value += `\n${instance.getMessage(interaction, 'BALANCE')}: ${format(
 						player.falcoins
 					)} falcoins`;
 
@@ -289,7 +289,7 @@ module.exports = {
 							i.deferUpdate();
 						} else {
 							i.reply({
-								content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
+								content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
 								ephemeral: true,
 							});
 						}
@@ -303,7 +303,7 @@ module.exports = {
 				});
 			} else {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
+					content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
 				});
 			}
 			player.save();

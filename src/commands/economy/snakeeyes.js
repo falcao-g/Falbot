@@ -34,7 +34,7 @@ module.exports = {
 				var bet = await specialArg(falcoins, player.falcoins);
 			} catch {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
 						VALUE: falcoins,
 					}),
 				});
@@ -59,7 +59,7 @@ module.exports = {
 
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: `-------------------\n      | ${diegif} | ${diegif} |\n-------------------`,
-					value: `--- **${instance.getMessage(interaction, 'ROLANDO')}** ---`,
+					value: `--- **${instance.getMessage(interaction, 'ROLLING')}** ---`,
 				});
 
 				await instance.editReply(interaction, {
@@ -69,13 +69,13 @@ module.exports = {
 				await new Promise((resolve) => setTimeout(resolve, 1500));
 				embed.data.fields[0] = {
 					name: `-------------------\n      | ${emoji1} | ${diegif} |\n-------------------`,
-					value: `--- **${instance.getMessage(interaction, 'ROLANDO')}** ---`,
+					value: `--- **${instance.getMessage(interaction, 'ROLLING')}** ---`,
 				};
 				await instance.editReply(interaction, { embeds: [embed] });
 				await new Promise((resolve) => setTimeout(resolve, 1500));
 				embed.data.fields[0] = {
 					name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-					value: `--- **${instance.getMessage(interaction, 'ROLANDO')}** ---`,
+					value: `--- **${instance.getMessage(interaction, 'ROLLING')}** ---`,
 				};
 				await instance.editReply(interaction, { embeds: [embed] });
 
@@ -84,11 +84,11 @@ module.exports = {
 					var embed2 = instance.createEmbed('#F1C40F').addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-							value: `--- **${instance.getMessage(interaction, 'VOCE_GANHOU')}** ---`,
+							value: `--- **${instance.getMessage(interaction, 'YOU_WON')}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.getMessage(interaction, 'GANHOS'),
+							name: instance.getMessage(interaction, 'WINNINGS'),
 							value: `${format(bet * 5)} falcoins`,
 							inline: true,
 						}
@@ -98,11 +98,11 @@ module.exports = {
 					var embed2 = instance.createEmbed(3066993).addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-							value: `--- **${instance.getMessage(interaction, 'VOCE_GANHOU')}** ---`,
+							value: `--- **${instance.getMessage(interaction, 'YOU_WON')}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.getMessage(interaction, 'GANHOS'),
+							name: instance.getMessage(interaction, 'WINNINGS'),
 							value: `${format(bet * 2)} falcoins`,
 							inline: true,
 						}
@@ -111,18 +111,18 @@ module.exports = {
 					var embed2 = instance.createEmbed(15158332).addFields(
 						{
 							name: `-------------------\n      | ${emoji1} | ${emoji2} |\n-------------------`,
-							value: `--- **${instance.getMessage(interaction, 'VOCE_PERDEU')}** ---`,
+							value: `--- **${instance.getMessage(interaction, 'YOU_LOST')}** ---`,
 							inline: false,
 						},
 						{
-							name: instance.getMessage(interaction, 'PERDAS'),
+							name: instance.getMessage(interaction, 'LOSSES'),
 							value: `${format(bet)} falcoins`,
 							inline: true,
 						}
 					);
 				}
 				embed2.addFields({
-					name: instance.getMessage(interaction, 'SALDO_ATUAL'),
+					name: instance.getMessage(interaction, 'BALANCE'),
 					value: `${format(player.falcoins)}`,
 				});
 				await instance.editReply(interaction, {
@@ -130,7 +130,7 @@ module.exports = {
 				});
 			} else {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'FALCOINS_INSUFICIENTES'),
+					content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
 				});
 			}
 			player.save();

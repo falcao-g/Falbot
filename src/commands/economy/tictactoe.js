@@ -54,7 +54,7 @@ module.exports = {
 					var bet = await specialArg(falcoins, author.falcoins);
 				} catch {
 					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'VALOR_INVALIDO', {
+						content: instance.getMessage(interaction, 'BAD_VALUE', {
 							VALUE: falcoins,
 						}),
 					});
@@ -62,7 +62,7 @@ module.exports = {
 				}
 				if (author.falcoins >= bet && challengedFile.falcoins >= bet) {
 					var answer = await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'VELHA_CHAMOU', {
+						content: instance.getMessage(interaction, 'TICTACTOE_CHALLENGE', {
 							USER: member,
 							USER2: challenged,
 							FALCOINS: format(bet),
@@ -84,13 +84,13 @@ module.exports = {
 					collector.on('end', async (collected) => {
 						if (collected.size === 0) {
 							await interaction.followUp({
-								content: instance.getMessage(interaction, 'VELHA_CANCELADO_DEMOROU', {
+								content: instance.getMessage(interaction, 'TICTACTOE_TOO_LONG', {
 									USER: challenged,
 								}),
 							});
 						} else if (collected.first().customId === 'refuse') {
 							await interaction.followUp({
-								content: instance.getMessage(interaction, 'VELHA_CANCELADO_RECUSOU', {
+								content: instance.getMessage(interaction, 'TICTACTOE_DECLINED', {
 									USER: challenged,
 								}),
 							});
@@ -127,7 +127,7 @@ module.exports = {
 							answer2 = await collected.first().reply({
 								content: `:older_woman: \`${member.displayName}\` **VS**  \`${
 									challenged.displayName
-								}\` \n\n${instance.getMessage(interaction, 'VELHA_MOVIMENTO', {
+								}\` \n\n${instance.getMessage(interaction, 'TICTACTOE_MOVE', {
 									USER: first_player.displayName,
 								})}`,
 								components: [row, row2, row3],
@@ -225,7 +225,7 @@ module.exports = {
 								await i.update({
 									content: `:older_woman: \`${member.displayName}\` **VS**  \`${
 										challenged.displayName
-									}\` \n\n${instance.getMessage(interaction, 'VELHA_MOVIMENTO', {
+									}\` \n\n${instance.getMessage(interaction, 'TICTACTOE_MOVE', {
 										USER: board.currentMark() === 'X' ? first_player.displayName : second_player.displayName,
 									})}`,
 									components: [row, row2, row3],
@@ -242,15 +242,15 @@ module.exports = {
 								if (board.hasWinner()) {
 									if (board.winningPlayer() === 'X') {
 										firstPlayer.falcoins += bet * 2;
-										firstPlayer.vitorias++;
+										firstPlayer.wins++;
 									} else {
 										secondPlayer.falcoins += bet * 2;
-										secondPlayer.vitorias++;
+										secondPlayer.wins++;
 									}
 									await answer2.edit({
 										content: `:older_woman: \`${member.displayName}\` **VS**  \`${
 											challenged.displayName
-										}\` \n\n**${instance.getMessage(interaction, 'GANHOU', {
+										}\` \n\n**${instance.getMessage(interaction, 'WON', {
 											WINNER: board.winningPlayer() === 'X' ? first_player.displayName : second_player.displayName,
 											FALCOINS: await format(bet * 2),
 										})}**`,
@@ -261,7 +261,7 @@ module.exports = {
 									await answer2.edit({
 										content: `:older_woman: \`${member.displayName}\` **VS**  \`${
 											challenged.displayName
-										}\` \n\n${instance.getMessage(interaction, 'VELHA_EMPATOU')}`,
+										}\` \n\n${instance.getMessage(interaction, 'TICTACTOE_DRAW')}`,
 									});
 								}
 								firstPlayer.save();
@@ -271,12 +271,12 @@ module.exports = {
 					});
 				} else {
 					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'INSUFICIENTE_CONTAS'),
+						content: instance.getMessage(interaction, 'INSUFFICIENT_ACCOUNTS'),
 					});
 				}
 			} else {
 				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'NAO_JOGAR_SOZINHO'),
+					content: instance.getMessage(interaction, 'DONT_PLAY_ALONE'),
 				});
 			}
 		} catch (error) {

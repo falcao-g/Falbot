@@ -12,11 +12,11 @@ const userSchema = mongoose.Schema(
 			type: Number,
 			default: 10000,
 		},
-		vitorias: {
+		wins: {
 			type: Number,
 			default: 0,
 		},
-		banco: {
+		bank: {
 			type: Number,
 			default: 0,
 		},
