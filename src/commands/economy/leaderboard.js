@@ -202,7 +202,7 @@ module.exports = {
 			var rank = [];
 			const scope = interaction.options.getString('type');
 			const embeds = [];
-			const itemArgument = interaction.options.getString('item') ?? '';
+			const itemArgument = interaction.options.getString('item') ?? 'wood';
 
 			enums = {
 				falcoins: 'falcoins',
