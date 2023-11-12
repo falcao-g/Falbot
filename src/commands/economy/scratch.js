@@ -57,11 +57,11 @@ module.exports = {
 			});
 
 			collector.on('collect', async (i) => {
-				const luck = randint(1, 25);
+				const luck = randint(1, 100);
 				cont = 6 - collector.total;
 				var embed = instance.createEmbed();
 
-				if (luck === 25) {
+				if (luck === 1) {
 					//jackpot
 					amount = randint(200000, 300000);
 					player.falcoins += amount;
@@ -74,7 +74,7 @@ module.exports = {
 					cont = 0;
 					setCooldown(user.id, 'scratch', 60 * 60 * 12);
 					collector.stop();
-				} else if (luck === 24) {
+				} else if (2 <= luck <= 3) {
 					//super close
 					amount = randint(100000, 190000);
 					player.falcoins += amount;
@@ -87,7 +87,7 @@ module.exports = {
 					cont = 0;
 					setCooldown(user.id, 'scratch', 60 * 60 * 10);
 					collector.stop();
-				} else if (luck === 23 || luck === 22) {
+				} else if (4 <= luck <= 8) {
 					//pretty close
 					amount = randint(50000, 90000);
 					player.falcoins += amount;
@@ -100,7 +100,7 @@ module.exports = {
 					cont = 0;
 					setCooldown(user.id, 'scratch', 60 * 60 * 8);
 					collector.stop();
-				} else if (luck === 21 || luck === 20) {
+				} else if (9 <= luck <= 15) {
 					//kinda close
 					amount = randint(30000, 45000);
 					player.falcoins += amount;
@@ -114,7 +114,7 @@ module.exports = {
 				} else {
 					//not found but still a chance to win some money
 					embed.setColor(15158332);
-					if (randint(1, 100) >= 80) {
+					if (randint(1, 100) >= 85) {
 						amount = randint(10000, 20000);
 						player.falcoins += amount;
 						embed.addFields({
