@@ -708,16 +708,17 @@ module.exports = {
 					value: instance.getMessage(interaction, 'SELLALL_VALUE'),
 				});
 
-				instance.editReply(interaction, {
+				var answer = await instance.editReply(interaction, {
 					embeds: [embed],
 					components: [buttons(['accept'])],
+					fetchReply: true,
 				});
 
 				const filter = (btInt) => {
 					return instance.defaultFilter(btInt) && btInt.user.id === member.id;
 				};
 
-				const collector = interaction.channel.createMessageComponentCollector({
+				const collector = answer.createMessageComponentCollector({
 					filter,
 					time: 1000 * 300,
 					max: 1,
