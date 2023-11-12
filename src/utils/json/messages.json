@@ -1551,6 +1551,16 @@
 		"en-US": "Items crafted",
 		"es-ES": "Artículos construidos"
 	},
+	"STATS_LOTTERY": {
+		"pt-BR": "Lucros na Loteria",
+		"en-US": "Lottery Profits",
+		"es-ES": "Ganancias de Lotería"
+	},
+	"STATS_SCRATCH": {
+		"pt-BR": "Jackpots Raspadinha",
+		"en-US": "Scratch-off Jackpots",
+		"es-ES": "Jackpots Raspadinha"
+	},
 	"OVERTIME": {
 		"pt-BR": "**:crescent_moon: Horas extras - 3x** bônus de trabalho ({TIME})",
 		"en-US": "**:crescent_moon: Overtime - 3x** work bonus ({TIME})",
