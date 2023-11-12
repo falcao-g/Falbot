@@ -35,7 +35,7 @@ Don’t miss the opportunity to have a unique and enriching experience on your D
 - ⚙️ Useful commands
 - 🌎 All features available in portuguese, english and spanish
 
-Add him by clicking [here](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=330816&scope=bot%20applications.commands)
+Add him by clicking [here](https://discord.com/api/oauth2/authorize?client_id=742331813539872798&permissions=0&scope=bot%20applications.commands)
 
 Support server: <https://discord.gg/8WrAtVYVKR>
 
