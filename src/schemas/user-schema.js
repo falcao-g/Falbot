@@ -76,6 +76,8 @@ const userSchema = mongoose.Schema(
 				['timesMined', 0],
 				['timesVoted', 0],
 				['itemsCrafted', 0],
+				['lotteryWins', 0],
+				['scratchJackpots', 0],
 			]),
 		},
 	},

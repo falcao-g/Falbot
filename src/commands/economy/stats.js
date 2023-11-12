@@ -88,6 +88,19 @@ module.exports = {
 						name: `:hammer_pick: ${instance.getMessage(interaction, 'STATS_CRAFTS')}`,
 						value: `${format(player.stats.get('itemsCrafted'))} ${instance.getMessage(interaction, 'STATS_ITEMS')}`,
 						inline: true,
+					},
+					{
+						name: `:tickets: ${instance.getMessage(interaction, 'STATS_LOTTERY')}`,
+						value: `${format(player.stats.get('lotteryWins') ?? 0)} falcoins`,
+						inline: true,
+					},
+					{
+						name: `:confetti_ball: ${instance.getMessage(interaction, 'STATS_SCRATCH')}`,
+						value: `${format(player.stats.get('scratchJackpots') ?? 0)} ${instance.getMessage(
+							interaction,
+							'STATS_TIMES'
+						)}`,
+						inline: true,
 					}
 				);
 
