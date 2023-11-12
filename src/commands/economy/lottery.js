@@ -4,9 +4,9 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('lottery')
-		.setNameLocalization('pt-BR', 'loteria')
+		.setNameLocalizations({ 'pt-BR': 'loteria', 'es-ES': 'lotería' })
 		.setDescription('Lottery')
-		.setDescriptionLocalization('pt-BR', 'Loteria')
+		.setDescriptionLocalizations({ 'pt-BR': 'Loteria', 'es-ES': 'lotería' })
 		.setDMPermission(false)
 		.addSubcommand((subcommand) =>
 			subcommand
