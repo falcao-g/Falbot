@@ -139,11 +139,6 @@
 		"en-US": ":handshake: {FALCOINS} falcoins transferred successfully to {USER}",
 		"es-ES": ":handshake: {FALCOINS} falcoins transferidos con éxito a {USER}"
 	},
-	"POLL": {
-		"pt-BR": "Nova enquete de: {USER}",
-		"en-US": "New poll by: {USER}",
-		"es-ES": "Nueva encuesta de: {USER}"
-	},
 	"WINS": {
 		"pt-BR": "Vitórias",
 		"en-US": "Wins",
@@ -607,9 +602,9 @@
 		"es-ES": ":pencil: Falbot también puede ser útil en tu vida diaria"
 	},
 	"HELP_UTILS2": {
-		"pt-BR": "-Faça uma pequena enquete com `/enquete`\n-Deixe o falbot resolver expressões matemáticas para você com `/mat`\n-Role dados usando `/rolar`\n-Veja informações e links úteis sobre o bot com `/botinfo`",
-		"en-US": "-Do a pretty little poll with `/poll`\n-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`\n-See stats and useful links regarding the bot with `/botinfo`",
-		"es-ES": "-Haz una pequeña encuesta con `/encuesta`\n-Deja que falbot resuelva tus expresiones matemáticas con `/mat`\n-Tira dados con `/tirar`\n-Ver estadísticas y enlaces útiles sobre el bot con `/botinfo`"
+		"pt-BR": "-Deixe o falbot resolver expressões matemáticas para você com `/mat`\n-Role dados usando `/rolar`\n-Veja informações e links úteis sobre o bot com `/botinfo`\n-Veja o ping do bot com `/ping`",
+		"en-US": "-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`\n-See stats and useful links regarding the bot with `/botinfo`\n-See the bot's ping with `/ping`",
+		"es-ES": "-Deja que falbot resuelva tus expresiones matemáticas con `/mat`\n-Tira dados con `/tirar`\n-Ver estadísticas y enlaces útiles sobre el bot con `/botinfo`\n-Ver el ping del bot con `/ping`"
 	},
 	"HELP_ITEMS": {
 		"pt-BR": ":school_satchel: Sistema de items",
@@ -617,9 +612,9 @@
 		"es-ES": ":school_satchel: Sistema de items"
 	},
 	"HELP_ITEMS2": {
-		"pt-BR": "**:compass: Consiga items usando `/pescar`, `/caçar`, `/explorar`, `/minerar`\n:luggage: Veja todos os items que você ou outra pessoa tem com `/inventário ver`\n:moneybag: Items podem ser vendidos com `/inventário vender`\n:book: Veja todas as informações sobre um item como valores, raridade e usos com `/iteminfo`\n:hammer_pick: Items podem ser construídos com `/inventário construir`**\n-Muitos items que são construídos podem ser equipados para garantir benefícios com `/inventário equipar`\n**:abacus: Calcule a quantidade de materiais necessários para construir uma quantidade de items com `/inventário calcular`**",
-		"en-US": "**:compass: Get items using `/fish`, `/hunt`, `/explore`, `/mine`\n:luggage: See all the items you or another person has with `/inventory view`\n:moneybag: Items can be sold with `/inventory sell`\n:book: See all the information about an item like values, rarity and uses with `/iteminfo`\n:hammer_pick: Items can be crafted with `/inventory craft`**\n-Many items that are crafted can be equipped to guarantee benefits with `/inventory equip`\n**:abacus: Calculate the amount of materials needed to craft a certain amount of items with `/inventory calc`**",
-		"es-ES": "**:compass: Obtén items usando `/pescado`, `/cazar`, `/explorar`, `/minar`\n:luggage: Ver todos los items que tú u otra persona tiene con `/inventario ver`\n:moneybag: Los items se pueden vender con `/inventario vender`\n:book: Ver toda la información sobre un item como valores, rareza y usos con `/iteminfo`\n:hammer_pick: Los items se pueden crear con `/inventario construir`**\n-Muchos items que se crean se pueden equipar para garantizar beneficios con `/inventario equipar`\n**:abacus: Calcula la cantidad de materiales necesarios para crear una cierta cantidad de items con `/inventario calcular`**"
+		"pt-BR": "**:compass: Consiga items usando `/pescar`, `/caçar`, `/explorar`, `/minerar`\n:luggage: Veja todos os items que você ou outra pessoa tem com `/inventário ver`\n:moneybag: Items podem ser vendidos com `/inventário vender`\n:book: Veja todas as informações sobre um item como valores, raridade e usos com `/iteminfo`\n:hammer_pick: Items podem ser construídos com `/inventário construir`**\n-Alguns items podem ser equipados para garantir benefícios com `/inventário equipar`\n-Outros items podem ser usados e tem efeitos especiais com `/inventário usar`\n**:abacus: Calcule a quantidade de materiais necessários para construir uma quantidade de items com `/inventário calcular`**\n:busts_in_silhouette: Vocẽ pode trocar items com outros jogadores usando `/troca`",
+		"en-US": "**:compass: Get items using `/fish`, `/hunt`, `/explore`, `/mine`\n:luggage: See all the items you or someone else has with `/inventory view`\n:moneybag: Items can be sold with `/inventory sell`\n:book: See all the information about an item such as values, rarity and uses with `/iteminfo`\n:hammer_pick: Items can be crafted with `/inventory craft`**\n-Some items can be equipped to guarantee benefits with `/inventory equip`\n-Other items can be used and have special effects with `/inventory use`\n**:abacus: Calculate the amount of materials needed to craft a certain amount of items with `/inventory calc`**\n:busts_in_silhouette: You can trade items with other players using `/exchange`",
+		"es-ES": "**:compass: Obtén items usando `/pescado`, `/cazar`, `/explorar`, `/minar`\n:luggage: Ver todos los items que tú o alguien más tiene con `/inventario ver`\n:moneybag: Los items se pueden vender con `/inventario vender`\n:book: Ver toda la información sobre un item como valores, rareza y usos con `/iteminfo`\n:hammer_pick: Los items se pueden construir con `/inventario construir`**\n-Algunos items se pueden equipar para garantizar beneficios con `/inventario equipar`\n-Otros items se pueden usar y tienen efectos especiales con `/inventario usar`\n**:abacus: Calcula la cantidad de materiales necesarios para construir una cierta cantidad de items con `/inventario calcular`**\n:busts_in_silhouette: Puedes intercambiar items con otros jugadores usando `/intercambio`"
 	},
 	"HELP_CONFIG": {
 		"pt-BR": ":gear: Configurando o Falbot para o seu servidor",
