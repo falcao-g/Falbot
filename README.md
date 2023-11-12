@@ -33,7 +33,7 @@ Don’t miss the opportunity to have a unique and enriching experience on your D
 - 👑 Global and local user leaderboards
 - 🎉 Fun commands
 - ⚙️ Useful commands
-- 🌎 All features available in both portuguese and english
+- 🌎 All features available in portuguese, english and spanish
 
 Add him by clicking [here](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=330816&scope=bot%20applications.commands)
 
