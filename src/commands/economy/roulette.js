@@ -145,7 +145,7 @@ module.exports = {
 
 				await new Promise((resolve) => setTimeout(resolve, 3000));
 
-				var embed2 = instance.createEmbed(member.displayColor).setTitle(instance.getMessage(interaction, 'ROLETA'));
+				var embed2 = instance.createEmbed(member.displayColor).setTitle(instance.getMessage(interaction, 'ROULETTE'));
 
 				if (type.includes(luck)) {
 					player.falcoins += profit;
