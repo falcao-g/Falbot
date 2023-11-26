@@ -57,7 +57,7 @@ module.exports = {
 				})
 				.setDescription('See the last 10 winners of the lottery')
 				.setDescriptionLocalizations({
-					'pt-BR': 'Veja os 10 últimos gahnadores da loteria',
+					'pt-BR': 'Veja os 10 últimos ganhadores da loteria',
 					'es-ES': 'Veja los 10 últimos ganadores de la lotería',
 				})
 		),
