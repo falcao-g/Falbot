@@ -1,4 +1,4 @@
-const { randint, format, isEquipped } = require('../../utils/functions.js');
+const { randint, format, isEquipped, useItem } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
