@@ -28,13 +28,13 @@ module.exports = {
 			var voted = (await request.json()).voted;
 			const player = await database.player.findOne(user.id);
 			var reward = instance.levels[player.rank - 1].vote;
+			const bonus = Math.min(player.voteStreak, 30) * 5;
 
 			if (Date.now() - player.lastVote > 1000 * 60 * 60 * 48) {
 				player.voteStreak = 0;
 			}
 
 			if (voted && Date.now() - player.lastVote > 1000 * 60 * 60 * 12) {
-				const bonus = Math.min(player.voteStreak, 30) * 5;
 				player.lastVote = Date.now();
 				player.voteStreak++;
 				player.falcoins += reward + (reward * bonus) / 100;
@@ -74,7 +74,7 @@ module.exports = {
 						value:
 							'https://top.gg/bot/742331813539872798/vote\n\n' +
 							instance.getMessage(interaction, 'VOTE_FINAL', {
-								PERCENTAGE: player.voteStreak * 5,
+								PERCENTAGE: bonus,
 							}),
 					});
 			}
