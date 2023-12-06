@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 class databaseHandler {
+	//todo: make this import automatically
 	player = require('../database/player.js');
+	market = require('../database/market.js');
 
 	async connect() {
 		try {

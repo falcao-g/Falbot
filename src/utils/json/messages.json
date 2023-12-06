@@ -1616,6 +1616,31 @@
 		"en-US": "**☕ your coffee allows you to work overtime!**",
 		"es-ES": "**☕ tu café te permite trabajar horas extras!**"
 	},
+	"MARKET_TITLE": {
+		"pt-BR": ":shopping_cart: Mercado ({PAGE}/{TOTAL})",
+		"en-US": ":shopping_cart: Market ({PAGE}/{TOTAL})",
+		"es-ES": ":shopping_cart: Mercado ({PAGE}/{TOTAL})"
+	},
+	"NO_LISTINGS": {
+		"pt-BR": "Não listado",
+		"en-US": "No listings",
+		"es-ES": "Sin listados"
+	},
+	"AVAILABLES": {
+		"pt-BR": "Disponíveis",
+		"en-US": "Availables",
+		"es-ES": "Disponibles"
+	},
+	"BUYERS": {
+		"pt-BR": "Compradores",
+		"en-US": "Buyers",
+		"es-ES": "Compradores"
+	},
+	"SELLERS": {
+		"pt-BR": "Vendedores",
+		"en-US": "Sellers",
+		"es-ES": "Vendedores"
+	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
 		"en-US": ":potato: Peasent",
