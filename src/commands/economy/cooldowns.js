@@ -25,7 +25,7 @@ module.exports = {
 			const exploreCooldown = await resolveCooldown(member.id, 'explore');
 			const mineCooldown = await resolveCooldown(member.id, 'mine');
 			const huntCooldown = await resolveCooldown(member.id, 'hunt');
-			const lotto = await instance.lottoSchema.findById('semanal');
+			const lotto = await instance.lottoSchema.findById('weekly');
 
 			var events = `**${instance.getMessage(interaction, 'LOTTERY')}** - ${instance.getMessage(
 				interaction,
