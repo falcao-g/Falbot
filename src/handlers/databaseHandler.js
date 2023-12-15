@@ -1,8 +1,19 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
+const interestSchema = require('../schemas/interest-schema.js');
+const lotterySchema = require('../schemas/lotto-schema.js');
 
 class databaseHandler {
+	//todo: make this import automatically
 	player = require('../database/player.js');
+	market = require('../database/market.js');
+
+	constructor() {
+		this.connect().then(async () => {
+			await interestSchema.findByIdAndUpdate('interest', { _id: 'interest' }, { upsert: true });
+			await lotterySchema.findByIdAndUpdate('weekly', { _id: 'weekly' }, { upsert: true });
+		});
+	}
 
 	async connect() {
 		try {
