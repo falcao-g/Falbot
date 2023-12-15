@@ -8,18 +8,15 @@ const lottoSchema = mongoose.Schema(
 		},
 		prize: {
 			type: Number,
-			default: 0,
-			required: true,
+			default: 3000000,
 		},
 		nextDraw: {
 			type: Number,
-			default: 0,
-			required: true,
+			default: Date.now() + 1000 * 60 * 60 * 24 * 7, // 7 days
 		},
 		history: {
 			type: Array,
 			default: [],
-			required: true,
 		},
 	},
 	{
