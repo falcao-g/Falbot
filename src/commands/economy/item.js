@@ -68,6 +68,14 @@ module.exports = {
 
 			if (itemJSON.value) {
 				information += `:moneybag: ${instance.getMessage(interaction, 'COST')} **${format(itemJSON.value)} falcoins**`;
+				const sellOrder = await database.market.getCheapestSellOrder(itemKey);
+				if (sellOrder.price != Infinity) {
+					information += `\n🛍️ ${instance.getMessage(interaction, 'BUY_FOR')} **${format(sellOrder.price)} falcoins**`;
+				}
+				const buyOrder = await database.market.getBestBuyOrder(itemKey);
+				if (buyOrder.price != 0) {
+					information += `\n🛒 ${instance.getMessage(interaction, 'SELL_FOR')} **${format(buyOrder.price)} falcoins**`;
+				}
 			} else {
 				information += `${instance.getMessage(interaction, 'CANT_SELL')}`;
 			}

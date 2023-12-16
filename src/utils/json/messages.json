@@ -1101,6 +1101,16 @@
 		"en-US": "Raw cost:",
 		"es-ES": "Costo base:"
 	},
+	"BUY_FOR": {
+		"pt-BR": "Compre por:",
+		"en-US": "Buy for:",
+		"es-ES": "Comprar por:"
+	},
+	"SELL_FOR": {
+		"pt-BR": "Venda por:",
+		"en-US": "Sell for:",
+		"es-ES": "Vender por:"
+	},
 	"SOLD_TITLE": {
 		"pt-BR": "Você vendeu {AMOUNT} {ITEM} por {FALCOINS} falcoins!",
 		"en-US": "You sold {AMOUNT} {ITEM} for {FALCOINS} falcoins!",

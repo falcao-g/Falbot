@@ -34,6 +34,15 @@ module.exports = {
 		});
 		return cheapest;
 	},
+	async getBestBuyOrder(id) {
+		const result = await marketSchema.findOne({ _id: id });
+
+		var best = { price: 0 };
+		result.buyOrders.forEach((order) => {
+			if (order.price > best.price) best = order;
+		});
+		return best;
+	},
 	async getSellOrders(id) {
 		const result = await marketSchema.findOne({ _id: id });
 		return result.sellOrders;
