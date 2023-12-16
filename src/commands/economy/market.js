@@ -350,10 +350,10 @@ module.exports = {
 			}
 
 			const price = interaction.options.getInteger('price');
-			if (price < itemJSON.value) {
+			if (price <= itemJSON.value * 1.2) {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'PRICE_TOO_LOW', {
-						PRICE: format(itemJSON.value),
+						PRICE: format(itemJSON.value * 1.2),
 					}),
 				});
 				return;
