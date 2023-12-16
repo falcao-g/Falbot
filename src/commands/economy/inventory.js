@@ -379,6 +379,11 @@ module.exports = {
 						.setCustomId('inventory sort')
 						.setStyle('Secondary')
 						.setLabel(instance.getMessage(interaction, 'INVENTORY_SORTING')),
+					new ButtonBuilder()
+						.setEmoji('🛒')
+						.setCustomId('market all')
+						.setStyle('Secondary')
+						.setLabel(instance.getMessage(interaction, 'MARKET')),
 				]);
 				const message = await instance.editReply(interaction, paginator.components());
 				message.channel.createMessageComponentCollector().on('collect', async (i) => {

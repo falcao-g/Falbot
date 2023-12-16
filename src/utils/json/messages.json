@@ -1616,6 +1616,11 @@
 		"en-US": "**☕ your coffee allows you to work overtime!**",
 		"es-ES": "**☕ tu café te permite trabajar horas extras!**"
 	},
+	"MARKET": {
+		"pt-BR": "Mercado",
+		"en-US": "Market",
+		"es-ES": "Mercado"
+	},
 	"MARKET_TITLE": {
 		"pt-BR": ":shopping_cart: Mercado ({PAGE}/{TOTAL})",
 		"en-US": ":shopping_cart: Market ({PAGE}/{TOTAL})",
