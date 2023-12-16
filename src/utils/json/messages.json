@@ -1651,6 +1651,21 @@
 		"en-US": "You bought {AMOUNT} {ITEM} for {PRICE} falcoins!",
 		"es-ES": "¡Compraste {AMOUNT} {ITEM} por {PRICE} falcoins!"
 	},
+	"NOT_ENOUGH_ITEMS": {
+		"pt-BR": "Você não tem {ITEM} suficiente para fazer essa ação!",
+		"en-US": "You don't have enough {ITEM} to do this action!",
+		"es-ES": "¡No tienes suficiente {ITEM} para hacer esta acción!"
+	},
+	"PRICE_TOO_LOW": {
+		"pt-BR": "O preço mínimo para esse item é {PRICE} falcoins!",
+		"en-US": "The minimum price for this item is {PRICE} falcoins!",
+		"es-ES": "¡El precio mínimo para este artículo es {PRICE} falcoins!"
+	},
+	"MARKET_LISTED_BUY": {
+		"pt-BR": "Você anunciou que quer comprar {AMOUNT} x {ITEM} por {PRICE} falcoins!",
+		"en-US": "You listed that you want to buy {AMOUNT} x {ITEM} for {PRICE} falcoins!",
+		"es-ES": "¡Listaste que quieres comprar {AMOUNT} x {ITEM} por {PRICE} falcoins!"	
+	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
 		"en-US": ":potato: Peasent",

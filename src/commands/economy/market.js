@@ -79,7 +79,51 @@ module.exports = {
 						.setRequired(true)
 						.setMinValue(1)
 				)
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('list-buy')
+				.setNameLocalizations({ 'pt-BR': 'anunciar-compra', 'es-ES': 'anunciar-compra' })
+				.setDescription('List a buy order in the market')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Anunciar uma compra no mercado',
+					'es-ES': 'Anunciar una compra en el mercado',
+				})
+				.addStringOption((option) =>
+					option
+						.setName('item')
+						.setDescription('The item to buy')
+						.setDescriptionLocalizations({
+							'pt-BR': 'O item para comprar',
+							'es-ES': 'El item para comprar',
+						})
+						.setRequired(true)
+						.setAutocomplete(true)
+				)
+				.addIntegerOption((option) =>
+					option
+						.setName('amount')
+						.setDescription('The amount of items to buy')
+						.setDescriptionLocalizations({
+							'pt-BR': 'A quantidade de itens para comprar',
+							'es-ES': 'La cantidad de items para comprar',
+						})
+						.setRequired(true)
+						.setMinValue(1)
+				)
+				.addIntegerOption((option) =>
+					option
+						.setName('price')
+						.setDescription('The price of the items')
+						.setDescriptionLocalizations({
+							'pt-BR': 'O preço dos itens',
+							'es-ES': 'El precio de los items',
+						})
+						.setRequired(true)
+						.setMinValue(1)
+				)
 		),
+
 	execute: async ({ guild, interaction, instance, member, subcommand, args, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
@@ -238,7 +282,11 @@ module.exports = {
 			//glutton algorithm to get the cheapest sell order
 			var amount = interaction.options.getInteger('amount');
 			var totalPaid = 0;
-			while (amount > 0 && (await database.market.getCheapestSellOrder(itemKey)).price != Infinity) {
+			while (
+				amount > 0 &&
+				(await database.market.getCheapestSellOrder(itemKey)).price != Infinity &&
+				userFile.falcoins > 0
+			) {
 				const sellOrder = await database.market.getCheapestSellOrder(itemKey);
 				const sellerFile = await database.player.findOne(sellOrder.owner);
 				if (amount >= sellOrder.amount) {
@@ -265,6 +313,66 @@ module.exports = {
 					AMOUNT: interaction.options.getInteger('amount') - amount,
 					ITEM: instance.getItemName(itemKey, interaction),
 					PRICE: format(totalPaid),
+				})
+			);
+
+			instance.editReply(interaction, { embeds: [embed] });
+		} else if (type == 'list-buy') {
+			const item = interaction.options.getString('item');
+			const itemKey = getItem(item);
+			const itemJSON = items[itemKey];
+			const userFile = await database.player.findOne(member.id);
+
+			if (itemJSON === undefined) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
+						VALUE: item,
+					}),
+				});
+				return;
+			}
+
+			if (!itemJSON.value) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'CANT_SELL'),
+				});
+				return;
+			}
+
+			const amount = interaction.options.getInteger('amount');
+			if (userFile.inventory.get(itemKey) < amount) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'NOT_ENOUGH_ITEMS', {
+						ITEM: instance.getItemName(itemKey, interaction),
+					}),
+				});
+				return;
+			}
+
+			const price = interaction.options.getInteger('price');
+			if (price < itemJSON.value) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'PRICE_TOO_LOW', {
+						PRICE: format(itemJSON.value),
+					}),
+				});
+				return;
+			}
+
+			userFile.inventory.set(itemKey, userFile.inventory.get(itemKey) - amount);
+			await userFile.save();
+			const buyOrder = {
+				price: price,
+				amount: amount,
+				owner: member.id,
+			};
+			await database.market.addBuyOrder(itemKey, buyOrder);
+
+			const embed = instance.createEmbed(member.displayColor).setTitle(
+				instance.getMessage(interaction, 'MARKET_LISTED_BUY', {
+					AMOUNT: amount,
+					ITEM: instance.getItemName(itemKey, interaction),
+					PRICE: format(price),
 				})
 			);
 
