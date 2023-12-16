@@ -1641,6 +1641,11 @@
 		"en-US": "Sellers",
 		"es-ES": "Vendedores"
 	},
+	"MARKET_BOUGHT": {
+		"pt-BR": "Você comprou {AMOUNT} {ITEM} por {PRICE} falcoins!",
+		"en-US": "You bought {AMOUNT} {ITEM} for {PRICE} falcoins!",
+		"es-ES": "¡Compraste {AMOUNT} {ITEM} por {PRICE} falcoins!"
+	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
 		"en-US": ":potato: Peasent",

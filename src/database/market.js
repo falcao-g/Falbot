@@ -1,5 +1,11 @@
 const marketSchema = require('../schemas/market-schema.js');
 
+function findSellOrder(array, sellOrder) {
+	return array.findIndex(
+		(order) => order.price === sellOrder.price && order.amount === sellOrder.amount && order.owner === sellOrder.owner
+	);
+}
+
 module.exports = {
 	/**
 	 *
@@ -22,9 +28,9 @@ module.exports = {
 		await this.create(id);
 		const result = await marketSchema.findOne({ _id: id });
 
-		var cheapest = Infinity;
+		var cheapest = { price: Infinity };
 		result.sellOrders.forEach((order) => {
-			if (order.price < cheapest) cheapest = order.price;
+			if (order.price < cheapest.price) cheapest = order;
 		});
 		return cheapest;
 	},
@@ -35,5 +41,17 @@ module.exports = {
 	async getBuyOrders(id) {
 		const result = await marketSchema.findOne({ _id: id });
 		return result.buyOrders;
+	},
+	async deleteSellOrder(id) {
+		await marketSchema.deleteOne({ _id: id });
+	},
+	async subtractQuantityFromSellOrder(item, sellOrder, amount) {
+		const result = await marketSchema.findOne({ _id: item });
+		var index = findSellOrder(result.sellOrders, sellOrder);
+		result.sellOrders[index].amount -= amount;
+		if (result.sellOrders[index].amount <= 0) {
+			result.sellOrders.splice(index, 1);
+		}
+		await marketSchema.findByIdAndUpdate(result.id, result);
 	},
 };
