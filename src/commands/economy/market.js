@@ -114,10 +114,53 @@ module.exports = {
 				.addIntegerOption((option) =>
 					option
 						.setName('price')
-						.setDescription('The price of the items')
+						.setDescription('The price of each individual item')
 						.setDescriptionLocalizations({
-							'pt-BR': 'O preço dos itens',
-							'es-ES': 'El precio de los items',
+							'pt-BR': 'O preço de cada item individual',
+							'es-ES': 'El precio de cada item individual',
+						})
+						.setRequired(true)
+						.setMinValue(1)
+				)
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('list-sell')
+				.setNameLocalizations({ 'pt-BR': 'anunciar-venda', 'es-ES': 'anunciar-venda' })
+				.setDescription('List a sell order in the market')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Anunciar uma venda no mercado',
+					'es-ES': 'Anunciar una venta en el mercado',
+				})
+				.addStringOption((option) =>
+					option
+						.setName('item')
+						.setDescription('The item to sell')
+						.setDescriptionLocalizations({
+							'pt-BR': 'O item para vender',
+							'es-ES': 'El item para vender',
+						})
+						.setRequired(true)
+						.setAutocomplete(true)
+				)
+				.addIntegerOption((option) =>
+					option
+						.setName('amount')
+						.setDescription('The amount of items to sell')
+						.setDescriptionLocalizations({
+							'pt-BR': 'A quantidade de itens para vender',
+							'es-ES': 'La cantidad de items para vender',
+						})
+						.setRequired(true)
+						.setMinValue(1)
+				)
+				.addIntegerOption((option) =>
+					option
+						.setName('price')
+						.setDescription('The price of each individual item')
+						.setDescriptionLocalizations({
+							'pt-BR': 'O preço de cada item individual',
+							'es-ES': 'El precio de cada item individual',
 						})
 						.setRequired(true)
 						.setMinValue(1)
@@ -318,6 +361,57 @@ module.exports = {
 
 			instance.editReply(interaction, { embeds: [embed] });
 		} else if (type == 'list-buy') {
+			//actually we need to check if the user has the falcoins to buy the items
+			//since if we try to remove the falcoins later, the user may have spent them already
+			const item = interaction.options.getString('item');
+			const itemKey = getItem(item);
+			const itemJSON = items[itemKey];
+			const userFile = await database.player.findOne(member.id);
+
+			if (itemJSON === undefined) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
+						VALUE: item,
+					}),
+				});
+				return;
+			}
+
+			if (!itemJSON.value) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'CANT_SELL'),
+				});
+				return;
+			}
+
+			const price = interaction.options.getInteger('price');
+			if (price <= Math.floor(itemJSON.value * 1.2)) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'PRICE_TOO_LOW', {
+						PRICE: format(Math.floor(itemJSON.value * 1.2)),
+					}),
+				});
+				return;
+			}
+
+			await userFile.save();
+			const buyOrder = {
+				price: price,
+				amount: amount,
+				owner: member.id,
+			};
+			await database.market.addBuyOrder(itemKey, buyOrder);
+
+			const embed = instance.createEmbed(member.displayColor).setTitle(
+				instance.getMessage(interaction, 'MARKET_LISTED_BUY', {
+					AMOUNT: amount,
+					ITEM: instance.getItemName(itemKey, interaction),
+					PRICE: format(price),
+				})
+			);
+
+			instance.editReply(interaction, { embeds: [embed] });
+		} else if (type == 'list-sell') {
 			const item = interaction.options.getString('item');
 			const itemKey = getItem(item);
 			const itemJSON = items[itemKey];
@@ -350,10 +444,10 @@ module.exports = {
 			}
 
 			const price = interaction.options.getInteger('price');
-			if (price <= itemJSON.value * 1.2) {
+			if (price <= Math.floor(itemJSON.value * 1.1)) {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'PRICE_TOO_LOW', {
-						PRICE: format(itemJSON.value * 1.2),
+						PRICE: format(Math.floor(itemJSON.value * 1.1)),
 					}),
 				});
 				return;
@@ -361,15 +455,15 @@ module.exports = {
 
 			userFile.inventory.set(itemKey, userFile.inventory.get(itemKey) - amount);
 			await userFile.save();
-			const buyOrder = {
+			const sellOrder = {
 				price: price,
 				amount: amount,
 				owner: member.id,
 			};
-			await database.market.addBuyOrder(itemKey, buyOrder);
+			await database.market.addSellOrder(itemKey, sellOrder);
 
 			const embed = instance.createEmbed(member.displayColor).setTitle(
-				instance.getMessage(interaction, 'MARKET_LISTED_BUY', {
+				instance.getMessage(interaction, 'MARKET_LISTED_SELL', {
 					AMOUNT: amount,
 					ITEM: instance.getItemName(itemKey, interaction),
 					PRICE: format(price),

@@ -68,4 +68,9 @@ module.exports = {
 		result.buyOrders.push(buyOrder);
 		await marketSchema.findByIdAndUpdate(result.id, result);
 	},
+	async addSellOrder(item, sellOrder) {
+		const result = await marketSchema.findOne({ _id: item });
+		result.sellOrders.push(sellOrder);
+		await marketSchema.findByIdAndUpdate(result.id, result);
+	},
 };

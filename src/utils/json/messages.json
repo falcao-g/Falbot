@@ -1676,6 +1676,11 @@
 		"en-US": "You listed that you want to buy {AMOUNT} x {ITEM} for {PRICE} falcoins!",
 		"es-ES": "¡Listaste que quieres comprar {AMOUNT} x {ITEM} por {PRICE} falcoins!"	
 	},
+	"MARKET_LISTED_SELL": {
+		"pt-BR": "Você anunciou que quer vender {AMOUNT} x {ITEM} por {PRICE} falcoins!",
+		"en-US": "You listed that you want to sell {AMOUNT} x {ITEM} for {PRICE} falcoins!",
+		"es-ES": "¡Listaste que quieres vender {AMOUNT} x {ITEM} por {PRICE} falcoins!"	
+	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
 		"en-US": ":potato: Peasent",
