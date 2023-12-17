@@ -21,8 +21,7 @@
 		"falgames": "^1.0.1",
 		"mathjs": "^10.6.0",
 		"mongoose": "^6.8.0",
-		"simply-blackjack": "^1.0.3",
-		"tictactoe-board": "^1.1.0"
+		"simply-blackjack": "^1.0.3"
 	},
 	"devDependencies": {
 		"eslint": "^8.45.0",
