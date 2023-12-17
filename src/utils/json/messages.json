@@ -1641,6 +1641,26 @@
 		"en-US": "Sellers",
 		"es-ES": "Vendedores"
 	},
+	"SNAKE_GAME": {
+		"pt-BR": "Jogo da Cobrinha",
+		"en-US": "Snake Game",
+		"es-ES": "Juego de la Serpiente"
+	},
+	"GAME_OVER": {
+		"pt-BR": "Fim de jogo!",
+		"en-US": "Game over!",
+		"es-ES": "¡Fin del juego!"
+	},
+	"STOP": {
+		"pt-BR": "Parar",
+		"en-US": "Stop",
+		"es-ES": "Parar"
+	},
+	"PLAYER_ONLY": {
+		"pt-BR": "Apenas {player} pode usar esses botões.",
+		"en-US": "Only {player} can use these buttons.",
+		"es-ES": "Solo {player} puede usar estos botones."
+	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
 		"en-US": ":potato: Peasent",
