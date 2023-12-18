@@ -35,6 +35,18 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "falcao-g",
+      "name": "Falcão",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60127788?v=4",
+      "profile": "https://falbot.netlify.app/",
+      "contributions": [
+        "code",
+        "doc",
+        "bug",
+        "translation"
+      ]
     }
   ]
 }
