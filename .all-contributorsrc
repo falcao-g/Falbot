@@ -9,13 +9,48 @@
   "contributorsPerLine": 7,
   "contributors": [
     {
+      "login": "falcao-g",
+      "name": "Falcão",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60127788?v=4",
+      "profile": "https://falbot.netlify.app/",
+      "contributions": [
+        "code",
+        "doc",
+        "bug",
+        "translation"
+      ]
+    },
+    {
+      "login": "mateus-sposo",
+      "name": "Mateus de Oliveira Sposo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/133553167?v=4",
+      "profile": "https://github.com/mateus-sposo",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Vinicius-Marques6",
+      "name": "Vinícius Marques",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56037523?v=4",
+      "profile": "https://github.com/Vinicius-Marques6",
+    },
+    {
+      "login": "AmarilhaTiago",
+      "name": "Tiago Amarilha Rodrigues",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34931192?v=4",
+      "profile": "https://www.linkedin.com/in/tiago-amarilha-rodrigues-a7a6b31b8/",
+      "contributions": [
+        "doc"
+      ]
+    }, 
+    {
       "login": "taciossbr",
       "name": "Tacio S. S.",
       "avatar_url": "https://avatars.githubusercontent.com/u/27559695?v=4",
       "profile": "https://tacioss.dev",
       "contributions": [
         "bug",
-        "code"
       ]
     }
   ]

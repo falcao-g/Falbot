@@ -58,6 +58,11 @@ If you want to contribute, please read the [contributing guide](CONTRIBUTING.md)
 <table>
   <tbody>
     <tr>
+
+      <td align="center" valign="top" width="14.28%"><a href="https://falbot.netlify.app/"><img src="https://avatars.githubusercontent.com/u/60127788?v=4?s=100" width="100px;" alt="Falcão"/><br /><sub><b>Falcão</b></sub></a><br /><a href="#code-falcao-g" title="Code">💻</a> <a href="#doc-falcao-g" title="Documentation">📖</a> <a href="#bug-falcao-g" title="Bug reports">🐛</a> <a href="#translation-falcao-g" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/mateus-sposo"><img src="https://avatars.githubusercontent.com/u/133553167?v=4?s=100" width="100px;" alt="Mateus de Oliveira Sposo"/><br /><sub><b>Mateus de Oliveira Sposo</b></sub></a><br /><a href="#translation-mateus-sposo" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Vinicius-Marques6"><img src="https://avatars.githubusercontent.com/u/56037523?v=4?s=100" width="100px;" alt="Vinícius Marques"/><br /><sub><b>Vinícius Marques</b></sub></a><br /><a href="#bug-Vinicius-Marques6" title="Bug reports">🐛</a> <a href="#code-Vinicius-Marques6" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/tiago-amarilha-rodrigues-a7a6b31b8/"><img src="https://avatars.githubusercontent.com/u/34931192?v=4?s=100" width="100px;" alt="Tiago Amarilha Rodrigues"/><br /><sub><b>Tiago Amarilha Rodrigues</b></sub></a><br /><a href="#doc-AmarilhaTiago" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://tacioss.dev"><img src="https://avatars.githubusercontent.com/u/27559695?v=4?s=100" width="100px;" alt="Tacio S. S."/><br /><sub><b>Tacio S. S.</b></sub></a><br /><a href="#bug-taciossbr" title="Bug reports">🐛</a> <a href="#code-taciossbr" title="Code">💻</a></td>
     </tr>
   </tbody>
