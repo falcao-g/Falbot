@@ -1,4 +1,21 @@
 {
-    "projectName": "Falbot",
-    "projectOwner": "falcao-g"
+  "projectName": "Falbot",
+  "projectOwner": "falcao-g",
+  "files": [
+    "README.md"
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "taciossbr",
+      "name": "Tacio S. S.",
+      "avatar_url": "https://avatars.githubusercontent.com/u/27559695?v=4",
+      "profile": "https://tacioss.dev",
+      "contributions": [
+        "bug"
+      ]
+    }
+  ]
 }
