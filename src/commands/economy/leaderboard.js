@@ -263,7 +263,7 @@ module.exports = {
 						type == 'rank'
 							? `${instance.getMessage(interaction, rank[i][type])}`
 							: subcommand == 'item'
-							? `${itemJSON['emoji']} ${format(rank[i]['inventory'].get(item) ?? 0)}`
+							? `${instance.getItemEmoji(item)} ${format(rank[i]['inventory'].get(item) ?? 0)}`
 							: subcommand == 'vote'
 							? `${Math.floor(format(rank[i][type]) / 2)} ${instance.getMessage(interaction, 'DAYS')}`
 							: `${format(rank[i][type])}`,
@@ -303,7 +303,7 @@ module.exports = {
 				embeds[0].setTitle(instance.getMessage(interaction, `LEADERBOARD_${scope.toUpperCase()}_TITLE`));
 				embeds[0].setDescription(
 					`${instance.getMessage(interaction, `LEADERBOARD_${subcommand.toUpperCase()}_DESCRIPTION`, {
-						ITEM: subcommand == 'item' ? itemJSON[interaction.locale] ?? itemJSON['en-US'] : '',
+						ITEM: subcommand == 'item' ? instance.getItemName(item, interaction) : '',
 					})}`
 				);
 				await instance.editReply(interaction, { embeds: [embeds[0]] });
@@ -323,7 +323,14 @@ module.exports = {
 		const localeItems = Object.keys(items).map((key) => {
 			return instance.getItemName(key, interaction);
 		});
-		const filtered = localeItems.filter((choice) => choice.startsWith(focusedValue));
+		const filtered = localeItems.filter((choice) => {
+			if (
+				choice.split(' ').slice(1).join(' ').toLowerCase().startsWith(focusedValue) ||
+				choice.toLowerCase().startsWith(focusedValue)
+			) {
+				return true;
+			}
+		});
 		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
 	},
 };
