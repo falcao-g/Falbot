@@ -277,7 +277,7 @@ module.exports = {
 					);
 					embeds[i].setDescription(
 						`${instance.getMessage(interaction, `LEADERBOARD_${subcommand.toUpperCase()}_DESCRIPTION`, {
-							ITEM: subcommand == 'item' ? itemJSON[interaction.locale] ?? itemJSON['en-US'] : '',
+							ITEM: subcommand == 'item' ? instance.getItemName(item, interaction) : '',
 						})}`
 					);
 				}
