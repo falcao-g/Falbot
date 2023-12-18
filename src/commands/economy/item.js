@@ -162,7 +162,14 @@ module.exports = {
 		const localeItems = Object.keys(items).map((key) => {
 			return instance.getItemName(key, interaction);
 		});
-		const filtered = localeItems.filter((choice) => choice.startsWith(focusedValue));
+		const filtered = localeItems.filter((choice) => {
+			if (
+				choice.split(' ').slice(1).join(' ').toLowerCase().startsWith(focusedValue) ||
+				choice.toLowerCase().startsWith(focusedValue)
+			) {
+				return true;
+			}
+		});
 		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
 	},
 };
