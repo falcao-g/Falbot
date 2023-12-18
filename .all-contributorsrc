@@ -9,6 +9,18 @@
   "contributorsPerLine": 7,
   "contributors": [
     {
+      "login": "falcao-g",
+      "name": "Falcão",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60127788?v=4",
+      "profile": "https://falbot.netlify.app/",
+      "contributions": [
+        "code",
+        "doc",
+        "bug",
+        "translation"
+      ]
+    },
+    {
       "login": "mateus-sposo",
       "name": "Mateus de Oliveira Sposo",
       "avatar_url": "https://avatars.githubusercontent.com/u/133553167?v=4",
@@ -34,18 +46,6 @@
       "profile": "https://www.linkedin.com/in/tiago-amarilha-rodrigues-a7a6b31b8/",
       "contributions": [
         "doc"
-      ]
-    },
-    {
-      "login": "falcao-g",
-      "name": "Falcão",
-      "avatar_url": "https://avatars.githubusercontent.com/u/60127788?v=4",
-      "profile": "https://falbot.netlify.app/",
-      "contributions": [
-        "code",
-        "doc",
-        "bug",
-        "translation"
       ]
     }
   ]
