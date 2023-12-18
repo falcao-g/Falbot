@@ -23,6 +23,7 @@ module.exports = {
 		const inventoryWorth = instance.getInventoryWorth(player.inventory);
 		var buff = 1;
 		var buffText = '';
+		var luck = 1;
 
 		if (inventoryWorth >= limit) {
 			instance.editReply(interaction, {
@@ -53,6 +54,7 @@ module.exports = {
 			if (buffText !== '') buffText += '\n';
 			buffText += `${instance.getMessage(interaction, 'SEARCH_PARTY_BONUS')}`;
 			buff ? (buff *= 2) : (buff = 2);
+			luck = 1.5;
 		}
 
 		// define the weight of each rarity level (the sum of all weights should be 1)
@@ -86,8 +88,9 @@ module.exports = {
 		var total = 0;
 		var text = '';
 		for (let i = 0; i < numItems; i++) {
-			var selectedItem = pick(filteredItems);
-			var amount = randint(1, amounts[items[selectedItem]['rarity']]) * randint(1, buff);
+			var selectedItem = pick(filteredItems, luck);
+			var softenedBuff = randint((buff * 10) / 2, buff * 10) / 10;
+			var amount = Math.floor(randint(1, amounts[items[selectedItem]['rarity']]) * softenedBuff);
 			var name = `${instance.getItemName(selectedItem, interaction)}`;
 			total += amount;
 			text += `**${name}** x ${amount}\n`;
