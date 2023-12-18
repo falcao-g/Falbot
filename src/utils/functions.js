@@ -161,11 +161,11 @@ function paginate() {
 /**
  *
  * @param {Array<string, number>} data
- * @description Picks a random element from an array based on its weight
- * @example pick([['a', 0.5], ['b', 0.3], ['c', 0.2]]) // 'a'
+ * @description Picks a random element from an array based on its weight, you can also alter the luck
+ * @example pick([['a', 0.5], ['b', 0.3], ['c', 0.2]], 1) // 'a'
  * @returns {string}
  */
-function pick(data) {
+function pick(data, luck = 1) {
 	// Split input into two separate arrays of values and weights.
 	const values = data.map((d) => d[0]);
 	const weights = data.map((d) => d[1]);
@@ -176,9 +176,10 @@ function pick(data) {
 		acc = element + acc;
 		return acc;
 	});
-	const rand = Math.random() * sum;
-
-	return values[weightsSum.filter((element) => element <= rand).length];
+	const rand = Math.random() * sum * luck;
+	let index = weightsSum.filter((element) => element <= rand).length;
+	index = index >= weights.length ? weights.length - 1 : index;
+	return values[index];
 }
 
 /**
