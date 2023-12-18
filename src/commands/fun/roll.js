@@ -1,4 +1,4 @@
-const roll = require('falbot-dice');
+const { Roll } = require('falgames');
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -27,34 +27,22 @@ module.exports = {
 					'es-ES': 'dados a serem tirados',
 				})
 				.setRequired(true)
-				.setMaxLength(500)
+				.setMaxLength(100)
 		),
-	execute: async ({ interaction, instance }) => {
+	execute: async ({ interaction, instance, member }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
-			text = interaction.options.getString('dice');
-
-			try {
-				var rolled = roll(text);
-
-				if (rolled.length > 2000) {
-					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'ROLL_LIMIT'),
-					});
-					return;
-				}
-			} catch {
-				await instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'BAD_VALUE', {
-						VALUE: text,
-					}),
-				});
-				return;
-			}
-
-			await instance.editReply(interaction, {
-				content: `**${instance.getMessage(interaction, 'RESULT')}:** ${rolled}`,
-			});
+			new Roll({
+				message: interaction,
+				rollLimitMessage: instance.getMessage(interaction, 'ROLL_LIMIT'),
+				rolledStringLimit: 300, // this argument and the one above and below don't exist yet, but they will
+				notValidRollMessage: instance.getMessage(interaction, 'BAD_VALUE'),
+				isSlashGame: true,
+				embed: {
+					title: instance.getMessage(interaction, 'RESULT'),
+					color: member.displayColor,
+				},
+			}).roll(interaction.options.getString('dice'));
 		} catch (error) {
 			console.error(`roll: ${error}`);
 			instance.editReply(interaction, {
