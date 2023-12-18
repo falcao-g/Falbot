@@ -55,6 +55,13 @@ If you want to contribute, please read the [contributing guide](CONTRIBUTING.md)
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/mateus-sposo"><img src="https://avatars.githubusercontent.com/u/133553167?v=4?s=100" width="100px;" alt="Mateus de Oliveira Sposo"/><br /><sub><b>Mateus de Oliveira Sposo</b></sub></a><br /><a href="#translation-mateus-sposo" title="Translation">🌍</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
