@@ -20,6 +20,7 @@ Don’t miss the opportunity to have a unique and enriching experience on your D
     <a title="Support server" href="https://discord.gg/8WrAtVYVKR">
         <img src="https://img.shields.io/discord/742332099788275732.svg?&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2&label=Support" alt="Support server">
     </a>
+    <img src="https://img.shields.io/github/all-contributors/falcao-g/Falbot?color=ee8449&style=flat-square" alt="All contributors">
     <img src="https://img.shields.io/badge/MongoDB--darkgreen.svg?logo=mongodb" alt="MongoDB">
 </p>
 
@@ -48,3 +49,14 @@ Official website: <https://falbot.netlify.app/>
 ## ❓ Want to contribute?
 
 If you want to contribute, please read the [contributing guide](CONTRIBUTING.md).
+
+## 🤝 Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
