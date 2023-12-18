@@ -60,6 +60,7 @@ If you want to contribute, please read the [contributing guide](CONTRIBUTING.md)
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/mateus-sposo"><img src="https://avatars.githubusercontent.com/u/133553167?v=4?s=100" width="100px;" alt="Mateus de Oliveira Sposo"/><br /><sub><b>Mateus de Oliveira Sposo</b></sub></a><br /><a href="#translation-mateus-sposo" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Vinicius-Marques6"><img src="https://avatars.githubusercontent.com/u/56037523?v=4?s=100" width="100px;" alt="Vinícius Marques"/><br /><sub><b>Vinícius Marques</b></sub></a><br /><a href="#bug-Vinicius-Marques6" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/tiago-amarilha-rodrigues-a7a6b31b8/"><img src="https://avatars.githubusercontent.com/u/34931192?v=4?s=100" width="100px;" alt="Tiago Amarilha Rodrigues"/><br /><sub><b>Tiago Amarilha Rodrigues</b></sub></a><br /><a href="#doc-AmarilhaTiago" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
