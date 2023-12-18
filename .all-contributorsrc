@@ -34,6 +34,10 @@
       "name": "Vinícius Marques",
       "avatar_url": "https://avatars.githubusercontent.com/u/56037523?v=4",
       "profile": "https://github.com/Vinicius-Marques6",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     },
     {
       "login": "AmarilhaTiago",
@@ -51,6 +55,7 @@
       "profile": "https://tacioss.dev",
       "contributions": [
         "bug",
+        "code"
       ]
     }
   ]
