@@ -47,7 +47,7 @@
       "contributions": [
         "doc"
       ]
-    }, 
+    },
     {
       "login": "taciossbr",
       "name": "Tacio S. S.",
@@ -56,6 +56,15 @@
       "contributions": [
         "bug",
         "code"
+      ]
+    },
+    {
+      "login": "Piyush-Deshmukh",
+      "name": "Piyush Deshmukh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/99667276?v=4",
+      "profile": "https://github.com/Piyush-Deshmukh",
+      "contributions": [
+        "example"
       ]
     }
   ]
