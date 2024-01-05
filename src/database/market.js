@@ -6,6 +6,10 @@ function findSellOrder(array, sellOrder) {
 	);
 }
 
+function findOrderByItemAndOwner(array, item, owner) {
+	return array.findIndex((order) => order.item === item && order.owner === owner);
+}
+
 module.exports = {
 	/**
 	 *
@@ -51,9 +55,6 @@ module.exports = {
 		const result = await marketSchema.findOne({ _id: id });
 		return result.buyOrders;
 	},
-	async deleteSellOrder(id) {
-		await marketSchema.deleteOne({ _id: id });
-	},
 	async subtractQuantityFromSellOrder(item, sellOrder, amount) {
 		const result = await marketSchema.findOne({ _id: item });
 		var index = findSellOrder(result.sellOrders, sellOrder);
@@ -71,6 +72,38 @@ module.exports = {
 	async addSellOrder(item, sellOrder) {
 		const result = await marketSchema.findOne({ _id: item });
 		result.sellOrders.push(sellOrder);
+		await marketSchema.findByIdAndUpdate(result.id, result);
+	},
+	async getBuyOrdersFromUser(id) {
+		const result = await marketSchema.find();
+		var orders = [];
+		result.forEach((item) => {
+			item.buyOrders.forEach((order) => {
+				if (order.owner === id) orders.push({ ...order, item: item._id });
+			});
+		});
+		return orders;
+	},
+	async getSellOrdersFromUser(id) {
+		const result = await marketSchema.find();
+		var orders = [];
+		result.forEach((item) => {
+			item.sellOrders.forEach((order) => {
+				if (order.owner === id) orders.push({ ...order, item: item._id });
+			});
+		});
+		return orders;
+	},
+	async deleteBuyOrder(item, owner) {
+		const result = await marketSchema.findOne({ _id: item });
+		var index = findOrderByItemAndOwner(result.buyOrders, item, owner);
+		result.buyOrders.splice(index, 1);
+		await marketSchema.findByIdAndUpdate(result.id, result);
+	},
+	async deleteSellOrder(item, owner) {
+		const result = await marketSchema.findOne({ _id: item });
+		var index = findOrderByItemAndOwner(result.sellOrders, item, owner);
+		result.sellOrders.splice(index, 1);
 		await marketSchema.findByIdAndUpdate(result.id, result);
 	},
 };

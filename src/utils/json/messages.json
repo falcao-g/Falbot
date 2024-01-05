@@ -1681,6 +1681,36 @@
 		"en-US": "You listed that you want to sell {AMOUNT} x {ITEM} for {PRICE} falcoins!",
 		"es-ES": "¡Listaste que quieres vender {AMOUNT} x {ITEM} por {PRICE} falcoins!"	
 	},
+	"MARKET_BUY_LISTINGS": {
+		"pt-BR": ":shopping_cart: Seus anúncios de compra {PAGE}/{TOTAL}",
+		"en-US": ":shopping_cart: Your buy listings {PAGE}/{TOTAL}",
+		"es-ES": ":shopping_cart: Tus anuncios de compra {PAGE}/{TOTAL}"
+	},
+	"MARKET_SELL_LISTINGS": {
+		"pt-BR": ":convenience_store: Seus anúncios de venda {PAGE}/{TOTAL}",
+		"en-US": ":convenience_store: Your sell listings {PAGE}/{TOTAL}",
+		"es-ES": ":convenience_store: Tus anuncios de venta {PAGE}/{TOTAL}"
+	},
+	"YOU_DONT_HAVE_LISTINGS": {
+		"pt-BR": "Você não fez nenhum anúncio desse tipo!",
+		"en-US": "You don't have any listings of this type!",
+		"es-ES": "¡No tienes ningún anuncio de este tipo!"
+	},
+	"THIS_LISTING_DOESNT_EXIST": {
+		"pt-BR": "Esse anúncio não existe!",
+		"en-US": "This listing doesn't exist!",
+		"es-ES": "¡Este anuncio no existe!"
+	},
+	"MARKET_DELISTED_BUY": {
+		"pt-BR": "Você removeu seu anúncio para comprar {AMOUNT} x {ITEM} por {PRICE} falcoins!",
+		"en-US": "You removed your listing to buy {AMOUNT} x {ITEM} for {PRICE} falcoins!",
+		"es-ES": "¡Eliminaste tu anuncio para comprar {AMOUNT} x {ITEM} por {PRICE} falcoins!"
+	},
+	"MARKET_DELISTED_SELL": {
+		"pt-BR": "Você removeu seu anúncio para vender {AMOUNT} x {ITEM} por {PRICE} falcoins!",
+		"en-US": "You removed your listing to sell {AMOUNT} x {ITEM} for {PRICE} falcoins!",
+		"es-ES": "¡Eliminaste tu anuncio para vender {AMOUNT} x {ITEM} por {PRICE} falcoins!"
+	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
 		"en-US": ":potato: Peasent",

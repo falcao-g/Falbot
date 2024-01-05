@@ -1,5 +1,5 @@
-const { format, paginate, getItem, buttons, isEquipped, specialArg } = require('../../utils/functions.js');
-const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
+const { format, paginate, getItem, specialArg } = require('../../utils/functions.js');
+const { ButtonBuilder, SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
 	developer: true,
@@ -165,8 +165,67 @@ module.exports = {
 						.setRequired(true)
 						.setMinValue(1)
 				)
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('listings')
+				.setNameLocalizations({ 'pt-BR': 'listagens', 'es-ES': 'listagens' })
+				.setDescription('View your listings')
+				.setDescriptionLocalizations({ 'pt-BR': 'Ver suas listagens', 'es-ES': 'Ver tus listagens' })
+				.addStringOption((option) =>
+					option
+						.setName('type')
+						.setNameLocalizations({ 'pt-BR': 'tipo', 'es-ES': 'tipo' })
+						.setDescription('The type of listings to view')
+						.setDescriptionLocalizations({
+							'pt-BR': 'O tipo de listagens para ver',
+							'es-ES': 'El tipo de listagens para ver',
+						})
+						.setRequired(true)
+						.addChoices(
+							{
+								name: 'buy',
+								name_localizations: { 'pt-BR': 'compra', 'es-ES': 'compra' },
+								value: 'buy',
+							},
+							{
+								name: 'sell',
+								name_localizations: { 'pt-BR': 'venda', 'es-ES': 'venda' },
+								value: 'sell',
+							}
+						)
+				)
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('delist')
+				.setNameLocalizations({ 'pt-BR': 'retirar', 'es-ES': 'retirar' })
+				.setDescription('Delist a listing')
+				.setDescriptionLocalizations({ 'pt-BR': 'Retirar uma listagem', 'es-ES': 'Retirar una listagem' })
+				.addStringOption((option) =>
+					option
+						.setName('type')
+						.setNameLocalizations({ 'pt-BR': 'tipo', 'es-ES': 'tipo' })
+						.setDescription('The type of listing to delist')
+						.setDescriptionLocalizations({
+							'pt-BR': 'O tipo de listagem para retirar',
+							'es-ES': 'El tipo de listagem para retirar',
+						})
+						.setRequired(true)
+						.addChoices(
+							{ name: 'buy', name_localizations: { 'pt-BR': 'compra', 'es-ES': 'compra' }, value: 'buy' },
+							{ name: 'sell', name_localizations: { 'pt-BR': 'venda', 'es-ES': 'venda' }, value: 'sell' }
+						)
+				)
+				.addStringOption((option) =>
+					option
+						.setName('item')
+						.setDescription('The item to delist')
+						.setDescriptionLocalizations({ 'pt-BR': 'O item para retirar', 'es-ES': 'El item para retirar' })
+						.setRequired(true)
+						.setAutocomplete(true)
+				)
 		),
-
 	execute: async ({ guild, interaction, instance, member, subcommand, args, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
@@ -361,12 +420,12 @@ module.exports = {
 
 			instance.editReply(interaction, { embeds: [embed] });
 		} else if (type == 'list-buy') {
-			//actually we need to check if the user has the falcoins to buy the items
-			//since if we try to remove the falcoins later, the user may have spent them already
 			const item = interaction.options.getString('item');
 			const itemKey = getItem(item);
 			const itemJSON = items[itemKey];
 			const userFile = await database.player.findOne(member.id);
+			const amount = interaction.options.getInteger('amount');
+			const price = interaction.options.getInteger('price');
 
 			if (itemJSON === undefined) {
 				instance.editReply(interaction, {
@@ -384,7 +443,13 @@ module.exports = {
 				return;
 			}
 
-			const price = interaction.options.getInteger('price');
+			if (userFile.falcoins < price * amount) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
+				});
+				return;
+			}
+
 			if (price <= Math.floor(itemJSON.value * 1.2)) {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'PRICE_TOO_LOW', {
@@ -394,6 +459,7 @@ module.exports = {
 				return;
 			}
 
+			userFile.falcoins -= price * amount;
 			await userFile.save();
 			const buyOrder = {
 				price: price,
@@ -452,7 +518,6 @@ module.exports = {
 				});
 				return;
 			}
-
 			userFile.inventory.set(itemKey, userFile.inventory.get(itemKey) - amount);
 			await userFile.save();
 			const sellOrder = {
@@ -471,6 +536,204 @@ module.exports = {
 			);
 
 			instance.editReply(interaction, { embeds: [embed] });
+		} else if (type == 'listings') {
+			const listings = interaction.options.getString('type');
+
+			if (listings == 'buy') {
+				const buyOrders = await database.market.getBuyOrdersFromUser(member.id);
+				if (buyOrders.length == 0) {
+					instance.editReply(interaction, {
+						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
+					});
+					return;
+				}
+
+				const numberOfPages = Math.ceil(buyOrders.length / 25);
+				const embeds = await Promise.all(
+					Array.from({ length: numberOfPages }).map(async (_, i) => {
+						const embed = instance.createEmbed(member.displayColor).setTitle(
+							instance.getMessage(interaction, 'MARKET_BUY_LISTINGS', {
+								PAGE: i + 1,
+								TOTAL: numberOfPages,
+							})
+						);
+
+						const ordersOnPage = buyOrders.slice(i * 25, (i + 1) * 25);
+						for (var order of ordersOnPage) {
+							embed.addFields({
+								name: `${instance.getItemName(order.item, interaction)}`,
+								value: `${format(order.price)} falcoins - ${format(order.amount)} ${instance.getMessage(
+									interaction,
+									'AVAILABLES'
+								)}`,
+								inline: false,
+							});
+						}
+
+						return embed;
+					})
+				);
+
+				const paginator = paginate();
+				paginator.add(...embeds);
+				const ids = [`${Date.now()}__left`, `${Date.now()}__right`];
+				paginator.setTraverser([
+					new ButtonBuilder().setEmoji('⬅️').setCustomId(ids[0]).setStyle('Secondary'),
+					new ButtonBuilder().setEmoji('➡️').setCustomId(ids[1]).setStyle('Secondary'),
+				]);
+
+				const message = await instance.editReply(interaction, paginator.components());
+
+				message.channel.createMessageComponentCollector().on('collect', async (i) => {
+					if (i.customId === ids[0]) {
+						await paginator.back();
+						await i.update(paginator.components());
+					} else if (i.customId === ids[1]) {
+						await paginator.next();
+						await i.update(paginator.components());
+					}
+				});
+			} else if (listings == 'sell') {
+				const sellOrders = await database.market.getSellOrdersFromUser(member.id);
+				if (sellOrders.length == 0) {
+					instance.editReply(interaction, {
+						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
+					});
+					return;
+				}
+
+				const numberOfPages = Math.ceil(sellOrders.length / 25);
+				const embeds = await Promise.all(
+					Array.from({ length: numberOfPages }).map(async (_, i) => {
+						const embed = instance.createEmbed(member.displayColor).setTitle(
+							instance.getMessage(interaction, 'MARKET_SELL_LISTINGS', {
+								PAGE: i + 1,
+								TOTAL: numberOfPages,
+							})
+						);
+
+						const ordersOnPage = sellOrders.slice(i * 25, (i + 1) * 25);
+						for (var order of ordersOnPage) {
+							embed.addFields({
+								name: `${instance.getItemName(order.item, interaction)}`,
+								value: `${format(order.price)} falcoins - ${format(order.amount)} ${instance.getMessage(
+									interaction,
+									'AVAILABLES'
+								)}`,
+								inline: false,
+							});
+						}
+
+						return embed;
+					})
+				);
+
+				const paginator = paginate();
+				paginator.add(...embeds);
+				const ids = [`${Date.now()}__left`, `${Date.now()}__right`];
+				paginator.setTraverser([
+					new ButtonBuilder().setEmoji('⬅️').setCustomId(ids[0]).setStyle('Secondary'),
+					new ButtonBuilder().setEmoji('➡️').setCustomId(ids[1]).setStyle('Secondary'),
+				]);
+
+				const message = await instance.editReply(interaction, paginator.components());
+
+				message.channel.createMessageComponentCollector().on('collect', async (i) => {
+					if (i.customId === ids[0]) {
+						await paginator.back();
+						await i.update(paginator.components());
+					} else if (i.customId === ids[1]) {
+						await paginator.next();
+						await i.update(paginator.components());
+					}
+				});
+			}
+		} else if (type == 'delist') {
+			const listings = interaction.options.getString('type');
+			const item = interaction.options.getString('item');
+			const itemKey = getItem(item);
+			const itemJSON = items[itemKey];
+			const userFile = await database.player.findOne(member.id);
+
+			if (itemJSON === undefined) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
+						VALUE: item,
+					}),
+				});
+				return;
+			}
+
+			if (!itemJSON.value) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'CANT_SELL'),
+				});
+				return;
+			}
+
+			if (listings == 'buy') {
+				const buyOrders = await database.market.getBuyOrdersFromUser(member.id);
+				if (buyOrders.length == 0) {
+					instance.editReply(interaction, {
+						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
+					});
+					return;
+				}
+
+				var index = buyOrders.findIndex((order) => order.item === itemKey && order.owner === member.id);
+				if (index == -1) {
+					instance.editReply(interaction, {
+						content: instance.getMessage(interaction, 'THIS_LISTING_DOESNT_EXIST'),
+					});
+					return;
+				}
+
+				const buyOrder = buyOrders[index];
+				userFile.falcoins += buyOrder.price * buyOrder.amount;
+				await userFile.save();
+				await database.market.deleteBuyOrder(itemKey, buyOrder);
+
+				const embed = instance.createEmbed(member.displayColor).setTitle(
+					instance.getMessage(interaction, 'MARKET_DELISTED_BUY', {
+						AMOUNT: buyOrder.amount,
+						ITEM: instance.getItemName(itemKey, interaction),
+						PRICE: format(buyOrder.price),
+					})
+				);
+
+				instance.editReply(interaction, { embeds: [embed] });
+			} else if (listings == 'sell') {
+				const sellOrders = await database.market.getSellOrdersFromUser(member.id);
+				if (sellOrders.length == 0) {
+					instance.editReply(interaction, {
+						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
+					});
+					return;
+				}
+
+				var index = sellOrders.findIndex((order) => order.item === itemKey && order.owner === member.id);
+				if (index == -1) {
+					instance.editReply(interaction, {
+						content: instance.getMessage(interaction, 'THIS_LISTING_DOESNT_EXIST'),
+					});
+					return;
+				}
+
+				const sellOrder = sellOrders[index];
+				userFile.inventory.set(itemKey, (userFile.inventory.get(itemKey) || 0) + sellOrder.amount);
+				await userFile.save();
+				await database.market.deleteSellOrder(itemKey, sellOrder);
+
+				const embed = instance.createEmbed(member.displayColor).setTitle(
+					instance.getMessage(interaction, 'MARKET_DELISTED_SELL', {
+						AMOUNT: sellOrder.amount,
+						ITEM: instance.getItemName(itemKey, interaction),
+						PRICE: format(sellOrder.price),
+					})
+				);
+
+				instance.editReply(interaction, { embeds: [embed] });
+			}
 		}
 	},
 	autocomplete: async ({ interaction, instance }) => {
