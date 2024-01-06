@@ -139,11 +139,6 @@
 		"en-US": "Wins",
 		"es-ES": "Victorias"
 	},
-	"RESULT": {
-		"pt-BR": "Resultado",
-		"en-US": "Result",
-		"es-ES": "Resultado"
-	},
 	"SPINNING": {
 		"pt-BR": "GIRANDO",
 		"en-US": "SPINNING",
@@ -582,9 +577,9 @@
 		"es-ES": ":pencil: Falbot también puede ser útil en tu vida diaria"
 	},
 	"HELP_UTILS2": {
-		"pt-BR": "-Deixe o falbot resolver expressões matemáticas para você com `/mat`\n-Role dados usando `/rolar`\n-Veja informações e links úteis sobre o bot com `/botinfo`\n-Veja o ping do bot com `/ping`",
-		"en-US": "-Let falbot resolve your mathematical expressions with `/math`\n-Roll dices with `/roll`\n-See stats and useful links regarding the bot with `/botinfo`\n-See the bot's ping with `/ping`",
-		"es-ES": "-Deja que falbot resuelva tus expresiones matemáticas con `/mat`\n-Tira dados con `/tirar`\n-Ver estadísticas y enlaces útiles sobre el bot con `/botinfo`\n-Ver el ping del bot con `/ping`"
+		"pt-BR": "-Role dados usando `/rolar`\n-Veja informações e links úteis sobre o bot com `/botinfo`\n-Veja o ping do bot com `/ping`",
+		"en-US": "-Roll dices with `/roll`\n-See stats and useful links regarding the bot with `/botinfo`\n-See the bot's ping with `/ping`",
+		"es-ES": "-Tira dados con `/tirar`\n-Ver estadísticas y enlaces útiles sobre el bot con `/botinfo`\n-Ver el ping del bot con `/ping`"
 	},
 	"HELP_ITEMS": {
 		"pt-BR": ":school_satchel: Sistema de items",
@@ -980,11 +975,6 @@
 		"pt-BR": "Trabalhar",
 		"en-US": "Work",
 		"es-ES": "Trabajar"
-	},
-	"MATH_ERROR": {
-		"pt-BR": "Desculpa, mas eu não sei como calcular isso no momento",
-		"en-US": "Sorry, I can't calculate this at the moment",
-		"es-ES": "Lo siento, no puedo calcular esto en este momento"
 	},
 	"ROLL_LIMIT": {
 		"pt-BR": "Você está tentando rolar dados demais! :confounded:",
