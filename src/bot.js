@@ -29,9 +29,6 @@ class Falbot {
 	constructor() {
 		this.client.on('ready', () => {
 			console.log('Bot online');
-			this.client.on('error', console.error);
-
-			this.database.connect();
 
 			this.client.events = new Collection();
 			this.client.commands = new Collection();
@@ -85,7 +82,7 @@ class Falbot {
 	async bankInterest() {
 		const interest = await this.interestSchema.findById('interest');
 		if (Date.now() - interest.lastInterest > 1000 * 60 * 60 * 24) {
-			console.log('poupança!');
+			console.log('interest!');
 			interest.lastInterest = Date.now().toString();
 
 			var users = await this.userSchema.find({
@@ -110,10 +107,10 @@ class Falbot {
 	}
 
 	async lotteryDraw() {
-		const lotto = await this.lottoSchema.findById('semanal');
+		const lotto = await this.lottoSchema.findById('weekly');
 
 		if (Date.now() > lotto.nextDraw) {
-			console.log('loteria!');
+			console.log('lottery!');
 
 			const users = await this.userSchema.find({
 				tickets: { $gt: 0 },

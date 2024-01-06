@@ -94,11 +94,6 @@
 		"en-US": "Players",
 		"es-ES": "Jugadores"
 	},
-	"WON": {
-		"pt-BR": "{WINNER} ganhou {FALCOINS} falcoins!",
-		"en-US": "{WINNER} won {FALCOINS} falcoins!",
-		"es-ES": "{WINNER} ganó {FALCOINS} falcoins!"
-	},
 	"HORSE_DESCRIPTION": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:1234: **Seu cavalo:** `{HORSE}`\n:hourglass: **Resultado**: Correndo...",
 		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:1234: **Your horse:** `{HORSE}`\n:hourglass: **Status**: Racing...",
@@ -173,21 +168,6 @@
 		"pt-BR": "O bot rolou",
 		"en-US": "The bot rolled",
 		"es-ES": "El bot sacó"
-	},
-	"TICTACTOE_CHALLENGE": {
-		"pt-BR": "{USER2}, você foi desafiado para um jogo da velha por {USER}\n*Se você entrar, você apostará {FALCOINS} falcoins :older_woman:*",
-		"en-US": "{USER2}, you've been challenged to a tic-tac-toe game by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins* :older_woman:",
-		"es-ES": "{USUARIO2}, has sido desafiado a un juego de tres en raya por {USUARIO}\n*Si aceptas, estarás apostando {FALCOINS} falcoins* :older_woman:"
-	},
-	"TICTACTOE_TOO_LONG": {
-		"pt-BR": "Jogo da velha cancelado. {USER} demorou muito para aceitar! :confounded:",
-		"en-US": "Tic-tac-toe cancelled. {USER} took to long to accept! :confounded:",
-		"es-ES": "Tic-tac-toe cancelado. {USER} tardó demasiado en aceptar! :confounded:"
-	},
-	"TICTACTOE_DECLINED": {
-		"pt-BR": "Jogo da velha cancelado. {USER} recusou o jogo! :confounded:",
-		"en-US": "Tic-tac-toe cancelled. {USER} declined the game! :confounded:",
-		"es-ES": "Tic-tac-toe cancelado. {USER} rechazó el juego! :confounded:"
 	},
 	"TICTACTOE_DRAW": {
 		"pt-BR": "**O jogo empatou**",
@@ -310,9 +290,9 @@
 		"es-ES": "Puntuación"
 	},
 	"TICTACTOE_MOVE": {
-		"pt-BR": "{USER}, escolha seu movimento:",
-		"en-US": "{USER}, choose your move:",
-		"es-ES": "{USER}, elige tu movimiento:"
+		"pt-BR": "{emoji} | É a vez do jogador **{player}**.",
+		"en-US": "{emoji} | Its turn of player **{player}**.",
+		"es-ES": "{emoji} | Es el turno del jugador **{player}**."
 	},
 	"8BALL_ANSWERS": {
 		"pt-BR": [
