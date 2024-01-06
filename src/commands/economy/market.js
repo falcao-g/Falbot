@@ -68,7 +68,7 @@ module.exports = {
 						.setRequired(true)
 						.setAutocomplete(true)
 				)
-				.addIntegerOption((option) =>
+				.addStringOption((option) =>
 					option
 						.setName('amount')
 						.setDescription('The amount of items to buy')
@@ -77,93 +77,99 @@ module.exports = {
 							'es-ES': 'La cantidad de items para comprar',
 						})
 						.setRequired(true)
-						.setMinValue(1)
 				)
 		)
-		.addSubcommand((subcommand) =>
-			subcommand
-				.setName('list-buy')
-				.setNameLocalizations({ 'pt-BR': 'anunciar-compra', 'es-ES': 'anunciar-compra' })
-				.setDescription('List a buy order in the market')
+
+		.addSubcommandGroup((subcommandGroup) =>
+			subcommandGroup
+				.setName('list')
+				.setNameLocalizations({ 'pt-BR': 'anunciar', 'es-ES': 'anunciar' })
+				.setDescription('List an item in the market')
 				.setDescriptionLocalizations({
-					'pt-BR': 'Anunciar uma compra no mercado',
-					'es-ES': 'Anunciar una compra en el mercado',
+					'pt-BR': 'Anunciar um item no mercado',
+					'es-ES': 'Anunciar un item en el mercado',
 				})
-				.addStringOption((option) =>
-					option
-						.setName('item')
-						.setDescription('The item to buy')
+				.addSubcommand((subcommand) =>
+					subcommand
+						.setName('buy')
+						.setNameLocalizations({ 'pt-BR': 'compra', 'es-ES': 'compra' })
+						.setDescription('List a buy order in the market')
 						.setDescriptionLocalizations({
-							'pt-BR': 'O item para comprar',
-							'es-ES': 'El item para comprar',
+							'pt-BR': 'Anunciar uma compra no mercado',
+							'es-ES': 'Anunciar una compra en el mercado',
 						})
-						.setRequired(true)
-						.setAutocomplete(true)
+						.addStringOption((option) =>
+							option
+								.setName('item')
+								.setDescription('The item to buy')
+								.setDescriptionLocalizations({
+									'pt-BR': 'O item para comprar',
+									'es-ES': 'El item para comprar',
+								})
+								.setRequired(true)
+								.setAutocomplete(true)
+						)
+						.addStringOption((option) =>
+							option
+								.setName('amount')
+								.setDescription('The amount of items to buy')
+								.setDescriptionLocalizations({
+									'pt-BR': 'A quantidade de itens para comprar',
+									'es-ES': 'La cantidad de items para comprar',
+								})
+								.setRequired(true)
+						)
+						.addStringOption((option) =>
+							option
+								.setName('price')
+								.setDescription('The price of each individual item')
+								.setDescriptionLocalizations({
+									'pt-BR': 'O preço de cada item individual',
+									'es-ES': 'El precio de cada item individual',
+								})
+								.setRequired(true)
+						)
 				)
-				.addIntegerOption((option) =>
-					option
-						.setName('amount')
-						.setDescription('The amount of items to buy')
+				.addSubcommand((subcommand) =>
+					subcommand
+						.setName('sell')
+						.setNameLocalizations({ 'pt-BR': 'venda', 'es-ES': 'venda' })
+						.setDescription('List a sell order in the market')
 						.setDescriptionLocalizations({
-							'pt-BR': 'A quantidade de itens para comprar',
-							'es-ES': 'La cantidad de items para comprar',
+							'pt-BR': 'Anunciar uma venda no mercado',
+							'es-ES': 'Anunciar una venta en el mercado',
 						})
-						.setRequired(true)
-						.setMinValue(1)
-				)
-				.addIntegerOption((option) =>
-					option
-						.setName('price')
-						.setDescription('The price of each individual item')
-						.setDescriptionLocalizations({
-							'pt-BR': 'O preço de cada item individual',
-							'es-ES': 'El precio de cada item individual',
-						})
-						.setRequired(true)
-						.setMinValue(1)
-				)
-		)
-		.addSubcommand((subcommand) =>
-			subcommand
-				.setName('list-sell')
-				.setNameLocalizations({ 'pt-BR': 'anunciar-venda', 'es-ES': 'anunciar-venda' })
-				.setDescription('List a sell order in the market')
-				.setDescriptionLocalizations({
-					'pt-BR': 'Anunciar uma venda no mercado',
-					'es-ES': 'Anunciar una venta en el mercado',
-				})
-				.addStringOption((option) =>
-					option
-						.setName('item')
-						.setDescription('The item to sell')
-						.setDescriptionLocalizations({
-							'pt-BR': 'O item para vender',
-							'es-ES': 'El item para vender',
-						})
-						.setRequired(true)
-						.setAutocomplete(true)
-				)
-				.addIntegerOption((option) =>
-					option
-						.setName('amount')
-						.setDescription('The amount of items to sell')
-						.setDescriptionLocalizations({
-							'pt-BR': 'A quantidade de itens para vender',
-							'es-ES': 'La cantidad de items para vender',
-						})
-						.setRequired(true)
-						.setMinValue(1)
-				)
-				.addIntegerOption((option) =>
-					option
-						.setName('price')
-						.setDescription('The price of each individual item')
-						.setDescriptionLocalizations({
-							'pt-BR': 'O preço de cada item individual',
-							'es-ES': 'El precio de cada item individual',
-						})
-						.setRequired(true)
-						.setMinValue(1)
+						.addStringOption((option) =>
+							option
+								.setName('item')
+								.setDescription('The item to sell')
+								.setDescriptionLocalizations({
+									'pt-BR': 'O item para vender',
+									'es-ES': 'El item para vender',
+								})
+								.setRequired(true)
+								.setAutocomplete(true)
+						)
+						.addStringOption((option) =>
+							option
+								.setName('amount')
+								.setDescription('The amount of items to sell')
+								.setDescriptionLocalizations({
+									'pt-BR': 'A quantidade de itens para vender',
+									'es-ES': 'La cantidad de items para vender',
+								})
+								.setRequired(true)
+						)
+						.addStringOption((option) =>
+							option
+								.setName('price')
+								.setDescription('The price of each individual item')
+								.setDescriptionLocalizations({
+									'pt-BR': 'O preço de cada item individual',
+									'es-ES': 'El precio de cada item individual',
+								})
+								.setRequired(true)
+						)
 				)
 		)
 		.addSubcommand((subcommand) =>
@@ -226,10 +232,11 @@ module.exports = {
 						.setAutocomplete(true)
 				)
 		),
-	execute: async ({ guild, interaction, instance, member, subcommand, args, database }) => {
+	execute: async ({ interaction, instance, member, subcommand, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			var type = interaction.options.getSubcommand();
+			var subcommandGroup = interaction.options.getSubcommandGroup();
 		} catch {
 			var type = subcommand;
 		}
@@ -359,7 +366,7 @@ module.exports = {
 				inline: false,
 			});
 			instance.editReply(interaction, { embeds: [embed] });
-		} else if (type == 'buy') {
+		} else if (type == 'buy' && subcommandGroup == null) {
 			const item = interaction.options.getString('item');
 			const itemKey = getItem(item);
 			const itemJSON = items[itemKey];
@@ -381,8 +388,18 @@ module.exports = {
 				return;
 			}
 
+			try {
+				var amountArgument = await specialArg(interaction.options.getString('amount'), Number.MAX_SAFE_INTEGER);
+				var amount = amountArgument;
+			} catch {
+				await instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
+						VALUE: interaction.options.getString('amount'),
+					}),
+				});
+			}
+
 			//glutton algorithm to get the cheapest sell order
-			var amount = interaction.options.getInteger('amount');
 			var totalPaid = 0;
 			while (
 				amount > 0 &&
@@ -412,20 +429,38 @@ module.exports = {
 
 			const embed = instance.createEmbed(member.displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_BOUGHT', {
-					AMOUNT: interaction.options.getInteger('amount') - amount,
+					AMOUNT: amountArgument - amount,
 					ITEM: instance.getItemName(itemKey, interaction),
 					PRICE: format(totalPaid),
 				})
 			);
 
 			instance.editReply(interaction, { embeds: [embed] });
-		} else if (type == 'list-buy') {
+		} else if (type == 'buy' && subcommandGroup == 'list') {
 			const item = interaction.options.getString('item');
 			const itemKey = getItem(item);
 			const itemJSON = items[itemKey];
 			const userFile = await database.player.findOne(member.id);
-			const amount = interaction.options.getInteger('amount');
-			const price = interaction.options.getInteger('price');
+
+			try {
+				var amount = await specialArg(interaction.options.getString('amount'), Number.MAX_SAFE_INTEGER);
+			} catch {
+				await instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
+						VALUE: interaction.options.getString('amount'),
+					}),
+				});
+			}
+
+			try {
+				var price = await specialArg(interaction.options.getString('price'), Number.MAX_SAFE_INTEGER);
+			} catch {
+				await instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
+						VALUE: interaction.options.getString('price'),
+					}),
+				});
+			}
 
 			if (itemJSON === undefined) {
 				instance.editReply(interaction, {
@@ -477,7 +512,7 @@ module.exports = {
 			);
 
 			instance.editReply(interaction, { embeds: [embed] });
-		} else if (type == 'list-sell') {
+		} else if (type == 'sell' && subcommandGroup == 'list') {
 			const item = interaction.options.getString('item');
 			const itemKey = getItem(item);
 			const itemJSON = items[itemKey];
@@ -499,7 +534,16 @@ module.exports = {
 				return;
 			}
 
-			const amount = interaction.options.getInteger('amount');
+			try {
+				var amount = await specialArg(interaction.options.getString('amount'), userFile.inventory.get(itemKey));
+			} catch {
+				await instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
+						VALUE: interaction.options.getString('amount'),
+					}),
+				});
+			}
+
 			if (userFile.inventory.get(itemKey) < amount) {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'NOT_ENOUGH_ITEMS', {
@@ -509,7 +553,16 @@ module.exports = {
 				return;
 			}
 
-			const price = interaction.options.getInteger('price');
+			try {
+				var price = await specialArg(interaction.options.getString('price'), Number.MAX_SAFE_INTEGER);
+			} catch {
+				await instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
+						VALUE: interaction.options.getString('price'),
+					}),
+				});
+			}
+
 			if (price <= Math.floor(itemJSON.value * 1.1)) {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'PRICE_TOO_LOW', {
