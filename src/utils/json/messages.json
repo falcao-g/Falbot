@@ -1071,6 +1071,16 @@
 		"en-US": "Raw cost:",
 		"es-ES": "Costo base:"
 	},
+	"BUY_FOR": {
+		"pt-BR": "Compre por:",
+		"en-US": "Buy for:",
+		"es-ES": "Comprar por:"
+	},
+	"SELL_FOR": {
+		"pt-BR": "Venda por:",
+		"en-US": "Sell for:",
+		"es-ES": "Vender por:"
+	},
 	"SOLD_TITLE": {
 		"pt-BR": "Você vendeu {AMOUNT} {ITEM} por {FALCOINS} falcoins!",
 		"en-US": "You sold {AMOUNT} {ITEM} for {FALCOINS} falcoins!",
@@ -1586,6 +1596,11 @@
 		"en-US": "**☕ your coffee allows you to work overtime!**",
 		"es-ES": "**☕ tu café te permite trabajar horas extras!**"
 	},
+	"MARKET": {
+		"pt-BR": "Mercado",
+		"en-US": "Market",
+		"es-ES": "Mercado"
+	},
 	"MARKET_TITLE": {
 		"pt-BR": ":shopping_cart: Mercado ({PAGE}/{TOTAL})",
 		"en-US": ":shopping_cart: Market ({PAGE}/{TOTAL})",
@@ -1611,45 +1626,60 @@
 		"en-US": "Sellers",
 		"es-ES": "Vendedores"
 	},
-	"SNAKE_GAME": {
-		"pt-BR": "Jogo da Cobrinha",
-		"en-US": "Snake Game",
-		"es-ES": "Juego de la Serpiente"
+	"MARKET_BOUGHT": {
+		"pt-BR": "Você comprou {AMOUNT} {ITEM} por {PRICE} falcoins!",
+		"en-US": "You bought {AMOUNT} {ITEM} for {PRICE} falcoins!",
+		"es-ES": "¡Compraste {AMOUNT} {ITEM} por {PRICE} falcoins!"
 	},
-	"GAME_OVER": {
-		"pt-BR": "Fim de jogo!",
-		"en-US": "Game over!",
-		"es-ES": "¡Fin del juego!"
+	"NOT_ENOUGH_ITEMS": {
+		"pt-BR": "Você não tem {ITEM} suficiente para fazer essa ação!",
+		"en-US": "You don't have enough {ITEM} to do this action!",
+		"es-ES": "¡No tienes suficiente {ITEM} para hacer esta acción!"
 	},
-	"STOP": {
-		"pt-BR": "Parar",
-		"en-US": "Stop",
-		"es-ES": "Parar"
+	"PRICE_TOO_LOW": {
+		"pt-BR": "O preço mínimo para esse item é {PRICE} falcoins!",
+		"en-US": "The minimum price for this item is {PRICE} falcoins!",
+		"es-ES": "¡El precio mínimo para este artículo es {PRICE} falcoins!"
 	},
-	"PLAYER_ONLY": {
-		"pt-BR": "Apenas {player} pode usar esses botões.",
-		"en-US": "Only {player} can use these buttons.",
-		"es-ES": "Solo {player} puede usar estos botones."
+	"MARKET_LISTED_BUY": {
+		"pt-BR": "Você anunciou que quer comprar {AMOUNT} x {ITEM} por {PRICE} falcoins!",
+		"en-US": "You listed that you want to buy {AMOUNT} x {ITEM} for {PRICE} falcoins!",
+		"es-ES": "¡Listaste que quieres comprar {AMOUNT} x {ITEM} por {PRICE} falcoins!"	
 	},
-	"PLAYER_ONLY_2": {
-		"pt-BR": "Apenas {player} e {opponent} podem usar esses botões.",
-		"en-US": "Only {player} and {opponent} can use these buttons.",
-		"es-ES": "Solo {player} y {opponent} pueden usar estos botones."
+	"MARKET_LISTED_SELL": {
+		"pt-BR": "Você anunciou que quer vender {AMOUNT} x {ITEM} por {PRICE} falcoins!",
+		"en-US": "You listed that you want to sell {AMOUNT} x {ITEM} for {PRICE} falcoins!",
+		"es-ES": "¡Listaste que quieres vender {AMOUNT} x {ITEM} por {PRICE} falcoins!"	
 	},
-	"TICTACTOE": {
-		"pt-BR": "Jogo da Velha",
-		"en-US": "Tic Tac Toe",
-		"es-ES": "Tres en Raya"
+	"MARKET_BUY_LISTINGS": {
+		"pt-BR": ":shopping_cart: Seus anúncios de compra {PAGE}/{TOTAL}",
+		"en-US": ":shopping_cart: Your buy listings {PAGE}/{TOTAL}",
+		"es-ES": ":shopping_cart: Tus anuncios de compra {PAGE}/{TOTAL}"
 	},
-	"TICTACTOE_WIN": {
-		"pt-BR": "{emoji} | **{player}** ganhou o Jogo da Velha.",
-		"en-US": "{emoji} | **{player}** won the TicTacToe Game.",
-		"es-ES": "{emoji} | **{player}** ganó el juego TicTacToe."
+	"MARKET_SELL_LISTINGS": {
+		"pt-BR": ":convenience_store: Seus anúncios de venda {PAGE}/{TOTAL}",
+		"en-US": ":convenience_store: Your sell listings {PAGE}/{TOTAL}",
+		"es-ES": ":convenience_store: Tus anuncios de venta {PAGE}/{TOTAL}"
 	},
-	"TICTACTOE_TIMEOUT": {
-		"pt-BR": "O jogo foi cancelado! Ninguém ganhou o Jogo!",
-		"en-US": "The Game went unfinished! No one won the Game!",
-		"es-ES": "¡El juego quedó inconcluso! ¡Nadie ganó el juego!"
+	"YOU_DONT_HAVE_LISTINGS": {
+		"pt-BR": "Você não fez nenhum anúncio desse tipo!",
+		"en-US": "You don't have any listings of this type!",
+		"es-ES": "¡No tienes ningún anuncio de este tipo!"
+	},
+	"THIS_LISTING_DOESNT_EXIST": {
+		"pt-BR": "Esse anúncio não existe!",
+		"en-US": "This listing doesn't exist!",
+		"es-ES": "¡Este anuncio no existe!"
+	},
+	"MARKET_DELISTED_BUY": {
+		"pt-BR": "Você removeu seu anúncio para comprar {AMOUNT} x {ITEM} por {PRICE} falcoins!",
+		"en-US": "You removed your listing to buy {AMOUNT} x {ITEM} for {PRICE} falcoins!",
+		"es-ES": "¡Eliminaste tu anuncio para comprar {AMOUNT} x {ITEM} por {PRICE} falcoins!"
+	},
+	"MARKET_DELISTED_SELL": {
+		"pt-BR": "Você removeu seu anúncio para vender {AMOUNT} x {ITEM} por {PRICE} falcoins!",
+		"en-US": "You removed your listing to sell {AMOUNT} x {ITEM} for {PRICE} falcoins!",
+		"es-ES": "¡Eliminaste tu anuncio para vender {AMOUNT} x {ITEM} por {PRICE} falcoins!"
 	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
