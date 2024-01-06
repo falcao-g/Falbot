@@ -476,7 +476,31 @@ module.exports = {
 					});
 					return;
 				}
-				const falcoins = itemJSON.value * amount;
+
+				//we need to check if there is someone in the market that wants to buy the item
+				let falcoins = 0;
+				let amountToSell = amount;
+				while (amountToSell > 0 && (await database.market.getBestBuyOrder(itemKey)).price > 0) {
+					const buyOrder = await database.market.getBestBuyOrder(itemKey);
+					const buyerFile = await database.player.findOne(buyOrder.owner);
+
+					if (amount >= buyOrder.amount) {
+						amountToSell -= buyOrder.amount;
+						amountSold = buyOrder.amount;
+					} else {
+						amountToSell = 0;
+						amountSold = amount;
+					}
+
+					buyerFile.falcoins -= buyOrder.price * amount;
+					buyerFile.inventory.set(itemKey, (buyerFile.inventory.get(itemKey) || 0) + amount);
+					falcoins += buyOrder.price * amountSold;
+					await database.market.subtractQuantityFromBuyOrder(itemKey, buyOrder, amount);
+					await buyerFile.save();
+				}
+
+				// if there is no one in the market that wants to buy the item, we sell it to the bot
+				if (amountToSell > 0) falcoins += itemJSON.value * amountToSell;
 
 				player.inventory.set(itemKey, player.inventory.get(itemKey) - amount);
 				player.falcoins += falcoins;

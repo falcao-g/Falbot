@@ -6,6 +6,12 @@ function findSellOrder(array, sellOrder) {
 	);
 }
 
+function findBuyOrder(array, buyOrder) {
+	return array.findIndex(
+		(order) => order.price === buyOrder.price && order.amount === buyOrder.amount && order.owner === buyOrder.owner
+	);
+}
+
 function findOrderByItemAndOwner(array, item, owner) {
 	return array.findIndex((order) => order.item === item && order.owner === owner);
 }
@@ -61,6 +67,15 @@ module.exports = {
 		result.sellOrders[index].amount -= amount;
 		if (result.sellOrders[index].amount <= 0) {
 			result.sellOrders.splice(index, 1);
+		}
+		await marketSchema.findByIdAndUpdate(result.id, result);
+	},
+	async subtractQuantityFromBuyOrder(item, buyOrder, amount) {
+		const result = await marketSchema.findOne({ _id: item });
+		var index = findBuyOrder(result.buyOrders, buyOrder);
+		result.buyOrders[index].amount -= amount;
+		if (result.buyOrders[index].amount <= 0) {
+			result.buyOrders.splice(index, 1);
 		}
 		await marketSchema.findByIdAndUpdate(result.id, result);
 	},
