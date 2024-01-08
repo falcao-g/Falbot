@@ -30,8 +30,6 @@ module.exports = {
 		),
 	execute: async ({ interaction, instance }) => {
 		try {
-			await interaction.deferReply().catch(() => {});
-
 			const Game = new TicTacToe({
 				message: interaction,
 				isSlashGame: true,
@@ -51,10 +49,10 @@ module.exports = {
 				timeoutTime: 60000,
 				xButtonStyle: 'DANGER',
 				oButtonStyle: 'PRIMARY',
-				turnMessage: instance.getMessage(interaction, 'TICTACTOE_MOVE'),
-				winMessage: instance.getMessage(interaction, 'TICTACTOE_WIN'),
-				tieMessage: instance.getMessage(interaction, 'TICTACTOE_DRAW'),
-				timeoutMessage: instance.getMessage(interaction, 'TICTACTOE_TIMEOUT'),
+				turnMessage: instance.getMessage(interaction, 'FALGAMES_MOVE'),
+				winMessage: instance.getMessage(interaction, 'FALGAMES_WIN'),
+				tieMessage: instance.getMessage(interaction, 'FALGAMES_DRAW'),
+				timeoutMessage: instance.getMessage(interaction, 'FALGAMES_TIMEOUT'),
 				playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY_2'),
 			});
 
