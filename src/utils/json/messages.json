@@ -164,7 +164,7 @@
 		"en-US": "The bot rolled",
 		"es-ES": "El bot sacó"
 	},
-	"TICTACTOE_DRAW": {
+	"FALGAMES_DRAW": {
 		"pt-BR": "**O jogo empatou**",
 		"en-US": "**The game ended in a draw**",
 		"es-ES": "**El juego terminó en empate**"
@@ -284,7 +284,7 @@
 		"en-US": "Score",
 		"es-ES": "Puntuación"
 	},
-	"TICTACTOE_MOVE": {
+	"FALGAMES_MOVE": {
 		"pt-BR": "{emoji} | É a vez do jogador **{player}**.",
 		"en-US": "{emoji} | Its turn of player **{player}**.",
 		"es-ES": "{emoji} | Es el turno del jugador **{player}**."
@@ -1680,6 +1680,131 @@
 		"pt-BR": "Você removeu seu anúncio para vender {AMOUNT} x {ITEM} por {PRICE} falcoins!",
 		"en-US": "You removed your listing to sell {AMOUNT} x {ITEM} for {PRICE} falcoins!",
 		"es-ES": "¡Eliminaste tu anuncio para vender {AMOUNT} x {ITEM} por {PRICE} falcoins!"
+	},
+	"SNAKE_GAME": {
+		"pt-BR": "Jogo da Cobrinha",
+		"en-US": "Snake Game",
+		"es-ES": "Juego de la Serpiente"
+	},
+	"GAME_OVER": {
+		"pt-BR": "Fim de jogo!",
+		"en-US": "Game over!",
+		"es-ES": "¡Fin del juego!"
+	},
+	"STOP": {
+		"pt-BR": "Parar",
+		"en-US": "Stop",
+		"es-ES": "Parar"
+	},
+	"PLAYER_ONLY": {
+		"pt-BR": "Apenas {player} pode usar esses botões.",
+		"en-US": "Only {player} can use these buttons.",
+		"es-ES": "Solo {player} puede usar estos botones."
+	},
+	"PLAYER_ONLY_2": {
+		"pt-BR": "Apenas {player} e {opponent} podem usar esses botões.",
+		"en-US": "Only {player} and {opponent} can use these buttons.",
+		"es-ES": "Solo {player} y {opponent} pueden usar estos botones."
+	},
+	"TICTACTOE": {
+		"pt-BR": ":older_woman: Jogo da Velha",
+		"en-US": ":older_woman: Tic Tac Toe",
+		"es-ES": ":older_woman: Tres en Raya"
+	},
+	"FALGAMES_WIN": {
+		"pt-BR": "{emoji} | **{player}** ganhou o jogo.",
+		"en-US": "{emoji} | **{player}** won the game.",
+		"es-ES": "{emoji} | **{player}** ganó el juego."
+	},
+	"FALGAMES_TIMEOUT": {
+		"pt-BR": "O jogo foi cancelado! Ninguém ganhou o Jogo!",
+		"en-US": "The Game went unfinished! No one won the Game!",
+		"es-ES": "¡El juego quedó inconcluso! ¡Nadie ganó el juego!"
+	},
+	"FIND_EMOJI": {
+		"pt-BR": ":mag_right: Encontre o emoji",
+		"en-US": ":mag_right: Find the emoji",
+		"es-ES": ":mag_right: Encuentra el emoji"
+	},
+	"REMEMBER_THE_EMOJIS": {
+		"pt-BR": "Lembre-se dos emojis do tabuleiro abaixo!",
+		"en-US": "Remember the emojis from the board below!",
+		"es-ES": "¡Recuerda los emojis del tablero de abajo!"
+	},
+	"FIND_EMOJI_DESCRIPTION": {
+		"pt-BR": "Encontre o emoji {emoji} antes que o tempo acabe.",
+		"en-US": "Find the {emoji} emoji before the time runs out.",
+		"es-ES": "Encuentra el emoji {emoji} antes de que se acabe el tiempo."
+	},
+	"FIND_EMOJI_WIN": {
+		"pt-BR": "Você ganhou! Você selecionou o emoji correto. {emoji}",
+		"en-US": "You won! You selected the correct emoji. {emoji}",
+		"es-ES": "¡Ganaste! Seleccionaste el emoji correcto. {emoji}"
+	},
+	"FIND_EMOJI_LOSE": {
+		"pt-BR": "Você perdeu! Você selecionou o emoji errado. {emoji}",
+		"en-US": "You lost! You selected the wrong emoji. {emoji}",
+		"es-ES": "¡Perdiste! Seleccionaste el emoji incorrecto. {emoji}"
+	},
+	"FIND_EMOJI_TIMEOUT": {
+		"pt-BR": "Você perdeu! Você não selecionou o emoji a tempo. {emoji}",
+		"en-US": "You lost! You ran out of time. {emoji}",
+		"es-ES": "¡Perdiste! Se te acabó el tiempo. {emoji}"
+	},
+	"FLOOD_GAME": {
+		"pt-BR": ":ocean: Enchente",
+		"en-US": ":ocean: Flood",
+		"es-ES": ":ocean: Inundación"
+	},
+	"FLOOD_WIN": {
+		"pt-BR": "Você ganhou! Você levou **{turns}** turnos.",
+		"en-US": "You won! You took **{turns}** turns.",
+		"es-ES": "¡Ganaste! Tomaste **{turns}** turnos."
+	},
+	"FLOOD_LOSE": {
+		"pt-BR": "Você perdeu! Você levou **{turns}** turnos.",
+		"en-US": "You lost! You took **{turns}** turns.",
+		"es-ES": "¡Perdiste! Tomaste **{turns}** turnos."
+	},
+	"MATCH_PAIRS": {
+		"pt-BR": ":jigsaw: Jogo da Memória",
+		"en-US": ":jigsaw: Match Pairs",
+		"es-ES": ":jigsaw: Juego de Memoria"
+	},
+	"MATCH_PAIRS_DESCRIPTION": {
+		"pt-BR": "**Clique nos botões para combinar emojis com seus pares.**",
+		"en-US": "**Click on the buttons to match emojis with their pairs.**",
+		"es-ES": "**Haz clic en los botones para combinar emojis con sus pares.**"
+	},
+	"MATCH_PAIRS_WIN": {
+		"pt-BR": "**Você ganhou o Jogo! Você virou um total de `{tilesTurned}` cartas.**",
+		"en-US": "**You won the Game! You turned a total of `{tilesTurned}` tiles.**",
+		"es-ES": "**¡Ganaste el juego! Volteaste un total de `{tilesTurned}` tiles.**"
+	},
+	"MATCH_PAIRS_LOSE": {
+		"pt-BR": "**Você perdeu o Jogo! Você virou um total de `{tilesTurned}` cartas.**",
+		"en-US": "**You lost the Game! You turned a total of `{tilesTurned}` tiles.**",
+		"es-ES": "**¡Perdiste el juego! Volteaste un total de `{tilesTurned}` tiles.**"
+	},
+	"MINESWEEPER": {
+		"pt-BR": ":bomb: Campo Minado",
+		"en-US": ":bomb: Minesweeper",
+		"es-ES": ":bomb: Buscaminas"
+	},
+	"MINESWEEPER_DESCRIPTION": {
+		"pt-BR": "Clique nos botões para revelar os blocos exceto as minas.",
+		"en-US": "Click on the buttons to reveal the blocks except mines.",
+		"es-ES": "Haz clic en los botones para revelar los bloques excepto las minas."
+	},
+	"MINESWEEPER_WIN": {
+		"pt-BR": "Você ganhou o Jogo! Você evitou com sucesso todas as minas.",
+		"en-US": "You won the Game! You successfully avoided all the mines.",
+		"es-ES": "¡Ganaste el juego! Evitaste con éxito todas las minas."
+	},
+	"MINESWEEPER_LOSE": {
+		"pt-BR": "Você perdeu o Jogo! Tome cuidado com as minas da próxima vez.",
+		"en-US": "You lost the Game! Beaware of the mines next time.",
+		"es-ES": "¡Perdiste el juego! Ten cuidado con las minas la próxima vez."
 	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",

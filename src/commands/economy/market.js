@@ -1,7 +1,6 @@
 const { format, paginate, getItem, specialArg } = require('../../utils/functions.js');
 const { ButtonBuilder, SlashCommandBuilder } = require('discord.js');
 
-
 module.exports = {
 	developer: true,
 	data: new SlashCommandBuilder()
