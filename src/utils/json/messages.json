@@ -1682,9 +1682,9 @@
 		"es-ES": "¡Eliminaste tu anuncio para vender {AMOUNT} x {ITEM} por {PRICE} falcoins!"
 	},
 	"SNAKE_GAME": {
-		"pt-BR": "Jogo da Cobrinha",
-		"en-US": "Snake Game",
-		"es-ES": "Juego de la Serpiente"
+		"pt-BR": ":snake: Jogo da Cobrinha",
+		"en-US": ":snake: Snake Game",
+		"es-ES": ":snake: Juego de la Serpiente"
 	},
 	"GAME_OVER": {
 		"pt-BR": "Fim de jogo!",
