@@ -206,7 +206,12 @@
 		"value": 50,
 		"rarity": "Common",
 		"emoji": "🌿",
-		"exploring": true
+		"exploring": true,
+		"growTime": 1800000,
+		"harvestAmount": {
+			"min": 30,
+			"max": 75
+		}
 	},
 	"rock": {
 		"en-US": "Rock",
@@ -975,19 +980,6 @@
 		"harvestAmount": {
 			"min": 5,
 			"max": 10
-		}
-	},
-	"herb": {
-		"en-US": "Herb",
-		"pt-BR": "Erva",
-		"es-ES": "Hierba",
-		"value": 0,
-		"rarity": "Uncommon",
-		"emoji": "🌾",
-		"growTime": 1800000,
-		"harvestAmount": {
-			"min": 30,
-			"max": 75
 		}
 	},
 	"potato": {
