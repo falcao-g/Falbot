@@ -114,24 +114,25 @@ module.exports = {
 
 		const player = await User.findByIdAndUpdate(member.id, {}, { select: 'plots inventory', upsert: true, new: true });
 
-		const viewButton = new ButtonBuilder().setCustomId('farm view').setLabel('🏡').setStyle(ButtonStyle.Primary);
+		const embed = instance
+			.createEmbed(member.displayColor)
+			.setTitle(instance.getMessage(interaction, 'FARM_TITLE', { USER: member.displayName }));
 
+		const viewButton = new ButtonBuilder().setCustomId('farm view').setLabel('🏡').setStyle(ButtonStyle.Primary);
 		const plantButton = new ButtonBuilder()
 			.setCustomId('farm plant')
 			.setLabel('🌱')
 			.setStyle(ButtonStyle.Primary)
 			.setDisabled(true);
-
 		const harvestButton = new ButtonBuilder().setCustomId('farm harvest').setLabel('🚜').setStyle(ButtonStyle.Success);
-
 		const uprootButton = new ButtonBuilder()
 			.setCustomId('farm uproot')
 			.setLabel('🔨')
 			.setStyle(ButtonStyle.Danger)
 			.setDisabled(true);
 
-		if (type === 'view') {
-			const plots = player.plots.map((plot, index) => {
+		function renderPlots({ plotsWatered = [], newPlot = [] }) {
+			return player.plots.map((plot, index) => {
 				const timeLeft = plot.harvestTime - Date.now();
 
 				const cropEmoji = instance.items[plot.crop].emoji;
@@ -139,20 +140,40 @@ module.exports = {
 				const crop = timeLeft > 0 ? '🌱' : cropEmoji;
 
 				return {
-					name: `Plot ${index + 1}`,
+					name: `${instance.getMessage(interaction, 'PLOT')} ${index + 1} ${plotsWatered.includes(index) ? '🚿' : ''} ${
+						newPlot.includes(index) ? '❇️' : ''
+					}`,
 					value: `${crop.repeat(6)}\n${
-						timeLeft > 0 ? `${cropEmoji} in ${msToTime(timeLeft)}` : '**Ready to harvest!**'
+						timeLeft > 0
+							? instance.getMessage(interaction, 'REMAINING_TIME', {
+									CROP: cropEmoji,
+									TIME: msToTime(timeLeft),
+							  })
+							: `**${instance.getMessage(interaction, 'READY_TO_HARVEST')}**`
 					}`,
 					inline: true,
 				};
 			});
+		}
 
-			const embed = instance
-				.createEmbed()
-				.setTitle(`🏞️ ${member.displayName}'s Farm`)
-				.setColor(member.displayColor)
-				.setDescription('💦 **Water crops to lower grow time!**')
-				.addFields(plots.length > 0 ? [...plots] : { name: 'No plots', value: 'Use `/farm plant` to plant a crop!' });
+		if (type === 'view') {
+			embed
+				.setDescription(
+					instance.getMessage(interaction, 'WATERING_TIP') +
+						'\n\n' +
+						instance.getMessage(interaction, 'PLOTS_AVAILABLE', {
+							CURRENT: 6 - player.plots.length,
+							MAX: 6,
+						})
+				)
+				.addFields(
+					player.plots.length > 0
+						? [...renderPlots({})]
+						: {
+								name: instance.getMessage(interaction, 'NO_PLOTS'),
+								value: instance.getMessage(interaction, 'NO_PLOTS_HINT'),
+						  }
+				);
 
 			const row = new ActionRowBuilder().addComponents(plantButton, harvestButton, uprootButton);
 
@@ -161,125 +182,112 @@ module.exports = {
 			const cropName = interaction.options.getString('crop');
 
 			if (player.plots.length >= 6) {
-				const embed = instance.createEmbed(member.displayColor).setTitle(`🏞️ ${member.displayName}'s Farm`);
-				embed.setDescription('You have no more plots!');
+				embed.setDescription(instance.getMessage(interaction, 'NO_PLOTS_AVAILABLE'));
+			} else {
+				const cropKey = getItem(cropName);
+				const cropJSON = instance.items[cropKey];
 
-				return interaction.editReply({ embeds: [embed] });
+				player.plots.push({
+					crop: cropKey,
+					harvestTime: Date.now() + cropJSON.growTime,
+				});
+				await player.save();
+
+				embed
+					.setDescription(
+						`${instance.getMessage(interaction, 'PLANTED')} **${instance.getItemName(cropKey, interaction)}**!`
+					)
+					.addFields(...renderPlots({ newPlot: [player.plots.length - 1] }));
 			}
 
-			const cropKey = getItem(cropName);
-			const cropJSON = instance.items[cropKey];
-
-			player.plots.push({
-				crop: cropKey,
-				harvestTime: Date.now() + cropJSON.growTime,
-			});
-			await player.save();
-
-			const embed = instance
-				.createEmbed(member.displayColor)
-				.setTitle(`🏞️ ${member.displayName}'s Farm`)
-				.setDescription(`Planted **${instance.getItemName(cropKey, interaction)}**!`);
 			const row = new ActionRowBuilder().addComponents(viewButton, harvestButton, uprootButton);
 
 			interaction.editReply({ embeds: [embed], components: [row] });
 		} else if (type === 'water') {
-			const embed = instance.createEmbed(member.displayColor).setTitle(`🏞️ ${member.displayName}'s Farm`);
+			const plotsWatered = [];
 
-			if (player.plots.length === 0) {
-				embed.setDescription('You have no crops to water!');
-
-				return interaction.editReply({ embeds: [embed] });
-			}
-
-			let total = 0;
-
-			player.plots.forEach((plot) => {
+			player.plots.forEach((plot, index) => {
 				if (plot.lastWatered + 60 * 60 * 1000 <= Date.now()) {
 					plot.harvestTime -= 45 * 60 * 1000;
 					plot.lastWatered = Date.now();
-					total++;
+					plotsWatered.push(index);
 				}
 			});
 
 			await player.save();
 
-			if (total === 0) {
-				embed.setDescription('No plots were watered!');
+			if (plotsWatered.length === 0) {
+				embed.setDescription(instance.getMessage(interaction, 'NO_PLOTS_WATERED'));
 			} else {
-				embed.setDescription(`Watered ${total} plots!`);
+				embed
+					.setDescription(instance.getMessage(interaction, 'PLOTS_WATERED', { AMOUNT: plotsWatered.length }))
+					.addFields(...renderPlots({ plotsWatered }));
 			}
 
 			interaction.editReply({ embeds: [embed] });
 		} else if (type === 'harvest') {
-			const embed = instance.createEmbed(member.displayColor).setTitle(`🏞️ ${member.displayName}'s Farm`);
 			const row = new ActionRowBuilder().addComponents(viewButton, plantButton, uprootButton);
 
 			if (player.plots.length === 0) {
-				embed.setDescription('You have no crops to harvest!');
-
-				return interaction.editReply({ embeds: [embed], components: [row] });
-			}
-
-			const harvestedCrops = {};
-			let total = 0;
-
-			player.plots.forEach((plot, index) => {
-				if (plot.harvestTime <= Date.now()) {
-					const cropKey = plot.crop;
-
-					const amount = 6;
-					total += amount;
-
-					player.inventory.set(cropKey, (player.inventory.get(cropKey) || 0) + amount);
-					player.plots.splice(index, 1);
-					harvestedCrops[cropKey] = (harvestedCrops[cropKey] || 0) + amount;
-				}
-			});
-			await player.save();
-
-			if (total === 0) {
-				embed.setDescription('No crops were harvested!');
+				embed.setDescription(instance.getMessage(interaction, 'NO_CROPS_TO_HARVEST'));
 			} else {
-				embed.addFields({
-					name: `🚜 ${total} crops harvested!`,
-					value: Object.keys(harvestedCrops)
-						.map((cropKey) => `**${instance.getItemName(cropKey, interaction)}** x ${harvestedCrops[cropKey]}`)
-						.join('\n'),
+				const harvestedCrops = {};
+				let total = 0;
+
+				player.plots.forEach(async (plot, index) => {
+					if (plot.harvestTime <= Date.now()) {
+						const cropKey = plot.crop;
+
+						const amount = 6;
+						total += amount;
+
+						await player.inventory.set(cropKey, (player.inventory.get(cropKey) || 0) + amount);
+						await plot.remove();
+						harvestedCrops[cropKey] = (harvestedCrops[cropKey] || 0) + amount;
+					}
 				});
+				await player.save();
+
+				if (total === 0) {
+					embed.setDescription(instance.getMessage(interaction, 'NO_CROPS_HARVESTED'));
+				} else {
+					embed.addFields({
+						name: instance.getMessage(interaction, 'CROPS_HARVESTED', { AMOUNT: total }),
+						value: Object.keys(harvestedCrops)
+							.map((cropKey) => `**${instance.getItemName(cropKey, interaction)}** x ${harvestedCrops[cropKey]}`)
+							.join('\n'),
+					});
+				}
 			}
 
 			interaction.editReply({ embeds: [embed], components: [row] });
 		} else if (type === 'uproot') {
 			const plot = interaction.options.getInteger('plot');
 
-			const embed = instance.createEmbed(member.displayColor).setTitle(`🏞️ ${member.displayName}'s Farm`);
 			const row = new ActionRowBuilder().addComponents(viewButton, plantButton, harvestButton);
 
 			if (player.plots.length === 0) {
-				embed.setDescription('You have no crops to uproot!');
+				embed.setDescription(instance.getMessage(interaction, 'NO_PLOTS_TO_UPROOT'));
+			} else if (plot > player.plots.length || plot <= 0) {
+				embed.setDescription(instance.getMessage(interaction, 'INVALID_PLOT'));
+			} else {
+				const cropKey = player.plots[plot - 1].crop;
 
-				return interaction.editReply({ embeds: [embed], components: [row] });
+				player.plots.splice(plot - 1, 1);
+				await player.save();
+
+				embed.setDescription(
+					instance.getMessage(interaction, 'PLOTS_UPRROTED', {
+						CROP: instance.getItemName(cropKey, interaction),
+						INDEX: plot,
+					})
+				);
 			}
-
-			if (plot > player.plots.length || plot <= 0) {
-				embed.setDescription('Invalid plot!');
-
-				return interaction.editReply({ embeds: [embed], components: [row] });
-			}
-
-			const cropKey = player.plots[plot - 1].crop;
-
-			player.plots.splice(plot - 1, 1);
-			await player.save();
-
-			embed.setDescription(`Uprooted **${instance.getItemName(cropKey, interaction)}**! from plot ${plot}`);
 
 			interaction.editReply({ embeds: [embed], components: [row] });
 		}
 	},
 };
 
-// TODO: Add translations
-// TODO: Add more crops
+// TODO: Add autocomplete
 // TODO: Add more buttons

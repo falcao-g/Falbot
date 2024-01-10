@@ -84,6 +84,7 @@ const userSchema = mongoose.Schema(
 			{
 				crop: {
 					type: String,
+					default: '',
 					required: true,
 				},
 				harvestTime: {
@@ -96,7 +97,6 @@ const userSchema = mongoose.Schema(
 					default: 0,
 					required: true,
 				},
-				_id: false,
 			},
 		],
 	},

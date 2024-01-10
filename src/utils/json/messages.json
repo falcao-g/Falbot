@@ -1930,5 +1930,95 @@
 		"pt-BR": ":ledger: Ministro",
 		"en-US": ":ledger: Minister",
 		"es-ES": ":ledger: Ministro"
+	},
+	"FARM_TITLE": {
+		"pt-BR": "🏞️ Fazenda de {USER}",
+		"en-US": "🏞️ {USER}'s Farm",
+		"es-ES": "🏞️ Granja de {USER}"
+	},
+	"WATERING_TIP": {
+		"pt-BR": "💦 **Regue as platações com `/fazenda regar` para diminir seu tempo de crescimento!**",
+		"en-US": "💦 **Water your crops with `/farm water` to decrease their growth time!**",
+		"es-ES": "💦 **¡Riega tus cultivos con `/granja regar` para disminuir su tiempo de crecimiento!**"
+	},
+	"PLOT": {
+		"pt-BR": "Terreno",
+		"en-US": "Plot",
+		"es-ES": "Terreno"
+	},
+	"NO_PLOTS": {
+		"pt-BR": "Sem terrenos",
+		"en-US": "No plots",
+		"es-ES": "Sin terrenos"
+	},
+	"NO_PLOTS_HINT": {
+		"pt-BR": "Use `/fazenda plantar` para plantar uma colheita!",
+		"en-US": "Use `/farm plant` to plant a crop!",
+		"es-ES": "¡Usa `/granja plantar` para plantar un cultivo!"
+	},
+	"REMAINING_TIME": {
+		"pt-BR": "{CROP} em {TIME}",
+		"en-US": "{CROP} in {TIME}",
+		"es-ES": "{CROP} en {TIME}"
+	},
+	"READY_TO_HARVEST": {
+		"pt-BR": "Pronto para colher!",
+		"en-US": "Ready to harvest!",
+		"es-ES": "¡Listo para cosechar!"
+	},
+	"PLANTED": {
+		"pt-BR": "Plantado",
+		"en-US": "Planted",
+		"es-ES": "Plantado"
+	},
+	"PLOTS_AVAILABLE": {
+		"pt-BR": "**{CURRENT}** de **{MAX}** terrenos disponíveis.",
+		"en-US": "**{CURRENT}** of **{MAX}** plots available.",
+		"es-ES": "**{CURRENT}** de **{MAX}** terrenos disponibles."
+	},
+	"NO_PLOTS_AVAILABLE": {
+		"pt-BR": "Você não tem mais terrenos disponíveis!",
+		"en-US": "You don't have any plots available!",
+		"es-ES": "¡No tienes ningún terreno disponible!"
+	},
+	"PLOTS_WATERED": {
+		"pt-BR": "Você regou **{AMOUNT}** terrenos!",
+		"en-US": "You watered **{AMOUNT}** plots!",
+		"es-ES": "¡Regaste **{AMOUNT}** terrenos!"
+	},
+	"NO_PLOTS_WATERED": {
+		"pt-BR": "Você não regou nenhum terreno!",
+		"en-US": "You didn't water any plots!",
+		"es-ES": "¡No regaste ningún terreno!"
+	},
+	"CROPS_HARVESTED": {
+		"pt-BR": "🚜 Você colheu **{AMOUNT}** colheitas!",
+		"en-US": "🚜 You harvested **{AMOUNT}** crops!",
+		"es-ES": "🚜 ¡Cosechaste **{AMOUNT}** cultivos!"
+	},
+	"NO_CROPS_HARVESTED": {
+		"pt-BR": "Você não colheu nenhuma colheita!",
+		"en-US": "You didn't harvest any crops!",
+		"es-ES": "¡No cosechaste ningún cultivo!"
+	},
+	"NO_CROPS_TO_HARVEST": {
+		"pt-BR": "Não há colheitas para colher!",
+		"en-US": "There are no crops to harvest!",
+		"es-ES": "¡No hay cultivos para cosechar!"
+	},
+	"PLOTS_UPRROTED": {
+		"pt-BR": "Você arrancou {CROP} do terreno **{INDEX}!**",
+		"en-US": "You uprooted {CROP} from plot **{INDEX}!**",
+		"es-ES": "¡Arrancaste {CROP} del terreno **{INDEX}!**"
+	},
+	"INVALID_PLOT": {
+		"pt-BR": "Esse terreno não existe!",
+		"en-US": "That plot doesn't exist!",
+		"es-ES": "¡Ese terreno no existe!"
+	},
+	"NO_CROPS_TO_UPROOT": {
+		"pt-BR": "Não há colheitas para arrancar!",
+		"en-US": "There are no crops to uproot!",
+		"es-ES": "¡No hay cultivos para arrancar!"
 	}
 }
