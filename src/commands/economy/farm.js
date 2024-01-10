@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
-const { msToTime, getItem } = require('../../utils/functions.js');
+const { msToTime, getItem, randint } = require('../../utils/functions.js');
 const User = require('../../schemas/user-schema.js');
 
 module.exports = {
@@ -204,6 +204,8 @@ module.exports = {
 
 			interaction.editReply({ embeds: [embed], components: [row] });
 		} else if (type === 'water') {
+			const row = new ActionRowBuilder().addComponents(viewButton, plantButton, harvestButton, uprootButton);
+
 			const plotsWatered = [];
 
 			player.plots.forEach((plot, index) => {
@@ -224,7 +226,7 @@ module.exports = {
 					.addFields(...renderPlots({ plotsWatered }));
 			}
 
-			interaction.editReply({ embeds: [embed] });
+			interaction.editReply({ embeds: [embed], components: [row] });
 		} else if (type === 'harvest') {
 			const row = new ActionRowBuilder().addComponents(viewButton, plantButton, uprootButton);
 
@@ -237,8 +239,9 @@ module.exports = {
 				player.plots.forEach(async (plot, index) => {
 					if (plot.harvestTime <= Date.now()) {
 						const cropKey = plot.crop;
+						const cropJSON = instance.items[cropKey];
 
-						const amount = 6;
+						const amount = randint(cropJSON.harvestAmount.min, cropJSON.harvestAmount.max);
 						total += amount;
 
 						await player.inventory.set(cropKey, (player.inventory.get(cropKey) || 0) + amount);
