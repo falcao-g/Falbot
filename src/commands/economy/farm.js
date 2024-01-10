@@ -49,6 +49,7 @@ module.exports = {
 							'es-ES': 'Cultivo para plantar',
 						})
 						.setRequired(true)
+						.setAutocomplete(true)
 				)
 		)
 		.addSubcommand((subcommand) =>
@@ -290,7 +291,19 @@ module.exports = {
 			interaction.editReply({ embeds: [embed], components: [row] });
 		}
 	},
+	autocomplete: async ({ interaction, instance }) => {
+		const focusedValue = interaction.options.getFocused().toLowerCase();
+		const cropsKeys = Object.keys(instance.items).filter((key) => instance.items[key].hasOwnProperty('growTime'));
+		const localeCrops = cropsKeys.map((key) => instance.getItemName(key, interaction));
+		const filtered = localeCrops.filter((choice) => {
+			const lowerCaseChoice = choice.toLowerCase();
+			return (
+				lowerCaseChoice.startsWith(focusedValue) ||
+				lowerCaseChoice.split(' ').slice(1).join(' ').startsWith(focusedValue)
+			);
+		});
+		await interaction.respond(filtered.slice(0, 25).map((choice) => ({ name: choice, value: choice })));
+	},
 };
 
-// TODO: Add autocomplete
 // TODO: Add more buttons
