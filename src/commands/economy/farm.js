@@ -238,8 +238,6 @@ module.exports = {
 			});
 			await player.save();
 
-			console.log(harvestedCrops);
-
 			if (total === 0) {
 				embed.setDescription('No crops were harvested!');
 			} else {
