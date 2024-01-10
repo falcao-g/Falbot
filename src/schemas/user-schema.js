@@ -80,6 +80,25 @@ const userSchema = mongoose.Schema(
 				['scratchJackpots', 0],
 			]),
 		},
+		plots: [
+			{
+				crop: {
+					type: String,
+					required: true,
+				},
+				harvestTime: {
+					type: Number,
+					default: 0,
+					required: true,
+				},
+				lastWatered: {
+					type: Number,
+					default: 0,
+					required: true,
+				},
+				_id: false,
+			},
+		],
 	},
 	{
 		versionKey: false,

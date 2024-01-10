@@ -839,7 +839,8 @@
 		"value": 400,
 		"rarity": "Epic",
 		"emoji": "🍀",
-		"exploring": true
+		"exploring": true,
+		"growTime": 345600000
 	},
 	"snowflake": {
 		"en-US": "Eternal Snowflake",
