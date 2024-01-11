@@ -302,19 +302,19 @@ module.exports = {
 				let total = 0;
 
 				// Loop through each plot and harvest the crops that are ready.
-				player.plots.forEach(async (plot, index) => {
-					if (plot.harvestTime <= Date.now()) {
-						const cropKey = plot.crop;
+				for (let i = player.plots.length - 1; i >= 0; i--) {
+					if (player.plots[i].harvestTime <= Date.now()) {
+						const cropKey = player.plots[i].crop;
 						const cropJSON = items[cropKey];
 
 						const amount = randint(cropJSON.harvestAmount.min, cropJSON.harvestAmount.max);
 						total += amount;
 
 						await player.inventory.set(cropKey, (player.inventory.get(cropKey) || 0) + amount);
-						await plot.remove();
+						await player.plots.splice(i, 1);
 						harvestedCrops[cropKey] = (harvestedCrops[cropKey] || 0) + amount;
 					}
-				});
+				}
 				await player.save();
 
 				if (total === 0) {

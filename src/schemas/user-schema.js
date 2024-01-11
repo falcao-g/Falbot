@@ -82,6 +82,7 @@ const userSchema = mongoose.Schema(
 		},
 		plots: [
 			{
+				_id: false,
 				crop: {
 					type: String,
 					default: '',
