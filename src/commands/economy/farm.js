@@ -126,6 +126,11 @@ module.exports = {
 			.createEmbed(member.displayColor)
 			.setTitle(instance.getMessage(interaction, 'FARM_TITLE', { USER: member.displayName }));
 
+		/**
+		 * Renders buttons ignoring the specified type.
+		 * @param {string} type - The type of button to ignore.
+		 * @returns {ActionRowBuilder} - The ActionRowBuilder object containing the rendered buttons.
+		 */
 		function renderButtons(type) {
 			const availableButtons = [
 				new ButtonBuilder()
@@ -160,6 +165,12 @@ module.exports = {
 			return new ActionRowBuilder().addComponents(...filteredButtons);
 		}
 
+		/**
+		 * Renders the plots for the farm.
+		 * @param {Object} plotsWatered - An array of plots that have been watered.
+		 * @param {Object} newPlot - An array of new plots.
+		 * @returns {Array} - An array of plot objects with name, value, and inline properties.
+		 */
 		function renderPlots({ plotsWatered = [], newPlot = [] }) {
 			return player.plots.map((plot, index) => {
 				const timeLeft = plot.harvestTime - Date.now();
@@ -213,6 +224,7 @@ module.exports = {
 				cropName = args[1];
 			}
 
+			// If no crop name is provided, show a list of crops that can be planted.
 			if (!cropName) {
 				const cropsKeys = Object.keys(items).filter((key) => items[key].hasOwnProperty('growTime'));
 				const canPlant = cropsKeys.map((cropKey) => {
@@ -249,6 +261,7 @@ module.exports = {
 				const cropKey = getItem(cropName);
 				const cropJSON = items[cropKey];
 
+				// Add the plot to the player's plots array.
 				player.plots.push({
 					crop: cropKey,
 					harvestTime: Date.now() + cropJSON.growTime,
@@ -264,6 +277,7 @@ module.exports = {
 		} else if (type === 'water') {
 			const plotsWatered = [];
 
+			// Loop through each plot and water all crops.
 			player.plots.forEach((plot, index) => {
 				if (plot.lastWatered + 60 * 60 * 1000 <= Date.now()) {
 					plot.harvestTime -= 45 * 60 * 1000;
@@ -271,7 +285,6 @@ module.exports = {
 					plotsWatered.push(index);
 				}
 			});
-
 			await player.save();
 
 			if (plotsWatered.length === 0) {
@@ -288,6 +301,7 @@ module.exports = {
 				const harvestedCrops = {};
 				let total = 0;
 
+				// Loop through each plot and harvest the crops that are ready.
 				player.plots.forEach(async (plot, index) => {
 					if (plot.harvestTime <= Date.now()) {
 						const cropKey = plot.crop;
@@ -324,6 +338,7 @@ module.exports = {
 				plotIndex = args[1];
 			}
 
+			// If no plot index is provided, show a list of plots that can be uprooted.
 			if (!plotIndex) {
 				const options = [];
 				for (let i = 0; i < player.plots.length; i++) {
@@ -358,6 +373,7 @@ module.exports = {
 			} else {
 				const cropKey = player.plots[plotIndex - 1].crop;
 
+				// Remove the plot from the player's plots array.
 				player.plots.splice(plotIndex - 1, 1);
 				await player.save();
 
@@ -370,10 +386,12 @@ module.exports = {
 			}
 		}
 
+		// Render embed and buttons.
 		interaction.editReply({ embeds: [embed], components: [renderButtons(type)] });
 	},
 	autocomplete: async ({ interaction, instance }) => {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
+
 		const cropsKeys = Object.keys(instance.items).filter((key) => instance.items[key].hasOwnProperty('growTime'));
 		const localeCrops = cropsKeys.map((key) => instance.getItemName(key, interaction));
 		const filtered = localeCrops.filter((choice) => {
@@ -383,6 +401,7 @@ module.exports = {
 				lowerCaseChoice.split(' ').slice(1).join(' ').startsWith(focusedValue)
 			);
 		});
+
 		await interaction.respond(filtered.slice(0, 25).map((choice) => ({ name: choice, value: choice })));
 	},
 };
