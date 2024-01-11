@@ -2020,5 +2020,55 @@
 		"pt-BR": "Não há colheitas para arrancar!",
 		"en-US": "There are no crops to uproot!",
 		"es-ES": "¡No hay cultivos para arrancar!"
+	},
+	"SELECT_CROP_PLACEHOLDER": {
+		"pt-BR": "Selecione uma cultura para plantar...",
+		"en-US": "Select a crop to plant...",
+		"es-ES": "Selecciona un cultivo para plantar..."
+	},
+	"SELECT_CROP": {
+		"pt-BR": "Selecione uma das culturas abaixo para plantar.\nVocê tem **{AMOUNT}** terrenos disponíveis.",
+		"en-US": "Select one of the crops below to plant.\nYou have **{AMOUNT}** plots available.",
+		"es-ES": "Selecciona uno de los cultivos de abajo para plantar.\nTienes **{AMOUNT}** terrenos disponibles."
+	},
+	"SELECT_PLOT_PLACEHOLDER": {
+		"pt-BR": "Selecione um terreno para arrancar...",
+		"en-US": "Select a plot to uproot...",
+		"es-ES": "Selecciona un terreno para arrancar..."
+	},
+	"SELECT_PLOT": {
+		"pt-BR": "Selecione um dos terrenos abaixo para arrancar:",
+		"en-US": "Select one of the plots below to uproot:",
+		"es-ES": "Selecciona uno de los terrenos de abajo para arrancar:"
+	},
+	"VIEW": {
+		"pt-BR": "Ver",
+		"en-US": "View",
+		"es-ES": "Ver"
+	},
+	"PLANT": {
+		"pt-BR": "Plantar",
+		"en-US": "Plant",
+		"es-ES": "Plantar"
+	},
+	"WATER": {
+		"pt-BR": "Regar",
+		"en-US": "Water",
+		"es-ES": "Regar"
+	},
+	"HARVEST": {
+		"pt-BR": "Colher",
+		"en-US": "Harvest",
+		"es-ES": "Cosechar"
+	},
+	"UPROOT": {
+		"pt-BR": "Arrancar",
+		"en-US": "Uproot",
+		"es-ES": "Arrancar"
+	},
+	"REMAINING": {
+		"pt-BR": "restante",
+		"en-US": "remaining",
+		"es-ES": "restante"
 	}
 }
