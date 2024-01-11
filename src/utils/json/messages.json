@@ -2070,5 +2070,10 @@
 		"pt-BR": "restante",
 		"en-US": "remaining",
 		"es-ES": "restante"
+	},
+	"INVALID_CROP": {
+		"pt-BR": "Essa cultura não existe!",
+		"en-US": "That crop doesn't exist!",
+		"es-ES": "¡Ese cultivo no existe!"
 	}
 }
