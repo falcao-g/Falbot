@@ -118,6 +118,7 @@ module.exports = {
 		}
 
 		const MAX_PLOTS = 6;
+		const WATER_COOLDOWN = 60 * 60 * 1000;
 
 		const player = await User.findByIdAndUpdate(member.id, {}, { select: 'plots inventory', upsert: true, new: true });
 		const items = instance.items;
@@ -171,7 +172,7 @@ module.exports = {
 		 * @param {Object} newPlot - An array of new plots.
 		 * @returns {Array} - An array of plot objects with name, value, and inline properties.
 		 */
-		function renderPlots({ plotsWatered = [], newPlot = [] }) {
+		function renderPlots({ newPlot = [] }) {
 			return player.plots.map((plot, index) => {
 				const timeLeft = plot.harvestTime - Date.now();
 
@@ -180,9 +181,9 @@ module.exports = {
 				const crop = timeLeft > 0 ? '🌱' : cropEmoji;
 
 				return {
-					name: `${instance.getMessage(interaction, 'PLOT')} ${index + 1} ${plotsWatered.includes(index) ? '🚿' : ''} ${
-						newPlot.includes(index) ? '❇️' : ''
-					}`,
+					name: `${instance.getMessage(interaction, 'PLOT')} ${index + 1} ${
+						plot.lastWatered + WATER_COOLDOWN > Date.now() ? '💧' : ''
+					} ${newPlot.includes(index) ? '❇️' : ''}`,
 					value: `${crop.repeat(6)}\n${
 						timeLeft > 0
 							? instance.getMessage(interaction, 'REMAINING_TIME', {
@@ -281,7 +282,7 @@ module.exports = {
 
 			// Loop through each plot and water all crops.
 			player.plots.forEach((plot, index) => {
-				if (plot.lastWatered + 60 * 60 * 1000 <= Date.now()) {
+				if (plot.lastWatered + WATER_COOLDOWN <= Date.now()) {
 					plot.harvestTime -= 45 * 60 * 1000;
 					plot.lastWatered = Date.now();
 					plotsWatered.push(index);
@@ -294,7 +295,7 @@ module.exports = {
 			} else {
 				embed
 					.setDescription(instance.getMessage(interaction, 'PLOTS_WATERED', { AMOUNT: plotsWatered.length }))
-					.addFields(...renderPlots({ plotsWatered }));
+					.addFields(...renderPlots({}));
 			}
 		} else if (type === 'harvest') {
 			if (player.plots.length === 0) {
