@@ -259,7 +259,7 @@ module.exports = {
 			const cropKey = getItem(cropName);
 			const cropJSON = items[cropKey];
 
-			if (cropJSON && !cropJSON.hasOwnProperty('growTime')) {
+			if (cropJSON === undefined || !cropJSON.hasOwnProperty('growTime')) {
 				embed.setDescription(instance.getMessage(interaction, 'INVALID_CROP'));
 			} else if (player.plots.length >= MAX_PLOTS) {
 				embed.setDescription(instance.getMessage(interaction, 'NO_PLOTS_AVAILABLE'));
