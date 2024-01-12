@@ -255,14 +255,14 @@ module.exports = {
 				return;
 			}
 
-			if (!items[cropName].hasOwnProperty('growTime')) {
+			const cropKey = getItem(cropName);
+			const cropJSON = items[cropKey];
+
+			if (cropJSON && !cropJSON.hasOwnProperty('growTime')) {
 				embed.setDescription(instance.getMessage(interaction, 'INVALID_CROP'));
 			} else if (player.plots.length >= MAX_PLOTS) {
 				embed.setDescription(instance.getMessage(interaction, 'NO_PLOTS_AVAILABLE'));
 			} else {
-				const cropKey = getItem(cropName);
-				const cropJSON = items[cropKey];
-
 				// Add the plot to the player's plots array.
 				player.plots.push({
 					crop: cropKey,
