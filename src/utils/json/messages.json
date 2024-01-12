@@ -1937,9 +1937,9 @@
 		"es-ES": "🏞️ Granja de {USER}"
 	},
 	"WATERING_TIP": {
-		"pt-BR": "💦 **Regue as platações com `/fazenda regar` para diminir seu tempo de crescimento!**",
-		"en-US": "💦 **Water your crops with `/farm water` to decrease their growth time!**",
-		"es-ES": "💦 **¡Riega tus cultivos con `/granja regar` para disminuir su tiempo de crecimiento!**"
+		"pt-BR": "💦 **Regue as platações para diminir seu tempo de crescimento!**",
+		"en-US": "💦 **Water your crops to decrease their growth time!**",
+		"es-ES": "💦 **¡Riega tus cultivos con para disminuir su tiempo de crecimiento!**"
 	},
 	"PLOT": {
 		"pt-BR": "Terreno",
