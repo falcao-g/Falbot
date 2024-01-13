@@ -168,8 +168,7 @@ module.exports = {
 
 		/**
 		 * Renders the plots for the farm.
-		 * @param {Object} plotsWatered - An array of plots that have been watered.
-		 * @param {Object} newPlot - An array of new plots.
+		 * @param {Array} newPlot - An array of new plots.
 		 * @returns {Array} - An array of plot objects with name, value, and inline properties.
 		 */
 		function renderPlots({ newPlot = [] }) {
