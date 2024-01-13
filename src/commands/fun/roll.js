@@ -35,7 +35,7 @@ module.exports = {
 			new Roll({
 				message: interaction,
 				rollLimitMessage: instance.getMessage(interaction, 'ROLL_LIMIT'),
-				rolledStringLimit: 300, // this argument and the one above and below don't exist yet, but they will
+				rolledStringLimit: 500,
 				notValidRollMessage: instance.getMessage(interaction, 'BAD_VALUE'),
 				isSlashGame: true,
 				embed: {
