@@ -207,7 +207,7 @@
 		"rarity": "Common",
 		"emoji": "🌿",
 		"exploring": true,
-		"growTime": 1800000,
+		"growTime": 5400000,
 		"harvestAmount": {
 			"min": 30,
 			"max": 75
@@ -895,10 +895,10 @@
 		"en-US": "Blueberry",
 		"pt-BR": "Mirtilo",
 		"es-ES": "Arándano",
-		"value": 0,
-		"rarity": "Uncommon",
+		"value": 75,
+		"rarity": "Common",
 		"emoji": "🫐",
-		"growTime": 300000,
+		"growTime": 3000000,
 		"harvestAmount": {
 			"min": 5,
 			"max": 10
@@ -908,10 +908,10 @@
 		"en-US": "Strawberry",
 		"pt-BR": "Morango",
 		"es-ES": "Fresa",
-		"value": 0,
-		"rarity": "Uncommon",
+		"value": 135,
+		"rarity": "Common",
 		"emoji": "🍓",
-		"growTime": 600000,
+		"growTime": 3600000,
 		"harvestAmount": {
 			"min": 5,
 			"max": 10
@@ -921,10 +921,10 @@
 		"en-US": "Kiwi",
 		"pt-BR": "Kiwi",
 		"es-ES": "Kiwi",
-		"value": 0,
+		"value": 375,
 		"rarity": "Uncommon",
 		"emoji": "🥝",
-		"growTime": 1800000,
+		"growTime": 5400000,
 		"harvestAmount": {
 			"min": 5,
 			"max": 10
@@ -934,10 +934,10 @@
 		"en-US": "Mango",
 		"pt-BR": "Manga",
 		"es-ES": "Mango",
-		"value": 0,
+		"value": 800,
 		"rarity": "Uncommon",
 		"emoji": "🥭",
-		"growTime": 3600000,
+		"growTime": 7200000,
 		"harvestAmount": {
 			"min": 5,
 			"max": 10
@@ -947,7 +947,7 @@
 		"en-US": "Melon",
 		"pt-BR": "Melão",
 		"es-ES": "Melón",
-		"value": 0,
+		"value": 3000,
 		"rarity": "Uncommon",
 		"emoji": "🍈",
 		"growTime": 14400000,
@@ -960,8 +960,8 @@
 		"en-US": "Coconut",
 		"pt-BR": "Coco",
 		"es-ES": "Coco",
-		"value": 0,
-		"rarity": "Uncommon",
+		"value": 6000,
+		"rarity": "Epic",
 		"emoji": "🥥",
 		"growTime": 28800000,
 		"harvestAmount": {
@@ -973,8 +973,8 @@
 		"en-US": "Pumpkin",
 		"pt-BR": "Abóbora",
 		"es-ES": "Calabaza",
-		"value": 0,
-		"rarity": "Uncommon",
+		"value": 17000,
+		"rarity": "Epic",
 		"emoji": "🎃",
 		"growTime": 86400000,
 		"harvestAmount": {
@@ -986,7 +986,7 @@
 		"en-US": "Potato",
 		"pt-BR": "Batata",
 		"es-ES": "Patata",
-		"value": 0,
+		"value": 1000,
 		"rarity": "Uncommon",
 		"emoji": "🥔",
 		"growTime": 259200000,
