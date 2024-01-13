@@ -234,6 +234,7 @@ module.exports = {
 					embed: {
 						title: instance.getMessage(interaction, 'SNAKE_GAME'),
 						overTitle: instance.getMessage(interaction, 'GAME_OVER'),
+						scoreText: instance.getMessage(interaction, 'SCORE'),
 						color: member.displayColor,
 					},
 					emojis: {
@@ -248,7 +249,6 @@ module.exports = {
 					stopButton: instance.getMessage(interaction, 'STOP'),
 					timeoutTime: 60000,
 					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY'),
-					scoreText: instance.getMessage(interaction, 'SCORE'),
 				});
 			} else if (type === 'tictactoe') {
 				var Game = new TicTacToe({
