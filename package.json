@@ -18,7 +18,7 @@
 	"dependencies": {
 		"discord.js": "^14.9.0",
 		"dotenv": "^16.0.1",
-		"falgames": "^1.0.1",
+		"falgames": "^1.0.2",
 		"mongoose": "^6.8.0",
 		"simply-blackjack": "^1.0.3"
 	},

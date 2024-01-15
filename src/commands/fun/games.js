@@ -129,7 +129,7 @@ module.exports = {
 						.setRequired(true)
 				)
 		),
-	execute: async ({ interaction, instance, subcommand }) => {
+	execute: async ({ interaction, instance, subcommand, member }) => {
 		try {
 			try {
 				var type = interaction.options.getSubcommand();
@@ -145,7 +145,7 @@ module.exports = {
 					embed: {
 						title: ':brain: Connect4',
 						statusTitle: 'Status',
-						color: '#6E0070',
+						color: member.displayColor,
 					},
 					emojis: {
 						board: '⚪',
@@ -167,7 +167,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: instance.getMessage(interaction, 'FIND_EMOJI'),
-						color: '#6E0070',
+						color: member.displayColor,
 						description: instance.getMessage(interaction, 'REMEMBER_THE_EMOJIS'),
 						findDescription: instance.getMessage(interaction, 'FIND_EMOJI_DESCRIPTION'),
 					},
@@ -186,7 +186,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: instance.getMessage(interaction, 'FLOOD_GAME'),
-						color: '#6E0070',
+						color: member.displayColor,
 					},
 					difficulty: 13,
 					timeoutTime: 60000,
@@ -202,7 +202,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: instance.getMessage(interaction, 'MATCH_PAIRS'),
-						color: '#6E0070',
+						color: member.displayColor,
 						description: instance.getMessage(interaction, 'MATCH_PAIRS_DESCRIPTION'),
 					},
 					timeoutTime: 60000,
@@ -217,7 +217,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: instance.getMessage(interaction, 'MINESWEEPER'),
-						color: '#6E0070',
+						color: member.displayColor,
 						description: instance.getMessage(interaction, 'MINESWEEPER_DESCRIPTION'),
 					},
 					emojis: { flag: '🚩', mine: '💣' },
@@ -234,7 +234,8 @@ module.exports = {
 					embed: {
 						title: instance.getMessage(interaction, 'SNAKE_GAME'),
 						overTitle: instance.getMessage(interaction, 'GAME_OVER'),
-						color: '#6E0070',
+						scoreText: instance.getMessage(interaction, 'SCORE'),
+						color: member.displayColor,
 					},
 					emojis: {
 						board: '⬛',
@@ -248,7 +249,6 @@ module.exports = {
 					stopButton: instance.getMessage(interaction, 'STOP'),
 					timeoutTime: 60000,
 					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY'),
-					scoreText: instance.getMessage(interaction, 'SCORE'),
 				});
 			} else if (type === 'tictactoe') {
 				var Game = new TicTacToe({
@@ -257,7 +257,7 @@ module.exports = {
 					opponent: interaction.options.getUser('opponent'),
 					embed: {
 						title: instance.getMessage(interaction, 'TICTACTOE'),
-						color: '#6E0070',
+						color: member.displayColor,
 						statusTitle: 'Status',
 						overTitle: instance.getMessage(interaction, 'GAME_OVER'),
 					},
