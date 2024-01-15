@@ -331,6 +331,13 @@ class Falbot {
 				});
 				perks += '\n';
 			}
+
+			if (old_rank.farmPlots < rank.farmPlots) {
+				perks += this.getMessage(interaction, 'RANKUP_FARM', {
+					PLOTS: format(rank.farmPlots - old_rank.farmPlots),
+				});
+				perks += '\n';
+			}
 		}
 
 		perks += `${this.getMessage(interaction, 'VOTE')}: ${format(rank.vote)} Falcoins\n`;

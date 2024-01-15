@@ -4,173 +4,198 @@
 		"vote": 10000,
 		"work": [1000, 1500],
 		"bankLimit": 100000,
-		"inventoryLimit": 500000
+		"inventoryLimit": 500000,
+		"farmPlots": 2
 	},
 	{
 		"falcoinsToLevelUp": 5000,
 		"vote": 10500,
 		"work": [1125, 1750],
 		"bankLimit": 100000,
-		"inventoryLimit": 500000
+		"inventoryLimit": 500000,
+		"farmPlots": 2
 	},
 	{
 		"falcoinsToLevelUp": 10000,
 		"vote": 11000,
 		"work": [1250, 2000],
 		"bankLimit": 100000,
-		"inventoryLimit": 1000000
+		"inventoryLimit": 1000000,
+		"farmPlots": 2
 	},
 	{
 		"falcoinsToLevelUp": 26000,
 		"vote": 11500,
 		"work": [1375, 2250],
 		"bankLimit": 150000,
-		"inventoryLimit": 1000000
+		"inventoryLimit": 1000000,
+		"farmPlots": 3
 	},
 	{
 		"falcoinsToLevelUp": 55000,
 		"vote": 12000,
 		"work": [1500, 2500],
 		"bankLimit": 150000,
-		"inventoryLimit": 1500000
+		"inventoryLimit": 1500000,
+		"farmPlots": 3
 	},
 	{
 		"falcoinsToLevelUp": 150000,
 		"vote": 12500,
 		"work": [1625, 2750],
 		"bankLimit": 150000,
-		"inventoryLimit": 1500000
+		"inventoryLimit": 1500000,
+		"farmPlots": 3
 	},
 	{
 		"falcoinsToLevelUp": 220000,
 		"vote": 13000,
 		"work": [1750, 3000],
 		"bankLimit": 200000,
-		"inventoryLimit": 2000000
+		"inventoryLimit": 2000000,
+		"farmPlots": 4
 	},
 	{
 		"falcoinsToLevelUp": 330000,
 		"vote": 13500,
 		"work": [1875, 3250],
 		"bankLimit": 200000,
-		"inventoryLimit": 2000000
+		"inventoryLimit": 2000000,
+		"farmPlots": 4
 	},
 	{
 		"falcoinsToLevelUp": 450000,
 		"vote": 14000,
 		"work": [2000, 3500],
 		"bankLimit": 200000,
-		"inventoryLimit": 2500000
+		"inventoryLimit": 2500000,
+		"farmPlots": 4
 	},
 	{
 		"falcoinsToLevelUp": 600000,
 		"vote": 14500,
 		"work": [2125, 3750],
 		"bankLimit": 250000,
-		"inventoryLimit": 2500000
+		"inventoryLimit": 2500000,
+		"farmPlots": 5
 	},
 	{
 		"falcoinsToLevelUp": 800000,
 		"vote": 15000,
 		"work": [2250, 4000],
 		"bankLimit": 250000,
-		"inventoryLimit": 3000000
+		"inventoryLimit": 3000000,
+		"farmPlots": 5
 	},
 	{
 		"falcoinsToLevelUp": 1050000,
 		"vote": 15500,
 		"work": [2500, 4500],
 		"bankLimit": 250000,
-		"inventoryLimit": 3000000
+		"inventoryLimit": 3000000,
+		"farmPlots": 5
 	},
 	{
 		"falcoinsToLevelUp": 1300000,
 		"vote": 16000,
 		"work": [2750, 5000],
 		"bankLimit": 300000,
-		"inventoryLimit": 3500000
+		"inventoryLimit": 3500000,
+		"farmPlots": 6
 	},
 	{
 		"falcoinsToLevelUp": 1600000,
 		"vote": 16500,
 		"work": [3000, 5500],
 		"bankLimit": 300000,
-		"inventoryLimit": 3500000
+		"inventoryLimit": 3500000,
+		"farmPlots": 6
 	},
 	{
 		"falcoinsToLevelUp": 2000000,
 		"vote": 17000,
 		"work": [3250, 6000],
 		"bankLimit": 300000,
-		"inventoryLimit": 4000000
+		"inventoryLimit": 4000000,
+		"farmPlots": 6
 	},
 	{
 		"falcoinsToLevelUp": 2500000,
 		"vote": 17500,
 		"work": [3500, 6500],
 		"bankLimit": 350000,
-		"inventoryLimit": 4000000
+		"inventoryLimit": 4000000,
+		"farmPlots": 7
 	},
 	{
 		"falcoinsToLevelUp": 3100000,
 		"vote": 18000,
 		"work": [3750, 6500],
 		"bankLimit": 350000,
-		"inventoryLimit": 4500000
+		"inventoryLimit": 4500000,
+		"farmPlots": 7
 	},
 	{
 		"falcoinsToLevelUp": 4000000,
 		"vote": 18500,
 		"work": [4000, 6500],
 		"bankLimit": 350000,
-		"inventoryLimit": 4500000
+		"inventoryLimit": 4500000,
+		"farmPlots": 7
 	},
 	{
 		"falcoinsToLevelUp": 5300000,
 		"vote": 19000,
 		"work": [4250, 6500],
 		"bankLimit": 400000,
-		"inventoryLimit": 5000000
+		"inventoryLimit": 5000000,
+		"farmPlots": 8
 	},
 	{
 		"falcoinsToLevelUp": 6700000,
 		"vote": 19500,
 		"work": [4500, 7000],
 		"bankLimit": 500000,
-		"inventoryLimit": 5000000
+		"inventoryLimit": 5000000,
+		"farmPlots": 8
 	},
 	{
 		"falcoinsToLevelUp": 7800000,
 		"vote": 20000,
 		"work": [5000, 8000],
 		"bankLimit": 600000,
-		"inventoryLimit": 5500000
+		"inventoryLimit": 5500000,
+		"farmPlots": 8
 	},
 	{
 		"falcoinsToLevelUp": 9100000,
 		"vote": 20500,
 		"work": [5500, 9000],
 		"bankLimit": 700000,
-		"inventoryLimit": 5500000
+		"inventoryLimit": 5500000,
+		"farmPlots": 9
 	},
 	{
 		"falcoinsToLevelUp": 10500000,
 		"vote": 21000,
 		"work": [6000, 10000],
 		"bankLimit": 700000,
-		"inventoryLimit": 6000000
+		"inventoryLimit": 6000000,
+		"farmPlots": 9
 	},
 	{
 		"falcoinsToLevelUp": 12100000,
 		"vote": 21500,
 		"work": [6500, 11000],
 		"bankLimit": 800000,
-		"inventoryLimit": 6000000
+		"inventoryLimit": 6000000,
+		"farmPlots": 9
 	},
 	{
 		"vote": 22000,
 		"work": [7000, 12000],
 		"bankLimit": 800000,
-		"inventoryLimit": 6500000
+		"inventoryLimit": 6500000,
+		"farmPlots": 10
 	}
 ]

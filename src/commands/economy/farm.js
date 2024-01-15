@@ -117,11 +117,16 @@ module.exports = {
 			var type = subcommand;
 		}
 
-		const MAX_PLOTS = 6;
 		const WATER_COOLDOWN = 60 * 60 * 1000;
 
-		const player = await User.findByIdAndUpdate(member.id, {}, { select: 'plots inventory', upsert: true, new: true });
+		const player = await User.findByIdAndUpdate(
+			member.id,
+			{},
+			{ select: 'plots inventory rank', upsert: true, new: true }
+		);
 		const items = instance.items;
+
+		const MAX_PLOTS = instance.levels[player.rank - 1].farmPlots;
 
 		const embed = instance
 			.createEmbed(member.displayColor)

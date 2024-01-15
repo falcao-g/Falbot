@@ -2075,5 +2075,10 @@
 		"pt-BR": "Essa cultura não existe!",
 		"en-US": "That crop doesn't exist!",
 		"es-ES": "¡Ese cultivo no existe!"
+	},
+	"RANKUP_FARM": {
+		"pt-BR": "🏞️ *+{PLOTS} terreno disponível na sua fazenda*",
+		"en-US": "🏞️ *+{PLOTS} plot available in your farm*",
+		"es-ES": "🏞️ *+{PLOTS} terreno disponible en tu granja*"
 	}
 }
