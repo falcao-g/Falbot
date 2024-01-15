@@ -280,9 +280,9 @@
 		"es-ES": "¡Listo!"
 	},
 	"SCORE": {
-		"pt-BR": "Pontuação",
-		"en-US": "Score",
-		"es-ES": "Puntuación"
+		"pt-BR": "**Pontuação:**",
+		"en-US": "**Score:**",
+		"es-ES": "**Puntuación:**"
 	},
 	"FALGAMES_MOVE": {
 		"pt-BR": "{emoji} | É a vez do jogador **{player}**.",
@@ -1805,6 +1805,11 @@
 		"pt-BR": "Você perdeu o Jogo! Tome cuidado com as minas da próxima vez.",
 		"en-US": "You lost the Game! Beaware of the mines next time.",
 		"es-ES": "¡Perdiste el juego! Ten cuidado con las minas la próxima vez."
+	},
+	"RESULT": {
+		"pt-BR": "Resultado",
+		"en-US": "Result",
+		"es-ES": "Resultado"
 	},
 	"1": {
 		"pt-BR": ":potato: Plebeu",
