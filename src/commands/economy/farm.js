@@ -374,7 +374,7 @@ module.exports = {
 			}
 
 			if (player.plots.length === 0) {
-				embed.setDescription(instance.getMessage(interaction, 'NO_PLOTS_TO_UPROOT'));
+				embed.setDescription(instance.getMessage(interaction, 'NO_CROPS_TO_UPROOT'));
 			} else if (plotIndex > player.plots.length || plotIndex <= 0) {
 				embed.setDescription(instance.getMessage(interaction, 'INVALID_PLOT'));
 			} else {
