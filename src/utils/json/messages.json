@@ -2115,5 +2115,10 @@
 		"pt-BR": "*Plantando e colhendo*",
 		"en-US": "*Planting and harvesting*",
 		"es-ES": "*Plantando y cosechando*"
+	},
+	"PLANTABLE": {
+		"pt-BR": "🌱 Plantável",
+		"en-US": "🌱 Plantable",
+		"es-ES": "🌱 Plantable"
 	}
 }
