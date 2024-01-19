@@ -187,7 +187,7 @@ module.exports = {
 				return {
 					name: `${instance.getMessage(interaction, 'PLOT')} ${index + 1} ${
 						plot.lastWatered + WATER_COOLDOWN > Date.now() ? '💧' : ''
-					} ${newPlot.includes(index) ? '❇️' : ''}`,
+					} *(${msToTime(plot.lastWatered + WATER_COOLDOWN - Date.now())})* ${newPlot.includes(index) ? '❇️' : ''}`,
 					value: `${crop.repeat(6)}\n${
 						timeLeft > 0
 							? instance.getMessage(interaction, 'REMAINING_TIME', {
