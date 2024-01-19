@@ -587,9 +587,9 @@
 		"es-ES": ":school_satchel: Sistema de items"
 	},
 	"HELP_ITEMS2": {
-		"pt-BR": "**:compass: Consiga items usando `/pescar`, `/caçar`, `/explorar`, `/minerar`\n:luggage: Veja todos os items que você ou outra pessoa tem com `/inventário ver`\n:moneybag: Items podem ser vendidos com `/inventário vender`\n:book: Veja todas as informações sobre um item como valores, raridade e usos com `/iteminfo`\n\n:hammer_pick: Items podem ser construídos com `/inventário construir`**\n-Calcule a quantidade de materiais necessários para construir com `/inventário calcular`\n-Alguns items podem ser equipados para garantir benefícios com `/inventário equipar`\n-Outros items podem ser usados e tem efeitos especiais com `/inventário usar`\n\n:busts_in_silhouette: Vocẽ pode trocar items com outros jogadores usando `/troca`\n**:convenience_store: Compre e venda itens no mercado, veja os itens disponíveis com `/mercado tudo` e as ofertas de um item específico com `/mercado ver`, anuncie com `/mercado anunciar compra` e `/mercado anunciar venda` e compre itens do mercado com `/mercado comprar`!**",
-		"en-US": "**:compass: Get items using `/fish`, `/hunt`, `/explore`, `/mine`\n:luggage: See all the items you or someone else has with `/inventory view`\n:moneybag: Items can be sold with `/inventory sell`\n:book: See all the information about an item such as values, rarity and uses with `/iteminfo`\n\n:hammer_pick: Items can be crafted with `/inventory craft`**\n-Calculate the amount of materials needed to craft with `/inventory calculate`\n-Some items can be equipped to grant benefits with `/inventory equip`\n-Other items can be used and have special effects with `/inventory use`\n\n:busts_in_silhouette: You can trade items with other players using `/trade`\n**:convenience_store: Buy and sell items in the market, see the available items with `/market all` and the offers of a specific item with `/market view`, announce with `/market announce buy` and `/market announce sell` and buy items from the market with `/market buy`!**",
-		"es-ES": "**:compass: Obtén items usando `/pescado`, `/cazar`, `/explorar`, `/minar`\n:luggage: Ver todos los items que tú o alguien más tiene con `/inventario ver`\n:moneybag: Los items se pueden vender con `/inventario vender`\n:book: Ver toda la información sobre un item como valores, rareza y usos con `/iteminfo`\n\n:hammer_pick: Los items se pueden construir con `/inventario construir`**\n-Calcule la cantidad de materiales necesarios para construir con `/inventario calcular`\n-Algunos items se pueden equipar para otorgar beneficios con `/inventario equipar`\n-Otros items se pueden usar y tienen efectos especiales con `/inventario usar`\n\n:busts_in_silhouette: Puedes intercambiar items con otros jugadores usando `/intercambio`\n**:convenience_store: ¡Compra y vende items en el mercado, ve los items disponibles con `/mercado todo` y las ofertas de un item específico con `/mercado ver`, anuncia con `/mercado anunciar compra` y `/mercado anunciar venta` y compra items del mercado con `/mercado comprar`!**"
+		"pt-BR": "**🧭 Consiga items usando `/pescar`, `/caçar`, `/explorar`, `/minerar`\n🧳 Veja todos os items que você ou outra pessoa tem com `/inventário ver`\n💰 Items podem ser vendidos com `/inventário vender`\n📖 Veja todas as informações sobre um item como valores, raridade e usos com `/iteminfo`\n\n⚒️ Items podem ser construídos com `/inventário construir`**\n-Calcule a quantidade de materiais necessários para construir com `/inventário calcular`\n-Alguns items podem ser equipados para garantir benefícios com `/inventário equipar`\n-Outros items podem ser usados e tem efeitos especiais com `/inventário usar`\n\n👥 Vocẽ pode trocar items com outros jogadores usando `/troca`\n**Para mais informações confira as páginas de 🏪 Mercado e 🏞️ Fazenda**",
+		"en-US": "**🧭 Get items using `/fish`, `/hunt`, `/explore`, `/mine`\n🧳 See all the items you or someone else has with `/inventory view`\n💰 Items can be sold with `/inventory sell`\n📖 See all the information about an item such as values, rarity and uses with `/iteminfo`\n\n⚒️ Items can be crafted with `/inventory craft`**\n-Calculate the amount of materials needed to craft with `/inventory calculate`\n-Some items can be equipped to grant benefits with `/inventory equip`\n-Other items can be used and have special effects with `/inventory use`\n\n👥 You can trade items with other players using `/trade`\n**For more information check the 🏪 Market and 🏞️ Farm pages**",
+		"es-ES": "**🧭 Obtén items usando `/pescar`, `/cazar`, `/explorar`, `/minerar`\n🧳 Ver todos los items que tú o alguien más tiene con `/inventario ver`\n💰 Los items se pueden vender con `/inventario vender`\n📖 Ver toda la información sobre un item como valores, rareza y usos con `/iteminfo`\n\n⚒️ Los items se pueden construir con `/inventario construir`**\n-Calcule la cantidad de materiales necesarios para construir con `/inventario calcular`\n-Algunos items se pueden equipar para otorgar beneficios con `/inventario equipar`\n-Otros items se pueden usar y tienen efectos especiales con `/inventario usar`\n\n👥 Puedes intercambiar items con otros jugadores usando `/intercambio`\n**Para más información, consulta las páginas de 🏪 Mercado y 🏞️ Granja**"
 	},
 	"HELP_CONFIG": {
 		"pt-BR": ":gear: Configurando o Falbot para o seu servidor",
@@ -2080,5 +2080,40 @@
 		"pt-BR": "🏞️ *+{PLOTS} terreno disponível na sua fazenda*",
 		"en-US": "🏞️ *+{PLOTS} plot available in your farm*",
 		"es-ES": "🏞️ *+{PLOTS} terreno disponible en tu granja*"
+	},
+	"HELP_MARKET": {
+		"pt-BR": "🏪 Vendendo e comprando no mercado",
+		"en-US": "🏪 Selling and buying on the market",
+		"es-ES": "🏪 Vender y comprar en el mercado"
+	},
+	"HELP_MARKET2": {
+		"pt-BR": "**O mercado é um lugar onde usuários podem comprar e vender itens entre si.**\n📦 Use `/mercado tudo` para ver todos os itens disponíveis no mercado.\n🔍 Veja todos os anúncios de um item específico com `/mercado ver`\n💰 Rapidamente compre um item do mercado com `/mercado comprar`\n\n**Tem itens de sobra ou quer algum em específico?**\n🛍️ Anuncie que quer comprar um item com `/mercado anunciar compra`\n🏷️ Anuncie que quer vender um item com `/mercado anunciar venda`\n📃 Veja todos os seus anúncios com `/mercado listagens`\n❌ Remova um anúncio com `/mercado retirar`",
+		"en-US": "**The market is a place where users can buy and sell items to each other.**\n📦 Use `/market all` to see all the items available on the market.\n🔍 See all the listings of a specific item with `/market view`\n💰 Quickly buy an item from the market with `/market buy`\n\n**Have extra items or want a specific one?**\n🛍️ List that you want to buy an item with `/market list buy`\n🏷️ List that you want to sell an item with `/market list sell`\n📃 See all your listings with `/market listings`\n❌ Remove a listing with `/market delist`",
+		"es-ES": "**El mercado es un lugar donde los usuarios pueden comprar y vender artículos entre sí.**\n📦 Usa `/mercado todo` para ver todos los artículos disponibles en el mercado.\n🔍 Ver todas las listas de un artículo específico con `/mercado ver`\n💰 Compra rápidamente un artículo del mercado con `/mercado comprar`\n\n**¿Tienes artículos extra o quieres uno específico?**\n🛍️ Anuncia que quieres comprar un artículo con `/mercado anunciar compra`\n🏷️ Anuncia que quieres vender un artículo con `/mercado anunciar venta`\n📃 Ver todas tus listas con `/mercado listados`\n❌ Elimina una lista con `/mercado retirar`"
+	},
+	"HELP_MARKET3": {
+		"pt-BR": "*Compre e venda itens*",
+		"en-US": "*Buy and sell items*",
+		"es-ES": "*Compra y vende artículos*"
+	},
+	"FARM": {
+		"pt-BR": "Fazenda",
+		"en-US": "Farm",
+		"es-ES": "Granja"
+	},
+	"HELP_FARM": {
+		"pt-BR": "🏞️ Cultivando sua fazenda",
+		"en-US": "🏞️ Farming your farm",
+		"es-ES": "🏞️ Cultivando tu granja"
+	},
+	"HELP_FARM2": {
+		"pt-BR": "**Na fazenda é possível plantar e colher certos itens**\n🪟 Veja sua fazenda com `/fazenda ver`\n🌱 Plante uma nova cultura com `/fazenda plantar`\n💦 Cada cultura pode ser regada a cada 2 horas com `/fazenda regar` isso diminui o tempo de crescimento\n🚜 Quando prontas as plantas podem ser colhidas com `/fazenda colher`\n🪓 Se arrependeu de algo que plantou? Arranque-a com `/fazenda arrancar`",
+		"en-US": "**On the farm you can plant and harvest certain items**\n🪟 View your farm with `/farm view`\n🌱 Plant a new crop with `/farm plant`\n💦 Each crop can be watered every 2 hours with `/farm water` this decreases the growth time\n🚜 When ready the crops can be harvested with `/farm harvest`\n🪓 Regret something you planted? Uproot it with `/farm uproot`",
+		"es-ES": "**En la granja puedes plantar y cosechar ciertos artículos**\n🪟 Ver tu granja con `/granja ver`\n🌱 Planta un nuevo cultivo con `/granja plantar`\n💦 Cada cultivo se puede regar cada 2 horas con `/granja regar` esto disminuye el tiempo de crecimiento\n🚜 Cuando estén listos los cultivos se pueden cosechar con `/granja cosechar`\n🪓 ¿Te arrepientes de algo que plantaste? Arráncalo con `/granja arrancar`"
+	},
+	"HELP_FARM3": {
+		"pt-BR": "*Plantando e colhendo*",
+		"en-US": "*Planting and harvesting*",
+		"es-ES": "*Plantando y cosechando*"
 	}
 }

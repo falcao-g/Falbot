@@ -62,6 +62,16 @@ module.exports = {
 						name: '⚙️ config',
 						name_localizations: { 'pt-BR': '⚙️ configuração', 'es-ES': '⚙️ configuración' },
 						value: 'config',
+					},
+					{
+						name: '🏪 market',
+						name_localizations: { 'pt-BR': '🏪 mercado', 'es-ES': '🏪 mercado' },
+						value: 'market',
+					},
+					{
+						name: '🏞️ farm',
+						name_localizations: { 'pt-BR': '🏞️ fazenda', 'es-ES': '🏞️ granja' },
+						value: 'farm',
 					}
 				)
 		),
@@ -117,6 +127,16 @@ module.exports = {
 					name: instance.getMessage(interaction, 'HELP_CONFIG'),
 					value: instance.getMessage(interaction, 'HELP_CONFIG2'),
 				});
+			} else if (page === 'market') {
+				embed.addFields({
+					name: instance.getMessage(interaction, 'HELP_MARKET'),
+					value: instance.getMessage(interaction, 'HELP_MARKET2'),
+				});
+			} else if (page === 'farm') {
+				embed.addFields({
+					name: instance.getMessage(interaction, 'HELP_FARM'),
+					value: instance.getMessage(interaction, 'HELP_FARM2'),
+				});
 			} else {
 				embed.setTitle(instance.getMessage(interaction, 'FALBOT_WELCOME'));
 				embed.addFields(
@@ -158,6 +178,16 @@ module.exports = {
 					{
 						name: ':gear: ' + instance.getMessage(interaction, 'CONFIG'),
 						value: instance.getMessage(interaction, 'HELP_CONFIG3'),
+						inline: true,
+					},
+					{
+						name: ':convenience_store: ' + instance.getMessage(interaction, 'MARKET'),
+						value: instance.getMessage(interaction, 'HELP_MARKET3'),
+						inline: true,
+					},
+					{
+						name: ':park: ' + instance.getMessage(interaction, 'FARM'),
+						value: instance.getMessage(interaction, 'HELP_FARM3'),
 						inline: true,
 					}
 				);
@@ -206,6 +236,16 @@ module.exports = {
 							label: instance.getMessage(interaction, 'CONFIG'),
 							value: 'config',
 							emoji: '⚙️',
+						},
+						{
+							label: instance.getMessage(interaction, 'MARKET'),
+							value: 'market',
+							emoji: '🏪',
+						},
+						{
+							label: instance.getMessage(interaction, 'FARM'),
+							value: 'farm',
+							emoji: '🏞️',
 						}
 					)
 			);
