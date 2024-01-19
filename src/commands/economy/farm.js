@@ -29,6 +29,20 @@ module.exports = {
 					'pt-BR': 'Veja sua fazenda',
 					'es-ES': 'Ve tu granja',
 				})
+				.addUserOption((option) =>
+					option
+						.setName('user')
+						.setNameLocalizations({
+							'pt-BR': 'usuário',
+							'es-ES': 'usuario',
+						})
+						.setDescription('The user you want to view the farm of')
+						.setDescriptionLocalizations({
+							'pt-BR': 'O usuário que você deseja ver a fazenda',
+							'es-ES': 'El usuario que quieres ver la granja',
+						})
+						.setRequired(false)
+				)
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
@@ -109,7 +123,7 @@ module.exports = {
 						})
 				)
 		),
-	execute: async ({ interaction, instance, subcommand, member, args }) => {
+	execute: async ({ interaction, instance, subcommand, member, args, guild }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			var type = interaction.options.getSubcommand();
@@ -119,8 +133,10 @@ module.exports = {
 
 		const WATER_COOLDOWN = 60 * 60 * 1000;
 
+		const user = interaction.options && interaction.options.getUser('user', false);
+		const target = user ? await guild.members.fetch(user.id) : member;
 		const player = await User.findByIdAndUpdate(
-			member.id,
+			target.id,
 			{},
 			{ select: 'plots inventory rank', upsert: true, new: true }
 		);
@@ -129,8 +145,8 @@ module.exports = {
 		const MAX_PLOTS = instance.levels[player.rank - 1].farmPlots;
 
 		const embed = instance
-			.createEmbed(member.displayColor)
-			.setTitle(instance.getMessage(interaction, 'FARM_TITLE', { USER: member.displayName }));
+			.createEmbed(target.displayColor)
+			.setTitle(instance.getMessage(interaction, 'FARM_TITLE', { USER: target.displayName }));
 
 		/**
 		 * Renders buttons ignoring the specified type.
