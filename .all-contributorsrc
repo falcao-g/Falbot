@@ -66,6 +66,15 @@
       "contributions": [
         "example"
       ]
+    },
+    {
+      "login": "Danilo-Mota",
+      "name": "Danilo Mota",
+      "avatar_url": "https://avatars.githubusercontent.com/u/72905566?v=4",
+      "profile": "https://github.com/Danilo-Mota",
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }

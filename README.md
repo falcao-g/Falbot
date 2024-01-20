@@ -64,6 +64,7 @@ If you want to contribute, please read the [contributing guide](CONTRIBUTING.md)
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/tiago-amarilha-rodrigues-a7a6b31b8/"><img src="https://avatars.githubusercontent.com/u/34931192?v=4?s=100" width="100px;" alt="Tiago Amarilha Rodrigues"/><br /><sub><b>Tiago Amarilha Rodrigues</b></sub></a><br /><a href="#doc-AmarilhaTiago" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://tacioss.dev"><img src="https://avatars.githubusercontent.com/u/27559695?v=4?s=100" width="100px;" alt="Tacio S. S."/><br /><sub><b>Tacio S. S.</b></sub></a><br /><a href="#bug-taciossbr" title="Bug reports">🐛</a> <a href="#code-taciossbr" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Piyush-Deshmukh"><img src="https://avatars.githubusercontent.com/u/99667276?v=4?s=100" width="100px;" alt="Piyush Deshmukh"/><br /><sub><b>Piyush Deshmukh</b></sub></a><br /><a href="#example-Piyush-Deshmukh" title="Examples">💡</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Danilo-Mota"><img src="https://avatars.githubusercontent.com/u/72905566?v=4?s=100" width="100px;" alt="Danilo Mota"/><br /><sub><b>Danilo Mota</b></sub></a><br /><a href="#doc-Danilo-Mota" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
