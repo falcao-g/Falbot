@@ -110,9 +110,9 @@
 		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:1234: **Tu caballo:** `{HORSE}`\n:hourglass: **Estado**: ¡Perdiste!\n:bank: **Saldo actual**: {SALDO} falcoins"
 	},
 	"HORSERACE_DESCRIPTION": {
-		"pt-BR": ":horse: {USER} começou uma **corrida de \ncavalos**, entre apertando o botão abaixo, o \nvencedor leva todos os **falcoins acumulados!**\n:moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Começando em `1m`",
-		"en-US": ":horse: {USER} started a **horse race**, \njoin by pressing the button below, the \nwinner gets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting in `1m`",
-		"es-ES": ":horse: {USER} comenzó una **carrera de \ncaballos**, únete presionando el botón de abajo, \nel ganador se lleva todos los **falcoins acumulados!**\n:moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: Comenzando en `1m`"
+		"pt-BR": ":horse: {USER} começou uma **corrida de \ncavalos**, entre apertando o botão abaixo, o \nvencedor leva todos os **falcoins acumulados!**\n:moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Começando ",
+		"en-US": ":horse: {USER} started a **horse race**, \njoin by pressing the button below, the \nwinner gets all the **accumulated falcoins!**\n:moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: Starting ",
+		"es-ES": ":horse: {USER} comenzó una **carrera de \ncaballos**, únete presionando el botón de abajo, \nel ganador se lleva todos los **falcoins acumulados!**\n:moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: Comenzando "
 	},
 	"HORSERACE_DESCRIPTION2": {
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: Correndo...",
@@ -123,6 +123,11 @@
 		"pt-BR": ":moneybag: **Aposta: {BET} falcoins**\n:hourglass: **Resultado**: {USER} ganhou!\n:bank: **Saldo atual**: {SALDO} falcoins",
 		"en-US": ":moneybag: **Bet: {BET} falcoins**\n:hourglass: **Status**: {USER} won!\n:bank: **Current balance**: {SALDO} falcoins",
 		"es-ES": ":moneybag: **Apuesta: {BET} falcoins**\n:hourglass: **Estado**: ¡{USER} ganó!\n:bank: **Saldo actual**: {SALDO} falcoins"
+	},
+	"HORSERACE_CANCEL": {
+		"pt-BR": "🐴 {USER} cancelou esta **corrida de\ncavalos**, o valor da aposta será devolvido\na todos os jogadores.\n💰 **Aposta: {BET} falcoins**",
+		"en-US": "🐴 {USER} has cancelled this **horse race**,\nthe bet amount will be returned\nto all players.\n💰 **Bet: {BET} falcoins**",
+		"es-ES": "🐴 {USER} ha cancelado esta **carrera de\ncaballos**, el valor de la apuesta será devuelto\na todos los jugadores.\n💰 **Apuesta: {BET} falcoins**"
 	},
 	"COINFLIP": {
 		"pt-BR": ":coin: você tirou **{CARAS}** caras e **{COROAS}** coroas jogando **{TIMES}** vezes",

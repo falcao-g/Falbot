@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, time } = require('discord.js');
 const { specialArg, randint, format, buttons } = require('../../utils/functions.js');
 
 module.exports = {
@@ -44,6 +44,8 @@ module.exports = {
 				return;
 			}
 
+			const remainingTime = time(Math.floor(Date.now() / 1000) + 60, 'R');
+
 			if (player.falcoins >= bet) {
 				var pot = bet;
 				const embed = instance
@@ -52,7 +54,7 @@ module.exports = {
 						instance.getMessage(interaction, 'HORSERACE_DESCRIPTION', {
 							USER: user,
 							BET: format(pot),
-						})
+						}) + remainingTime
 					)
 					.addFields({
 						name: instance.getMessage(interaction, 'PLAYERS'),
@@ -62,11 +64,13 @@ module.exports = {
 
 				var answer = await instance.editReply(interaction, {
 					embeds: [embed],
-					components: [buttons(['accept', 'skip'])],
+					components: [buttons(['accept', 'skip', 'refuse'])],
 					fetchReply: true,
 				});
 
 				player.falcoins -= bet;
+
+				player.save();
 
 				var users = [user];
 				var path = ['- - - - -'];
@@ -82,7 +86,9 @@ module.exports = {
 
 				collector.on('collect', async (i) => {
 					var collectorUser = await database.player.findOne(i.user.id);
-					if (i.customId === 'skip' && i.user.id === user.id && users.length > 1) {
+					if (i.customId === 'refuse' && i.user.id === user.id) {
+						collector.stop('refuse');
+					} else if (i.customId === 'skip' && i.user.id === user.id && users.length > 1) {
 						collector.stop();
 					} else if (i.customId === 'accept' && collectorUser.falcoins >= bet && !users.includes(i.user)) {
 						collectorUser.falcoins -= bet;
@@ -93,73 +99,91 @@ module.exports = {
 							instance.getMessage(interaction, 'HORSERACE_DESCRIPTION', {
 								USER: user,
 								BET: format(pot),
-							})
+							}) + remainingTime
 						);
 						embed.data.fields[0] = {
 							name: instance.getMessage(interaction, 'PLAYERS'),
 							value: `${users.join('\n')}`,
 							inline: false,
 						};
-					}
 
-					await i.update({
-						embeds: [embed],
-					});
-					collectorUser.save();
+						await i.update({
+							embeds: [embed],
+						});
+						collectorUser.save();
+					}
 				});
 
-				collector.on('end', async () => {
-					while (true) {
-						var luck = randint(0, users.length - 1);
-						path[luck] = path[luck].slice(0, -2);
-
-						var frase = '';
-						for (let i = 0; i < path.length; i++) {
-							frase += `${users[i]}\n:checkered_flag: ${path[i]}:horse_racing:\n\n`;
+				collector.on('end', async (collected, reason) => {
+					if (reason === 'refuse') {
+						for (const _user of users) {
+							const userFile = await database.player.findOne(_user.id);
+							userFile.falcoins += bet;
+							userFile.save();
 						}
 
 						embed.setDescription(
-							instance.getMessage(interaction, 'HORSERACE_DESCRIPTION2', {
+							instance.getMessage(interaction, 'HORSERACE_CANCEL', {
+								USER: user,
 								BET: format(pot),
 							})
 						);
+						await interaction.editReply({
+							embeds: [embed],
+							components: [],
+						});
+					} else {
+						while (true) {
+							var luck = randint(0, users.length - 1);
+							path[luck] = path[luck].slice(0, -2);
 
-						embed.data.fields[0] = {
-							name: '\u200b',
-							value: `${frase}`,
-							inline: false,
-						};
+							var frase = '';
+							for (let i = 0; i < path.length; i++) {
+								frase += `${users[i]}\n:checkered_flag: ${path[i]}:horse_racing:\n\n`;
+							}
+
+							embed.setDescription(
+								instance.getMessage(interaction, 'HORSERACE_DESCRIPTION2', {
+									BET: format(pot),
+								})
+							);
+
+							embed.data.fields[0] = {
+								name: '\u200b',
+								value: `${frase}`,
+								inline: false,
+							};
+
+							await instance.editReply(interaction, {
+								embeds: [embed],
+								components: [],
+							});
+
+							if (path[luck] === '') {
+								var winner = users[luck];
+								break;
+							}
+
+							await new Promise((resolve) => setTimeout(resolve, 250));
+						}
+
+						const winnerFile = await database.player.findOne(winner.id);
+						winnerFile.falcoins += pot;
+						if (users.length > 1) winnerFile.wins++;
+						embed.setDescription(
+							instance.getMessage(interaction, 'HORSERACE_DESCRIPTION3', {
+								BET: format(pot),
+								USER: winner,
+								SALDO: format(winnerFile.falcoins),
+							})
+						);
 
 						await instance.editReply(interaction, {
 							embeds: [embed],
 							components: [],
 						});
-
-						if (path[luck] === '') {
-							var winner = users[luck];
-							break;
-						}
-
-						await new Promise((resolve) => setTimeout(resolve, 250));
+						winnerFile.save();
 					}
-
-					const winnerFile = await database.player.findOne(winner.id);
-					winnerFile.falcoins += pot;
-					if (users.length > 1) winnerFile.wins++;
-					embed.setDescription(
-						instance.getMessage(interaction, 'HORSERACE_DESCRIPTION3', {
-							BET: format(pot),
-							USER: winner,
-							SALDO: format(winnerFile.falcoins),
-						})
-					);
-
-					await instance.editReply(interaction, {
-						embeds: [embed],
-						components: [],
-					});
-					player.save();
-					winnerFile.save();
 				});
 			} else {
 				await instance.editReply(interaction, {
