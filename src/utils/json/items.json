@@ -206,7 +206,12 @@
 		"value": 50,
 		"rarity": "Common",
 		"emoji": "🌿",
-		"exploring": true
+		"exploring": true,
+		"growTime": 5400000,
+		"harvestAmount": {
+			"min": 30,
+			"max": 75
+		}
 	},
 	"rock": {
 		"en-US": "Rock",
@@ -839,7 +844,12 @@
 		"value": 400,
 		"rarity": "Epic",
 		"emoji": "🍀",
-		"exploring": true
+		"exploring": true,
+		"growTime": 21600000,
+		"harvestAmount": {
+			"min": 10,
+			"max": 100
+		}
 	},
 	"snowflake": {
 		"en-US": "Eternal Snowflake",
@@ -861,7 +871,13 @@
 		"es-ES": "Grano de Café",
 		"value": 150,
 		"rarity": "Uncommon",
-		"exploring": true
+		"emoji": "🫘",
+		"exploring": true,
+		"growTime": 10800000,
+		"harvestAmount": {
+			"min": 50,
+			"max": 100
+		}
 	},
 	"coffee": {
 		"pt-BR": "Café",
@@ -873,6 +889,110 @@
 		"effect": "work-2",
 		"recipe": {
 			"coffeebean": 40
+		}
+	},
+	"blueberry": {
+		"en-US": "Blueberry",
+		"pt-BR": "Mirtilo",
+		"es-ES": "Arándano",
+		"value": 75,
+		"rarity": "Common",
+		"emoji": "🫐",
+		"growTime": 3000000,
+		"harvestAmount": {
+			"min": 5,
+			"max": 10
+		}
+	},
+	"strawberry": {
+		"en-US": "Strawberry",
+		"pt-BR": "Morango",
+		"es-ES": "Fresa",
+		"value": 135,
+		"rarity": "Common",
+		"emoji": "🍓",
+		"growTime": 3600000,
+		"harvestAmount": {
+			"min": 5,
+			"max": 10
+		}
+	},
+	"kiwi": {
+		"en-US": "Kiwi",
+		"pt-BR": "Kiwi",
+		"es-ES": "Kiwi",
+		"value": 375,
+		"rarity": "Uncommon",
+		"emoji": "🥝",
+		"growTime": 5400000,
+		"harvestAmount": {
+			"min": 5,
+			"max": 10
+		}
+	},
+	"mango": {
+		"en-US": "Mango",
+		"pt-BR": "Manga",
+		"es-ES": "Mango",
+		"value": 800,
+		"rarity": "Uncommon",
+		"emoji": "🥭",
+		"growTime": 7200000,
+		"harvestAmount": {
+			"min": 5,
+			"max": 10
+		}
+	},
+	"melon": {
+		"en-US": "Melon",
+		"pt-BR": "Melão",
+		"es-ES": "Melón",
+		"value": 3000,
+		"rarity": "Uncommon",
+		"emoji": "🍈",
+		"growTime": 14400000,
+		"harvestAmount": {
+			"min": 5,
+			"max": 10
+		}
+	},
+	"coconut": {
+		"en-US": "Coconut",
+		"pt-BR": "Coco",
+		"es-ES": "Coco",
+		"value": 6000,
+		"rarity": "Epic",
+		"emoji": "🥥",
+		"growTime": 28800000,
+		"harvestAmount": {
+			"min": 5,
+			"max": 10
+		}
+	},
+	"pumpkin": {
+		"en-US": "Pumpkin",
+		"pt-BR": "Abóbora",
+		"es-ES": "Calabaza",
+		"value": 17000,
+		"rarity": "Epic",
+		"emoji": "🎃",
+		"growTime": 86400000,
+		"harvestAmount": {
+			"min": 5,
+			"max": 10
+		}
+	},
+	"potato": {
+		"en-US": "Potato",
+		"pt-BR": "Batata",
+		"es-ES": "Patata",
+		"value": 1000,
+		"rarity": "Uncommon",
+		"emoji": "🥔",
+		"growTime": 259200000,
+		"harvestAmount": {
+			"min": 250,
+			"max": 500
 		}
 	}
 }

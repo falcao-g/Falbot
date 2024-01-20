@@ -84,6 +84,10 @@ module.exports = {
 				information += `\n${instance.getMessage(interaction, 'MYTHICAL')}`;
 			}
 
+			if (itemJSON.growTime != undefined) {
+				information += `\n${instance.getMessage(interaction, 'PLANTABLE')}`;
+			}
+
 			if (itemJSON.equip != undefined) {
 				information += `\n${instance.getMessage(interaction, 'EQUIPPABLE')}`;
 				information += `\n${instance.getMessage(interaction, itemJSON.effect.toUpperCase())}`;
