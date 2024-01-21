@@ -75,7 +75,10 @@ module.exports = {
 				});
 
 				const filter = (btInt) => {
-					return instance.defaultFilter(btInt) && btInt.user.id === challenged.user.id;
+					return (
+						instance.defaultFilter(btInt) &&
+						(btInt.user.id === challenged.user.id || (btInt.user.id === user.id && btInt.customId === 'refuse'))
+					);
 				};
 
 				const collector = answer.createMessageComponentCollector({
@@ -89,6 +92,12 @@ module.exports = {
 						interaction.followUp({
 							content: instance.getMessage(interaction, 'FIGHT_TOO_LONG', {
 								USER: challenged,
+							}),
+						});
+					} else if (collected.first().customId === 'refuse' && collected.first().user.id === user.id) {
+						interaction.followUp({
+							content: instance.getMessage(interaction, 'FIGHT_DECLINED', {
+								USER: member,
 							}),
 						});
 					} else if (collected.first().customId === 'refuse') {
