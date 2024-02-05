@@ -1,6 +1,7 @@
 const { specialArg, format } = require('../../utils/functions.js');
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const Blackjack = require('simply-blackjack');
+const User = require('../../schemas/user-schema.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,10 +31,11 @@ module.exports = {
 	execute: async ({ member, interaction, instance, user, database }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
-			const falcoins = interaction.options.getString('falcoins');
-			const player = await database.player.findOne(user.id);
+			var bet = interaction.options.getString('falcoins');
+			const { falcoins } = await User.findByIdAndUpdate(user.id, {}, { select: 'falcoins', upsert: true, new: true });
+			console.log(falcoins);
 			try {
-				var bet = await specialArg(falcoins, player.falcoins);
+				bet = await specialArg(bet, falcoins);
 			} catch {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'BAD_VALUE', {
@@ -42,8 +44,8 @@ module.exports = {
 				});
 				return;
 			}
-			if (player.falcoins >= bet) {
-				player.falcoins -= bet;
+			if (falcoins >= bet) {
+				await User.findByIdAndUpdate(user.id, { $inc: { falcoins: -bet } });
 
 				const Game = new Blackjack({
 					decks: 2,
@@ -180,13 +182,13 @@ module.exports = {
 							FALCOINS: format(results.bet),
 						});
 						embed.setColor(9807270);
-						player.falcoins += results.bet;
+						await User.findByIdAndUpdate(user.id, { $inc: { falcoins: results.bet } });
 					} else if (results.state === 'player_blackjack') {
 						embed.data.fields[0].value = instance.getMessage(interaction, 'PLAYER_BLACKJACK', {
 							FALCOINS: format(results.winnings),
 						});
 						embed.setColor(15844367);
-						player.falcoins += results.bet + results.winnings;
+						await User.findByIdAndUpdate(user.id, { $inc: { falcoins: results.bet + results.winnings } });
 					} else if (results.state === 'player_win') {
 						if (results.dealer.total > 21) {
 							embed.data.fields[0].value = instance.getMessage(interaction, 'DEALER_BUST', {
@@ -198,7 +200,9 @@ module.exports = {
 							)} falcoins`;
 						}
 						embed.setColor(3066993);
-						player.falcoins += results.bet + Math.floor(results.winnings / 2);
+						await User.findByIdAndUpdate(user.id, {
+							$inc: { falcoins: results.bet + Math.floor(results.winnings / 2) },
+						});
 					} else if (results.state === 'dealer_win') {
 						if (results.player.total > 21) {
 							embed.data.fields[0].value = instance.getMessage(interaction, 'PLAYER_BUST', {
@@ -218,7 +222,7 @@ module.exports = {
 					}
 
 					embed.data.fields[0].value += `\n${instance.getMessage(interaction, 'BALANCE')}: ${format(
-						player.falcoins
+						(await User.findById(user.id, 'falcoins')).falcoins
 					)} falcoins`;
 
 					await instance.editReply(interaction, {
@@ -281,8 +285,8 @@ module.exports = {
 						Game.stand();
 						i.deferUpdate();
 					} else {
-						if (player.falcoins >= bet) {
-							player.falcoins -= bet;
+						if (falcoins >= bet) {
+							User.findByIdAndUpdate(user.id, { $inc: { falcoins: -bet } });
 							Game.bet(bet * 2);
 							Game.hit();
 							Game.stand();
@@ -306,7 +310,6 @@ module.exports = {
 					content: instance.getMessage(interaction, 'NOT_ENOUGH_FALCOINS'),
 				});
 			}
-			player.save();
 		} catch (error) {
 			console.error(`blackjack: ${error}`);
 			instance.editReply(interaction, {
