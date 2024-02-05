@@ -33,7 +33,6 @@ module.exports = {
 		try {
 			var bet = interaction.options.getString('falcoins');
 			const { falcoins } = await User.findByIdAndUpdate(user.id, {}, { select: 'falcoins', upsert: true, new: true });
-			console.log(falcoins);
 			try {
 				bet = await specialArg(bet, falcoins);
 			} catch {
@@ -192,7 +191,7 @@ module.exports = {
 					} else if (results.state === 'player_win') {
 						if (results.dealer.total > 21) {
 							embed.data.fields[0].value = instance.getMessage(interaction, 'DEALER_BUST', {
-								FALCOINS: format(results.winnings / 2),
+								FALCOINS: format(Math.floor(results.winnings / 2)),
 							});
 						} else {
 							embed.data.fields[0].value = `${instance.getMessage(interaction, 'GANHOS')}: ${format(
