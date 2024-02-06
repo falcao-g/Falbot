@@ -159,6 +159,11 @@
 		"en-US": "You lost!",
 		"es-ES": "¡Perdiste!"
 	},
+	"EARNINGS": {
+		"pt-BR": "Ganhos:",
+		"en-US": "Earnings:",
+		"es-ES": "Ganancias:"
+	},
 	"LOSSES": {
 		"pt-BR": "Perdas",
 		"en-US": "Losses",

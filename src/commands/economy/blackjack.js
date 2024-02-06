@@ -194,7 +194,7 @@ module.exports = {
 								FALCOINS: format(Math.floor(results.winnings / 2)),
 							});
 						} else {
-							embed.data.fields[0].value = `${instance.getMessage(interaction, 'GANHOS')}: ${format(
+							embed.data.fields[0].value = `${instance.getMessage(interaction, 'EARNINGS')}: ${format(
 								Math.floor(results.winnings / 2)
 							)} falcoins`;
 						}
