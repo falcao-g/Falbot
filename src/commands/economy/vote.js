@@ -1,4 +1,4 @@
-const { msToTime, format } = require('../../utils/functions.js');
+const { msToTime, format, checkIfUserIsPremium } = require('../../utils/functions.js');
 require('dotenv').config();
 const { SlashCommandBuilder } = require('discord.js');
 
@@ -14,7 +14,7 @@ module.exports = {
 			'pt-BR': 'Ganhe falcois votando no bot no top.gg',
 			'es-ES': 'Gana falcoins votando por nosotros en top.gg',
 		}),
-	execute: async ({ user, instance, interaction, database }) => {
+	execute: async ({ client, user, instance, interaction, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 
@@ -28,6 +28,7 @@ module.exports = {
 			var voted = (await request.json()).voted;
 			const player = await database.player.findOne(user.id);
 			var reward = instance.levels[player.rank - 1].vote;
+			var premiumBonus = (await checkIfUserIsPremium(client, user)) ? reward : 0;
 			const bonus = Math.min(player.voteStreak, 30) * 5;
 
 			if (Date.now() - player.lastVote > 1000 * 60 * 60 * 48) {
@@ -37,19 +38,29 @@ module.exports = {
 			if (voted && Date.now() - player.lastVote > 1000 * 60 * 60 * 12) {
 				player.lastVote = Date.now();
 				player.voteStreak++;
-				player.falcoins += reward + (reward * bonus) / 100;
+				player.falcoins += reward + premiumBonus + (reward * bonus) / 100;
+
+				let rewardText = instance.getMessage(interaction, 'VOTE_COLLECTED', {
+					REWARD: format(reward + premiumBonus),
+				});
+
+				if (premiumBonus > 0) {
+					rewardText += `\n${instance.getMessage(interaction, 'PREMIUM_BONUS')}`;
+				}
+
+				if (bonus == 150) {
+					rewardText += `\n${instance.getMessage(interaction, 'VOTE_BONUS_MAX', {
+						PERCENTAGE: bonus,
+					})}`;
+				} else {
+					rewardText += `\n${instance.getMessage(interaction, 'VOTE_BONUS', {
+						PERCENTAGE: bonus,
+					})}`;
+				}
+
 				var embed = instance.createEmbed(3066993).addFields({
 					name: instance.getMessage(interaction, 'VOTE_THANKS'),
-					value:
-						bonus != 150
-							? instance.getMessage(interaction, 'VOTE_COLLECTED', {
-									REWARD: format(reward),
-									PERCENTAGE: bonus,
-							  })
-							: instance.getMessage(interaction, 'VOTE_COLLECTED_MAX', {
-									REWARD: format(reward),
-									PERCENTAGE: bonus,
-							  }),
+					value: rewardText,
 				});
 				player.stats.set('timesVoted', player.stats.get('timesVoted') + 1);
 			} else if (voted && Date.now() - player.lastVote < 1000 * 60 * 60 * 12) {

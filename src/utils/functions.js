@@ -318,6 +318,39 @@ async function useItem(member, item) {
 	await userSchema.findByIdAndUpdate(member.id, { equippedItems: equippedItems });
 }
 
+/**
+ *
+ * @param {Client} client
+ * @param {User} user
+ * @description Check if the user is a premium user
+ * @async
+ * @example checkIfUserIsPremium(client, user) // true
+ * @returns {Promise<boolean>}
+ */
+async function checkIfUserIsPremium(client, user) {
+	const { premium } = await userSchema.findById(user.id, 'premium');
+
+	// Here we first check the database because it's faster than fetching things from the discord API
+	if (premium.active && Date.now() < premium.expires) {
+		await userSchema.findByIdAndUpdate(user.id, { 'premium.expires': Date.now() + 1000 * 60 * 60 * 24 * 30 });
+		return true;
+	}
+
+	const guild = await client.guilds.fetch('742332099788275732');
+	// cache is false, otherwise if the user roles change while the program is running, it won't be updated
+	const member = await guild.members.fetch({ user, cache: false });
+
+	// If the user is a premium user, we update the database and return true
+	if (member.roles.cache.has('1204182200476639312')) {
+		await userSchema.findByIdAndUpdate(user.id, {
+			'premium.expires': Date.now() + 1000 * 60 * 60 * 24 * 30,
+			'premium.active': true,
+		});
+		return true;
+	}
+	return false;
+}
+
 module.exports = {
 	msToTime,
 	specialArg,
@@ -331,4 +364,5 @@ module.exports = {
 	isEquipped,
 	useItem,
 	resolveCooldown,
+	checkIfUserIsPremium,
 };

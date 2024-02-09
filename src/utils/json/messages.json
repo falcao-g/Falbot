@@ -557,15 +557,25 @@
 		"es-ES": ":ballot_box: ¡Gracias por votar!"
 	},
 	"VOTE_COLLECTED": {
-        "pt-BR": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:fire: +1 voto! Você vai receber outros 5% falcoins adicionais da próxima vez.**\n**:ballot_box: Vote diariamente para aumentar o seu bônus**\n**:calendar_spiral: Você pode aumentar seu bônus até 150%**",
-        "en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:fire: +1 streak! You'll earn another 5% additional falcoins next time!**\n**:ballot_box: Vote daily to increase your streak**\n**:calendar_spiral: You can increase your streak up to 150%**",   
-        "es-ES": "**{REWARD} falcoins** se han acreditado en su cuenta.\n¡También ganaste un **{PERCENTAGE}%** adicional de falcoins de tu bonificación de racha!\n**:fire: +1 racha! ¡Ganarás otro 5% de falcoins adicionales la próxima vez!**\n**:ballot_box: Vota diariamente para aumentar tu racha**\n**:calendar_spiral: Puedes aumentar tu racha hasta un 150%**"
+        "pt-BR": "**{REWARD} falcoins** foram adicionados a sua conta.",
+        "en-US": "**{REWARD} falcoins** have been credited to your account.",
+        "es-ES": "**{REWARD} falcoins** se han acreditado en su cuenta."
 	},
-	"VOTE_COLLECTED_MAX": {
-        "pt-BR": "**{REWARD} falcoins** foram adicionados a sua conta.\nVocê também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:trophy: Você chegou ao bônus máximo, continue votando para mantê-lo!**",
-		"en-US": "**{REWARD} falcoins** have been credited to your account.\nYou also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:trophy: You reached the max streak, keep voting to keep it!**",
-        "es-ES": "**{REWARD} falcoins** se han acreditado en su cuenta.\n¡También ganaste un **{PERCENTAGE}%** adicional de falcoins de tu bonificación de racha!\n**:trophy: ¡Alcanzaste la racha máxima, sigue votando para mantenerla!**"
-    },
+	"PREMIUM_BONUS": {
+		"pt-BR": ":crown: Você ganhou o dobro de falcoins por apoiar o Falbot no Patreon, obrigado!",
+		"en-US": ":crown: You earned double falcoins for supporting Falbot on Patreon, thank you!",
+		"es-ES": ":crown: ¡Ganaste el doble de falcoins por apoyar a Falbot en Patreon, gracias!"
+	},
+	"VOTE_BONUS": {
+		"pt-BR": ":1234: Você também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:fire: +1 voto! Você vai receber outros 5% falcoins adicionais da próxima vez.**\n**:ballot_box: Vote diariamente para aumentar o seu bônus**\n**:calendar_spiral: Você pode aumentar seu bônus até 150%**",
+		"en-US": ":1234: You also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:fire: +1 vote! You'll earn another 5% additional falcoins next time!**\n**:ballot_box: Vote daily to increase your streak**\n**:calendar_spiral: You can increase your streak up to 150%**",
+		"es-ES": ":1234: ¡También ganaste un **{PERCENTAGE}%** adicional de falcoins de tu bonificación de racha!\n**:fire: +1 voto! ¡Ganarás otro 5% de falcoins adicionales la próxima vez!**\n**:ballot_box: Vota diariamente para aumentar tu racha**\n**:calendar_spiral: Puedes aumentar tu racha hasta un 150%**"
+	},
+	"VOTE_BONUS_MAX": {
+		"pt-BR": ":1234: Você também ganhou **{PERCENTAGE}%** falcoins a mais como bônus por seus votos diários!\n**:trophy: Você chegou ao bônus máximo, continue votando para mantê-lo!**",
+		"en-US": ":1234: You also earned an additional **{PERCENTAGE}%** falcoins from your streak bonus!\n**:trophy: You reached the max bonus, keep voting to keep it!**",
+		"es-ES": ":1234: ¡También ganaste un **{PERCENTAGE}%** adicional de falcoins de tu bonificación de racha!\n**:trophy: ¡Alcanzaste el bono máximo, sigue votando para mantenerlo!**"
+	},	
 	"HELP_RANK": {
 		"pt-BR": ":arrow_double_up: Gaste falcoins para subir de rank",
 		"en-US": ":arrow_double_up: Spend falcoins to rank up",

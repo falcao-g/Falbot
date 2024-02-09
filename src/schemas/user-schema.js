@@ -100,6 +100,17 @@ const userSchema = mongoose.Schema(
 				},
 			},
 		],
+		premium: {
+			_id: false,
+			active: {
+				type: Boolean,
+				default: false,
+			},
+			expires: {
+				type: Number,
+				default: 0,
+			},
+		},
 	},
 	{
 		versionKey: false,
