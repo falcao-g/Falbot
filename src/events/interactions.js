@@ -19,31 +19,6 @@ module.exports = {
 			return;
 		}
 
-		if (interaction.guild != undefined) {
-			var disabledChannels = instance._disabledChannels.get(interaction.guild.id);
-			var disabledCommands = instance._disabledCommands.get(interaction.guild.id);
-		}
-
-		if (disabledChannels != undefined ? disabledChannels.includes(interaction.channel.id) : false) {
-			interaction.reply({
-				content: instance.getMessage(interaction, 'THIS_CHANNEL_IS_DISABLED'),
-				ephemeral: true,
-			});
-			return;
-		}
-
-		if (
-			disabledCommands != undefined
-				? disabledCommands.includes(interaction.commandName ?? interaction.customId.split(' ')[0])
-				: false
-		) {
-			interaction.reply({
-				content: instance.getMessage(interaction, 'THIS_COMMAND_IS_DISABLED'),
-				ephemeral: true,
-			});
-			return;
-		}
-
 		if (interaction.isChatInputCommand() || interaction.isContextMenuCommand()) {
 			const command = client.commands.get(interaction.commandName);
 
