@@ -75,7 +75,7 @@ module.exports = {
 					cont = 0;
 					setCooldown(user.id, 'scratch', 60 * 60 * 12);
 					collector.stop();
-				} else if (2 <= luck <= 3) {
+				} else if (2 <= luck && luck <= 3) {
 					//super close
 					amount = randint(100000, 190000);
 					player.falcoins += amount;
@@ -88,7 +88,7 @@ module.exports = {
 					cont = 0;
 					setCooldown(user.id, 'scratch', 60 * 60 * 10);
 					collector.stop();
-				} else if (4 <= luck <= 8) {
+				} else if (4 <= luck && luck <= 8) {
 					//pretty close
 					amount = randint(50000, 90000);
 					player.falcoins += amount;
@@ -101,7 +101,7 @@ module.exports = {
 					cont = 0;
 					setCooldown(user.id, 'scratch', 60 * 60 * 8);
 					collector.stop();
-				} else if (9 <= luck <= 15) {
+				} else if (9 <= luck && luck <= 15) {
 					//kinda close
 					amount = randint(30000, 45000);
 					player.falcoins += amount;
