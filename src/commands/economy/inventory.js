@@ -297,7 +297,7 @@ module.exports = {
 				const target = option ? await guild.members.fetch(option.id) : member;
 				const player = await database.player.findOne(target.id);
 				const limit = instance.levels[player.rank - 1].inventoryLimit + player.inventoryBonus;
-				const inventoryWorth = instance.getInventoryWorth(player.inventory);
+				const { inventoryWorth } = instance.getInventoryInfo(player.inventory);
 
 				if (player.inventory === undefined) {
 					instance.editReply(interaction, {
