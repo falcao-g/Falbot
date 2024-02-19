@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Connect4, FindEmoji, Flood, MatchPairs, Minesweeper, Snake, TicTacToe } = require('falgames');
+const { Connect4, FindEmoji, Flood, MatchPairs, Minesweeper, Snake, TicTacToe, TwoZeroFourEight } = require('falgames');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -128,6 +128,12 @@ module.exports = {
 						})
 						.setRequired(true)
 				)
+		)
+		.addSubcommand((subcommand) =>
+			subcommand.setName('2048').setDescription('Play the classic 2048 game').setDescriptionLocalizations({
+				'pt-BR': 'Jogue o clássico jogo 2048',
+				'es-ES': 'Juega el clásico juego 2048',
+			})
 		),
 	execute: async ({ interaction, instance, subcommand, member }) => {
 		try {
@@ -275,6 +281,25 @@ module.exports = {
 					tieMessage: instance.getMessage(interaction, 'FALGAMES_DRAW'),
 					timeoutMessage: instance.getMessage(interaction, 'FALGAMES_TIMEOUT'),
 					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY_2'),
+				});
+			} else if (type === '2048') {
+				var Game = new TwoZeroFourEight({
+					message: interaction,
+					isSlashGame: true,
+					embed: {
+						title: '🔢 2048',
+						color: '#551476',
+					},
+					emojis: {
+						up: '⬆️',
+						down: '⬇️',
+						left: '⬅️',
+						right: '➡️',
+					},
+					timeoutTime: 60000,
+					stopButton: instance.getMessage(interaction, 'STOP'),
+					buttonStyle: 'PRIMARY',
+					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY'),
 				});
 			}
 
