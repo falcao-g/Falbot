@@ -126,7 +126,7 @@ module.exports = {
 				);
 
 				instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'DISABLED', { NAME: command[0] }),
+					content: instance.getMessage(interaction, 'ENABLED', { NAME: command[0] }),
 				});
 			}
 		} catch (error) {

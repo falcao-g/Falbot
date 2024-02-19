@@ -15,14 +15,14 @@
 		"es-ES": "¡Este comando no existe!"
 	},
 	"DISABLED": {
-		"en-US": "{NAME} was disabled!",
-		"pt-BR": "{NAME} foi desativado!",
-		"es-ES": "{NAME} fue desactivado!"
+		"en-US": "{NAME} was disabled! this command is deprecated and will be removed, please use the integrations menu from discord instead",
+		"pt-BR": "{NAME} foi desativado! este comando está obsoleto e será removido, por favor use o menu de integrações do discord no lugar",
+		"es-ES": "{NAME} fue desactivado! este comando está obsoleto y será eliminado, por favor use el menú de integraciones de discord en su lugar"
 	},
 	"ENABLED": {
-		"en-US": "{NAME} was renabled!",
-		"pt-BR": "{NAME} foi reativado!",
-		"es-ES": "{NAME} fue reactivado!"
+		"en-US": "{NAME} was renabled! this command is deprecated and will be removed, please use the integrations menu from discord instead",
+		"pt-BR": "{NAME} foi reativado! este comando está obsoleto e será removido, por favor use o menu de integrações do discord no lugar",
+		"es-ES": "{NAME} fue reactivado! este comando está obsoleto y será eliminado, por favor use el menú de integraciones de discord en su lugar"
 	},
 	"THIS_CHANNEL_IS_DISABLED": {
 		"en-US": "You can't use Falbot in this channel because it's disabled",
