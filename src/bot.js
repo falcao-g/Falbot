@@ -22,7 +22,6 @@ class Falbot {
 	lottoSchema = require('./schemas/lotto-schema.js');
 	interestSchema = require('./schemas/interest-schema.js');
 	bannedSchema = require('./schemas/banned-schema.js');
-	guildsSchema = require('./schemas/guilds-schema.js');
 	activeEvents = new Map();
 
 	constructor() {
