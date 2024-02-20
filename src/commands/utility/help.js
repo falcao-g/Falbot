@@ -59,11 +59,6 @@ module.exports = {
 						value: 'items',
 					},
 					{
-						name: '⚙️ config',
-						name_localizations: { 'pt-BR': '⚙️ configuração', 'es-ES': '⚙️ configuración' },
-						value: 'config',
-					},
-					{
 						name: '🏪 market',
 						name_localizations: { 'pt-BR': '🏪 mercado', 'es-ES': '🏪 mercado' },
 						value: 'market',
@@ -122,11 +117,6 @@ module.exports = {
 					name: instance.getMessage(interaction, 'HELP_ITEMS'),
 					value: instance.getMessage(interaction, 'HELP_ITEMS2'),
 				});
-			} else if (page === 'config') {
-				embed.addFields({
-					name: instance.getMessage(interaction, 'HELP_CONFIG'),
-					value: instance.getMessage(interaction, 'HELP_CONFIG2'),
-				});
 			} else if (page === 'market') {
 				embed.addFields({
 					name: instance.getMessage(interaction, 'HELP_MARKET'),
@@ -173,11 +163,6 @@ module.exports = {
 					{
 						name: ':school_satchel: ' + instance.getMessage(interaction, 'ITEMS'),
 						value: instance.getMessage(interaction, 'HELP_ITEMS3'),
-						inline: true,
-					},
-					{
-						name: ':gear: ' + instance.getMessage(interaction, 'CONFIG'),
-						value: instance.getMessage(interaction, 'HELP_CONFIG3'),
 						inline: true,
 					},
 					{
@@ -231,11 +216,6 @@ module.exports = {
 							label: instance.getMessage(interaction, 'ITEMS'),
 							value: 'items',
 							emoji: '🎒',
-						},
-						{
-							label: instance.getMessage(interaction, 'CONFIG'),
-							value: 'config',
-							emoji: '⚙️',
 						},
 						{
 							label: instance.getMessage(interaction, 'MARKET'),

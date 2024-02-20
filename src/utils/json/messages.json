@@ -14,26 +14,6 @@
 		"en-US": "This command doesn't exist!",
 		"es-ES": "¡Este comando no existe!"
 	},
-	"DISABLED": {
-		"en-US": "{NAME} was disabled!",
-		"pt-BR": "{NAME} foi desativado!",
-		"es-ES": "{NAME} fue desactivado!"
-	},
-	"ENABLED": {
-		"en-US": "{NAME} was renabled!",
-		"pt-BR": "{NAME} foi reativado!",
-		"es-ES": "{NAME} fue reactivado!"
-	},
-	"THIS_CHANNEL_IS_DISABLED": {
-		"en-US": "You can't use Falbot in this channel because it's disabled",
-		"pt-BR": "Você não pode usar o Falbot nesse canal porque ele está desativado",
-		"es-ES": "No puedes usar Falbot en este canal porque está desactivado"
-	},
-	"THIS_COMMAND_IS_DISABLED": {
-		"en-US": "You can't use this command because it's disabled",
-		"pt-BR": "Você não pode usar esse comando porque ele está desativado",
-		"es-ES": "No puedes usar este comando porque está desactivado"
-	},
 	"BOT_OWNERS_ONLY": {
 		"en-US": "Only the bot developer can run this command.",
 		"pt-BR": "Apenas o desenvolvedor do bot pode executar este comando.",
@@ -616,16 +596,6 @@
 		"en-US": "**🧭 Get items using `/fish`, `/hunt`, `/explore`, `/mine`\n🧳 See all the items you or someone else has with `/inventory view`\n💰 Items can be sold with `/inventory sell`\n📖 See all the information about an item such as values, rarity and uses with `/iteminfo`\n\n⚒️ Items can be crafted with `/inventory craft`**\n-Calculate the amount of materials needed to craft with `/inventory calculate`\n-Some items can be equipped to grant benefits with `/inventory equip`\n-Other items can be used and have special effects with `/inventory use`\n\n👥 You can trade items with other players using `/trade`\n**For more information check the 🏪 Market and 🏞️ Farm pages**",
 		"es-ES": "**🧭 Obtén items usando `/pescar`, `/cazar`, `/explorar`, `/minerar`\n🧳 Ver todos los items que tú o alguien más tiene con `/inventario ver`\n💰 Los items se pueden vender con `/inventario vender`\n📖 Ver toda la información sobre un item como valores, rareza y usos con `/iteminfo`\n\n⚒️ Los items se pueden construir con `/inventario construir`**\n-Calcule la cantidad de materiales necesarios para construir con `/inventario calcular`\n-Algunos items se pueden equipar para otorgar beneficios con `/inventario equipar`\n-Otros items se pueden usar y tienen efectos especiales con `/inventario usar`\n\n👥 Puedes intercambiar items con otros jugadores usando `/intercambio`\n**Para más información, consulta las páginas de 🏪 Mercado y 🏞️ Granja**"
 	},
-	"HELP_CONFIG": {
-		"pt-BR": ":gear: Configurando o Falbot para o seu servidor",
-		"en-US": ":gear: Configuring Falbot to your server",
-		"es-ES": ":gear: Configurando Falbot para tu servidor"
-	},
-	"HELP_CONFIG2": {
-		"pt-BR": "-Desative/reative canais com `/canal`\n-Desative/reative comandos com `/comando`\ncomandos e canais desativados serão ignorados pelo bot",
-		"en-US": "-Disable/enable channels with `/channel`\n-Disable/enable channels with `/command`\ndisabled channels and commands will be ignored by the bot",
-		"es-ES": "-Desactiva/activa canales con `/canal`\n-Desactiva/activa comandos con `/comando`\nlos canales y comandos desactivados serán ignorados por el bot"
-	},
 	"INTRODUCTION": {
 		"pt-BR": "Introdução",
 		"en-US": "Introduction",
@@ -655,11 +625,6 @@
 		"pt-BR": "Items e Inventário",
 		"en-US": "Items and Inventory",
 		"es-ES": "Items e Inventario"
-	},
-	"CONFIG": {
-		"pt-BR": "Configuração",
-		"en-US": "Configuration",
-		"es-ES": "Configuración"
 	},
 	"HELP_INTRODUCTION": {
 		"pt-BR": "*Introdução ao jogo*",
@@ -700,11 +665,6 @@
 		"pt-BR": "*Inventário e items*",
 		"en-US": "*Inventory and item help*",
 		"es-ES": "*Inventario y items*"
-	},
-	"HELP_CONFIG3": {
-		"pt-BR": "*Configurando falbot para o seu servidor*",
-		"en-US": "*Configuring falbot for your server*",
-		"es-ES": "*Configurando falbot para tu servidor*"
 	},
 	"FALBOT_WELCOME": {
 		"pt-BR": ":wave: Bem-vindo ao falbot! Use o menu para escolher uma página de ajuda",
