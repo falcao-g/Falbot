@@ -348,11 +348,15 @@ class Falbot {
 		return perks;
 	}
 
-	getInventoryWorth(inventory) {
-		return Array.from(inventory).reduce((acc, [itemName, quantity]) => {
-			if (this.items[itemName]['value'] !== undefined) acc += this.items[itemName]['value'] * quantity;
-			return acc;
-		}, 0);
+	getInventoryInfo(inventory) {
+		return Array.from(inventory).reduce(
+			(acc, [itemName, quantity]) => {
+				if (this.items[itemName]['value'] !== undefined) acc.inventoryWorth += this.items[itemName]['value'] * quantity;
+				acc.inventoryQuantity += quantity;
+				return acc;
+			},
+			{ inventoryWorth: 0, inventoryQuantity: 0 }
+		);
 	}
 
 	createEmbed(color = 'Random') {

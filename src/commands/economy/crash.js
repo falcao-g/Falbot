@@ -43,7 +43,7 @@ module.exports = {
 			}
 			if (player.falcoins >= bet) {
 				player.falcoins -= bet;
-				multiplier = 10;
+				var multiplier = 10;
 				const embed = instance.createEmbed(member.displayColor).addFields(
 					{
 						name: 'Crash',

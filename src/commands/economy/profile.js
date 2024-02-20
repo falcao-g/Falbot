@@ -48,8 +48,7 @@ module.exports = {
 				});
 			}
 
-			var inventoryQuantity = 0;
-			const inventoryWorth = instance.getInventoryWorth(inventory);
+			const { inventoryWorth, inventoryQuantity } = instance.getInventoryInfo(inventory);
 
 			const embed = instance
 				.createEmbed(target.displayColor)
