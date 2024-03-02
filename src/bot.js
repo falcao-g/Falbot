@@ -14,7 +14,7 @@ class Falbot {
 	emVal = (s) => s.split('').reduce((a, b) => ((a << 5) - a + b.charCodeAt(0)) | 0, 0);
 	client = new Client({
 		shards: 'auto',
-		intents: [GatewayIntentBits.Guilds],
+		intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
 	});
 	levels = require('./utils/json/levels.json');
 	items = require('./utils/json/items.json');
