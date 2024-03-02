@@ -140,7 +140,7 @@ module.exports = {
 			{},
 			{ select: 'plots inventory rank', upsert: true, new: true }
 		);
-		const items = instance.items;
+		const { items } = instance;
 
 		const MAX_PLOTS = instance.levels[player.rank - 1].farmPlots;
 

@@ -193,7 +193,7 @@ function pick(data, luck = 1) {
  * @returns {Promise<void>}
  */
 async function setCooldown(id, command, cooldown) {
-	var cooldowns = (await userSchema.findById(id)).cooldowns;
+	var { cooldowns } = await userSchema.findById(id);
 	cooldowns.set(command, Date.now() + cooldown * 1000);
 	await userSchema.findByIdAndUpdate(id, { cooldowns: cooldowns });
 }
@@ -208,7 +208,7 @@ async function setCooldown(id, command, cooldown) {
  * @returns {integer}
  */
 async function resolveCooldown(id, command) {
-	var cooldowns = (await userSchema.findById(id)).cooldowns;
+	var { cooldowns } = await userSchema.findById(id);
 	var commandField = cooldowns.get(command);
 	if (commandField != undefined) {
 		if (commandField > Date.now()) {
@@ -283,7 +283,7 @@ function buttons(buttons) {
  * @returns {boolean}
  */
 async function isEquipped(member, item) {
-	const equippedItems = (await userSchema.findById(member.id)).equippedItems;
+	const { equippedItems } = await userSchema.findById(member.id);
 
 	for (itemEquipped of equippedItems) {
 		if (itemEquipped.name === item) {
@@ -302,7 +302,7 @@ async function isEquipped(member, item) {
  * @returns {Promise<void>}
  */
 async function useItem(member, item) {
-	var equippedItems = (await userSchema.findById(member.id)).equippedItems;
+	var { equippedItems } = await userSchema.findById(member.id);
 
 	for (itemEquipped of equippedItems) {
 		if (itemEquipped.name === item) {

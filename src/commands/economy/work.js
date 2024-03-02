@@ -18,7 +18,7 @@ module.exports = {
 	execute: async ({ interaction, instance, member, user, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
-			var levels = instance.levels;
+			var { levels } = instance;
 			const player = await database.player.findOne(user.id);
 
 			var min = levels[player.rank - 1].work[0];

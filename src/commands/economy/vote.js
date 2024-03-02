@@ -25,7 +25,7 @@ module.exports = {
 				},
 			});
 
-			var voted = (await request.json()).voted;
+			var { voted } = await request.json();
 			const player = await database.player.findOne(user.id);
 			var reward = instance.levels[player.rank - 1].vote;
 			var premiumBonus = (await checkIfUserIsPremium(client, user)) ? reward : 0;

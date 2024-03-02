@@ -287,7 +287,7 @@ module.exports = {
 			} catch {
 				var type = subcommand;
 			}
-			const items = instance.items;
+			const { items } = instance;
 
 			if (type === 'view') {
 				if (subcommand != 'view') {
@@ -788,7 +788,7 @@ module.exports = {
 					player.falcoins += falcoins;
 
 					if (itemsSold.length > 10) {
-						var length = itemsSold.length;
+						var { length } = itemsSold;
 						itemsSold = itemsSold.splice(0, 10);
 						itemsSold.push(
 							instance.getMessage(interaction, 'MORE', {
@@ -938,7 +938,7 @@ module.exports = {
 	},
 	autocomplete: async ({ interaction, instance }) => {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
-		const items = instance.items;
+		const { items } = instance;
 		const subcommand = interaction.options.getSubcommand();
 
 		var localeItems = Object.keys(items)

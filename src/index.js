@@ -21,5 +21,5 @@ manager
 		console.log(`${shards.size} shard(s) spawned.`);
 	})
 	.catch((err) => {
-		console.log('An error has occurred :', err);
+		console.error('An error has occurred :', err);
 	});

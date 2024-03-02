@@ -24,7 +24,7 @@ module.exports = {
 	execute: async ({ interaction, instance, member, subcommand, args, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
-			const items = instance.items;
+			const { items } = instance;
 			const player = await database.player.findOne(member.id);
 
 			if (interaction.options !== undefined) {
@@ -170,7 +170,7 @@ module.exports = {
 	},
 	autocomplete: async ({ interaction, instance }) => {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
-		const items = instance.items;
+		const { items } = instance;
 		const localeItems = Object.keys(items).map((key) => {
 			return instance.getItemName(key, interaction);
 		});

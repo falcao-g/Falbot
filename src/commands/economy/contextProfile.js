@@ -18,7 +18,7 @@ module.exports = {
 				target.user.id
 			);
 			const limit = instance.levels[rank - 1].bankLimit;
-			const items = instance.items;
+			const { items } = instance;
 
 			if (instance.levels[rank - 1].falcoinsToLevelUp === undefined) {
 				var rankText = ':sparkles: ' + instance.getMessage(interaction, 'MAX_RANK2');

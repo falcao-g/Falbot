@@ -10,16 +10,21 @@
         "ecmaVersion": "latest"
     },
     "rules": {
-        "prettier/prettier": ["error", { "printWidth": 120, "useTabs": true }],
+        "prettier/prettier": "error",
           "array-bracket-spacing": "error",
           "comma-spacing": "error",
-          "no-alert": "error",
           "no-const-assign": "error",
           "no-empty": "error",
           "no-eval": "error",
           "no-extra-boolean-cast": "error",
           "prefer-const": "error",
           "sort-imports": "error",
-          "sort-vars": "error"
+          "sort-vars": "error",
+          "max-params": ["error", 3],
+          "prefer-destructuring": ["error", {
+            "array": false,
+            "object": true
+          }],
+          "no-console": ["warn", { "allow": ["error"]}]
     }
 }
