@@ -2110,5 +2110,225 @@
 		"pt-BR": "🌱 Plantável",
 		"en-US": "🌱 Plantable",
 		"es-ES": "🌱 Plantable"
+	},
+	"WOULD_YOU_RATHER": {
+		"pt-BR": ":thinking: Você prefere...",
+		"en-US": ":thinking: Would you rather...",
+		"es-ES": ":thinking: ¿Preferirías..."
+	},
+	"FAST_TYPE": {
+		"pt-BR": "⌨️ Digite o mais rápido que puder!",
+		"en-US": "⌨️ Type as fast as you can!",
+		"es-ES": "⌨️ ¡Escribe lo más rápido que puedas!"
+	},
+	"TIME_TO_TYPE": {
+		"pt-BR": "Você tem {time} segundos para digitar a frase abaixo.",
+		"en-US": "You have {time} seconds to type the sentence below.",
+		"es-ES": "Tienes {time} segundos para escribir la oración a continuación."
+	},
+	"SENTENCES": {
+		"pt-BR": [
+			"Num buraco no chão vivia um hobbit. Não uma toca desagradável, suja e úmida, cheia de restos de minhocas e com cheiro de lodo, nem uma toca seca, nua e arenosa, sem nada em que se sentar ou o que comer: era uma toca-hobbit, e isso significa conforto.",
+			"O barulho das explosões ao longe e do contrafogo retumbante da artilharia em terra invadiu o centro de comando. A sala estremeceu. Grãos de poeira caíam das tubulações e de cabos no teto, e as luminárias piscavam. Tarkin monitorava os holovídeos das transmissões terrestres.",
+			"O retrato, como já disse, era o de uma jovem. Mostrava apenas a cabeça e os ombros, pintados naquilo que tecnicamente é denominado vignette; muito no estilo das cabeças favoritas de Sully. Os braços, o colo e até mesmo as pontas do cabelo radiante fundiam-se de maneira imperceptível na sombra vaga porém densa que formava o pano de fundo do conjunto",
+			"Acho que o Rowley merece os parabéns por ter conseguido encontrar uma garota que goste dele. Mas isso não significa que eu esteja FELIZ com isso. Nos bons tempos, quando éramos só eu e ele, nós podiámos fazer o que desse vontade.",
+			"Trate o inimigo irritável com uma abordagem provocativa. Torne ainda mais orgulhoso o inimigo que te despreza. Procure cansar o inimigo descansado e enfraquecer com discórdia o inimigo que goza de harmonia. Aproveite a oportunidade e ataque o inimigo quando ele não estiver preparado, dando um golpe repentino e inesperado.",
+			"Eis o que diz a Enciclopédia Galáctica a respeito do álcool: é um líquido volátil e incolor formado pela fermentação dos açúcares. Acrescenta ainda que o álcool tem o efeito de inebriar certas formas de via baseadas em carbono. O Guia do Mochileiro das Galáxias também menciona o álcool. Diz que o melhor drinque que existe é a Dinamite Pangalática."
+		],
+		"en-US": [
+			"In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell, nor yet a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a hobbit-hole, and that means comfort.",
+			"The noise of distant explosions and the booming counterfire of artillery on the ground shook the command center. The room trembled. Dust fell from the pipes and cables in the ceiling, and the lights flickered. Tarkin monitored the holovids of the ground transmissions.",
+			"The portrait, as I said before, was of a young woman. It showed only the head and shoulders, painted in what is technically called a vignette; very much in the style of Sully's favorite heads. The arms, the bosom, and even the ends of the radiant hair melted imperceptibly into the vague but dense shadow which formed the back-ground of the whole.",
+			"Treat the irritable enemy with a provocative approach. Make the enemy who despises you even more proud. Try to tire the rested enemy and weaken the enemy who enjoys harmony with discord. Take the opportunity and attack the enemy when he is not prepared, giving a sudden and unexpected blow.",
+			"Here is what the Encyclopedia Galactica has to say about alcohol: it is a volatile liquid and colorless formed by the fermentation of sugars. It further adds that alcohol has the effect of intoxicating certain forms of travel based on carbon. The Hitchhiker's Guide to the Galaxy also mentions alcohol. It says that the best drink there is is the Pan Galactic Dynamite."
+		],
+		"es-ES": [
+			"En un agujero en el suelo vivía un hobbit. No un agujero desagradable, sucio y húmedo, lleno de extremos de gusanos y un olor viscoso, ni un agujero seco, desnudo y arenoso sin nada en lo que sentarse o comer: era un agujero de hobbit, y eso significa comodidad.",
+			"El ruido de las explosiones a distancia y el contrafuego retumbante de la artillería en tierra sacudieron el centro de mando. La habitación tembló. El polvo caía de las tuberías y cables del techo, y las luces parpadeaban. Tarkin monitoreó los holovideos de las transmisiones terrestres.",
+			"El retrato, como dije antes, era de una joven. Mostraba solo la cabeza y los hombros, pintados en lo que técnicamente se llama viñeta; muy al estilo de las cabezas favoritas de Sully. Los brazos, el pecho e incluso las puntas del cabello radiante se fundieron imperceptiblemente en la sombra vaga pero densa que formaba el fondo de todo el conjunto.",
+			"Trata al enemigo irritable con un enfoque provocativo. Haz que el enemigo que te desprecia esté aún más orgulloso. Intente cansar al enemigo descansado y debilitar al enemigo que disfruta de la armonía con la discordia. Aprovecha la oportunidad y ataca al enemigo cuando no esté preparado, dando un golpe repentino e inesperado.",
+			"Esto es lo que dice la Enciclopedia Galáctica sobre el alcohol: es un líquido volátil e incoloro formado por la fermentación de azúcares. Además agrega que el alcohol tiene el efecto de intoxicar ciertas formas de viaje basadas en carbono. La Guía del autoestopista galáctico también menciona el alcohol. Dice que la mejor bebida que existe es la Dinamita Pan Galáctica."
+		]
+	},
+	"FAST_TYPE_WIN": {
+		"pt-BR": "Você ganhou! Você digitou a frase em {time} segundos, digitando {wpm} palavras por minuto!",
+		"en-US": "You won! You typed the sentence in {time} seconds, typing {wpm} words per minute!",
+		"es-ES": "¡Ganaste! Escribiste la oración en {time} segundos, escribiendo {wpm} palabras por minuto!"
+	},
+	"FAST_TYPE_LOSE": {
+		"pt-BR": "Você perdeu! Você não digitou a frase rápido o suficiente!",
+		"en-US": "You lost! You didn't type the sentence fast enough!",
+		"es-ES": "¡Perdiste! ¡No escribiste la oración lo suficientemente rápido!"
+	},
+	"TRIVIA_WIN": {
+		"pt-BR": "Você ganhou! A resposta certa é {answer}.",
+		"en-US": "You won! The correct answer is {answer}.",
+		"es-ES": "¡Ganaste! La respuesta correcta es {answer}."
+	},
+	"TRIVIA_LOSE": {
+		"pt-BR": "Você perdeu! A resposta certa é {answer}.",
+		"en-US": "You lost! The correct answer is {answer}.",
+		"es-ES": "¡Perdiste! La respuesta correcta es {answer}."
+	},
+	"TRIVIA_DESCRIPTION": {
+		"pt-BR": "Você tem 60 segundos para responder a pergunta.",
+		"en-US": "You have 60 seconds to answer the question.",
+		"es-ES": "Tienes 60 segundos para responder la pregunta."
+	},
+	"POKEMON": {
+		"pt-BR": "Quem é esse Pokémon?",
+		"en-US": "Who's The Pokemon?",
+		"es-ES": "¿Quién es ese Pokémon?"
+	},
+	"POKEMON_WIN": {
+		"pt-BR": "Você adivinhou corretamente! Era um {pokemon}.",
+		"en-US": "You guessed correctly! It was a {pokemon}.",
+		"es-ES": "¡Adivinaste correctamente! Era un {pokemon}."
+	},
+	"POKEMON_LOSE": {
+		"pt-BR": "Mais sorte na próxima! Era um {pokemon}.",
+		"en-US": "Better luck next time! It was a {pokemon}.",
+		"es-ES": "Mejor suerte la próxima vez! Era un {pokemon}."
+	},
+	"TYPES": {
+		"pt-BR": "Tipos",
+		"en-US": "Types",
+		"es-ES": "Tipos"
+	},
+	"ABILITIES": {
+		"pt-BR": "Habilidades",
+		"en-US": "Abilities",
+		"es-ES": "Habilidades"
+	},
+	"HANGMAN": {
+		"pt-BR": "🪢 Forca",
+		"en-US": "🪢 Hangman",
+		"es-ES": "🪢 Ahorcado"
+	},
+	"WORDS_WIN": {
+		"pt-BR": "Você ganhou! A palavra era **{word}**.",
+		"en-US": "You won! The word was **{word}**.",
+		"es-ES": "¡Ganaste! La palabra era **{word}**."
+	},
+	"WORDS_LOSE": {
+		"pt-BR": "Você perdeu! A palavra era **{word}**.",
+		"en-US": "You lost! The word was **{word}**.",
+		"es-ES": "¡Perdiste! La palabra era **{word}**."
+	},
+	"HANGMAN_WORDS": {
+		"pt-BR": [
+			"cachoeira",
+			"ilha",
+			"grama",
+			"lago",
+			"oceano",
+			"azul",
+			"verde",
+			"amarelo",
+			"roxo",
+			"laranja",
+			"futebol",
+			"basquete",
+			"boxe",
+			"skate",
+			"abacaxi",
+			"banana",
+			"morango",
+			"uva",
+			"kiwi",
+			"melancia",
+			"gelo",
+			"casaco",
+			"blusa",
+			"elefante",
+			"tigre",
+			"cachorro",
+			"gato"
+		],
+		"en-US": [
+			"waterfall",
+			"island",
+			"grass",
+			"lake",
+			"ocean",
+			"blue",
+			"green",
+			"yellow",
+			"purple",
+			"orange",
+			"football",
+			"basketball",
+			"boxing",
+			"skate",
+			"pineapple",
+			"banana",
+			"strawberry",
+			"grape",
+			"kiwi",
+			"watermelon",
+			"ice",
+			"jacket",
+			"sweater",
+			"elephant",
+			"tiger",
+			"dog",
+			"cat"
+		],
+		"es-ES": [
+			"cascada",
+			"isla",
+			"hierba",
+			"lago",
+			"azul",
+			"verde",
+			"amarillo",
+			"naranja",
+			"baloncesto",
+			"boxeo",
+			"patineta",
+			"fresa",
+			"uva",
+			"kiwi",
+			"hielo",
+			"chaqueta",
+			"elefante",
+			"tigre",
+			"perro",
+			"gato",
+			"naranja",
+			"manzana",
+			"pera",
+			"ciruela"
+		]
+	},
+	"ROCK": {
+		"pt-BR": "Pedra",
+		"en-US": "Rock",
+		"es-ES": "Piedra"
+	},
+	"PAPER": {
+		"pt-BR": "Papel",
+		"en-US": "Paper",
+		"es-ES": "Papel"
+	},
+	"SCISSORS": {
+		"pt-BR": "Tesoura",
+		"en-US": "Scissors",
+		"es-ES": "Tijeras"
+	},
+	"BUTTON_BELOW": {
+		"pt-BR": "Pressione um botão abaixo para fazer uma escolha.",
+		"en-US": "Press a button below to make a choice.",
+		"es-ES": "Presiona un botón a continuación para hacer una elección."
+	},
+	"RPS_CHOICE": {
+		"pt-BR": "Você escolheu {emoji}.",
+		"en-US": "You choose {emoji}.",
+		"es-ES": "Elegiste {emoji}."
+	},
+	"RPS_WIN": {
+		"pt-BR": "**{player}** ganhou o jogo! Parabéns!",
+		"en-US": "'**{player}** won the Game! Congratulations!'",
+		"es-ES": "**{player}** ganó el juego! ¡Felicidades!"
 	}
 }

@@ -1,5 +1,22 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { Connect4, FindEmoji, Flood, MatchPairs, Minesweeper, Snake, TicTacToe, TwoZeroFourEight } = require('falgames');
+const { randint } = require('../../utils/functions');
+const {
+	Connect4,
+	FindEmoji,
+	Flood,
+	MatchPairs,
+	Minesweeper,
+	Snake,
+	TicTacToe,
+	TwoZeroFourEight,
+	WouldYouRather,
+	Trivia,
+	FastType,
+	GuessThePokemon,
+	Hangman,
+	RockPaperScissors,
+	Wordle,
+} = require('falgames');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -134,6 +151,93 @@ module.exports = {
 				'pt-BR': 'Jogue o clássico jogo 2048',
 				'es-ES': 'Juega el clásico juego 2048',
 			})
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('wouldyourather')
+				.setNameLocalizations({
+					'pt-BR': 'vocêprefere',
+					'es-ES': 'prefieres',
+				})
+				.setDescription('Choose what you would rather do')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Escolha o que você prefere fazer',
+					'es-ES': 'Elige qué preferirías hacer',
+				})
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('trivia')
+				.setDescription('See how much useless knowledge you know')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Veja o quanto de conhecimento inútil você sabe',
+					'es-ES': 'Ve cuánto conocimiento inútil sabes',
+				})
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('fasttype')
+				.setNameLocalizations({
+					'pt-BR': 'digiterápido',
+					'es-ES': 'escribirrápido',
+				})
+				.setDescription('Can you type fast?')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Você consegue digitar rápido?',
+					'es-ES': '¿Puedes escribir rápido?',
+				})
+		)
+		.addSubcommand((subcommand) =>
+			subcommand.setName('pokemon').setDescription('What pokemon is this?').setDescriptionLocalizations({
+				'pt-BR': 'Que pokemon é esse?',
+				'es-ES': '¿Qué pokemon es este?',
+			})
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('hangman')
+				.setNameLocalizations({
+					'pt-BR': 'forca',
+					'es-ES': 'ahorcado',
+				})
+				.setDescription('Find out the mystery word')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Descubra a palavra misteriosa',
+					'es-ES': 'Descubre la palabra misteriosa',
+				})
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('rockpaperscissors')
+				.setNameLocalizations({
+					'pt-BR': 'jokenpô',
+					'es-ES': 'piedrapapeltijera',
+				})
+				.setDescription('Challenge someone to a game of rock paper scissors')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Desafie alguém para um jogo de jokenpô',
+					'es-ES': 'Desafía a alguien a un juego de piedra papel tijera',
+				})
+				.addUserOption((option) =>
+					option
+						.setName('opponent')
+						.setNameLocalizations({
+							'pt-BR': 'oponente',
+							'es-ES': 'oponente',
+						})
+						.setDescription('opponent to play with')
+						.setDescriptionLocalizations({
+							'pt-BR': 'oponente para jogar',
+							'es-ES': 'oponente para jugar',
+						})
+						.setRequired(true)
+				)
+		)
+		.addSubcommand((subcommand) =>
+			subcommand.setName('wordle').setDescription('Play wordle from a random day').setDescriptionLocalizations({
+				'pt-BR': 'Jogue wordle de um dia aleatório',
+				'es-ES': 'Juega wordle de un día aleatorio',
+			})
 		),
 	execute: async ({ interaction, instance, subcommand, member }) => {
 		try {
@@ -150,7 +254,6 @@ module.exports = {
 					opponent: interaction.options.getUser('opponent'),
 					embed: {
 						title: ':brain: Connect4',
-						statusTitle: 'Status',
 						color: member.displayColor,
 					},
 					emojis: {
@@ -158,9 +261,7 @@ module.exports = {
 						player1: '🔴',
 						player2: '🟡',
 					},
-					mentionUser: true,
-					timeoutTime: 60000,
-					buttonStyle: 'PRIMARY',
+					timeoutTime: 1000 * 60,
 					turnMessage: instance.getMessage(interaction, 'FALGAMES_MOVE'),
 					winMessage: instance.getMessage(interaction, 'FALGAMES_WIN'),
 					tieMessage: instance.getMessage(interaction, 'FALGAMES_DRAW'),
@@ -177,9 +278,8 @@ module.exports = {
 						description: instance.getMessage(interaction, 'REMEMBER_THE_EMOJIS'),
 						findDescription: instance.getMessage(interaction, 'FIND_EMOJI_DESCRIPTION'),
 					},
-					timeoutTime: 60000,
-					hideEmojiTime: 5000,
-					buttonStyle: 'PRIMARY',
+					timeoutTime: 1000 * 60,
+					hideEmojiTime: 8000,
 					emojis: ['🍉', '🍇', '🍊', '🍋', '🥭', '🍎', '🍏', '🥝'],
 					winMessage: instance.getMessage(interaction, 'FIND_EMOJI_WIN'),
 					loseMessage: instance.getMessage(interaction, 'FIND_EMOJI_LOSE'),
@@ -195,8 +295,7 @@ module.exports = {
 						color: member.displayColor,
 					},
 					difficulty: 13,
-					timeoutTime: 60000,
-					buttonStyle: 'PRIMARY',
+					timeoutTime: 1000 * 60,
 					emojis: ['🟥', '🟦', '🟧', '🟪', '🟩'],
 					winMessage: instance.getMessage(interaction, 'FLOOD_WIN'),
 					loseMessage: instance.getMessage(interaction, 'FLOOD_LOSE'),
@@ -211,7 +310,7 @@ module.exports = {
 						color: member.displayColor,
 						description: instance.getMessage(interaction, 'MATCH_PAIRS_DESCRIPTION'),
 					},
-					timeoutTime: 60000,
+					timeoutTime: 1000 * 60,
 					emojis: ['🍉', '🍇', '🍊', '🥭', '🍎', '🍏', '🥝', '🥥', '🍓', '🫐', '🍍', '🥕', '🥔'],
 					winMessage: instance.getMessage(interaction, 'MATCH_PAIRS_WIN'),
 					loseMessage: instance.getMessage(interaction, 'MATCH_PAIRS_LOSE'),
@@ -228,7 +327,7 @@ module.exports = {
 					},
 					emojis: { flag: '🚩', mine: '💣' },
 					mines: 5,
-					timeoutTime: 60000,
+					timeoutTime: 1000 * 60,
 					winMessage: instance.getMessage(interaction, 'MINESWEEPER_WIN'),
 					loseMessage: instance.getMessage(interaction, 'MINESWEEPER_LOSE'),
 					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY'),
@@ -253,7 +352,7 @@ module.exports = {
 					snake: { head: '🤑', body: '🟩', tail: '🟢', over: '💥' },
 					foods: ['💰', '🪙', '💵', '💎', '💸', '💳'],
 					stopButton: instance.getMessage(interaction, 'STOP'),
-					timeoutTime: 60000,
+					timeoutTime: 1000 * 60,
 					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY'),
 				});
 			} else if (type === 'tictactoe') {
@@ -264,7 +363,6 @@ module.exports = {
 					embed: {
 						title: instance.getMessage(interaction, 'TICTACTOE'),
 						color: member.displayColor,
-						statusTitle: 'Status',
 						overTitle: instance.getMessage(interaction, 'GAME_OVER'),
 					},
 					emojis: {
@@ -272,10 +370,7 @@ module.exports = {
 						oButton: '🔵',
 						blankButton: '➖',
 					},
-					mentionUser: true,
-					timeoutTime: 60000,
-					xButtonStyle: 'DANGER',
-					oButtonStyle: 'PRIMARY',
+					timeoutTime: 1000 * 60,
 					turnMessage: instance.getMessage(interaction, 'FALGAMES_MOVE'),
 					winMessage: instance.getMessage(interaction, 'FALGAMES_WIN'),
 					tieMessage: instance.getMessage(interaction, 'FALGAMES_DRAW'),
@@ -288,7 +383,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: '🔢 2048',
-						color: '#551476',
+						color: member.displayColor,
 					},
 					emojis: {
 						up: '⬆️',
@@ -296,9 +391,131 @@ module.exports = {
 						left: '⬅️',
 						right: '➡️',
 					},
-					timeoutTime: 60000,
+					timeoutTime: 1000 * 60,
 					stopButton: instance.getMessage(interaction, 'STOP'),
-					buttonStyle: 'PRIMARY',
+					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY'),
+					scoreText: instance.getMessage(interaction, 'SCORE'),
+					totalScoreText: instance.getMessage(interaction, 'SCORE'),
+				});
+			} else if (type === 'wouldyourather') {
+				var Game = new WouldYouRather({
+					message: interaction,
+					isSlashGame: true,
+					embed: {
+						title: instance.getMessage(interaction, 'WOULD_YOU_RATHER'),
+						color: member.displayColor,
+					},
+					buttons: {
+						option1: '\u200b',
+						option2: '\u200b',
+					},
+					errMessage: instance.getMessage(interaction, 'EXCEPTION'),
+					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY'),
+				});
+			} else if (type === 'trivia') {
+				var Game = new Trivia({
+					message: interaction,
+					isSlashGame: true,
+					embed: {
+						title: '❔ Trivia',
+						description: instance.getMessage(interaction, 'TRIVIA_DESCRIPTION'),
+						color: member.displayColor,
+					},
+					timeoutTime: 1000 * 60,
+					mode: ['multiple', 'single'][randint(0, 1)],
+					difficulty: ['easy', 'medium', 'hard'][randint(0, 2)],
+					winMessage: instance.getMessage(interaction, 'TRIVIA_WIN'),
+					loseMessage: instance.getMessage(interaction, 'TRIVIA_LOSE'),
+					errMessage: instance.getMessage(interaction, 'EXCEPTION'),
+					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY'),
+				});
+			} else if (type === 'fasttype') {
+				const sentences = instance.getMessage(interaction, 'SENTENCES');
+				const sentence = sentences[randint(0, sentences.length - 1)];
+				var Game = new FastType({
+					message: interaction,
+					isSlashGame: true,
+					embed: {
+						title: instance.getMessage(interaction, 'FAST_TYPE'),
+						description: instance.getMessage(interaction, 'TIME_TO_TYPE'),
+						color: member.displayColor,
+					},
+					timeoutTime: 1000 * 600,
+					sentence: sentence,
+					winMessage: instance.getMessage(interaction, 'FAST_TYPE_WIN'),
+					loseMessage: instance.getMessage(interaction, 'FAST_TYPE_LOSE'),
+				});
+			} else if (type === 'pokemon') {
+				var Game = new GuessThePokemon({
+					message: interaction,
+					isSlashGame: true,
+					embed: {
+						title: instance.getMessage(interaction, 'POKEMON'),
+						color: member.displayColor,
+					},
+					timeoutTime: 1000 * 60,
+					winMessage: instance.getMessage(interaction, 'POKEMON_WIN'),
+					loseMessage: instance.getMessage(interaction, 'POKEMON_LOSE'),
+					errMessage: instance.getMessage(interaction, 'EXCEPTION'),
+					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY'),
+					typesText: instance.getMessage(interaction, 'TYPES'),
+					abilitiesText: instance.getMessage(interaction, 'ABILITIES'),
+				});
+			} else if (type === 'hangman') {
+				const words = instance.getMessage(interaction, 'HANGMAN_WORDS');
+				const word = words[randint(0, words.length - 1)];
+				var Game = new Hangman({
+					message: interaction,
+					isSlashGame: true,
+					embed: {
+						title: instance.getMessage(interaction, 'HANGMAN'),
+						color: member.displayColor,
+					},
+					hangman: { hat: '🎩', head: '😟', shirt: '👕', pants: '🩳', boots: '👞👞' },
+					customWord: word,
+					timeoutTime: 1000 * 60,
+					winMessage: instance.getMessage(interaction, 'WORDS_WIN'),
+					loseMessage: instance.getMessage(interaction, 'WORDS_LOSE'),
+					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY'),
+				});
+			} else if (type === 'rockpaperscissors') {
+				var Game = new RockPaperScissors({
+					message: interaction,
+					isSlashGame: true,
+					opponent: interaction.options.getUser('opponent'),
+					embed: {
+						title: '🪨📄✂️',
+						description: instance.getMessage(interaction, 'BUTTON_BELOW'),
+						color: member.displayColor,
+					},
+					buttons: {
+						rock: instance.getMessage(interaction, 'ROCK'),
+						paper: instance.getMessage(interaction, 'PAPER'),
+						scissors: instance.getMessage(interaction, 'SCISSORS'),
+					},
+					emojis: {
+						rock: '🌑',
+						paper: '📰',
+						scissors: '✂️',
+					},
+					timeoutTime: 1000 * 60,
+					pickMessage: instance.getMessage(interaction, 'RPS_CHOICE'),
+					winMessage: instance.getMessage(interaction, 'RPS_WIN'),
+					tieMessage: instance.getMessage(interaction, 'FALGAMES_DRAW'),
+					timeoutMessage: instance.getMessage(interaction, 'FALGAMES_TIMEOUT'),
+					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY_2'),
+				});
+			} else if (type === 'wordle') {
+				var Game = new Wordle({
+					message: interaction,
+					isSlashGame: true,
+					embed: {
+						title: 'Wordle',
+						color: member.displayColor,
+					},
+					timeoutTime: 1000 * 600,
+					winMessage: instance.getMessage(interaction, 'WORDS_WIN'),
+					loseMessage: instance.getMessage(interaction, 'WORDS_LOSE'),
 					playerOnlyMessage: instance.getMessage(interaction, 'PLAYER_ONLY'),
 				});
 			}
