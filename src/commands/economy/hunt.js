@@ -17,7 +17,7 @@ module.exports = {
 		.setDMPermission(false),
 	execute: async ({ interaction, instance, member, database }) => {
 		await interaction.deferReply().catch(() => {});
-		const items = instance.items;
+		const { items } = instance;
 		const player = await database.player.findOne(member.id);
 		const limit = instance.levels[player.rank - 1].inventoryLimit + player.inventoryBonus;
 		const { inventoryWorth } = instance.getInventoryInfo(player.inventory);

@@ -319,7 +319,7 @@ module.exports = {
 	},
 	autocomplete: async ({ interaction, instance }) => {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
-		const items = instance.items;
+		const { items } = instance;
 		const localeItems = Object.keys(items).map((key) => {
 			return instance.getItemName(key, interaction);
 		});

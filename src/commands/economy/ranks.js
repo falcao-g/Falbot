@@ -42,7 +42,7 @@ module.exports = {
 		try {
 			await interaction.deferReply().catch(() => {});
 			const type = interaction.options.getSubcommand();
-			const levels = instance.levels;
+			const { levels } = instance;
 			const player = await database.player.findOne(user.id);
 
 			if (type === 'rankup') {

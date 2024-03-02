@@ -240,7 +240,7 @@ module.exports = {
 		} catch {
 			var type = subcommand;
 		}
-		const items = instance.items;
+		const { items } = instance;
 
 		if (type == 'all') {
 			//first filter the mythical items, because they are not supposed to be in the market
@@ -791,7 +791,7 @@ module.exports = {
 	},
 	autocomplete: async ({ interaction, instance }) => {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
-		const items = instance.items;
+		const { items } = instance;
 
 		var localeItems = Object.keys(items).map((key) => {
 			return instance.getItemName(key, interaction);
