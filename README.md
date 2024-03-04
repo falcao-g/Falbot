@@ -1,7 +1,7 @@
 <h1 align="center"> Falbot 🪙 </h1>
 <blockquote>
 <p><i>
-Falbot is a fun brazilian bot, with the focus point being enconomy, which includes a lot of other features and systems, such as gambling, inventory, progression, competitive commands, and much more. 
+Falbot is a fun brazilian bot, with the focus point being enconomy, which includes a lot of other features and systems, such as tons of fun games, inventory, progression, competitive commands, and much more. 
 
 Don’t miss the opportunity to have a unique and enriching experience on your Discord server with Falbot!
 </i></p>
