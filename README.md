@@ -26,7 +26,7 @@ Don’t miss the opportunity to have a unique and enriching experience on your D
 
 ## 🚀 Features
 
-- 🎲 Gamble commands
+- 🎲 Tons of fun games
 - ⚔️ Competitive commands
 - 📈 Engaging rank-up and progression system
 - 🏛️ Dynamic economy run by player activity
