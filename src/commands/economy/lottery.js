@@ -64,7 +64,7 @@ module.exports = {
 	execute: async ({ user, interaction, instance, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
-			const lotto = await instance.lottoSchema.findById('semanal');
+			const lotto = await instance.lottoSchema.findById('weekly');
 			const type = interaction.options.getSubcommand();
 			const player = await database.player.findOne(user.id);
 			if (type === 'buy') {
