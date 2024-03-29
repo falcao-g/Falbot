@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { specialArg, format, randint, buttons } = require('../../utils/functions.js');
+const { specialArg, format, randint, buttons, pick } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -89,19 +89,19 @@ module.exports = {
 
 				collector.on('end', async (collected) => {
 					if (collected.size === 0) {
-						interaction.followUp({
+						interaction.editReply({
 							content: instance.getMessage(interaction, 'FIGHT_TOO_LONG', {
 								USER: challenged,
 							}),
 						});
 					} else if (collected.first().customId === 'refuse' && collected.first().user.id === user.id) {
-						interaction.followUp({
+						interaction.editReply({
 							content: instance.getMessage(interaction, 'FIGHT_DECLINED', {
 								USER: member,
 							}),
 						});
 					} else if (collected.first().customId === 'refuse') {
-						interaction.followUp({
+						interaction.editReply({
 							content: instance.getMessage(interaction, 'FIGHT_DECLINED', {
 								USER: challenged,
 							}),
@@ -109,14 +109,21 @@ module.exports = {
 					} else {
 						author.falcoins -= bet;
 						challengedFile.falcoins -= bet;
-						const attacks = ['instantâneo', 'stun', 'roubo de vida', 'cura', 'self', 'escudo'];
+						const attacks = [
+							['base', 25],
+							['stun', 15],
+							['life steal', 15],
+							['heal', 15],
+							['self', 5],
+							['shield', 10],
+						];
 						const player_1 = {
 							hp: 100,
 							name: member.displayName,
 							stunned: false,
 							mention: user,
 							id: user.id,
-							escudo: false,
+							shield: false,
 						};
 						const player_2 = {
 							hp: 100,
@@ -124,9 +131,9 @@ module.exports = {
 							stunned: false,
 							mention: challenged,
 							id: challenged.id,
-							escudo: false,
+							shield: false,
 						};
-						const luck = Math.round(Math.random());
+						var luck = Math.round(Math.random());
 						const order = luck === 0 ? [player_1, player_2] : [player_2, player_1];
 
 						first = true;
@@ -140,10 +147,10 @@ module.exports = {
 									break;
 								}
 
-								player.escudo = false;
+								player.shield = false;
 
-								const attack = attacks[randint(0, attacks.length - 1)];
-								const luck = randint(1, 50);
+								const attack = pick(attacks);
+								luck = randint(1, 50);
 
 								field = {
 									name: instance.getMessage(interaction, 'TURN', {
@@ -155,9 +162,9 @@ module.exports = {
 								if (player.stunned === true) {
 									player.stunned = false;
 									field.value += instance.getMessage(interaction, 'UNCONSCIOUS');
-								} else if (enemy.escudo === true && !['self', 'escudo', 'cura'].includes(attack)) {
+								} else if (enemy.shield === true && !['self', 'shield', 'heal'].includes(attack)) {
 									field.value += instance.getMessage(interaction, 'FAILED');
-								} else if (attack === 'instantâneo') {
+								} else if (attack === 'base') {
 									enemy.hp -= luck;
 									field.value += instance.getMessage(interaction, 'ATTACK', {
 										VALUE: luck,
@@ -168,30 +175,31 @@ module.exports = {
 									field.value += instance.getMessage(interaction, 'STUN', {
 										VALUE: luck,
 									});
-								} else if (attack === 'roubo de vida') {
+								} else if (attack === 'life steal') {
 									enemy.hp -= luck;
 									player.hp += luck;
 									field.value += instance.getMessage(interaction, 'LIFE_STEAL', {
 										VALUE: luck,
 									});
-								} else if (attack === 'cura') {
+								} else if (attack === 'heal') {
 									player.hp += luck;
 									field.value += instance.getMessage(interaction, 'HEAL', {
 										VALUE: luck,
 									});
 								} else if (attack === 'self') {
+									luck = randint(1, 20);
 									player.hp -= luck;
 									field.value += instance.getMessage(interaction, 'SELF', {
 										VALUE: luck,
 									});
-								} else if (attack === 'escudo') {
-									player.escudo = true;
+								} else if (attack === 'shield') {
+									player.shield = true;
 									field.value += instance.getMessage(interaction, 'PROTECTED');
 								}
 
 								embed.addFields(field);
 
-								player.hp = Math.min(player.hp, 100);
+								player.hp = Math.min(player.hp, 150);
 
 								embed.addFields({
 									name: 'HP',
