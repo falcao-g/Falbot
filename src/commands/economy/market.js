@@ -1,8 +1,8 @@
 const { format, paginate, getItem, specialArg } = require('../../utils/functions.js');
-const { ButtonBuilder, SlashCommandBuilder } = require('discord.js');
+const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder } = require('discord.js');
 
 module.exports = {
-	developer: true,
+	developer: false,
 	data: new SlashCommandBuilder()
 		.setName('market')
 		.setNameLocalizations({
@@ -231,6 +231,27 @@ module.exports = {
 						.setRequired(true)
 						.setAutocomplete(true)
 				)
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName('history')
+				.setNameLocalizations({ 'pt-BR': 'histórico', 'es-ES': 'histórico' })
+				.setDescription('View the market history for an item')
+				.setDescriptionLocalizations({
+					'pt-BR': 'Ver o histórico do mercado para um item',
+					'es-ES': 'Ver el histórico del mercado para un item',
+				})
+				.addStringOption((option) =>
+					option
+						.setName('item')
+						.setDescription('The item to view the history for')
+						.setDescriptionLocalizations({
+							'pt-BR': 'O item para ver o histórico',
+							'es-ES': 'El item para ver el histórico',
+						})
+						.setRequired(true)
+						.setAutocomplete(true)
+				)
 		),
 	execute: async ({ interaction, instance, member, subcommand, database }) => {
 		await interaction.deferReply().catch(() => {});
@@ -248,8 +269,14 @@ module.exports = {
 				return item[1].mythical != true;
 			});
 
-			//create an array of embeds, each embed containing 3 columns with 5 items each, until all items are displayed
+			// pre calculate the sections of items
 			const numberOfPages = Math.ceil(filteredItems.length / 15);
+			const itemsOnPage = {};
+			for (var i = 0; i < numberOfPages; i++) {
+				itemsOnPage[i] = filteredItems.slice(i * 15, (i + 1) * 15);
+			}
+
+			//create an array of embeds, each embed containing 3 columns with 5 items each, until all items are displayed
 			const embeds = await Promise.all(
 				Array.from({ length: numberOfPages }).map(async (_, i) => {
 					const embed = instance.createEmbed(member.displayColor).setTitle(
@@ -259,8 +286,7 @@ module.exports = {
 						})
 					);
 
-					const itemsOnPage = filteredItems.slice(i * 15, (i + 1) * 15);
-					for (var item of itemsOnPage) {
+					for (var item of itemsOnPage[i]) {
 						var cheapestSellOrder = await database.market.getCheapestSellOrder(item[0]);
 						embed.addFields({
 							name: instance.getItemName(item[0], interaction),
@@ -276,8 +302,27 @@ module.exports = {
 				})
 			);
 
+			// create a select menu for each embed with the items on that page
+			const selectMenus = await Promise.all(
+				Array.from({ length: numberOfPages }).map(async (_, i) => {
+					const options = itemsOnPage[i].map((item) => {
+						return {
+							label: instance.getItemName(item[0], interaction),
+							value: item[0],
+						};
+					});
+					const select = new StringSelectMenuBuilder()
+						.setCustomId(`market view`)
+						.setPlaceholder(instance.getMessage(interaction, 'MARKET_MENU'))
+						.addOptions(options);
+
+					return select;
+				})
+			);
+
 			const paginator = paginate();
 			paginator.add(...embeds);
+			paginator.addComponents(...selectMenus);
 			const ids = [`${Date.now()}__left`, `${Date.now()}__right`];
 			paginator.setTraverser([
 				new ButtonBuilder().setEmoji('⬅️').setCustomId(ids[0]).setStyle('Secondary'),
@@ -296,7 +341,11 @@ module.exports = {
 				}
 			});
 		} else if (type === 'view') {
-			const item = interaction.options.getString('item');
+			if (interaction.options !== undefined) {
+				var item = interaction.options.getString('item');
+			} else {
+				var item = interaction.values[0];
+			}
 			const itemKey = getItem(item);
 			const itemJSON = items[itemKey];
 
@@ -323,7 +372,7 @@ module.exports = {
 			if (buyOrders != []) {
 				var groupedBuyOrders = {};
 				buyOrders.forEach((order) => {
-					if (groupedBuyOrders[order.price]) groupedBuyOrders[order.price] + order.amount;
+					if (groupedBuyOrders[order.price]) groupedBuyOrders[order.price] += order.amount;
 					else groupedBuyOrders[order.price] = order.amount;
 				});
 				var formattedBuyOrders = Object.entries(groupedBuyOrders)
@@ -415,6 +464,14 @@ module.exports = {
 					userFile.inventory.set(itemKey, (userFile.inventory.get(itemKey) || 0) + sellOrder.amount);
 					sellerFile.falcoins += sellOrder.price * sellOrder.amount;
 					await database.market.subtractQuantityFromSellOrder(itemKey, sellOrder, sellOrder.amount);
+					await database.market.addHistory(
+						itemKey,
+						instance.getMessage(interaction, 'HISTORY_BOUGHT', {
+							PRICE: format(sellOrder.price * sellOrder.amount),
+							AMOUNT: format(sellOrder.amount),
+							ITEM: instance.getItemName(itemKey, interaction),
+						})
+					);
 				} else {
 					userFile.falcoins -= sellOrder.price * amount;
 					totalPaid += sellOrder.price * amount;
@@ -422,6 +479,14 @@ module.exports = {
 					sellerFile.falcoins += sellOrder.price * amount;
 					await database.market.subtractQuantityFromSellOrder(itemKey, sellOrder, amount);
 					amount = 0;
+					await database.market.addHistory(
+						itemKey,
+						instance.getMessage(interaction, 'HISTORY_BOUGHT', {
+							PRICE: format(sellOrder.price),
+							AMOUNT: format(amount),
+							ITEM: instance.getItemName(itemKey, interaction),
+						})
+					);
 				}
 				await sellerFile.save();
 			}
@@ -485,7 +550,7 @@ module.exports = {
 				return;
 			}
 
-			if (price <= Math.floor(itemJSON.value * 1.2)) {
+			if (price < Math.floor(itemJSON.value * 1.2)) {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'PRICE_TOO_LOW', {
 						PRICE: format(Math.floor(itemJSON.value * 1.2)),
@@ -563,7 +628,7 @@ module.exports = {
 				});
 			}
 
-			if (price <= Math.floor(itemJSON.value * 1.1)) {
+			if (price < Math.floor(itemJSON.value * 1.1)) {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'PRICE_TOO_LOW', {
 						PRICE: format(Math.floor(itemJSON.value * 1.1)),
@@ -787,6 +852,63 @@ module.exports = {
 
 				instance.editReply(interaction, { embeds: [embed] });
 			}
+		} else if (type == 'history') {
+			const item = interaction.options.getString('item');
+			const itemKey = getItem(item);
+			const itemJSON = items[itemKey];
+
+			if (itemJSON === undefined) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'BAD_VALUE', {
+						VALUE: item,
+					}),
+				});
+				return;
+			}
+
+			if (!itemJSON.value) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'CANT_SELL'),
+				});
+				return;
+			}
+
+			const history = await database.market.getHistory(itemKey);
+			if (history.length == 0) {
+				instance.editReply(interaction, {
+					content: instance.getMessage(interaction, 'NO_HISTORY'),
+				});
+				return;
+			}
+
+			const numberOfPages = Math.ceil(history.length / 15);
+			const embeds = await Promise.all(
+				Array.from({ length: numberOfPages }).map(async (_, i) => {
+					const embed = instance.createEmbed(member.displayColor);
+
+					const historyOnPage = history.slice(i * 15, (i + 1) * 15);
+					embed.addFields({
+						name: instance.getMessage(interaction, 'MARKET_HISTORY', {
+							ITEM: instance.getItemName(itemKey, interaction),
+							PAGE: i + 1,
+							TOTAL: numberOfPages,
+						}),
+						value: historyOnPage.join('\n'),
+					});
+
+					return embed;
+				})
+			);
+
+			const paginator = paginate();
+			paginator.add(...embeds);
+			const ids = [`${Date.now()}__left`, `${Date.now()}__right`];
+			paginator.setTraverser([
+				new ButtonBuilder().setEmoji('⬅️').setCustomId(ids[0]).setStyle('Secondary'),
+				new ButtonBuilder().setEmoji('➡️').setCustomId(ids[1]).setStyle('Secondary'),
+			]);
+
+			const message = await instance.editReply(interaction, paginator.components());
 		}
 	},
 	autocomplete: async ({ interaction, instance }) => {
