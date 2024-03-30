@@ -5,6 +5,24 @@ const reqString = {
 	required: true,
 };
 
+const stats = mongoose.Schema({
+	_id: false,
+	commands: { type: Number, default: 0 },
+	itemsFound: { type: Number, default: 0 },
+	timesWorked: { type: Number, default: 0 },
+	timesExplored: { type: Number, default: 0 },
+	timesFished: { type: Number, default: 0 },
+	timesHunted: { type: Number, default: 0 },
+	timesMined: { type: Number, default: 0 },
+	timesVoted: { type: Number, default: 0 },
+	itemsCrafted: { type: Number, default: 0 },
+	lotteryWins: { type: Number, default: 0 },
+	scratchJackpots: { type: Number, default: 0 },
+	timesWatered: { type: Number, default: 0 },
+	cropsHarvested: { type: Number, default: 0 },
+	listingsSold: { type: Number, default: 0 },
+});
+
 const userSchema = mongoose.Schema(
 	{
 		_id: reqString,
@@ -63,22 +81,8 @@ const userSchema = mongoose.Schema(
 			default: 0,
 		},
 		stats: {
-			type: Map,
-			of: Number,
-			default: new Map([
-				['ranks', 0],
-				['commands', 0],
-				['itemsFound', 0],
-				['timesWorked', 0],
-				['timesExplored', 0],
-				['timesFished', 0],
-				['timesHunted', 0],
-				['timesMined', 0],
-				['timesVoted', 0],
-				['itemsCrafted', 0],
-				['lotteryWins', 0],
-				['scratchJackpots', 0],
-			]),
+			type: stats,
+			default: {},
 		},
 		plots: [
 			{

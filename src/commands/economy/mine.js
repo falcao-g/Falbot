@@ -113,8 +113,8 @@ module.exports = {
 			components: [buttons(['balance', 'inventory_view', 'cooldowns'])],
 		});
 
-		player.stats.set('timesMined', player.stats.get('timesMined') + 1);
-		player.stats.set('itemsFound', player.stats.get('itemsFound') + total);
+		player.stats.timesMined += 1;
+		player.stats.itemsFound += total;
 		player.save();
 	},
 };

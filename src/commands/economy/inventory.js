@@ -728,7 +728,7 @@ module.exports = {
 					components: [row],
 				});
 
-				player.stats.set('itemsCrafted', player.stats.get('itemsCrafted') + amount);
+				player.stats.itemsCrafted += amount;
 				player.save();
 			} else if (type === 'sellall') {
 				const player = await database.player.findOne(member.id);

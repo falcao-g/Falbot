@@ -415,12 +415,14 @@ module.exports = {
 					userFile.inventory.set(itemKey, (userFile.inventory.get(itemKey) || 0) + sellOrder.amount);
 					sellerFile.falcoins += sellOrder.price * sellOrder.amount;
 					await database.market.subtractQuantityFromSellOrder(itemKey, sellOrder, sellOrder.amount);
+					sellerFile.stats.listingsSold += sellOrder.amount;
 				} else {
 					userFile.falcoins -= sellOrder.price * amount;
 					totalPaid += sellOrder.price * amount;
 					userFile.inventory.set(itemKey, (userFile.inventory.get(itemKey) || 0) + amount);
 					sellerFile.falcoins += sellOrder.price * amount;
 					await database.market.subtractQuantityFromSellOrder(itemKey, sellOrder, amount);
+					sellerFile.stats.listingsSold += amount;
 					amount = 0;
 				}
 				await sellerFile.save();

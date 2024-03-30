@@ -65,7 +65,7 @@ module.exports = {
 					//jackpot
 					amount = randint(200000, 300000);
 					player.falcoins += amount;
-					player.stats.set('scratchJackpots', (player.stats.get('scratchJackpots') ?? 0) + 1);
+					player.stats.scratchJackpots += 1;
 					embed.setColor(15844367).addFields({
 						name: instance.getMessage(interaction, 'SCRATCH_PRIZE'),
 						value: `${instance.getMessage(interaction, 'SCRATCH_PRIZE_DESCRIPTION', {
