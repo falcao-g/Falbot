@@ -472,12 +472,14 @@ module.exports = {
 							ITEM: instance.getItemName(itemKey, interaction),
 						})
 					);
+					sellerFile.stats.listingsSold += sellOrder.amount;
 				} else {
 					userFile.falcoins -= sellOrder.price * amount;
 					totalPaid += sellOrder.price * amount;
 					userFile.inventory.set(itemKey, (userFile.inventory.get(itemKey) || 0) + amount);
 					sellerFile.falcoins += sellOrder.price * amount;
 					await database.market.subtractQuantityFromSellOrder(itemKey, sellOrder, amount);
+					sellerFile.stats.listingsSold += amount;
 					amount = 0;
 					await database.market.addHistory(
 						itemKey,

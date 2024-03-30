@@ -113,8 +113,8 @@ module.exports = {
 			components: [buttons(['balance', 'inventory_view', 'cooldowns'])],
 		});
 
-		player.stats.set('timesHunted', player.stats.get('timesHunted') + 1);
-		player.stats.set('itemsFound', player.stats.get('itemsFound') + total);
+		player.stats.timesHunted += 1;
+		player.stats.itemsFound += total;
 		player.save();
 	},
 };

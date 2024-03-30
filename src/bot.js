@@ -120,7 +120,7 @@ class Falbot {
 
 				const winnerFile = await this.database.player.findOne(winner.id);
 				winnerFile.falcoins += lotto.prize;
-				winnerFile.stats.set('lotteryWins', (winnerFile.stats.get('lotteryWins') ?? 0) + lotto.prize);
+				winnerFile.stats.lotteryWins += lotto.prize;
 				winnerFile.save();
 
 				var winnerUser = await this.client.users.fetch(winner.id);

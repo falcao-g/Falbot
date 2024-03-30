@@ -1536,6 +1536,26 @@
 		"en-US": "Scratch-off Jackpots",
 		"es-ES": "Jackpots Raspadinha"
 	},
+	"STATS_WATERED": {
+		"pt-BR": "Regadas",
+		"en-US": "Times Watered",
+		"es-ES": "Veces Regado"
+	},
+	"STATS_HARVESTED": {
+		"pt-BR": "Colheitas",
+		"en-US": "Times Harvested",
+		"es-ES": "Veces Cosechado"
+	},
+	"STATS_CROPS": {
+		"pt-BR": "culturas",
+		"en-US": "crops",
+		"es-ES": "cosechas"
+	},
+	"STATS_SOLD": {
+		"pt-BR": "Itens Vendidos",
+		"en-US": "Items Sold",
+		"es-ES": "Artículos Vendidos"
+	},
 	"OVERTIME": {
 		"pt-BR": "**:crescent_moon: Horas extras - 3x** bônus de trabalho ({TIME})",
 		"en-US": "**:crescent_moon: Overtime - 3x** work bonus ({TIME})",

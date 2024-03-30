@@ -45,7 +45,7 @@ module.exports = {
 			}
 
 			const player = await instance.database.player.findOne(interaction.user.id);
-			player.stats.set('commands', player.stats.get('commands') + 1);
+			player.stats.commands += 1;
 			player.save();
 
 			command.execute({
@@ -93,7 +93,7 @@ module.exports = {
 			if (commandName == 'help') interaction.values = [null];
 
 			const player = await instance.database.player.findOne(interaction.user.id);
-			player.stats.set('commands', player.stats.get('commands') + 1);
+			player.stats.commands += 1;
 			player.save();
 
 			await command.execute({
@@ -112,7 +112,7 @@ module.exports = {
 			const command = client.commands.get(interaction.customId.split(' ')[0]);
 
 			const player = await instance.database.player.findOne(interaction.user.id);
-			player.stats.set('commands', player.stats.get('commands') + 1);
+			player.stats.commands += 1;
 			player.save();
 
 			await command.execute({
