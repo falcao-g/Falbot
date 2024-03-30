@@ -1951,6 +1951,21 @@
 		"en-US": ":ledger: Minister",
 		"es-ES": ":ledger: Ministro"
 	},
+	"26": {
+		"pt-BR": ":man_with_chinese_cap: Duque",
+		"en-US": ":man_with_chinese_cap: Duke",
+		"es-ES": ":man_with_chinese_cap: Duque"
+	},
+	"27": {
+		"pt-BR": ":horse: Príncipe",
+		"en-US": ":horse: Prince",
+		"es-ES": ":horse: Príncipe"
+	},
+	"28": {
+		"pt-BR": ":rainbow: Arconte",
+		"en-US": ":rainbow: Archon",
+		"es-ES": ":rainbow: Arconte"
+	},
 	"FARM_TITLE": {
 		"pt-BR": "🏞️ Fazenda de {USER}",
 		"en-US": "🏞️ {USER}'s Farm",
