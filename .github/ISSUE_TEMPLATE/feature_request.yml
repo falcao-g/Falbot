@@ -1,30 +1,29 @@
 name: 🚀 Feature request
-description: Use this format to fill a feature request.
+description: Suggest an idea for Falbot that you would like to see implemented.
 labels: [enhancement]
 body:
   - type: markdown
     attributes:
-      value: '# Feature request'
-
+      value: |
+        Before submiting a new feature suggestion, make sure that this wasn't already suggested. If you find a similar issue, you can contribute to the discussion, if necessary.
   - type: textarea
     id: description
     attributes:
-      label: Feature description
+      label: Description
+      description: What do you want to improve? Please describe your suggestion.
+      placeholder: |
+        I would like to see a new command...
+        I think this system could be improved by...
+        I think this could be improved if...
+        If applicable attach a screenshot or a video to help us understand the suggestion better.
     validations:
       required: true
-
   - type: textarea
-    id: steps
+    id: implementation
     attributes:
-      label: How to implement?
-      description: Have any idea how to implement this feature? Tell us!
-    validations:
-      required: false
-
-  - type: textarea
-    id: screenshot
-    attributes:
-      label: Media, if applicable
-      description: Screenshot, GIF, video, etc.
-    validations:
-      required: false
+      label: Possible implementation
+      description: Have any idea how to implement this feature? Share imagens, videos, code or references that you think could help us.
+      placeholder: |
+        I think we could implement like this...
+        Here is a reference that could help...
+        I think we could use this code snippet...

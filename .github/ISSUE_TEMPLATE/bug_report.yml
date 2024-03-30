@@ -1,30 +1,37 @@
 name: 🐛 Bug report
-description: Use this format to fill a bug report.
+description: Tells us about a bug to helps us improve.
 labels: [bug]
 body:
   - type: markdown
     attributes:
-      value: '# Bug report'
-
+      value: |
+        Before submiting a new bug report, make sure that this wasn't already reported. If you find a similar issue, you can contribute to the discussion and provide more information about the problem.
   - type: textarea
     id: description
     attributes:
-      label: Description of the bug
+      label: Description
+      placeholder: |
+        I found a bug when using the command...
+        I was trying to ... and it didn't work as expected...
+        If necessary attach a screenshot or a video to help us understand the problem better.
     validations:
       required: true
-
   - type: textarea
     id: steps
     attributes:
-      label: Steps to reproduce
+      label: Steps to reproduce the problem
       description: Tell us how to reproduce this bug or how you found it
+      placeholder: |
+        1. Play the ... game
+        2. Use command ... with the following arguments ...
+        3. Do this '....'
     validations:
       required: true
-
   - type: textarea
-    id: screenshot
+    id: solution
     attributes:
-      label: Media, if necessary
-      description: Screenshot, GIF, video, etc.
-    validations:
-      required: false
+      label: Possible solution
+      description: Have any idea how to solve this bug? Tell us!
+      placeholder: |
+        I think that the solution is...
+        We could solve this by...
