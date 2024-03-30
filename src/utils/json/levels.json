@@ -192,10 +192,34 @@
 		"farmPlots": 9
 	},
 	{
+		"falcoinsToLevelUp": 13500000,
 		"vote": 22000,
 		"work": [7000, 12000],
 		"bankLimit": 800000,
 		"inventoryLimit": 6500000,
 		"farmPlots": 10
+	},
+	{
+		"falcoinsToLevelUp": 15200000,
+		"vote": 23000,
+		"work": [8000, 13000],
+		"bankLimit": 900000,
+		"inventoryLimit": 6500000,
+		"farmPlots": 10
+	},
+	{
+		"falcoinsToLevelUp": 17600000,
+		"vote": 24000,
+		"work": [9000, 14000],
+		"bankLimit": 900000,
+		"inventoryLimit": 7000000,
+		"farmPlots": 10
+	},
+	{
+		"vote": 25000,
+		"work": [10000, 15000],
+		"bankLimit": 1000000,
+		"inventoryLimit": 7000000,
+		"farmPlots": 11
 	}
 ]
