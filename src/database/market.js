@@ -90,21 +90,21 @@ module.exports = {
 		await marketSchema.findByIdAndUpdate(result.id, result);
 	},
 	async getBuyOrdersFromUser(id) {
-		const result = await marketSchema.find();
+		const result = await marketSchema.find({ 'buyOrders.owner': id });
 		var orders = [];
 		result.forEach((item) => {
 			item.buyOrders.forEach((order) => {
-				if (order.owner === id) orders.push({ ...order, item: item._id });
+				if (order.owner === id) orders.push({ amount: order.amount, price: order.price, item: item._id, owner: id });
 			});
 		});
 		return orders;
 	},
 	async getSellOrdersFromUser(id) {
-		const result = await marketSchema.find();
+		const result = await marketSchema.find({ 'sellOrders.owner': id });
 		var orders = [];
 		result.forEach((item) => {
 			item.sellOrders.forEach((order) => {
-				if (order.owner === id) orders.push({ ...order, item: item._id });
+				if (order.owner === id) orders.push({ amount: order.amount, price: order.price, item: item._id, owner: id });
 			});
 		});
 		return orders;
@@ -120,5 +120,15 @@ module.exports = {
 		var index = findOrderByItemAndOwner(result.sellOrders, item, owner);
 		result.sellOrders.splice(index, 1);
 		await marketSchema.findByIdAndUpdate(result.id, result);
+	},
+	async getHistory(id) {
+		const result = await marketSchema.findOne({ _id: id });
+		return result.history;
+	},
+	async addHistory(id, message) {
+		var result = await marketSchema.findOne({ _id: id });
+		result.history.unshift(message);
+		result.history = result.history.slice(0, 100);
+		result.save();
 	},
 };

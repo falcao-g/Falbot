@@ -497,6 +497,14 @@ module.exports = {
 					falcoins += buyOrder.price * amountSold;
 					await database.market.subtractQuantityFromBuyOrder(itemKey, buyOrder, amount);
 					await buyerFile.save();
+					await database.market.addHistory(
+						itemKey,
+						instance.getMessage(interaction, 'HISTORY_SOLD', {
+							PRICE: format(buyOrder.price * amountSold),
+							AMOUNT: format(amountSold),
+							ITEM: instance.getItemName(itemKey, interaction),
+						})
+					);
 				}
 
 				// if there is no one in the market that wants to buy the item, we sell it to the bot
@@ -732,9 +740,17 @@ module.exports = {
 				player.save();
 			} else if (type === 'sellall') {
 				const player = await database.player.findOne(member.id);
+				var sellAllText = instance.getMessage(interaction, 'SELLALL_VALUE');
+
+				const lootonly = interaction.options.getString('lootonly');
+				const noLegendary = interaction.options.getString('no-legendary');
+
+				if (noLegendary === 'yes') sellAllText += instance.getMessage(interaction, 'SELLALL_NOLEGENDARY');
+				if (lootonly === 'yes') sellAllText += instance.getMessage(interaction, 'SELLALL_LOOTONLY');
+
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'SELLALL_TITLE'),
-					value: instance.getMessage(interaction, 'SELLALL_VALUE'),
+					value: sellAllText,
 				});
 
 				var answer = await instance.editReply(interaction, {
@@ -754,8 +770,6 @@ module.exports = {
 				});
 
 				collector.on('collect', async (i) => {
-					const lootonly = interaction.options.getString('lootonly');
-					const noLegendary = interaction.options.getString('no-legendary');
 					var itemsSold = [];
 					let falcoins = 0;
 
@@ -781,6 +795,38 @@ module.exports = {
 							continue;
 						}
 
+						// sell to the market if applicable
+						let amountToSell = player.inventory.get(key);
+						if (amountToSell > 0 && (await database.market.getBestBuyOrder(key)).price > 0) {
+							const buyOrder = await database.market.getBestBuyOrder(key);
+							const buyerFile = await database.player.findOne(buyOrder.owner);
+
+							if (amountToSell >= buyOrder.amount) {
+								amountToSell -= buyOrder.amount;
+								amountSold = buyOrder.amount;
+							} else {
+								amountSold = amountToSell;
+								amountToSell = 0;
+							}
+
+							buyerFile.falcoins -= buyOrder.price * amountSold;
+							buyerFile.inventory.set(key, (buyerFile.inventory.get(key) || 0) + amountSold);
+							falcoins += buyOrder.price * amountSold;
+							await database.market.subtractQuantityFromBuyOrder(key, buyOrder, amountSold);
+							await buyerFile.save();
+							itemsSold.push(`${instance.getItemName(key, interaction)}: ${format(amountSold)}`);
+							await database.market.addHistory(
+								key,
+								instance.getMessage(interaction, 'HISTORY_SOLD', {
+									PRICE: format(buyOrder.price * amountSold),
+									AMOUNT: format(amountSold),
+									ITEM: instance.getItemName(key, interaction),
+								})
+							);
+							continue;
+						}
+
+						// otherwise sell to the bot
 						falcoins += itemJSON.value * player.inventory.get(key);
 						itemsSold.push(`${instance.getItemName(key, interaction)}: ${format(player.inventory.get(key))}`);
 						player.inventory.set(key, 0);
@@ -809,8 +855,8 @@ module.exports = {
 						embeds: [embed],
 						components: [],
 					});
+					player.save();
 				});
-				collector.on('end', () => player.save());
 			} else if (type === 'sort') {
 				if (interaction.values === undefined) {
 					const embed = instance.createEmbed(member.displayColor).addFields({

@@ -1281,6 +1281,16 @@
 		"en-US": ":money_with_wings: You are about to sell **EVERYTHING** from your inventory\n:eye: Mythical items are not included.",
 		"es-ES": ":money_with_wings: Estás a punto de vender **TODO** de tu inventario\n:eye: Los artículos míticos no están incluidos."
 	},
+	"SELLALL_LOOTONLY": {
+		"pt-BR": "\n:compass: Você escolheu vender apenas os itens de loot.",
+		"en-US": "\n:compass: You chose to sell only loot items.",
+		"es-ES": "\n:compass: Elegiste vender solo artículos de botín."
+	},
+	"SELLALL_NOLEGENDARY": {
+		"pt-BR": "\n:milky_way: Itens lendários não serão vendidos.",
+		"en-US": "\n:milky_way: Legendary items will not be sold.",
+		"es-ES": "\n:milky_way: Los artículos legendarios no se venderán."
+	},
 	"SELLALL_CONFIRMED_TITLE": {
 		"pt-BR": ":moneybag: Inventário vendido!",
 		"en-US": ":moneybag: Inventory sold!",
@@ -1612,9 +1622,9 @@
 		"es-ES": ":shopping_cart: Mercado ({PAGE}/{TOTAL})"
 	},
 	"NO_LISTINGS": {
-		"pt-BR": "Não listado",
-		"en-US": "No listings",
-		"es-ES": "Sin listados"
+		"pt-BR": "Indisponível",
+		"en-US": "Unavailable",
+		"es-ES": "No disponible"
 	},
 	"AVAILABLES": {
 		"pt-BR": "Disponíveis",
@@ -1622,14 +1632,14 @@
 		"es-ES": "Disponibles"
 	},
 	"BUYERS": {
-		"pt-BR": "Compradores",
-		"en-US": "Buyers",
-		"es-ES": "Compradores"
+		"pt-BR": "Venda por",
+		"en-US": "Sell for",
+		"es-ES": "Vender por"
 	},
 	"SELLERS": {
-		"pt-BR": "Vendedores",
-		"en-US": "Sellers",
-		"es-ES": "Vendedores"
+		"pt-BR": "Compre por",
+		"en-US": "Buy for",
+		"es-ES": "Compra por"
 	},
 	"MARKET_BOUGHT": {
 		"pt-BR": "Você comprou {AMOUNT} {ITEM} por {PRICE} falcoins!",
@@ -2350,5 +2360,30 @@
 		"pt-BR": "**{player}** ganhou o jogo! Parabéns!",
 		"en-US": "'**{player}** won the Game! Congratulations!'",
 		"es-ES": "**{player}** ganó el juego! ¡Felicidades!"
+	},
+	"MARKET_MENU": {
+		"pt-BR": "Veja um mercado...",
+		"en-US": "View a market...",
+		"es-ES": "Ver un mercado..."
+	},
+	"MARKET_HISTORY": {
+		"pt-BR": ":shopping_bags: Histórico de transações de {ITEM} {PAGE}/{TOTAL}",
+		"en-US": ":shopping_bags: Transaction history of {ITEM} {PAGE}/{TOTAL}",
+		"es-ES": ":shopping_bags: Historial de transacciones de {ITEM} {PAGE}/{TOTAL}"
+	},
+	"NO_HISTORY": {
+		"pt-BR": ":hourglass: Esse item não foi vendido no mercado ainda.",
+		"en-US": ":hourglass: This item hasn't been sold on the market yet.",
+		"es-ES": ":hourglass: Este artículo aún no se ha vendido en el mercado."
+	},
+	"HISTORY_BOUGHT": {
+		"pt-BR": "{ITEM} x {AMOUNT} foram comprados por {PRICE} falcoins.",
+		"en-US": "{ITEM} x {AMOUNT} were bought for {PRICE} falcoins.",
+		"es-ES": "{ITEM} x {AMOUNT} fueron comprados por {PRICE} falcoins."
+	},
+	"HISTORY_SOLD": {
+		"pt-BR": "{ITEM} x {AMOUNT} foram vendidos por {PRICE} falcoins.",
+		"en-US": "{ITEM} x {AMOUNT} were sold for {PRICE} falcoins.",
+		"es-ES": "{ITEM} x {AMOUNT} fueron vendidos por {PRICE} falcoins."
 	}
 }
