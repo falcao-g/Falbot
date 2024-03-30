@@ -107,6 +107,23 @@ module.exports = {
 							}),
 						});
 					} else {
+						const thread = await answer.startThread({
+							name: `${member.displayName} vs ${challenged.displayName}`,
+							autoArchiveDuration: 60,
+							reason: `Fight between ${member.displayName} and ${challenged.displayName}`,
+						});
+
+						await collected.first().update({
+							content: instance.getMessage(interaction, 'FIGHT_ACCEPTED', {
+								USER: member,
+								USER2: challenged,
+							}),
+							components: [],
+						});
+
+						await thread.members.add(member);
+						await thread.members.add(challenged);
+
 						author.falcoins -= bet;
 						challengedFile.falcoins -= bet;
 						const attacks = [
@@ -136,7 +153,6 @@ module.exports = {
 						var luck = Math.round(Math.random());
 						const order = luck === 0 ? [player_1, player_2] : [player_2, player_1];
 
-						first = true;
 						while (order[0]['hp'] > 0 && order[1]['hp'] > 0) {
 							for (const [i, player] of order.entries()) {
 								const enemy = i === 0 ? order[1] : order[0];
@@ -206,21 +222,15 @@ module.exports = {
 									value: `${order[0]['mention']}: ${order[0]['hp']} hp\n${order[1]['mention']}: ${order[1]['hp']} hp`,
 								});
 
-								if (first) {
-									await collected.first().reply({
-										embeds: [embed],
-										components: [],
-									});
-									first = false;
-								} else {
-									await interaction.channel.send({
-										embeds: [embed],
-									});
-								}
+								await thread.send({
+									embeds: [embed],
+								});
 
 								await new Promise((resolve) => setTimeout(resolve, 2500));
 							}
 						}
+
+						await thread.delete();
 
 						const winner = order[0].hp <= 0 ? order[1] : order[0];
 						const loser = order[0].hp <= 0 ? order[0] : order[1];
@@ -242,11 +252,7 @@ module.exports = {
 							}
 						);
 
-						await interaction.channel
-							.send({
-								embeds: [embed2],
-							})
-							.catch((err) => console.error(err));
+						await interaction.followUp({ embeds: [embed2] }).catch((err) => console.error(err));
 					}
 				});
 			} else {
