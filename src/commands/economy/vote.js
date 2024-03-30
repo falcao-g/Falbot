@@ -62,7 +62,7 @@ module.exports = {
 					name: instance.getMessage(interaction, 'VOTE_THANKS'),
 					value: rewardText,
 				});
-				player.stats.set('timesVoted', player.stats.get('timesVoted') + 1);
+				player.stats.timesVoted += 1;
 			} else if (voted && Date.now() - player.lastVote < 1000 * 60 * 60 * 12) {
 				var embed = instance.createEmbed(15158332).addFields({
 					name: instance.getMessage(interaction, 'ALREADY_COLLECTED'),

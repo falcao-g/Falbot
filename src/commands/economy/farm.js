@@ -139,7 +139,7 @@ module.exports = {
 			const player = await User.findByIdAndUpdate(
 				target.id,
 				{},
-				{ select: 'plots inventory rank', upsert: true, new: true }
+				{ select: 'plots inventory rank stats', upsert: true, new: true }
 			);
 			const { items } = instance;
 
@@ -310,6 +310,7 @@ module.exports = {
 						plotsWatered.push(index);
 					}
 				});
+				player.stats.timesWatered += 1;
 				await player.save();
 
 				if (plotsWatered.length === 0) {
@@ -340,6 +341,7 @@ module.exports = {
 							harvestedCrops[cropKey] = (harvestedCrops[cropKey] || 0) + amount;
 						}
 					}
+					player.stats.cropsHarvested += total;
 					await player.save();
 
 					if (total === 0) {

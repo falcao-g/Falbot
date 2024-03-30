@@ -46,60 +46,72 @@ module.exports = {
 					},
 					{
 						name: `:pager: ${instance.getMessage(interaction, 'STATS_TOTAL_COMMANDS')}`,
-						value: `${format(player.stats.get('commands'))} ${instance.getMessage(interaction, 'STATS_COMMANDS')}`,
+						value: `${format(player.stats.commands)} ${instance.getMessage(interaction, 'STATS_COMMANDS')}`,
 						inline: true,
 					},
 					{
 						name: `:mag: ${instance.getMessage(interaction, 'STATS_ITEMS_FOUND')}`,
-						value: `${format(player.stats.get('itemsFound'))} ${instance.getMessage(interaction, 'STATS_ITEMS')}`,
+						value: `${format(player.stats.itemsFound)} ${instance.getMessage(interaction, 'STATS_ITEMS')}`,
 						inline: true,
 					},
 					{
 						name: `:briefcase: ${instance.getMessage(interaction, 'STATS_WORK')}`,
-						value: `${format(player.stats.get('timesWorked'))} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
+						value: `${format(player.stats.timesWorked)} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
 						inline: true,
 					},
 					{
 						name: `:compass: ${instance.getMessage(interaction, 'STATS_EXPLORE')}`,
-						value: `${format(player.stats.get('timesExplored'))} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
+						value: `${format(player.stats.timesExplored)} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
 						inline: true,
 					},
 					{
 						name: `:fishing_pole_and_fish: ${instance.getMessage(interaction, 'STATS_FISH')}`,
-						value: `${format(player.stats.get('timesFished'))} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
+						value: `${format(player.stats.timesFished)} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
 						inline: true,
 					},
 					{
 						name: `:ox: ${instance.getMessage(interaction, 'STATS_HUNT')}`,
-						value: `${format(player.stats.get('timesHunted'))} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
+						value: `${format(player.stats.timesHunted)} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
 						inline: true,
 					},
 					{
 						name: `:pick: ${instance.getMessage(interaction, 'STATS_MINE')}`,
-						value: `${format(player.stats.get('timesMined'))} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
+						value: `${format(player.stats.timesMined)} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
 						inline: true,
 					},
 					{
 						name: `:gift: ${instance.getMessage(interaction, 'STATS_VOTE')}`,
-						value: `${format(player.stats.get('timesVoted'))} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
+						value: `${format(player.stats.timesVoted)} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
 						inline: true,
 					},
 					{
 						name: `:hammer_pick: ${instance.getMessage(interaction, 'STATS_CRAFTS')}`,
-						value: `${format(player.stats.get('itemsCrafted'))} ${instance.getMessage(interaction, 'STATS_ITEMS')}`,
+						value: `${format(player.stats.itemsCrafted)} ${instance.getMessage(interaction, 'STATS_ITEMS')}`,
 						inline: true,
 					},
 					{
 						name: `:tickets: ${instance.getMessage(interaction, 'STATS_LOTTERY')}`,
-						value: `${format(player.stats.get('lotteryWins') ?? 0)} falcoins`,
+						value: `${format(player.stats.lotteryWins)} falcoins`,
 						inline: true,
 					},
 					{
 						name: `:confetti_ball: ${instance.getMessage(interaction, 'STATS_SCRATCH')}`,
-						value: `${format(player.stats.get('scratchJackpots') ?? 0)} ${instance.getMessage(
-							interaction,
-							'STATS_TIMES'
-						)}`,
+						value: `${format(player.stats.scratchJackpots)} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
+						inline: true,
+					},
+					{
+						name: `:droplet: ${instance.getMessage(interaction, 'STATS_WATERED')}`,
+						value: `${format(player.stats.timesWatered)} ${instance.getMessage(interaction, 'STATS_TIMES')}`,
+						inline: true,
+					},
+					{
+						name: `:seedling: ${instance.getMessage(interaction, 'STATS_HARVESTED')}`,
+						value: `${format(player.stats.cropsHarvested)} ${instance.getMessage(interaction, 'STATS_CROPS')}`,
+						inline: true,
+					},
+					{
+						name: `:shopping_cart: ${instance.getMessage(interaction, 'STATS_SOLD')}`,
+						value: `${format(player.stats.listingsSold)} ${instance.getMessage(interaction, 'STATS_ITEMS')}`,
 						inline: true,
 					}
 				);

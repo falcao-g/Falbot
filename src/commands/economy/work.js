@@ -67,7 +67,7 @@ module.exports = {
 				embeds: [embed],
 			});
 
-			player.stats.set('timesWorked', player.stats.get('timesWorked') + 1);
+			player.stats.timesWorked += 1;
 			player.save();
 		} catch (err) {
 			console.error(`work: ${err}`);
