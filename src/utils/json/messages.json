@@ -254,11 +254,6 @@
 		"en-US": "Fight cancelled. {USER} declined the duel! :face_with_monocle:",
 		"es-ES": "Pelea cancelada. {USER} rechazó el duelo! :face_with_monocle:"
 	},
-	"FIGHT_ACCEPTED": {
-		"pt-BR": "{USER2} aceitou o convite de {USER}. Que comece a luta! ⚔️",
-		"en-US": "{USER2} accepted {USER}'s invitation. Let the fight begin! ⚔️",
-		"es-ES": "{USER2} aceptó la invitación de {USER}. ¡Que comience la pelea! ⚔️"
-	},
 	"FIGHT_CHALLENGE": {
 		"pt-BR": "{USER2}, você foi desafiado para uma luta por {USER}\n*Se você entrar, você apostará {FALCOINS} falcoins :smiling_imp:*",
 		"en-US": "{USER2}, you've been challenged to a fight by {USER}\n*If you accept, you'll be betting {FALCOINS} falcoins :smiling_imp:*",
