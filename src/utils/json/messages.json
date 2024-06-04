@@ -2405,5 +2405,10 @@
 		"pt-BR": "{ITEM} x {AMOUNT} foram vendidos por {PRICE} falcoins.",
 		"en-US": "{ITEM} x {AMOUNT} were sold for {PRICE} falcoins.",
 		"es-ES": "{ITEM} x {AMOUNT} fueron vendidos por {PRICE} falcoins."
+	},
+	"INVITE": {
+		"pt-BR": ":pushpin: Convide o Falbot você mesmo: [Clique Aqui](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=0&scope=applications.commands%20bot)\n:wave: Entre no nosso Servidor do Discord de Suporte Oficial: https://discord.gg/JBYgPZCEnS",
+		"en-US": ":pushpin: Invite Falbot yourself: [Click Here](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=0&scope=applications.commands%20bot)\n:wave: Join our Official Support Discord Server: https://discord.gg/JBYgPZCEnS",
+		"es-ES": ":pushpin: Invita a Falbot tú mismo: [Haz Clic Aquí](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=0&scope=applications.commands%20bot)\n:wave: Únete a nuestro Servidor de Discord de Soporte Oficial: https://discord.gg/JBYgPZCEnS"
 	}
 }
