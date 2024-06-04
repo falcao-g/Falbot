@@ -416,7 +416,7 @@ module.exports = {
 
 					for (key in itemJSON.recipe) {
 						ingredients += `\n${instance.getItemName(key, interaction)} x ${itemJSON.recipe[key] * amount}`;
-						cost += items[key].value * amount;
+						cost += items[key].value * itemJSON.recipe[key] * amount;
 					}
 				} else {
 					cost = itemJSON.value * amount;
