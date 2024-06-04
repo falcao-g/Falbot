@@ -70,6 +70,21 @@ module.exports = {
 						})
 						.setAutocomplete(true)
 				)
+				.addIntegerOption((option) =>
+					option
+						.setName('amount')
+						.setNameLocalizations({
+							'pt-BR': 'quantidade',
+							'es-ES': 'cantidad',
+						})
+						.setDescription('amount of the item')
+						.setDescriptionLocalizations({
+							'pt-BR': 'quantidade do item',
+							'es-ES': 'cantidad del item',
+						})
+						.setRequired(false)
+						.setMinValue(1)
+				)
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
@@ -241,10 +256,13 @@ module.exports = {
 				let cropName;
 				if (interaction.options !== undefined) {
 					cropName = interaction.options.getString('crop');
+					var amount = interaction.options.getInteger('amount') || 1;
 				} else if (interaction.values !== undefined) {
 					cropName = interaction.values[0];
+					var amount = 1;
 				} else {
 					cropName = args[1];
+					var amount = Number(args[0]);
 				}
 
 				// If no crop name is provided, show a list of crops that can be planted.
@@ -286,18 +304,30 @@ module.exports = {
 				} else if (player.plots.length >= MAX_PLOTS) {
 					embed.setDescription(instance.getMessage(interaction, 'NO_PLOTS_AVAILABLE'));
 				} else {
-					// Add the plot to the player's plots array.
-					player.plots.push({
-						crop: cropKey,
-						harvestTime: Date.now() + cropJSON.growTime,
-					});
+					// Add the plot(s) to the player's plots array.
+					var cont = 0;
+					while (amount-- > 0 && player.plots.length < MAX_PLOTS) {
+						player.plots.push({
+							crop: cropKey,
+							harvestTime: Date.now() + cropJSON.growTime,
+						});
+						cont += 1;
+					}
 					await player.save();
+
+					var newPlots = [];
+					for (var i = player.plots.length - cont; i < player.plots.length; i++) {
+						newPlots.push(i);
+					}
 
 					embed
 						.setDescription(
-							`${instance.getMessage(interaction, 'PLANTED')} **${instance.getItemName(cropKey, interaction)}**!`
+							`${instance.getMessage(interaction, 'PLANTED')} **${instance.getItemName(
+								cropKey,
+								interaction
+							)} x ${cont}**!`
 						)
-						.addFields(...renderPlots({ newPlot: [player.plots.length - 1] }));
+						.addFields(...renderPlots({ newPlot: newPlots }));
 				}
 			} else if (type === 'water') {
 				const plotsWatered = [];
