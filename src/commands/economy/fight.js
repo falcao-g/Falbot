@@ -64,6 +64,8 @@ module.exports = {
 				return;
 			}
 			if (author.falcoins >= bet && challengedFile.falcoins >= bet) {
+				author.falcoins -= bet;
+				author.save();
 				var answer = await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'FIGHT_CHALLENGE', {
 						USER: member,
@@ -95,6 +97,8 @@ module.exports = {
 							}),
 							components: [],
 						});
+						author.falcoins += bet;
+						author.save();
 					} else if (collected.first().customId === 'refuse') {
 						interaction.editReply({
 							content: instance.getMessage(interaction, 'FIGHT_DECLINED', {
@@ -102,9 +106,11 @@ module.exports = {
 							}),
 							components: [],
 						});
+						author.falcoins += bet;
+						author.save();
 					} else {
-						author.falcoins -= bet;
 						challengedFile.falcoins -= bet;
+						challengedFile.save();
 						const attacks = [
 							['base', 25],
 							['stun', 15],
@@ -224,6 +230,7 @@ module.exports = {
 						const winnerFile = await database.player.findOne(winner.id);
 						winnerFile.falcoins += bet * 2;
 						winnerFile.wins++;
+						winnerFile.save();
 
 						const embed2 = instance.createEmbed(3066993).addFields(
 							{
@@ -250,8 +257,6 @@ module.exports = {
 					content: instance.getMessage(interaction, 'INSUFFICIENT_ACCOUNTS'),
 				});
 			}
-			author.save();
-			challengedFile.save();
 		} catch (error) {
 			console.error(`fight: ${error}`);
 			interaction.channel
