@@ -38,7 +38,7 @@ module.exports = {
 					'es-ES': 'Veja todos os ranks',
 				})
 		),
-	execute: async ({ guild, user, interaction, instance, database }) => {
+	execute: async ({ user, interaction, instance, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
 			const type = interaction.options.getSubcommand();
@@ -72,7 +72,7 @@ module.exports = {
 						{
 							name: 'Rank Up!',
 							value: instance.getMessage(interaction, 'RANKUP_SUCESS', {
-								RANK: instance.getMessage(interaction, String(player.rank + 1)),
+								RANK: instance.getMessage(interaction, String(player.rank)),
 								FALCOINS: format(rank.falcoinsToLevelUp),
 							}),
 						},
