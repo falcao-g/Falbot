@@ -917,9 +917,17 @@ module.exports = {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
 		const { items } = instance;
 
-		var localeItems = Object.keys(items).map((key) => {
-			return instance.getItemName(key, interaction);
-		});
+		var localeItems = Object.keys(items)
+			.map((key) => {
+				const itemData = items[key];
+				if (
+					itemData.mythical !== true // Sellable items
+				) {
+					return instance.getItemName(key, interaction);
+				}
+				return undefined;
+			})
+			.filter((item) => item !== undefined);
 
 		const filtered = localeItems.filter((choice) => {
 			if (
