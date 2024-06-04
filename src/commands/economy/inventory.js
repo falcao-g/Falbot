@@ -970,6 +970,23 @@ module.exports = {
 						name: instance.getMessage(interaction, 'USE_MYTHICAL_TITLE'),
 						value: instance.getMessage(interaction, 'USE_SNOWFLAKE_VALUE'),
 					});
+				} else if (itemKey === 'fertilizer') {
+					if (player.plots.length === 0) {
+						instance.editReply(interaction, {
+							content: instance.getMessage(interaction, 'EMPTY_FARM'),
+						});
+						return;
+					}
+
+					player.plots.forEach((plot) => {
+						plot.harvestTime -= 1000 * 60 * 60 * 2;
+						plot.lastWatered = Date.now();
+					});
+
+					var embed = instance.createEmbed(member.displayColor).addFields({
+						name: instance.getMessage(interaction, 'USE_FERTILIZER_TITLE'),
+						value: instance.getMessage(interaction, 'USE_FERTILIZER_VALUE'),
+					});
 				}
 				instance.editReply(interaction, {
 					embeds: [embed],

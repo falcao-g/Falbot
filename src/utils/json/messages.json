@@ -1381,6 +1381,16 @@
 		"en-US": "Success! You increased your inventory limit by 200.000 falcoins with 1 backpack",
 		"es-ES": "¡Éxito! Aumentaste tu límite de inventario en 200.000 falcoins con 1 mochila"
 	},
+	"USE_FERTILIZER_TITLE": {
+		"pt-BR": ":blossom: Suas plantas estão crescendo mais rápido!",
+		"en-US": ":blossom: Your plants are growing faster!",
+		"es-ES": ":blossom: ¡Tus plantas están creciendo más rápido!"
+	},
+	"USE_FERTILIZER_VALUE": {
+		"pt-BR": "Sucesso! Todas as colheitas vão demorar 2 horas a menos para crescer",
+		"en-US": "Success! All crops will take 2 hours less to grow",
+		"es-ES": "¡Éxito! Todas las cosechas tardarán 2 horas menos en crecer"
+	},
 	"USABLE": {
 		"pt-BR": ":white_check_mark: Usável",
 		"en-US": ":white_check_mark: Useable",
@@ -1442,9 +1452,14 @@
 		"es-ES": "¡No puedes intercambiar artículos contigo mismo! :confused:"
   },
 	"RESET-COOLDOWNS": {
-		"pt-BR": ":snowflake: reseta todos os cooldowns",
-		"en-US": ":snowflake: resets all cooldowns",
-		"es-ES": ":snowflake: reinicia todos los tiempos de espera"
+		"pt-BR": ":snowflake: Reseta todos os cooldowns",
+		"en-US": ":snowflake: Resets all cooldowns",
+		"es-ES": ":snowflake: Reinicia todos los tiempos de espera"
+	},
+	"GROW-2": {
+		"pt-BR": ":blossom: -2h no crescimento das plantas",
+		"en-US": ":blossom: -2h on crop growth",
+		"es-ES": ":blossom: -2h en el crecimiento de cultivos"
 	},
 	"CANT_SELL": {
 		"pt-BR": ":no_entry_sign: Esse item não pode ser vendido",
@@ -2410,5 +2425,10 @@
 		"pt-BR": ":pushpin: Convide o Falbot você mesmo: [Clique Aqui](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=0&scope=applications.commands%20bot)\n:wave: Entre no nosso Servidor do Discord de Suporte Oficial: https://discord.gg/JBYgPZCEnS",
 		"en-US": ":pushpin: Invite Falbot yourself: [Click Here](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=0&scope=applications.commands%20bot)\n:wave: Join our Official Support Discord Server: https://discord.gg/JBYgPZCEnS",
 		"es-ES": ":pushpin: Invita a Falbot tú mismo: [Haz Clic Aquí](https://discord.com/oauth2/authorize?client_id=742331813539872798&permissions=0&scope=applications.commands%20bot)\n:wave: Únete a nuestro Servidor de Discord de Soporte Oficial: https://discord.gg/JBYgPZCEnS"
+	},
+	"EMPTY_FARM": {
+		"pt-BR": ":tractor: Sua fazenda está vazia! Plante algo com `/fazenda plantar`!",
+		"en-US": ":tractor: Your farm is empty! Plant something with `/farm plant`!",
+		"es-ES": ":tractor: ¡Tu granja está vacía! ¡Planta algo con `/granja plantar`!"
 	}
 }

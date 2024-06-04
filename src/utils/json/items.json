@@ -700,8 +700,10 @@
 		"es-ES": "Fertilizante",
 		"value": 12500,
 		"emoji": "💩",
+		"use": true,
+		"effect": "grow-2",
 		"recipe": {
-			"weeds": 200
+			"weeds": 100
 		}
 	},
 	"oil": {
