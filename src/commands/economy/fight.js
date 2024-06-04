@@ -87,24 +87,20 @@ module.exports = {
 					time: 1000 * 300,
 				});
 
-				collector.on('end', async (collected) => {
-					if (collected.size === 0) {
+				collector.on('end', async (collected, reason) => {
+					if (reason === 'time') {
 						interaction.editReply({
 							content: instance.getMessage(interaction, 'FIGHT_TOO_LONG', {
 								USER: challenged,
 							}),
-						});
-					} else if (collected.first().customId === 'refuse' && collected.first().user.id === user.id) {
-						interaction.editReply({
-							content: instance.getMessage(interaction, 'FIGHT_DECLINED', {
-								USER: member,
-							}),
+							components: [],
 						});
 					} else if (collected.first().customId === 'refuse') {
 						interaction.editReply({
 							content: instance.getMessage(interaction, 'FIGHT_DECLINED', {
-								USER: challenged,
+								USER: collected.first().user,
 							}),
+							components: [],
 						});
 					} else {
 						author.falcoins -= bet;
