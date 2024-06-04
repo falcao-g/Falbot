@@ -614,7 +614,12 @@
 		"value": 1000,
 		"rarity": "Rare",
 		"emoji": "🌾",
-		"exploring": true
+		"exploring": true,
+		"growTime": 9000000,
+		"harvestAmount": {
+			"min": 25,
+			"max": 50
+		}
 	},
 	"butter": {
 		"en-US": "Butter",
