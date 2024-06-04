@@ -322,7 +322,7 @@ module.exports = {
 									items[getItem(b.split(' ').slice(1, -2).join(' '))].value
 								);
 							case 'quantity':
-								return a.split(' ')[-1] - b.split(' ')[-1];
+								return a.split(' x ')[1] - b.split(' x ')[1];
 							case 'worth':
 								return (
 									items[getItem(a.split(' ').slice(1, -2).join(' '))].value * a.split(' x ')[1] -
@@ -897,8 +897,10 @@ module.exports = {
 						embeds: [embed],
 					});
 				} else {
+					const player = await database.player.findOne(member.id);
 					const sort = interaction.values[0];
 					player.inventorySort = sort;
+					player.save();
 
 					const embed = instance.createEmbed(member.displayColor).addFields({
 						name: ':gear: ' + instance.getMessage(interaction, 'INVENTORY_SORTING'),
