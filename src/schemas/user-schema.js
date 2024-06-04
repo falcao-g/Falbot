@@ -21,6 +21,7 @@ const stats = mongoose.Schema({
 	timesWatered: { type: Number, default: 0 },
 	cropsHarvested: { type: Number, default: 0 },
 	listingsSold: { type: Number, default: 0 },
+	mythicalUsed: { type: Number, default: 0 },
 });
 
 const userSchema = mongoose.Schema(

@@ -1556,6 +1556,11 @@
 		"en-US": "Items Sold",
 		"es-ES": "Artículos Vendidos"
 	},
+	"STATS_MYTHICAL": {
+		"pt-BR": "Itens Míticos Usados",
+		"en-US": "Mythical Items Used",
+		"es-ES": "Artículos Míticos Usados"
+	},
 	"OVERTIME": {
 		"pt-BR": "**:crescent_moon: Horas extras - 3x** bônus de trabalho ({TIME})",
 		"en-US": "**:crescent_moon: Overtime - 3x** work bonus ({TIME})",

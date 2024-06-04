@@ -962,6 +962,7 @@ module.exports = {
 						fish: 0,
 						scratch: 0,
 					};
+					player.stats.mythicalUsed += 1;
 
 					var embed = instance.createEmbed(member.displayColor).addFields({
 						name: instance.getMessage(interaction, 'USE_MYTHICAL_TITLE'),

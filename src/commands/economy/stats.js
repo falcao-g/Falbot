@@ -113,6 +113,11 @@ module.exports = {
 						name: `:shopping_cart: ${instance.getMessage(interaction, 'STATS_SOLD')}`,
 						value: `${format(player.stats.listingsSold)} ${instance.getMessage(interaction, 'STATS_ITEMS')}`,
 						inline: true,
+					},
+					{
+						name: `:snowflake: ${instance.getMessage(interaction, 'STATS_MYTHICAL')}`,
+						value: `${format(player.stats.mythicalUsed)} ${instance.getMessage(interaction, 'STATS_ITEMS')}`,
+						inline: true,
 					}
 				);
 
