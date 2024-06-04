@@ -209,7 +209,7 @@ module.exports = {
 			});
 
 			const filter = (btInt) => {
-				return instance.defaultFilter(btInt) && btInt.user.id === recipient.user.id;
+				return instance.defaultFilter(btInt) && btInt.user.id === member.user.id;
 			};
 
 			const collector = answer.createMessageComponentCollector({
@@ -294,10 +294,10 @@ module.exports = {
 						embeds: [embed],
 						components: [],
 					});
+					userFile.save();
+					recipientFile.save();
 				}
 			});
-			userFile.save();
-			recipientFile.save();
 		} catch (error) {
 			console.error(`exchange: ${error}`);
 			instance.editReply(interaction, {
