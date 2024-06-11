@@ -1,14 +1,6 @@
 const { ButtonBuilder, SlashCommandBuilder } = require('discord.js');
 const { format, paginate, getItem } = require('../../utils/functions.js');
 
-async function getMember(guild, member_id) {
-	try {
-		return await guild.members.fetch(member_id);
-	} catch {
-		return undefined;
-	}
-}
-
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('leaderboard')
@@ -230,13 +222,9 @@ module.exports = {
 			}
 
 			if (scope === 'server') {
-				users = await instance.userSchema.find({}).sort({ [type]: -1 });
-
-				for (useri of users) {
-					if (await getMember(guild, useri['_id'])) {
-						rank.push(useri);
-					}
-				}
+				var members = await guild.members.fetch();
+				const membersArray = members.map((member) => member.id);
+				rank = await instance.userSchema.find({ _id: { $in: membersArray } }).sort({ [type]: -1 });
 			} else {
 				rank = await instance.userSchema
 					.find({})
@@ -250,11 +238,10 @@ module.exports = {
 				if (a == embeds.length) embeds.push(instance.createEmbed('#206694'));
 
 				try {
-					member =
-						scope == 'server' ? await getMember(guild, rank[i]['_id']) : await client.users.fetch(rank[i]['_id']);
-					username = scope == 'server' ? member.displayName : member.username;
+					const member = scope == 'server' ? members.get(rank[i]['_id']) : await client.users.fetch(rank[i]['_id']);
+					var username = scope == 'server' ? member.displayName : member.username;
 				} catch {
-					username = 'Unknown user';
+					var username = 'Unknown user';
 				}
 
 				embeds[a].addFields({

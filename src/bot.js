@@ -13,7 +13,12 @@ class Falbot {
 	emojiList = {};
 	client = new Client({
 		shards: 'auto',
-		intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
+		intents: [
+			GatewayIntentBits.Guilds,
+			GatewayIntentBits.GuildMessages,
+			GatewayIntentBits.MessageContent,
+			GatewayIntentBits.GuildMembers,
+		],
 	});
 	levels = require('./utils/json/levels.json');
 	items = require('./utils/json/items.json');
