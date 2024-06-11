@@ -90,23 +90,11 @@ function specialArg(string, total) {
  * @returns {string}
  */
 function format(falcoins) {
-	if (parseInt(falcoins) < 0) {
-		falcoins = falcoins.toString();
-		pop = falcoins.slice(1);
-	} else {
-		pop = falcoins.toString();
+	if (falcoins < 0) {
+		falcoins = Math.abs(falcoins);
 	}
-	pop_reverse = pop.split('').reverse().join('');
-	pop_2 = '';
-	for (c in pop_reverse) {
-		if (c / 3 == parseInt(c / 3) && c / 3 != 0) {
-			pop_2 += '.';
-			pop_2 += pop_reverse[c];
-		} else {
-			pop_2 += pop_reverse[c];
-		}
-	}
-	return pop_2.split('').reverse().join('');
+
+	return falcoins.toLocaleString('pt-BR');
 }
 
 /**
