@@ -1,5 +1,6 @@
-const { msToTime, format, specialArg } = require('../../utils/functions.js');
+const { msToTime, format } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
+const { numerize } = require('numerize');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -69,7 +70,7 @@ module.exports = {
 			const player = await database.player.findOne(user.id);
 			if (type === 'buy') {
 				try {
-					var amount = specialArg(interaction.options.getString('amount'), parseInt(player.falcoins / 500));
+					var amount = numerize(interaction.options.getString('amount'), parseInt(player.falcoins / 500));
 				} catch {
 					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'BAD_VALUE', {

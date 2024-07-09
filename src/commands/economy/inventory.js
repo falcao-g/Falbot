@@ -1,5 +1,6 @@
-const { format, paginate, getItem, buttons, isEquipped, specialArg } = require('../../utils/functions.js');
+const { format, paginate, getItem, buttons, isEquipped } = require('../../utils/functions.js');
 const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
+const { numerize } = require('numerize');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -466,7 +467,7 @@ module.exports = {
 				try {
 					var amount = Math.min(
 						player.inventory.get(itemKey),
-						specialArg(interaction.options.getString('amount'), player.inventory.get(itemKey))
+						numerize(interaction.options.getString('amount'), player.inventory.get(itemKey))
 					);
 				} catch {
 					await instance.editReply(interaction, {

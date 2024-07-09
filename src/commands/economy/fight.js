@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { specialArg, format, randint, buttons, pick } = require('../../utils/functions.js');
+const { format, randint, buttons, pick } = require('../../utils/functions.js');
+const { numerize } = require('numerize');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -54,7 +55,7 @@ module.exports = {
 			}
 
 			try {
-				var bet = await specialArg(falcoins, author.falcoins);
+				var bet = await numerize(falcoins, author.falcoins);
 			} catch {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'BAD_VALUE', {

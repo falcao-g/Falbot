@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
 const interestSchema = require('../schemas/interest-schema.js');
 const lotterySchema = require('../schemas/lotto-schema.js');
 

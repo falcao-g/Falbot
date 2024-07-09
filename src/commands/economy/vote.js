@@ -1,5 +1,4 @@
 const { msToTime, format, checkIfUserIsPremium } = require('../../utils/functions.js');
-require('dotenv').config();
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {

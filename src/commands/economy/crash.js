@@ -1,5 +1,6 @@
-const { specialArg, randint, format } = require('../../utils/functions.js');
+const { randint, format } = require('../../utils/functions.js');
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const { numerize } = require('numerize');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -32,7 +33,7 @@ module.exports = {
 			const falcoins = interaction.options.getString('falcoins');
 			const player = await database.player.findOne(member.id);
 			try {
-				var bet = specialArg(falcoins, player.falcoins);
+				var bet = numerize(falcoins, player.falcoins);
 			} catch {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'BAD_VALUE', {

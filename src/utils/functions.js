@@ -1,6 +1,7 @@
 const userSchema = require('../schemas/user-schema');
 const { ActionRowBuilder, ButtonBuilder, GuildMember } = require('discord.js');
 const items = require('./json/items.json');
+
 /**
  * @param {integer} ms
  * @description Converts milliseconds to a string with the format "1m 1d 1h 1m 1s"
@@ -38,48 +39,6 @@ function msToTime(ms) {
 	if (time === '') time += '1m';
 
 	return time.trimEnd();
-}
-
-/**
- *
- * @param {string} string
- * @param {integer} total
- * @description Parses a string to an integer
- * @example specialArg('10%', 1000) // 100
- * @returns {integer}
- */
-function specialArg(string, total) {
-	string = string.toLowerCase();
-	string.replace(/,/g, '');
-	string.replace(/\./g, '');
-	var new_value = parseInt(string);
-
-	if (string == 'tudo' || string == 'all' || string == 'max' || string == 'todo') {
-		new_value = total;
-	} else if (string == 'metade' || string == 'half' || string == 'mitad') {
-		new_value = parseInt(total / 2);
-	} else if (string.slice(-1) === 'k') {
-		string = string.slice(0, -1);
-		new_value += '000';
-	} else if (string.slice(-1) === 'm') {
-		string = string.slice(0, -1);
-		new_value += '000000';
-	} else if (string.slice(-1) === 'b') {
-		string = string.slice(0, -1);
-		new_value += '000000000';
-	} else {
-		for (c in string) {
-			if (string[c] == '%') {
-				new_value = parseInt((parseInt(string.slice(0, -1)) * parseInt(total)) / 100);
-			}
-		}
-	}
-
-	if (parseInt(new_value) <= 0 || isNaN(parseInt(new_value))) {
-		throw Error('Invalid value!');
-	} else {
-		return parseInt(new_value);
-	}
 }
 
 /**
@@ -357,7 +316,6 @@ async function checkIfUserIsPremium(client, user) {
 
 module.exports = {
 	msToTime,
-	specialArg,
 	format,
 	randint,
 	paginate,

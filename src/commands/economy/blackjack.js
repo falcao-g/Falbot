@@ -1,7 +1,8 @@
-const { specialArg, format } = require('../../utils/functions.js');
+const { format } = require('../../utils/functions.js');
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const Blackjack = require('simply-blackjack');
 const User = require('../../schemas/user-schema.js');
+const { numerize } = require('numerize');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -34,7 +35,7 @@ module.exports = {
 			var bet = interaction.options.getString('falcoins');
 			const { falcoins } = await User.findByIdAndUpdate(user.id, {}, { select: 'falcoins', upsert: true, new: true });
 			try {
-				bet = await specialArg(bet, falcoins);
+				bet = await numerize(bet, falcoins);
 			} catch {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'BAD_VALUE', {

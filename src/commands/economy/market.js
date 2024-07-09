@@ -1,5 +1,6 @@
-const { format, paginate, getItem, specialArg } = require('../../utils/functions.js');
+const { format, paginate, getItem } = require('../../utils/functions.js');
 const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder } = require('discord.js');
+const { numerize } = require('numerize');
 
 module.exports = {
 	developer: false,
@@ -438,7 +439,7 @@ module.exports = {
 			}
 
 			try {
-				var amountArgument = await specialArg(interaction.options.getString('amount'), Number.MAX_SAFE_INTEGER);
+				var amountArgument = await numerize(interaction.options.getString('amount'), Number.MAX_SAFE_INTEGER);
 				var amount = amountArgument;
 			} catch {
 				await instance.editReply(interaction, {
@@ -510,7 +511,7 @@ module.exports = {
 			const userFile = await database.player.findOne(member.id);
 
 			try {
-				var amount = await specialArg(interaction.options.getString('amount'), Number.MAX_SAFE_INTEGER);
+				var amount = await numerize(interaction.options.getString('amount'), Number.MAX_SAFE_INTEGER);
 			} catch {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'BAD_VALUE', {
@@ -520,7 +521,7 @@ module.exports = {
 			}
 
 			try {
-				var price = await specialArg(interaction.options.getString('price'), Number.MAX_SAFE_INTEGER);
+				var price = await numerize(interaction.options.getString('price'), Number.MAX_SAFE_INTEGER);
 			} catch {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'BAD_VALUE', {
@@ -602,7 +603,7 @@ module.exports = {
 			}
 
 			try {
-				var amount = await specialArg(interaction.options.getString('amount'), userFile.inventory.get(itemKey));
+				var amount = await numerize(interaction.options.getString('amount'), userFile.inventory.get(itemKey));
 			} catch {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'BAD_VALUE', {
@@ -621,7 +622,7 @@ module.exports = {
 			}
 
 			try {
-				var price = await specialArg(interaction.options.getString('price'), Number.MAX_SAFE_INTEGER);
+				var price = await numerize(interaction.options.getString('price'), Number.MAX_SAFE_INTEGER);
 			} catch {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'BAD_VALUE', {

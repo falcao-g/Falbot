@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { specialArg, format } = require('../../utils/functions.js');
+const { format } = require('../../utils/functions.js');
+const { numerize } = require('numerize');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -105,7 +106,7 @@ module.exports = {
 				await instance.editReply(interaction, { embeds: [embed] });
 			} else if (subcommand === 'deposit') {
 				try {
-					var quantity = specialArg(falcoins, player.falcoins);
+					var quantity = numerize(falcoins, player.falcoins);
 				} catch {
 					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'BAD_VALUE', {
@@ -158,7 +159,7 @@ module.exports = {
 				}
 			} else if (subcommand === 'withdraw') {
 				try {
-					var quantity = specialArg(falcoins, player.bank);
+					var quantity = numerize(falcoins, player.bank);
 				} catch {
 					await instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'BAD_VALUE', {

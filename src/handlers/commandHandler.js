@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 async function loadCommands(instance, client) {
 	const { loadFiles } = require('../utils/fileLoader');
 
