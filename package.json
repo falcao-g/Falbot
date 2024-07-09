@@ -19,6 +19,7 @@
 		"discord.js": "^14.15.3",
 		"falgames": "^1.2.0",
 		"mongoose": "^6.13.0",
+		"numerize": "^1.0.0",
 		"simply-blackjack": "^1.0.3"
 	},
 	"devDependencies": {

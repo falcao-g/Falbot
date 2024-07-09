@@ -1,5 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { format, buttons, getItem, specialArg } = require('../../utils/functions.js');
+const { format, buttons, getItem } = require('../../utils/functions.js');
+const { numerize } = require('numerize');
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('exchange')
@@ -88,7 +90,7 @@ module.exports = {
 			//separate the falcoins from the items
 			for (var i = 0; i < offerItems.length; i++) {
 				if (offerItems[i].includes('falcoins')) {
-					offerFalcoins = specialArg(offerItems[i].split(' ')[0], userFile.falcoins);
+					offerFalcoins = numerize(offerItems[i].split(' ')[0], userFile.falcoins);
 				} else {
 					offerItems[i] = offerItems[i].trim();
 					var itemName = getItem(offerItems[i].split(' ').slice(1).join(' '));
@@ -102,7 +104,7 @@ module.exports = {
 					}
 					try {
 						offerItemsNames.push(itemName);
-						offerItemsAmount.push(specialArg(offerItems[i].split(' ')[0], userFile.inventory.get(itemName)));
+						offerItemsAmount.push(numerize(offerItems[i].split(' ')[0], userFile.inventory.get(itemName)));
 					} catch {
 						await instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'BAD_VALUE', {
@@ -117,7 +119,7 @@ module.exports = {
 			//separate the falcoins from the items
 			for (var i = 0; i < receiveItems.length; i++) {
 				if (receiveItems[i].includes('falcoins')) {
-					receiveFalcoins = specialArg(receiveItems[i].split(' ')[0], recipientFile.falcoins);
+					receiveFalcoins = numerize(receiveItems[i].split(' ')[0], recipientFile.falcoins);
 				} else {
 					receiveItems[i] = receiveItems[i].trim();
 					var itemName = getItem(receiveItems[i].split(' ').slice(1).join(' '));
@@ -131,7 +133,7 @@ module.exports = {
 					}
 					try {
 						receiveItemsNames.push(itemName);
-						receiveItemsAmount.push(specialArg(receiveItems[i].split(' ')[0], recipientFile.inventory.get(itemName)));
+						receiveItemsAmount.push(numerize(receiveItems[i].split(' ')[0], recipientFile.inventory.get(itemName)));
 					} catch {
 						await instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'BAD_VALUE', {

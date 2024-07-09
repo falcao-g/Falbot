@@ -1,7 +1,6 @@
 const { randint, format } = require('./utils/functions.js');
 const { Client, GatewayIntentBits, Collection, EmbedBuilder } = require('discord.js');
 const path = require('path');
-require('dotenv').config();
 const { loadEvents } = require('./handlers/eventHandler.js');
 const { loadCommands } = require('./handlers/commandHandler.js');
 

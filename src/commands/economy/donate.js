@@ -1,5 +1,6 @@
-const { specialArg, format } = require('../../utils/functions.js');
+const { format } = require('../../utils/functions.js');
 const { SlashCommandBuilder } = require('discord.js');
+const { numerize } = require('numerize');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -46,7 +47,7 @@ module.exports = {
 			const author = await database.player.findOne(user.id);
 			const receiver = await database.player.findOne(target.id);
 			try {
-				var quantity = specialArg(falcoins, author.falcoins);
+				var quantity = numerize(falcoins, author.falcoins);
 			} catch {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'BAD_VALUE', {
