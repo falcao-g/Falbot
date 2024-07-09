@@ -703,7 +703,7 @@
 		"use": true,
 		"effect": "grow-2",
 		"recipe": {
-			"weeds": 100
+			"weeds": 150
 		}
 	},
 	"oil": {
