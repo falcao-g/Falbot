@@ -209,8 +209,8 @@
 		"exploring": true,
 		"growTime": 5400000,
 		"harvestAmount": {
-			"min": 30,
-			"max": 75
+			"min": 5,
+			"max": 20
 		}
 	},
 	"rock": {
@@ -617,8 +617,8 @@
 		"exploring": true,
 		"growTime": 9000000,
 		"harvestAmount": {
-			"min": 25,
-			"max": 50
+			"min": 15,
+			"max": 40
 		}
 	},
 	"butter": {
