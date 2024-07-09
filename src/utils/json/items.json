@@ -998,8 +998,8 @@
 		"emoji": "🥔",
 		"growTime": 259200000,
 		"harvestAmount": {
-			"min": 250,
-			"max": 500
+			"min": 100,
+			"max": 200
 		}
 	}
 }
