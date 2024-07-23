@@ -69,6 +69,12 @@ module.exports = {
 
 			player.stats.timesWorked += 1;
 			player.save();
+
+			instance.achievement.sendAchievementMessage(
+				interaction,
+				interaction.user.id,
+				instance.achievement.getById('hard_work')
+			);
 		} catch (err) {
 			console.error(`work: ${err}`);
 			instance.editReply(interaction, {

@@ -739,6 +739,12 @@ module.exports = {
 
 				player.stats.itemsCrafted += amount;
 				player.save();
+
+				instance.achievement.sendAchievementMessage(
+					interaction,
+					interaction.user.id,
+					instance.achievement.getById('crafter')
+				);
 			} else if (type === 'sellall') {
 				const player = await database.player.findOne(member.id);
 				var sellAllText = instance.getMessage(interaction, 'SELLALL_VALUE');
@@ -966,6 +972,12 @@ module.exports = {
 						scratch: 0,
 					};
 					player.stats.mythicalUsed += 1;
+
+					instance.achievement.sendAchievementMessage(
+						interaction,
+						interaction.user.id,
+						instance.achievement.getById('mythical_time')
+					);
 
 					var embed = instance.createEmbed(member.displayColor).addFields({
 						name: instance.getMessage(interaction, 'USE_MYTHICAL_TITLE'),

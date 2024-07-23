@@ -226,7 +226,7 @@ module.exports = {
 								? instance.getMessage(interaction, 'REMAINING_TIME', {
 										CROP: cropEmoji,
 										TIME: msToTime(timeLeft),
-								  })
+									})
 								: `**${instance.getMessage(interaction, 'READY_TO_HARVEST')}**`
 						}`,
 						inline: true,
@@ -250,7 +250,7 @@ module.exports = {
 							: {
 									name: instance.getMessage(interaction, 'NO_PLOTS'),
 									value: instance.getMessage(interaction, 'NO_PLOTS_HINT'),
-							  }
+								}
 					);
 			} else if (type === 'plant') {
 				let cropName;
@@ -343,6 +343,12 @@ module.exports = {
 				player.stats.timesWatered += 1;
 				await player.save();
 
+				instance.achievement.sendAchievementMessage(
+					interaction,
+					interaction.user.id,
+					instance.achievement.getById('farmer')
+				);
+
 				if (plotsWatered.length === 0) {
 					embed.setDescription(instance.getMessage(interaction, 'NO_PLOTS_WATERED'));
 				} else {
@@ -373,6 +379,12 @@ module.exports = {
 					}
 					player.stats.cropsHarvested += total;
 					await player.save();
+
+					instance.achievement.sendAchievementMessage(
+						interaction,
+						interaction.user.id,
+						instance.achievement.getById('good_harvest')
+					);
 
 					if (total === 0) {
 						embed.setDescription(instance.getMessage(interaction, 'NO_CROPS_HARVESTED'));

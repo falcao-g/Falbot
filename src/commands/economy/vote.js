@@ -62,6 +62,12 @@ module.exports = {
 					value: rewardText,
 				});
 				player.stats.timesVoted += 1;
+
+				instance.achievement.sendAchievementMessage(
+					interaction,
+					interaction.user.id,
+					instance.achievement.getById('thank_you')
+				);
 			} else if (voted && Date.now() - player.lastVote < 1000 * 60 * 60 * 12) {
 				var embed = instance.createEmbed(15158332).addFields({
 					name: instance.getMessage(interaction, 'ALREADY_COLLECTED'),

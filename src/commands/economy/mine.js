@@ -116,5 +116,17 @@ module.exports = {
 		player.stats.timesMined += 1;
 		player.stats.itemsFound += total;
 		player.save();
+
+		instance.achievement.sendAchievementMessage(
+			interaction,
+			interaction.user.id,
+			instance.achievement.getById('small_collection')
+		);
+
+		instance.achievement.sendAchievementMessage(
+			interaction,
+			interaction.user.id,
+			instance.achievement.getById('rock_and_stone')
+		);
 	},
 };

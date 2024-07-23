@@ -1,4 +1,6 @@
 const { format } = require('../utils/functions.js');
+const database = require('../database/player.js');
+const User = require('../schemas/user-schema.js');
 
 const achievements = [
 	{
@@ -174,7 +176,7 @@ const achievements = [
 			'es-ES': 'Gana la lotería.',
 		},
 		emoji: ':partying_face:',
-		hasAchieved: (user) => user.stats.lotteryWins >= 0,
+		hasAchieved: (user) => user.stats.lotteryWins >= 1,
 		progress: (user) => false,
 	},
 	{
@@ -286,18 +288,24 @@ class Achievement {
 		return this._achievements.get(id)?.progress(user) ?? '';
 	}
 
-	async sendAchievementMessage(interaction, memberId, achievement) {
+	async sendAchievementMessage(interaction, userId, achievement) {
 		if (!achievement) return;
 
-		const member = await getMember(memberId);
-		const userStats = await getUserStats(memberId);
-		if (member.badges.includes(achievement.id)) return;
-		if (!this.hasAchievement(achievement.id, member, userStats)) return;
+		const user = await database.findOne(userId);
+		if (user.badges.includes(achievement.id)) return;
+		if (!this.hasAchievement(achievement.id, user)) return;
 
-		await interaction.followUp({
-			content: `:tada: You've unlocked the <:${achievement.id}:${achievement.emoji}> **${achievement.name}** achievement!`,
+		await User.findByIdAndUpdate(userId, { $push: { badges: achievement.id } });
+
+		const responses = {
+			'pt-BR': `:tada: ${interaction.member} você desbloqueou a conquista ${achievement.emoji} **${achievement.name[interaction.locale]}**!`,
+			'en-US': `:tada: ${interaction.member} you've unlocked the ${achievement.emoji} **${achievement.name[interaction.locale]}** achievement!`,
+			'es-ES': `:tada: ¡${interaction.member} has desbloqueado el logro ${achievement.emoji} **${achievement.name[interaction.locale]}**!`,
+		};
+
+		await interaction.channel.send({
+			content: responses[interaction.locale],
 		});
-		await Member.updateOne({ id: memberId }, { $push: { badges: achievement.id } });
 	}
 }
 
