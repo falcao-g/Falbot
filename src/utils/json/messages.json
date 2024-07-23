@@ -2445,5 +2445,10 @@
 		"pt-BR": ":sparkles: Novas conquistas :sparkles:",
 		"en-US": ":sparkles: New achievements :sparkles:",
 		"es-ES": ":sparkles: Nuevos logros :sparkles:"
+	},
+	"BADGES": {
+		"pt-BR": "Insígnias",
+		"en-US": "Badges",
+		"es-ES": "Insignias"
 	}
 }
