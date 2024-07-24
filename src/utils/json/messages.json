@@ -2437,9 +2437,9 @@
 		"es-ES": ":trophy: Logros {PAGE}/{TOTAL}"
 	},
 	"NO_NEW_ACHIEVEMENTS": {
-		"pt-BR": "Você não tem novas conquistas.",
-		"en-US": "You don't have any new achievements.",
-		"es-ES": "No tienes nuevos logros."
+		"pt-BR": "Você não tem novas conquistas :person_shrugging:",
+		"en-US": "You don't have any new achievements :person_shrugging:",
+		"es-ES": "No tienes nuevos logros :person_shrugging:"
 	},
 	"NEW_ACHIEVEMENTS": {
 		"pt-BR": ":sparkles: Novas conquistas :sparkles:",
