@@ -1,4 +1,4 @@
-const { paginate } = require('../../utils/functions.js');
+const { paginate, buttons } = require('../../utils/functions.js');
 const { SlashCommandBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
@@ -36,9 +36,13 @@ module.exports = {
 					'es-ES': 'Buscar nuevos logros que puedas haber desbloqueado',
 				})
 		),
-	execute: async ({ interaction, instance, member, database }) => {
+	execute: async ({ interaction, instance, member, subcommand, database }) => {
 		await interaction.deferReply().catch(() => {});
-		var type = interaction.options.getSubcommand();
+		try {
+			var type = interaction.options.getSubcommand();
+		} catch {
+			var type = subcommand;
+		}
 
 		if (type === 'list') {
 			const user = await database.player.findOne(member.id);
@@ -79,6 +83,7 @@ module.exports = {
 			paginator.setTraverser([
 				new ButtonBuilder().setEmoji('⬅️').setCustomId(ids[0]).setStyle('Secondary'),
 				new ButtonBuilder().setEmoji('➡️').setCustomId(ids[1]).setStyle('Secondary'),
+				new ButtonBuilder().setCustomId('achievements refresh').setEmoji('🔄').setStyle('Secondary'),
 			]);
 			const message = await instance.editReply(interaction, paginator.components());
 			message.channel.createMessageComponentCollector().on('collect', async (i) => {
@@ -113,7 +118,10 @@ module.exports = {
 						.map((achievement) => `${achievement.emoji} **${achievement.name[interaction.locale]}**`)
 						.join('\n')
 				);
-			await instance.editReply(interaction, { embeds: [embed] });
+			await instance.editReply(interaction, {
+				embeds: [embed],
+				components: [buttons(['list_achievements'])],
+			});
 		}
 	},
 };

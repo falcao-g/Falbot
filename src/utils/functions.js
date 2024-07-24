@@ -227,6 +227,7 @@ function buttons(buttons) {
 		refuse: new ButtonBuilder().setCustomId('refuse').setEmoji('⛔').setStyle('Danger'),
 		inventory_view: new ButtonBuilder().setCustomId('inventory view').setEmoji('🎒').setStyle('Secondary'),
 		balance: new ButtonBuilder().setCustomId('balance').setEmoji('🪙').setStyle('Secondary'),
+		list_achievements: new ButtonBuilder().setCustomId('achievements list').setEmoji('🏆').setStyle('Secondary'),
 	};
 
 	for (button of buttons) {
