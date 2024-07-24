@@ -2430,5 +2430,25 @@
 		"pt-BR": ":tractor: Sua fazenda está vazia! Plante algo com `/fazenda plantar`!",
 		"en-US": ":tractor: Your farm is empty! Plant something with `/farm plant`!",
 		"es-ES": ":tractor: ¡Tu granja está vacía! ¡Planta algo con `/granja plantar`!"
+	},
+	"ACHIEVEMENTS": {
+		"pt-BR": ":trophy: Conquistas {PAGE}/{TOTAL}",
+		"en-US": ":trophy: Achievements {PAGE}/{TOTAL}",
+		"es-ES": ":trophy: Logros {PAGE}/{TOTAL}"
+	},
+	"NO_NEW_ACHIEVEMENTS": {
+		"pt-BR": "Você não tem novas conquistas :person_shrugging:",
+		"en-US": "You don't have any new achievements :person_shrugging:",
+		"es-ES": "No tienes nuevos logros :person_shrugging:"
+	},
+	"NEW_ACHIEVEMENTS": {
+		"pt-BR": ":sparkles: Novas conquistas :sparkles:",
+		"en-US": ":sparkles: New achievements :sparkles:",
+		"es-ES": ":sparkles: Nuevos logros :sparkles:"
+	},
+	"BADGES": {
+		"pt-BR": "Insígnias",
+		"en-US": "Badges",
+		"es-ES": "Insignias"
 	}
 }

@@ -33,9 +33,8 @@ module.exports = {
 		try {
 			const user = interaction.options.getUser('user');
 			const target = user ? await guild.members.fetch(user.id) : member;
-			const { rank, falcoins, wins, bank, inventory, voteStreak, tickets, createdAt } = await database.player.findOne(
-				target.user.id
-			);
+			const { rank, falcoins, wins, bank, inventory, voteStreak, tickets, badges, createdAt } =
+				await database.player.findOne(target.user.id);
 			const limit = instance.levels[rank - 1].bankLimit;
 
 			if (instance.levels[rank - 1].falcoinsToLevelUp === undefined) {
@@ -49,6 +48,8 @@ module.exports = {
 			}
 
 			const { inventoryWorth, inventoryQuantity } = instance.getInventoryInfo(inventory);
+
+			const achievementBadges = badges.map((badge) => instance.achievement.getById(badge).emoji).join(' ');
 
 			const embed = instance
 				.createEmbed(target.displayColor)
@@ -72,12 +73,17 @@ module.exports = {
 							STREAK: Math.floor(voteStreak / 2),
 							CREATED: time(createdAt, 'd'),
 						}),
+					},
+					{
+						name: instance.getMessage(interaction, 'BADGES'),
+						value: achievementBadges ? achievementBadges : '\u200b',
 					}
 				);
+			embed.data.fields = achievementBadges ? embed.data.fields : embed.data.fields.slice(0, 2);
 
 			await instance.editReply(interaction, {
 				embeds: [embed],
-				components: [buttons(['cooldowns', 'help'])],
+				components: [buttons(['cooldowns', 'help', 'list_achievements'])],
 			});
 		} catch (error) {
 			console.error(`balance: ${error}`);

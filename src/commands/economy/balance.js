@@ -71,7 +71,7 @@ module.exports = {
 
 			instance.editReply(interaction, {
 				embeds: [embed],
-				components: [buttons(['cooldowns', 'help'])],
+				components: [buttons(['cooldowns', 'help', 'list_achievements'])],
 			});
 		} catch (error) {
 			console.error(`balance: ${error}`);

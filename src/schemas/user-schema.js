@@ -116,6 +116,7 @@ const userSchema = mongoose.Schema(
 				default: 0,
 			},
 		},
+		badges: [{ type: String, default: [] }],
 	},
 	{
 		versionKey: false,

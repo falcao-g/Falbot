@@ -75,6 +75,12 @@ module.exports = {
 					cont = 0;
 					setCooldown(user.id, 'scratch', 60 * 60 * 12);
 					collector.stop();
+
+					instance.achievement.sendAchievementMessage(
+						interaction,
+						interaction.user.id,
+						instance.achievement.getById('jackpot')
+					);
 				} else if (2 <= luck && luck <= 3) {
 					//super close
 					amount = randint(100000, 190000);

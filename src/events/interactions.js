@@ -3,6 +3,8 @@ const { resolveCooldown, msToTime, setCooldown } = require('../utils/functions.j
 module.exports = {
 	name: 'interactionCreate',
 	execute: async (interaction, instance, client) => {
+		var countCommand = false;
+
 		if (interaction.user.bot) {
 			interaction.reply({
 				content: instance.getMessage(interaction, 'YOU_ARE_BOT'),
@@ -44,9 +46,7 @@ module.exports = {
 				});
 			}
 
-			const player = await instance.database.player.findOne(interaction.user.id);
-			player.stats.commands += 1;
-			player.save();
+			countCommand = true;
 
 			command.execute({
 				interaction,
@@ -92,9 +92,7 @@ module.exports = {
 
 			if (commandName == 'help') interaction.values = [null];
 
-			const player = await instance.database.player.findOne(interaction.user.id);
-			player.stats.commands += 1;
-			player.save();
+			countCommand = true;
 
 			await command.execute({
 				interaction,
@@ -111,9 +109,7 @@ module.exports = {
 		} else if (interaction.isStringSelectMenu()) {
 			const command = client.commands.get(interaction.customId.split(' ')[0]);
 
-			const player = await instance.database.player.findOne(interaction.user.id);
-			player.stats.commands += 1;
-			player.save();
+			countCommand = true;
 
 			await command.execute({
 				guild: interaction.guild,
@@ -126,6 +122,36 @@ module.exports = {
 				database: instance.database,
 				subcommand: interaction.customId.split(' ')[1],
 			});
+		}
+
+		if (countCommand) {
+			const player = await instance.database.player.findOne(interaction.user.id);
+			player.stats.commands += 1;
+			player.save();
+
+			instance.achievement.sendAchievementMessage(
+				interaction,
+				interaction.user.id,
+				instance.achievement.getById('touch_grass')
+			);
+
+			instance.achievement.sendAchievementMessage(
+				interaction,
+				interaction.user.id,
+				instance.achievement.getById('no_life')
+			);
+
+			instance.achievement.sendAchievementMessage(
+				interaction,
+				interaction.user.id,
+				instance.achievement.getById('one_in_a_million')
+			);
+
+			instance.achievement.sendAchievementMessage(
+				interaction,
+				interaction.user.id,
+				instance.achievement.getById('seller')
+			);
 		}
 	},
 };
