@@ -76,9 +76,10 @@ module.exports = {
 					},
 					{
 						name: instance.getMessage(interaction, 'BADGES'),
-						value: achievementBadges,
+						value: achievementBadges ? achievementBadges : '\u200b',
 					}
 				);
+			embed.data.fields = achievementBadges ? embed.data.fields : embed.data.fields.slice(0, 2);
 
 			await instance.editReply(interaction, {
 				embeds: [embed],
