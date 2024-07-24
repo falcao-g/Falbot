@@ -9,7 +9,7 @@ class Falbot {
 	_messages = require(path.join(__dirname, '/utils/json/messages.json'));
 	_banned = new Array();
 	database = require('./handlers/databaseHandler.js');
-	achievement = require('./handlers/achievement.js');
+	achievement = require('./handlers/achievements.js');
 	emojiList = {};
 	client = new Client({
 		shards: 'auto',
