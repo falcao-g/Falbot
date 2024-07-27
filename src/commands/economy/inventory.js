@@ -162,7 +162,7 @@ module.exports = {
 						.setRequired(false)
 						.setAutocomplete(true)
 				)
-				.addIntegerOption((option) =>
+				.addStringOption((option) =>
 					option
 						.setName('amount')
 						.setNameLocalizations({
@@ -175,7 +175,6 @@ module.exports = {
 							'es-ES': 'cantidad del item',
 						})
 						.setRequired(false)
-						.setMinValue(1)
 				)
 		)
 		.addSubcommand((subcommand) =>
@@ -587,7 +586,23 @@ module.exports = {
 				const player = await database.player.findOne(member.id);
 				if (interaction.options !== undefined) {
 					var item = interaction.options.getString('item');
-					var amount = interaction.options.getInteger('amount') || 1;
+
+					var max = Math.min(
+						...Object.keys(items[getItem(item)].recipe).map((key) => {
+							return Math.floor(player.inventory.get(key) / items[getItem(item)].recipe[key]);
+						})
+					);
+					var amount = interaction.options.getString('amount');
+					try {
+						amount = await numerize(amount, max);
+					} catch {
+						await instance.editReply(interaction, {
+							content: instance.getMessage(interaction, 'BAD_VALUE', {
+								VALUE: amount,
+							}),
+						});
+						return;
+					}
 				} else {
 					if (interaction.values !== undefined) {
 						var item = interaction.values[0];
