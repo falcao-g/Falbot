@@ -6,7 +6,7 @@ const {
 	StringSelectMenuBuilder,
 } = require('discord.js');
 const { msToTime, getItem, randint } = require('../../utils/functions.js');
-const User = require('../../schemas/user-schema.js');
+const User = require('../../schemas/user.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()

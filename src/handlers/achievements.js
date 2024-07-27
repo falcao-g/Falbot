@@ -1,6 +1,6 @@
 const { format } = require('../utils/functions.js');
 const database = require('../database/player.js');
-const User = require('../schemas/user-schema.js');
+const User = require('../schemas/user.js');
 
 const achievements = [
 	{

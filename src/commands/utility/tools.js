@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const { loadCommands } = require('../../handlers/commandHandler');
-const { loadEvents } = require('../../handlers/eventHandler');
+const { loadCommands } = require('../../handlers/commands');
+const { loadEvents } = require('../../handlers/events');
 
 module.exports = {
 	developer: true,

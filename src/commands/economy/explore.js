@@ -50,7 +50,7 @@ module.exports = {
 			})}**`;
 		}
 
-		if (instance.activeEvents.has('Search Party')) {
+		if (instance.randomEvents.isActive('Search Party')) {
 			if (buffText !== '') buffText += '\n';
 			buffText += `${instance.getMessage(interaction, 'SEARCH_PARTY_BONUS')}`;
 			buff ? (buff *= 2) : (buff = 2);

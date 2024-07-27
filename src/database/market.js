@@ -1,4 +1,4 @@
-const marketSchema = require('../schemas/market-schema.js');
+const marketSchema = require('../schemas/market.js');
 
 function findSellOrder(array, sellOrder) {
 	return array.findIndex(

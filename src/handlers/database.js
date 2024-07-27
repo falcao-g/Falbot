@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const interestSchema = require('../schemas/interest-schema.js');
-const lotterySchema = require('../schemas/lotto-schema.js');
+const interestSchema = require('../schemas/interest.js');
+const lotterySchema = require('../schemas/lotto.js');
 
 class databaseHandler {
 	//todo: make this import automatically

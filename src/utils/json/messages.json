@@ -1576,31 +1576,6 @@
 		"en-US": "Mythical Items Used",
 		"es-ES": "Artículos Míticos Usados"
 	},
-	"OVERTIME": {
-		"pt-BR": "**:crescent_moon: Horas extras - 3x** bônus de trabalho ({TIME})",
-		"en-US": "**:crescent_moon: Overtime - 3x** work bonus ({TIME})",
-		"es-ES": "**:crescent_moon: Horas extras - 3x** bonificación de trabajo ({TIME})"
-	},
-	"SEARCH PARTY": {
-		"pt-BR": "**:flashlight: Busca em grupo - 2x** bônus de exploração ({TIME})",
-		"en-US": "**:flashlight: Search party - 2x** explore bonus ({TIME})",
-		"es-ES": "**:flashlight: Búsqueda en grupo - 2x** bonificación de exploración ({TIME})"
-	},
-	"STAMPEDE": {
-		"pt-BR": "**:mammoth: Manada - 2x** bônus de caça ({TIME})",
-		"en-US": "**:mammoth: Stampede - 2x** hunt bonus ({TIME})",
-		"es-ES": "**:mammoth: Estampida - 2x** bonificación de caza ({TIME})"
-	},
-	"FLOOD": {
-		"pt-BR": "**:cloud_rain: Enchente - 2x** bônus de pesca ({TIME})",
-		"en-US": "**:cloud_rain: Flood - 2x** fishing bonus ({TIME})",
-		"es-ES": "**:cloud_rain: Inundación - 2x** bonificación de pesca ({TIME})"
-	},
-	"COMET": {
-		"pt-BR": "**:comet: Cometa - 2x** bônus de mineração ({TIME})",
-		"en-US": "**:comet: Comet - 2x** mining bonus ({TIME})",
-		"es-ES": "**:comet: Cometa - 2x** bonificación de minería ({TIME})"
-	},
 	"OVERTIME_BONUS": {
 		"pt-BR": "**:crescent_moon: bônus de 3x do evento**",
 		"en-US": "**:crescent_moon: 3x event bonus**",
