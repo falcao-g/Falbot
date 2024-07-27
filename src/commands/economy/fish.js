@@ -50,7 +50,7 @@ module.exports = {
 			})}**`;
 		}
 
-		if (instance.activeEvents.has('Flood')) {
+		if (instance.randomEvents.isActive('Flood')) {
 			if (buffText !== '') buffText += '\n';
 			buffText += `${instance.getMessage(interaction, 'FLOOD_BONUS')}`;
 			buff ? (buff *= 2) : (buff = 2);

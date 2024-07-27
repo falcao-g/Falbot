@@ -35,11 +35,7 @@ module.exports = {
 				}
 			)}`;
 
-			for (const [event, value] of instance.activeEvents.entries()) {
-				events += `\n${instance.getMessage(interaction, event.toUpperCase(), {
-					TIME: msToTime(value - Date.now()),
-				})}`;
-			}
+			events += instance.randomEvents.stringifyActives(interaction); // Add active events
 
 			const embed = instance
 				.createEmbed(member.displayColor)

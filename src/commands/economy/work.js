@@ -32,7 +32,7 @@ module.exports = {
 				eventText += `\n${instance.getMessage(interaction, 'WORK_BUFF')}`;
 			}
 
-			if (instance.activeEvents.has('Overtime')) {
+			if (instance.randomEvents.isActive('Overtime')) {
 				salary *= 3;
 				eventText += `\n${instance.getMessage(interaction, 'OVERTIME_BONUS')}`;
 			}

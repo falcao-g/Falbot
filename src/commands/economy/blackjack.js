@@ -1,7 +1,7 @@
 const { format } = require('../../utils/functions.js');
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const Blackjack = require('simply-blackjack');
-const User = require('../../schemas/user-schema.js');
+const User = require('../../schemas/user.js');
 const { numerize } = require('numerize');
 
 module.exports = {

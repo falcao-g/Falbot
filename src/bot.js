@@ -1,15 +1,16 @@
 const { randint, format } = require('./utils/functions.js');
 const { Client, GatewayIntentBits, Collection, EmbedBuilder } = require('discord.js');
 const path = require('path');
-const { loadEvents } = require('./handlers/eventHandler.js');
-const { loadCommands } = require('./handlers/commandHandler.js');
+const { loadEvents } = require('./handlers/events.js');
+const { loadCommands } = require('./handlers/commands.js');
 
 class Falbot {
 	config = require('./config.json');
 	_messages = require(path.join(__dirname, '/utils/json/messages.json'));
 	_banned = new Array();
-	database = require('./handlers/databaseHandler.js');
+	database = require('./handlers/database.js');
 	achievement = require('./handlers/achievements.js');
+	randomEvents = require('./handlers/randomEvents.js');
 	emojiList = {};
 	client = new Client({
 		shards: 'auto',
@@ -22,11 +23,10 @@ class Falbot {
 	});
 	levels = require('./utils/json/levels.json');
 	items = require('./utils/json/items.json');
-	userSchema = require('./schemas/user-schema.js');
-	lottoSchema = require('./schemas/lotto-schema.js');
-	interestSchema = require('./schemas/interest-schema.js');
-	bannedSchema = require('./schemas/banned-schema.js');
-	activeEvents = new Map();
+	userSchema = require('./schemas/user.js');
+	lottoSchema = require('./schemas/lotto.js');
+	interestSchema = require('./schemas/interest.js');
+	bannedSchema = require('./schemas/banned.js');
 
 	constructor() {
 		this.client.on('ready', () => {
@@ -64,13 +64,6 @@ class Falbot {
 				this.client.user.setActivity('/help | arte by: @kinsallum'), this.bankInterest(), this.lotteryDraw();
 			},
 			1000 * 60 * 5
-		);
-
-		setInterval(
-			() => {
-				this.randomEventsHandler();
-			},
-			1000 * 60 * 45
 		);
 	}
 
@@ -175,55 +168,6 @@ class Falbot {
 		}
 	}
 
-	async randomEventsHandler() {
-		const events = [
-			{
-				probability: 0.05,
-				name: 'Overtime',
-				min_time: 60,
-				max_time: 120,
-			},
-			{
-				probability: 0.03,
-				name: 'Search Party',
-				min_time: 60,
-				max_time: 120,
-			},
-			{
-				probability: 0.03,
-				name: 'Stampede',
-				min_time: 60,
-				max_time: 120,
-			},
-			{
-				probability: 0.03,
-				name: 'Flood',
-				min_time: 60,
-				max_time: 120,
-			},
-			{
-				probability: 0.03,
-				name: 'Comet',
-				min_time: 60,
-				max_time: 120,
-			},
-		];
-
-		for (const event of events) {
-			const randomProbability = Math.random();
-			if (randomProbability <= event.probability) {
-				if (!this.activeEvents.has(event.name)) {
-					var duration = 1000 * 60 * randint(event.min_time, event.max_time);
-					this.activeEvents.set(event.name, Date.now() + duration);
-					setTimeout(() => {
-						this.activeEvents.delete(event.name);
-					}, duration);
-					break;
-				}
-			}
-		}
-	}
-
 	ban(userId) {
 		this._banned.push(userId);
 	}
@@ -300,7 +244,6 @@ class Falbot {
 		}
 
 		perks += `${this.getMessage(interaction, 'VOTE')}: ${format(rank.vote)} Falcoins\n`;
-
 		perks += `${this.getMessage(interaction, 'WORK')}: ${format(rank.work[0])}-${format(rank.work[1])} Falcoins`;
 
 		return perks;

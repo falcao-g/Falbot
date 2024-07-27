@@ -50,7 +50,7 @@ module.exports = {
 			})}**`;
 		}
 
-		if (instance.activeEvents.has('Stampede')) {
+		if (instance.randomEvents.isActive('Stampede')) {
 			if (buffText !== '') buffText += '\n';
 			buffText += `${instance.getMessage(interaction, 'STAMPEDE_BONUS')}`;
 			buff ? (buff *= 2) : (buff = 2);

@@ -1,4 +1,4 @@
-const userSchema = require('../schemas/user-schema');
+const userSchema = require('../schemas/user.js');
 const { ActionRowBuilder, ButtonBuilder, GuildMember } = require('discord.js');
 const items = require('./json/items.json');
 

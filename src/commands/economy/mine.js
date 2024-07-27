@@ -50,7 +50,7 @@ module.exports = {
 			})}**`;
 		}
 
-		if (instance.activeEvents.has('Comet')) {
+		if (instance.randomEvents.isActive('Comet')) {
 			if (buffText !== '') buffText += '\n';
 			buffText += `${instance.getMessage(interaction, 'COMET_BONUS')}`;
 			buff ? (buff *= 2) : (buff = 2);
