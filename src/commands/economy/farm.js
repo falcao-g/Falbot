@@ -7,6 +7,7 @@ const {
 } = require('discord.js');
 const { msToTime, getItem, randint } = require('../../utils/functions.js');
 const User = require('../../schemas/user.js');
+const { numerize } = require('numerize');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -70,7 +71,7 @@ module.exports = {
 						})
 						.setAutocomplete(true)
 				)
-				.addIntegerOption((option) =>
+				.addStringOption((option) =>
 					option
 						.setName('amount')
 						.setNameLocalizations({
@@ -83,7 +84,6 @@ module.exports = {
 							'es-ES': 'cantidad del item',
 						})
 						.setRequired(false)
-						.setMinValue(1)
 				)
 		)
 		.addSubcommand((subcommand) =>
@@ -256,7 +256,17 @@ module.exports = {
 				let cropName;
 				if (interaction.options !== undefined) {
 					cropName = interaction.options.getString('crop');
-					var amount = interaction.options.getInteger('amount') || 1;
+					var amount = interaction.options.getString('amount');
+					try {
+						amount = await numerize(amount, MAX_PLOTS - player.plots.length);
+					} catch {
+						await instance.editReply(interaction, {
+							content: instance.getMessage(interaction, 'BAD_VALUE', {
+								VALUE: amount,
+							}),
+						});
+						return;
+					}
 				} else if (interaction.values !== undefined) {
 					cropName = interaction.values[0];
 					var amount = 1;
