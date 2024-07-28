@@ -481,15 +481,12 @@ module.exports = {
 					sellerFile.falcoins += sellOrder.price * amount;
 					await database.market.subtractQuantityFromSellOrder(itemKey, sellOrder, amount);
 					sellerFile.stats.listingsSold += amount;
+					await database.market.addHistory(itemKey, {
+						price: format(sellOrder.price),
+						amount: format(amount),
+						item: instance.getItemName(itemKey, interaction),
+					});
 					amount = 0;
-					await database.market.addHistory(
-						itemKey,
-						instance.getMessage(interaction, 'HISTORY_BOUGHT', {
-							PRICE: format(sellOrder.price),
-							AMOUNT: format(amount),
-							ITEM: instance.getItemName(itemKey, interaction),
-						})
-					);
 				}
 				await sellerFile.save();
 			}
