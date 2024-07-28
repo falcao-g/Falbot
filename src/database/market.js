@@ -125,10 +125,10 @@ module.exports = {
 		const result = await marketSchema.findOne({ _id: id });
 		return result.history;
 	},
-	async addHistory(id, message) {
+	async addHistory(id, { price, amount, item }) {
 		var result = await marketSchema.findOne({ _id: id });
-		result.history.unshift(message);
-		result.history = result.history.slice(0, 100);
+		result.history.unshift({ price, amount, item });
+		result.history = result.history.slice(0, 1000);
 		result.save();
 	},
 };

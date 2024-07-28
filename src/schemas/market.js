@@ -36,7 +36,6 @@ const marketSchema = mongoose.Schema(
 		],
 		history: {
 			type: Array,
-			of: String,
 			default: [],
 		},
 	},
