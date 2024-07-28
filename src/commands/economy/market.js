@@ -470,7 +470,7 @@ module.exports = {
 					await database.market.addHistory(itemKey, {
 						price: format(sellOrder.price * sellOrder.amount),
 						amount: format(sellOrder.amount),
-						item: instance.getItemName(itemKey, interaction),
+						item: itemKey,
 					});
 					sellerFile.stats.listingsSold += sellOrder.amount;
 				} else {
@@ -483,7 +483,7 @@ module.exports = {
 					await database.market.addHistory(itemKey, {
 						price: format(sellOrder.price),
 						amount: format(amount),
-						item: instance.getItemName(itemKey, interaction),
+						item: itemKey,
 					});
 					amount = 0;
 				}
@@ -890,7 +890,7 @@ module.exports = {
 						instance.getMessage(interaction, 'HISTORY_BOUGHT', {
 							PRICE: entry.price,
 							AMOUNT: entry.amount,
-							ITEM: entry.item,
+							ITEM: instance.getItemName(entry.item, interaction),
 						})
 					);
 
