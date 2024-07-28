@@ -465,14 +465,11 @@ module.exports = {
 					userFile.inventory.set(itemKey, (userFile.inventory.get(itemKey) || 0) + sellOrder.amount);
 					sellerFile.falcoins += sellOrder.price * sellOrder.amount;
 					await database.market.subtractQuantityFromSellOrder(itemKey, sellOrder, sellOrder.amount);
-					await database.market.addHistory(
-						itemKey,
-						instance.getMessage(interaction, 'HISTORY_BOUGHT', {
-							PRICE: format(sellOrder.price * sellOrder.amount),
-							AMOUNT: format(sellOrder.amount),
-							ITEM: instance.getItemName(itemKey, interaction),
-						})
-					);
+					await database.market.addHistory(itemKey, {
+						price: format(sellOrder.price * sellOrder.amount),
+						amount: format(sellOrder.amount),
+						item: instance.getItemName(itemKey, interaction),
+					});
 					sellerFile.stats.listingsSold += sellOrder.amount;
 				} else {
 					userFile.falcoins -= sellOrder.price * amount;
@@ -481,15 +478,12 @@ module.exports = {
 					sellerFile.falcoins += sellOrder.price * amount;
 					await database.market.subtractQuantityFromSellOrder(itemKey, sellOrder, amount);
 					sellerFile.stats.listingsSold += amount;
+					await database.market.addHistory(itemKey, {
+						price: format(sellOrder.price),
+						amount: format(amount),
+						item: instance.getItemName(itemKey, interaction),
+					});
 					amount = 0;
-					await database.market.addHistory(
-						itemKey,
-						instance.getMessage(interaction, 'HISTORY_BOUGHT', {
-							PRICE: format(sellOrder.price),
-							AMOUNT: format(amount),
-							ITEM: instance.getItemName(itemKey, interaction),
-						})
-					);
 				}
 				await sellerFile.save();
 			}
@@ -890,13 +884,21 @@ module.exports = {
 					const embed = instance.createEmbed(member.displayColor);
 
 					const historyOnPage = history.slice(i * 15, (i + 1) * 15);
+					var formattedHistory = historyOnPage.map((entry) =>
+						instance.getMessage(interaction, 'HISTORY_BOUGHT', {
+							PRICE: entry.price,
+							AMOUNT: entry.amount,
+							ITEM: entry.item,
+						})
+					);
+
 					embed.addFields({
 						name: instance.getMessage(interaction, 'MARKET_HISTORY', {
 							ITEM: instance.getItemName(itemKey, interaction),
 							PAGE: i + 1,
 							TOTAL: numberOfPages,
 						}),
-						value: historyOnPage.join('\n'),
+						value: formattedHistory.join('\n'),
 					});
 
 					return embed;
