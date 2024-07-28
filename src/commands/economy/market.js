@@ -373,14 +373,15 @@ module.exports = {
 			if (buyOrders != []) {
 				var groupedBuyOrders = {};
 				buyOrders.forEach((order) => {
-					if (groupedBuyOrders[order.price]) groupedBuyOrders[order.price] += order.amount;
+					if (groupedBuyOrders[order.price])
+						groupedBuyOrders[order.price] = groupedBuyOrders[order.price] += order.amount;
 					else groupedBuyOrders[order.price] = order.amount;
 				});
 				var formattedBuyOrders = Object.entries(groupedBuyOrders)
 					.sort((a, b) => b[0] - a[0])
 					.map(
 						(order) =>
-							`${instance.getItemEmoji(itemKey)} **${format(order[0])} falcoins** - ${format(
+							`${instance.getItemEmoji(itemKey)} **${format(Number(order[0]))} falcoins** - ${format(
 								order[1]
 							)} ${instance.getMessage(interaction, 'AVAILABLES')}`
 					);
@@ -391,14 +392,15 @@ module.exports = {
 			if (sellOrders != []) {
 				var groupedSellOrders = {};
 				sellOrders.forEach((order) => {
-					if (groupedSellOrders[order.price]) groupedSellOrders[order.price] + order.amount;
+					if (groupedSellOrders[order.price])
+						groupedSellOrders[order.price] = groupedSellOrders[order.price] + order.amount;
 					else groupedSellOrders[order.price] = order.amount;
 				});
 				var formattedSellOrders = Object.entries(groupedSellOrders)
 					.sort((a, b) => b[0] - a[0])
 					.map(
 						(order) =>
-							`${instance.getItemEmoji(itemKey)} **${format(order[0])} falcoins** - ${format(
+							`${instance.getItemEmoji(itemKey)} **${format(Number(order[0]))} falcoins** - ${format(
 								order[1]
 							)} ${instance.getMessage(interaction, 'AVAILABLES')}`
 					);
@@ -468,7 +470,7 @@ module.exports = {
 					await database.market.addHistory(itemKey, {
 						price: format(sellOrder.price * sellOrder.amount),
 						amount: format(sellOrder.amount),
-						item: instance.getItemName(itemKey, interaction),
+						item: itemKey,
 					});
 					sellerFile.stats.listingsSold += sellOrder.amount;
 				} else {
@@ -481,7 +483,7 @@ module.exports = {
 					await database.market.addHistory(itemKey, {
 						price: format(sellOrder.price),
 						amount: format(amount),
-						item: instance.getItemName(itemKey, interaction),
+						item: itemKey,
 					});
 					amount = 0;
 				}
@@ -888,7 +890,7 @@ module.exports = {
 						instance.getMessage(interaction, 'HISTORY_BOUGHT', {
 							PRICE: entry.price,
 							AMOUNT: entry.amount,
-							ITEM: entry.item,
+							ITEM: instance.getItemName(entry.item, interaction),
 						})
 					);
 
