@@ -15,7 +15,7 @@ module.exports = {
 		try {
 			const embed = instance.createEmbed(3426654).addFields({
 				name: 'Falbot info',
-				value: `**:earth_americas: Site: https://falbot.netlify.app/\n:robot: Github: https://github.com/falcao-g/Falbot\n:bird: Twitter: https://twitter.com/falb0t\n:crown: Patreon: https://www.patreon.com/Falbot\n:house: ${instance.getMessage(
+				value: `**:earth_americas: [Site](https://falbot.netlify.app/) :robot: [Github](https://github.com/falcao-g/Falbot) :butterfly: [Bluesky](https://bsky.app/profile/falbot.bsky.social) :crown: [Patreon](https://www.patreon.com/Falbot)\n:house: ${instance.getMessage(
 					interaction,
 					'SERVERS'
 				)}: ${client.guilds.cache.size}\n:busts_in_silhouette: ${instance.getMessage(interaction, 'TOTAL_PLAYERS')}: ${
