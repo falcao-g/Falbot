@@ -1,9 +1,8 @@
-const { ShardingManager } = require('discord.js'); //imports the sharding manager
+const { ShardingManager } = require('discord.js');
 
 const manager = new ShardingManager('./src/bot.js', {
 	token: process.env.TOKEN,
 	respawn: true,
-	autoSpawn: true,
 	totalShards: 1,
 	shardList: 'auto',
 });
