@@ -4,6 +4,7 @@ const lotterySchema = require('../schemas/lotto.js');
 
 class databaseHandler {
 	//todo: make this import automatically
+
 	player = require('../database/player.js');
 	market = require('../database/market.js');
 
@@ -17,9 +18,7 @@ class databaseHandler {
 	async connect() {
 		try {
 			mongoose.set('strictQuery', false);
-			mongoose.connect(process.env.MONGODB_URI, {
-				keepAlive: true,
-			});
+			mongoose.connect(process.env.MONGODB_URI);
 		} catch {
 			console.log('A conexão caiu');
 			mongoose.connect(process.env.MONGODB_URI);
