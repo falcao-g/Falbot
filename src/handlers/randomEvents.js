@@ -65,15 +65,18 @@ class randomEvents {
 
 	constructor() {
 		var threshold = 1;
-		setInterval(() => {
-			const luck = randint(0, 100);
-			if (luck <= threshold) {
-				threshold = 1;
-				this.startEvent();
-			} else {
-				threshold += 1;
-			}
-		}, 1000 * 6);
+		setInterval(
+			() => {
+				const luck = randint(0, 100);
+				if (luck <= threshold) {
+					threshold = 1;
+					this.startEvent();
+				} else {
+					threshold += 1;
+				}
+			},
+			1000 * 60 * 45
+		);
 	}
 
 	all() {
