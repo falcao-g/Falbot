@@ -75,10 +75,8 @@ module.exports = {
 			Legendary: 1,
 		};
 
-		var filteredItems = Array.from(Object.keys(items)).reduce((acc, item) => {
-			if (items[item].fishing === true) {
-				acc.push([item, weights[items[item]['rarity']]]);
-			}
+		var filteredItems = Array.from(items.fishingItems.entries()).reduce((acc, [item, itemDetails]) => {
+			acc.push([item, weights[itemDetails['rarity']]]);
 			return acc;
 		}, []);
 
@@ -90,7 +88,7 @@ module.exports = {
 		for (let i = 0; i < numItems; i++) {
 			var selectedItem = pick(filteredItems, luck);
 			var softenedBuff = Math.max(1, randint((buff * 10) / 2, buff * 10) / 10);
-			var amount = Math.floor(randint(1, amounts[items[selectedItem]['rarity']]) * softenedBuff);
+			var amount = Math.floor(randint(1, amounts[items.getById(selectedItem)['rarity']]) * softenedBuff);
 			var name = `${instance.getItemName(selectedItem, interaction)}`;
 			total += amount;
 			text += `**${name}** x ${amount}\n`;

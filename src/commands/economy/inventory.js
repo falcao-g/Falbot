@@ -1,6 +1,8 @@
-const { format, paginate, getItem, buttons, isEquipped } = require('../../utils/functions.js');
+const { format, paginate, buttons, isEquipped } = require('../../utils/functions.js');
 const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
-const { numerize } = require('numerize');
+var numerize = require('numerize');
+// eslint-disable-next-line prefer-destructuring
+numerize = numerize.default.numerize; // uugh
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -318,15 +320,15 @@ module.exports = {
 						switch (player.inventorySort) {
 							case 'itemValue':
 								return (
-									items[getItem(a.split(' ').slice(1, -2).join(' '))].value -
-									items[getItem(b.split(' ').slice(1, -2).join(' '))].value
+									items.getItem(a.split(' ').slice(1, -2).join(' ')).value -
+									items.getItem(b.split(' ').slice(1, -2).join(' ')).value
 								);
 							case 'quantity':
 								return a.split(' x ')[1] - b.split(' x ')[1];
 							case 'worth':
 								return (
-									items[getItem(a.split(' ').slice(1, -2).join(' '))].value * a.split(' x ')[1] -
-									items[getItem(b.split(' ').slice(1, -2).join(' '))].value * b.split(' x ')[1]
+									items.getItem(a.split(' ').slice(1, -2).join(' ')).value * a.split(' x ')[1] -
+									items.getItem(b.split(' ').slice(1, -2).join(' ')).value * b.split(' x ')[1]
 								);
 							default:
 								return a.split(' ').slice(1, -2).join(' ').localeCompare(b.split(' ').slice(1, -2).join(' '));
@@ -398,8 +400,7 @@ module.exports = {
 				player.save();
 			} else if (type === 'calc') {
 				const amount = interaction.options.getInteger('amount');
-				const itemKey = getItem(interaction.options.getString('item'));
-				const itemJSON = items[itemKey];
+				const itemJSON = items.getItem(interaction.options.getString('item'));
 				var cost = 0;
 
 				if (itemJSON === undefined) {
@@ -416,7 +417,7 @@ module.exports = {
 
 					for (key in itemJSON.recipe) {
 						ingredients += `\n${instance.getItemName(key, interaction)} x ${itemJSON.recipe[key] * amount}`;
-						cost += items[key].value * itemJSON.recipe[key] * amount;
+						cost += items.getById(key).value * itemJSON.recipe[key] * amount;
 					}
 				} else {
 					cost = itemJSON.value * amount;
@@ -426,7 +427,7 @@ module.exports = {
 					.createEmbed(member.displayColor)
 					.setTitle(instance.getMessage(interaction, 'CALCULATOR'))
 					.addFields({
-						name: `${instance.getItemName(itemKey, interaction)} x ${amount}`,
+						name: `${instance.getItemName(itemJSON.id, interaction)} x ${amount}`,
 						value: `${ingredients != undefined ? ingredients : ''}\n${instance.getMessage(
 							interaction,
 							'COST'
@@ -438,8 +439,7 @@ module.exports = {
 				});
 			} else if (type === 'sell') {
 				const player = await database.player.findOne(member.id);
-				const itemKey = getItem(interaction.options.getString('item'));
-				const itemJSON = items[itemKey];
+				const itemJSON = items.getItem(interaction.options.getString('item'));
 
 				if (itemJSON === undefined) {
 					instance.editReply(interaction, {
@@ -457,31 +457,23 @@ module.exports = {
 					return;
 				}
 
-				if (player.inventory.get(itemKey) === 0 || player.inventory.get(itemKey) === undefined) {
+				if (player.inventory.get(itemJSON.id) === 0 || player.inventory.get(itemJSON.id) === undefined) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_ITEM'),
 					});
 					return;
 				}
-				try {
-					var amount = Math.min(
-						player.inventory.get(itemKey),
-						numerize(interaction.options.getString('amount'), player.inventory.get(itemKey))
-					);
-				} catch {
-					await instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'BAD_VALUE', {
-							VALUE: interaction.options.getString('amount'),
-						}),
-					});
-					return;
-				}
+
+				var amount = Math.min(
+					player.inventory.get(itemJSON.id),
+					numerize(interaction.options.getString('amount'), player.inventory.get(itemJSON.id))
+				);
 
 				//we need to check if there is someone in the market that wants to buy the item
 				let falcoins = 0;
 				let amountToSell = amount;
-				while (amountToSell > 0 && (await database.market.getBestBuyOrder(itemKey)).price > 0) {
-					const buyOrder = await database.market.getBestBuyOrder(itemKey);
+				while (amountToSell > 0 && (await database.market.getBestBuyOrder(itemJSON.id)).price > 0) {
+					const buyOrder = await database.market.getBestBuyOrder(itemJSON.id);
 					const buyerFile = await database.player.findOne(buyOrder.owner);
 
 					if (amount >= buyOrder.amount) {
@@ -493,16 +485,16 @@ module.exports = {
 					}
 
 					buyerFile.falcoins -= buyOrder.price * amount;
-					buyerFile.inventory.set(itemKey, (buyerFile.inventory.get(itemKey) || 0) + amount);
+					buyerFile.inventory.set(itemJSON.id, (buyerFile.inventory.get(itemJSON.id) || 0) + amount);
 					falcoins += buyOrder.price * amountSold;
-					await database.market.subtractQuantityFromBuyOrder(itemKey, buyOrder, amount);
+					await database.market.subtractQuantityFromBuyOrder(itemJSON.id, buyOrder, amount);
 					await buyerFile.save();
 					await database.market.addHistory(
-						itemKey,
+						itemJSON.id,
 						instance.getMessage(interaction, 'HISTORY_SOLD', {
 							PRICE: format(buyOrder.price * amountSold),
 							AMOUNT: format(amountSold),
-							ITEM: instance.getItemName(itemKey, interaction),
+							ITEM: instance.getItemName(itemJSON.id, interaction),
 						})
 					);
 				}
@@ -510,17 +502,17 @@ module.exports = {
 				// if there is no one in the market that wants to buy the item, we sell it to the bot
 				if (amountToSell > 0) falcoins += itemJSON.value * amountToSell;
 
-				player.inventory.set(itemKey, player.inventory.get(itemKey) - amount);
+				player.inventory.set(itemJSON.id, player.inventory.get(itemJSON.id) - amount);
 				player.falcoins += falcoins;
 
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'SOLD_TITLE', {
 						AMOUNT: format(amount),
-						ITEM: `${instance.getItemName(itemKey, interaction)}`,
+						ITEM: `${instance.getItemName(itemJSON.id, interaction)}`,
 						FALCOINS: format(falcoins),
 					}),
 					value: instance.getMessage(interaction, 'SOLD_FIELD', {
-						REMAINING: format(player.inventory.get(itemKey)),
+						REMAINING: format(player.inventory.get(itemJSON.id)),
 						FALCOINS2: format(Number(falcoins / amount)),
 					}),
 				});
@@ -533,8 +525,7 @@ module.exports = {
 			} else if (type === 'equip') {
 				const player = await database.player.findOne(member.id);
 				const item = interaction.options.getString('item');
-				const itemKey = getItem(item);
-				const itemJSON = items[itemKey];
+				const itemJSON = items.getItem(item);
 
 				if (itemJSON === undefined) {
 					instance.editReply(interaction, {
@@ -552,29 +543,29 @@ module.exports = {
 					return;
 				}
 
-				if (player.inventory.get(itemKey) === 0 || player.inventory.get(itemKey) === undefined) {
+				if (player.inventory.get(itemJSON.id) === 0 || player.inventory.get(itemJSON.id) === undefined) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_ITEM'),
 					});
 					return;
 				}
 
-				if (await isEquipped(member, itemKey)) {
+				if (await isEquipped(member, itemJSON.id)) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'ALREADY_EQUIPPED'),
 					});
 					return;
 				}
 
-				player.equippedItems.push({ name: itemKey, usageCount: 3 });
-				player.inventory.set(itemKey, player.inventory.get(itemKey) - 1);
+				player.equippedItems.push({ name: itemJSON.id, usageCount: 3 });
+				player.inventory.set(itemJSON.id, player.inventory.get(itemJSON.id) - 1);
 
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'EQUIPPED_TITLE', {
-						ITEM: `${instance.getItemName(itemKey, interaction)}`,
+						ITEM: `${instance.getItemName(itemJSON.id, interaction)}`,
 					}),
 					value: instance.getMessage(interaction, 'EQUIPPED_VALUE', {
-						ITEM: `${instance.getItemName(itemKey, interaction)}`,
+						ITEM: `${instance.getItemName(itemJSON.id, interaction)}`,
 					}),
 				});
 
@@ -588,8 +579,8 @@ module.exports = {
 					var item = interaction.options.getString('item');
 
 					var max = Math.min(
-						...Object.keys(items[getItem(item)].recipe).map((key) => {
-							return Math.floor(player.inventory.get(key) / items[getItem(item)].recipe[key]);
+						...Object.keys(items.getItem(item).recipe).map((key) => {
+							return Math.floor(player.inventory.get(key) / items.getItem(item).recipe[key]);
 						})
 					);
 					var amount = interaction.options.getString('amount');
@@ -615,18 +606,18 @@ module.exports = {
 
 				//the bot sends a string select menu containing all items that can be crafted
 				if (!item) {
-					const canBeCrafted = Object.keys(items)
+					const canBeCrafted = Array.from(items.all().values())
 						.map((item) => {
-							if (items[item].recipe === undefined) return;
+							if (item.recipe === undefined) return;
 
-							for (key in items[item].recipe) {
-								if ((player.inventory.get(key) || 0) < items[item].recipe[key]) return;
+							for (key in item.recipe) {
+								if ((player.inventory.get(key) || 0) < item.recipe[key]) return;
 							}
 
 							return {
-								label: items[item][interaction.locale] ?? items[item]['en-US'],
-								value: item,
-								emoji: instance.getItemEmoji(item),
+								label: item.name[interaction.locale] ?? item.name['en-US'],
+								value: item.id,
+								emoji: item.emoji,
 							};
 						})
 						.filter((item) => item !== undefined);
@@ -657,8 +648,7 @@ module.exports = {
 					return;
 				}
 
-				const itemKey = getItem(item);
-				const itemJSON = items[itemKey];
+				const itemJSON = items.getItem(item);
 
 				if (itemJSON === undefined) {
 					instance.editReply(interaction, {
@@ -683,9 +673,7 @@ module.exports = {
 
 					if ((player.inventory.get(key) || 0) < ingredientAmount) {
 						missingIngredients.push(
-							`${instance.getItemName(key, interaction)} x ${format(
-								ingredientAmount - (player.inventory.get(key) || 0)
-							)}`
+							`${instance.getItemName(key, interaction)} x ${format(ingredientAmount - (player.inventory.get(key) || 0))}`
 						);
 					}
 
@@ -709,20 +697,20 @@ module.exports = {
 					})
 				);
 
-				if (player.inventory.get(itemKey) === undefined) {
-					player.inventory.set(itemKey, 0);
+				if (player.inventory.get(itemJSON.id) === undefined) {
+					player.inventory.set(itemJSON.id, 0);
 				}
 
-				player.inventory.set(itemKey, player.inventory.get(itemKey) + amount);
+				player.inventory.set(itemJSON.id, player.inventory.get(itemJSON.id) + amount);
 
 				const embed = instance.createEmbed(member.displayColor).addFields({
 					name: instance.getMessage(interaction, 'CRAFTED_TITLE', {
-						ITEM: `${instance.getItemName(itemKey, interaction)}`,
+						ITEM: `${instance.getItemName(itemJSON.id, interaction)}`,
 						AMOUNT: format(amount),
 					}),
 					value: instance.getMessage(interaction, 'CRAFTED_VALUE', {
 						INGREDIENTS: ingredients.join('\n'),
-						ITEM: `${instance.getItemName(itemKey, interaction)}`,
+						ITEM: `${instance.getItemName(itemJSON.id, interaction)}`,
 						AMOUNT: format(amount),
 						MAXAMOUNT: format(maxAmount),
 					}),
@@ -730,19 +718,19 @@ module.exports = {
 
 				const row = new ActionRowBuilder().addComponents([
 					new ButtonBuilder()
-						.setCustomId(`inventory craft 1 ${itemKey}`)
+						.setCustomId(`inventory craft 1 ${itemJSON.id}`)
 						.setLabel(instance.getMessage(interaction, 'CRAFT') + ' 1')
 						.setStyle('Secondary'),
 					new ButtonBuilder()
-						.setCustomId(`inventory craft 10 ${itemKey}`)
+						.setCustomId(`inventory craft 10 ${itemJSON.id}`)
 						.setLabel(instance.getMessage(interaction, 'CRAFT') + ' 10')
 						.setStyle('Secondary'),
 					new ButtonBuilder()
-						.setCustomId(`inventory craft 100 ${itemKey}`)
+						.setCustomId(`inventory craft 100 ${itemJSON.id}`)
 						.setLabel(instance.getMessage(interaction, 'CRAFT') + ' 100')
 						.setStyle('Secondary'),
 					new ButtonBuilder()
-						.setCustomId(`inventory craft ${maxAmount} ${itemKey} max`)
+						.setCustomId(`inventory craft ${maxAmount} ${itemJSON.id} max`)
 						.setLabel(instance.getMessage(interaction, 'CRAFT_MAX'))
 						.setStyle('Secondary'),
 				]);
@@ -796,7 +784,7 @@ module.exports = {
 					let falcoins = 0;
 
 					for (key of player.inventory.keys()) {
-						const itemJSON = items[key];
+						const itemJSON = items.getById(key);
 
 						if (lootonly === 'yes') {
 							if (
@@ -941,10 +929,9 @@ module.exports = {
 			} else if (type === 'use') {
 				const player = await database.player.findOne(member.id);
 				const item = interaction.options.getString('item');
-				const itemKey = getItem(item);
-				const itemJSON = items[itemKey];
+				const itemJSON = items.getItem(item);
 
-				if (itemKey === undefined) {
+				if (itemJSON.id === undefined) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'BAD_VALUE', {
 							VALUE: item,
@@ -953,7 +940,7 @@ module.exports = {
 					return;
 				}
 
-				if (player.inventory.get(itemKey) === undefined || player.inventory.get(itemKey) === 0) {
+				if (player.inventory.get(itemJSON.id) === undefined || player.inventory.get(itemJSON.id) === 0) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'NO_ITEM'),
 					});
@@ -967,16 +954,16 @@ module.exports = {
 					return;
 				}
 
-				player.inventory.set(itemKey, player.inventory.get(itemKey) - 1);
+				player.inventory.set(itemJSON.id, player.inventory.get(itemJSON.id) - 1);
 
-				if (itemKey === 'backpack') {
+				if (itemJSON.id === 'backpack') {
 					player.inventoryBonus += 200000;
 
 					var embed = instance.createEmbed(member.displayColor).addFields({
 						name: instance.getMessage(interaction, 'USE_BACKPACK_TITLE'),
 						value: instance.getMessage(interaction, 'USE_BACKPACK_VALUE'),
 					});
-				} else if (itemKey === 'snowflake') {
+				} else if (itemJSON.id === 'snowflake') {
 					//reset all cooldowns
 					player.cooldowns = {
 						work: 0,
@@ -998,7 +985,7 @@ module.exports = {
 						name: instance.getMessage(interaction, 'USE_MYTHICAL_TITLE'),
 						value: instance.getMessage(interaction, 'USE_SNOWFLAKE_VALUE'),
 					});
-				} else if (itemKey === 'fertilizer') {
+				} else if (itemJSON.id === 'fertilizer') {
 					if (player.plots.length === 0) {
 						instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'EMPTY_FARM'),
@@ -1035,17 +1022,16 @@ module.exports = {
 		const { items } = instance;
 		const subcommand = interaction.options.getSubcommand();
 
-		var localeItems = Object.keys(items)
-			.map((key) => {
-				const itemData = items[key];
+		var localeItems = Array.from(items.all().values())
+			.map((item) => {
 				if (
-					(subcommand === 'equip' && itemData.equip === true) || // Equipable items
-					(subcommand === 'craft' && itemData.recipe !== undefined) || // Craftable items
-					(subcommand === 'use' && itemData.use !== undefined) || // Usable items
-					(subcommand === 'sell' && itemData.mythical !== true) || // Sellable items
+					(subcommand === 'equip' && item.equip === true) || // Equipable items
+					(subcommand === 'craft' && item.recipe !== undefined) || // Craftable items
+					(subcommand === 'use' && item.use !== undefined) || // Usable items
+					(subcommand === 'sell' && item.mythical !== true) || // Sellable items
 					subcommand === 'calc' // All items
 				) {
-					return instance.getItemName(key, interaction);
+					return instance.getItemName(item.id, interaction);
 				}
 				return undefined;
 			})

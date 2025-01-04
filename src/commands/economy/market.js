@@ -1,6 +1,8 @@
 const { format, paginate, getItem } = require('../../utils/functions.js');
 const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder } = require('discord.js');
-const { numerize } = require('numerize');
+var numerize = require('numerize');
+// eslint-disable-next-line prefer-destructuring
+numerize = numerize.default.numerize; // uugh
 
 module.exports = {
 	developer: false,
@@ -266,8 +268,8 @@ module.exports = {
 
 		if (type == 'all') {
 			//first filter the mythical items, because they are not supposed to be in the market
-			const filteredItems = Object.entries(items).filter((item) => {
-				return item[1].mythical != true;
+			const filteredItems = Array.from(items.all().values()).filter((item) => {
+				return item.mythical != true;
 			});
 
 			// pre calculate the sections of items
@@ -288,9 +290,9 @@ module.exports = {
 					);
 
 					for (var item of itemsOnPage[i]) {
-						var cheapestSellOrder = await database.market.getCheapestSellOrder(item[0]);
+						var cheapestSellOrder = await database.market.getCheapestSellOrder(item.id);
 						embed.addFields({
-							name: instance.getItemName(item[0], interaction),
+							name: instance.getItemName(item.id, interaction),
 							value:
 								cheapestSellOrder.price == Infinity
 									? instance.getMessage(interaction, 'NO_LISTINGS')
@@ -308,8 +310,8 @@ module.exports = {
 				Array.from({ length: numberOfPages }).map(async (_, i) => {
 					const options = itemsOnPage[i].map((item) => {
 						return {
-							label: instance.getItemName(item[0], interaction),
-							value: item[0],
+							label: instance.getItemName(item.id, interaction),
+							value: item.id,
 						};
 					});
 					const select = new StringSelectMenuBuilder()
@@ -347,8 +349,7 @@ module.exports = {
 			} else {
 				var item = interaction.values[0];
 			}
-			const itemKey = getItem(item);
-			const itemJSON = items[itemKey];
+			const itemJSON = items.getItem(item);
 
 			if (itemJSON === undefined) {
 				instance.editReply(interaction, {
@@ -366,10 +367,10 @@ module.exports = {
 				return;
 			}
 
-			const embed = instance.createEmbed(member.displayColor).setTitle(instance.getItemName(itemKey, interaction));
+			const embed = instance.createEmbed(member.displayColor).setTitle(instance.getItemName(itemJSON.id, interaction));
 
 			//retrieve all buy orders and group them by price, putting the highest price first, and formatting the string like x falcoins - y availables
-			const buyOrders = await database.market.getBuyOrders(itemKey);
+			const buyOrders = await database.market.getBuyOrders(itemJSON.id);
 			if (buyOrders != []) {
 				var groupedBuyOrders = {};
 				buyOrders.forEach((order) => {
@@ -381,14 +382,14 @@ module.exports = {
 					.sort((a, b) => b[0] - a[0])
 					.map(
 						(order) =>
-							`${instance.getItemEmoji(itemKey)} **${format(Number(order[0]))} falcoins** - ${format(
+							`${instance.getItemEmoji(itemJSON.id)} **${format(Number(order[0]))} falcoins** - ${format(
 								order[1]
 							)} ${instance.getMessage(interaction, 'AVAILABLES')}`
 					);
 			}
 
 			//retrieve all sell orders and group them by price, putting the lowest price first, and formatting the string like x falcoins (y orders)
-			const sellOrders = await database.market.getSellOrders(itemKey);
+			const sellOrders = await database.market.getSellOrders(itemJSON.id);
 			if (sellOrders != []) {
 				var groupedSellOrders = {};
 				sellOrders.forEach((order) => {
@@ -400,7 +401,7 @@ module.exports = {
 					.sort((a, b) => b[0] - a[0])
 					.map(
 						(order) =>
-							`${instance.getItemEmoji(itemKey)} **${format(Number(order[0]))} falcoins** - ${format(
+							`${instance.getItemEmoji(itemJSON.id)} **${format(Number(order[0]))} falcoins** - ${format(
 								order[1]
 							)} ${instance.getMessage(interaction, 'AVAILABLES')}`
 					);
@@ -420,8 +421,7 @@ module.exports = {
 			instance.editReply(interaction, { embeds: [embed] });
 		} else if (type == 'buy' && subcommandGroup == null) {
 			const item = interaction.options.getString('item');
-			const itemKey = getItem(item);
-			const itemJSON = items[itemKey];
+			const itemJSON = items.getItem(item);
 			const userFile = await database.player.findOne(member.id);
 
 			if (itemJSON === undefined) {
@@ -455,35 +455,35 @@ module.exports = {
 			var totalPaid = 0;
 			while (
 				amount > 0 &&
-				(await database.market.getCheapestSellOrder(itemKey)).price != Infinity &&
+				(await database.market.getCheapestSellOrder(itemJSON.id)).price != Infinity &&
 				userFile.falcoins > 0
 			) {
-				const sellOrder = await database.market.getCheapestSellOrder(itemKey);
+				const sellOrder = await database.market.getCheapestSellOrder(itemJSON.id);
 				const sellerFile = await database.player.findOne(sellOrder.owner);
 				if (amount >= sellOrder.amount) {
 					amount -= sellOrder.amount;
 					userFile.falcoins -= sellOrder.price * sellOrder.amount;
 					totalPaid += sellOrder.price * sellOrder.amount;
-					userFile.inventory.set(itemKey, (userFile.inventory.get(itemKey) || 0) + sellOrder.amount);
+					userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + sellOrder.amount);
 					sellerFile.falcoins += sellOrder.price * sellOrder.amount;
-					await database.market.subtractQuantityFromSellOrder(itemKey, sellOrder, sellOrder.amount);
-					await database.market.addHistory(itemKey, {
+					await database.market.subtractQuantityFromSellOrder(itemJSON.id, sellOrder, sellOrder.amount);
+					await database.market.addHistory(itemJSON.id, {
 						price: format(sellOrder.price * sellOrder.amount),
 						amount: format(sellOrder.amount),
-						item: itemKey,
+						item: itemJSON.id,
 					});
 					sellerFile.stats.listingsSold += sellOrder.amount;
 				} else {
 					userFile.falcoins -= sellOrder.price * amount;
 					totalPaid += sellOrder.price * amount;
-					userFile.inventory.set(itemKey, (userFile.inventory.get(itemKey) || 0) + amount);
+					userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + amount);
 					sellerFile.falcoins += sellOrder.price * amount;
-					await database.market.subtractQuantityFromSellOrder(itemKey, sellOrder, amount);
+					await database.market.subtractQuantityFromSellOrder(itemJSON.id, sellOrder, amount);
 					sellerFile.stats.listingsSold += amount;
-					await database.market.addHistory(itemKey, {
+					await database.market.addHistory(itemJSON.id, {
 						price: format(sellOrder.price),
 						amount: format(amount),
-						item: itemKey,
+						item: itemJSON.id,
 					});
 					amount = 0;
 				}
@@ -494,7 +494,7 @@ module.exports = {
 			const embed = instance.createEmbed(member.displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_BOUGHT', {
 					AMOUNT: amountArgument - amount,
-					ITEM: instance.getItemName(itemKey, interaction),
+					ITEM: instance.getItemName(itemJSON.id, interaction),
 					PRICE: format(totalPaid),
 				})
 			);
@@ -502,8 +502,7 @@ module.exports = {
 			instance.editReply(interaction, { embeds: [embed] });
 		} else if (type == 'buy' && subcommandGroup == 'list') {
 			const item = interaction.options.getString('item');
-			const itemKey = getItem(item);
-			const itemJSON = items[itemKey];
+			const itemJSON = items.getItem(item);
 			const userFile = await database.player.findOne(member.id);
 
 			try {
@@ -565,12 +564,12 @@ module.exports = {
 				amount: amount,
 				owner: member.id,
 			};
-			await database.market.addBuyOrder(itemKey, buyOrder);
+			await database.market.addBuyOrder(itemJSON.id, buyOrder);
 
 			const embed = instance.createEmbed(member.displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_LISTED_BUY', {
 					AMOUNT: amount,
-					ITEM: instance.getItemName(itemKey, interaction),
+					ITEM: instance.getItemName(itemJSON.id, interaction),
 					PRICE: format(price),
 				})
 			);
@@ -578,8 +577,7 @@ module.exports = {
 			instance.editReply(interaction, { embeds: [embed] });
 		} else if (type == 'sell' && subcommandGroup == 'list') {
 			const item = interaction.options.getString('item');
-			const itemKey = getItem(item);
-			const itemJSON = items[itemKey];
+			const itemJSON = items.getItem(item);
 			const userFile = await database.player.findOne(member.id);
 
 			if (itemJSON === undefined) {
@@ -599,7 +597,7 @@ module.exports = {
 			}
 
 			try {
-				var amount = await numerize(interaction.options.getString('amount'), userFile.inventory.get(itemKey));
+				var amount = await numerize(interaction.options.getString('amount'), userFile.inventory.get(itemJSON.id));
 			} catch {
 				await instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'BAD_VALUE', {
@@ -608,10 +606,10 @@ module.exports = {
 				});
 			}
 
-			if (userFile.inventory.get(itemKey) < amount) {
+			if (userFile.inventory.get(itemJSON.id) < amount) {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'NOT_ENOUGH_ITEMS', {
-						ITEM: instance.getItemName(itemKey, interaction),
+						ITEM: instance.getItemName(itemJSON.id, interaction),
 					}),
 				});
 				return;
@@ -635,19 +633,19 @@ module.exports = {
 				});
 				return;
 			}
-			userFile.inventory.set(itemKey, userFile.inventory.get(itemKey) - amount);
+			userFile.inventory.set(itemJSON.id, userFile.inventory.get(itemJSON.id) - amount);
 			await userFile.save();
 			const sellOrder = {
 				price: price,
 				amount: amount,
 				owner: member.id,
 			};
-			await database.market.addSellOrder(itemKey, sellOrder);
+			await database.market.addSellOrder(itemJSON.id, sellOrder);
 
 			const embed = instance.createEmbed(member.displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_LISTED_SELL', {
 					AMOUNT: amount,
-					ITEM: instance.getItemName(itemKey, interaction),
+					ITEM: instance.getItemName(itemJSON.id, interaction),
 					PRICE: format(price),
 				})
 			);
@@ -768,8 +766,7 @@ module.exports = {
 		} else if (type == 'delist') {
 			const listings = interaction.options.getString('type');
 			const item = interaction.options.getString('item');
-			const itemKey = getItem(item);
-			const itemJSON = items[itemKey];
+			const itemJSON = items.getItem(item);
 			const userFile = await database.player.findOne(member.id);
 
 			if (itemJSON === undefined) {
@@ -797,7 +794,7 @@ module.exports = {
 					return;
 				}
 
-				var index = buyOrders.findIndex((order) => order.item === itemKey && order.owner === member.id);
+				var index = buyOrders.findIndex((order) => order.item === itemJSON.id && order.owner === member.id);
 				if (index == -1) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'THIS_LISTING_DOESNT_EXIST'),
@@ -808,12 +805,12 @@ module.exports = {
 				const buyOrder = buyOrders[index];
 				userFile.falcoins += buyOrder.price * buyOrder.amount;
 				await userFile.save();
-				await database.market.deleteBuyOrder(itemKey, buyOrder);
+				await database.market.deleteBuyOrder(itemJSON.id, buyOrder);
 
 				const embed = instance.createEmbed(member.displayColor).setTitle(
 					instance.getMessage(interaction, 'MARKET_DELISTED_BUY', {
 						AMOUNT: buyOrder.amount,
-						ITEM: instance.getItemName(itemKey, interaction),
+						ITEM: instance.getItemName(itemJSON.id, interaction),
 						PRICE: format(buyOrder.price),
 					})
 				);
@@ -828,7 +825,7 @@ module.exports = {
 					return;
 				}
 
-				var index = sellOrders.findIndex((order) => order.item === itemKey && order.owner === member.id);
+				var index = sellOrders.findIndex((order) => order.item === itemJSON.id && order.owner === member.id);
 				if (index == -1) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'THIS_LISTING_DOESNT_EXIST'),
@@ -837,14 +834,14 @@ module.exports = {
 				}
 
 				const sellOrder = sellOrders[index];
-				userFile.inventory.set(itemKey, (userFile.inventory.get(itemKey) || 0) + sellOrder.amount);
+				userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + sellOrder.amount);
 				await userFile.save();
-				await database.market.deleteSellOrder(itemKey, sellOrder);
+				await database.market.deleteSellOrder(itemJSON.id, sellOrder);
 
 				const embed = instance.createEmbed(member.displayColor).setTitle(
 					instance.getMessage(interaction, 'MARKET_DELISTED_SELL', {
 						AMOUNT: sellOrder.amount,
-						ITEM: instance.getItemName(itemKey, interaction),
+						ITEM: instance.getItemName(itemJSON.id, interaction),
 						PRICE: format(sellOrder.price),
 					})
 				);
@@ -853,8 +850,7 @@ module.exports = {
 			}
 		} else if (type == 'history') {
 			const item = interaction.options.getString('item');
-			const itemKey = getItem(item);
-			const itemJSON = items[itemKey];
+			const itemJSON = items.getItem(item);
 
 			if (itemJSON === undefined) {
 				instance.editReply(interaction, {
@@ -872,7 +868,7 @@ module.exports = {
 				return;
 			}
 
-			const history = await database.market.getHistory(itemKey);
+			const history = await database.market.getHistory(itemJSON.id);
 			if (history.length == 0) {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'NO_HISTORY'),
@@ -896,7 +892,7 @@ module.exports = {
 
 					embed.addFields({
 						name: instance.getMessage(interaction, 'MARKET_HISTORY', {
-							ITEM: instance.getItemName(itemKey, interaction),
+							ITEM: instance.getItemName(itemJSON.id, interaction),
 							PAGE: i + 1,
 							TOTAL: numberOfPages,
 						}),
@@ -922,13 +918,12 @@ module.exports = {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
 		const { items } = instance;
 
-		var localeItems = Object.keys(items)
-			.map((key) => {
-				const itemData = items[key];
+		var localeItems = Array.from(items.all().values())
+			.map((item) => {
 				if (
-					itemData.mythical !== true // Sellable items
+					item.mythical !== true // Sellable items
 				) {
-					return instance.getItemName(key, interaction);
+					return instance.getItemName(item.id, interaction);
 				}
 				return undefined;
 			})

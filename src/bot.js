@@ -10,6 +10,7 @@ class Falbot {
 	_banned = new Array();
 	database = require('./handlers/database.js');
 	achievement = require('./handlers/achievements.js');
+	items = require('./handlers/items.js');
 	randomEvents = require('./handlers/randomEvents.js');
 	emojiList = {};
 	client = new Client({
@@ -22,7 +23,6 @@ class Falbot {
 		],
 	});
 	levels = require('./utils/json/levels.json');
-	items = require('./utils/json/items.json');
 	userSchema = require('./schemas/user.js');
 	lottoSchema = require('./schemas/lotto.js');
 	interestSchema = require('./schemas/interest.js');
@@ -252,7 +252,8 @@ class Falbot {
 	getInventoryInfo(inventory) {
 		return Array.from(inventory).reduce(
 			(acc, [itemName, quantity]) => {
-				if (this.items[itemName]['value'] !== undefined) acc.inventoryWorth += this.items[itemName]['value'] * quantity;
+				if (this.items.getById(itemName)['value'] !== undefined)
+					acc.inventoryWorth += this.items.getById(itemName)['value'] * quantity;
 				acc.inventoryQuantity += quantity;
 				return acc;
 			},
@@ -265,12 +266,12 @@ class Falbot {
 	}
 
 	getItemEmoji(item) {
-		if (this.items[item].emoji) return this.items[item].emoji;
+		if (this.items.getById(item).emoji) return this.items.getById(item).emoji;
 		return this.emojiList[item];
 	}
 
 	getItemName(item, interaction) {
-		return `${this.getItemEmoji(item)} ${this.items[item][interaction.locale] ?? this.items[item]['en-US']}`;
+		return `${this.getItemEmoji(item)} ${this.items.getById(item).name[interaction.locale] ?? this.items.getById(item).name['en-US']}`;
 	}
 
 	async editReply(interaction, { content, embeds, components, fetchReply = false }) {

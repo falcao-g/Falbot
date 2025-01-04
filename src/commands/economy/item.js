@@ -1,4 +1,4 @@
-const { format, getItem } = require('../../utils/functions.js');
+const { format } = require('../../utils/functions.js');
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
@@ -44,8 +44,7 @@ module.exports = {
 				item = Object.keys(items)[index];
 			}
 
-			const itemKey = getItem(item);
-			const itemJSON = items[itemKey];
+			const itemJSON = items.getItem(item);
 
 			if (itemJSON === undefined) {
 				instance.editReply(interaction, {
@@ -68,11 +67,11 @@ module.exports = {
 
 			if (itemJSON.value) {
 				information += `:moneybag: ${instance.getMessage(interaction, 'COST')} **${format(itemJSON.value)} falcoins**`;
-				const sellOrder = await database.market.getCheapestSellOrder(itemKey);
+				const sellOrder = await database.market.getCheapestSellOrder(itemJSON.id);
 				if (sellOrder.price != Infinity) {
 					information += `\n🛍️ ${instance.getMessage(interaction, 'BUY_FOR')} **${format(sellOrder.price)} falcoins**`;
 				}
-				const buyOrder = await database.market.getBestBuyOrder(itemKey);
+				const buyOrder = await database.market.getBestBuyOrder(itemJSON.id);
 				if (buyOrder.price != 0) {
 					information += `\n🛒 ${instance.getMessage(interaction, 'SELL_FOR')} **${format(buyOrder.price)} falcoins**`;
 				}
@@ -98,14 +97,14 @@ module.exports = {
 				information += `\n${instance.getMessage(interaction, itemJSON.effect.toUpperCase())}`;
 			}
 
-			if (player.inventory.get(itemKey))
+			if (player.inventory.get(itemJSON.id))
 				information += `\n${instance.getMessage(interaction, 'OWNED', {
-					AMOUNT: player.inventory.get(itemKey),
+					AMOUNT: player.inventory.get(itemJSON.id),
 				})}`;
 
 			const embed = instance
 				.createEmbed(member.displayColor)
-				.setTitle(`${instance.getItemName(itemKey, interaction)} ` + '(`' + `${itemKey}` + '`)')
+				.setTitle(`${instance.getItemName(itemJSON.id, interaction)} ` + '(`' + `${itemJSON.id}` + '`)')
 				.addFields({
 					name: instance.getMessage(interaction, 'INFO'),
 					value: information,
@@ -127,7 +126,7 @@ module.exports = {
 			craft: for (i in items) {
 				if (items[i].recipe != undefined) {
 					for (key in items[i].recipe) {
-						if (key === itemKey) {
+						if (key === itemJSON.id) {
 							usedToCraft += `\n${instance.getItemName(i, interaction)}`;
 							cont += 1;
 
@@ -149,17 +148,13 @@ module.exports = {
 
 			//create two buttons to go to the next and previous item
 			const row = new ActionRowBuilder().addComponents([
-				new ButtonBuilder().setCustomId(`iteminfo previous ${itemKey}`).setEmoji('⬅️').setStyle('Secondary'),
-				new ButtonBuilder().setCustomId(`iteminfo next ${itemKey}`).setEmoji('➡️').setStyle('Secondary'),
+				new ButtonBuilder().setCustomId(`iteminfo previous ${itemJSON.id}`).setEmoji('⬅️').setStyle('Secondary'),
+				new ButtonBuilder().setCustomId(`iteminfo next ${itemJSON.id}`).setEmoji('➡️').setStyle('Secondary'),
 			]);
-			interaction
-				.editReply({
-					embeds: [embed],
-					components: [row],
-				})
-				.catch(() => {
-					throw new Error('Failed to send message');
-				});
+			interaction.editReply({
+				embeds: [embed],
+				components: [row],
+			});
 		} catch (err) {
 			console.error(`iteminfo: ${err}`);
 			instance.editReply(interaction, {
@@ -171,8 +166,8 @@ module.exports = {
 	autocomplete: async ({ interaction, instance }) => {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
 		const { items } = instance;
-		const localeItems = Object.keys(items).map((key) => {
-			return instance.getItemName(key, interaction);
+		const localeItems = Array.from(items.all().values()).map((item) => {
+			return instance.getItemName(item.id, interaction);
 		});
 		const filtered = localeItems.filter((choice) => {
 			if (
