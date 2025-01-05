@@ -467,8 +467,8 @@ module.exports = {
 	autocomplete: async ({ interaction, instance }) => {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
 		const { items } = instance;
-		const crops = Array.from(items.all().values()).filter((item) => item.hasOwnProperty('growTime'));
-		const localeCrops = crops.map((crop) => instance.getItemName(crop.id, interaction));
+		const localeCrops = Array.from(items.crops.keys()).map((key) => instance.getItemName(key, interaction));
+
 		const filtered = localeCrops.filter((choice) => {
 			const lowerCaseChoice = choice.toLowerCase();
 			return (
@@ -476,7 +476,6 @@ module.exports = {
 				lowerCaseChoice.split(' ').slice(1).join(' ').startsWith(focusedValue)
 			);
 		});
-
 		await interaction.respond(filtered.slice(0, 25).map((choice) => ({ name: choice, value: choice })));
 	},
 };

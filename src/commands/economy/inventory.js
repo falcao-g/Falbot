@@ -1021,29 +1021,22 @@ module.exports = {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
 		const { items } = instance;
 		const subcommand = interaction.options.getSubcommand();
+		const itemsGroup = {
+			equip: items.equipableItems,
+			craft: items.craftableItems,
+			use: items.usableItems,
+			sell: items.sellableItems,
+			calc: items.all(),
+		};
 
-		var localeItems = Array.from(items.all().values())
-			.map((item) => {
-				if (
-					(subcommand === 'equip' && item.equip === true) || // Equipable items
-					(subcommand === 'craft' && item.recipe !== undefined) || // Craftable items
-					(subcommand === 'use' && item.use !== undefined) || // Usable items
-					(subcommand === 'sell' && item.mythical !== true) || // Sellable items
-					subcommand === 'calc' // All items
-				) {
-					return instance.getItemName(item.id, interaction);
-				}
-				return undefined;
-			})
-			.filter((item) => item !== undefined);
+		var localeItems = Array.from(itemsGroup[subcommand].keys()).map((item) => instance.getItemName(item, interaction));
 
 		const filtered = localeItems.filter((choice) => {
-			if (
-				choice.split(' ').slice(1).join(' ').toLowerCase().startsWith(focusedValue) ||
-				choice.toLowerCase().startsWith(focusedValue)
-			) {
-				return true;
-			}
+			const lowerCaseChoice = choice.toLowerCase();
+			return (
+				lowerCaseChoice.startsWith(focusedValue) ||
+				lowerCaseChoice.split(' ').slice(1).join(' ').startsWith(focusedValue)
+			);
 		});
 		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
 	},

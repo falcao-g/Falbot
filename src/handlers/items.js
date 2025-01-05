@@ -1286,6 +1286,12 @@ class Item {
 	miningItems = new Map(items.filter((a) => a.mining).map((a) => [a.id, a]));
 	fishingItems = new Map(items.filter((a) => a.fishing).map((a) => [a.id, a]));
 	huntingItems = new Map(items.filter((a) => a.hunting).map((a) => [a.id, a]));
+	sellableItems = new Map(items.filter((a) => a.mythical != true).map((a) => [a.id, a]));
+	usableItems = new Map(items.filter((a) => a.use).map((a) => [a.id, a]));
+	equipableItems = new Map(items.filter((a) => a.equip).map((a) => [a.id, a]));
+	craftableItems = new Map(items.filter((a) => a.recipe).map((a) => [a.id, a]));
+	crops = new Map(items.filter((a) => a.growTime).map((a) => [a.id, a]));
+
 	// define the weight of each rarity level (the sum of all weights should be 1)
 	rarityWeights = {
 		Common: 0.5,

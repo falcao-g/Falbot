@@ -918,24 +918,14 @@ module.exports = {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
 		const { items } = instance;
 
-		var localeItems = Array.from(items.all().values())
-			.map((item) => {
-				if (
-					item.mythical !== true // Sellable items
-				) {
-					return instance.getItemName(item.id, interaction);
-				}
-				return undefined;
-			})
-			.filter((item) => item !== undefined);
+		var localeItems = Array.from(items.sellableItems.keys()).map((key) => instance.getItemName(key, interaction));
 
 		const filtered = localeItems.filter((choice) => {
-			if (
-				choice.split(' ').slice(1).join(' ').toLowerCase().startsWith(focusedValue) ||
-				choice.toLowerCase().startsWith(focusedValue)
-			) {
-				return true;
-			}
+			const lowerCaseChoice = choice.toLowerCase();
+			return (
+				lowerCaseChoice.startsWith(focusedValue) ||
+				lowerCaseChoice.split(' ').slice(1).join(' ').startsWith(focusedValue)
+			);
 		});
 		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
 	},
