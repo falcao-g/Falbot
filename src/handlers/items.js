@@ -1286,6 +1286,23 @@ class Item {
 	miningItems = new Map(items.filter((a) => a.mining).map((a) => [a.id, a]));
 	fishingItems = new Map(items.filter((a) => a.fishing).map((a) => [a.id, a]));
 	huntingItems = new Map(items.filter((a) => a.hunting).map((a) => [a.id, a]));
+	// define the weight of each rarity level (the sum of all weights should be 1)
+	rarityWeights = {
+		Common: 0.5,
+		Uncommon: 0.3,
+		Rare: 0.11,
+		Epic: 0.055,
+		Legendary: 0.025,
+	};
+
+	//define what amount each rarity can give
+	rarityAmounts = {
+		Common: 20,
+		Uncommon: 15,
+		Rare: 10,
+		Epic: 5,
+		Legendary: 1,
+	};
 
 	constructor() {
 		this._items = new Map(items.map((a) => [a.id, a]));
