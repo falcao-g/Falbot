@@ -124,20 +124,18 @@ module.exports = {
 			var usedToCraft = '';
 			var cont = 0;
 			craft: for (var i of items.all().values()) {
-				if (i.recipe != undefined) {
-					for (key in i.recipe) {
-						if (key === itemJSON.id) {
-							usedToCraft += `\n${instance.getItemName(i.id, interaction)}`;
-							cont += 1;
+				for (key in i.recipe) {
+					if (key === itemJSON.id) {
+						usedToCraft += `\n${instance.getItemName(i.id, interaction)}`;
+						cont += 1;
 
-							if (cont === 4) {
-								usedToCraft += instance.getMessage(interaction, 'AND_MORE');
-								embed.addFields({
-									name: instance.getMessage(interaction, 'USED'),
-									value: usedToCraft,
-								});
-								break craft;
-							}
+						if (cont === 4) {
+							usedToCraft += instance.getMessage(interaction, 'AND_MORE');
+							embed.addFields({
+								name: instance.getMessage(interaction, 'USED'),
+								value: usedToCraft,
+							});
+							break craft;
 						}
 					}
 				}
