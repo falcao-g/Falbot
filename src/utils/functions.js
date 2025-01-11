@@ -1,6 +1,5 @@
 const userSchema = require('../schemas/user.js');
 const { ActionRowBuilder, ButtonBuilder, GuildMember } = require('discord.js');
-const items = require('./json/items.json');
 
 /**
  * @param {integer} ms
@@ -186,31 +185,6 @@ async function resolveCooldown(id, command) {
 
 /**
  *
- * @param {string} item
- * @description Returns the item's json key
- * @example getItem('skunk pelt') // 'skunk'
- * @returns {string}
- */
-function getItem(item) {
-	if (!'abcdefghijklmnopqrstuvwxyz'.includes(item[0].toLowerCase())) {
-		item = item.split(' ').slice(1).join(' ');
-	}
-
-	item = item.toLowerCase();
-
-	for (const key in items) {
-		if (items[key]['pt-BR'].toLowerCase() === item || items[key]['en-US'].toLowerCase() === item) {
-			return key;
-		}
-	}
-
-	if (items[item] != undefined) {
-		return item;
-	}
-}
-
-/**
- *
  * @param {Array<string>} buttons
  * @description Returns a row of buttons
  * @example buttons(['cooldowns', 'help', 'balance'])
@@ -322,7 +296,6 @@ module.exports = {
 	paginate,
 	pick,
 	setCooldown,
-	getItem,
 	buttons,
 	isEquipped,
 	useItem,

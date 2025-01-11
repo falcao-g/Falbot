@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { format, buttons, getItem } = require('../../utils/functions.js');
-const { numerize } = require('numerize');
+const { format, buttons } = require('../../utils/functions.js');
+var numerize = require('numerize');
+// eslint-disable-next-line prefer-destructuring
+numerize = numerize.default.numerize; // uugh
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -67,6 +69,7 @@ module.exports = {
 			var recipient = await guild.members.fetch(interaction.options.getUser('user').id);
 			const recipientFile = await database.player.findOne(recipient.user.id);
 			const userFile = await database.player.findOne(user.id);
+			const { items } = instance;
 
 			if (recipient.user === user) {
 				await instance.editReply(interaction, {
@@ -93,8 +96,8 @@ module.exports = {
 					offerFalcoins = numerize(offerItems[i].split(' ')[0], userFile.falcoins);
 				} else {
 					offerItems[i] = offerItems[i].trim();
-					var itemName = getItem(offerItems[i].split(' ').slice(1).join(' '));
-					if (getItem(itemName) === undefined) {
+					var itemName = items.getItem(offerItems[i].split(' ').slice(1).join(' ')).id;
+					if (itemName === undefined) {
 						await instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'BAD_VALUE', {
 								VALUE: offerItems[i].split(' ')[1],
@@ -122,7 +125,7 @@ module.exports = {
 					receiveFalcoins = numerize(receiveItems[i].split(' ')[0], recipientFile.falcoins);
 				} else {
 					receiveItems[i] = receiveItems[i].trim();
-					var itemName = getItem(receiveItems[i].split(' ').slice(1).join(' '));
+					var itemName = items.getItem(receiveItems[i].split(' ').slice(1).join(' ')).id;
 					if (itemName === undefined) {
 						await instance.editReply(interaction, {
 							content: instance.getMessage(interaction, 'BAD_VALUE', {
@@ -211,7 +214,7 @@ module.exports = {
 			});
 
 			const filter = (btInt) => {
-				return instance.defaultFilter(btInt) && btInt.user.id === member.user.id;
+				return instance.defaultFilter(btInt) && btInt.user.id === recipient.user.id;
 			};
 
 			const collector = answer.createMessageComponentCollector({

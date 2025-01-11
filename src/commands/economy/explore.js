@@ -32,71 +32,48 @@ module.exports = {
 			return;
 		}
 
-		if (await isEquipped(member, 'activewear')) {
-			buff = 2;
-			await useItem(member, 'activewear');
-			buffText = `**${instance.getMessage(interaction, 'BUFF', {
-				ITEM: `${instance.getItemName('activewear', interaction)}`,
-				BUFF: 2,
-			})}**`;
-		}
+		const buffs = [
+			{ item: 'activewear', value: 2 },
+			{ item: 'coat', value: 4 },
+		];
 
-		if (await isEquipped(member, 'coat')) {
-			buff = 4;
-			await useItem(member, 'coat');
-			buffText = `**${instance.getMessage(interaction, 'BUFF', {
-				ITEM: `${instance.getItemName('coat', interaction)}`,
-				BUFF: 4,
-			})}**`;
+		for (const { item, value } of buffs) {
+			if (await isEquipped(member, item)) {
+				buff = value;
+				await useItem(member, item);
+				buffText += `**${instance.getMessage(interaction, 'BUFF', {
+					ITEM: instance.getItemName(item, interaction),
+					BUFF: value,
+				})}**\n`;
+			}
 		}
 
 		if (instance.randomEvents.isActive('Search Party')) {
-			if (buffText !== '') buffText += '\n';
 			buffText += `${instance.getMessage(interaction, 'SEARCH_PARTY_BONUS')}`;
-			buff ? (buff *= 2) : (buff = 2);
+			buff *= 2;
 			luck = 1.5;
 		}
 
-		// define the weight of each rarity level (the sum of all weights should be 1)
-		const weights = {
-			Common: 0.5,
-			Uncommon: 0.3,
-			Rare: 0.11,
-			Epic: 0.055,
-			Legendary: 0.025,
-		};
+		var filteredItems = Array.from(items.exploringItems.entries()).map(([item, itemDetails]) => [
+			itemDetails,
+			items.rarityWeights[itemDetails['rarity']],
+		]);
 
-		//define what amount each rarity can give
-		const amounts = {
-			Common: 20,
-			Uncommon: 15,
-			Rare: 10,
-			Epic: 5,
-			Legendary: 1,
-		};
-
-		var filteredItems = Array.from(Object.keys(items)).reduce((acc, item) => {
-			if (items[item].exploring === true) {
-				acc.push([item, weights[items[item]['rarity']]]);
-			}
-			return acc;
-		}, []);
-
-		// randomly select a number of items based on their weights
-		const selectedItems = [];
 		const numItems = randint(3, 5);
-		var total = 0;
-		var text = '';
+		let total = 0;
+		let text = '';
+
 		for (let i = 0; i < numItems; i++) {
-			var selectedItem = pick(filteredItems, luck);
-			var softenedBuff = Math.max(1, randint((buff * 10) / 2, buff * 10) / 10);
-			var amount = Math.floor(randint(1, amounts[items[selectedItem]['rarity']]) * softenedBuff);
-			var name = `${instance.getItemName(selectedItem, interaction)}`;
+			const selectedItem = pick(filteredItems, luck);
+			const softenedBuff = Math.max(1, randint((buff * 10) / 2, buff * 10) / 10);
+			const amount = Math.floor(randint(1, items.rarityAmounts[selectedItem.rarity]) * softenedBuff);
+			const name = instance.getItemName(selectedItem.id, interaction);
+
 			total += amount;
 			text += `**${name}** x ${amount}\n`;
-			filteredItems = filteredItems.filter((item) => item[0] !== selectedItem);
-			player.inventory.set(selectedItem, (player.inventory.get(selectedItem) || 0) + amount);
-			selectedItems.push(selectedItem);
+
+			filteredItems = filteredItems.filter(([item]) => item !== selectedItem);
+			player.inventory.set(selectedItem.id, (player.inventory.get(selectedItem.id) || 0) + amount);
 		}
 
 		var embed = instance.createEmbed(member.displayColor).addFields({
