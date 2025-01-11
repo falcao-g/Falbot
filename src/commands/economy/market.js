@@ -1,4 +1,4 @@
-const { format, paginate, getItem } = require('../../utils/functions.js');
+const { format, paginate } = require('../../utils/functions.js');
 const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder } = require('discord.js');
 var numerize = require('numerize');
 // eslint-disable-next-line prefer-destructuring
@@ -74,6 +74,7 @@ module.exports = {
 				.addStringOption((option) =>
 					option
 						.setName('amount')
+						.setNameLocalizations({ 'pt-BR': 'quantidade', 'es-ES': 'cantidad' })
 						.setDescription('The amount of items to buy')
 						.setDescriptionLocalizations({
 							'pt-BR': 'A quantidade de itens para comprar',
@@ -96,18 +97,18 @@ module.exports = {
 					subcommand
 						.setName('buy')
 						.setNameLocalizations({ 'pt-BR': 'compra', 'es-ES': 'compra' })
-						.setDescription('List a buy order in the market')
+						.setDescription('List that you want to buy an item in the market')
 						.setDescriptionLocalizations({
-							'pt-BR': 'Anunciar uma compra no mercado',
-							'es-ES': 'Anunciar una compra en el mercado',
+							'pt-BR': 'Anuncie que você quer comprar um item no mercado',
+							'es-ES': 'Anuncie que quieres comprar un item en el mercado',
 						})
 						.addStringOption((option) =>
 							option
 								.setName('item')
-								.setDescription('The item to buy')
+								.setDescription('The item to be bought')
 								.setDescriptionLocalizations({
-									'pt-BR': 'O item para comprar',
-									'es-ES': 'El item para comprar',
+									'pt-BR': 'O item que deseja comprar',
+									'es-ES': 'El item que deseas comprar',
 								})
 								.setRequired(true)
 								.setAutocomplete(true)
@@ -115,40 +116,43 @@ module.exports = {
 						.addStringOption((option) =>
 							option
 								.setName('amount')
-								.setDescription('The amount of items to buy')
+								.setNameLocalizations({ 'pt-BR': 'quantidade', 'es-ES': 'cantidad' })
+								.setDescription('The amount of items you want to buy')
 								.setDescriptionLocalizations({
-									'pt-BR': 'A quantidade de itens para comprar',
-									'es-ES': 'La cantidad de items para comprar',
+									'pt-BR': 'A quantidade de itens que deseja comprar',
+									'es-ES': 'La cantidad de items que deseas comprar',
 								})
 								.setRequired(true)
 						)
 						.addStringOption((option) =>
 							option
 								.setName('price')
-								.setDescription('The price of each individual item')
+								.setNameLocalizations({ 'pt-BR': 'preço', 'es-ES': 'precio' })
+								.setDescription('How much you want to pay for each item')
 								.setDescriptionLocalizations({
-									'pt-BR': 'O preço de cada item individual',
-									'es-ES': 'El precio de cada item individual',
+									'pt-BR': 'Quanto deseja pagar por cada item individual',
+									'es-ES': 'Cuánto deseas pagar por cada item individual',
 								})
 								.setRequired(true)
+								.setAutocomplete(true)
 						)
 				)
 				.addSubcommand((subcommand) =>
 					subcommand
 						.setName('sell')
 						.setNameLocalizations({ 'pt-BR': 'venda', 'es-ES': 'venda' })
-						.setDescription('List a sell order in the market')
+						.setDescription('List that you want to sell an item in the market')
 						.setDescriptionLocalizations({
-							'pt-BR': 'Anunciar uma venda no mercado',
-							'es-ES': 'Anunciar una venta en el mercado',
+							'pt-BR': 'Anuncie que você quer vender um item no mercado',
+							'es-ES': 'Anuncie que quieres vender un item en el mercado',
 						})
 						.addStringOption((option) =>
 							option
 								.setName('item')
-								.setDescription('The item to sell')
+								.setDescription('The item to be sold')
 								.setDescriptionLocalizations({
-									'pt-BR': 'O item para vender',
-									'es-ES': 'El item para vender',
+									'pt-BR': 'O item que deseja vender',
+									'es-ES': 'El item que deseas vender',
 								})
 								.setRequired(true)
 								.setAutocomplete(true)
@@ -156,22 +160,25 @@ module.exports = {
 						.addStringOption((option) =>
 							option
 								.setName('amount')
-								.setDescription('The amount of items to sell')
+								.setNameLocalizations({ 'pt-BR': 'quantidade', 'es-ES': 'cantidad' })
+								.setDescription('The amount of items you want to sell')
 								.setDescriptionLocalizations({
-									'pt-BR': 'A quantidade de itens para vender',
-									'es-ES': 'La cantidad de items para vender',
+									'pt-BR': 'A quantidade de itens que deseja vender',
+									'es-ES': 'La cantidad de items que deseas vender',
 								})
 								.setRequired(true)
 						)
 						.addStringOption((option) =>
 							option
 								.setName('price')
-								.setDescription('The price of each individual item')
+								.setNameLocalizations({ 'pt-BR': 'preço', 'es-ES': 'precio' })
+								.setDescription('How much you want to sell each item for')
 								.setDescriptionLocalizations({
-									'pt-BR': 'O preço de cada item individual',
-									'es-ES': 'El precio de cada item individual',
+									'pt-BR': 'Quanto deseja vender cada item individual',
+									'es-ES': 'Cuánto deseas vender cada item individual',
 								})
 								.setRequired(true)
+								.setAutocomplete(true)
 						)
 				)
 		)
@@ -344,11 +351,7 @@ module.exports = {
 				}
 			});
 		} else if (type === 'view') {
-			if (interaction.options !== undefined) {
-				var item = interaction.options.getString('item');
-			} else {
-				var item = interaction.values[0];
-			}
+			var item = interaction.options ? interaction.options.getString('item') : interaction.values[0];
 			const itemJSON = items.getItem(item);
 
 			if (itemJSON === undefined) {
@@ -916,17 +919,32 @@ module.exports = {
 	},
 	autocomplete: async ({ interaction, instance }) => {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
+		const option = interaction.options.getFocused(true).name;
 		const { items } = instance;
 
-		var localeItems = Array.from(items.sellableItems.keys()).map((key) => instance.getItemName(key, interaction));
+		if (option == 'item') {
+			var localeItems = Array.from(items.sellableItems.keys()).map((key) => instance.getItemName(key, interaction));
 
-		const filtered = localeItems.filter((choice) => {
-			const lowerCaseChoice = choice.toLowerCase();
-			return (
-				lowerCaseChoice.startsWith(focusedValue) ||
-				lowerCaseChoice.split(' ').slice(1).join(' ').startsWith(focusedValue)
-			);
-		});
-		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
+			const filtered = localeItems.filter((choice) => {
+				const lowerCaseChoice = choice.toLowerCase();
+				return (
+					lowerCaseChoice.startsWith(focusedValue) ||
+					lowerCaseChoice.split(' ').slice(1).join(' ').startsWith(focusedValue)
+				);
+			});
+
+			await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
+		} else if (option == 'price') {
+			const minimumPrice = items.getItem(interaction.options.getString('item')).value * 1.2;
+
+			await interaction.respond([
+				{
+					name: instance.getMessage(interaction, 'PRICE_TOO_LOW', {
+						PRICE: format(minimumPrice),
+					}),
+					value: `${minimumPrice}`,
+				},
+			]);
+		}
 	},
 };
