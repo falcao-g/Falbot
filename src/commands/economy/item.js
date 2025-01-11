@@ -123,27 +123,24 @@ module.exports = {
 
 			var usedToCraft = '';
 			var cont = 0;
-			craft: for (i in items) {
-				if (items[i].recipe != undefined) {
-					for (key in items[i].recipe) {
+			craft: for (var i of items.all().values()) {
+				if (i.recipe != undefined) {
+					for (key in i.recipe) {
 						if (key === itemJSON.id) {
-							usedToCraft += `\n${instance.getItemName(i, interaction)}`;
+							usedToCraft += `\n${instance.getItemName(i.id, interaction)}`;
 							cont += 1;
 
 							if (cont === 4) {
 								usedToCraft += instance.getMessage(interaction, 'AND_MORE');
+								embed.addFields({
+									name: instance.getMessage(interaction, 'USED'),
+									value: usedToCraft,
+								});
 								break craft;
 							}
 						}
 					}
 				}
-			}
-
-			if (usedToCraft.length != '') {
-				embed.addFields({
-					name: instance.getMessage(interaction, 'USED'),
-					value: usedToCraft,
-				});
 			}
 
 			//create two buttons to go to the next and previous item
