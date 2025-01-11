@@ -274,16 +274,12 @@ module.exports = {
 		const { items } = instance;
 
 		if (type == 'all') {
-			//first filter the mythical items, because they are not supposed to be in the market
-			const filteredItems = Array.from(items.all().values()).filter((item) => {
-				return item.mythical != true;
-			});
-
 			// pre calculate the sections of items
-			const numberOfPages = Math.ceil(filteredItems.length / 15);
+			const sellableItems = Array.from(items.sellableItems.values());
+			const numberOfPages = Math.ceil(sellableItems.length / 15);
 			const itemsOnPage = {};
 			for (var i = 0; i < numberOfPages; i++) {
-				itemsOnPage[i] = filteredItems.slice(i * 15, (i + 1) * 15);
+				itemsOnPage[i] = sellableItems.slice(i * 15, (i + 1) * 15);
 			}
 
 			//create an array of embeds, each embed containing 3 columns with 5 items each, until all items are displayed
