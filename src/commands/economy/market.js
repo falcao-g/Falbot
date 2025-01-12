@@ -187,15 +187,15 @@ module.exports = {
 				.setName('listings')
 				.setNameLocalizations({ 'pt-BR': 'listagens', 'es-ES': 'listagens' })
 				.setDescription('View your listings')
-				.setDescriptionLocalizations({ 'pt-BR': 'Ver suas listagens', 'es-ES': 'Ver tus listagens' })
+				.setDescriptionLocalizations({ 'pt-BR': 'Veja seus anúncios', 'es-ES': 'Ver tus anuncios' })
 				.addStringOption((option) =>
 					option
 						.setName('type')
 						.setNameLocalizations({ 'pt-BR': 'tipo', 'es-ES': 'tipo' })
 						.setDescription('The type of listings to view')
 						.setDescriptionLocalizations({
-							'pt-BR': 'O tipo de listagens para ver',
-							'es-ES': 'El tipo de listagens para ver',
+							'pt-BR': 'O tipo de anúncios a serem vistos',
+							'es-ES': 'El tipo de anuncios a ver',
 						})
 						.setRequired(true)
 						.addChoices(
@@ -210,36 +210,6 @@ module.exports = {
 								value: 'sell',
 							}
 						)
-				)
-		)
-		.addSubcommand((subcommand) =>
-			subcommand
-				.setName('delist')
-				.setNameLocalizations({ 'pt-BR': 'retirar', 'es-ES': 'retirar' })
-				.setDescription('Delist a listing')
-				.setDescriptionLocalizations({ 'pt-BR': 'Retirar uma listagem', 'es-ES': 'Retirar una listagem' })
-				.addStringOption((option) =>
-					option
-						.setName('type')
-						.setNameLocalizations({ 'pt-BR': 'tipo', 'es-ES': 'tipo' })
-						.setDescription('The type of listing to delist')
-						.setDescriptionLocalizations({
-							'pt-BR': 'O tipo de listagem para retirar',
-							'es-ES': 'El tipo de listagem para retirar',
-						})
-						.setRequired(true)
-						.addChoices(
-							{ name: 'buy', name_localizations: { 'pt-BR': 'compra', 'es-ES': 'compra' }, value: 'buy' },
-							{ name: 'sell', name_localizations: { 'pt-BR': 'venda', 'es-ES': 'venda' }, value: 'sell' }
-						)
-				)
-				.addStringOption((option) =>
-					option
-						.setName('item')
-						.setDescription('The item to delist')
-						.setDescriptionLocalizations({ 'pt-BR': 'O item para retirar', 'es-ES': 'El item para retirar' })
-						.setRequired(true)
-						.setAutocomplete(true)
 				)
 		)
 		.addSubcommand((subcommand) =>
@@ -688,8 +658,27 @@ module.exports = {
 					})
 				);
 
+				//create a select menu with the items on that page
+				const selectMenus = await Promise.all(
+					Array.from({ length: numberOfPages }).map(async (_, i) => {
+						const options = buyOrders.slice(i * 25, (i + 1) * 25).map((order) => {
+							return {
+								label: instance.getItemName(order.item, interaction),
+								value: `${order.item}__${order.price}__${order.amount}`,
+							};
+						});
+						const select = new StringSelectMenuBuilder()
+							.setCustomId(`${i}`)
+							.setPlaceholder(instance.getMessage(interaction, 'LISTING_REMOVE'))
+							.addOptions(options);
+
+						return select;
+					})
+				);
+
 				const paginator = paginate();
 				paginator.add(...embeds);
+				paginator.addComponents(...selectMenus);
 				const ids = [`${Date.now()}__left`, `${Date.now()}__right`];
 				paginator.setTraverser([
 					new ButtonBuilder().setEmoji('⬅️').setCustomId(ids[0]).setStyle('Secondary'),
@@ -698,13 +687,31 @@ module.exports = {
 
 				const message = await instance.editReply(interaction, paginator.components());
 
-				message.channel.createMessageComponentCollector().on('collect', async (i) => {
+				message.createMessageComponentCollector().on('collect', async (i) => {
 					if (i.customId === ids[0]) {
 						await paginator.back();
 						await i.update(paginator.components());
 					} else if (i.customId === ids[1]) {
 						await paginator.next();
 						await i.update(paginator.components());
+					} else if (i.values[0].includes('__')) {
+						const [item, price, amount] = i.values[0].split('__');
+						const itemJSON = items.getItem(item);
+						const userFile = await database.player.findOne(member.id);
+						userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + Number(amount));
+						await userFile.save();
+						await database.market.deleteBuyOrder(itemJSON.id, {
+							owner: interaction.user.id,
+							price: Number(price),
+							amount: Number(amount),
+						});
+						await i.reply({
+							content: instance.getMessage(interaction, 'MARKET_DELISTED_BUY', {
+								AMOUNT: format(Number(amount)),
+								ITEM: instance.getItemName(itemJSON.id, interaction),
+								PRICE: format(Number(price)),
+							}),
+						});
 					}
 				});
 			} else if (listings == 'sell') {
@@ -742,8 +749,27 @@ module.exports = {
 					})
 				);
 
+				//create a select menu with the items on that page
+				const selectMenus = await Promise.all(
+					Array.from({ length: numberOfPages }).map(async (_, i) => {
+						const options = sellOrders.slice(i * 25, (i + 1) * 25).map((order) => {
+							return {
+								label: instance.getItemName(order.item, interaction),
+								value: `${order.item}__${order.price}__${order.amount}`,
+							};
+						});
+						const select = new StringSelectMenuBuilder()
+							.setCustomId(`${i}`)
+							.setPlaceholder(instance.getMessage(interaction, 'LISTING_REMOVE'))
+							.addOptions(options);
+
+						return select;
+					})
+				);
+
 				const paginator = paginate();
 				paginator.add(...embeds);
+				paginator.addComponents(...selectMenus);
 				const ids = [`${Date.now()}__left`, `${Date.now()}__right`];
 				paginator.setTraverser([
 					new ButtonBuilder().setEmoji('⬅️').setCustomId(ids[0]).setStyle('Secondary'),
@@ -752,100 +778,33 @@ module.exports = {
 
 				const message = await instance.editReply(interaction, paginator.components());
 
-				message.channel.createMessageComponentCollector().on('collect', async (i) => {
+				message.createMessageComponentCollector().on('collect', async (i) => {
 					if (i.customId === ids[0]) {
 						await paginator.back();
 						await i.update(paginator.components());
 					} else if (i.customId === ids[1]) {
 						await paginator.next();
 						await i.update(paginator.components());
+					} else if (i.values[0].includes('__')) {
+						const [item, price, amount] = i.values[0].split('__');
+						const itemJSON = items.getItem(item);
+						const userFile = await database.player.findOne(member.id);
+						userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + Number(amount));
+						await userFile.save();
+						await database.market.deleteSellOrder(itemJSON.id, {
+							owner: interaction.user.id,
+							price: Number(price),
+							amount: Number(amount),
+						});
+						await i.reply({
+							content: instance.getMessage(interaction, 'MARKET_DELISTED_SELL', {
+								AMOUNT: amount,
+								ITEM: instance.getItemName(itemJSON.id, interaction),
+								PRICE: format(price),
+							}),
+						});
 					}
 				});
-			}
-		} else if (type == 'delist') {
-			const listings = interaction.options.getString('type');
-			const item = interaction.options.getString('item');
-			const itemJSON = items.getItem(item);
-			const userFile = await database.player.findOne(member.id);
-
-			if (itemJSON === undefined) {
-				instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'BAD_VALUE', {
-						VALUE: item,
-					}),
-				});
-				return;
-			}
-
-			if (!itemJSON.value) {
-				instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'CANT_SELL'),
-				});
-				return;
-			}
-
-			if (listings == 'buy') {
-				const buyOrders = await database.market.getBuyOrdersFromUser(member.id);
-				if (buyOrders.length == 0) {
-					instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
-					});
-					return;
-				}
-
-				var index = buyOrders.findIndex((order) => order.item === itemJSON.id && order.owner === member.id);
-				if (index == -1) {
-					instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'THIS_LISTING_DOESNT_EXIST'),
-					});
-					return;
-				}
-
-				const buyOrder = buyOrders[index];
-				userFile.falcoins += buyOrder.price * buyOrder.amount;
-				await userFile.save();
-				await database.market.deleteBuyOrder(itemJSON.id, buyOrder);
-
-				const embed = instance.createEmbed(member.displayColor).setTitle(
-					instance.getMessage(interaction, 'MARKET_DELISTED_BUY', {
-						AMOUNT: buyOrder.amount,
-						ITEM: instance.getItemName(itemJSON.id, interaction),
-						PRICE: format(buyOrder.price),
-					})
-				);
-
-				instance.editReply(interaction, { embeds: [embed] });
-			} else if (listings == 'sell') {
-				const sellOrders = await database.market.getSellOrdersFromUser(member.id);
-				if (sellOrders.length == 0) {
-					instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
-					});
-					return;
-				}
-
-				var index = sellOrders.findIndex((order) => order.item === itemJSON.id && order.owner === member.id);
-				if (index == -1) {
-					instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'THIS_LISTING_DOESNT_EXIST'),
-					});
-					return;
-				}
-
-				const sellOrder = sellOrders[index];
-				userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + sellOrder.amount);
-				await userFile.save();
-				await database.market.deleteSellOrder(itemJSON.id, sellOrder);
-
-				const embed = instance.createEmbed(member.displayColor).setTitle(
-					instance.getMessage(interaction, 'MARKET_DELISTED_SELL', {
-						AMOUNT: sellOrder.amount,
-						ITEM: instance.getItemName(itemJSON.id, interaction),
-						PRICE: format(sellOrder.price),
-					})
-				);
-
-				instance.editReply(interaction, { embeds: [embed] });
 			}
 		} else if (type == 'history') {
 			const item = interaction.options.getString('item');
