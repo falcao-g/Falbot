@@ -472,7 +472,7 @@ module.exports = {
 				//we need to check if there is someone in the market that wants to buy the item
 				let falcoins = 0;
 				let amountToSell = amount;
-				while (amountToSell > 0 && (await database.market.getBestBuyOrder(itemJSON.id)).price > 0) {
+				while (amountToSell > 0 && (await database.market.getBestBuyOrder(itemJSON.id)) != null) {
 					const buyOrder = await database.market.getBestBuyOrder(itemJSON.id);
 					const buyerFile = await database.player.findOne(buyOrder.owner);
 
@@ -807,7 +807,7 @@ module.exports = {
 
 						// sell to the market if applicable
 						let amountToSell = player.inventory.get(key);
-						if (amountToSell > 0 && (await database.market.getBestBuyOrder(key)).price > 0) {
+						if (amountToSell > 0 && (await database.market.getBestBuyOrder(key)) != null) {
 							const buyOrder = await database.market.getBestBuyOrder(key);
 							const buyerFile = await database.player.findOne(buyOrder.owner);
 

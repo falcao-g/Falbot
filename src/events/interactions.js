@@ -109,6 +109,8 @@ module.exports = {
 		} else if (interaction.isStringSelectMenu()) {
 			const command = client.commands.get(interaction.customId.split(' ')[0]);
 
+			if (command == undefined) return;
+
 			countCommand = true;
 
 			await command.execute({

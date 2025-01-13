@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const order = mongoose.Schema({
-	_id: false,
 	owner: {
 		type: String,
 		required: true,
