@@ -1,21 +1,5 @@
 const marketSchema = require('../schemas/market.js');
 
-function findSellOrder(array, sellOrder) {
-	return array.findIndex(
-		(order) => order.price === sellOrder.price && order.amount === sellOrder.amount && order.owner === sellOrder.owner
-	);
-}
-
-function findBuyOrder(array, buyOrder) {
-	return array.findIndex(
-		(order) => order.price === buyOrder.price && order.amount === buyOrder.amount && order.owner === buyOrder.owner
-	);
-}
-
-function findOrderByItemAndOwner(array, item, owner) {
-	return array.findIndex((order) => order.item === item && order.owner === owner);
-}
-
 module.exports = {
 	/**
 	 *
@@ -34,92 +18,72 @@ module.exports = {
 			}
 		);
 	},
-	async getCheapestSellOrder(id) {
-		await this.create(id);
-		const result = await marketSchema.findOne({ _id: id });
+	async getCheapestSellOrder(item) {
+		const result = await marketSchema.aggregate([
+			{ $match: { _id: item } }, // Filter by item
+			{ $unwind: '$sellOrders' }, // Flatten the sellOrders array
+			{ $sort: { 'sellOrders.price': 1 } }, // Sort by price (ascending)
+			{ $limit: 1 }, // Get only the cheapest
+			{ $project: { _id: 0, order: '$sellOrders' } }, // Return only the order
+		]);
 
-		var cheapest = { price: Infinity };
-		result.sellOrders.forEach((order) => {
-			if (order.price < cheapest.price) cheapest = order;
-		});
-		return cheapest;
+		return result.length > 0 ? result[0].order : null; // Return the cheapest order
 	},
-	async getBestBuyOrder(id) {
-		const result = await marketSchema.findOne({ _id: id });
+	async getBestBuyOrder(item) {
+		const result = await marketSchema.aggregate([
+			{ $match: { _id: item } }, // Filter by item
+			{ $unwind: '$buyOrders' }, // Flatten the buyOrders array
+			{ $sort: { 'buyOrders.price': -1 } }, // Sort by price (descending)
+			{ $limit: 1 }, // Get only the best (highest price)
+			{ $project: { _id: 0, order: '$buyOrders' } }, // Return only the order
+		]);
 
-		var best = { price: 0 };
-		result.buyOrders.forEach((order) => {
-			if (order.price > best.price) best = order;
-		});
-		return best;
+		return result.length > 0 ? result[0].order : null; // Return the best order
 	},
-	async getSellOrders(id) {
-		const result = await marketSchema.findOne({ _id: id });
-		return result.sellOrders;
-	},
-	async getBuyOrders(id) {
-		const result = await marketSchema.findOne({ _id: id });
-		return result.buyOrders;
-	},
-	async subtractQuantityFromSellOrder(item, sellOrder, amount) {
+	async getOrders(item, type) {
 		const result = await marketSchema.findOne({ _id: item });
-		var index = findSellOrder(result.sellOrders, sellOrder);
-		result.sellOrders[index].amount -= amount;
-		if (result.sellOrders[index].amount <= 0) {
-			result.sellOrders.splice(index, 1);
-		}
-		await marketSchema.findByIdAndUpdate(result.id, result);
+		return result[type + 'Orders'];
 	},
 	async subtractQuantityFromBuyOrder(item, buyOrder, amount) {
-		const result = await marketSchema.findOne({ _id: item });
-		var index = findBuyOrder(result.buyOrders, buyOrder);
-		result.buyOrders[index].amount -= amount;
-		if (result.buyOrders[index].amount <= 0) {
-			result.buyOrders.splice(index, 1);
-		}
-		await marketSchema.findByIdAndUpdate(result.id, result);
+		await marketSchema.updateOne(
+			{ _id: item, [`buyOrders._id`]: buyOrder._id },
+			{
+				$inc: { [`buyOrders.$.amount`]: -amount },
+			}
+		);
 	},
-	async addBuyOrder(item, buyOrder) {
-		const result = await marketSchema.findOne({ _id: item });
-		result.buyOrders.push(buyOrder);
-		await marketSchema.findByIdAndUpdate(result.id, result);
+	async subtractQuantityFromSellOrder(item, sellOrder, amount) {
+		await marketSchema.updateOne(
+			{ _id: item, [`sellOrders._id`]: sellOrder._id },
+			{
+				$inc: { [`sellOrders.$.amount`]: -amount },
+			}
+		);
 	},
-	async addSellOrder(item, sellOrder) {
-		const result = await marketSchema.findOne({ _id: item });
-		result.sellOrders.push(sellOrder);
-		await marketSchema.findByIdAndUpdate(result.id, result);
+	async addOrder(item, order, type) {
+		const update = type === 'buy' ? { $push: { buyOrders: order } } : { $push: { sellOrders: order } };
+		await marketSchema.updateOne({ _id: item }, update);
 	},
-	async getBuyOrdersFromUser(id) {
-		const result = await marketSchema.find({ 'buyOrders.owner': id });
-		var orders = [];
-		result.forEach((item) => {
-			item.buyOrders.forEach((order) => {
-				if (order.owner === id) orders.push({ amount: order.amount, price: order.price, item: item._id, owner: id });
-			});
-		});
-		return orders;
+	async getOrdersFromUser(owner, type) {
+		const arrayPath = type === 'buy' ? 'buyOrders' : 'sellOrders';
+
+		const result = await marketSchema
+			.aggregate([
+				{ $unwind: `$${arrayPath}` }, // Flatten the array
+				{ $match: { [`${arrayPath}.owner`]: owner } }, // Match the owner
+				{ $project: { _id: 1, order: `$${arrayPath}` } }, // Return marketId and order
+			])
+			.lean();
+
+		return result;
 	},
-	async getSellOrdersFromUser(id) {
-		const result = await marketSchema.find({ 'sellOrders.owner': id });
-		var orders = [];
-		result.forEach((item) => {
-			item.sellOrders.forEach((order) => {
-				if (order.owner === id) orders.push({ amount: order.amount, price: order.price, item: item._id, owner: id });
-			});
-		});
-		return orders;
-	},
-	async deleteBuyOrder(item, owner) {
-		const result = await marketSchema.findOne({ _id: item });
-		var index = findOrderByItemAndOwner(result.buyOrders, item, owner);
-		result.buyOrders.splice(index, 1);
-		await marketSchema.findByIdAndUpdate(result.id, result);
-	},
-	async deleteSellOrder(item, owner) {
-		const result = await marketSchema.findOne({ _id: item });
-		var index = findOrderByItemAndOwner(result.sellOrders, item, owner);
-		result.sellOrders.splice(index, 1);
-		await marketSchema.findByIdAndUpdate(result.id, result);
+	async removeOrder(item, semiOrder, type) {
+		const filter =
+			type === 'buy'
+				? { $pull: { buyOrders: { owner: semiOrder.owner, amount: semiOrder.amount, price: semiOrder.price } } }
+				: { $pull: { sellOrders: { owner: semiOrder.owner, amount: semiOrder.amount, price: semiOrder.price } } };
+
+		await marketSchema.updateOne({ _id: item }, filter);
 	},
 	async getHistory(id) {
 		const result = await marketSchema.findOne({ _id: id });

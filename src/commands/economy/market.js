@@ -267,7 +267,7 @@ module.exports = {
 						embed.addFields({
 							name: instance.getItemName(item.id, interaction),
 							value:
-								cheapestSellOrder.price == Infinity
+								cheapestSellOrder == null
 									? instance.getMessage(interaction, 'NO_LISTINGS')
 									: `${format(cheapestSellOrder.price)} falcoins`,
 							inline: true,
@@ -339,7 +339,7 @@ module.exports = {
 			const embed = instance.createEmbed(member.displayColor).setTitle(instance.getItemName(itemJSON.id, interaction));
 
 			//retrieve all buy orders and group them by price, putting the highest price first, and formatting the string like x falcoins - y availables
-			const buyOrders = await database.market.getBuyOrders(itemJSON.id);
+			const buyOrders = await database.market.getOrders(itemJSON.id, 'buy');
 			if (buyOrders != []) {
 				var groupedBuyOrders = {};
 				buyOrders.forEach((order) => {
@@ -358,7 +358,7 @@ module.exports = {
 			}
 
 			//retrieve all sell orders and group them by price, putting the lowest price first, and formatting the string like x falcoins (y orders)
-			const sellOrders = await database.market.getSellOrders(itemJSON.id);
+			const sellOrders = await database.market.getOrders(itemJSON.id, 'sell');
 			if (sellOrders != []) {
 				var groupedSellOrders = {};
 				sellOrders.forEach((order) => {
@@ -422,11 +422,7 @@ module.exports = {
 
 			//glutton algorithm to get the cheapest sell order
 			var totalPaid = 0;
-			while (
-				amount > 0 &&
-				(await database.market.getCheapestSellOrder(itemJSON.id)).price != Infinity &&
-				userFile.falcoins > 0
-			) {
+			while (amount > 0 && (await database.market.getCheapestSellOrder(itemJSON.id)) != null && userFile.falcoins > 0) {
 				const sellOrder = await database.market.getCheapestSellOrder(itemJSON.id);
 				const sellerFile = await database.player.findOne(sellOrder.owner);
 				if (amount >= sellOrder.amount) {
@@ -533,7 +529,7 @@ module.exports = {
 				amount: amount,
 				owner: member.id,
 			};
-			await database.market.addBuyOrder(itemJSON.id, buyOrder);
+			await database.market.addOrder(itemJSON.id, buyOrder, 'buy');
 
 			const embed = instance.createEmbed(member.displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_LISTED_BUY', {
@@ -609,7 +605,7 @@ module.exports = {
 				amount: amount,
 				owner: member.id,
 			};
-			await database.market.addSellOrder(itemJSON.id, sellOrder);
+			await database.market.addOrder(itemJSON.id, sellOrder, 'sell');
 
 			const embed = instance.createEmbed(member.displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_LISTED_SELL', {
@@ -624,7 +620,7 @@ module.exports = {
 			const listings = interaction.options.getString('type');
 
 			if (listings == 'buy') {
-				const buyOrders = await database.market.getBuyOrdersFromUser(member.id);
+				const buyOrders = await database.market.getOrdersFromUser(member.id, 'buy');
 				if (buyOrders.length == 0) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
@@ -643,9 +639,10 @@ module.exports = {
 						);
 
 						const ordersOnPage = buyOrders.slice(i * 25, (i + 1) * 25);
-						for (var order of ordersOnPage) {
+						for (var o of ordersOnPage) {
+							const { _id, order } = o;
 							embed.addFields({
-								name: `${instance.getItemName(order.item, interaction)}`,
+								name: `${instance.getItemName(_id, interaction)}`,
 								value: `${format(order.price)} falcoins - ${format(order.amount)} ${instance.getMessage(
 									interaction,
 									'AVAILABLES'
@@ -661,10 +658,11 @@ module.exports = {
 				//create a select menu with the items on that page
 				const selectMenus = await Promise.all(
 					Array.from({ length: numberOfPages }).map(async (_, i) => {
-						const options = buyOrders.slice(i * 25, (i + 1) * 25).map((order) => {
+						const options = buyOrders.slice(i * 25, (i + 1) * 25).map((o) => {
+							const { _id, order } = o;
 							return {
-								label: instance.getItemName(order.item, interaction),
-								value: `${order.item}__${order.price}__${order.amount}`,
+								label: instance.getItemName(_id, interaction),
+								value: `${_id}__${order.amount}__${order.price}`,
 							};
 						});
 						const select = new StringSelectMenuBuilder()
@@ -695,16 +693,12 @@ module.exports = {
 						await paginator.next();
 						await i.update(paginator.components());
 					} else if (i.values[0].includes('__')) {
-						const [item, price, amount] = i.values[0].split('__');
+						const [item, amount, price] = i.values[0].split('__');
 						const itemJSON = items.getItem(item);
 						const userFile = await database.player.findOne(member.id);
 						userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + Number(amount));
 						await userFile.save();
-						await database.market.deleteBuyOrder(itemJSON.id, {
-							owner: interaction.user.id,
-							price: Number(price),
-							amount: Number(amount),
-						});
+						await database.market.removeOrder(itemJSON.id, { owner: member.id, amount, price }, 'buy');
 						await i.reply({
 							content: instance.getMessage(interaction, 'MARKET_DELISTED_BUY', {
 								AMOUNT: format(Number(amount)),
@@ -715,7 +709,7 @@ module.exports = {
 					}
 				});
 			} else if (listings == 'sell') {
-				const sellOrders = await database.market.getSellOrdersFromUser(member.id);
+				const sellOrders = await database.market.getOrdersFromUser(member.id, 'sell');
 				if (sellOrders.length == 0) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
@@ -734,9 +728,10 @@ module.exports = {
 						);
 
 						const ordersOnPage = sellOrders.slice(i * 25, (i + 1) * 25);
-						for (var order of ordersOnPage) {
+						for (var o of ordersOnPage) {
+							const { _id, order } = o;
 							embed.addFields({
-								name: `${instance.getItemName(order.item, interaction)}`,
+								name: `${instance.getItemName(_id, interaction)}`,
 								value: `${format(order.price)} falcoins - ${format(order.amount)} ${instance.getMessage(
 									interaction,
 									'AVAILABLES'
@@ -752,10 +747,11 @@ module.exports = {
 				//create a select menu with the items on that page
 				const selectMenus = await Promise.all(
 					Array.from({ length: numberOfPages }).map(async (_, i) => {
-						const options = sellOrders.slice(i * 25, (i + 1) * 25).map((order) => {
+						const options = sellOrders.slice(i * 25, (i + 1) * 25).map((o) => {
+							const { _id, order } = o;
 							return {
-								label: instance.getItemName(order.item, interaction),
-								value: `${order.item}__${order.price}__${order.amount}`,
+								label: instance.getItemName(_id, interaction),
+								value: `${_id}__${order.amount}__${order.price}`,
 							};
 						});
 						const select = new StringSelectMenuBuilder()
@@ -786,16 +782,12 @@ module.exports = {
 						await paginator.next();
 						await i.update(paginator.components());
 					} else if (i.values[0].includes('__')) {
-						const [item, price, amount] = i.values[0].split('__');
+						const [item, amount, price] = i.values[0].split('__');
 						const itemJSON = items.getItem(item);
 						const userFile = await database.player.findOne(member.id);
 						userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + Number(amount));
 						await userFile.save();
-						await database.market.deleteSellOrder(itemJSON.id, {
-							owner: interaction.user.id,
-							price: Number(price),
-							amount: Number(amount),
-						});
+						await database.market.removeOrder(itemJSON.id, { owner: member.id, amount, price }, 'sell');
 						await i.reply({
 							content: instance.getMessage(interaction, 'MARKET_DELISTED_SELL', {
 								AMOUNT: amount,
