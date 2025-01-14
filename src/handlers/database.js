@@ -3,10 +3,7 @@ const interestSchema = require('../schemas/interest.js');
 const lotterySchema = require('../schemas/lotto.js');
 
 class databaseHandler {
-	//todo: make this import automatically
-
 	player = require('../database/player.js');
-	market = require('../database/market.js');
 
 	constructor() {
 		this.connect().then(async () => {

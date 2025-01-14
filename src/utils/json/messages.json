@@ -1672,14 +1672,14 @@
 		"es-ES": ":convenience_store: Tus anuncios de venta {PAGE}/{TOTAL}"
 	},
 	"YOU_DONT_HAVE_LISTINGS": {
-		"pt-BR": "Você não fez nenhum anúncio desse tipo!",
+		"pt-BR": "Você não tem nenhum anúncio desse tipo!",
 		"en-US": "You don't have any listings of this type!",
 		"es-ES": "¡No tienes ningún anuncio de este tipo!"
 	},
-	"THIS_LISTING_DOESNT_EXIST": {
-		"pt-BR": "Esse anúncio não existe!",
-		"en-US": "This listing doesn't exist!",
-		"es-ES": "¡Este anuncio no existe!"
+	"LISTING_REMOVE": {
+		"pt-BR": "Escolha um anúncio para remover...",
+		"en-US": "Choose a listing to remove...",
+		"es-ES": "Elige un anuncio para eliminar..."
 	},
 	"MARKET_DELISTED_BUY": {
 		"pt-BR": "Você removeu seu anúncio para comprar {AMOUNT} x {ITEM} por {PRICE} falcoins!",

@@ -1,4 +1,4 @@
-const { format, paginate, getItem } = require('../../utils/functions.js');
+const { format, paginate } = require('../../utils/functions.js');
 const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder } = require('discord.js');
 var numerize = require('numerize');
 // eslint-disable-next-line prefer-destructuring
@@ -74,6 +74,7 @@ module.exports = {
 				.addStringOption((option) =>
 					option
 						.setName('amount')
+						.setNameLocalizations({ 'pt-BR': 'quantidade', 'es-ES': 'cantidad' })
 						.setDescription('The amount of items to buy')
 						.setDescriptionLocalizations({
 							'pt-BR': 'A quantidade de itens para comprar',
@@ -96,18 +97,18 @@ module.exports = {
 					subcommand
 						.setName('buy')
 						.setNameLocalizations({ 'pt-BR': 'compra', 'es-ES': 'compra' })
-						.setDescription('List a buy order in the market')
+						.setDescription('List that you want to buy an item in the market')
 						.setDescriptionLocalizations({
-							'pt-BR': 'Anunciar uma compra no mercado',
-							'es-ES': 'Anunciar una compra en el mercado',
+							'pt-BR': 'Anuncie que você quer comprar um item no mercado',
+							'es-ES': 'Anuncie que quieres comprar un item en el mercado',
 						})
 						.addStringOption((option) =>
 							option
 								.setName('item')
-								.setDescription('The item to buy')
+								.setDescription('The item to be bought')
 								.setDescriptionLocalizations({
-									'pt-BR': 'O item para comprar',
-									'es-ES': 'El item para comprar',
+									'pt-BR': 'O item que deseja comprar',
+									'es-ES': 'El item que deseas comprar',
 								})
 								.setRequired(true)
 								.setAutocomplete(true)
@@ -115,40 +116,43 @@ module.exports = {
 						.addStringOption((option) =>
 							option
 								.setName('amount')
-								.setDescription('The amount of items to buy')
+								.setNameLocalizations({ 'pt-BR': 'quantidade', 'es-ES': 'cantidad' })
+								.setDescription('The amount of items you want to buy')
 								.setDescriptionLocalizations({
-									'pt-BR': 'A quantidade de itens para comprar',
-									'es-ES': 'La cantidad de items para comprar',
+									'pt-BR': 'A quantidade de itens que deseja comprar',
+									'es-ES': 'La cantidad de items que deseas comprar',
 								})
 								.setRequired(true)
 						)
 						.addStringOption((option) =>
 							option
 								.setName('price')
-								.setDescription('The price of each individual item')
+								.setNameLocalizations({ 'pt-BR': 'preço', 'es-ES': 'precio' })
+								.setDescription('How much you want to pay for each item')
 								.setDescriptionLocalizations({
-									'pt-BR': 'O preço de cada item individual',
-									'es-ES': 'El precio de cada item individual',
+									'pt-BR': 'Quanto deseja pagar por cada item individual',
+									'es-ES': 'Cuánto deseas pagar por cada item individual',
 								})
 								.setRequired(true)
+								.setAutocomplete(true)
 						)
 				)
 				.addSubcommand((subcommand) =>
 					subcommand
 						.setName('sell')
 						.setNameLocalizations({ 'pt-BR': 'venda', 'es-ES': 'venda' })
-						.setDescription('List a sell order in the market')
+						.setDescription('List that you want to sell an item in the market')
 						.setDescriptionLocalizations({
-							'pt-BR': 'Anunciar uma venda no mercado',
-							'es-ES': 'Anunciar una venta en el mercado',
+							'pt-BR': 'Anuncie que você quer vender um item no mercado',
+							'es-ES': 'Anuncie que quieres vender un item en el mercado',
 						})
 						.addStringOption((option) =>
 							option
 								.setName('item')
-								.setDescription('The item to sell')
+								.setDescription('The item to be sold')
 								.setDescriptionLocalizations({
-									'pt-BR': 'O item para vender',
-									'es-ES': 'El item para vender',
+									'pt-BR': 'O item que deseja vender',
+									'es-ES': 'El item que deseas vender',
 								})
 								.setRequired(true)
 								.setAutocomplete(true)
@@ -156,39 +160,42 @@ module.exports = {
 						.addStringOption((option) =>
 							option
 								.setName('amount')
-								.setDescription('The amount of items to sell')
+								.setNameLocalizations({ 'pt-BR': 'quantidade', 'es-ES': 'cantidad' })
+								.setDescription('The amount of items you want to sell')
 								.setDescriptionLocalizations({
-									'pt-BR': 'A quantidade de itens para vender',
-									'es-ES': 'La cantidad de items para vender',
+									'pt-BR': 'A quantidade de itens que deseja vender',
+									'es-ES': 'La cantidad de items que deseas vender',
 								})
 								.setRequired(true)
 						)
 						.addStringOption((option) =>
 							option
 								.setName('price')
-								.setDescription('The price of each individual item')
+								.setNameLocalizations({ 'pt-BR': 'preço', 'es-ES': 'precio' })
+								.setDescription('How much you want to sell each item for')
 								.setDescriptionLocalizations({
-									'pt-BR': 'O preço de cada item individual',
-									'es-ES': 'El precio de cada item individual',
+									'pt-BR': 'Quanto deseja vender cada item individual',
+									'es-ES': 'Cuánto deseas vender cada item individual',
 								})
 								.setRequired(true)
+								.setAutocomplete(true)
 						)
 				)
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('listings')
-				.setNameLocalizations({ 'pt-BR': 'listagens', 'es-ES': 'listagens' })
+				.setNameLocalizations({ 'pt-BR': 'anúncios', 'es-ES': 'anuncios' })
 				.setDescription('View your listings')
-				.setDescriptionLocalizations({ 'pt-BR': 'Ver suas listagens', 'es-ES': 'Ver tus listagens' })
+				.setDescriptionLocalizations({ 'pt-BR': 'Veja seus anúncios', 'es-ES': 'Ver tus anuncios' })
 				.addStringOption((option) =>
 					option
 						.setName('type')
 						.setNameLocalizations({ 'pt-BR': 'tipo', 'es-ES': 'tipo' })
 						.setDescription('The type of listings to view')
 						.setDescriptionLocalizations({
-							'pt-BR': 'O tipo de listagens para ver',
-							'es-ES': 'El tipo de listagens para ver',
+							'pt-BR': 'O tipo de anúncios a serem vistos',
+							'es-ES': 'El tipo de anuncios a ver',
 						})
 						.setRequired(true)
 						.addChoices(
@@ -203,36 +210,6 @@ module.exports = {
 								value: 'sell',
 							}
 						)
-				)
-		)
-		.addSubcommand((subcommand) =>
-			subcommand
-				.setName('delist')
-				.setNameLocalizations({ 'pt-BR': 'retirar', 'es-ES': 'retirar' })
-				.setDescription('Delist a listing')
-				.setDescriptionLocalizations({ 'pt-BR': 'Retirar uma listagem', 'es-ES': 'Retirar una listagem' })
-				.addStringOption((option) =>
-					option
-						.setName('type')
-						.setNameLocalizations({ 'pt-BR': 'tipo', 'es-ES': 'tipo' })
-						.setDescription('The type of listing to delist')
-						.setDescriptionLocalizations({
-							'pt-BR': 'O tipo de listagem para retirar',
-							'es-ES': 'El tipo de listagem para retirar',
-						})
-						.setRequired(true)
-						.addChoices(
-							{ name: 'buy', name_localizations: { 'pt-BR': 'compra', 'es-ES': 'compra' }, value: 'buy' },
-							{ name: 'sell', name_localizations: { 'pt-BR': 'venda', 'es-ES': 'venda' }, value: 'sell' }
-						)
-				)
-				.addStringOption((option) =>
-					option
-						.setName('item')
-						.setDescription('The item to delist')
-						.setDescriptionLocalizations({ 'pt-BR': 'O item para retirar', 'es-ES': 'El item para retirar' })
-						.setRequired(true)
-						.setAutocomplete(true)
 				)
 		)
 		.addSubcommand((subcommand) =>
@@ -264,19 +241,15 @@ module.exports = {
 		} catch {
 			var type = subcommand;
 		}
-		const { items } = instance;
+		const { items, market } = instance;
 
 		if (type == 'all') {
-			//first filter the mythical items, because they are not supposed to be in the market
-			const filteredItems = Array.from(items.all().values()).filter((item) => {
-				return item.mythical != true;
-			});
-
 			// pre calculate the sections of items
-			const numberOfPages = Math.ceil(filteredItems.length / 15);
+			const sellableItems = Array.from(items.sellableItems.values());
+			const numberOfPages = Math.ceil(sellableItems.length / 15);
 			const itemsOnPage = {};
 			for (var i = 0; i < numberOfPages; i++) {
-				itemsOnPage[i] = filteredItems.slice(i * 15, (i + 1) * 15);
+				itemsOnPage[i] = sellableItems.slice(i * 15, (i + 1) * 15);
 			}
 
 			//create an array of embeds, each embed containing 3 columns with 5 items each, until all items are displayed
@@ -290,11 +263,11 @@ module.exports = {
 					);
 
 					for (var item of itemsOnPage[i]) {
-						var cheapestSellOrder = await database.market.getCheapestSellOrder(item.id);
+						var cheapestSellOrder = await market.getCheapestSellOrder(item.id);
 						embed.addFields({
 							name: instance.getItemName(item.id, interaction),
 							value:
-								cheapestSellOrder.price == Infinity
+								cheapestSellOrder == null
 									? instance.getMessage(interaction, 'NO_LISTINGS')
 									: `${format(cheapestSellOrder.price)} falcoins`,
 							inline: true,
@@ -344,11 +317,7 @@ module.exports = {
 				}
 			});
 		} else if (type === 'view') {
-			if (interaction.options !== undefined) {
-				var item = interaction.options.getString('item');
-			} else {
-				var item = interaction.values[0];
-			}
+			var item = interaction.options ? interaction.options.getString('item') : interaction.values[0];
 			const itemJSON = items.getItem(item);
 
 			if (itemJSON === undefined) {
@@ -370,7 +339,7 @@ module.exports = {
 			const embed = instance.createEmbed(member.displayColor).setTitle(instance.getItemName(itemJSON.id, interaction));
 
 			//retrieve all buy orders and group them by price, putting the highest price first, and formatting the string like x falcoins - y availables
-			const buyOrders = await database.market.getBuyOrders(itemJSON.id);
+			const buyOrders = await market.getOrders(itemJSON.id, 'buy');
 			if (buyOrders != []) {
 				var groupedBuyOrders = {};
 				buyOrders.forEach((order) => {
@@ -389,7 +358,7 @@ module.exports = {
 			}
 
 			//retrieve all sell orders and group them by price, putting the lowest price first, and formatting the string like x falcoins (y orders)
-			const sellOrders = await database.market.getSellOrders(itemJSON.id);
+			const sellOrders = await market.getOrders(itemJSON.id, 'sell');
 			if (sellOrders != []) {
 				var groupedSellOrders = {};
 				sellOrders.forEach((order) => {
@@ -453,12 +422,8 @@ module.exports = {
 
 			//glutton algorithm to get the cheapest sell order
 			var totalPaid = 0;
-			while (
-				amount > 0 &&
-				(await database.market.getCheapestSellOrder(itemJSON.id)).price != Infinity &&
-				userFile.falcoins > 0
-			) {
-				const sellOrder = await database.market.getCheapestSellOrder(itemJSON.id);
+			while (amount > 0 && (await market.getCheapestSellOrder(itemJSON.id)) != null && userFile.falcoins > 0) {
+				const sellOrder = await market.getCheapestSellOrder(itemJSON.id);
 				const sellerFile = await database.player.findOne(sellOrder.owner);
 				if (amount >= sellOrder.amount) {
 					amount -= sellOrder.amount;
@@ -466,8 +431,8 @@ module.exports = {
 					totalPaid += sellOrder.price * sellOrder.amount;
 					userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + sellOrder.amount);
 					sellerFile.falcoins += sellOrder.price * sellOrder.amount;
-					await database.market.subtractQuantityFromSellOrder(itemJSON.id, sellOrder, sellOrder.amount);
-					await database.market.addHistory(itemJSON.id, {
+					await market.subtractQuantityFromOrder(itemJSON.id, sellOrder, sellOrder.amount, 'sell');
+					await market.addHistory(itemJSON.id, {
 						price: format(sellOrder.price * sellOrder.amount),
 						amount: format(sellOrder.amount),
 						item: itemJSON.id,
@@ -478,9 +443,9 @@ module.exports = {
 					totalPaid += sellOrder.price * amount;
 					userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + amount);
 					sellerFile.falcoins += sellOrder.price * amount;
-					await database.market.subtractQuantityFromSellOrder(itemJSON.id, sellOrder, amount);
+					await market.subtractQuantityFromOrder(itemJSON.id, sellOrder, amount, 'sell');
 					sellerFile.stats.listingsSold += amount;
-					await database.market.addHistory(itemJSON.id, {
+					await market.addHistory(itemJSON.id, {
 						price: format(sellOrder.price),
 						amount: format(amount),
 						item: itemJSON.id,
@@ -564,7 +529,7 @@ module.exports = {
 				amount: amount,
 				owner: member.id,
 			};
-			await database.market.addBuyOrder(itemJSON.id, buyOrder);
+			await market.addOrder(itemJSON.id, buyOrder, 'buy');
 
 			const embed = instance.createEmbed(member.displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_LISTED_BUY', {
@@ -640,7 +605,7 @@ module.exports = {
 				amount: amount,
 				owner: member.id,
 			};
-			await database.market.addSellOrder(itemJSON.id, sellOrder);
+			await market.addOrder(itemJSON.id, sellOrder, 'sell');
 
 			const embed = instance.createEmbed(member.displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_LISTED_SELL', {
@@ -655,7 +620,7 @@ module.exports = {
 			const listings = interaction.options.getString('type');
 
 			if (listings == 'buy') {
-				const buyOrders = await database.market.getBuyOrdersFromUser(member.id);
+				const buyOrders = await market.getOrdersFromUser(member.id, 'buy');
 				if (buyOrders.length == 0) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
@@ -674,9 +639,10 @@ module.exports = {
 						);
 
 						const ordersOnPage = buyOrders.slice(i * 25, (i + 1) * 25);
-						for (var order of ordersOnPage) {
+						for (var o of ordersOnPage) {
+							const { _id, order } = o;
 							embed.addFields({
-								name: `${instance.getItemName(order.item, interaction)}`,
+								name: `${instance.getItemName(_id, interaction)}`,
 								value: `${format(order.price)} falcoins - ${format(order.amount)} ${instance.getMessage(
 									interaction,
 									'AVAILABLES'
@@ -689,8 +655,28 @@ module.exports = {
 					})
 				);
 
+				//create a select menu with the items on that page
+				const selectMenus = await Promise.all(
+					Array.from({ length: numberOfPages }).map(async (_, i) => {
+						const options = buyOrders.slice(i * 25, (i + 1) * 25).map((o) => {
+							const { _id, order } = o;
+							return {
+								label: instance.getItemName(_id, interaction),
+								value: `${_id}__${order.amount}__${order.price}`,
+							};
+						});
+						const select = new StringSelectMenuBuilder()
+							.setCustomId(`${i}`)
+							.setPlaceholder(instance.getMessage(interaction, 'LISTING_REMOVE'))
+							.addOptions(options);
+
+						return select;
+					})
+				);
+
 				const paginator = paginate();
 				paginator.add(...embeds);
+				paginator.addComponents(...selectMenus);
 				const ids = [`${Date.now()}__left`, `${Date.now()}__right`];
 				paginator.setTraverser([
 					new ButtonBuilder().setEmoji('⬅️').setCustomId(ids[0]).setStyle('Secondary'),
@@ -699,17 +685,31 @@ module.exports = {
 
 				const message = await instance.editReply(interaction, paginator.components());
 
-				message.channel.createMessageComponentCollector().on('collect', async (i) => {
+				message.createMessageComponentCollector().on('collect', async (i) => {
 					if (i.customId === ids[0]) {
 						await paginator.back();
 						await i.update(paginator.components());
 					} else if (i.customId === ids[1]) {
 						await paginator.next();
 						await i.update(paginator.components());
+					} else if (i.values[0].includes('__')) {
+						const [item, amount, price] = i.values[0].split('__');
+						const itemJSON = items.getItem(item);
+						const userFile = await database.player.findOne(member.id);
+						userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + Number(amount));
+						await userFile.save();
+						await market.removeOrder(itemJSON.id, { owner: member.id, amount, price }, 'buy');
+						await i.reply({
+							content: instance.getMessage(interaction, 'MARKET_DELISTED_BUY', {
+								AMOUNT: format(Number(amount)),
+								ITEM: instance.getItemName(itemJSON.id, interaction),
+								PRICE: format(Number(price)),
+							}),
+						});
 					}
 				});
 			} else if (listings == 'sell') {
-				const sellOrders = await database.market.getSellOrdersFromUser(member.id);
+				const sellOrders = await market.getOrdersFromUser(member.id, 'sell');
 				if (sellOrders.length == 0) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
@@ -728,9 +728,10 @@ module.exports = {
 						);
 
 						const ordersOnPage = sellOrders.slice(i * 25, (i + 1) * 25);
-						for (var order of ordersOnPage) {
+						for (var o of ordersOnPage) {
+							const { _id, order } = o;
 							embed.addFields({
-								name: `${instance.getItemName(order.item, interaction)}`,
+								name: `${instance.getItemName(_id, interaction)}`,
 								value: `${format(order.price)} falcoins - ${format(order.amount)} ${instance.getMessage(
 									interaction,
 									'AVAILABLES'
@@ -743,8 +744,28 @@ module.exports = {
 					})
 				);
 
+				//create a select menu with the items on that page
+				const selectMenus = await Promise.all(
+					Array.from({ length: numberOfPages }).map(async (_, i) => {
+						const options = sellOrders.slice(i * 25, (i + 1) * 25).map((o) => {
+							const { _id, order } = o;
+							return {
+								label: instance.getItemName(_id, interaction),
+								value: `${_id}__${order.amount}__${order.price}`,
+							};
+						});
+						const select = new StringSelectMenuBuilder()
+							.setCustomId(`${i}`)
+							.setPlaceholder(instance.getMessage(interaction, 'LISTING_REMOVE'))
+							.addOptions(options);
+
+						return select;
+					})
+				);
+
 				const paginator = paginate();
 				paginator.add(...embeds);
+				paginator.addComponents(...selectMenus);
 				const ids = [`${Date.now()}__left`, `${Date.now()}__right`];
 				paginator.setTraverser([
 					new ButtonBuilder().setEmoji('⬅️').setCustomId(ids[0]).setStyle('Secondary'),
@@ -753,100 +774,29 @@ module.exports = {
 
 				const message = await instance.editReply(interaction, paginator.components());
 
-				message.channel.createMessageComponentCollector().on('collect', async (i) => {
+				message.createMessageComponentCollector().on('collect', async (i) => {
 					if (i.customId === ids[0]) {
 						await paginator.back();
 						await i.update(paginator.components());
 					} else if (i.customId === ids[1]) {
 						await paginator.next();
 						await i.update(paginator.components());
+					} else if (i.values[0].includes('__')) {
+						const [item, amount, price] = i.values[0].split('__');
+						const itemJSON = items.getItem(item);
+						const userFile = await database.player.findOne(member.id);
+						userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + Number(amount));
+						await userFile.save();
+						await market.removeOrder(itemJSON.id, { owner: member.id, amount, price }, 'sell');
+						await i.reply({
+							content: instance.getMessage(interaction, 'MARKET_DELISTED_SELL', {
+								AMOUNT: amount,
+								ITEM: instance.getItemName(itemJSON.id, interaction),
+								PRICE: format(price),
+							}),
+						});
 					}
 				});
-			}
-		} else if (type == 'delist') {
-			const listings = interaction.options.getString('type');
-			const item = interaction.options.getString('item');
-			const itemJSON = items.getItem(item);
-			const userFile = await database.player.findOne(member.id);
-
-			if (itemJSON === undefined) {
-				instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'BAD_VALUE', {
-						VALUE: item,
-					}),
-				});
-				return;
-			}
-
-			if (!itemJSON.value) {
-				instance.editReply(interaction, {
-					content: instance.getMessage(interaction, 'CANT_SELL'),
-				});
-				return;
-			}
-
-			if (listings == 'buy') {
-				const buyOrders = await database.market.getBuyOrdersFromUser(member.id);
-				if (buyOrders.length == 0) {
-					instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
-					});
-					return;
-				}
-
-				var index = buyOrders.findIndex((order) => order.item === itemJSON.id && order.owner === member.id);
-				if (index == -1) {
-					instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'THIS_LISTING_DOESNT_EXIST'),
-					});
-					return;
-				}
-
-				const buyOrder = buyOrders[index];
-				userFile.falcoins += buyOrder.price * buyOrder.amount;
-				await userFile.save();
-				await database.market.deleteBuyOrder(itemJSON.id, buyOrder);
-
-				const embed = instance.createEmbed(member.displayColor).setTitle(
-					instance.getMessage(interaction, 'MARKET_DELISTED_BUY', {
-						AMOUNT: buyOrder.amount,
-						ITEM: instance.getItemName(itemJSON.id, interaction),
-						PRICE: format(buyOrder.price),
-					})
-				);
-
-				instance.editReply(interaction, { embeds: [embed] });
-			} else if (listings == 'sell') {
-				const sellOrders = await database.market.getSellOrdersFromUser(member.id);
-				if (sellOrders.length == 0) {
-					instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
-					});
-					return;
-				}
-
-				var index = sellOrders.findIndex((order) => order.item === itemJSON.id && order.owner === member.id);
-				if (index == -1) {
-					instance.editReply(interaction, {
-						content: instance.getMessage(interaction, 'THIS_LISTING_DOESNT_EXIST'),
-					});
-					return;
-				}
-
-				const sellOrder = sellOrders[index];
-				userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + sellOrder.amount);
-				await userFile.save();
-				await database.market.deleteSellOrder(itemJSON.id, sellOrder);
-
-				const embed = instance.createEmbed(member.displayColor).setTitle(
-					instance.getMessage(interaction, 'MARKET_DELISTED_SELL', {
-						AMOUNT: sellOrder.amount,
-						ITEM: instance.getItemName(itemJSON.id, interaction),
-						PRICE: format(sellOrder.price),
-					})
-				);
-
-				instance.editReply(interaction, { embeds: [embed] });
 			}
 		} else if (type == 'history') {
 			const item = interaction.options.getString('item');
@@ -868,7 +818,7 @@ module.exports = {
 				return;
 			}
 
-			const history = await database.market.getHistory(itemJSON.id);
+			const history = await market.getHistory(itemJSON.id);
 			if (history.length == 0) {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'NO_HISTORY'),
@@ -916,17 +866,32 @@ module.exports = {
 	},
 	autocomplete: async ({ interaction, instance }) => {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
+		const option = interaction.options.getFocused(true).name;
 		const { items } = instance;
 
-		var localeItems = Array.from(items.sellableItems.keys()).map((key) => instance.getItemName(key, interaction));
+		if (option == 'item') {
+			var localeItems = Array.from(items.sellableItems.keys()).map((key) => instance.getItemName(key, interaction));
 
-		const filtered = localeItems.filter((choice) => {
-			const lowerCaseChoice = choice.toLowerCase();
-			return (
-				lowerCaseChoice.startsWith(focusedValue) ||
-				lowerCaseChoice.split(' ').slice(1).join(' ').startsWith(focusedValue)
-			);
-		});
-		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
+			const filtered = localeItems.filter((choice) => {
+				const lowerCaseChoice = choice.toLowerCase();
+				return (
+					lowerCaseChoice.startsWith(focusedValue) ||
+					lowerCaseChoice.split(' ').slice(1).join(' ').startsWith(focusedValue)
+				);
+			});
+
+			await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
+		} else if (option == 'price') {
+			const minimumPrice = items.getItem(interaction.options.getString('item')).value * 1.2;
+
+			await interaction.respond([
+				{
+					name: instance.getMessage(interaction, 'PRICE_TOO_LOW', {
+						PRICE: format(minimumPrice),
+					}),
+					value: `${minimumPrice}`,
+				},
+			]);
+		}
 	},
 };
