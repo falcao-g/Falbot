@@ -487,7 +487,7 @@ module.exports = {
 					buyerFile.falcoins -= buyOrder.price * amount;
 					buyerFile.inventory.set(itemJSON.id, (buyerFile.inventory.get(itemJSON.id) || 0) + amount);
 					falcoins += buyOrder.price * amountSold;
-					await database.market.subtractQuantityFromBuyOrder(itemJSON.id, buyOrder, amount);
+					await database.market.subtractQuantityFromOrder(itemJSON.id, buyOrder, amount, 'buy');
 					await buyerFile.save();
 					await database.market.addHistory(
 						itemJSON.id,
@@ -807,39 +807,41 @@ module.exports = {
 
 						// sell to the market if applicable
 						let amountToSell = player.inventory.get(key);
-						if (amountToSell > 0 && (await database.market.getBestBuyOrder(key)) != null) {
-							const buyOrder = await database.market.getBestBuyOrder(key);
-							const buyerFile = await database.player.findOne(buyOrder.owner);
+						while (amountToSell > 0) {
+							if ((await database.market.getBestBuyOrder(key)) != null) {
+								const buyOrder = await database.market.getBestBuyOrder(key);
+								const buyerFile = await database.player.findOne(buyOrder.owner);
 
-							if (amountToSell >= buyOrder.amount) {
-								amountToSell -= buyOrder.amount;
-								amountSold = buyOrder.amount;
+								if (amountToSell >= buyOrder.amount) {
+									amountToSell -= buyOrder.amount;
+									amountSold = buyOrder.amount;
+								} else {
+									amountSold = amountToSell;
+									amountToSell = 0;
+								}
+
+								buyerFile.falcoins -= buyOrder.price * amountSold;
+								buyerFile.inventory.set(key, (buyerFile.inventory.get(key) || 0) + amountSold);
+								player.inventory.set(key, player.inventory.get(key) - amountSold);
+								falcoins += buyOrder.price * amountSold;
+								await database.market.subtractQuantityFromOrder(key, buyOrder, amountSold, 'buy');
+								await buyerFile.save();
+								itemsSold.push(`${instance.getItemName(key, interaction)}: ${format(amountSold)}`);
+								await database.market.addHistory(
+									key,
+									instance.getMessage(interaction, 'HISTORY_SOLD', {
+										PRICE: format(buyOrder.price * amountSold),
+										AMOUNT: format(amountSold),
+										ITEM: instance.getItemName(key, interaction),
+									})
+								);
 							} else {
-								amountSold = amountToSell;
-								amountToSell = 0;
+								// otherwise sell to the bot
+								falcoins += itemJSON.value * player.inventory.get(key);
+								itemsSold.push(`${instance.getItemName(key, interaction)}: ${format(player.inventory.get(key))}`);
+								player.inventory.set(key, 0);
 							}
-
-							buyerFile.falcoins -= buyOrder.price * amountSold;
-							buyerFile.inventory.set(key, (buyerFile.inventory.get(key) || 0) + amountSold);
-							falcoins += buyOrder.price * amountSold;
-							await database.market.subtractQuantityFromBuyOrder(key, buyOrder, amountSold);
-							await buyerFile.save();
-							itemsSold.push(`${instance.getItemName(key, interaction)}: ${format(amountSold)}`);
-							await database.market.addHistory(
-								key,
-								instance.getMessage(interaction, 'HISTORY_SOLD', {
-									PRICE: format(buyOrder.price * amountSold),
-									AMOUNT: format(amountSold),
-									ITEM: instance.getItemName(key, interaction),
-								})
-							);
-							continue;
 						}
-
-						// otherwise sell to the bot
-						falcoins += itemJSON.value * player.inventory.get(key);
-						itemsSold.push(`${instance.getItemName(key, interaction)}: ${format(player.inventory.get(key))}`);
-						player.inventory.set(key, 0);
 					}
 					player.falcoins += falcoins;
 

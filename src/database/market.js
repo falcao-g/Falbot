@@ -44,21 +44,22 @@ module.exports = {
 		const result = await marketSchema.findOne({ _id: item });
 		return result[type + 'Orders'];
 	},
-	async subtractQuantityFromBuyOrder(item, buyOrder, amount) {
-		await marketSchema.updateOne(
-			{ _id: item, [`buyOrders._id`]: buyOrder._id },
-			{
-				$inc: { [`buyOrders.$.amount`]: -amount },
-			}
-		);
-	},
-	async subtractQuantityFromSellOrder(item, sellOrder, amount) {
-		await marketSchema.updateOne(
-			{ _id: item, [`sellOrders._id`]: sellOrder._id },
-			{
-				$inc: { [`sellOrders.$.amount`]: -amount },
-			}
-		);
+	async subtractQuantityFromOrder(item, buyOrder, amount, type) {
+		if (buyOrder.amount <= amount) {
+			await marketSchema.updateOne(
+				{ _id: item },
+				{
+					$pull: { buyOrders: { _id: buyOrder._id } },
+				}
+			);
+		} else {
+			await marketSchema.updateOne(
+				{ _id: item, [`${type}Orders._id`]: buyOrder._id },
+				{
+					$inc: { [`${type}Orders.$.amount`]: -amount },
+				}
+			);
+		}
 	},
 	async addOrder(item, order, type) {
 		const update = type === 'buy' ? { $push: { buyOrders: order } } : { $push: { sellOrders: order } };

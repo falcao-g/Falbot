@@ -431,7 +431,7 @@ module.exports = {
 					totalPaid += sellOrder.price * sellOrder.amount;
 					userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + sellOrder.amount);
 					sellerFile.falcoins += sellOrder.price * sellOrder.amount;
-					await database.market.subtractQuantityFromSellOrder(itemJSON.id, sellOrder, sellOrder.amount);
+					await database.market.subtractQuantityFromOrder(itemJSON.id, sellOrder, sellOrder.amount, 'sell');
 					await database.market.addHistory(itemJSON.id, {
 						price: format(sellOrder.price * sellOrder.amount),
 						amount: format(sellOrder.amount),
@@ -443,7 +443,7 @@ module.exports = {
 					totalPaid += sellOrder.price * amount;
 					userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + amount);
 					sellerFile.falcoins += sellOrder.price * amount;
-					await database.market.subtractQuantityFromSellOrder(itemJSON.id, sellOrder, amount);
+					await database.market.subtractQuantityFromOrder(itemJSON.id, sellOrder, amount, 'sell');
 					sellerFile.stats.listingsSold += amount;
 					await database.market.addHistory(itemJSON.id, {
 						price: format(sellOrder.price),
