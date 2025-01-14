@@ -20,7 +20,7 @@
           "prefer-const": "error",
           "sort-imports": "error",
           "sort-vars": "error",
-          "max-params": ["error", 3],
+          "max-params": ["error", 4],
           "prefer-destructuring": ["error", {
             "array": false,
             "object": true
