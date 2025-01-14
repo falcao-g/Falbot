@@ -840,6 +840,7 @@ module.exports = {
 								falcoins += itemJSON.value * player.inventory.get(key);
 								itemsSold.push(`${instance.getItemName(key, interaction)}: ${format(player.inventory.get(key))}`);
 								player.inventory.set(key, 0);
+								amountToSell = 0;
 							}
 						}
 					}
