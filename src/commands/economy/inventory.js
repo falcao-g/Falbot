@@ -489,14 +489,11 @@ module.exports = {
 					falcoins += buyOrder.price * amountSold;
 					await market.subtractQuantityFromOrder(itemJSON.id, buyOrder, amount, 'buy');
 					await buyerFile.save();
-					await market.addHistory(
-						itemJSON.id,
-						instance.getMessage(interaction, 'HISTORY_SOLD', {
-							PRICE: format(buyOrder.price * amountSold),
-							AMOUNT: format(amountSold),
-							ITEM: instance.getItemName(itemJSON.id, interaction),
-						})
-					);
+					await market.addHistory(itemJSON.id, {
+						price: format(buyOrder.price * amountSold),
+						amount: format(amountSold),
+						item: itemJSON.id,
+					});
 				}
 
 				// if there is no one in the market that wants to buy the item, we sell it to the bot
@@ -827,14 +824,11 @@ module.exports = {
 								await market.subtractQuantityFromOrder(key, buyOrder, amountSold, 'buy');
 								await buyerFile.save();
 								itemsSold.push(`${instance.getItemName(key, interaction)}: ${format(amountSold)}`);
-								await market.addHistory(
-									key,
-									instance.getMessage(interaction, 'HISTORY_SOLD', {
-										PRICE: format(buyOrder.price * amountSold),
-										AMOUNT: format(amountSold),
-										ITEM: instance.getItemName(key, interaction),
-									})
-								);
+								await market.addHistory(key, {
+									price: format(buyOrder.price * amountSold),
+									amount: format(amountSold),
+									item: key,
+								});
 							} else {
 								// otherwise sell to the bot
 								falcoins += itemJSON.value * player.inventory.get(key);
