@@ -185,7 +185,7 @@ module.exports = {
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName('listings')
-				.setNameLocalizations({ 'pt-BR': 'listagens', 'es-ES': 'listagens' })
+				.setNameLocalizations({ 'pt-BR': 'anúncios', 'es-ES': 'anuncios' })
 				.setDescription('View your listings')
 				.setDescriptionLocalizations({ 'pt-BR': 'Veja seus anúncios', 'es-ES': 'Ver tus anuncios' })
 				.addStringOption((option) =>
