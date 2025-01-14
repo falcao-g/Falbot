@@ -11,6 +11,7 @@ class Falbot {
 	database = require('./handlers/database.js');
 	achievement = require('./handlers/achievements.js');
 	items = require('./handlers/items.js');
+	market = require('./handlers/market.js');
 	randomEvents = require('./handlers/randomEvents.js');
 	emojiList = {};
 	client = new Client({

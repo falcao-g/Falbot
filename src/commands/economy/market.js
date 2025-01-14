@@ -241,7 +241,7 @@ module.exports = {
 		} catch {
 			var type = subcommand;
 		}
-		const { items } = instance;
+		const { items, market } = instance;
 
 		if (type == 'all') {
 			// pre calculate the sections of items
@@ -263,7 +263,7 @@ module.exports = {
 					);
 
 					for (var item of itemsOnPage[i]) {
-						var cheapestSellOrder = await database.market.getCheapestSellOrder(item.id);
+						var cheapestSellOrder = await market.getCheapestSellOrder(item.id);
 						embed.addFields({
 							name: instance.getItemName(item.id, interaction),
 							value:
@@ -339,7 +339,7 @@ module.exports = {
 			const embed = instance.createEmbed(member.displayColor).setTitle(instance.getItemName(itemJSON.id, interaction));
 
 			//retrieve all buy orders and group them by price, putting the highest price first, and formatting the string like x falcoins - y availables
-			const buyOrders = await database.market.getOrders(itemJSON.id, 'buy');
+			const buyOrders = await market.getOrders(itemJSON.id, 'buy');
 			if (buyOrders != []) {
 				var groupedBuyOrders = {};
 				buyOrders.forEach((order) => {
@@ -358,7 +358,7 @@ module.exports = {
 			}
 
 			//retrieve all sell orders and group them by price, putting the lowest price first, and formatting the string like x falcoins (y orders)
-			const sellOrders = await database.market.getOrders(itemJSON.id, 'sell');
+			const sellOrders = await market.getOrders(itemJSON.id, 'sell');
 			if (sellOrders != []) {
 				var groupedSellOrders = {};
 				sellOrders.forEach((order) => {
@@ -422,8 +422,8 @@ module.exports = {
 
 			//glutton algorithm to get the cheapest sell order
 			var totalPaid = 0;
-			while (amount > 0 && (await database.market.getCheapestSellOrder(itemJSON.id)) != null && userFile.falcoins > 0) {
-				const sellOrder = await database.market.getCheapestSellOrder(itemJSON.id);
+			while (amount > 0 && (await market.getCheapestSellOrder(itemJSON.id)) != null && userFile.falcoins > 0) {
+				const sellOrder = await market.getCheapestSellOrder(itemJSON.id);
 				const sellerFile = await database.player.findOne(sellOrder.owner);
 				if (amount >= sellOrder.amount) {
 					amount -= sellOrder.amount;
@@ -431,8 +431,8 @@ module.exports = {
 					totalPaid += sellOrder.price * sellOrder.amount;
 					userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + sellOrder.amount);
 					sellerFile.falcoins += sellOrder.price * sellOrder.amount;
-					await database.market.subtractQuantityFromOrder(itemJSON.id, sellOrder, sellOrder.amount, 'sell');
-					await database.market.addHistory(itemJSON.id, {
+					await market.subtractQuantityFromOrder(itemJSON.id, sellOrder, sellOrder.amount, 'sell');
+					await market.addHistory(itemJSON.id, {
 						price: format(sellOrder.price * sellOrder.amount),
 						amount: format(sellOrder.amount),
 						item: itemJSON.id,
@@ -443,9 +443,9 @@ module.exports = {
 					totalPaid += sellOrder.price * amount;
 					userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + amount);
 					sellerFile.falcoins += sellOrder.price * amount;
-					await database.market.subtractQuantityFromOrder(itemJSON.id, sellOrder, amount, 'sell');
+					await market.subtractQuantityFromOrder(itemJSON.id, sellOrder, amount, 'sell');
 					sellerFile.stats.listingsSold += amount;
-					await database.market.addHistory(itemJSON.id, {
+					await market.addHistory(itemJSON.id, {
 						price: format(sellOrder.price),
 						amount: format(amount),
 						item: itemJSON.id,
@@ -529,7 +529,7 @@ module.exports = {
 				amount: amount,
 				owner: member.id,
 			};
-			await database.market.addOrder(itemJSON.id, buyOrder, 'buy');
+			await market.addOrder(itemJSON.id, buyOrder, 'buy');
 
 			const embed = instance.createEmbed(member.displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_LISTED_BUY', {
@@ -605,7 +605,7 @@ module.exports = {
 				amount: amount,
 				owner: member.id,
 			};
-			await database.market.addOrder(itemJSON.id, sellOrder, 'sell');
+			await market.addOrder(itemJSON.id, sellOrder, 'sell');
 
 			const embed = instance.createEmbed(member.displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_LISTED_SELL', {
@@ -620,7 +620,7 @@ module.exports = {
 			const listings = interaction.options.getString('type');
 
 			if (listings == 'buy') {
-				const buyOrders = await database.market.getOrdersFromUser(member.id, 'buy');
+				const buyOrders = await market.getOrdersFromUser(member.id, 'buy');
 				if (buyOrders.length == 0) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
@@ -698,7 +698,7 @@ module.exports = {
 						const userFile = await database.player.findOne(member.id);
 						userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + Number(amount));
 						await userFile.save();
-						await database.market.removeOrder(itemJSON.id, { owner: member.id, amount, price }, 'buy');
+						await market.removeOrder(itemJSON.id, { owner: member.id, amount, price }, 'buy');
 						await i.reply({
 							content: instance.getMessage(interaction, 'MARKET_DELISTED_BUY', {
 								AMOUNT: format(Number(amount)),
@@ -709,7 +709,7 @@ module.exports = {
 					}
 				});
 			} else if (listings == 'sell') {
-				const sellOrders = await database.market.getOrdersFromUser(member.id, 'sell');
+				const sellOrders = await market.getOrdersFromUser(member.id, 'sell');
 				if (sellOrders.length == 0) {
 					instance.editReply(interaction, {
 						content: instance.getMessage(interaction, 'YOU_DONT_HAVE_LISTINGS'),
@@ -787,7 +787,7 @@ module.exports = {
 						const userFile = await database.player.findOne(member.id);
 						userFile.inventory.set(itemJSON.id, (userFile.inventory.get(itemJSON.id) || 0) + Number(amount));
 						await userFile.save();
-						await database.market.removeOrder(itemJSON.id, { owner: member.id, amount, price }, 'sell');
+						await market.removeOrder(itemJSON.id, { owner: member.id, amount, price }, 'sell');
 						await i.reply({
 							content: instance.getMessage(interaction, 'MARKET_DELISTED_SELL', {
 								AMOUNT: amount,
@@ -818,7 +818,7 @@ module.exports = {
 				return;
 			}
 
-			const history = await database.market.getHistory(itemJSON.id);
+			const history = await market.getHistory(itemJSON.id);
 			if (history.length == 0) {
 				instance.editReply(interaction, {
 					content: instance.getMessage(interaction, 'NO_HISTORY'),
