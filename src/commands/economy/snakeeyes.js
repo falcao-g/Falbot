@@ -58,7 +58,7 @@ module.exports = {
 				emoji1 = choices[random1 - 1];
 				emoji2 = choices[random2 - 1];
 
-				const embed = instance.createEmbed(member.displayColor).addFields({
+				const embed = instance.createEmbed(await instance.getUserDisplay('displayColor', member)).addFields({
 					name: `-------------------\n      | ${diegif} | ${diegif} |\n-------------------`,
 					value: `--- **${instance.getMessage(interaction, 'ROLLING')}** ---`,
 				});

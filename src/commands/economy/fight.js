@@ -122,7 +122,7 @@ module.exports = {
 						];
 						const player_1 = {
 							hp: 100,
-							name: member.displayName,
+							name: await instance.getUserDisplay('displayName', member),
 							stunned: false,
 							mention: user,
 							id: user.id,
@@ -130,7 +130,7 @@ module.exports = {
 						};
 						const player_2 = {
 							hp: 100,
-							name: challenged.displayName,
+							name: await instance.getUserDisplay('displayName', challenged),
 							stunned: false,
 							mention: challenged,
 							id: challenged.id,

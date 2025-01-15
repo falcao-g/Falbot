@@ -1,8 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { format, buttons } = require('../../utils/functions.js');
-var numerize = require('numerize');
-// eslint-disable-next-line prefer-destructuring
-numerize = numerize.default.numerize; // uugh
+const { numerize } = require('numerize');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -70,6 +68,9 @@ module.exports = {
 			const recipientFile = await database.player.findOne(recipient.user.id);
 			const userFile = await database.player.findOne(user.id);
 			const { items } = instance;
+			const displayColor = await instance.getUserDisplay('displayColor', member);
+			const memberDisplayName = await instance.getUserDisplay('displayName', member);
+			const recipientDisplayName = await instance.getUserDisplay('displayName', recipient);
 
 			if (recipient.user === user) {
 				await instance.editReply(interaction, {
@@ -185,17 +186,17 @@ module.exports = {
 			}
 
 			//create the message to send to the user
-			const embed = instance.createEmbed(member.displayColor);
+			const embed = instance.createEmbed(displayColor);
 			embed.setTitle(
 				instance.getMessage(interaction, 'EXCHANGE_PROPOSAL', {
-					USER: member.displayName,
-					USER2: recipient.displayName,
+					USER: memberDisplayName,
+					USER2: recipientDisplayName,
 				})
 			);
 			embed.addFields(
 				{
 					name: instance.getMessage(interaction, 'OFFER', {
-						USER: member.displayName,
+						USER: memberDisplayName,
 					}),
 					value: offerFormated.join('\n'),
 					inline: true,
@@ -235,8 +236,8 @@ module.exports = {
 				} else if (collected.first().customId === 'refuse') {
 					embed.setTitle(
 						instance.getMessage(interaction, 'EXCHANGE_REFUSED', {
-							USER: member.displayName,
-							USER2: recipient.displayName,
+							USER: memberDisplayName,
+							USER2: recipientDisplayName,
 						})
 					);
 
@@ -272,18 +273,18 @@ module.exports = {
 						);
 					}
 
-					const embed = instance.createEmbed(member.displayColor);
+					const embed = instance.createEmbed(displayColor);
 					embed.setTitle(
 						instance.getMessage(interaction, 'EXCHANGE_ACCEPTED', {
-							USER: member.displayName,
-							USER2: recipient.displayName,
+							USER: memberDisplayName,
+							USER2: recipientDisplayName,
 						})
 					);
 
 					embed.addFields(
 						{
 							name: instance.getMessage(interaction, 'OFFER', {
-								USER: member.displayName,
+								USER: memberDisplayName,
 							}),
 							value: offerFormated.join('\n'),
 							inline: true,

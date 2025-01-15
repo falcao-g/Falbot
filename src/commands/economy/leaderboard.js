@@ -1,5 +1,5 @@
 const { ButtonBuilder, SlashCommandBuilder } = require('discord.js');
-const { format, paginate, getItem } = require('../../utils/functions.js');
+const { format, paginate } = require('../../utils/functions.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -195,12 +195,13 @@ module.exports = {
 			const scope = interaction.options.getString('type');
 			const embeds = [];
 			const itemArgument = interaction.options.getString('item') ?? 'wood';
+			const { items } = instance;
 
 			enums = {
 				falcoins: 'falcoins',
 				rank: 'rank',
 				wins: 'wins',
-				item: `inventory.${getItem(itemArgument.toLowerCase())}`,
+				item: `inventory.${items.getItem(itemArgument.toLowerCase(), true)}`,
 				vote: 'voteStreak',
 			};
 
@@ -209,7 +210,7 @@ module.exports = {
 
 			if (subcommand === 'item') {
 				var item = type.split('.')[1];
-				var itemJSON = instance.items[item];
+				var itemJSON = items.getItem(item);
 
 				if (itemJSON === undefined) {
 					instance.editReply(interaction, {
@@ -239,7 +240,7 @@ module.exports = {
 
 				try {
 					const member = scope == 'server' ? members.get(rank[i]['_id']) : await client.users.fetch(rank[i]['_id']);
-					var username = scope == 'server' ? member.displayName : member.username;
+					var username = await instance.getUserDisplay('displayName', member);
 				} catch {
 					var username = 'Unknown user';
 				}
@@ -250,10 +251,10 @@ module.exports = {
 						type == 'rank'
 							? `${instance.getMessage(interaction, rank[i][type])}`
 							: subcommand == 'item'
-							? `${instance.getItemEmoji(item)} ${format(rank[i]['inventory'].get(item) ?? 0)}`
-							: subcommand == 'vote'
-							? `${Math.floor(format(rank[i][type]) / 2)} ${instance.getMessage(interaction, 'DAYS')}`
-							: `${format(rank[i][type])}`,
+								? `${instance.getItemEmoji(item)} ${format(rank[i]['inventory'].get(item) ?? 0)}`
+								: subcommand == 'vote'
+									? `${Math.floor(format(rank[i][type]) / 2)} ${instance.getMessage(interaction, 'DAYS')}`
+									: `${format(rank[i][type])}`,
 				});
 			}
 
@@ -307,16 +308,16 @@ module.exports = {
 	autocomplete: async ({ interaction, instance }) => {
 		const focusedValue = interaction.options.getFocused().toLowerCase();
 		const { items } = instance;
-		const localeItems = Object.keys(items).map((key) => {
+		const localeItems = Array.from(items.all().keys()).map((key) => {
 			return instance.getItemName(key, interaction);
 		});
+
 		const filtered = localeItems.filter((choice) => {
-			if (
-				choice.split(' ').slice(1).join(' ').toLowerCase().startsWith(focusedValue) ||
-				choice.toLowerCase().startsWith(focusedValue)
-			) {
-				return true;
-			}
+			const lowerCaseChoice = choice.toLowerCase();
+			return (
+				lowerCaseChoice.startsWith(focusedValue) ||
+				lowerCaseChoice.split(' ').slice(1).join(' ').startsWith(focusedValue)
+			);
 		});
 		await interaction.respond(filtered.map((choice) => ({ name: choice, value: choice })).slice(0, 25));
 	},

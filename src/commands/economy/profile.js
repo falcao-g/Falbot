@@ -36,6 +36,8 @@ module.exports = {
 			const { rank, falcoins, wins, bank, inventory, voteStreak, tickets, badges, createdAt } =
 				await database.player.findOne(target.user.id);
 			const limit = instance.levels[rank - 1].bankLimit;
+			const displayColor = await instance.getUserDisplay('displayColor', target);
+			const displayName = await instance.getUserDisplay('displayName', target);
 
 			if (instance.levels[rank - 1].falcoinsToLevelUp === undefined) {
 				var rankText = ':sparkles: ' + instance.getMessage(interaction, 'MAX_RANK2');
@@ -52,8 +54,8 @@ module.exports = {
 			const achievementBadges = badges.map((badge) => instance.achievement.getById(badge).emoji).join(' ');
 
 			const embed = instance
-				.createEmbed(target.displayColor)
-				.setTitle(instance.getMessage(interaction, 'PROFILE', { USER: target.displayName }))
+				.createEmbed(displayColor)
+				.setTitle(instance.getMessage(interaction, 'PROFILE', { USER: displayName }))
 				.setThumbnail(target.user.avatarURL())
 				.addFields(
 					{

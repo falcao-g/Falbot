@@ -55,7 +55,7 @@ module.exports = {
 			player.falcoins += salary + bonus;
 
 			var embed = instance
-				.createEmbed(member.displayColor)
+				.createEmbed(await instance.getUserDisplay('displayColor', member))
 				.setTitle(
 					instance.getMessage(interaction, 'WORK_TITLE', {
 						FALCOINS: format(salary + bonus),

@@ -115,6 +115,8 @@ const userSchema = mongoose.Schema(
 				type: Number,
 				default: 0,
 			},
+			displayName: String,
+			displayColor: String,
 		},
 		badges: [{ type: String, default: [] }],
 	},

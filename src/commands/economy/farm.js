@@ -5,11 +5,9 @@ const {
 	ActionRowBuilder,
 	StringSelectMenuBuilder,
 } = require('discord.js');
-const { msToTime, getItem, randint } = require('../../utils/functions.js');
+const { msToTime, randint } = require('../../utils/functions.js');
 const User = require('../../schemas/user.js');
-var numerize = require('numerize');
-// eslint-disable-next-line prefer-destructuring
-numerize = numerize.default.numerize; // uugh
+const { numerize } = require('numerize');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -158,12 +156,14 @@ module.exports = {
 			{ select: 'plots inventory rank stats', upsert: true, new: true }
 		);
 		const { items } = instance;
+		const displayColor = await instance.getUserDisplay('displayColor', target);
+		const displayName = await instance.getUserDisplay('displayName', target);
 
 		const MAX_PLOTS = instance.levels[player.rank - 1].farmPlots;
 
 		const embed = instance
-			.createEmbed(target.displayColor)
-			.setTitle(instance.getMessage(interaction, 'FARM_TITLE', { USER: target.displayName }));
+			.createEmbed(displayColor)
+			.setTitle(instance.getMessage(interaction, 'FARM_TITLE', { USER: displayName }));
 
 		/**
 		 * Renders buttons ignoring the specified type.

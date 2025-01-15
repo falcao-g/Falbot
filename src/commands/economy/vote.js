@@ -27,7 +27,7 @@ module.exports = {
 			var { voted } = await request.json();
 			const player = await database.player.findOne(user.id);
 			var reward = instance.levels[player.rank - 1].vote;
-			var premiumBonus = (await checkIfUserIsPremium(client, user)) ? reward : 0;
+			var premiumBonus = (await checkIfUserIsPremium(user.id, client)) ? reward : 0;
 			const bonus = Math.min(player.voteStreak, 30) * 5;
 
 			if (Date.now() - player.lastVote > 1000 * 60 * 60 * 48) {

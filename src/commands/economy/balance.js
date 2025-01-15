@@ -36,10 +36,12 @@ module.exports = {
 			}
 			const target = user ? await guild.members.fetch(user.id) : member;
 			const { rank, falcoins, wins, bank } = await database.player.findOne(target.user.id);
+			const displayColor = await instance.getUserDisplay('displayColor', target);
+			const displayName = await instance.getUserDisplay('displayName', target);
 
 			const embed = instance
-				.createEmbed(target.displayColor)
-				.setTitle(instance.getMessage(interaction, rank) + ' ' + target.displayName)
+				.createEmbed(displayColor)
+				.setTitle(instance.getMessage(interaction, rank) + ' ' + displayName)
 				.addFields(
 					{
 						name: ':coin: Falcoins',

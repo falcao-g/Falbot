@@ -68,7 +68,7 @@ module.exports = {
 				player.falcoins -= bet;
 				const horses = ['- - - - -', '- - - - -', '- - - - -', '- - - - -', '- - - - -'];
 				const embed = instance
-					.createEmbed(member.displayColor)
+					.createEmbed(await instance.getUserDisplay('displayColor', member))
 					.setDescription(
 						instance.getMessage(interaction, 'HORSE_DESCRIPTION', {
 							BET: format(bet),
