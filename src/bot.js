@@ -283,7 +283,6 @@ class Falbot {
 
 	async getUserDisplay(type, member) {
 		var userFile = await this.userSchema.findById(member.id);
-		console.log(await checkIfUserIsPremium(member.id, this.client));
 
 		if ((await checkIfUserIsPremium(member.id, this.client)) && userFile.premium[type] != undefined) {
 			return userFile.premium[type];
