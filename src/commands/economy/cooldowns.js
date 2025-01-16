@@ -38,7 +38,7 @@ module.exports = {
 			events += instance.randomEvents.stringifyActives(interaction); // Add active events
 
 			const embed = instance
-				.createEmbed(member.displayColor)
+				.createEmbed(await instance.getUserDisplay('displayColor', member))
 				.setTitle(instance.getMessage(interaction, 'COOLDOWNS'))
 				.addFields(
 					{

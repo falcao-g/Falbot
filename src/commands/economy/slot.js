@@ -54,7 +54,7 @@ module.exports = {
 				const emoji2 = pick(choices);
 				const emoji3 = pick(choices);
 
-				const embed = instance.createEmbed(member.displayColor).addFields({
+				const embed = instance.createEmbed(await instance.getUserDisplay('displayColor', member)).addFields({
 					name: `-------------------\n | ${emote} | ${emote} | ${emote} |\n-------------------`,
 					value: `--- **${instance.getMessage(interaction, 'SPINNING')}** ---`,
 				});

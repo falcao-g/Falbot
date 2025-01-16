@@ -89,9 +89,10 @@ module.exports = {
 			const falcoins = interaction.options.getString('falcoins');
 			const player = await database.player.findOne(user.id);
 			const limit = instance.levels[player.rank - 1].bankLimit;
+			const displayColor = await instance.getUserDisplay('displayColor', member);
 
 			if (subcommand === 'view') {
-				const embed = instance.createEmbed(member.displayColor).addFields({
+				const embed = instance.createEmbed(displayColor).addFields({
 					name: ':bank: ' + instance.getMessage(interaction, 'BANK'),
 					value: `**:coin: ${format(player.bank)} falcoins\n:bank: ${instance.getMessage(
 						interaction,
@@ -132,7 +133,7 @@ module.exports = {
 					player.bank += quantity;
 
 					const embed = instance
-						.createEmbed(member.displayColor)
+						.createEmbed(displayColor)
 						.setTitle(
 							instance.getMessage(interaction, 'BANK_DEPOSIT', {
 								VALUE: format(quantity),
@@ -174,7 +175,7 @@ module.exports = {
 					player.falcoins += quantity;
 
 					const embed = instance
-						.createEmbed(member.displayColor)
+						.createEmbed(displayColor)
 						.setTitle(
 							instance.getMessage(interaction, 'BANK_WITHDRAW', {
 								VALUE: format(quantity),

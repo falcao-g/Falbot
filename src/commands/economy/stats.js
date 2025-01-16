@@ -34,10 +34,12 @@ module.exports = {
 			var user = interaction.options.getUser('user');
 			const target = user ? await guild.members.fetch(user.id) : member;
 			const player = await database.player.findOne(target.id);
+			const displayColor = await instance.getUserDisplay('displayColor', target);
+			const displayName = await instance.getUserDisplay('displayName', target);
 
 			const embed = instance
-				.createEmbed(target.displayColor)
-				.setTitle(instance.getMessage(interaction, 'STATS_TITLE', { USER: target.displayName }))
+				.createEmbed(displayColor)
+				.setTitle(instance.getMessage(interaction, 'STATS_TITLE', { USER: displayName }))
 				.addFields(
 					{
 						name: ':arrow_up: Rankups',

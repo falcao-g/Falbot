@@ -107,12 +107,13 @@ module.exports = {
 					}),
 				});
 			}
+			const displayColor = await instance.getUserDisplay('displayColor', member);
 
 			if (player.falcoins >= bet) {
 				player.falcoins -= bet;
 
 				const embed = instance
-					.createEmbed(member.displayColor)
+					.createEmbed(displayColor)
 					.setTitle(instance.getMessage(interaction, 'ROULETTE'))
 					.setDescription(instance.getMessage(interaction, 'SPINNING_ROULETTE'))
 					.setImage('https://media3.giphy.com/media/26uf2YTgF5upXUTm0/giphy.gif');
@@ -146,7 +147,7 @@ module.exports = {
 
 				await new Promise((resolve) => setTimeout(resolve, 3000));
 
-				var embed2 = instance.createEmbed(member.displayColor).setTitle(instance.getMessage(interaction, 'ROULETTE'));
+				var embed2 = instance.createEmbed(displayColor).setTitle(instance.getMessage(interaction, 'ROULETTE'));
 
 				if (type.includes(luck)) {
 					player.falcoins += profit;

@@ -1,8 +1,6 @@
 const { format, paginate, buttons, isEquipped } = require('../../utils/functions.js');
 const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder, ActionRowBuilder } = require('discord.js');
-var numerize = require('numerize');
-// eslint-disable-next-line prefer-destructuring
-numerize = numerize.default.numerize; // uugh
+const { numerize } = require('numerize');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -290,6 +288,7 @@ module.exports = {
 				var type = subcommand;
 			}
 			const { items, market } = instance;
+			const displayColor = await instance.getUserDisplay('displayColor', member);
 
 			if (type === 'view') {
 				if (subcommand != 'view') {
@@ -300,6 +299,7 @@ module.exports = {
 				const player = await database.player.findOne(target.id);
 				const limit = instance.levels[player.rank - 1].inventoryLimit + player.inventoryBonus;
 				const { inventoryWorth } = instance.getInventoryInfo(player.inventory);
+				const displayName = await instance.getUserDisplay('displayName', target);
 
 				if (player.inventory === undefined) {
 					instance.editReply(interaction, {
@@ -343,9 +343,9 @@ module.exports = {
 					const startIndex = i * 24;
 					const itemsChunk = inventoryItems.slice(startIndex, startIndex + 24);
 
-					const embed = instance.createEmbed(member.displayColor).setTitle(
+					const embed = instance.createEmbed(displayColor).setTitle(
 						instance.getMessage(interaction, 'INVENTORY_TITLE', {
-							MEMBER: target.displayName,
+							MEMBER: displayName,
 							NUMBER: i + 1,
 							TOTAL: numEmbeds,
 							WORTH: format(inventoryWorth),
@@ -424,7 +424,7 @@ module.exports = {
 				}
 
 				const embed = instance
-					.createEmbed(member.displayColor)
+					.createEmbed(displayColor)
 					.setTitle(instance.getMessage(interaction, 'CALCULATOR'))
 					.addFields({
 						name: `${instance.getItemName(itemJSON.id, interaction)} x ${amount}`,
@@ -502,7 +502,7 @@ module.exports = {
 				player.inventory.set(itemJSON.id, player.inventory.get(itemJSON.id) - amount);
 				player.falcoins += falcoins;
 
-				const embed = instance.createEmbed(member.displayColor).addFields({
+				const embed = instance.createEmbed(displayColor).addFields({
 					name: instance.getMessage(interaction, 'SOLD_TITLE', {
 						AMOUNT: format(amount),
 						ITEM: `${instance.getItemName(itemJSON.id, interaction)}`,
@@ -557,7 +557,7 @@ module.exports = {
 				player.equippedItems.push({ name: itemJSON.id, usageCount: 3 });
 				player.inventory.set(itemJSON.id, player.inventory.get(itemJSON.id) - 1);
 
-				const embed = instance.createEmbed(member.displayColor).addFields({
+				const embed = instance.createEmbed(displayColor).addFields({
 					name: instance.getMessage(interaction, 'EQUIPPED_TITLE', {
 						ITEM: `${instance.getItemName(itemJSON.id, interaction)}`,
 					}),
@@ -633,7 +633,7 @@ module.exports = {
 							.addOptions(canBeCrafted.length > 25 ? canBeCrafted.slice(0, 25) : canBeCrafted),
 					]);
 
-					const embed = instance.createEmbed(member.displayColor).addFields({
+					const embed = instance.createEmbed(displayColor).addFields({
 						name: instance.getMessage(interaction, 'CRAFT_TITLE'),
 						value: instance.getMessage(interaction, 'CRAFT_VALUE'),
 					});
@@ -700,7 +700,7 @@ module.exports = {
 
 				player.inventory.set(itemJSON.id, player.inventory.get(itemJSON.id) + amount);
 
-				const embed = instance.createEmbed(member.displayColor).addFields({
+				const embed = instance.createEmbed(displayColor).addFields({
 					name: instance.getMessage(interaction, 'CRAFTED_TITLE', {
 						ITEM: `${instance.getItemName(itemJSON.id, interaction)}`,
 						AMOUNT: format(amount),
@@ -755,7 +755,7 @@ module.exports = {
 				if (noLegendary === 'yes') sellAllText += instance.getMessage(interaction, 'SELLALL_NOLEGENDARY');
 				if (lootonly === 'yes') sellAllText += instance.getMessage(interaction, 'SELLALL_LOOTONLY');
 
-				const embed = instance.createEmbed(member.displayColor).addFields({
+				const embed = instance.createEmbed(displayColor).addFields({
 					name: instance.getMessage(interaction, 'SELLALL_TITLE'),
 					value: sellAllText,
 				});
@@ -850,7 +850,7 @@ module.exports = {
 						);
 					}
 
-					const embed = instance.createEmbed(member.displayColor).addFields({
+					const embed = instance.createEmbed(displayColor).addFields({
 						name: instance.getMessage(interaction, 'SELLALL_CONFIRMED_TITLE'),
 						value: instance.getMessage(interaction, 'SELLALL_CONFIRMED_VALUE', {
 							ITEMS: itemsSold.join('\n'),
@@ -866,7 +866,7 @@ module.exports = {
 				});
 			} else if (type === 'sort') {
 				if (interaction.values === undefined) {
-					const embed = instance.createEmbed(member.displayColor).addFields({
+					const embed = instance.createEmbed(displayColor).addFields({
 						name: ':gear: ' + instance.getMessage(interaction, 'INVENTORY_SORTING'),
 						value: ':dvd: ' + instance.getMessage(interaction, 'SORTING_MENU'),
 					});
@@ -909,7 +909,7 @@ module.exports = {
 					player.inventorySort = sort;
 					player.save();
 
-					const embed = instance.createEmbed(member.displayColor).addFields({
+					const embed = instance.createEmbed(displayColor).addFields({
 						name: ':gear: ' + instance.getMessage(interaction, 'INVENTORY_SORTING'),
 						value:
 							':dvd: ' +
@@ -956,7 +956,7 @@ module.exports = {
 				if (itemJSON.id === 'backpack') {
 					player.inventoryBonus += 200000;
 
-					var embed = instance.createEmbed(member.displayColor).addFields({
+					var embed = instance.createEmbed(displayColor).addFields({
 						name: instance.getMessage(interaction, 'USE_BACKPACK_TITLE'),
 						value: instance.getMessage(interaction, 'USE_BACKPACK_VALUE'),
 					});
@@ -978,7 +978,7 @@ module.exports = {
 						instance.achievement.getById('mythical_time')
 					);
 
-					var embed = instance.createEmbed(member.displayColor).addFields({
+					var embed = instance.createEmbed(displayColor).addFields({
 						name: instance.getMessage(interaction, 'USE_MYTHICAL_TITLE'),
 						value: instance.getMessage(interaction, 'USE_SNOWFLAKE_VALUE'),
 					});
@@ -995,7 +995,7 @@ module.exports = {
 						plot.lastWatered = Date.now();
 					});
 
-					var embed = instance.createEmbed(member.displayColor).addFields({
+					var embed = instance.createEmbed(displayColor).addFields({
 						name: instance.getMessage(interaction, 'USE_FERTILIZER_TITLE'),
 						value: instance.getMessage(interaction, 'USE_FERTILIZER_VALUE'),
 					});

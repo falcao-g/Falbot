@@ -76,7 +76,7 @@ module.exports = {
 			player.inventory.set(selectedItem.id, (player.inventory.get(selectedItem.id) || 0) + amount);
 		}
 
-		var embed = instance.createEmbed(member.displayColor).addFields({
+		var embed = instance.createEmbed(await instance.getUserDisplay('displayColor', member)).addFields({
 			name:
 				':dagger: ' +
 				instance.getMessage(interaction, 'FOUND', {

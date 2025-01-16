@@ -2425,5 +2425,25 @@
 		"pt-BR": "Insígnias",
 		"en-US": "Badges",
 		"es-ES": "Insignias"
+	},
+	"PATREON_NAME": {
+		"pt-BR": "Você mudou seu nome de usuário para {NAME}!",
+		"en-US": "You changed your username to {NAME}!",
+		"es-ES": "¡Cambiaste tu nombre de usuario a {NAME}!"
+	},
+	"PATREON_COLOR": {
+		"pt-BR": "Você mudou a sua cor de embed para {COLOR}!",
+		"en-US": "You changed your embed color to {COLOR}!",
+		"es-ES": "¡Cambiaste tu color de embed a {COLOR}!"
+	},
+	"NOT_PREMIUM_DESC": {
+		"pt-BR": "Você encontrou uma funcionalidade exclusiva para usuários premium! :star:",
+		"en-US": "You found an exclusive feature for premium users! :star:",
+		"es-ES": "¡Encontraste una función exclusiva para usuarios premium! :star:"
+	},
+	"NOT_PREMIUM_DESC2": {
+		"pt-BR": "Considere apoiar o Falbot no [Patreon](https://www.patreon.com/c/Falbot) para desbloquear essa funcionalidade e apoiar o desenvolvimento! :heart:\n\nAlém disso, você obtém acesso a: \n-Canais exclusivos no nosso servidor 🤫\n-Sneak-peeks de funcionalidades antes do público geral 🗞️\n-Comandos exclusivos 👑\n-2x falcoins ao votar 🤑",
+		"en-US": "Consider supporting Falbot on [Patreon](https://www.patreon.com/c/Falbot) to unlock this feature and support development! :heart:\n\nAdditionally, you get access to: \n-Exclusive channels on our server 🤫\n-Sneak-peeks of features before the general public 🗞️\n-Exclusive commands 👑\n-2x falcoins when voting 🤑",	
+		"es-ES": "¡Considera apoyar a Falbot en [Patreon](https://www.patreon.com/c/Falbot) para desbloquear esta función y apoyar el desarrollo! :heart:\n\nAdemás, obtienes acceso a: \n-Canales exclusivos en nuestro servidor 🤫\n-Vistas previas de funciones antes del público en general 🗞️\n-Comandos exclusivos 👑\n-2x falcoins al votar 🤑"
 	}
 }

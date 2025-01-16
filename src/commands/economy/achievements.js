@@ -43,6 +43,7 @@ module.exports = {
 		} catch {
 			var type = subcommand;
 		}
+		const displayColor = await instance.getUserDisplay('displayColor', member);
 
 		if (type === 'list') {
 			const user = await database.player.findOne(member.id);
@@ -69,7 +70,7 @@ module.exports = {
 			let achievements = createList(user, page);
 			while (achievements) {
 				const embed = instance
-					.createEmbed(member.displayColor)
+					.createEmbed(displayColor)
 					.setTitle(instance.getMessage(interaction, 'ACHIEVEMENTS', { PAGE: page + 1, TOTAL: total }))
 					.setDescription(achievements);
 				embeds.push(embed);
@@ -111,7 +112,7 @@ module.exports = {
 			});
 
 			const embed = instance
-				.createEmbed(member.displayColor)
+				.createEmbed(displayColor)
 				.setTitle(instance.getMessage(interaction, 'NEW_ACHIEVEMENTS'))
 				.setDescription(
 					achievements

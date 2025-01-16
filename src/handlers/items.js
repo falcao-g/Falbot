@@ -1330,14 +1330,14 @@ class Item {
 		);
 	}
 
-	getItem(item) {
+	getItem(item, simple = false) {
 		if (!'abcdefghijklmnopqrstuvwxyz'.includes(item[0].toLowerCase())) {
 			item = item.split(' ').slice(1).join(' ');
 		}
 
 		item = item.toLowerCase();
-
-		return this.getByName(item) ?? this.getById(item);
+		const result = this.getByName(item) ?? this.getById(item);
+		return simple ? result?.id : result;
 	}
 }
 

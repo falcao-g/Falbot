@@ -29,7 +29,7 @@ module.exports = {
 				})
 				.setRequired(true)
 		),
-	execute: async ({ member, interaction, instance, user, database }) => {
+	execute: async ({ member, interaction, instance, user }) => {
 		await interaction.deferReply().catch(() => {});
 		try {
 			var bet = interaction.options.getString('falcoins');
@@ -86,7 +86,7 @@ module.exports = {
 				});
 				dealer_cards.push(enum_cards['hidden']);
 
-				const embed = instance.createEmbed(member.displayColor).addFields(
+				const embed = instance.createEmbed(await instance.getUserDisplay('displayColor', member)).addFields(
 					{
 						name: 'BlackJack',
 						value: instance.getMessage(interaction, 'BLACKJACK_TITLE', {

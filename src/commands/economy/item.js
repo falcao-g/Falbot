@@ -24,7 +24,7 @@ module.exports = {
 	execute: async ({ interaction, instance, member, subcommand, args, database }) => {
 		try {
 			await interaction.deferReply().catch(() => {});
-			const { items } = instance;
+			const { items, market } = instance;
 			const player = await database.player.findOne(member.id);
 
 			if (interaction.options !== undefined) {
@@ -67,12 +67,12 @@ module.exports = {
 
 			if (itemJSON.value) {
 				information += `:moneybag: ${instance.getMessage(interaction, 'COST')} **${format(itemJSON.value)} falcoins**`;
-				const sellOrder = await database.market.getCheapestSellOrder(itemJSON.id);
-				if (sellOrder.price != Infinity) {
+				const sellOrder = await market.getCheapestSellOrder(itemJSON.id);
+				if (sellOrder != null) {
 					information += `\n🛍️ ${instance.getMessage(interaction, 'BUY_FOR')} **${format(sellOrder.price)} falcoins**`;
 				}
-				const buyOrder = await database.market.getBestBuyOrder(itemJSON.id);
-				if (buyOrder.price != 0) {
+				const buyOrder = await market.getBestBuyOrder(itemJSON.id);
+				if (buyOrder != null) {
 					information += `\n🛒 ${instance.getMessage(interaction, 'SELL_FOR')} **${format(buyOrder.price)} falcoins**`;
 				}
 			} else {
@@ -103,7 +103,7 @@ module.exports = {
 				})}`;
 
 			const embed = instance
-				.createEmbed(member.displayColor)
+				.createEmbed(await instance.getUserDisplay('displayColor', member))
 				.setTitle(`${instance.getItemName(itemJSON.id, interaction)} ` + '(`' + `${itemJSON.id}` + '`)')
 				.addFields({
 					name: instance.getMessage(interaction, 'INFO'),

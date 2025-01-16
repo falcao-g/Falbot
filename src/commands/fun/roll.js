@@ -40,7 +40,7 @@ module.exports = {
 				isSlashGame: true,
 				embed: {
 					title: instance.getMessage(interaction, 'RESULT'),
-					color: member.displayColor,
+					color: await instance.getUserDisplay('displayColor', member),
 				},
 			}).roll(interaction.options.getString('dice'));
 		} catch (error) {

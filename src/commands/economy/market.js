@@ -1,8 +1,6 @@
 const { format, paginate } = require('../../utils/functions.js');
 const { ButtonBuilder, SlashCommandBuilder, StringSelectMenuBuilder } = require('discord.js');
-var numerize = require('numerize');
-// eslint-disable-next-line prefer-destructuring
-numerize = numerize.default.numerize; // uugh
+const { numerize } = require('numerize');
 
 module.exports = {
 	developer: false,
@@ -242,6 +240,7 @@ module.exports = {
 			var type = subcommand;
 		}
 		const { items, market } = instance;
+		const displayColor = await instance.getUserDisplay('displayColor', member);
 
 		if (type == 'all') {
 			// pre calculate the sections of items
@@ -255,7 +254,7 @@ module.exports = {
 			//create an array of embeds, each embed containing 3 columns with 5 items each, until all items are displayed
 			const embeds = await Promise.all(
 				Array.from({ length: numberOfPages }).map(async (_, i) => {
-					const embed = instance.createEmbed(member.displayColor).setTitle(
+					const embed = instance.createEmbed(displayColor).setTitle(
 						instance.getMessage(interaction, 'MARKET_TITLE', {
 							PAGE: i + 1,
 							TOTAL: numberOfPages,
@@ -336,7 +335,7 @@ module.exports = {
 				return;
 			}
 
-			const embed = instance.createEmbed(member.displayColor).setTitle(instance.getItemName(itemJSON.id, interaction));
+			const embed = instance.createEmbed(displayColor).setTitle(instance.getItemName(itemJSON.id, interaction));
 
 			//retrieve all buy orders and group them by price, putting the highest price first, and formatting the string like x falcoins - y availables
 			const buyOrders = await market.getOrders(itemJSON.id, 'buy');
@@ -456,7 +455,7 @@ module.exports = {
 			}
 			await userFile.save();
 
-			const embed = instance.createEmbed(member.displayColor).setTitle(
+			const embed = instance.createEmbed(displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_BOUGHT', {
 					AMOUNT: amountArgument - amount,
 					ITEM: instance.getItemName(itemJSON.id, interaction),
@@ -531,7 +530,7 @@ module.exports = {
 			};
 			await market.addOrder(itemJSON.id, buyOrder, 'buy');
 
-			const embed = instance.createEmbed(member.displayColor).setTitle(
+			const embed = instance.createEmbed(displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_LISTED_BUY', {
 					AMOUNT: amount,
 					ITEM: instance.getItemName(itemJSON.id, interaction),
@@ -607,7 +606,7 @@ module.exports = {
 			};
 			await market.addOrder(itemJSON.id, sellOrder, 'sell');
 
-			const embed = instance.createEmbed(member.displayColor).setTitle(
+			const embed = instance.createEmbed(displayColor).setTitle(
 				instance.getMessage(interaction, 'MARKET_LISTED_SELL', {
 					AMOUNT: amount,
 					ITEM: instance.getItemName(itemJSON.id, interaction),
@@ -631,7 +630,7 @@ module.exports = {
 				const numberOfPages = Math.ceil(buyOrders.length / 25);
 				const embeds = await Promise.all(
 					Array.from({ length: numberOfPages }).map(async (_, i) => {
-						const embed = instance.createEmbed(member.displayColor).setTitle(
+						const embed = instance.createEmbed(displayColor).setTitle(
 							instance.getMessage(interaction, 'MARKET_BUY_LISTINGS', {
 								PAGE: i + 1,
 								TOTAL: numberOfPages,
@@ -720,7 +719,7 @@ module.exports = {
 				const numberOfPages = Math.ceil(sellOrders.length / 25);
 				const embeds = await Promise.all(
 					Array.from({ length: numberOfPages }).map(async (_, i) => {
-						const embed = instance.createEmbed(member.displayColor).setTitle(
+						const embed = instance.createEmbed(displayColor).setTitle(
 							instance.getMessage(interaction, 'MARKET_SELL_LISTINGS', {
 								PAGE: i + 1,
 								TOTAL: numberOfPages,
@@ -829,7 +828,7 @@ module.exports = {
 			const numberOfPages = Math.ceil(history.length / 15);
 			const embeds = await Promise.all(
 				Array.from({ length: numberOfPages }).map(async (_, i) => {
-					const embed = instance.createEmbed(member.displayColor);
+					const embed = instance.createEmbed(displayColor);
 
 					const historyOnPage = history.slice(i * 15, (i + 1) * 15);
 					var formattedHistory = historyOnPage.map((entry) =>

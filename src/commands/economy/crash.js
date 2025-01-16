@@ -45,7 +45,7 @@ module.exports = {
 			if (player.falcoins >= bet) {
 				player.falcoins -= bet;
 				var multiplier = 10;
-				const embed = instance.createEmbed(member.displayColor).addFields(
+				const embed = instance.createEmbed(await instance.getUserDisplay('displayColor', member)).addFields(
 					{
 						name: 'Crash',
 						value: instance.getMessage(interaction, 'CRASH_TEXT'),

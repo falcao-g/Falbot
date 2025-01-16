@@ -246,6 +246,7 @@ module.exports = {
 			} catch {
 				var type = subcommand;
 			}
+			const displayColor = await instance.getUserDisplay('displayColor', member);
 
 			if (type === 'connect4') {
 				var Game = new Connect4({
@@ -254,7 +255,7 @@ module.exports = {
 					opponent: interaction.options.getUser('opponent'),
 					embed: {
 						title: ':brain: Connect4',
-						color: member.displayColor,
+						color: displayColor,
 					},
 					emojis: {
 						board: '⚪',
@@ -274,7 +275,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: instance.getMessage(interaction, 'FIND_EMOJI'),
-						color: member.displayColor,
+						color: displayColor,
 						description: instance.getMessage(interaction, 'REMEMBER_THE_EMOJIS'),
 						findDescription: instance.getMessage(interaction, 'FIND_EMOJI_DESCRIPTION'),
 					},
@@ -292,7 +293,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: instance.getMessage(interaction, 'FLOOD_GAME'),
-						color: member.displayColor,
+						color: displayColor,
 					},
 					difficulty: 13,
 					timeoutTime: 1000 * 60,
@@ -307,7 +308,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: instance.getMessage(interaction, 'MATCH_PAIRS'),
-						color: member.displayColor,
+						color: displayColor,
 						description: instance.getMessage(interaction, 'MATCH_PAIRS_DESCRIPTION'),
 					},
 					timeoutTime: 1000 * 60,
@@ -322,7 +323,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: instance.getMessage(interaction, 'MINESWEEPER'),
-						color: member.displayColor,
+						color: displayColor,
 						description: instance.getMessage(interaction, 'MINESWEEPER_DESCRIPTION'),
 					},
 					emojis: { flag: '🚩', mine: '💣' },
@@ -340,7 +341,7 @@ module.exports = {
 						title: instance.getMessage(interaction, 'SNAKE_GAME'),
 						overTitle: instance.getMessage(interaction, 'GAME_OVER'),
 						scoreText: instance.getMessage(interaction, 'SCORE'),
-						color: member.displayColor,
+						color: displayColor,
 					},
 					emojis: {
 						board: '⬛',
@@ -362,7 +363,7 @@ module.exports = {
 					opponent: interaction.options.getUser('opponent'),
 					embed: {
 						title: instance.getMessage(interaction, 'TICTACTOE'),
-						color: member.displayColor,
+						color: displayColor,
 						overTitle: instance.getMessage(interaction, 'GAME_OVER'),
 					},
 					emojis: {
@@ -383,7 +384,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: '🔢 2048',
-						color: member.displayColor,
+						color: displayColor,
 					},
 					emojis: {
 						up: '⬆️',
@@ -403,7 +404,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: instance.getMessage(interaction, 'WOULD_YOU_RATHER'),
-						color: member.displayColor,
+						color: displayColor,
 					},
 					buttons: {
 						option1: '\u200b',
@@ -419,7 +420,7 @@ module.exports = {
 					embed: {
 						title: '❔ Trivia',
 						description: instance.getMessage(interaction, 'TRIVIA_DESCRIPTION'),
-						color: member.displayColor,
+						color: displayColor,
 					},
 					timeoutTime: 1000 * 60,
 					mode: ['multiple', 'single'][randint(0, 1)],
@@ -438,7 +439,7 @@ module.exports = {
 					embed: {
 						title: instance.getMessage(interaction, 'FAST_TYPE'),
 						description: instance.getMessage(interaction, 'TIME_TO_TYPE'),
-						color: member.displayColor,
+						color: displayColor,
 					},
 					timeoutTime: 1000 * 600,
 					sentence: sentence,
@@ -451,7 +452,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: instance.getMessage(interaction, 'POKEMON'),
-						color: member.displayColor,
+						color: displayColor,
 					},
 					timeoutTime: 1000 * 60,
 					winMessage: instance.getMessage(interaction, 'POKEMON_WIN'),
@@ -469,7 +470,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: instance.getMessage(interaction, 'HANGMAN'),
-						color: member.displayColor,
+						color: displayColor,
 					},
 					hangman: { hat: '🎩', head: '😟', shirt: '👕', pants: '🩳', boots: '👞👞' },
 					customWord: word,
@@ -486,7 +487,7 @@ module.exports = {
 					embed: {
 						title: '🪨📄✂️',
 						description: instance.getMessage(interaction, 'BUTTON_BELOW'),
-						color: member.displayColor,
+						color: displayColor,
 					},
 					buttons: {
 						rock: instance.getMessage(interaction, 'ROCK'),
@@ -511,7 +512,7 @@ module.exports = {
 					isSlashGame: true,
 					embed: {
 						title: 'Wordle',
-						color: member.displayColor,
+						color: displayColor,
 					},
 					timeoutTime: 1000 * 600,
 					winMessage: instance.getMessage(interaction, 'WORDS_WIN'),

@@ -68,6 +68,8 @@ module.exports = {
 			const lotto = await instance.lottoSchema.findById('weekly');
 			const type = interaction.options.getSubcommand();
 			const player = await database.player.findOne(user.id);
+			const displayColor = await instance.getUserDisplay('displayColor', interaction.member);
+
 			if (type === 'buy') {
 				try {
 					var amount = numerize(interaction.options.getString('amount'), parseInt(player.falcoins / 500));
@@ -81,7 +83,7 @@ module.exports = {
 				}
 
 				if (player.falcoins > amount * 500) {
-					var embed = instance.createEmbed(15844367).addFields({
+					var embed = instance.createEmbed(displayColor).addFields({
 						name: `:tickets: ${format(amount)} ` + instance.getMessage(interaction, 'PURCHASED'),
 						value: instance.getMessage(interaction, 'LOTTERY_COST', {
 							COST: format(amount * 500),
@@ -100,7 +102,7 @@ module.exports = {
 					});
 				}
 			} else if (type === 'view') {
-				var embed = instance.createEmbed(15844367).addFields(
+				var embed = instance.createEmbed(displayColor).addFields(
 					{
 						name: instance.getMessage(interaction, 'LOTTERY'),
 						value: instance.getMessage(interaction, 'LOTTERY_POOL', {
@@ -143,7 +145,7 @@ module.exports = {
 					}
 				}
 
-				var embed = instance.createEmbed(15844367).addFields({
+				var embed = instance.createEmbed(displayColor).addFields({
 					name: instance.getMessage(interaction, 'LOTTERY_WINNERS'),
 					value: history,
 				});

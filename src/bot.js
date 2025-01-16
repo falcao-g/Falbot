@@ -1,4 +1,4 @@
-const { randint, format } = require('./utils/functions.js');
+const { randint, format, checkIfUserIsPremium } = require('./utils/functions.js');
 const { Client, GatewayIntentBits, Collection, EmbedBuilder } = require('discord.js');
 const path = require('path');
 const { loadEvents } = require('./handlers/events.js');
@@ -279,6 +279,18 @@ class Falbot {
 		return await interaction.editReply({ content, embeds, components, fetchReply }).catch((err) => {
 			console.error(err);
 		});
+	}
+
+	async getUserDisplay(type, member) {
+		var userFile = await this.userSchema.findById(member.id);
+
+		if ((await checkIfUserIsPremium(member.id, this.client)) && userFile.premium[type] != undefined) {
+			return userFile.premium[type];
+		}
+
+		if (type == 'displayName' && member.displayName == undefined) return member.globalName ?? member.username;
+
+		return member[type];
 	}
 }
 

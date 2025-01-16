@@ -18,7 +18,8 @@ module.exports = {
 				target.user.id
 			);
 			const limit = instance.levels[rank - 1].bankLimit;
-			const { items } = instance;
+			const displayColor = await instance.getUserDisplay('displayColor', target);
+			const displayName = await instance.getUserDisplay('displayName', target);
 
 			if (instance.levels[rank - 1].falcoinsToLevelUp === undefined) {
 				var rankText = ':sparkles: ' + instance.getMessage(interaction, 'MAX_RANK2');
@@ -31,15 +32,11 @@ module.exports = {
 			}
 
 			var inventoryQuantity = 0;
-			const inventoryWorth = Array.from(inventory).reduce((acc, [itemName, quantity]) => {
-				acc += items[itemName]['value'] * quantity;
-				inventoryQuantity += quantity;
-				return acc;
-			}, 0);
+			const { inventoryWorth } = instance.getInventoryInfo(inventory);
 
 			const embed = instance
-				.createEmbed(target.displayColor)
-				.setTitle(instance.getMessage(interaction, 'PROFILE', { USER: target.displayName }))
+				.createEmbed(displayColor)
+				.setTitle(instance.getMessage(interaction, 'PROFILE', { USER: displayName }))
 				.setThumbnail(target.user.avatarURL())
 				.addFields(
 					{

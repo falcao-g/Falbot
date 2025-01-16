@@ -35,7 +35,7 @@ module.exports = {
 				rows[cr].addComponents(new ButtonBuilder().setCustomId(String(i)).setStyle('Success').setEmoji('❓'));
 			}
 
-			var embed = instance.createEmbed(member.displayColor).addFields({
+			var embed = instance.createEmbed(await instance.getUserDisplay('displayColor', member)).addFields({
 				name: instance.getMessage(interaction, 'SCRATCH_TITLE'),
 				value: instance.getMessage(interaction, 'SCRATCH_DESCRIPTION'),
 			});
