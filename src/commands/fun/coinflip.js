@@ -5,8 +5,8 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('coinflip')
 		.setNameLocalizations({
-			'pt-BR': 'girarmoeda',
-			'es-ES': 'tirarmoneda',
+			'pt-BR': 'caraoucoroa',
+			'es-ES': 'caraocruz',
 		})
 		.setDescription('Flip a coin')
 		.setDescriptionLocalizations({
