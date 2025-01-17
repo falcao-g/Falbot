@@ -32,16 +32,16 @@ module.exports = {
 			} else {
 				var item = args[0];
 				var cont = 0;
-				for (i in items) {
+				for (i of items.all().keys()) {
 					if (i == item) {
 						var index = subcommand == 'previous' ? cont - 1 : cont + 1;
 						break;
 					}
 					cont++;
 				}
-				if (index < 0) index = Object.keys(items).length - 1;
-				if (index > Object.keys(items).length - 1) index = 0;
-				item = Object.keys(items)[index];
+				if (index < 0) index = Array.from(items.all()).length - 1;
+				if (index > Array.from(items.all()).length - 1) index = 0;
+				item = Array.from(items.all().keys())[index];
 			}
 
 			const itemJSON = items.getItem(item);
