@@ -1961,6 +1961,21 @@
 		"en-US": ":rainbow: Archon",
 		"es-ES": ":rainbow: Arconte"
 	},
+	"29": {
+		"pt-BR": ":fleur_de_lis: Marquês",
+		"en-US": ":fleur_de_lis: Marquis",
+		"es-ES": ":fleur_de_lis: Marqués"
+	},
+	"30": {
+		"pt-BR": ":fire: Grão-duque",
+		"en-US": ":fire: Grand Duke",
+		"es-ES": ":fire: Gran Duque"
+	},
+	"31": {
+		"pt-BR": ":axe: Lorde",
+		"en-US": ":axe: Lord",
+		"es-ES": ":axe: Señor"
+	},
 	"FARM_TITLE": {
 		"pt-BR": "🏞️ Fazenda de {USER}",
 		"en-US": "🏞️ {USER}'s Farm",
